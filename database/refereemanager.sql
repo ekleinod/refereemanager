@@ -328,9 +328,7 @@ DROP TABLE IF EXISTS `rfrmgr_assignments` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_assignments` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `game_number` INT UNSIGNED NOT NULL ,
-  `time` DATETIME NOT NULL ,
-  `home_team_id` INT NOT NULL ,
-  `road_team_id` INT NOT NULL ,
+  `datetime` DATETIME NOT NULL ,
   `season_id` INT NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
@@ -398,21 +396,3 @@ COMMENT = 'Team\'s assignments: home or road team.';
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
--- -----------------------------------------------------
--- Data for table `rfrmgr_leagues`
--- -----------------------------------------------------
-START TRANSACTION;
-INSERT INTO `rfrmgr_leagues` (`id`, `title`, `description`, `code`, `women`, `umpire_report_link`, `created`, `modified`) VALUES (1, 'Oberliga Damen', NULL, 'OLD', 1, 'http://something/', NULL, NULL);
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `rfrmgr_referee_assignment_roles`
--- -----------------------------------------------------
-START TRANSACTION;
-INSERT INTO `rfrmgr_referee_assignment_roles` (`id`, `code`, `title`, `description`, `created`, `modified`) VALUES (1, 'OSR', 'Oberschiedsrichter', NULL, '2012-07-17 00:43:00', '2012-07-17 00:43:00');
-INSERT INTO `rfrmgr_referee_assignment_roles` (`id`, `code`, `title`, `description`, `created`, `modified`) VALUES (2, 'Stellv. OSR', 'Stellvertretender Oberschiedsrichter', NULL, '2012-07-17 00:43:00', '2012-07-17 00:43:00');
-INSERT INTO `rfrmgr_referee_assignment_roles` (`id`, `code`, `title`, `description`, `created`, `modified`) VALUES (3, 'SR', 'Schiedsrichter', NULL, '2012-07-17 00:43:00', '2012-07-17 00:43:00');
-
-COMMIT;
