@@ -80,11 +80,11 @@ COMMENT = 'All seasons.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_leagues_people_seasons`
+-- Table `rfrmgr_umpire_report_recipients`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_leagues_people_seasons` ;
+DROP TABLE IF EXISTS `rfrmgr_umpire_report_recipients` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_leagues_people_seasons` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_umpire_report_recipients` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `league_id` INT NOT NULL ,
   `person_id` INT NOT NULL ,
