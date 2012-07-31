@@ -283,6 +283,23 @@ COMMENT = 'Spokepersons for the teams.';
 
 
 -- -----------------------------------------------------
+-- Table `rfrmgr_user_roles`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_user_roles` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_user_roles` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `title` VARCHAR(100) NOT NULL ,
+  `description` TEXT NULL ,
+  `created` DATETIME NOT NULL ,
+  `modified` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+COMMENT = 'Roles of users, such as admin, reader, editor.';
+
+
+-- -----------------------------------------------------
 -- Table `rfrmgr_users`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rfrmgr_users` ;
@@ -291,7 +308,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `username` VARCHAR(100) NOT NULL ,
   `password` VARCHAR(100) NOT NULL ,
-  `role` VARCHAR(100) NOT NULL ,
+  `user_role_id` INT(11) NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
