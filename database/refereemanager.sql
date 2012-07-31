@@ -32,7 +32,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_people` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(100) NOT NULL ,
   `first_name` VARCHAR(100) NULL ,
-  `birthday` DATE NOT NULL ,
+  `birthday` DATE NULL ,
   `address_id` INT UNSIGNED NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
