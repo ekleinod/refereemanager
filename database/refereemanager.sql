@@ -265,11 +265,11 @@ COMMENT = 'All teams.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_people_seasons_teams`
+-- Table `rfrmgr_team_spokespeople`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_people_seasons_teams` ;
+DROP TABLE IF EXISTS `rfrmgr_team_spokespeople` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_people_seasons_teams` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_team_spokespeople` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `team_id` INT NOT NULL ,
   `person_id` INT NOT NULL ,
