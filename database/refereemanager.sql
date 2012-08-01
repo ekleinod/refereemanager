@@ -254,6 +254,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_teams` (
   `number` INT UNSIGNED NOT NULL ,
   `name` VARCHAR(100) NOT NULL ,
   `description` TEXT NULL ,
+  `club_id` INT(11) NOT NULL ,
   `address_id` INT UNSIGNED NULL COMMENT 'standard address of the club. To be used if no address for a team is given.' ,
   `league_id` INT NOT NULL ,
   `created` DATETIME NOT NULL ,
