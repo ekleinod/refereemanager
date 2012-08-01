@@ -61,23 +61,6 @@ class Email extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
- * hasOne associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'ContactKind' => array(
-			'className' => 'ContactKind',
-			'foreignKey' => 'id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
 /**
  * belongsTo associations
  *
@@ -87,6 +70,13 @@ class Email extends AppModel {
 		'Person' => array(
 			'className' => 'Person',
 			'foreignKey' => 'person_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'ContactKind' => array(
+			'className' => 'ContactKind',
+			'foreignKey' => 'contact_kind_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

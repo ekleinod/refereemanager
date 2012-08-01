@@ -60,11 +60,58 @@ class Address extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'Club' => array(
+			'className' => 'Club',
+			'foreignKey' => 'id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'Person' => array(
+			'className' => 'Person',
+			'foreignKey' => 'id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'Team' => array(
+			'className' => 'Team',
+			'foreignKey' => 'id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
+/**
  * belongsTo associations
  *
  * @var array
  */
-	public $belongsTo = array(
+/*	public $belongsTo = array(
 		'Club' => array(
 			'className' => 'Club',
 			'foreignKey' => 'id',
@@ -86,5 +133,5 @@ class Address extends AppModel {
 			'fields' => '',
 			'order' => ''
 		)
-	);
+	);*/
 }
