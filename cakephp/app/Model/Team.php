@@ -3,7 +3,8 @@ App::uses('AppModel', 'Model');
 /**
  * Team Model
  *
- * @property TeamSpokesperson $TeamSpokesperson
+ * @property Address $Address
+ * @property Club $Club
  * @property League $League
  * @property TeamAssignment $TeamAssignment
  * @property TeamSpokesperson $TeamSpokesperson
@@ -51,7 +52,7 @@ class Team extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'address_id' => array(
+		'club_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -81,8 +82,8 @@ class Team extends AppModel {
  * @var array
  */
 	public $hasOne = array(
-		'TeamSpokesperson' => array(
-			'className' => 'TeamSpokesperson',
+		'Address' => array(
+			'className' => 'Address',
 			'foreignKey' => 'id',
 			'conditions' => '',
 			'fields' => '',
@@ -96,9 +97,16 @@ class Team extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
+		'Club' => array(
+			'className' => 'Club',
+			'foreignKey' => 'club_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 		'League' => array(
 			'className' => 'League',
-			'foreignKey' => 'id',
+			'foreignKey' => 'league_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
@@ -113,6 +121,19 @@ class Team extends AppModel {
 	public $hasMany = array(
 		'TeamAssignment' => array(
 			'className' => 'TeamAssignment',
+			'foreignKey' => 'team_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'TeamSpokesperson' => array(
+			'className' => 'TeamSpokesperson',
 			'foreignKey' => 'team_id',
 			'dependent' => false,
 			'conditions' => '',

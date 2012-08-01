@@ -5,6 +5,7 @@ App::uses('AppModel', 'Model');
  *
  * @property Address $Address
  * @property Referee $Referee
+ * @property Team $Team
  */
 class Club extends AppModel {
 
@@ -68,6 +69,19 @@ class Club extends AppModel {
 	public $hasMany = array(
 		'Referee' => array(
 			'className' => 'Referee',
+			'foreignKey' => 'club_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'Team' => array(
+			'className' => 'Team',
 			'foreignKey' => 'club_id',
 			'dependent' => false,
 			'conditions' => '',
