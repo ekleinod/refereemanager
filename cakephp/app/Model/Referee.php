@@ -105,37 +105,6 @@ class Referee extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
- * hasOne associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'AssignmentQuantity' => array(
-			'className' => 'AssignmentQuantity',
-			'foreignKey' => 'id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Status' => array(
-			'className' => 'Status',
-			'foreignKey' => 'id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'RefereeKind' => array(
-			'className' => 'RefereeKind',
-			'foreignKey' => 'id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
 /**
  * belongsTo associations
  *
@@ -145,6 +114,34 @@ class Referee extends AppModel {
 		'Club' => array(
 			'className' => 'Club',
 			'foreignKey' => 'club_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Person' => array(
+			'className' => 'Person',
+			'foreignKey' => 'person_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Status' => array(
+			'className' => 'Status',
+			'foreignKey' => 'status_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'AssignmentQuantity' => array(
+			'className' => 'AssignmentQuantity',
+			'foreignKey' => 'assignment_quantity_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'RefereeKind' => array(
+			'className' => 'RefereeKind',
+			'foreignKey' => 'referee_kind_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
@@ -171,5 +168,4 @@ class Referee extends AppModel {
 			'counterQuery' => ''
 		)
 	);
-
 }

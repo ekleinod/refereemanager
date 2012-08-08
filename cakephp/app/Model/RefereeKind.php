@@ -42,20 +42,24 @@ class RefereeKind extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
 /**
- * belongsTo associations
+ * hasMany associations
  *
  * @var array
  */
-	public $belongsTo = array(
-		'Referees' => array(
-			'className' => 'Referees',
-			'foreignKey' => 'id',
+	public $hasMany = array(
+		'Referee' => array(
+			'className' => 'Referee',
+			'foreignKey' => 'referee_kind_id',
+			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
-			'order' => ''
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
 		)
 	);
 }

@@ -72,6 +72,21 @@ class Person extends AppModel {
 	);
 
 /**
+ * hasOne associations
+ *
+ * @var array
+ */
+	public $hasOne = array(
+		'Referee' => array(
+			'className' => 'Referee',
+			'foreignKey' => 'person_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
+
+/**
  * hasMany associations
  *
  * @var array
@@ -92,6 +107,32 @@ class Person extends AppModel {
 		),
 		'PhoneNumber' => array(
 			'className' => 'PhoneNumber',
+			'foreignKey' => 'person_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'UmpireReportRecipient' => array(
+			'className' => 'UmpireReportRecipient',
+			'foreignKey' => 'person_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'TeamSpokesperson' => array(
+			'className' => 'TeamSpokesperson',
 			'foreignKey' => 'person_id',
 			'dependent' => false,
 			'conditions' => '',

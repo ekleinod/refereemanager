@@ -31,8 +31,8 @@ class PhoneNumber extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 			'phone' => array(
-				'rule' => array('phone'),
-				//'message' => 'Your custom message here',
+				'rule' => array('phone', '/^\d{3,5} \d{5,10}$/'),
+				'message' => 'Die Telefonnummer muss folgende Form haben: "#### ##########".',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -61,23 +61,6 @@ class PhoneNumber extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
- * hasOne associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'ContactKind' => array(
-			'className' => 'ContactKind',
-			'foreignKey' => 'id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
 /**
  * belongsTo associations
  *
@@ -87,6 +70,13 @@ class PhoneNumber extends AppModel {
 		'Person' => array(
 			'className' => 'Person',
 			'foreignKey' => 'person_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'ContactKind' => array(
+			'className' => 'ContactKind',
+			'foreignKey' => 'contact_kind_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

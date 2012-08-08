@@ -10,6 +10,14 @@ App::uses('AppModel', 'Model');
 class Address extends AppModel {
 
 /**
+ * Display field
+ *
+ * @var string
+ */
+	public $virtualFields = array("title_address"=>"CONCAT(street, ' ', number)");
+	public $displayField = 'title_address';
+
+/**
  * Validation rules
  *
  * @var array
@@ -67,7 +75,7 @@ class Address extends AppModel {
 	public $hasMany = array(
 		'Club' => array(
 			'className' => 'Club',
-			'foreignKey' => 'id',
+			'foreignKey' => 'address_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
@@ -80,7 +88,7 @@ class Address extends AppModel {
 		),
 		'Person' => array(
 			'className' => 'Person',
-			'foreignKey' => 'id',
+			'foreignKey' => 'address_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
@@ -93,7 +101,7 @@ class Address extends AppModel {
 		),
 		'Team' => array(
 			'className' => 'Team',
-			'foreignKey' => 'id',
+			'foreignKey' => 'address_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
@@ -106,32 +114,4 @@ class Address extends AppModel {
 		)
 	);
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-/*	public $belongsTo = array(
-		'Club' => array(
-			'className' => 'Club',
-			'foreignKey' => 'id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Team' => array(
-			'className' => 'Team',
-			'foreignKey' => 'id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);*/
 }
