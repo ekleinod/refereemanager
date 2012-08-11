@@ -47,34 +47,33 @@ class RefereeAssignment extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
 /**
- * hasOne associations
+ * belongsTo associations
  *
  * @var array
  */
-	public $hasOne = array(
+	public $belongsTo = array(
 		'Assignment' => array(
 			'className' => 'Assignment',
-			'foreignKey' => 'id',
+			'foreignKey' => 'assignment_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
 		'RefereeAssignmentRole' => array(
 			'className' => 'RefereeAssignmentRole',
-			'foreignKey' => 'id',
+			'foreignKey' => 'referee_assignment_role_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
 		'Referee' => array(
 			'className' => 'Referee',
-			'foreignKey' => 'id',
+			'foreignKey' => 'referee_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		)
 	);
+
 }

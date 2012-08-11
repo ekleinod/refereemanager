@@ -47,30 +47,6 @@ class TeamSpokesperson extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
- * hasOne associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Season' => array(
-			'className' => 'Season',
-			'foreignKey' => 'id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
 /**
  * belongsTo associations
  *
@@ -80,6 +56,20 @@ class TeamSpokesperson extends AppModel {
 		'Team' => array(
 			'className' => 'Team',
 			'foreignKey' => 'team_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Person' => array(
+			'className' => 'Person',
+			'foreignKey' => 'person_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Season' => array(
+			'className' => 'Season',
+			'foreignKey' => 'season_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

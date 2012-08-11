@@ -16,7 +16,8 @@ class Team extends AppModel {
  *
  * @var string
  */
-	public $displayField = 'name';
+	public $virtualFields = array("title_team"=>"CONCAT(Team.club_id, ' ', Team.number)");
+	public $displayField = 'title_team';
 
 /**
  * Validation rules
@@ -33,16 +34,6 @@ class Team extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'name' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
@@ -74,29 +65,19 @@ class Team extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
- * hasOne associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'Address' => array(
-			'className' => 'Address',
-			'foreignKey' => 'id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
 /**
  * belongsTo associations
  *
  * @var array
  */
 	public $belongsTo = array(
+		'Address' => array(
+			'className' => 'Address',
+			'foreignKey' => 'address_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 		'Club' => array(
 			'className' => 'Club',
 			'foreignKey' => 'club_id',

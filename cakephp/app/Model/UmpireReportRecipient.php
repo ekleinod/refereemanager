@@ -47,29 +47,19 @@ class UmpireReportRecipient extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
- * hasOne associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
 /**
  * belongsTo associations
  *
  * @var array
  */
 	public $belongsTo = array(
+		'Person' => array(
+			'className' => 'Person',
+			'foreignKey' => 'person_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
 		'League' => array(
 			'className' => 'League',
 			'foreignKey' => 'league_id',

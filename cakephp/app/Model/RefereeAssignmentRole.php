@@ -40,4 +40,26 @@ class RefereeAssignmentRole extends AppModel {
 			),
 		),
 	);
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'RefereeAssignment' => array(
+			'className' => 'RefereeAssignment',
+			'foreignKey' => 'referee_assignment_role_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
 }
