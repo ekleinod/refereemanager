@@ -20,6 +20,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_addresses` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'All addresses.';
 
 
@@ -39,6 +41,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_people` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Alle people go here, specializations, such as referees, have' /* comment truncated */;
 
 
@@ -59,6 +63,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_leagues` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'All leagues.';
 
 
@@ -76,6 +82,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_seasons` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'All seasons.';
 
 
@@ -94,6 +102,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_umpire_report_recipients` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Recipients of umpire reports.';
 
 
@@ -116,6 +126,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referees` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Storage of all referees.';
 
 
@@ -133,6 +145,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_statuses` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Possible referee statuses, such as active, not active, not a' /* comment truncated */;
 
 
@@ -150,6 +164,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_assignment_quantities` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Possible assignment quantities, such as normal, many, less.';
 
 
@@ -169,6 +185,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_phone_numbers` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'All phone numbers.';
 
 
@@ -188,6 +206,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_emails` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'All email adresses.';
 
 
@@ -205,6 +225,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_contact_kinds` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Possible kinds of telephone numbers, such as private, workin' /* comment truncated */;
 
 
@@ -223,6 +245,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_clubs` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'All clubs.';
 
 
@@ -241,6 +265,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_kinds` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Possible kinds of referees such as international referee, Ge' /* comment truncated */;
 
 
@@ -262,6 +288,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_teams` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'All teams.';
 
 
@@ -280,6 +308,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_team_spokespeople` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Spokepersons for the teams.';
 
 
@@ -297,6 +327,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_user_roles` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Roles of users, such as admin, reader, editor.';
 
 
@@ -315,6 +347,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_users` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'User table for access rights.';
 
 
@@ -335,6 +369,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_activity_logs` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Activity log of the database.';
 
 
@@ -353,6 +389,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_assignments` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Assignments for referees.';
 
 
@@ -371,6 +409,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_assignment_roles` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Possible roles of referee\'s assignments such as umpire, stan' /* comment truncated */;
 
 
@@ -389,6 +429,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_assignments` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Referee\'s assignments with their role.';
 
 
@@ -407,6 +449,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_team_assignments` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Team\'s assignments: home or road team.';
 
 
