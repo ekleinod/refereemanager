@@ -59,6 +59,7 @@ class User extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+		),
 		'person_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),

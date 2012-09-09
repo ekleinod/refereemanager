@@ -9,5 +9,6 @@ class DATABASE_CONFIG {
 		'password' => '',
 		'database' => 'refereemanager',
 		'prefix' => 'rfrmgr_',
+		'encoding' => 'utf8',
 	);
 }
