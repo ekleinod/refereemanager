@@ -7,6 +7,7 @@ App::uses('AppModel', 'Model');
  * @property Status $Status
  * @property RefereeKind $RefereeKind
  * @property Club $Club
+ * @property Person $Person
  * @property RefereeAssignment $RefereeAssignment
  */
 class Referee extends AppModel {

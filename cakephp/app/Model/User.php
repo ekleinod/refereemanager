@@ -5,6 +5,7 @@ App::uses('AppModel', 'Model');
  *
  * @property UserRole $UserRole
  * @property ActivityLog $ActivityLog
+ * @property Person $Person
  */
 class User extends AppModel {
 
@@ -58,6 +59,15 @@ class User extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+		'person_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
 		),
 	);
 
@@ -70,6 +80,13 @@ class User extends AppModel {
 		'UserRole' => array(
 			'className' => 'UserRole',
 			'foreignKey' => 'user_role_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Person' => array(
+			'className' => 'Person',
+			'foreignKey' => 'person_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
