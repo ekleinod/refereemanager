@@ -26,6 +26,46 @@ COMMENT = 'All addresses.';
 
 
 -- -----------------------------------------------------
+-- Table `rfrmgr_user_roles`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_user_roles` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_user_roles` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `title` VARCHAR(100) NOT NULL ,
+  `description` TEXT NULL ,
+  `created` DATETIME NOT NULL ,
+  `modified` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Roles of users, such as admin, reader, editor.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_users`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_users` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_users` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `username` VARCHAR(100) NOT NULL ,
+  `password` VARCHAR(100) NOT NULL ,
+  `user_role_id` INT NOT NULL ,
+  `person_id` INT NULL ,
+  `created` DATETIME NOT NULL ,
+  `modified` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'User table for access rights.';
+
+
+-- -----------------------------------------------------
 -- Table `rfrmgr_people`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rfrmgr_people` ;
@@ -38,7 +78,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_people` (
   `address_id` INT UNSIGNED NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -311,45 +350,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'Spokepersons for the teams.';
-
-
--- -----------------------------------------------------
--- Table `rfrmgr_user_roles`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_user_roles` ;
-
-CREATE  TABLE IF NOT EXISTS `rfrmgr_user_roles` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `title` VARCHAR(100) NOT NULL ,
-  `description` TEXT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'Roles of users, such as admin, reader, editor.';
-
-
--- -----------------------------------------------------
--- Table `rfrmgr_users`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_users` ;
-
-CREATE  TABLE IF NOT EXISTS `rfrmgr_users` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `username` VARCHAR(100) NOT NULL ,
-  `password` VARCHAR(100) NOT NULL ,
-  `user_role_id` INT(11) NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'User table for access rights.';
 
 
 -- -----------------------------------------------------
