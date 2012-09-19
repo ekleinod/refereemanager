@@ -12,7 +12,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_addresses` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `street` VARCHAR(100) NOT NULL ,
   `number` VARCHAR(100) NOT NULL ,
-  `zip_code` VARCHAR(100) NOT NULL ,
+  `zip_code` VARCHAR(100) NULL ,
   `city` VARCHAR(100) NOT NULL ,
   `description` TEXT NULL ,
   `created` DATETIME NOT NULL ,
@@ -114,7 +114,7 @@ DROP TABLE IF EXISTS `rfrmgr_seasons` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_seasons` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `year_start` DATE NOT NULL ,
+  `year_start` YEAR NOT NULL ,
   `description` TEXT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
@@ -153,8 +153,8 @@ DROP TABLE IF EXISTS `rfrmgr_referees` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_referees` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `license` DATE NOT NULL ,
-  `last_referee_training` DATE NOT NULL ,
+  `license` DATE NULL ,
+  `last_referee_training` DATE NULL ,
   `assignment_quantity_id` INT NOT NULL ,
   `status_id` INT NOT NULL ,
   `club_id` INT NOT NULL ,
@@ -317,7 +317,7 @@ DROP TABLE IF EXISTS `rfrmgr_teams` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_teams` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `number` INT UNSIGNED NOT NULL ,
-  `name` VARCHAR(100) NOT NULL ,
+  `name` VARCHAR(100) NULL ,
   `description` TEXT NULL ,
   `club_id` INT UNSIGNED NOT NULL ,
   `address_id` INT UNSIGNED NULL COMMENT 'standard address of the club. To be used if no address for a team is given.' ,
@@ -364,6 +364,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_activity_logs` (
   `old_value` TEXT NULL ,
   `new_value` TEXT NOT NULL ,
   `user_id` INT NOT NULL COMMENT '\n' ,
+  `description` TEXT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
