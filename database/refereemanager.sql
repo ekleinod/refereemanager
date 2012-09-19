@@ -385,6 +385,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_assignments` (
   `game_number` INT UNSIGNED NOT NULL ,
   `datetime` DATETIME NOT NULL ,
   `season_id` INT NOT NULL ,
+  `league_id` INT NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
