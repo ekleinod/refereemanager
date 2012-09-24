@@ -27,10 +27,10 @@ class AssignmentsController extends AppController {
 		$assignments = $this->Assignment->find('all', $options);
 
 		// add missing fields
-		$this->loadModel('League');
+/*		$this->loadModel('League');
 		foreach ($assignments as &$assignment):
 			$assignment['League'] = $this->League->findById($assignment['Assignment']['league_id']);
-		endforeach;
+		endforeach;*/
 
 		// pass selected items to view
 		$this->set('assignments', $assignments);
