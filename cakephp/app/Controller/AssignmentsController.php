@@ -26,11 +26,30 @@ class AssignmentsController extends AppController {
 		// find matching assignments
 		$assignments = $this->Assignment->find('all', $options);
 
-		// add missing fields
-/*		$this->loadModel('League');
+		// reconfigure array for easy access of values
 		foreach ($assignments as &$assignment):
-			$assignment['League'] = $this->League->findById($assignment['Assignment']['league_id']);
-		endforeach;*/
+			foreach ($assignment['Team'] as $team):
+				if ($team['TeamAssignment']['home']) {
+					$assignment['HomeTeam'] = $team;
+				} else {
+					$assignment['RoadTeam'] = $team;
+				}
+			endforeach;
+			foreach ($assignment['Referee'] as $referee):
+				if ($referee['RefereeAssignment']['referee_assignment_role_id'] == 1) {
+					$assignment['Umpire'] = $referee;
+				}
+				if ($referee['RefereeAssignment']['referee_assignment_role_id'] == 2) {
+					$assignment['Standby'] = $referee;
+				}
+				if ($referee['RefereeAssignment']['referee_assignment_role_id'] == 3) {
+					if (!array_key_exists('SimpleReferee', $assignment)) {
+						$assignment['SimpleReferee'] = array();
+					}
+					$assignment['SimpleReferee'][] = $referee;
+				}
+			endforeach;
+		endforeach;
 
 		// pass selected items to view
 		$this->set('assignments', $assignments);
