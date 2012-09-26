@@ -26,8 +26,18 @@ class AssignmentsController extends AppController {
 		// find matching assignments
 		$assignments = $this->Assignment->find('all', $options);
 
+		// load referee assignment roles
+		$this->loadModel('RefereeAssignmentRole');
+		$wholerefereeroles = $this->RefereeAssignmentRole->find('all');
+		$refereeroles = array();
+		foreach ($wholerefereeroles as $refereerole):
+			$refereeroles[] = $refereerole['RefereeAssignmentRole'];
+		endforeach;
+
 		// reconfigure array for easy access of values
 		foreach ($assignments as &$assignment):
+
+			// home and road team
 			foreach ($assignment['Team'] as $team):
 				if ($team['TeamAssignment']['home']) {
 					$assignment['HomeTeam'] = $team;
@@ -35,6 +45,8 @@ class AssignmentsController extends AppController {
 					$assignment['RoadTeam'] = $team;
 				}
 			endforeach;
+
+			// referees
 			foreach ($assignment['Referee'] as $referee):
 				if ($referee['RefereeAssignment']['referee_assignment_role_id'] == 1) {
 					$assignment['Umpire'] = $referee;
@@ -54,6 +66,7 @@ class AssignmentsController extends AppController {
 		// pass selected items to view
 		$this->set('assignments', $assignments);
 		$this->set('season', $season);
+		$this->set('refereeroles', $refereeroles);
 	}
 
 /**

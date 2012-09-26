@@ -10,9 +10,9 @@
 				<th><?php echo __('Ligue'); ?></th>
 				<th><?php echo __('Home Team'); ?></th>
 				<th><?php echo __('Off Team'); ?></th>
-				<th><?php echo __('OSR'); ?></th>
-				<th><?php echo __('Stellv. OSR'); ?></th>
-				<th><?php echo __('SR'); ?></th>
+				<?php foreach ($refereeroles as $refereerole): ?>
+					<th><?php echo '<span title="' . __($refereerole['title']) . '">' . __($refereerole['code']) . '</span>'; ?></th>
+				<?php endforeach; ?>
 				<th><?php echo __('Last Change'); ?></th>
 				<th><?php echo __('Aktionen'); ?></th>
 			</tr>
