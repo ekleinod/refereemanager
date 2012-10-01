@@ -7,6 +7,8 @@ App::uses('AppController', 'Controller');
  */
 class AssignmentsController extends AppController {
 
+	private $refereeroles = NULL;
+
 	/**
 	 * Index method: show all assignments of a specific season, current season if none given.
 	 *
@@ -25,14 +27,6 @@ class AssignmentsController extends AppController {
 
 		// find matching assignments
 		$assignments = $this->Assignment->find('all', $options);
-
-		// load referee assignment roles
-		$this->loadModel('RefereeAssignmentRole');
-		$wholerefereeroles = $this->RefereeAssignmentRole->find('all');
-		$refereeroles = array();
-		foreach ($wholerefereeroles as $refereerole):
-			$refereeroles[] = $refereerole['RefereeAssignmentRole'];
-		endforeach;
 
 		// load Person model
 		$this->loadModel('Person');
@@ -55,7 +49,7 @@ class AssignmentsController extends AppController {
 				$referee['Person'] = $this->Person->findById($referee['person_id']);
 
 				// assignment roles
-				foreach ($refereeroles as $refereerole):
+				foreach ($this->getRefereeRoles() as $refereerole):
 					if ($referee['RefereeAssignment']['referee_assignment_role_id'] == $refereerole['id']) {
 						if (!array_key_exists($refereerole['code'], $assignment)) {
 							$assignment[$refereerole['code']] = array();
@@ -69,22 +63,23 @@ class AssignmentsController extends AppController {
 		// pass selected items to view
 		$this->set('assignments', $assignments);
 		$this->set('season', $season);
-		$this->set('refereeroles', $refereeroles);
+		$this->set('refereeroles', $this->getRefereeRoles());
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * view method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
 	public function view($id = null) {
 		$this->Assignment->id = $id;
 		if (!$this->Assignment->exists()) {
 			throw new NotFoundException(__('Invalid assignment'));
 		}
 		$this->set('assignment', $this->Assignment->read(null, $id));
+		$this->set('refereeroles', $this->getRefereeRoles());
 	}
 
 /**
@@ -154,6 +149,22 @@ class AssignmentsController extends AppController {
 		}
 		$this->Session->setFlash(__('Assignment was not deleted'));
 		$this->redirect(array('action' => 'index'));
+	}
+
+	/**
+	 * Returns available referee roles.
+	 *
+	 */
+	private function getRefereeRoles() {
+		if ($this->refereeroles == NULL) {
+			$this->loadModel('RefereeAssignmentRole');
+			$wholerefereeroles = $this->RefereeAssignmentRole->find('all');
+			$this->refereeroles = array();
+			foreach ($wholerefereeroles as $refereerole):
+				$this->refereeroles[] = $refereerole['RefereeAssignmentRole'];
+			endforeach;
+		}
+		return $this->refereeroles;
 	}
 
 }

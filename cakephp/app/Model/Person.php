@@ -14,7 +14,7 @@ class Person extends AppModel {
  *
  * @var string
  */
-	public $virtualFields = array("title_person"=>"CONCAT(Person.name, ', ', Person.first_name)");
+	public $virtualFields = array("title_person" => "CONCAT(Person.name, ', ', Person.first_name)");
 	public $displayField = 'title_person';
 
 /**

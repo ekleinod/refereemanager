@@ -1,6 +1,6 @@
 <div class="assignments index">
 	<h2><?php echo __('Referee Assignments'); ?></h2>
-	<p>Season: <?php echo $season; ?><!--?php echo $this->Html->link($assignment['Season']['year_start'], array('controller' => 'seasons', 'action' => 'view', $assignment['Season']['id'])); ?--></p>
+	<p>Season: <?php echo $season . "/" . ($season + 1); ?></p>
 	<?php
 		if (count($assignments) < 1) {
 	?>
@@ -21,7 +21,7 @@
 						<th><?php echo '<span title="' . __($refereerole['title']) . '">' . __($refereerole['code']) . '</span>'; ?></th>
 					<?php endforeach; ?>
 					<th><?php echo __('Last Change'); ?></th>
-					<th><?php echo __('Aktionen'); ?></th>
+					<th><?php echo __('Actions'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -61,7 +61,7 @@
 		}
 	?>
 
-	<?php pr($assignments); ?>
+	<!--?php pr($assignments); ?-->
 
 </div>
 
