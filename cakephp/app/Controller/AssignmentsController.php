@@ -7,12 +7,12 @@ App::uses('AppController', 'Controller');
  */
 class AssignmentsController extends AppController {
 
-/**
- * index method
- *
- * @param string $season
- * @return void
- */
+	/**
+	 * Index method: show all assignments of a specific season, current season if none given.
+	 *
+	 * @param string $season
+	 * @return void
+	 */
 	public function index($season = null) {
 
 		// select season
@@ -34,6 +34,9 @@ class AssignmentsController extends AppController {
 			$refereeroles[] = $refereerole['RefereeAssignmentRole'];
 		endforeach;
 
+		// load Person model
+		$this->loadModel('Person');
+
 		// reconfigure array for easy access of values
 		foreach ($assignments as &$assignment):
 
@@ -47,19 +50,19 @@ class AssignmentsController extends AppController {
 			endforeach;
 
 			// referees
-			foreach ($assignment['Referee'] as $referee):
-				if ($referee['RefereeAssignment']['referee_assignment_role_id'] == 1) {
-					$assignment['Umpire'] = $referee;
-				}
-				if ($referee['RefereeAssignment']['referee_assignment_role_id'] == 2) {
-					$assignment['Standby'] = $referee;
-				}
-				if ($referee['RefereeAssignment']['referee_assignment_role_id'] == 3) {
-					if (!array_key_exists('SimpleReferee', $assignment)) {
-						$assignment['SimpleReferee'] = array();
+			foreach ($assignment['Referee'] as &$referee):
+				// person data
+				$referee['Person'] = $this->Person->findById($referee['person_id']);
+
+				// assignment roles
+				foreach ($refereeroles as $refereerole):
+					if ($referee['RefereeAssignment']['referee_assignment_role_id'] == $refereerole['id']) {
+						if (!array_key_exists($refereerole['code'], $assignment)) {
+							$assignment[$refereerole['code']] = array();
+						}
+						$assignment[$refereerole['code']][] = $referee;
 					}
-					$assignment['SimpleReferee'][] = $referee;
-				}
+				endforeach;
 			endforeach;
 		endforeach;
 

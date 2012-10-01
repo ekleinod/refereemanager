@@ -73,21 +73,6 @@ class Person extends AppModel {
 	);
 
 /**
- * hasOne associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'Referee' => array(
-			'className' => 'Referee',
-			'foreignKey' => 'person_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
-/**
  * hasMany associations
  *
  * @var array
