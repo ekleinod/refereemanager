@@ -28,36 +28,9 @@ class AssignmentsController extends AppController {
 		// find matching assignments
 		$assignments = $this->Assignment->find('all', $options);
 
-		// load Person model
-		$this->loadModel('Person');
-
 		// reconfigure array for easy access of values
 		foreach ($assignments as &$assignment):
-
-			// home and road team
-			foreach ($assignment['Team'] as $team):
-				if ($team['TeamAssignment']['home']) {
-					$assignment['HomeTeam'] = $team;
-				} else {
-					$assignment['RoadTeam'] = $team;
-				}
-			endforeach;
-
-			// referees
-			foreach ($assignment['Referee'] as &$referee):
-				// person data
-				$referee['Person'] = $this->Person->findById($referee['person_id']);
-
-				// assignment roles
-				foreach ($this->getRefereeRoles() as $refereerole):
-					if ($referee['RefereeAssignment']['referee_assignment_role_id'] == $refereerole['id']) {
-						if (!array_key_exists($refereerole['code'], $assignment)) {
-							$assignment[$refereerole['code']] = array();
-						}
-						$assignment[$refereerole['code']][] = $referee;
-					}
-				endforeach;
-			endforeach;
+			$this->fillAssignment(&$assignment);
 		endforeach;
 
 		// pass selected items to view
@@ -78,7 +51,10 @@ class AssignmentsController extends AppController {
 		if (!$this->Assignment->exists()) {
 			throw new NotFoundException(__('Invalid assignment'));
 		}
-		$this->set('assignment', $this->Assignment->read(null, $id));
+		$assignment = $this->Assignment->read(null, $id);
+
+		$this->fillAssignment(&$assignment);
+		$this->set('assignment', $assignment);
 		$this->set('refereeroles', $this->getRefereeRoles());
 	}
 
@@ -167,4 +143,42 @@ class AssignmentsController extends AppController {
 		return $this->refereeroles;
 	}
 
+	/**
+	 * Fills assignment array with missing values, resp. gives readable names for easy access in views.
+	 *
+	 */
+	private function fillAssignment($assignment) {
+
+		// load Person model
+		$this->loadModel('Person');
+
+		// home and road team
+		foreach ($assignment['Team'] as $team):
+			if ($team['TeamAssignment']['home']) {
+				$assignment['HomeTeam'] = $team;
+			} else {
+				$assignment['RoadTeam'] = $team;
+			}
+		endforeach;
+
+		// referees
+		foreach ($assignment['Referee'] as &$referee):
+			// person data
+			$referee['Person'] = $this->Person->findById($referee['person_id']);
+
+			// assignment roles
+			foreach ($this->getRefereeRoles() as $refereerole):
+				if ($referee['RefereeAssignment']['referee_assignment_role_id'] == $refereerole['id']) {
+					if (!array_key_exists($refereerole['code'], $assignment)) {
+						$assignment[$refereerole['code']] = array();
+					}
+					$assignment[$refereerole['code']][] = $referee;
+				}
+			endforeach;
+		endforeach;
+	}
+
 }
+
+/* EOF*/
+
