@@ -14,7 +14,7 @@ class Person extends AppModel {
  *
  * @var string
  */
-	public $virtualFields = array("title_person"=>"CONCAT(Person.name, ', ', Person.first_name)");
+	public $virtualFields = array("title_person" => "CONCAT(Person.name, ', ', Person.first_name)");
 	public $displayField = 'title_person';
 
 /**
@@ -66,21 +66,6 @@ class Person extends AppModel {
 		'Address' => array(
 			'className' => 'Address',
 			'foreignKey' => 'address_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
-/**
- * hasOne associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'Referee' => array(
-			'className' => 'Referee',
-			'foreignKey' => 'person_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

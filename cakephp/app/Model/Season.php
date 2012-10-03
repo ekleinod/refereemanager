@@ -14,7 +14,8 @@ class Season extends AppModel {
  *
  * @var string
  */
-	public $displayField = 'year_start';
+	public $virtualFields = array("title_season" => "CONCAT(Season.year_start, '/', Season.year_start + 1)");
+	public $displayField = 'title_season';
 
 /**
  * Validation rules

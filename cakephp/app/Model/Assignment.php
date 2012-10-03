@@ -1,5 +1,7 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * Assignment Model
  *
@@ -9,18 +11,27 @@ App::uses('AppModel', 'Model');
  */
 class Assignment extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @var string
+	 */
+	public $name = 'Assignment';
+
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'game_number';
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'game_number' => array(
 			'numeric' => array(
@@ -70,52 +81,28 @@ class Assignment extends AppModel {
 		),
 	);
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Season' => array(
-			'className' => 'Season',
-			'foreignKey' => 'season_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
+	public $belongsTo = array('Season', 'League');
 
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'RefereeAssignment' => array(
-			'className' => 'RefereeAssignment',
-			'foreignKey' => 'assignment_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
+	/**
+	 * hasAndBelongsToMany associations
+	 *
+	 * @var array
+	 */
+	public $hasAndBelongsToMany = array(
+		'Referee' => array(
+//			'className' => 'Referee',
+			'joinTable' => 'referee_assignments',
+			'unique' => 'keepExisting'
 		),
-		'TeamAssignment' => array(
-			'className' => 'TeamAssignment',
-			'foreignKey' => 'assignment_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
+		'Team' => array(
+//			'className' => 'Team',
+			'joinTable' => 'team_assignments',
+			'unique' => 'keepExisting'
 		)
 	);
 

@@ -106,67 +106,18 @@ class Referee extends AppModel {
 		),
 	);
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Club' => array(
-			'className' => 'Club',
-			'foreignKey' => 'club_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'person_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Status' => array(
-			'className' => 'Status',
-			'foreignKey' => 'status_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'AssignmentQuantity' => array(
-			'className' => 'AssignmentQuantity',
-			'foreignKey' => 'assignment_quantity_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'RefereeKind' => array(
-			'className' => 'RefereeKind',
-			'foreignKey' => 'referee_kind_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
+	public $belongsTo = array('Club', 'Person', 'Status', 'AssignmentQuantity', 'RefereeKind');
 
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'RefereeAssignment' => array(
-			'className' => 'RefereeAssignment',
-			'foreignKey' => 'referee_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
+	public $hasMany = array('RefereeAssignment');
+
 }
