@@ -360,6 +360,7 @@ DROP TABLE IF EXISTS `rfrmgr_activity_logs` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_activity_logs` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `table_name` VARCHAR(100) NOT NULL ,
+  `row_id` INT NOT NULL ,
   `column_name` VARCHAR(100) NOT NULL ,
   `old_value` TEXT NULL ,
   `new_value` TEXT NOT NULL ,
@@ -372,7 +373,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_activity_logs` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Activity log of the database.';
+COMMENT = 'Activity log of selected data tables. Only those tables are ' /* comment truncated */;
 
 
 -- -----------------------------------------------------
