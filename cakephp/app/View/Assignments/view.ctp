@@ -10,13 +10,13 @@
 		<dt><?php echo __('Game-No.'); ?></dt>
 			<dd><?php echo h($assignment['Assignment']['game_number']); ?></dd>
 		<dt><?php echo __('Ligue'); ?></dt>
-			<dd><?php echo h($assignment['League']['title']); ?></dd>
+			<dd><?php echo $this->Html->link($assignment['League']['title'], array('controller' => 'leagues', 'action' => 'view', $assignment['League']['id'])); ?></dd>
 		<dt><?php echo __('Home Team'); ?></dt>
-			<dd><?php echo h((array_key_exists('HomeTeam', $assignment)) ? $assignment['HomeTeam']['title_team'] : '??'); ?></dd>
+			<dd><?php echo (array_key_exists('HomeTeam', $assignment)) ? $this->Html->link($assignment['HomeTeam']['title_team'], array('controller' => 'teams', 'action' => 'view', $assignment['HomeTeam']['id'])) : h('??'); ?></dd>
 		<dt><?php echo __('Off Team'); ?></dt>
-			<dd><?php echo h((array_key_exists('RoadTeam', $assignment)) ? $assignment['RoadTeam']['title_team'] : '??'); ?></dd>
+			<dd><?php echo (array_key_exists('RoadTeam', $assignment)) ? $this->Html->link($assignment['RoadTeam']['title_team'], array('controller' => 'teams', 'action' => 'view', $assignment['RoadTeam']['id'])) : h('??'); ?></dd>
 		<?php foreach ($refereeroles as $refereerole): ?>
-			<dt><?php echo __($refereerole['title']) . ' (' . __($refereerole['code']) . ')'; ?></dt>
+			<dt><?php echo '<span title="' . __($refereerole['title']) . '">' . __($refereerole['code']) . '</span>'; ?></dt>
 				<dd><?php
 					if (array_key_exists($refereerole['code'], $assignment)) {
 						$moreReferees = false;
@@ -25,13 +25,15 @@
 								echo '<br />';
 							}
 							$moreReferees = true;
-							echo h($referee['Person']['Person']['title_person']);
+							echo $this->Html->link($referee['Person']['Person']['title_person'], array('controller' => 'people', 'action' => 'view', $referee['Person']['Person']['id']));
 						endforeach;
 					}
 				?></dd>
 		<?php endforeach; ?>
+		<dt><?php echo __('Venue'); ?></dt>
+			<dd>??</dd>
 	</dl>
-	<!--?php pr($assignment); ?-->
+	<?php pr($assignment); ?>
 
 	<h3><?php  echo __('Changes of this Referee Assignment'); ?></h3>
 	<?php if (count($changes) < 1) { ?>

@@ -63,9 +63,13 @@ class AssignmentsController extends AppController {
 		// get changes
 		$changes = $this->getChangesForAssignment($assignment);;
 
+		// get venue
+		$venue = $this->getVenueForAssignment($assignment);;
+
 		// pass information to view
 		$this->set('assignment', $assignment);
 		$this->set('changes', $changes);
+		$this->set('venue', $venue);
 		$this->set('refereeroles', $this->getRefereeRoles());
 	}
 
@@ -248,6 +252,68 @@ class AssignmentsController extends AppController {
 
 		// return results
 		return $changes;
+	}
+
+	/**
+	 * Returns venue for the selected assignment.
+	 *
+	 */
+	private function getVenueForAssignment($assignment) {
+
+		if ($assignment['Assignment']['address_id'] > 0) {
+
+		}
+
+		// load ActivityLog model
+		$this->loadModel('ActivityLog');
+
+		// tables that contain changes for referee assignments
+		$changes_tables = array('addresses', // address change of home team
+														'leagues', // change of umpire report link
+														'umpire_report_recipients',
+														'clubs', // address change of home team
+														'teams', // name, address
+														'team_spokespeople',
+														'assignments',
+														'referee_assignments',
+														'team_assignments');
+
+		// change of assignment
+		$logs = $this->ActivityLog->find('all',
+			array(
+				'conditions' => array(
+					'ActivityLog.table_name' => 'assignments',
+					'ActivityLog.row_id' => $assignment['Assignment']['id']
+				)
+			)
+		);
+		foreach ($logs as $log) {
+			if (!array_key_exists($log['ActivityLog']['created'], $changes)) {
+				$changes[$log['ActivityLog']['created']] = array();
+			}
+			switch ($log['ActivityLog']['column_name']) {
+				case 'datetime':
+					$old_value = $log['ActivityLog']['old_value'];
+					$new_value = $log['ActivityLog']['new_value'];
+					$type = 'datetime';
+					break;
+				default:
+					$old_value = $log['ActivityLog']['old_value'];
+					$new_value = $log['ActivityLog']['new_value'];
+					break;
+			}
+			$change = array(
+				'datetime' => $log['ActivityLog']['created'],
+				'description' => $log['ActivityLog']['description'],
+				'type' => $type,
+				'old_value' => $old_value,
+				'new_value' => $new_value
+			);
+			$changes[$log['ActivityLog']['created']][] = $change;
+		}
+
+		// nothing found
+		return NULL;
 	}
 
 }
