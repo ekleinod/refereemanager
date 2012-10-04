@@ -27,8 +27,6 @@
 					}
 				?>
 		<?php endforeach; ?>
-		<dt><?php echo __('Last Change'); ?></dt>
-			<dd><?php echo h($this->RefereeFormat->format($assignment['Assignment']['modified'], 'datetime')); ?></dd>
 	</dl>
 	<!--?php pr($assignment); ?-->
 
@@ -54,7 +52,7 @@
 							<td><?php
 								if ($single_change['old_value'] != '') {
 									echo h($this->RefereeFormat->format($single_change['old_value'], $single_change['type']));
-									echo h(' &rarr; ');
+									echo ' &rarr; ';
 								}
 								echo h($this->RefereeFormat->format($single_change['new_value'], $single_change['type']));
 							?></td>

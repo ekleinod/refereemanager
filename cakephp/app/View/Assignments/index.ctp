@@ -20,7 +20,6 @@
 					<?php foreach ($refereeroles as $refereerole): ?>
 						<th><?php echo '<span title="' . __($refereerole['title']) . '">' . __($refereerole['code']) . '</span>'; ?></th>
 					<?php endforeach; ?>
-					<th><?php echo __('Last Change'); ?></th>
 					<th><?php echo __('Actions'); ?></th>
 				</tr>
 			</thead>
@@ -48,7 +47,6 @@
 								}
 							?></td>
 						<?php endforeach; ?>
-						<td><?php echo h($this->RefereeFormat->format($assignment['Assignment']['modified'], 'datetime')); ?></td>
 						<td class="actions">
 							<?php echo $this->Html->link(__('View'), array('action' => 'view', $assignment['Assignment']['id'])); ?>
 							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
