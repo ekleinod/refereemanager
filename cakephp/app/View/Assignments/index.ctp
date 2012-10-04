@@ -38,11 +38,11 @@
 								if (array_key_exists($refereerole['code'], $assignment)) {
 									$moreReferees = false;
 									foreach ($assignment[$refereerole['code']] as $referee):
-										echo h($referee['Person']['Person']['title_person']);
 										if ($moreReferees) {
-											echo h('<br />');
+											echo '<br />';
 										}
 										$moreReferees = true;
+										echo h($referee['Person']['Person']['title_person']);
 									endforeach;
 								}
 							?></td>

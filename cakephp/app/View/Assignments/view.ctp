@@ -17,15 +17,18 @@
 			<dd><?php echo h((array_key_exists('RoadTeam', $assignment)) ? $assignment['RoadTeam']['title_team'] : '??'); ?></dd>
 		<?php foreach ($refereeroles as $refereerole): ?>
 			<dt><?php echo __($refereerole['title']) . ' (' . __($refereerole['code']) . ')'; ?></dt>
-				<?php
+				<dd><?php
 					if (array_key_exists($refereerole['code'], $assignment)) {
+						$moreReferees = false;
 						foreach ($assignment[$refereerole['code']] as $referee):
-							echo '<dd>' . h($referee['Person']['Person']['title_person']) . '</dd>';
+							if ($moreReferees) {
+								echo '<br />';
+							}
+							$moreReferees = true;
+							echo h($referee['Person']['Person']['title_person']);
 						endforeach;
-					} else {
-						echo '<dd>&nbsp;</dd>';
 					}
-				?>
+				?></dd>
 		<?php endforeach; ?>
 	</dl>
 	<!--?php pr($assignment); ?-->

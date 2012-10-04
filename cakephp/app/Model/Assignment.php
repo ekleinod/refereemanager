@@ -25,7 +25,8 @@ class Assignment extends AppModel {
 	 *
 	 * @var string
 	 */
-	public $displayField = 'game_number';
+	public $virtualFields = array("title_assignment" => "CONCAT(Assignment.id, ' #', Assignment.game_number)");
+	public $displayField = 'title_assignment';
 
 	/**
 	 * Validation rules
