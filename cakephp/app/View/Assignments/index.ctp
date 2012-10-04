@@ -28,8 +28,8 @@
 				<?php
 				foreach ($assignments as $assignment): ?>
 					<tr>
-						<td><?php echo h($this->Time->format('D d.m.Y', $assignment['Assignment']['datetime'])); ?></td>
-						<td><?php echo h($this->Time->format('H:i', $assignment['Assignment']['datetime'])); ?></td>
+						<td><?php echo h($this->RefereeFormat->format($assignment['Assignment']['datetime'], 'longdate')); ?></td>
+						<td><?php echo h($this->RefereeFormat->format($assignment['Assignment']['datetime'], 'time')); ?></td>
 						<td><?php echo h($assignment['Assignment']['game_number']); ?></td>
 						<td><?php echo h($assignment['League']['title']); ?></td>
 						<td><?php echo h((array_key_exists('HomeTeam', $assignment)) ? $assignment['HomeTeam']['title_team'] : '??'); ?></td>
@@ -48,7 +48,7 @@
 								}
 							?></td>
 						<?php endforeach; ?>
-						<td><?php echo h($this->Time->format('d.m.Y, H:i', $assignment['Assignment']['modified'])); ?></td>
+						<td><?php echo h($this->RefereeFormat->format($assignment['Assignment']['modified'], 'datetime')); ?></td>
 						<td class="actions">
 							<?php echo $this->Html->link(__('View'), array('action' => 'view', $assignment['Assignment']['id'])); ?>
 							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->

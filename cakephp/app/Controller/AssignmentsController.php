@@ -7,6 +7,10 @@ App::uses('AppController', 'Controller');
  */
 class AssignmentsController extends AppController {
 
+	/** Helpers that are used within this class and the associated views. */
+	public $helpers = array('RefereeFormat');
+
+	/** Singleton containing the available referee roles. */
 	private $refereeroles = NULL;
 
 	/**

@@ -4,9 +4,9 @@
 		<dt><?php echo __('Season'); ?></dt>
 			<dd><?php echo $this->Html->link($assignment['Season']['title_season'], array('controller' => 'seasons', 'action' => 'view', $assignment['Season']['id'])); ?></dd>
 		<dt><?php echo __('Date'); ?></dt>
-			<dd><?php echo h($this->Time->format('D d.m.Y', $assignment['Assignment']['datetime'])); ?></dd>
+			<dd><?php echo h($this->RefereeFormat->format($assignment['Assignment']['datetime'], 'longdate')); ?></dd>
 		<dt><?php echo __('Time'); ?></dt>
-			<dd><?php echo h($this->Time->format('H:i', $assignment['Assignment']['datetime'])); ?></dd>
+			<dd><?php echo h($this->RefereeFormat->format($assignment['Assignment']['datetime'], 'time')); ?></dd>
 		<dt><?php echo __('Game-No.'); ?></dt>
 			<dd><?php echo h($assignment['Assignment']['game_number']); ?></dd>
 		<dt><?php echo __('Ligue'); ?></dt>
@@ -28,7 +28,7 @@
 				?>
 		<?php endforeach; ?>
 		<dt><?php echo __('Last Change'); ?></dt>
-			<dd><?php echo h($this->Time->format('d.m.Y, H:i', $assignment['Assignment']['modified'])); ?></dd>
+			<dd><?php echo h($this->RefereeFormat->format($assignment['Assignment']['modified'], 'datetime')); ?></dd>
 	</dl>
 	<!--?php pr($assignment); ?-->
 
@@ -49,28 +49,14 @@
 				<?php foreach ($changes as $change): ?>
 					<?php foreach ($change as $single_change): ?>
 						<tr>
-							<td><?php echo h($this->Time->format('d.m.Y', $single_change['datetime'])); ?></td>
+							<td><?php echo h($this->RefereeFormat->format($single_change['datetime'], 'date')); ?></td>
 							<td><?php echo h($single_change['description']); ?></td>
 							<td><?php
 								if ($single_change['old_value'] != '') {
-									switch ($single_change['type']) {
-										case 'datetime':
-											echo h($this->Time->format('d.m.Y, H:i', $single_change['old_value']));
-											break;
-										default:
-											echo h($single_change['old_value']);
-											break;
-									}
-									echo h(' -> ');
+									echo h($this->RefereeFormat->format($single_change['old_value'], $single_change['type']));
+									echo h(' &rarr; ');
 								}
-								switch ($single_change['type']) {
-									case 'datetime':
-										echo h($this->Time->format('d.m.Y, H:i', $single_change['new_value']));
-										break;
-									default:
-										echo h($single_change['new_value']);
-										break;
-								}
+								echo h($this->RefereeFormat->format($single_change['new_value'], $single_change['type']));
 							?></td>
 						</tr>
 					<?php endforeach; ?>
