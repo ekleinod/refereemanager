@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS `rfrmgr_addresses` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_addresses` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `street` VARCHAR(100) NOT NULL ,
-  `number` VARCHAR(100) NOT NULL ,
+  `number` VARCHAR(100) NULL ,
   `zip_code` VARCHAR(100) NULL ,
   `city` VARCHAR(100) NOT NULL ,
   `description` TEXT NULL ,
@@ -386,6 +386,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_assignments` (
   `datetime` DATETIME NOT NULL ,
   `season_id` INT NOT NULL ,
   `league_id` INT NOT NULL ,
+  `address_id` INT NULL COMMENT 'Only filled if team plays outside their normal location.' ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
