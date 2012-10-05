@@ -31,9 +31,12 @@
 				?></dd>
 		<?php endforeach; ?>
 		<dt><?php echo __('Venue'); ?></dt>
-			<dd>??</dd>
+			<dd><?php echo $this->Html->link($venue['title_address'], array('controller' => 'addresses', 'action' => 'view', $venue['id'])); ?></dd>
 	</dl>
-	<?php pr($assignment); ?>
+	<p>
+		<?php pr($venue); ?>
+		<?php pr($assignment); ?>
+	</p>
 
 	<h3><?php  echo __('Changes of this Referee Assignment'); ?></h3>
 	<?php if (count($changes) < 1) { ?>

@@ -259,15 +259,15 @@ class AssignmentsController extends AppController {
 	}
 
 	/**
-	 * Returns venue for the selected assignment.
+	 * Returns venue address for the selected assignment.
 	 *
 	 * @param $assignment assignment to get venue for
-	 * @return venue (NULL if none found)
+	 * @return venue address (NULL if none found)
 	 */
 	private function getVenueForAssignment($assignment) {
 
 		if ($assignment['Assignment']['address_id'] > 0) {
-
+			return $assignment['Address'];
 		}
 
 		// load ActivityLog model

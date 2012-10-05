@@ -14,7 +14,7 @@ class Address extends AppModel {
  *
  * @var string
  */
-	public $virtualFields = array("title_address"=>"CONCAT(Address.street, ' ', Address.number)");
+	public $virtualFields = array("title_address" => "CONCAT(Address.street, ' ', Address.number, ', ', Address.zip_code, ' ', Address.city)");
 	public $displayField = 'title_address';
 
 /**

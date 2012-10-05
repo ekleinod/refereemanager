@@ -87,7 +87,7 @@ class Assignment extends AppModel {
 	 *
 	 * @var array
 	 */
-	public $belongsTo = array('Season', 'League');
+	public $belongsTo = array('Season', 'League', 'Address');
 
 	/**
 	 * hasAndBelongsToMany associations
@@ -96,12 +96,10 @@ class Assignment extends AppModel {
 	 */
 	public $hasAndBelongsToMany = array(
 		'Referee' => array(
-//			'className' => 'Referee',
 			'joinTable' => 'referee_assignments',
 			'unique' => 'keepExisting'
 		),
 		'Team' => array(
-//			'className' => 'Team',
 			'joinTable' => 'team_assignments',
 			'unique' => 'keepExisting'
 		)
