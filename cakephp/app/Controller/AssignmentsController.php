@@ -34,7 +34,7 @@ class AssignmentsController extends AppController {
 
 		// reconfigure array for easy access of values
 		foreach ($assignments as &$assignment):
-			$this->fillAssignment(&$assignment);
+			$this->fillAssignment($assignment);
 		endforeach;
 
 		// pass information to view
@@ -58,7 +58,7 @@ class AssignmentsController extends AppController {
 			throw new NotFoundException(__('Invalid assignment'));
 		}
 		$assignment = $this->Assignment->read(null, $id);
-		$this->fillAssignment(&$assignment);
+		$this->fillAssignment($assignment);
 
 		// get changes
 		$changes = $this->getChangesForAssignment($assignment);;
@@ -145,6 +145,7 @@ class AssignmentsController extends AppController {
 	/**
 	 * Returns available referee roles.
 	 *
+	 * @return array with all available referee assignment roles
 	 */
 	private function getRefereeRoles() {
 		if ($this->refereeroles == NULL) {
@@ -161,8 +162,9 @@ class AssignmentsController extends AppController {
 	/**
 	 * Fills assignment array with missing values, resp. gives readable names for easy access in views.
 	 *
+	 * @param $assignment assignment to fill (is changed within function)
 	 */
-	private function fillAssignment($assignment) {
+	private function fillAssignment(&$assignment) {
 
 		// load Person model
 		$this->loadModel('Person');
@@ -196,6 +198,8 @@ class AssignmentsController extends AppController {
 	/**
 	 * Returns changes for the selected assignment.
 	 *
+	 * @param $assignment assignment to get changes for
+	 * @return array with changes
 	 */
 	private function getChangesForAssignment($assignment) {
 
@@ -257,6 +261,8 @@ class AssignmentsController extends AppController {
 	/**
 	 * Returns venue for the selected assignment.
 	 *
+	 * @param $assignment assignment to get venue for
+	 * @return venue (NULL if none found)
 	 */
 	private function getVenueForAssignment($assignment) {
 
