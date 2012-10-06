@@ -9,12 +9,21 @@ App::uses('AppModel', 'Model');
  */
 class Address extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
-	public $virtualFields = array("title_address" => "CONCAT(Address.street, ' ', Address.number, ', ', Address.zip_code, ' ', Address.city)");
+	/**
+	 * Declare virtual field in constructor to be alias-safe.
+	 *
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['title_address'] = sprintf('CONCAT(%s.street, " ", %s.number, ", ", %s.zip_code, " ", %s.city)', $this->alias, $this->alias, $this->alias, $this->alias);
+	}
+
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
+//	public $virtualFields = array("title_address" => "CONCAT(Address.street, ' ', Address.number, ', ', Address.zip_code, ' ', Address.city)");
 	public $displayField = 'title_address';
 
 /**
