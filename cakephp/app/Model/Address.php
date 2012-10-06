@@ -15,15 +15,26 @@ class Address extends AppModel {
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$this->virtualFields['title_address'] = sprintf('CONCAT(%s.street, " ", %s.number, ", ", %s.zip_code, " ", %s.city)', $this->alias, $this->alias, $this->alias, $this->alias);
+		$this->virtualFields['title_address'] = sprintf(
+			'CONCAT(IFNULL(%1$s.street, "??"), IFNULL(CONCAT(" ", %1$s.number), ""), ", ", IFNULL(%1$s.zip_code, ""), IFNULL(CONCAT(" ", %1$s.city), "??"))',
+			$this->alias
+		);
 	}
+
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @var string
+	 */
+	public $name = 'Address';
 
 	/**
 	 * Display field
 	 *
 	 * @var string
 	 */
-//	public $virtualFields = array("title_address" => "CONCAT(Address.street, ' ', Address.number, ', ', Address.zip_code, ' ', Address.city)");
 	public $displayField = 'title_address';
 
 /**
