@@ -12,9 +12,9 @@
 		<dt><?php echo __('Ligue'); ?></dt>
 			<dd><?php echo $this->Html->link($assignment['League']['title'], array('controller' => 'leagues', 'action' => 'view', $assignment['League']['id'])); ?></dd>
 		<dt><?php echo __('Home Team'); ?></dt>
-			<dd><?php echo (array_key_exists('HomeTeam', $assignment)) ? $this->Html->link($assignment['HomeTeam']['title_team'], array('controller' => 'teams', 'action' => 'view', $assignment['HomeTeam']['id'])) : h('??'); ?></dd>
+			<dd><?php echo (array_key_exists('HomeTeam', $assignment)) ? $this->Html->link($assignment['HomeTeam']['Team']['title_team'], array('controller' => 'teams', 'action' => 'view', $assignment['HomeTeam']['Team']['id'])) : h('??'); ?></dd>
 		<dt><?php echo __('Off Team'); ?></dt>
-			<dd><?php echo (array_key_exists('RoadTeam', $assignment)) ? $this->Html->link($assignment['RoadTeam']['title_team'], array('controller' => 'teams', 'action' => 'view', $assignment['RoadTeam']['id'])) : h('??'); ?></dd>
+			<dd><?php echo (array_key_exists('RoadTeam', $assignment)) ? $this->Html->link($assignment['RoadTeam']['Team']['title_team'], array('controller' => 'teams', 'action' => 'view', $assignment['RoadTeam']['Team']['id'])) : h('??'); ?></dd>
 		<?php foreach ($refereeroles as $refereerole): ?>
 			<dt><?php echo '<span title="' . __($refereerole['title']) . '">' . __($refereerole['code']) . '</span>'; ?></dt>
 				<dd><?php
@@ -34,7 +34,7 @@
 			<dd><?php echo $this->Html->link($venue['title_address'], array('controller' => 'addresses', 'action' => 'view', $venue['id'])); ?></dd>
 	</dl>
 	<p>
-		<?php pr($venue); ?>
+		<!--?php pr($venue); ?-->
 		<?php pr($assignment); ?>
 	</p>
 

@@ -1,20 +1,39 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * Season Model
  *
- * @property Assignment $Assignment
- * @property TeamSpokesperson $TeamSpokesperson
- * @property UmpireReportRecipient $UmpireReportRecipient
  */
 class Season extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
-	public $virtualFields = array("title_season" => "CONCAT(Season.year_start, '/', Season.year_start + 1)");
+	/**
+	 * Declare virtual field in constructor to be alias-safe.
+	 *
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['title_season'] = sprintf(
+			'CONCAT(%1$s.year_start, "/", %1$s.year_start + 1)',
+			$this->alias
+		);
+	}
+
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @var string
+	 */
+	public $name = 'Season';
+
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'title_season';
 
 /**

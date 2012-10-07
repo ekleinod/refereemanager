@@ -1,11 +1,10 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * Address Model
  *
- * @property Club $Club
- * @property Person $Person
- * @property Team $Team
  */
 class Address extends AppModel {
 

@@ -5,9 +5,6 @@ App::uses('AppModel', 'Model');
 /**
  * Assignment Model
  *
- * @property Season $Season
- * @property Referee $Referee
- * @property Team $Team
  */
 class Assignment extends AppModel {
 

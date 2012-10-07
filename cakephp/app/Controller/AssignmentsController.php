@@ -166,15 +166,19 @@ class AssignmentsController extends AppController {
 	 */
 	private function fillAssignment(&$assignment) {
 
-		// load Person model
+		// load needed models
 		$this->loadModel('Person');
+		$this->loadModel('Team');
 
 		// home and road team
 		foreach ($assignment['Team'] as $team):
+			// hack for team name
+			$fullteam = $this->Team->findById($team['id']);
+			$fullteam['Team']['title_team'] = $fullteam['Club']['name'] . (($fullteam['Team']['number'] == 0) ? '' : ' ' . $fullteam['Team']['number']);
 			if ($team['TeamAssignment']['home']) {
-				$assignment['HomeTeam'] = $team;
+				$assignment['HomeTeam'] = $fullteam;
 			} else {
-				$assignment['RoadTeam'] = $team;
+				$assignment['RoadTeam'] = $fullteam;
 			}
 		endforeach;
 
