@@ -149,4 +149,31 @@ class Team extends AppModel {
 		)
 	);
 
+	/**
+	 * Returns team title for given team.
+	 *
+	 * @param $theTeam team
+	 * @return team title
+	 */
+	public static function getTeamTitle($theTeam) {
+
+		if (is_null($theTeam['Team']['name'])) {
+			if (array_key_exists('Club', $theTeam)) {
+				$name = is_null($theTeam['Club']['shortname']) ? $theTeam['Club']['name'] : $theTeam['Club']['shortname'];
+			} else {
+				$name = $theTeam['Team']['id'];
+			}
+		} else {
+			$name = $theTeam['Team']['name'];
+		}
+
+		$number = ($theTeam['Team']['number'] == 0) ? '' : ' ' . $theTeam['Team']['number'];
+
+		return $name . $number;
+
+	}
+
 }
+
+/* EOF */
+

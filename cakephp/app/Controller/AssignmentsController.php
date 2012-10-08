@@ -174,7 +174,7 @@ class AssignmentsController extends AppController {
 		foreach ($assignment['Team'] as $team):
 			// hack for team name
 			$fullteam = $this->Team->findById($team['id']);
-			$fullteam['Team']['title_team'] = $fullteam['Club']['name'] . (($fullteam['Team']['number'] == 0) ? '' : ' ' . $fullteam['Team']['number']);
+			$fullteam['Team']['title_team'] = $this->Team->getTeamTitle($fullteam);
 			if ($team['TeamAssignment']['home']) {
 				$assignment['HomeTeam'] = $fullteam;
 			} else {
