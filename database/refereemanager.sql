@@ -277,6 +277,7 @@ DROP TABLE IF EXISTS `rfrmgr_clubs` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_clubs` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(100) NOT NULL ,
+  `shortname` VARCHAR(100) NULL ,
   `description` TEXT NULL ,
   `address_id` INT NULL COMMENT 'standard address of the club. To be used if no address for a team is given.' ,
   `created` DATETIME NOT NULL ,
