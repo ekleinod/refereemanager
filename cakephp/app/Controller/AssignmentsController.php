@@ -270,16 +270,22 @@ class AssignmentsController extends AppController {
 	 */
 	private function getVenueForAssignment($assignment) {
 
-		// direct address given
+		// direct address
 		if ($assignment['Assignment']['address_id'] > 0) {
 			return $assignment['Address'];
 		}
 
-		// address of team given
+		// address of team
 		if ($assignment['HomeTeam']['Team']['address_id'] > 0) {
 			return $assignment['HomeTeam']['Address'];
 		}
 
+		// address of club
+		if ($assignment['HomeTeam']['Club']['address_id'] > 0) {
+			$this->loadModel('Address');
+			$address = $this->Address->findById($assignment['HomeTeam']['Club']['address_id']);
+			return $address['Address'];
+		}
 
 		// nothing found
 		return NULL;

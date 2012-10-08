@@ -37,7 +37,7 @@
 	</dl>
 	<p>
 		<!--?php pr($venue); ?-->
-		<?php pr($assignment); ?>
+		<!--?php pr($assignment); ?-->
 	</p>
 
 	<h3><?php  echo __('Changes of this Referee Assignment'); ?></h3>
