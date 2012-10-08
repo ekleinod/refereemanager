@@ -27,6 +27,8 @@
 							$moreReferees = true;
 							echo $this->Html->link($referee['Person']['Person']['title_person'], array('controller' => 'people', 'action' => 'view', $referee['Person']['Person']['id']));
 						endforeach;
+					} else {
+						echo '&nbsp;';
 					}
 				?></dd>
 		<?php endforeach; ?>
