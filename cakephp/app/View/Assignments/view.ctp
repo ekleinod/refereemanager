@@ -40,6 +40,9 @@
 		<!--?php pr($assignment); ?-->
 	</p>
 
+	<h3><?php  echo __('Actions for this Referee Assignment'); ?></h3>
+	<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $assignment['Assignment']['id'])); ?>
+
 	<h3><?php  echo __('Changes of this Referee Assignment'); ?></h3>
 	<?php if (count($changes) < 1) { ?>
 		<p><?php  echo __('This referee assignment was not changed so far.'); ?></p>

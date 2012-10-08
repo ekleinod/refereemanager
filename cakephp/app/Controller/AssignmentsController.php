@@ -92,13 +92,13 @@ class AssignmentsController extends AppController {
 		$this->set(compact('seasons'));
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * edit method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
 	public function edit($id = null) {
 		$this->Assignment->id = $id;
 		if (!$this->Assignment->exists()) {
