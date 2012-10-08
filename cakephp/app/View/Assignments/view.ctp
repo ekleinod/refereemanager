@@ -31,7 +31,7 @@
 				?></dd>
 		<?php endforeach; ?>
 		<dt><?php echo __('Venue'); ?></dt>
-			<dd><?php echo $this->Html->link($venue['title_address'], array('controller' => 'addresses', 'action' => 'view', $venue['id'])); ?></dd>
+			<dd><?php echo is_null($venue) ? __('Unknown') : $this->Html->link($venue['title_address'], array('controller' => 'addresses', 'action' => 'view', $venue['id'])); ?></dd>
 	</dl>
 	<p>
 		<!--?php pr($venue); ?-->

@@ -31,8 +31,8 @@
 						<td><?php echo h($this->RefereeFormat->format($assignment['Assignment']['datetime'], 'time')); ?></td>
 						<td><?php echo h($assignment['Assignment']['game_number']); ?></td>
 						<td><?php echo h($assignment['League']['title']); ?></td>
-						<td><?php echo h((array_key_exists('HomeTeam', $assignment)) ? $assignment['HomeTeam']['title_team'] : '??'); ?></td>
-						<td><?php echo h((array_key_exists('RoadTeam', $assignment)) ? $assignment['RoadTeam']['title_team'] : '??'); ?></td>
+						<td><?php echo h((array_key_exists('HomeTeam', $assignment)) ? $assignment['HomeTeam']['Team']['title_team'] : '??'); ?></td>
+						<td><?php echo h((array_key_exists('RoadTeam', $assignment)) ? $assignment['RoadTeam']['Team']['title_team'] : '??'); ?></td>
 						<?php foreach ($refereeroles as $refereerole): ?>
 							<td><?php
 								if (array_key_exists($refereerole['code'], $assignment)) {
