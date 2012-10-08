@@ -3,20 +3,41 @@ App::uses('AppModel', 'Model');
 /**
  * Team Model
  *
- * @property Address $Address
- * @property Club $Club
- * @property League $League
- * @property TeamAssignment $TeamAssignment
- * @property TeamSpokesperson $TeamSpokesperson
  */
 class Team extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
-	public $virtualFields = array("title_team"=>"CONCAT(Team.club_id, ' ', Team.number)");
+	/**
+	 * Declare virtual field in constructor to be alias-safe.
+	 *
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+
+		// I can't get this one working, so I program a simple (but possibly bad) workaround
+//		$this->virtualFields['title_team'] = sprintf(
+//			'CONCAT(Club.name, IF(%1$s.number > 0, CONCAT(" ", %1$s.number), ""))',
+//			$this->alias
+//		);
+		$this->virtualFields['title_team'] = sprintf(
+			'CONCAT(%1$s.id, IF(%1$s.number > 0, CONCAT(" #", %1$s.number), ""))',
+			$this->alias
+		);
+	}
+
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @var string
+	 */
+	public $name = 'Team';
+
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'title_team';
 
 /**

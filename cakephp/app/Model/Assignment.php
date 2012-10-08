@@ -5,11 +5,20 @@ App::uses('AppModel', 'Model');
 /**
  * Assignment Model
  *
- * @property Season $Season
- * @property Referee $Referee
- * @property Team $Team
  */
 class Assignment extends AppModel {
+
+	/**
+	 * Declare virtual field in constructor to be alias-safe.
+	 *
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['title_assignment'] = sprintf(
+			'CONCAT(%1$s.id, " #", IFNULL(%1$s.game_number, "??"))',
+			$this->alias
+		);
+	}
 
 	/**
 	 * Model name.
@@ -25,7 +34,6 @@ class Assignment extends AppModel {
 	 *
 	 * @var string
 	 */
-	public $virtualFields = array("title_assignment" => "CONCAT(Assignment.id, ' #', Assignment.game_number)");
 	public $displayField = 'title_assignment';
 
 	/**
@@ -87,7 +95,7 @@ class Assignment extends AppModel {
 	 *
 	 * @var array
 	 */
-	public $belongsTo = array('Season', 'League');
+	public $belongsTo = array('Season', 'League', 'Address');
 
 	/**
 	 * hasAndBelongsToMany associations
@@ -96,12 +104,10 @@ class Assignment extends AppModel {
 	 */
 	public $hasAndBelongsToMany = array(
 		'Referee' => array(
-//			'className' => 'Referee',
 			'joinTable' => 'referee_assignments',
 			'unique' => 'keepExisting'
 		),
 		'Team' => array(
-//			'className' => 'Team',
 			'joinTable' => 'team_assignments',
 			'unique' => 'keepExisting'
 		)

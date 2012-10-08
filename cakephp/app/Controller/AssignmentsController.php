@@ -34,7 +34,7 @@ class AssignmentsController extends AppController {
 
 		// reconfigure array for easy access of values
 		foreach ($assignments as &$assignment):
-			$this->fillAssignment(&$assignment);
+			$this->fillAssignment($assignment);
 		endforeach;
 
 		// pass information to view
@@ -58,7 +58,7 @@ class AssignmentsController extends AppController {
 			throw new NotFoundException(__('Invalid assignment'));
 		}
 		$assignment = $this->Assignment->read(null, $id);
-		$this->fillAssignment(&$assignment);
+		$this->fillAssignment($assignment);
 
 		// get changes
 		$changes = $this->getChangesForAssignment($assignment);;
@@ -145,6 +145,7 @@ class AssignmentsController extends AppController {
 	/**
 	 * Returns available referee roles.
 	 *
+	 * @return array with all available referee assignment roles
 	 */
 	private function getRefereeRoles() {
 		if ($this->refereeroles == NULL) {
@@ -161,18 +162,23 @@ class AssignmentsController extends AppController {
 	/**
 	 * Fills assignment array with missing values, resp. gives readable names for easy access in views.
 	 *
+	 * @param $assignment assignment to fill (is changed within function)
 	 */
-	private function fillAssignment($assignment) {
+	private function fillAssignment(&$assignment) {
 
-		// load Person model
+		// load needed models
 		$this->loadModel('Person');
+		$this->loadModel('Team');
 
 		// home and road team
 		foreach ($assignment['Team'] as $team):
+			// hack for team name
+			$fullteam = $this->Team->findById($team['id']);
+			$fullteam['Team']['title_team'] = $fullteam['Club']['name'] . (($fullteam['Team']['number'] == 0) ? '' : ' ' . $fullteam['Team']['number']);
 			if ($team['TeamAssignment']['home']) {
-				$assignment['HomeTeam'] = $team;
+				$assignment['HomeTeam'] = $fullteam;
 			} else {
-				$assignment['RoadTeam'] = $team;
+				$assignment['RoadTeam'] = $fullteam;
 			}
 		endforeach;
 
@@ -196,6 +202,8 @@ class AssignmentsController extends AppController {
 	/**
 	 * Returns changes for the selected assignment.
 	 *
+	 * @param $assignment assignment to get changes for
+	 * @return array with changes
 	 */
 	private function getChangesForAssignment($assignment) {
 
@@ -255,13 +263,15 @@ class AssignmentsController extends AppController {
 	}
 
 	/**
-	 * Returns venue for the selected assignment.
+	 * Returns venue address for the selected assignment.
 	 *
+	 * @param $assignment assignment to get venue for
+	 * @return venue address (NULL if none found)
 	 */
 	private function getVenueForAssignment($assignment) {
 
 		if ($assignment['Assignment']['address_id'] > 0) {
-
+			return $assignment['Address'];
 		}
 
 		// load ActivityLog model

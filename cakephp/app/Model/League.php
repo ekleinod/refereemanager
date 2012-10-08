@@ -1,25 +1,34 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * League Model
  *
- * @property Team $Team
- * @property UmpireReportRecipient $UmpireReportRecipient
  */
 class League extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @var string
+	 */
+	public $name = 'League';
+
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
 	public $displayField = 'title';
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'title' => array(
 			'notempty' => array(
