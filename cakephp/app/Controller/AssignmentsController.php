@@ -115,7 +115,11 @@ class AssignmentsController extends AppController {
 			$this->request->data = $this->Assignment->read(null, $id);
 		}
 		$seasons = $this->Assignment->Season->find('list');
+		$leagues = $this->Assignment->League->find('list');
+		$addresses = $this->Assignment->Address->find('list');
 		$this->set(compact('seasons'));
+		$this->set(compact('leagues'));
+		$this->set(compact('addresses'));
 	}
 
 /**

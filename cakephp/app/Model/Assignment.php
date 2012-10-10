@@ -115,7 +115,7 @@ class Assignment extends AppModel {
 	 *
 	 * @var array
 	 */
-	public $belongsTo = array('Season', 'League', 'Address');
+	public $belongsTo = array('Address', 'League', 'Season');
 
 	/**
 	 * hasAndBelongsToMany associations
