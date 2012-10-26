@@ -1,0 +1,26 @@
+Title:							Referee Manager Configuration
+Author:							Ekkart Kleinod
+Date:								26.10.2012
+
+# Apache
+
+In standard configuration, all sites in apache2 have access restrictions.
+You have to allow access explicitely.
+
+Handle this situation with care if you are on a live system.
+In my test system that is working local in a VM, I can allow access to all sites withour having to consider security issues.
+
+Add the file `httpd.conf` to the directory `/etc/apache2`.
+Check if the file exists first, merge existing files if you have to.
+
+Content of `httpd.conf`:
+
+	<Directory />
+			Options FollowSymLinks
+			AllowOverride All
+	#    Order deny,allow
+	#    Deny from all
+	</Directory>
+
+	LoadModule rewrite_module /usr/lib/apache2/modules/mod_rewrite.so
+
