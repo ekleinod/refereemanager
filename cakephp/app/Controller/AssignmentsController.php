@@ -101,9 +101,11 @@ class AssignmentsController extends AppController {
 	 */
 	public function edit($id = null) {
 		$this->Assignment->id = $id;
+
 		if (!$this->Assignment->exists()) {
 			throw new NotFoundException(__('Invalid assignment'));
 		}
+
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Assignment->save($this->request->data)) {
 				$this->Session->setFlash(__('The assignment has been saved'));
@@ -114,12 +116,37 @@ class AssignmentsController extends AppController {
 		} else {
 			$this->request->data = $this->Assignment->read(null, $id);
 		}
+
 		$seasons = $this->Assignment->Season->find('list');
 		$leagues = $this->Assignment->League->find('list');
 		$addresses = $this->Assignment->Address->find('list');
+
+		// prepare teams
+		$teamobjects = $this->Assignment->Team->find('all');
+		$teams = array();
+		foreach ($teamobjects as $team):
+			$teams[$team['Team']['id']] = $this->Assignment->Team->getTeamTitle($team);
+		endforeach;
+		$home = -1;
+		$off = -1;
+		foreach ($this->Assignment->data['Team'] as $team):
+			if ($team['TeamAssignment']['home']) {
+				$home = $team['id'];
+			} else {
+				$off = $team['id'];
+			}
+		endforeach;
+
+		// pass information to view
 		$this->set(compact('seasons'));
 		$this->set(compact('leagues'));
 		$this->set(compact('addresses'));
+		$this->set(compact('teams'));
+		$this->set('hometeamid', $home);
+		$this->set('offteamid', $off);
+
+		// debug code
+		$this->set('assignment', $this->Assignment);
 	}
 
 /**

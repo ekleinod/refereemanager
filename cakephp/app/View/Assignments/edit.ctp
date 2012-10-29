@@ -14,10 +14,10 @@
 										'min' => '1', 'pattern' => '[1-9][0-9]*',
 										'required' => 'required')
 					);
-				echo $this->Html->tag('div',
-						$label . $input,
-						array('class' => 'input number required')
-				);
+					echo $this->Html->tag('div',
+							$label . $input,
+							array('class' => 'input number required')
+					);
 
 				// date
 					$label = $this->Form->label('Assignment.datetime.date', __('Date'));
@@ -27,10 +27,10 @@
 										'pattern' => '[0-3][0-9]\.[0-1][0-9]\.2[0-9][0-9][0-9]',
 										'required' => 'required')
 					);
-				echo $this->Html->tag('div',
-						$label . $input,
-						array('class' => 'input date required')
-				);
+					echo $this->Html->tag('div',
+							$label . $input,
+							array('class' => 'input date required')
+					);
 
 				// time
 					$label = $this->Form->label('Assignment.datetime.time', __('Time'));
@@ -40,14 +40,19 @@
 										'pattern' => '[0-2][0-9]:[0-5][0-9]',
 										'required' => 'required')
 					);
-				echo $this->Html->tag('div',
-						$label . $input,
-						array('class' => 'input date required')
-				);
+					echo $this->Html->tag('div',
+							$label . $input,
+							array('class' => 'input time required')
+					);
 
+				// league
 				echo $this->Form->input('Assignment.league_id');
-				echo $this->Form->input('TeamAssignment.team_id', array('label' => __('Home Team')));
-				echo $this->Form->input('TeamAssignment.team_id', array('label' => __('Off Team')));
+
+				// teams
+				echo $this->Form->input('TeamAssignment.home.team_id', array('label' => __('Home Team'), 'selected' => $hometeamid));
+				echo $this->Form->input('TeamAssignment.off.team_id', array('label' => __('Off Team'), 'selected' => $offteamid));
+
+
 				echo $this->Form->input('RefereeAssignment.referee_id', array('label' => __('OSR'), 'empty' => __('none')));
 				echo $this->Form->input('RefereeAssignment.referee_id', array('label' => __('SSR'), 'empty' => __('none')));
 				echo $this->Form->input('RefereeAssignment.referee_id', array('label' => __('SR'), 'empty' => __('none')));
@@ -59,6 +64,10 @@
 
 	<?php echo $this->Form->button('Reset the Form', array('type' => 'reset')); ?>
 	<?php echo $this->Form->end(__('Submit')); ?>
+
+	<?php pr($teams); ?>
+	<?php pr($leagues); ?>
+	<?php pr($assignment); ?>
 
 </div>
 
