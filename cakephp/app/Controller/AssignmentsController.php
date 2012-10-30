@@ -118,8 +118,11 @@ class AssignmentsController extends AppController {
 		}
 
 		$seasons = $this->Assignment->Season->find('list');
+		asort($seasons, SORT_LOCALE_STRING | SORT_FLAG_CASE);
 		$leagues = $this->Assignment->League->find('list');
+		asort($leagues, SORT_LOCALE_STRING | SORT_FLAG_CASE);
 		$addresses = $this->Assignment->Address->find('list');
+		asort($addresses, SORT_LOCALE_STRING | SORT_FLAG_CASE);
 
 		// prepare teams
 		$teamobjects = $this->Assignment->Team->find('all');
