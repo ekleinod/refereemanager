@@ -127,6 +127,7 @@ class AssignmentsController extends AppController {
 		foreach ($teamobjects as $team):
 			$teams[$team['Team']['id']] = $this->Assignment->Team->getTeamTitle($team);
 		endforeach;
+		asort($teams, SORT_LOCALE_STRING | SORT_FLAG_CASE);
 		$hometeamid = -1;
 		$offteamid = -1;
 		foreach ($this->Assignment->data['Team'] as $team):
