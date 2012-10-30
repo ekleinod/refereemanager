@@ -127,13 +127,13 @@ class AssignmentsController extends AppController {
 		foreach ($teamobjects as $team):
 			$teams[$team['Team']['id']] = $this->Assignment->Team->getTeamTitle($team);
 		endforeach;
-		$home = -1;
-		$off = -1;
+		$hometeamid = -1;
+		$offteamid = -1;
 		foreach ($this->Assignment->data['Team'] as $team):
 			if ($team['TeamAssignment']['home']) {
-				$home = $team['id'];
+				$hometeamid = $team['id'];
 			} else {
-				$off = $team['id'];
+				$offteamid = $team['id'];
 			}
 		endforeach;
 
@@ -142,8 +142,9 @@ class AssignmentsController extends AppController {
 		$this->set(compact('leagues'));
 		$this->set(compact('addresses'));
 		$this->set(compact('teams'));
-		$this->set('hometeamid', $home);
-		$this->set('offteamid', $off);
+		$this->set('hometeamid', $hometeamid);
+		$this->set('offteamid', $offteamid);
+		$this->set('datetime', $this->Assignment->data['Assignment']['datetime']);
 
 		// debug code
 		$this->set('assignment', $this->Assignment);

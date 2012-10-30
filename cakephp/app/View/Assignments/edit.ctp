@@ -25,7 +25,8 @@
 							array('type' => 'date',
 										'placeholder' => __('tt.mm.jjjj'), 'title' => __('tt.mm.jjjj'),
 										'pattern' => '[0-3][0-9]\.[0-1][0-9]\.2[0-9][0-9][0-9]',
-										'required' => 'required')
+										'required' => 'required',
+										'value' => (($datetime == null) ? '' : $this->RefereeFormat->format($datetime, 'date')))
 					);
 					echo $this->Html->tag('div',
 							$label . $input,
@@ -38,7 +39,8 @@
 							array('type' => 'time',
 										'placeholder' => __('hh:mm'), 'title' => __('hh:mm'),
 										'pattern' => '[0-2][0-9]:[0-5][0-9]',
-										'required' => 'required')
+										'required' => 'required',
+										'value' => (($datetime == null) ? '' : $this->RefereeFormat->format($datetime, 'time')))
 					);
 					echo $this->Html->tag('div',
 							$label . $input,
