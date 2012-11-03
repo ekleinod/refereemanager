@@ -20,8 +20,8 @@
 					);
 
 				// date
-					$label = $this->Form->label('Assignment.datetime.date', __('Date'));
-					$input = $this->Form->text('Assignment.datetime.date',
+					$label = $this->Form->label('Assignment.date.datetime', __('Date'));
+					$input = $this->Form->text('Assignment.date.datetime',
 							array('type' => 'date',
 										'placeholder' => __('tt.mm.jjjj'), 'title' => __('tt.mm.jjjj'),
 										'pattern' => '[0-3][0-9]\.[0-1][0-9]\.2[0-9][0-9][0-9]',
@@ -34,8 +34,8 @@
 					);
 
 				// time
-					$label = $this->Form->label('Assignment.datetime.time', __('Time'));
-					$input = $this->Form->text('Assignment.datetime.time',
+					$label = $this->Form->label('Assignment.time.datetime', __('Time'));
+					$input = $this->Form->text('Assignment.time.datetime',
 							array('type' => 'time',
 										'placeholder' => __('hh:mm'), 'title' => __('hh:mm'),
 										'pattern' => '[0-2][0-9]:[0-5][0-9]',
@@ -52,9 +52,9 @@
 
 				// teams
 				echo $this->Form->input('TeamAssignment.home.team_id',
-								array('label' => __('Home Team'), 'selected' => $hometeamid, 'required' => 'required'));
+								array('label' => __('Home Team'), 'selected' => $hometeamid, 'div' => 'input select required'));
 				echo $this->Form->input('TeamAssignment.off.team_id',
-								array('label' => __('Off Team'), 'selected' => $offteamid, 'required' => 'required'));
+								array('label' => __('Off Team'), 'selected' => $offteamid, 'div' => 'input select required'));
 
 				// referees
 				foreach ($refereeroles as $refereerole):
