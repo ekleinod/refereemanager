@@ -150,12 +150,12 @@ class Team extends AppModel {
 	);
 
 	/**
-	 * Returns team title for given team.
+	 * Returns title for given team.
 	 *
 	 * @param $theTeam team
-	 * @return team title
+	 * @return title
 	 */
-	public static function getTeamTitle($theTeam) {
+	public static function getTitle($theTeam) {
 
 		if (is_null($theTeam['Team']['name'])) {
 			if (array_key_exists('Club', $theTeam)) {

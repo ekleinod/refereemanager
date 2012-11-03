@@ -118,19 +118,19 @@ class AssignmentsController extends AppController {
 		}
 
 		$seasons = $this->Assignment->Season->find('list');
-		asort($seasons, SORT_LOCALE_STRING | SORT_FLAG_CASE);
+		asort($seasons, SORT_LOCALE_STRING);
 		$leagues = $this->Assignment->League->find('list');
-		asort($leagues, SORT_LOCALE_STRING | SORT_FLAG_CASE);
+		asort($leagues, SORT_LOCALE_STRING);
 		$addresses = $this->Assignment->Address->find('list');
-		asort($addresses, SORT_LOCALE_STRING | SORT_FLAG_CASE);
+		asort($addresses, SORT_LOCALE_STRING);
 
 		// prepare teams
 		$teamobjects = $this->Assignment->Team->find('all');
 		$teams = array();
 		foreach ($teamobjects as $team):
-			$teams[$team['Team']['id']] = $this->Assignment->Team->getTeamTitle($team);
+			$teams[$team['Team']['id']] = $this->Assignment->Team->getTitle($team);
 		endforeach;
-		asort($teams, SORT_LOCALE_STRING | SORT_FLAG_CASE);
+		asort($teams, SORT_LOCALE_STRING);
 		$hometeamid = -1;
 		$offteamid = -1;
 		foreach ($this->Assignment->data['Team'] as $team):
@@ -141,17 +141,25 @@ class AssignmentsController extends AppController {
 			}
 		endforeach;
 
+		// prepare referees
+		$refereeobjects = $this->Assignment->Referee->find('all');
+		$referees = array();
+		foreach ($refereeobjects as $referee):
+			$referees[$referee['Referee']['id']] = $this->Assignment->Referee->getTitle($referee);
+		endforeach;
+		asort($referees, SORT_LOCALE_STRING);
+
 		// pass information to view
 		$this->set(compact('seasons'));
 		$this->set(compact('leagues'));
 		$this->set(compact('addresses'));
 		$this->set(compact('teams'));
+		$this->set(compact('referees'));
 		$this->set('hometeamid', $hometeamid);
 		$this->set('offteamid', $offteamid);
 		$this->set('datetime', $this->Assignment->data['Assignment']['datetime']);
+		$this->set('refereeroles', $this->getRefereeRoles());
 
-		// debug code
-		$this->set('assignment', $this->Assignment);
 	}
 
 /**
@@ -210,7 +218,7 @@ class AssignmentsController extends AppController {
 		foreach ($assignment['Team'] as $team):
 			// hack for team name
 			$fullteam = $this->Team->findById($team['id']);
-			$fullteam['Team']['title_team'] = $this->Team->getTeamTitle($fullteam);
+			$fullteam['Team']['title_team'] = $this->Team->getTitle($fullteam);
 			if ($team['TeamAssignment']['home']) {
 				$assignment['HomeTeam'] = $fullteam;
 			} else {

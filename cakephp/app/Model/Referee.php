@@ -3,14 +3,37 @@ App::uses('AppModel', 'Model');
 /**
  * Referee Model
  *
- * @property AssignmentQuantity $AssignmentQuantity
- * @property Status $Status
- * @property RefereeKind $RefereeKind
- * @property Club $Club
- * @property Person $Person
- * @property RefereeAssignment $RefereeAssignment
  */
 class Referee extends AppModel {
+
+	/**
+	 * Declare virtual field in constructor to be alias-safe.
+	 *
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		// I can't get this one working with persons name, so I program a simple (but possibly bad) workaround
+		$this->virtualFields['title_referee'] = sprintf(
+			'CONCAT(%1$s.id, "-", %1$s.person_id, "-", %1$s.referee_kind_id)',
+			$this->alias
+		);
+	}
+
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @var string
+	 */
+	public $name = 'Referee';
+
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
+	public $displayField = 'title_referee';
 
 /**
  * Validation rules
@@ -120,4 +143,23 @@ class Referee extends AppModel {
 	 */
 	public $hasMany = array('RefereeAssignment');
 
+	/**
+	 * Returns title for given referee.
+	 *
+	 * @param $theReferee referee
+	 * @return title
+	 */
+	public static function getTitle($theReferee) {
+
+		if (array_key_exists('Person', $theReferee)) {
+			return sprintf("%s, %s", $theReferee['Person']['name'], $theReferee['Person']['first_name']);
+		}
+
+		return $theReferee['Referee']['id'];
+
+	}
+
 }
+
+/* EOF */
+

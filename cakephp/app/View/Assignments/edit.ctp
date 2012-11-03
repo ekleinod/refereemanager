@@ -51,25 +51,27 @@
 				echo $this->Form->input('Assignment.league_id');
 
 				// teams
-				echo $this->Form->input('TeamAssignment.home.team_id', array('label' => __('Home Team'), 'selected' => $hometeamid));
-				echo $this->Form->input('TeamAssignment.off.team_id', array('label' => __('Off Team'), 'selected' => $offteamid));
+				echo $this->Form->input('TeamAssignment.home.team_id',
+								array('label' => __('Home Team'), 'selected' => $hometeamid, 'required' => 'required'));
+				echo $this->Form->input('TeamAssignment.off.team_id',
+								array('label' => __('Off Team'), 'selected' => $offteamid, 'required' => 'required'));
 
+				// referees
+				foreach ($refereeroles as $refereerole):
+					$maxcount = ($refereerole['code'] == 'SR') ? 3 : 1;
+					for ($i = 1; $i <= $maxcount; $i++) {
+						echo $this->Form->input('RefereeAssignment.' . $refereerole['code'] . $i . '.referee_id',
+										array('label' => __($refereerole['title']), 'empty' => __('none')));
+					}
+				endforeach;
 
-				echo $this->Form->input('RefereeAssignment.referee_id', array('label' => __('OSR'), 'empty' => __('none')));
-				echo $this->Form->input('RefereeAssignment.referee_id', array('label' => __('SSR'), 'empty' => __('none')));
-				echo $this->Form->input('RefereeAssignment.referee_id', array('label' => __('SR'), 'empty' => __('none')));
-				echo $this->Form->input('RefereeAssignment.referee_id', array('label' => __('SR'), 'empty' => __('none')));
-				echo $this->Form->input('RefereeAssignment.referee_id', array('label' => __('SR'), 'empty' => __('none')));
+				// venue
 				echo $this->Form->input('Assignment.address_id', array('label' => __('Venue'), 'empty' => __('none')));
 			?>
 		</fieldset>
 
 	<?php echo $this->Form->button('Reset the Form', array('type' => 'reset')); ?>
 	<?php echo $this->Form->end(__('Submit')); ?>
-
-	<?php pr($teams); ?>
-	<?php pr($leagues); ?>
-	<?php pr($assignment); ?>
 
 </div>
 
