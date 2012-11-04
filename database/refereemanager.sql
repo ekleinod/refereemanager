@@ -322,7 +322,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_teams` (
   `description` TEXT NULL ,
   `club_id` INT UNSIGNED NOT NULL ,
   `address_id` INT UNSIGNED NULL COMMENT 'standard address of the club. To be used if no address for a team is given.' ,
-  `league_id` INT UNSIGNED NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
@@ -331,26 +330,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'All teams.';
-
-
--- -----------------------------------------------------
--- Table `rfrmgr_team_spokespeople`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_team_spokespeople` ;
-
-CREATE  TABLE IF NOT EXISTS `rfrmgr_team_spokespeople` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `team_id` INT NOT NULL ,
-  `person_id` INT NOT NULL ,
-  `season_id` INT NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'Spokepersons for the teams.';
 
 
 -- -----------------------------------------------------
@@ -459,15 +438,16 @@ COMMENT = 'Team\'s assignments: home or road team.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_team_seasons`
+-- Table `rfrmgr_team_seasons_leagues_spokespersons`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_team_seasons` ;
+DROP TABLE IF EXISTS `rfrmgr_team_seasons_leagues_spokespersons` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_team_seasons` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_team_seasons_leagues_spokespersons` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `home` TINYINT(1) NOT NULL ,
-  `season_id` INT NOT NULL ,
   `team_id` INT NOT NULL ,
+  `season_id` INT NOT NULL ,
+  `league_id` INT NOT NULL ,
+  `person_id` INT NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
@@ -475,7 +455,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_team_seasons` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Teams are valid for a season only.';
+COMMENT = 'Teams are assigned a league, in a season. They have a spokes' /* comment truncated */;
 
 
 
