@@ -458,6 +458,26 @@ COLLATE = utf8_general_ci
 COMMENT = 'Team\'s assignments: home or road team.';
 
 
+-- -----------------------------------------------------
+-- Table `rfrmgr_team_seasons`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_team_seasons` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_team_seasons` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `home` TINYINT(1) NOT NULL ,
+  `season_id` INT NOT NULL ,
+  `team_id` INT NOT NULL ,
+  `created` DATETIME NOT NULL ,
+  `modified` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Teams are valid for a season only.';
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
