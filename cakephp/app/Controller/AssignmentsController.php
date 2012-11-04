@@ -188,30 +188,6 @@ class AssignmentsController extends AppController {
 		$this->set('assignment', $this->Assignment->data);
 	}
 
-/**
- * delete method
- *
- * @throws MethodNotAllowedException
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
-		if (!$this->request->is('post')) {
-			throw new MethodNotAllowedException();
-		}
-		$this->Assignment->id = $id;
-		if (!$this->Assignment->exists()) {
-			throw new NotFoundException(__('Invalid assignment'));
-		}
-		if ($this->Assignment->delete()) {
-			$this->Session->setFlash(__('Assignment deleted'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('Assignment was not deleted'));
-		$this->redirect(array('action' => 'index'));
-	}
-
 	/**
 	 * Returns available referee roles.
 	 *
