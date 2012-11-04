@@ -88,8 +88,8 @@ class AssignmentsController extends AppController {
 				$this->Session->setFlash(__('The assignment could not be saved. Please, try again.'));
 			}
 		}
-		$seasons = $this->Assignment->Season->find('list');
-		$this->set(compact('seasons'));
+
+		$this->prepareAndSetAddEdit();
 	}
 
 	/**
@@ -117,6 +117,14 @@ class AssignmentsController extends AppController {
 			$this->request->data = $this->Assignment->read(null, $id);
 		}
 
+		$this->prepareAndSetAddEdit();
+	}
+
+	/**
+	 * Prepares data for add/edit view and sets it.
+	 *
+	 */
+	private function prepareAndSetAddEdit() {
 		$seasons = $this->Assignment->Season->find('list');
 		asort($seasons, SORT_LOCALE_STRING);
 		$leagues = $this->Assignment->League->find('list');
@@ -133,13 +141,15 @@ class AssignmentsController extends AppController {
 		asort($teams, SORT_LOCALE_STRING);
 		$hometeamid = -1;
 		$offteamid = -1;
-		foreach ($this->Assignment->data['Team'] as $team):
-			if ($team['TeamAssignment']['home']) {
-				$hometeamid = $team['id'];
-			} else {
-				$offteamid = $team['id'];
-			}
-		endforeach;
+		if ($this->Assignment->data) {
+			foreach ($this->Assignment->data['Team'] as $team):
+				if ($team['TeamAssignment']['home']) {
+					$hometeamid = $team['id'];
+				} else {
+					$offteamid = $team['id'];
+				}
+			endforeach;
+		}
 
 		// prepare referees
 		$refereeobjects = $this->Assignment->Referee->find('all');
@@ -149,6 +159,20 @@ class AssignmentsController extends AppController {
 		endforeach;
 		asort($referees, SORT_LOCALE_STRING);
 
+		// get selected referees
+		$selectedreferees = array();
+		if ($this->Assignment->data) {
+			foreach ($this->Assignment->data['Referee'] as $referee):
+				if (!array_key_exists($referee['RefereeAssignment']['referee_assignment_role_id'], $selectedreferees)) {
+					$selectedreferees[$referee['RefereeAssignment']['referee_assignment_role_id']] = array();
+				}
+				$selectedreferees[$referee['RefereeAssignment']['referee_assignment_role_id']][] = $referee['id'];
+			endforeach;
+		}
+
+		// data and time
+		$datetime = ($this->Assignment->data) ? $this->Assignment->data['Assignment']['datetime'] : null;
+
 		// pass information to view
 		$this->set(compact('seasons'));
 		$this->set(compact('leagues'));
@@ -157,9 +181,11 @@ class AssignmentsController extends AppController {
 		$this->set(compact('referees'));
 		$this->set('hometeamid', $hometeamid);
 		$this->set('offteamid', $offteamid);
-		$this->set('datetime', $this->Assignment->data['Assignment']['datetime']);
+		$this->set('datetime', $datetime);
 		$this->set('refereeroles', $this->getRefereeRoles());
+		$this->set('selectedreferees', $selectedreferees);
 
+		$this->set('assignment', $this->Assignment->data);
 	}
 
 /**

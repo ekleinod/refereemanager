@@ -1,7 +1,7 @@
 <div class="assignments form">
 	<?php echo $this->Form->create('Assignment'); ?>
 		<fieldset>
-			<legend><?php echo __('Edit Referee Assignment'); ?></legend>
+			<legend><?php echo __('Add Referee Assignment'); ?></legend>
 			<?php
 				echo $this->Form->input('Assignment.id');
 				echo $this->Form->input('Assignment.season_id');
@@ -60,15 +60,8 @@
 				foreach ($refereeroles as $refereerole):
 					$maxcount = ($refereerole['code'] == 'SR') ? 3 : 1;
 					for ($i = 1; $i <= $maxcount; $i++) {
-						$refereeid = '';
-						if (array_key_exists($refereerole['id'], $selectedreferees) &&
-								array_key_exists($i - 1, $selectedreferees[$refereerole['id']])) {
-							$refereeid = $selectedreferees[$refereerole['id']][$i - 1];
-						}
 						echo $this->Form->input('RefereeAssignment.' . $refereerole['code'] . $i . '.referee_id',
-										array('label' => __($refereerole['title']),
-													'empty' => __('none'),
-													'selected' => $refereeid));
+										array('label' => __($refereerole['title']), 'empty' => __('none')));
 					}
 				endforeach;
 
@@ -76,11 +69,6 @@
 				echo $this->Form->input('Assignment.address_id', array('label' => __('Venue'), 'empty' => __('none')));
 			?>
 		</fieldset>
-
-	<?php echo $this->Form->button('Reset the Form', array('type' => 'reset')); ?>
 	<?php echo $this->Form->end(__('Submit')); ?>
-
-	<?php pr($assignment); ?>
-
 </div>
 

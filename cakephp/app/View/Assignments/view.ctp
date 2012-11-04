@@ -35,13 +35,9 @@
 		<dt><?php echo __('Venue'); ?></dt>
 			<dd><?php echo is_null($venue) ? __('Unknown') : $this->Html->link($venue['title_address'], array('controller' => 'addresses', 'action' => 'view', $venue['id'])); ?></dd>
 	</dl>
-	<p>
-		<!--?php pr($venue); ?-->
-		<!--?php pr($assignment); ?-->
-	</p>
 
 	<h3><?php  echo __('Actions for this Referee Assignment'); ?></h3>
-	<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $assignment['Assignment']['id'])); ?>
+	<p class="actions"><?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $assignment['Assignment']['id'])); ?></p>
 
 	<h3><?php  echo __('Changes of this Referee Assignment'); ?></h3>
 	<?php if (count($changes) < 1) { ?>

@@ -1,5 +1,6 @@
 <div class="assignments index">
 	<h2><?php echo __('Referee Assignments'); ?></h2>
+	<p class="actions"><?php echo $this->Html->link(__('Add new Referee Assignment'), array('action' => 'add')); ?></p>
 	<p>Season: <?php echo $season . "/" . ($season + 1); ?></p>
 	<?php
 		if (count($assignments) < 1) {
