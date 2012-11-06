@@ -438,11 +438,11 @@ COMMENT = 'Team\'s assignments: home or road team.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_team_seasons_leagues_spokespersons`
+-- Table `rfrmgr_team_seasons_leagues_spokespeople`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_team_seasons_leagues_spokespersons` ;
+DROP TABLE IF EXISTS `rfrmgr_team_seasons_leagues_spokespeople` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_team_seasons_leagues_spokespersons` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_team_seasons_leagues_spokespeople` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `team_id` INT NOT NULL ,
   `season_id` INT NOT NULL ,
