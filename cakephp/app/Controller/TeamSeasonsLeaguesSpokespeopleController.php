@@ -1,10 +1,10 @@
 <?php
 App::uses('AppController', 'Controller');
 /**
- * Teams Controller
+ * TeamSeasonsLeaguesSpokespeople Controller
  *
  */
-class TeamsController extends AppController {
+class TeamSeasonsLeaguesSpokespeopleController extends AppController {
 
 /**
  * Scaffold
