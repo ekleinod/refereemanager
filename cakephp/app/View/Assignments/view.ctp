@@ -9,7 +9,7 @@
 			<dd><?php echo h($this->RefereeFormat->format($assignment['Assignment']['datetime'], 'time')); ?></dd>
 		<dt><?php echo __('Game-No.'); ?></dt>
 			<dd><?php echo h($assignment['Assignment']['game_number']); ?></dd>
-		<dt><?php echo __('Ligue'); ?></dt>
+		<dt><?php echo __('League'); ?></dt>
 			<dd><?php echo $this->Html->link($assignment['League']['title'], array('controller' => 'leagues', 'action' => 'view', $assignment['League']['id'])); ?></dd>
 		<dt><?php echo __('Home Team'); ?></dt>
 			<dd><?php echo (array_key_exists('HomeTeam', $assignment)) ? $this->Html->link($assignment['HomeTeam']['Team']['title_team'], array('controller' => 'teams', 'action' => 'view', $assignment['HomeTeam']['Team']['id'])) : h('??'); ?></dd>

@@ -105,13 +105,6 @@ class Team extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		),
-		'League' => array(
-			'className' => 'League',
-			'foreignKey' => 'league_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
 		)
 	);
 
@@ -123,19 +116,6 @@ class Team extends AppModel {
 	public $hasMany = array(
 		'TeamAssignment' => array(
 			'className' => 'TeamAssignment',
-			'foreignKey' => 'team_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'TeamSpokesperson' => array(
-			'className' => 'TeamSpokesperson',
 			'foreignKey' => 'team_id',
 			'dependent' => false,
 			'conditions' => '',
