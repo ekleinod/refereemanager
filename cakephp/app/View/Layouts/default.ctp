@@ -13,7 +13,7 @@
 
 		<?php echo $this->fetch('meta'); ?>
 		<?php
-			$this->Html->css('refereemanager', null, array('inline' => false, 'media' => 'print'));
+			$this->Html->css('refereemanager', null, array('inline' => false));
 			echo $this->fetch('css');
 		?>
 		<?php echo $this->fetch('script'); ?>
