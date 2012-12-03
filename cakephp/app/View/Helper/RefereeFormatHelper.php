@@ -34,6 +34,9 @@ class RefereeFormatHelper extends AppHelper {
 			case 'date':
 				$formatted = $this->Time->format('d.m.Y', $data);
 				break;
+			case 'datereverse':
+				$formatted = $this->Time->format('Y-m-d', $data);
+				break;
 			case 'datetime':
 				$formatted = $this->Time->format('d.m.Y, H:i', $data);
 				break;

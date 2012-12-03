@@ -29,7 +29,7 @@
 
 		<nav>
 			<ul class="actions">
-				<li><?php echo $this->Html->link(__('Referee Assignments'), array('action' => 'index', 'controller' => 'assignments'), array('class' => 'active')); ?></li>
+				<li><?php echo $this->Html->link(__('Schiedsrichtereinsätze'), array('action' => 'index', 'controller' => 'assignments'), array('class' => 'active')); ?></li>
 				<li><?php echo $this->Html->link(__('Teams'), array('action' => 'index', 'controller' => 'teams'), array('class' => '')); ?></li>
 			</ul>
 		</nav>
@@ -42,7 +42,7 @@
 		</article>
 
 		<footer>
-			<?php echo $this->Html->link(__('Referee Homepage'), 'http://schiri.bettv.de/'); ?>
+			<?php echo $this->Html->link(__('Schiedsrichter-Homepage'), 'http://schiri.bettv.de/'); ?>
 			<?php echo $this->element('sql_dump'); ?>
 		</footer>
 	</body>
