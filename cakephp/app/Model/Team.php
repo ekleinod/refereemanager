@@ -40,11 +40,11 @@ class Team extends AppModel {
 	 */
 	public $displayField = 'title_team';
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'number' => array(
 			'numeric' => array(
@@ -74,58 +74,36 @@ class Team extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'league_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 	);
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Address' => array(
-			'className' => 'Address',
-			'foreignKey' => 'address_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Club' => array(
-			'className' => 'Club',
-			'foreignKey' => 'club_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
+	public $belongsTo = array('Address', 'Club');
 
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'TeamAssignment' => array(
-			'className' => 'TeamAssignment',
-			'foreignKey' => 'team_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
+	/**
+	 * hasAndBelongsToMany associations
+	 *
+	 * @var array
+	 */
+	public $hasAndBelongsToMany = array(
+		'Assignment' => array(
+			'joinTable' => 'team_assignments',
+			'unique' => 'keepExisting'
+		),
+		'Season' => array(
+			'joinTable' => 'team_seasons_leagues_spokespeople',
+			'unique' => 'keepExisting'
+		),
+		'League' => array(
+			'joinTable' => 'team_seasons_leagues_spokespeople',
+			'unique' => 'keepExisting'
+		),
+		'Person' => array(
+			'joinTable' => 'team_seasons_leagues_spokespeople',
+			'unique' => 'keepExisting'
 		)
 	);
 

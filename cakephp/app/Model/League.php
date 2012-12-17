@@ -96,19 +96,6 @@ class League extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'Team' => array(
-			'className' => 'Team',
-			'foreignKey' => 'league_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
 		'UmpireReportRecipient' => array(
 			'className' => 'UmpireReportRecipient',
 			'foreignKey' => 'league_id',
