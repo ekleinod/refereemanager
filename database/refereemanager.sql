@@ -52,13 +52,15 @@ DROP TABLE IF EXISTS `rfrmgr_users` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `username` VARCHAR(100) NOT NULL ,
-  `password` VARCHAR(100) NOT NULL ,
+  `password` VARCHAR(128) NOT NULL ,
+  `salt` VARCHAR(128) NOT NULL ,
   `user_role_id` INT NOT NULL ,
   `person_id` INT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
