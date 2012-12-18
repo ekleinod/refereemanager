@@ -1,58 +1,24 @@
 <?php
-
 App::uses('AppModel', 'Model');
+/**
+ * TeamSeasonsLeaguesSpokesperson Model
+ *
+ * @property Team $Team
+ * @property Season $Season
+ * @property League $League
+ * @property Person $Person
+ */
+class TeamSeasonsLeaguesSpokesperson extends AppModel {
 
 /**
- * League Model
+ * Validation rules
  *
+ * @var array
  */
-class League extends AppModel {
-
-	/**
-	 * Model name.
-	 *
-	 * Good practice to include the model name.
-	 *
-	 * @var string
-	 */
-	public $name = 'League';
-
-	/**
-	 * Display field
-	 *
-	 * @var string
-	 */
-	public $displayField = 'title';
-
-	/**
-	 * Validation rules
-	 *
-	 * @var array
-	 */
 	public $validate = array(
-		'title' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'code' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'women' => array(
-			'boolean' => array(
-				'rule' => array('boolean'),
+		'team_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -68,7 +34,15 @@ class League extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'umpire_report_link' => array(
+		'season_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
 			'notempty' => array(
 				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
@@ -77,8 +51,48 @@ class League extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-			'url' => array(
-				'rule' => array('url'),
+		),
+		'league_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+			'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'person_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'created' => array(
+			'datetime' => array(
+				'rule' => array('datetime'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'modified' => array(
+			'datetime' => array(
+				'rule' => array('datetime'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -91,37 +105,38 @@ class League extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
- * hasMany associations
+ * belongsTo associations
  *
  * @var array
  */
-	public $hasMany = array(
-		'UmpireReportRecipient' => array(
-			'className' => 'UmpireReportRecipient',
-			'foreignKey' => 'league_id',
-			'dependent' => false,
+	public $belongsTo = array(
+		'Team' => array(
+			'className' => 'Team',
+			'foreignKey' => 'team_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
+			'order' => ''
 		),
-		'Assignment' => array(
-			'className' => 'Assignment',
-			'foreignKey' => 'league_id',
-			'dependent' => false,
+		'Season' => array(
+			'className' => 'Season',
+			'foreignKey' => 'season_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
+			'order' => ''
+		),
+		'League' => array(
+			'className' => 'League',
+			'foreignKey' => 'league_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Person' => array(
+			'className' => 'Person',
+			'foreignKey' => 'person_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
-
 }

@@ -1,0 +1,134 @@
+@charset "utf-8";
+
+/*
+	Overall definitions
+*/
+body {
+	font-family: sans-serif;
+	font-size: normal;
+	margin: 1% 5% 1% 2%;
+	padding: 0;
+	color: black;
+}
+
+header, footer, nav, article {
+	display: block;
+}
+
+header, footer {
+	background-color: #CCFFCC;
+}
+
+nav {
+	background-color: #006633;
+}
+
+/* links */
+a, a:visited {
+	color: #006633;
+}
+
+a.nounder {
+	text-decoration: none;
+}
+
+/* header */
+header h1 {
+	font-size: 200%;
+}
+
+/* headings */
+h1, h2, h3, h4, h5, h6, table caption {
+	font-variant: small-caps;
+}
+
+section h1 {
+	font-size: 150%;
+	font-weight: bolder;
+}
+
+section h2 {
+	font-size: 130%;
+	font-weight: bolder;
+}
+
+/* navigation bar */
+nav ul {
+	list-style-type: none;
+	margin: 0 0 0 0;
+	padding: 0;
+}
+
+nav li, article div.intro ul li {
+	margin: 0 1ex 0 0;
+}
+
+nav a, nav a:visited, article div.intro nav a {
+	text-decoration: none;
+	display: block;
+	padding: 0 1em;
+	color: white;
+/*	border-bottom: 1px dotted white;*/ /* invisible border to avoid jumping text while hovering */
+}
+
+nav a:hover, nav a.active, article div.intro ul a:hover {
+	background: white;
+	color: #006633;
+}
+
+nav a.active {
+	/*border-bottom: 1px dotted gainsboro;*/
+}
+
+/* footer */
+footer {
+	font-size: smaller;
+}
+
+footer .right {
+	margin: 0;
+}
+
+/* text */
+.mono {
+	font-family: monospace;
+}
+
+/* lists */
+dt {
+	padding-top: 2ex;
+	padding-bottom: 1ex;
+}
+
+/* tables */
+table caption, th.caption {
+	text-align: left;
+	padding-top: 2ex;
+	padding-bottom: 1ex;
+	font-size: 120%;
+	font-weight: bolder;
+	background: white;
+}
+
+th {
+	border-collapse: collapse;
+	font-weight: normal;
+	text-align: left;
+	vertical-align: top;
+	background-color: whitesmoke;
+	padding: .2ex 1em .5ex .2em;
+}
+
+td {
+	padding: .2ex 1em .5ex 1em;
+	vertical-align: top;
+}
+
+/* other */
+.right {
+	float: right;
+	margin: 0 2em 1em 1em;
+}
+
+/* EOF */
+

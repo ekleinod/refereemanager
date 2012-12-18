@@ -83,19 +83,6 @@ class Season extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'TeamSpokesperson' => array(
-			'className' => 'TeamSpokesperson',
-			'foreignKey' => 'season_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
 		'UmpireReportRecipient' => array(
 			'className' => 'UmpireReportRecipient',
 			'foreignKey' => 'season_id',
