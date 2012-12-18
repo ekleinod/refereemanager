@@ -34,6 +34,27 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 
 	/**
+	 * Extend components array by Auth component for simple authentication.
+	 *
+	 * @var array
+	 */
+	public $components = array(
+		'Session',
+		'Auth' => array(
+			'loginRedirect' => array('controller' => 'posts', 'action' => 'index'),
+			'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home')
+		)
+	);
+
+	/**
+	 * Defines actions to perform before the action method is executed.
+	 *
+	 */
+	public function beforeFilter() {
+		$this->Auth->allow('index', 'view');
+	}
+
+	/**
 	 * Returns if the user is authorized.
 	 *
 	 * Prepared this function for later use.

@@ -3,116 +3,107 @@ App::uses('AppModel', 'Model');
 /**
  * User Model
  *
- * @property UserRole $UserRole
- * @property ActivityLog $ActivityLog
- * @property Person $Person
  */
 class User extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @var string
+	 */
+	public $name = 'User';
+
+	/**
+	 * Display field.
+	 *
+	 * @var string
+	 */
 	public $displayField = 'username';
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Hash the password before saving.
+	 *
+	 * @param options
+	 */
+	public function beforeSave($options = array()) {
+		if (isset($this->data[$this->alias]['password'])) {
+			$this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
+		}
+		return true;
+	}
+
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'username' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'allowEmpty' => false,
+				'required' => true,
+				'message' => 'Der Nutzername (login) muss angegeben werden.',
+			),
+			'unique' => array(
+				'rule' => array('isUnique'),
+				'message' => 'Der Nutzername (login) existiert bereits. Bitte anderen Nutzernamen wählen.',
+				'on' => 'create',
+			),
+			'alphaNumeric' => array(
+				'rule' => array('alphaNumeric'),
+				'required' => true,
+				'message' => 'Der Nutzername (login) darf nur aus Buchstaben und Zahlen bestehen.',
+			),
+			'between' => array(
+				'rule' => array('between', 3, 20),
+				'message' => 'Der Nutzername (login) darf zwischen 3 und 20 Zeichen lang sein.',
 			),
 		),
 		'password' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'allowEmpty' => false,
+				'required' => true,
+				'message' => 'Das Passwort muss angegeben werden.',
 			),
-			'minlength' => array(
-				'rule' => array('minlength', 8),
-				'message' => 'Das Passwort muss mindestens 8 Zeichen lang sein.',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			'between' => array(
+				'rule' => array('between', 8, 20),
+				'message' => 'Das Passwort darf zwischen 8 und 20 Zeichen lang sein.',
 			),
 		),
 		'user_role_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'allowEmpty' => false,
+				'required' => true,
+				'message' => 'Eine Rolle muss selektiert sein.',
 			),
 		),
 		'person_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 	);
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'UserRole' => array(
-			'className' => 'UserRole',
-			'foreignKey' => 'user_role_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'person_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
+	public $belongsTo = array('UserRole', 'Person');
 
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'ActivityLog' => array(
-			'className' => 'ActivityLog',
-			'foreignKey' => 'user_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
+	public $hasMany = array('ActivityLog');
 
 }
+
+/* EOF */
+
