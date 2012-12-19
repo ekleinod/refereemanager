@@ -1,8 +1,19 @@
 Title:							Referee Manager Configuration
 Author:							Ekkart Kleinod
-Date:								26.10.2012
+Date:								19.12.2012
 
 # Apache
+
+## Include referee manager code and phpmyadmin
+
+Create a symbolic link to the two needed directories.
+The links have to be created in
+	/var/www/
+
+	/var/www/$ ln -s .../refereemanager-code/
+	/var/www/$ ln -s .../phpmyadmin
+
+## Access restrictions
 
 In standard configuration, all sites in apache2 have access restrictions.
 You have to allow access explicitely.
