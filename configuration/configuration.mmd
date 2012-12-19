@@ -4,6 +4,9 @@ Date:								19.12.2012
 
 # Apache
 
+After each change restart apache
+	$ sudo apachectl -k restart
+
 ## Include referee manager code and phpmyadmin
 
 Create a symbolic link to the two needed directories.
@@ -34,4 +37,20 @@ Content of `httpd.conf`:
 	</Directory>
 
 	LoadModule rewrite_module /usr/lib/apache2/modules/mod_rewrite.so
+
+Maybe change `default`in `/etc/apache2/sites-available/`
+
+	DocumentRoot /var/www
+	<Directory />
+		Options FollowSymLinks
+	#	AllowOverride None
+		AllowOverride All
+	</Directory>
+	<Directory /var/www/>
+		Options Indexes FollowSymLinks MultiViews
+	#	AllowOverride None
+		AllowOverride All
+		Order allow,deny
+		allow from all
+	</Directory>
 
