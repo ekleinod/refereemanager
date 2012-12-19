@@ -21,6 +21,7 @@
  */
 
 App::uses('Controller', 'Controller');
+App::uses('Security', 'Utility'); // use more secure salt hash
 
 /**
  * Application Controller
@@ -42,7 +43,8 @@ class AppController extends Controller {
 		'Session',
 		'Auth' => array(
 			'loginRedirect' => array('controller' => 'posts', 'action' => 'index'),
-			'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home')
+			'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home'),
+			'authenticate' => array('SaltForm') // use own authentication class
 		)
 	);
 
@@ -51,6 +53,8 @@ class AppController extends Controller {
 	 *
 	 */
 	public function beforeFilter() {
+		parent::beforeFilter();
+		Security::setHash('sha512');
 		$this->Auth->allow('index', 'view');
 	}
 

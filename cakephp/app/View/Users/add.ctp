@@ -1,26 +1,14 @@
 <div class="users form">
 <?php echo $this->Form->create('User'); ?>
 	<fieldset>
-		<legend><?php echo __('Add User'); ?></legend>
-	<?php
-		echo $this->Form->input('username');
-		echo $this->Form->input('password');
-		echo $this->Form->input('user_role_id');
-		echo $this->Form->input('person_id');
-	?>
+		<legend><?php echo __('Nutzer anlegen'); ?></legend>
+		<?php
+			echo $this->Form->input('username', array('label' => __('Nutzername')));
+			echo $this->Form->input('password', array('label' => __('Passwort')));
+			echo $this->Form->input('user_role_id', array('label' => __('Rolle'), 'selected' => '3'));
+			echo $this->Form->input('person_id', array('label' => __('Person'), 'empty' => __('keine Person')));
+		?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
+	<?php echo $this->Form->end(__('Anlegen')); ?>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
 
-		<li><?php echo $this->Html->link(__('List Users'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List User Roles'), array('controller' => 'user_roles', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User Role'), array('controller' => 'user_roles', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List People'), array('controller' => 'people', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Person'), array('controller' => 'people', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Activity Logs'), array('controller' => 'activity_logs', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Activity Log'), array('controller' => 'activity_logs', 'action' => 'add')); ?> </li>
-	</ul>
-</div>

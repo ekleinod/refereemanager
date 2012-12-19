@@ -6,6 +6,7 @@
 		echo $this->Form->input('id');
 		echo $this->Form->input('username');
 		echo $this->Form->input('password');
+		echo $this->Form->input('salt');
 		echo $this->Form->input('user_role_id');
 		echo $this->Form->input('person_id');
 	?>

@@ -13,7 +13,7 @@ class UsersController extends AppController {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		//$this->Auth->allow('add'); // this would allow users to register themselves, this is not used for now
+		$this->Auth->allow('add'); // this would allow users to register themselves, this is not used for now
 	}
 
 	/**
@@ -71,6 +71,7 @@ class UsersController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
+			$this->request->data['User']['salt'] = Security::generateAuthKey();
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved'));
 				$this->redirect(array('action' => 'index'));
@@ -79,7 +80,9 @@ class UsersController extends AppController {
 			}
 		}
 		$userRoles = $this->User->UserRole->find('list');
+		asort($userRoles, SORT_LOCALE_STRING);
 		$people = $this->User->Person->find('list');
+		asort($people, SORT_LOCALE_STRING);
 		$this->set(compact('userRoles', 'people'));
 	}
 

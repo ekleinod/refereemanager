@@ -28,8 +28,9 @@ class User extends AppModel {
 	 * @param options
 	 */
 	public function beforeSave($options = array()) {
-		if (isset($this->data[$this->alias]['password'])) {
-			$this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
+		if (isset($this->data[$this->alias]['password']) && isset($this->data[$this->alias]['salt'])) {
+			$this->data[$this->alias]['password'] =
+					Security::hash($this->data[$this->alias]['password'].$this->data[$this->alias]['salt']);
 		}
 		return true;
 	}
@@ -59,7 +60,7 @@ class User extends AppModel {
 			),
 			'between' => array(
 				'rule' => array('between', 3, 20),
-				'message' => 'Der Nutzername (login) darf zwischen 3 und 20 Zeichen lang sein.',
+				'message' => 'Der Nutzername (login) muss mindestens 3 und darf höchstens 20 Zeichen lang sein.',
 			),
 		),
 		'password' => array(
@@ -71,7 +72,7 @@ class User extends AppModel {
 			),
 			'between' => array(
 				'rule' => array('between', 8, 20),
-				'message' => 'Das Passwort darf zwischen 8 und 20 Zeichen lang sein.',
+				'message' => 'Das Passwort muss mindestens 8 und darf höchstens 20 Zeichen lang sein.',
 			),
 		),
 		'user_role_id' => array(
