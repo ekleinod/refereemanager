@@ -1,6 +1,47 @@
-Title:							Referee Manager Configuration
-Author:							Ekkart Kleinod
-Date:								19.12.2012
+Title:	Referee Manager Configuration
+Author:	Ekkart Kleinod
+Date:		29.12.2012
+
+Important: the whole installation is meant for development, not production.
+Therefore, no real passwords are used etc.
+
+# Software
+
+You will need at least:
+* Git
+* Apache (incl. mysql module)
+* PHP
+
+# Code and CakePHP
+
+It is a bit difficult to set up the code and cakephp.
+Not "impossible" difficult, but nonetheless, follow the instruction given below.
+
+* clone the code of the referee manager (example with ssh access, for other possibilities see http://sourceforge.net/projects/refereemanager/)
+
+	$ git clone ssh://git.code.sf.net/p/refereemanager/code refereemanager-code
+
+* rename the folder `app` in `cakephp/app` to `app.xyz`
+	* explanation: we will copy the `app` folder of CakePHP here, so this folder has to be out of the way for now
+* download the latest version of CakePHP http://cakephp.org/
+* extract the files
+* copy all files to the `cakephp` folder of the referee manager
+	* do not forget the *hidden* files (ctrl+h in most file managers)
+* copy the content of the `app.xyz` folder to `app`
+	* choose overwrite for existing files
+* ready
+
+Now some folder have to be given more access rights in order for the application to work nicely.
+
+* all folders that are referenced by apache have to be given read rights for apache
+	* the whole path has to be readable, especially the home folder
+* in `refereemanager-code/cakephp/` the following folders have to be writeable for apache:
+	* `app/tmp` and all its subfolders
+
+	$ cd <...>/refereemanager-code/cakephp/app/
+	$ chmod 777 tmp
+	$ cd tmp
+	$ find -type d -exec chmod 777 {} \;
 
 # Apache
 
@@ -13,8 +54,8 @@ Create a symbolic link to the two needed directories.
 The links have to be created in
 	/var/www/
 
-	/var/www/$ ln -s .../refereemanager-code/
-	/var/www/$ ln -s .../phpmyadmin
+	/var/www/$ sudo ln -s <...>/refereemanager-code/
+	/var/www/$ sudo ln -s <...>/phpmyadmin
 
 ## Access restrictions
 
@@ -24,7 +65,7 @@ You have to allow access explicitely.
 Handle this situation with care if you are on a live system.
 In my test system that is working local in a VM, I can allow access to all sites withour having to consider security issues.
 
-Add the file `httpd.conf` to the directory `/etc/apache2`.
+Add the file `httpd.conf` to the directory `/etc/apache2` or link the given `httpd.conf` file from git.
 Check if the file exists first, merge existing files if you have to.
 
 Content of `httpd.conf`:
@@ -38,7 +79,11 @@ Content of `httpd.conf`:
 
 	LoadModule rewrite_module /usr/lib/apache2/modules/mod_rewrite.so
 
-Maybe change `default`in `/etc/apache2/sites-available/`
+Or (the linking solution):
+	$ cd /etc/apache2/
+	$ sudo ln -s <...>/refereemanager-code/configuration/apache2/httpd.conf
+
+Maybe change `default` in `/etc/apache2/sites-available/` (to be tested if this change is needed).
 
 	DocumentRoot /var/www
 	<Directory />
@@ -53,4 +98,24 @@ Maybe change `default`in `/etc/apache2/sites-available/`
 		Order allow,deny
 		allow from all
 	</Directory>
+
+Check if `http://localhost/` works.
+
+# Setup database
+
+Now we are ready to set up the database.
+First, link the phpmyadmin configuration file to your PHPMyAdmin folder:
+	$ cd <...>/phpmyadmin
+	$ ln -s <...>/refereemanager-code/configuration/phpmyadmin/config.inc.php
+
+Now you should be able to access your database with:
+	https://localhost/phpmyadmin/
+
+Now create a database called "refereemanager".
+
+Create the database tables using the code of
+	<...>/refereemanager-code/database/refereemanager.sql
+
+Fill the database with your data if you have some.
+
 
