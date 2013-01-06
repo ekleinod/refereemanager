@@ -1,6 +1,7 @@
-Title:	Referee Manager Configuration
-Author:	Ekkart Kleinod
-Date:		06.01.2013
+Title:							Referee Manager Configuration
+Author:							Ekkart Kleinod
+Date:								06.01.2013
+Base Header Level:	3
 
 Important: the whole installation is meant for development, not production.
 Therefore, no real passwords are used etc.
@@ -8,6 +9,7 @@ Therefore, no real passwords are used etc.
 # Software
 
 You will need at least:
+
 - Git
 - Apache (incl. mysql module)
 - PHP
@@ -58,6 +60,7 @@ After each change restart apache
 
 Create a symbolic link to the two needed directories.
 The links have to be created in
+
 	/var/www/
 
 	/var/www/$ sudo ln -s <...>/refereemanager-code/cakephp/
@@ -78,10 +81,12 @@ After the changes, check if [http://localhost/](http://localhost/) (still) works
 For some reason in newer apache installations the file `apache2.conf` does not lin to `httpd.conf` anymore.
 I don't know if this is a bug, a feature, a security thing or else.
 In that case, add the following line to `apache2.conf`
+
 	# Include all the user configurations:
 	Include httpd.conf
 
 Add the line before
+
 	Include ports.conf
 
 The file is provided in git too, check if a link is needed or the changes are made faster by hand.
@@ -92,13 +97,16 @@ Add the file `httpd.conf` to the directory `/etc/apache2` or link the given `htt
 Check if the file exists first, merge existing files if you have to.
 
 Important changes content of `httpd.conf` in section `Directory /`:
+
 	Options FollowSymLinks
 	AllowOverride All
 
 At the end of the file:
+
 	LoadModule rewrite_module /usr/lib/apache2/modules/mod_rewrite.so
 
 Or (the linking solution):
+
 	$ cd /etc/apache2/
 	$ sudo ln -s <...>/refereemanager-code/configuration/apache2/httpd.conf
 
@@ -110,6 +118,7 @@ Change `default` in `/etc/apache2/sites-available/` (to be tested if this change
 Here too allow override and following of symbolic links in sections `Directory /` and `Directory /var/www`.
 
 You can link to the git-stored file as well:
+
 	$ cd /etc/apache2/sites-available/
 	$ sudo ln -s <...>/refereemanager-code/configuration/apache2/sites-available/default
 
@@ -120,15 +129,18 @@ In that case restart apache by hand, see explanation above.
 
 Now we are ready to set up the database.
 First, link the phpmyadmin configuration file to your PHPMyAdmin folder:
+
 	$ cd <...>/phpmyadmin
 	$ ln -s <...>/refereemanager-code/configuration/phpmyadmin/config.inc.php
 
 Now you should be able to access your database with:
+
 	https://localhost/phpmyadmin/
 
 Now create a database called "refereemanager".
 
 Create the database tables using the code of
+
 	<...>/refereemanager-code/database/refereemanager.sql
 
 Fill the database with your data if you have some.

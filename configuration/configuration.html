@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>Referee Manager Configuration</title>
+	<meta name="author" content="Ekkart Kleinod"/>
+	<meta name="date" content="06.01.2013"/>
+</head>
+<body>
+
+<p>Important: the whole installation is meant for development, not production.
+Therefore, no real passwords are used etc.</p>
+
+<h3 id="software">Software</h3>
+
+<p>You will need at least:</p>
+
+<ul>
+<li>Git</li>
+<li>Apache (incl. mysql module)</li>
+<li>PHP</li>
+<li>Referee Manager</li>
+</ul>
+
+<h3 id="codeandcakephp">Code and CakePHP</h3>
+
+<p>It is a bit difficult to set up the code and cakephp.
+Maybe I provide an ant script for this task, for now you have to do this by hand.
+It is not &#8220;impossible&#8221; difficult, but nonetheless, follow the instruction given below.</p>
+
+<ul>
+<li><p>clone the code of the referee manager (example with ssh access, for other possibilities see <a href="http://sourceforge.net/projects/refereemanager/">http://sourceforge.net/projects/refereemanager/</a>)</p>
+
+<p>$ git clone ssh://git.code.sf.net/p/refereemanager/code refereemanager-code</p></li>
+<li>rename the folder <code>app</code> in <code>cakephp/app</code> to <code>app.xyz</code>
+
+<ul>
+<li>explanation: we will copy the <code>app</code> folder of CakePHP here, so this folder has to be out of the way for now</li>
+</ul></li>
+<li><p>download the latest version of CakePHP http://cakephp.org/</p></li>
+<li><p>extract the files</p></li>
+<li>copy all files to the <code>cakephp</code> folder of the referee manager
+
+<ul>
+<li>do not forget the <em>hidden</em> files (ctrl+h in most file managers)</li>
+</ul></li>
+<li>copy the content of the <code>app.xyz</code> folder to <code>app</code>
+
+<ul>
+<li>choose overwrite for existing files</li>
+</ul></li>
+<li><p>ready</p></li>
+</ul>
+
+<p>Now some folder have to be given more access rights in order for the application to work nicely.</p>
+
+<ul>
+<li>all folders that are referenced by apache have to be given read rights for apache
+
+<ul>
+<li>the whole path has to be readable, especially the home folder</li>
+</ul></li>
+<li>in <code>refereemanager-code/cakephp/</code> the following folders have to be writeable for apache:
+
+<ul>
+<li><code>app/tmp</code> and all its subfolders</li>
+</ul>
+
+<p>$ cd &lt;&#8230;&gt;/refereemanager-code/cakephp/app/
+$ chmod 777 tmp
+$ cd tmp
+$ find -type d -exec chmod 777 {} \;</p></li>
+</ul>
+
+<h3 id="apache">Apache</h3>
+
+<p>Sometimes apache did not start when the file <code>default</code> was linked into the directory <code>sites-available</code> (see below).
+In that case, restart apache as stated below.
+I did not research if this is a bug or a feature or an error on my side.</p>
+
+<p>After each change restart apache
+ $ sudo apachectl -k restart</p>
+
+<h4 id="includerefereemanagercodeandphpmyadmin">Include referee manager code and phpmyadmin</h4>
+
+<p>Create a symbolic link to the two needed directories.
+The links have to be created in</p>
+
+<pre><code>/var/www/
+
+/var/www/$ sudo ln -s &lt;...&gt;/refereemanager-code/cakephp/
+/var/www/$ sudo ln -s &lt;...&gt;/phpmyadmin
+</code></pre>
+
+<h4 id="accessrestrictions">Access restrictions</h4>
+
+<p>In standard configuration, all sites in apache2 have access restrictions.
+You have to allow access explicitely.</p>
+
+<p>Handle this situation with care if you are on a live system.
+In my test system that is working local in a VM, I can allow access to all sites withour having to consider security issues.</p>
+
+<p>After the changes, check if <a href="http://localhost/">http://localhost/</a> (still) works.</p>
+
+<h5 id="apache2.conf">apache2.conf</h5>
+
+<p>For some reason in newer apache installations the file <code>apache2.conf</code> does not lin to <code>httpd.conf</code> anymore.
+I don&#8217;t know if this is a bug, a feature, a security thing or else.
+In that case, add the following line to <code>apache2.conf</code></p>
+
+<pre><code># Include all the user configurations:
+Include httpd.conf
+</code></pre>
+
+<p>Add the line before</p>
+
+<pre><code>Include ports.conf
+</code></pre>
+
+<p>The file is provided in git too, check if a link is needed or the changes are made faster by hand.</p>
+
+<h5 id="httpd.conf">httpd.conf</h5>
+
+<p>Add the file <code>httpd.conf</code> to the directory <code>/etc/apache2</code> or link the given <code>httpd.conf</code> file from git.
+Check if the file exists first, merge existing files if you have to.</p>
+
+<p>Important changes content of <code>httpd.conf</code> in section <code>Directory /</code>:</p>
+
+<pre><code>Options FollowSymLinks
+AllowOverride All
+</code></pre>
+
+<p>At the end of the file:</p>
+
+<pre><code>LoadModule rewrite_module /usr/lib/apache2/modules/mod_rewrite.so
+</code></pre>
+
+<p>Or (the linking solution):</p>
+
+<pre><code>$ cd /etc/apache2/
+$ sudo ln -s &lt;...&gt;/refereemanager-code/configuration/apache2/httpd.conf
+</code></pre>
+
+<p>In both cases it is important to allow the following of symbolic links and the override.</p>
+
+<h5 id="default">default</h5>
+
+<p>Change <code>default</code> in <code>/etc/apache2/sites-available/</code> (to be tested if this change is needed).
+Here too allow override and following of symbolic links in sections <code>Directory /</code> and <code>Directory /var/www</code>.</p>
+
+<p>You can link to the git-stored file as well:</p>
+
+<pre><code>$ cd /etc/apache2/sites-available/
+$ sudo ln -s &lt;...&gt;/refereemanager-code/configuration/apache2/sites-available/default
+</code></pre>
+
+<p>Sometimes apache did not start with a linked <code>default</code>.
+In that case restart apache by hand, see explanation above.</p>
+
+<h3 id="setupdatabase">Setup database</h3>
+
+<p>Now we are ready to set up the database.
+First, link the phpmyadmin configuration file to your PHPMyAdmin folder:</p>
+
+<pre><code>$ cd &lt;...&gt;/phpmyadmin
+$ ln -s &lt;...&gt;/refereemanager-code/configuration/phpmyadmin/config.inc.php
+</code></pre>
+
+<p>Now you should be able to access your database with:</p>
+
+<pre><code>https://localhost/phpmyadmin/
+</code></pre>
+
+<p>Now create a database called &#8220;refereemanager&#8221;.</p>
+
+<p>Create the database tables using the code of</p>
+
+<pre><code>&lt;...&gt;/refereemanager-code/database/refereemanager.sql
+</code></pre>
+
+<p>Fill the database with your data if you have some.</p>
+
+</body>
+</html>
