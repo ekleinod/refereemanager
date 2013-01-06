@@ -1,7 +1,7 @@
 <div class="users index">
 	<h2><?php echo __('Nutzer'); ?></h2>
 	<?php
-		if (count($users) < 1) {
+		if (empty($users)) {
 	?>
 		<p><?php echo __('Es gibt keine Nutzer.'); ?></p>
 	<?php

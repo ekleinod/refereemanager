@@ -41,6 +41,11 @@ class AssignmentsController extends AppController {
 		$this->set('assignments', $assignments);
 		$this->set('season', $season);
 		$this->set('refereeroles', $this->getRefereeRoles());
+
+		// user test
+		$this->set('isReferee', $this->isReferee($this->Auth->user()));
+		$this->set('isEditor', $this->isEditor($this->Auth->user()));
+		$this->set('isAdmin', $this->isAdmin($this->Auth->user()));
 	}
 
 	/**

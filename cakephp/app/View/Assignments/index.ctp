@@ -1,9 +1,14 @@
 <div class="assignments index">
 	<h2><?php echo __('Schiedsrichtereinsätze'); ?></h2>
-	<p class="actions"><?php echo $this->Html->link(__('Neuen Schiedsrichtereinsatz hinzufügen'), array('action' => 'add')); ?></p>
+
+	<?php if ($isEditor) { ?>
+		<p class="actions"><?php echo $this->Html->link(__('Neuen Schiedsrichtereinsatz hinzufügen'), array('action' => 'add')); ?></p>
+	<?php } ?>
+
 	<p>Saison: <?php echo $season . "/" . ($season + 1); ?></p>
+
 	<?php
-		if (count($assignments) < 1) {
+		if (empty($assignments)) {
 	?>
 		<p><?php echo __('Es gibt keine Schiedsrichtereinsätze für diese Saison.'); ?></p>
 	<?php

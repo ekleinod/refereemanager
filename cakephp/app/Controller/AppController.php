@@ -34,6 +34,15 @@ App::uses('Security', 'Utility'); // use more secure salt hash
  */
 class AppController extends Controller {
 
+	/** Role: referee. */
+	const ROLE_REFEREE = 'referee';
+
+	/** Role: editor. */
+	const ROLE_EDITOR = 'editor';
+
+	/** Role: admin. */
+	const ROLE_ADMIN = 'admin';
+
 	/**
 	 * Extend components array by Auth component for simple authentication.
 	 *
@@ -59,15 +68,119 @@ class AppController extends Controller {
 	}
 
 	/**
-	 * Returns if the user is authorized.
+	 * Returns if the user has the rights of a referee.
 	 *
-	 * Prepared this function for later use.
+	 * This includes editors and admins.
 	 *
 	 * @param $user user to check
-	 * @return true = authorized, false = not authorized
+	 * @return true = referee, false = no referee
 	 */
-	public function isAuthorized($user) {
-		return true;
+	public function isReferee($user = null) {
+
+		// no user given
+		if ($user == null) {
+			return false;
+		}
+
+		// user not logged in
+		if (empty($user) || ($user['id'] == null)) {
+			return false;
+		}
+
+		// hierarchy
+		if ($this->isAdmin($user)) {
+			return true;
+		}
+		if ($this->isEditor($user)) {
+			return true;
+		}
+
+		// check rights
+		$this->loadModel('User');
+		$this->User->id = $user['id'];
+		if (!$this->User->exists()) {
+			throw new NotFoundException(__('Ungültiger Nutzer: ') . $user['id']);
+		}
+		$theUser = $this->User->read(null, $user['id']);
+
+		if ($theUser['UserRole']['title'] == self::ROLE_REFEREE) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns if the user has the rights of an editor.
+	 *
+	 * This includes admins.
+	 *
+	 * @param $user user to check
+	 * @return true = editor, false = no editor
+	 */
+	public function isEditor($user = null) {
+
+		// no user given
+		if ($user == null) {
+			return false;
+		}
+
+		// user not logged in
+		if (empty($user) || ($user['id'] == null)) {
+			return false;
+		}
+
+		// hierarchy
+		if ($this->isAdmin($user)) {
+			return true;
+		}
+
+		// check rights
+		$this->loadModel('User');
+		$this->User->id = $user['id'];
+		if (!$this->User->exists()) {
+			throw new NotFoundException(__('Ungültiger Nutzer: ') . $user['id']);
+		}
+		$theUser = $this->User->read(null, $user['id']);
+
+		if ($theUser['UserRole']['title'] == self::ROLE_EDITOR) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns if the user has the rights of an admin.
+	 *
+	 * @param $user user to check
+	 * @return true = admin, false = no admin
+	 */
+	public function isAdmin($user = null) {
+
+		// no user given
+		if ($user == null) {
+			return false;
+		}
+
+		// user not logged in
+		if (empty($user) || ($user['id'] == null)) {
+			return false;
+		}
+
+		// check rights
+		$this->loadModel('User');
+		$this->User->id = $user['id'];
+		if (!$this->User->exists()) {
+			throw new NotFoundException(__('Ungültiger Nutzer: ') . $user['id']);
+		}
+		$theUser = $this->User->read(null, $user['id']);
+
+		if ($theUser['UserRole']['title'] == self::ROLE_ADMIN) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -6,7 +6,7 @@
 	<p>Saison: <?php echo $season . "/" . ($season + 1); ?></p>
 
 	<?php
-		if (count($teams) < 1) {
+		if (empty($teams)) {
 	?>
 		<p><?php echo __('Es gibt keine Teams für diese Saison.'); ?></p>
 	<?php

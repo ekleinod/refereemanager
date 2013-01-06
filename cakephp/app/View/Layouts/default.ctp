@@ -31,6 +31,8 @@
 			<ul class="actions">
 				<li><?php echo $this->Html->link(__('Schiedsrichtereinsätze'), array('action' => 'index', 'controller' => 'assignments'), array('class' => 'active')); ?></li>
 				<li><?php echo $this->Html->link(__('Teams'), array('action' => 'index', 'controller' => 'teams'), array('class' => '')); ?></li>
+				<li><?php echo $this->Html->link(__('Login'), array('action' => 'login', 'controller' => 'users'), array('class' => '')); ?></li>
+				<li><?php echo $this->Html->link(__('Logout'), array('action' => 'logout', 'controller' => 'users'), array('class' => '')); ?></li>
 			</ul>
 		</nav>
 
