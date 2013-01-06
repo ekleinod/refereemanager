@@ -65,6 +65,11 @@ class AppController extends Controller {
 		parent::beforeFilter();
 		Security::setHash('sha512');
 		$this->Auth->allow('index', 'view');
+
+		// set user role checks
+		$this->set('isReferee', $this->isReferee($this->Auth->user()));
+		$this->set('isEditor', $this->isEditor($this->Auth->user()));
+		$this->set('isAdmin', $this->isAdmin($this->Auth->user()));
 	}
 
 	/**
