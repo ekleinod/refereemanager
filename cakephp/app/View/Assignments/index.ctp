@@ -56,6 +56,10 @@
 						<td class="actions">
 							<?php echo $this->Html->link(__('Ansehen'), array('action' => 'view', $assignment['Assignment']['id'])); ?>
 							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<?php if ($isEditor) { ?>
+								<?php echo $this->Html->link(__('Editieren'), array('action' => 'edit', $assignment['Assignment']['id'])); ?>
+								<?php echo $this->Html->link(__('Löschen'), array('action' => 'delete', $assignment['Assignment']['id'])); ?>
+							<?php } ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

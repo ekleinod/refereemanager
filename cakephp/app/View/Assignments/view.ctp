@@ -36,11 +36,16 @@
 			<dd><?php echo is_null($venue) ? __('Unknown') : $this->Html->link($venue['title_address'], array('controller' => 'addresses', 'action' => 'view', $venue['id'])); ?></dd>
 	</dl>
 
-	<h3><?php  echo __('Aktionen für diesen Schiedsrichtereinsatz'); ?></h3>
-	<p class="actions"><?php echo $this->Html->link(__('Editieren'), array('action' => 'edit', $assignment['Assignment']['id'])); ?></p>
+	<?php if ($isEditor) { ?>
+		<h3><?php  echo __('Aktionen für diesen Schiedsrichtereinsatz'); ?></h3>
+		<p class="actions">
+			<?php echo $this->Html->link(__('Editieren'), array('action' => 'edit', $assignment['Assignment']['id'])); ?>
+			<?php echo $this->Html->link(__('Löschen'), array('action' => 'delete', $assignment['Assignment']['id'])); ?>
+		</p>
+	<?php } ?>
 
 	<h3><?php  echo __('Änderungen dieses Schiedsrichtereinsatzes'); ?></h3>
-	<?php if (count($changes) < 1) { ?>
+	<?php if (empty($changes)) { ?>
 		<p><?php  echo __('Dieser Schiedsrichtereinsatz wurde bisher nicht geändert.'); ?></p>
 	<?php } else { ?>
 		<p><?php  echo __('Die folgenden Änderungen am Schiedsrichtereinsatz wurden durchgeführt:'); ?></p>

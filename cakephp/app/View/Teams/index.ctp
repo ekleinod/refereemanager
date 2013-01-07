@@ -1,7 +1,9 @@
 <div class="teams index">
 	<h2><?php echo __('Teams'); ?></h2>
 
-	<p class="actions"><?php echo $this->Html->link(__('Neues Team hinzufügen'), array('action' => 'add')); ?></p>
+	<?php if ($isEditor) { ?>
+		<p class="actions"><?php echo $this->Html->link(__('Neues Team hinzufügen'), array('action' => 'add')); ?></p>
+	<?php } ?>
 
 	<p>Saison: <?php echo $season . "/" . ($season + 1); ?></p>
 
@@ -34,12 +36,37 @@
 						<td><?php echo h($team['Team']['description']); ?></td>
 						<td><?php echo $this->Html->link($team['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $team['Club']['id'])); ?></td>
 
-						<td></td>
-						<td></td>
-						<td></td>
+						<td>
+							<?php if (empty($team['League'])) { ?>
+								&nbsp;
+							<?php } else { ?>
+								<?php echo $this->Html->link($team['League'][0]['title'], array('controller' => 'leagues', 'action' => 'view', $team['League'][0]['id'])); ?></td>
+							<?php } ?>
+						</td>
+
+						<td>
+							<?php if (empty($team['Season'])) { ?>
+								&nbsp;
+							<?php } else { ?>
+								<?php echo $this->Html->link($team['Season'][0]['title_season'], array('controller' => 'seasons', 'action' => 'view', $team['Season'][0]['id'])); ?></td>
+							<?php } ?>
+						</td>
+
+						<td>
+							<?php if (empty($team['Person'])) { ?>
+								&nbsp;
+							<?php } else { ?>
+								<?php echo $this->Html->link($team['Person'][0]['title_person'], array('controller' => 'people', 'action' => 'view', $team['Person'][0]['id'])); ?></td>
+							<?php } ?>
+						</td>
+
 						<td><?php echo $this->Html->link($team['Address']['title_address'], array('controller' => 'addresses', 'action' => 'view', $team['Address']['id'])); ?></td>
 						<td class="actions">
 							<?php echo $this->Html->link(__('Ansehen'), array('action' => 'view', $team['Team']['id'])); ?>
+							<?php if ($isEditor) { ?>
+								<?php echo $this->Html->link(__('Editieren'), array('action' => 'edit', $team['Team']['id'])); ?>
+								<?php echo $this->Html->link(__('Löschen'), array('action' => 'delete', $team['Team']['id'])); ?>
+							<?php } ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>
@@ -49,7 +76,7 @@
 		}
 	?>
 
-	<!--?php pr($teams); ?-->
+	<?php pr($teams); ?>
 
 </div>
 
