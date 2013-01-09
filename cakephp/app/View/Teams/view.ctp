@@ -59,9 +59,11 @@
 	<?php if (!$isEditor) { ?>
 		<h3><?php  echo __('Aktionen für dieses Team'); ?></h3>
 		<p class="actions">
-			<?php echo $this->Html->link(__('Editieren'), array('action' => 'edit', $team['Team']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Löschen'), array('controller' => 'teams', 'action' => 'delete', $team['Team']['id']), null, __('Wollen Sie Team "%s" wirklich löschen?', $team['Team']['number'])); ?>
+			<?php echo $this->Html->link(__('Team Editieren'), array('action' => 'edit', $team['Team']['id'])); ?>
 			<?php echo $this->Html->link(__('Neues Spiel'), array('controller' => 'assignments', 'action' => 'add')); ?>
+		</p>
+		<p class="actions">
+			<?php echo $this->Form->postLink(__('Team Löschen'), array('action' => 'delete', $team['Team']['id']), null, __('Wollen Sie Team "%s" wirklich löschen?', $team['Team']['number'])); ?>
 		</p>
 	<?php } ?>
 
