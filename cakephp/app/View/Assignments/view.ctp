@@ -1,5 +1,6 @@
 <div class="assignments view">
 	<h2><?php  echo __('Schiedsrichtereinsatz'); ?></h2>
+
 	<dl>
 		<dt><?php echo __('Saison'); ?></dt>
 			<dd><?php echo $this->Html->link($assignment['Season']['title_season'], array('controller' => 'seasons', 'action' => 'view', $assignment['Season']['id'])); ?></dd>

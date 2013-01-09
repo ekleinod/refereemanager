@@ -40,7 +40,7 @@
 							<?php if (empty($team['League'])) { ?>
 								&nbsp;
 							<?php } else { ?>
-								<?php echo $this->Html->link($team['League'][0]['title'], array('controller' => 'leagues', 'action' => 'view', $team['League'][0]['id'])); ?></td>
+								<?php echo $this->Html->link($team['League'][0]['title'], array('controller' => 'leagues', 'action' => 'view', $team['League'][0]['id'])); ?>
 							<?php } ?>
 						</td>
 
@@ -48,7 +48,7 @@
 							<?php if (empty($team['Season'])) { ?>
 								&nbsp;
 							<?php } else { ?>
-								<?php echo $this->Html->link($team['Season'][0]['title_season'], array('controller' => 'seasons', 'action' => 'view', $team['Season'][0]['id'])); ?></td>
+								<?php echo $this->Html->link($team['Season'][0]['title_season'], array('controller' => 'seasons', 'action' => 'view', $team['Season'][0]['id'])); ?>
 							<?php } ?>
 						</td>
 
@@ -56,7 +56,7 @@
 							<?php if (empty($team['Person'])) { ?>
 								&nbsp;
 							<?php } else { ?>
-								<?php echo $this->Html->link($team['Person'][0]['title_person'], array('controller' => 'people', 'action' => 'view', $team['Person'][0]['id'])); ?></td>
+								<?php echo $this->Html->link($team['Person'][0]['title_person'], array('controller' => 'people', 'action' => 'view', $team['Person'][0]['id'])); ?>
 							<?php } ?>
 						</td>
 
