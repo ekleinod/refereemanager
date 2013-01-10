@@ -58,7 +58,7 @@
 							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
 							<?php if ($isEditor) { ?>
 								<?php echo $this->Html->link(__('Editieren'), array('action' => 'edit', $assignment['Assignment']['id'])); ?>
-								<?php echo $this->Html->link(__('Löschen'), array('action' => 'delete', $assignment['Assignment']['id'])); ?>
+								<?php echo $this->Form->postLink(__('Löschen'), array('action' => 'delete', $assignment['Assignment']['id']), null, __('Wollen Sie den Einsatz wirklich löschen?')); ?>
 							<?php } ?>
 						</td>
 					</tr>

@@ -39,10 +39,10 @@
 
 	<?php if ($isEditor) { ?>
 		<h3><?php  echo __('Aktionen für diesen Schiedsrichtereinsatz'); ?></h3>
-		<p class="actions">
+		<div class="actions">
 			<?php echo $this->Html->link(__('Editieren'), array('action' => 'edit', $assignment['Assignment']['id'])); ?>
-			<?php echo $this->Html->link(__('Löschen'), array('action' => 'delete', $assignment['Assignment']['id'])); ?>
-		</p>
+			<?php echo $this->Form->postLink(__('Löschen'), array('action' => 'delete', $assignment['Assignment']['id']), null, __('Wollen Sie den Einsatz wirklich löschen?')); ?>
+		</div>
 	<?php } ?>
 
 	<h3><?php  echo __('Änderungen dieses Schiedsrichtereinsatzes'); ?></h3>
@@ -50,33 +50,11 @@
 		<p><?php  echo __('Dieser Schiedsrichtereinsatz wurde bisher nicht geändert.'); ?></p>
 	<?php } else { ?>
 		<p><?php  echo __('Die folgenden Änderungen am Schiedsrichtereinsatz wurden durchgeführt:'); ?></p>
-		<table>
-			<thead>
-				<tr>
-					<th><?php echo __('Datum'); ?></th>
-					<th><?php echo __('Änderung'); ?></th>
-					<th><?php echo __('Werte'); ?></th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php foreach ($changes as $change): ?>
-					<?php foreach ($change as $single_change): ?>
-						<tr>
-							<td><?php echo h($this->RefereeFormat->format($single_change['datetime'], 'date')); ?></td>
-							<td><?php echo h($single_change['description']); ?></td>
-							<td><?php
-								if ($single_change['old_value'] != '') {
-									echo h($this->RefereeFormat->format($single_change['old_value'], $single_change['type']));
-									echo ' &rarr; ';
-								}
-								echo h($this->RefereeFormat->format($single_change['new_value'], $single_change['type']));
-							?></td>
-						</tr>
-					<?php endforeach; ?>
-				<?php endforeach; ?>
-			</tbody>
-		</table>
-	<?php } ?>
+	<?php
+			echo $this->element('changes_table_small',
+													array('changes' => $changes));
+		}
+	?>
 
 	<?php pr($changes); ?>
 
