@@ -24,11 +24,11 @@ class TeamsController extends AppController {
 
 		// find matching teams
 		$teams = $this->Team->find('all', $options);
-		foreach ($teams as &$team):
+		foreach ($teams as &$team) {
 			if (!$team['Team']['name']) {
 				$team['Team']['name'] = $this->Team->getTitle($team);
 			}
-		endforeach;
+		}
 
 		$this->set('teams', $teams);
 		$this->set('season', $season);
@@ -46,7 +46,10 @@ class TeamsController extends AppController {
 		if (!$this->Team->exists()) {
 			throw new NotFoundException(__('Invalid team'));
 		}
-		$this->set('team', $this->Team->read(null, $id));
+
+		$team = $this->Team->read(null, $id);
+		$team['Team']['title_team'] = $this->Team->getTitle($team);
+		$this->set('team', $team);
 	}
 
 /**

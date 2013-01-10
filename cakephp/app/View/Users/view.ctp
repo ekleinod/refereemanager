@@ -1,5 +1,5 @@
 <div class="users view">
-	<h2><?php echo sprintf('%s "%s"', __('Nutzer'), h($user['User']['username'])); ?></h2>
+	<h2><?php echo __('Nutzer "%s"', h($user['User']['username'])); ?></h2>
 
 	<dl>
 		<dt><?php echo __('Nutzername'); ?></dt>

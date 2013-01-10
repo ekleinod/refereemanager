@@ -1,5 +1,5 @@
 <div class="teams view">
-	<h2><?php  echo __('Team'); ?></h2>
+	<h2><?php  echo __('Team "%s"', $team['Team']['title_team']); ?></h2>
 
 	<dl>
 		<dt><?php echo __('Nummer'); ?></dt>
@@ -56,14 +56,12 @@
 			</dd>
 	</dl>
 
-	<?php if (!$isEditor) { ?>
+	<?php if ($isEditor) { ?>
 		<h3><?php  echo __('Aktionen für dieses Team'); ?></h3>
 		<p class="actions">
 			<?php echo $this->Html->link(__('Team Editieren'), array('action' => 'edit', $team['Team']['id'])); ?>
+			<?php echo $this->Form->postLink(__('Team Löschen'), array('action' => 'delete', $team['Team']['id']), null, __('Wollen Sie Team "%s" wirklich löschen?', $team['Team']['title_team'])); ?>
 			<?php echo $this->Html->link(__('Neues Spiel'), array('controller' => 'assignments', 'action' => 'add')); ?>
-		</p>
-		<p class="actions">
-			<?php echo $this->Form->postLink(__('Team Löschen'), array('action' => 'delete', $team['Team']['id']), null, __('Wollen Sie Team "%s" wirklich löschen?', $team['Team']['number'])); ?>
 		</p>
 	<?php } ?>
 
