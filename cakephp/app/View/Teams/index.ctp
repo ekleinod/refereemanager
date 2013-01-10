@@ -65,7 +65,7 @@
 							<?php echo $this->Html->link(__('Ansehen'), array('action' => 'view', $team['Team']['id'])); ?>
 							<?php if ($isEditor) { ?>
 								<?php echo $this->Html->link(__('Editieren'), array('action' => 'edit', $team['Team']['id'])); ?>
-								<?php echo $this->Html->link(__('Löschen'), array('action' => 'delete', $team['Team']['id'])); ?>
+								<?php echo $this->Form->postLink(__('Löschen'), array('action' => 'delete', $team['Team']['id']), null, __('Wollen Sie Team "%s" wirklich löschen?', $team['Team']['name'])); ?>
 							<?php } ?>
 						</td>
 					</tr>
