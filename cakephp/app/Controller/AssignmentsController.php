@@ -1,5 +1,7 @@
 <?php
+
 App::uses('AppController', 'Controller');
+
 /**
  * Assignments Controller
  *
@@ -16,7 +18,7 @@ class AssignmentsController extends AppController {
 	/**
 	 * Index method: show all assignments of a specific season, current season if none given.
 	 *
-	 * @param string $season
+	 * @param $season season to show assignments for
 	 * @return void
 	 */
 	public function index($season = null) {
@@ -44,10 +46,9 @@ class AssignmentsController extends AppController {
 	}
 
 	/**
-	 * view method
+	 * View method: show the assignment with the given id.
 	 *
-	 * @throws NotFoundException
-	 * @param string $id
+	 * @param $id id of assignment
 	 * @return void
 	 */
 	public function view($id = null) {
@@ -73,11 +74,11 @@ class AssignmentsController extends AppController {
 		$this->set('refereeroles', $this->getRefereeRoles());
 	}
 
-/**
- * add method
- *
- * @return void
- */
+	/**
+	 * Add method: add new assignment.
+	 *
+	 * @return void
+	 */
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Assignment->create();
@@ -93,10 +94,9 @@ class AssignmentsController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * Edit method: edit the assignment with the given id.
 	 *
-	 * @throws NotFoundException
-	 * @param string $id
+	 * @param $id id of assignment
 	 * @return void
 	 */
 	public function edit($id = null) {

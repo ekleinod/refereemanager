@@ -1,5 +1,7 @@
 <?php
+
 App::uses('AppController', 'Controller');
+
 /**
  * Teams Controller
  *
@@ -8,9 +10,9 @@ App::uses('AppController', 'Controller');
 class TeamsController extends AppController {
 
 	/**
-	 * Index method: show all assignments of a specific season, current season if none given.
+	 * Index method: show all teams of a specific season, current season if none given.
 	 *
-	 * @param string $season
+	 * @param $season season to show teams for
 	 * @return void
 	 */
 	public function index($season = null) {
@@ -34,13 +36,12 @@ class TeamsController extends AppController {
 		$this->set('season', $season);
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * View method: show the team with the given id.
+	 *
+	 * @param $id id of team
+	 * @return void
+	 */
 	public function view($id = null) {
 		$this->Team->id = $id;
 		if (!$this->Team->exists()) {
@@ -52,11 +53,11 @@ class TeamsController extends AppController {
 		$this->set('team', $team);
 	}
 
-/**
- * add method
- *
- * @return void
- */
+	/**
+	 * Add method: add new team.
+	 *
+	 * @return void
+	 */
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Team->create();
@@ -76,18 +77,19 @@ class TeamsController extends AppController {
 		$this->set(compact('addresses', 'clubs', 'assignments', 'seasons', 'leagues', 'people'));
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * Edit method: edit the assignment with the given id.
+	 *
+	 * @param $id id of assignment
+	 * @return void
+	 */
 	public function edit($id = null) {
 		$this->Team->id = $id;
+
 		if (!$this->Team->exists()) {
 			throw new NotFoundException(__('Invalid team'));
 		}
+
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Team->save($this->request->data)) {
 				$this->Session->setFlash(__('The team has been saved'));
@@ -98,13 +100,35 @@ class TeamsController extends AppController {
 		} else {
 			$this->request->data = $this->Team->read(null, $id);
 		}
-		$addresses = $this->Team->Address->find('list');
+
+		$this->prepareAndSetAddEdit();
+	}
+
+	/**
+	 * Prepares data for add/edit view and sets it.
+	 *
+	 */
+	private function prepareAndSetAddEdit() {
+
 		$clubs = $this->Team->Club->find('list');
-		$assignments = $this->Team->Assignment->find('list');
-		$seasons = $this->Team->Season->find('list');
+		asort($clubs, SORT_LOCALE_STRING);
 		$leagues = $this->Team->League->find('list');
+		asort($leagues, SORT_LOCALE_STRING);
+		$seasons = $this->Team->Season->find('list');
+		asort($seasons, SORT_LOCALE_STRING);
 		$people = $this->Team->Person->find('list');
-		$this->set(compact('addresses', 'clubs', 'assignments', 'seasons', 'leagues', 'people'));
+		asort($people, SORT_LOCALE_STRING);
+		$addresses = $this->Team->Address->find('list');
+		asort($addresses, SORT_LOCALE_STRING);
+
+		// pass information to view
+		$this->set(compact('clubs'));
+		$this->set(compact('leagues'));
+		$this->set(compact('seasons'));
+		$this->set(compact('people'));
+		$this->set(compact('addresses'));
+
+		$this->set('team', $this->Team->data);
 	}
 
 /**
