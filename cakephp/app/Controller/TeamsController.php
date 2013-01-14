@@ -45,12 +45,18 @@ class TeamsController extends AppController {
 	public function view($id = null) {
 		$this->Team->id = $id;
 		if (!$this->Team->exists()) {
-			throw new NotFoundException(__('Invalid team'));
+			throw new NotFoundException(__('Team nicht vorhanden'));
 		}
 
 		$team = $this->Team->read(null, $id);
 		$team['Team']['title_team'] = $this->Team->getTitle($team);
+
+		// get changes
+		$changes = $this->getChanges($team);;
+
+		// pass information to view
 		$this->set('team', $team);
+		$this->set('changes', $changes);
 	}
 
 	/**
@@ -62,10 +68,10 @@ class TeamsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Team->create();
 			if ($this->Team->save($this->request->data)) {
-				$this->Session->setFlash(__('The team has been saved'));
+				$this->Session->setFlash(__('Das Team wurde gespeichert.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The team could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Das Team konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
 			}
 		}
 		$addresses = $this->Team->Address->find('list');
@@ -87,21 +93,54 @@ class TeamsController extends AppController {
 		$this->Team->id = $id;
 
 		if (!$this->Team->exists()) {
-			throw new NotFoundException(__('Invalid team'));
+			throw new NotFoundException(__('Team nicht vorhanden'));
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Team->save($this->request->data)) {
-				$this->Session->setFlash(__('The team has been saved'));
+				$this->Session->setFlash(__('Das Team wurde gespeichert.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The team could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Das Team konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
 			}
 		} else {
 			$this->request->data = $this->Team->read(null, $id);
 		}
 
 		$this->prepareAndSetAddEdit();
+	}
+
+	/**
+	 * Delete method: show the team with the given id and ask for deletion or delete team.
+	 *
+	 * @param $id id of team
+	 * @return void
+	 */
+	public function delete($id = null) {
+		$this->Team->id = $id;
+		if (!$this->Team->exists()) {
+			throw new NotFoundException(__('Team nicht vorhanden'));
+		}
+
+		if ($this->request->is('post') || $this->request->is('put')) {
+//		if ($this->Team->delete()) {
+			if (false) {
+				$this->Session->setFlash(__('Das Team wurde gelöscht.'));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('Das Team konnte nicht gelöscht werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
+			}
+		}
+
+		$team = $this->Team->read(null, $id);
+		$team['Team']['title_team'] = $this->Team->getTitle($team);
+
+		// get changes
+		$changes = $this->getChanges($team);;
+
+		// pass information to view
+		$this->set('team', $team);
+		$this->set('changes', $changes);
 	}
 
 	/**
@@ -131,27 +170,24 @@ class TeamsController extends AppController {
 		$this->set('team', $this->Team->data);
 	}
 
-/**
- * delete method
- *
- * @throws MethodNotAllowedException
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
-		if (!$this->request->is('post')) {
-			throw new MethodNotAllowedException();
-		}
-		$this->Team->id = $id;
-		if (!$this->Team->exists()) {
-			throw new NotFoundException(__('Invalid team'));
-		}
-		if ($this->Team->delete()) {
-			$this->Session->setFlash(__('Team deleted'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('Team was not deleted'));
-		$this->redirect(array('action' => 'index'));
+	/**
+	 * Returns changes for the selected team.
+	 *
+	 * @param $assignment team to get changes for
+	 * @return array with changes
+	 */
+	private function getChanges($team) {
+
+		// initialize return array
+		$changes = array();
+
+		// load ActivityLog model
+		$this->loadModel('ActivityLog');
+
+		// to do (see assignments)
+
+		// return results
+		return $changes;
 	}
+
 }

@@ -4,9 +4,9 @@
 	<?php echo $this->element('Assignments/view'); ?>
 
 	<?php echo $this->element('actions_h3', array('id' => $assignment['Assignment']['id']));	?>
+</div>
 
+<div class="related">
 	<?php echo $this->element('Changes/table_small', array('changes' => $changes));	?>
-
 	<?php pr($changes); ?>
-
 </div>

@@ -62,10 +62,10 @@ class AssignmentsController extends AppController {
 		$this->fillAssignment($assignment);
 
 		// get changes
-		$changes = $this->getChangesForAssignment($assignment);;
+		$changes = $this->getChanges($assignment);;
 
 		// get venue
-		$venue = $this->getVenueForAssignment($assignment);;
+		$venue = $this->getVenue($assignment);;
 
 		// pass information to view
 		$this->set('assignment', $assignment);
@@ -83,10 +83,10 @@ class AssignmentsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Assignment->create();
 			if ($this->Assignment->save($this->request->data)) {
-				$this->Session->setFlash(__('The assignment has been saved'));
+				$this->Session->setFlash(__('Der Schiedsrichtereinsatz wurde gespeichert.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The assignment could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Der Schiedsrichtereinsatz konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
 			}
 		}
 
@@ -108,10 +108,10 @@ class AssignmentsController extends AppController {
 
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Assignment->save($this->request->data)) {
-				$this->Session->setFlash(__('The assignment has been saved'));
+				$this->Session->setFlash(__('Der Schiedsrichtereinsatz wurde gespeichert.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The assignment could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Der Schiedsrichtereinsatz konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
 			}
 		} else {
 			$this->request->data = $this->Assignment->read(null, $id);
@@ -128,7 +128,6 @@ class AssignmentsController extends AppController {
 	 */
 	public function delete($id = null) {
 
-		// get and fill assignment
 		$this->Assignment->id = $id;
 		if (!$this->Assignment->exists()) {
 			throw new NotFoundException(__('Schiedsrichtereinsatz nicht vorhanden'));
@@ -137,10 +136,10 @@ class AssignmentsController extends AppController {
 		if ($this->request->is('post') || $this->request->is('put')) {
 //		if ($this->Assignment->delete()) {
 			if (false) {
-				$this->Session->setFlash(__('Schiedsrichtereinsatz gelöscht'));
+				$this->Session->setFlash(__('Der Schiedsrichtereinsatz wurde gelöscht.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('Schiedsrichtereinsatz nicht gelöscht'));
+				$this->Session->setFlash(__('Der Schiedsrichtereinsatz konnte nicht gelöscht werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
 			}
 		}
 
@@ -148,10 +147,10 @@ class AssignmentsController extends AppController {
 		$this->fillAssignment($assignment);
 
 		// get changes
-		$changes = $this->getChangesForAssignment($assignment);;
+		$changes = $this->getChanges($assignment);;
 
 		// get venue
-		$venue = $this->getVenueForAssignment($assignment);;
+		$venue = $this->getVenue($assignment);;
 
 		// pass information to view
 		$this->set('assignment', $assignment);
@@ -291,7 +290,7 @@ class AssignmentsController extends AppController {
 	 * @param $assignment assignment to get changes for
 	 * @return array with changes
 	 */
-	private function getChangesForAssignment($assignment) {
+	private function getChanges($assignment) {
 
 		// initialize return array
 		$changes = array();
@@ -354,7 +353,7 @@ class AssignmentsController extends AppController {
 	 * @param $assignment assignment to get venue for
 	 * @return venue address (NULL if none found)
 	 */
-	private function getVenueForAssignment($assignment) {
+	private function getVenue($assignment) {
 
 		// direct address
 		if ($assignment['Assignment']['address_id'] > 0) {

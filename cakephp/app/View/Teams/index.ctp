@@ -62,11 +62,7 @@
 
 						<td><?php echo $this->Html->link($team['Address']['title_address'], array('controller' => 'addresses', 'action' => 'view', $team['Address']['id'])); ?></td>
 						<td class="actions">
-							<?php echo $this->Html->link(__('Ansehen'), array('action' => 'view', $team['Team']['id'])); ?>
-							<?php if ($isEditor) { ?>
-								<?php echo $this->Html->link(__('Editieren'), array('action' => 'edit', $team['Team']['id'])); ?>
-								<?php echo $this->Form->postLink(__('Löschen'), array('action' => 'delete', $team['Team']['id']), null, __('Wollen Sie Team "%s" wirklich löschen?', $team['Team']['name'])); ?>
-							<?php } ?>
+							<?php echo $this->element('actions_table', array('id' => $team['Team']['id']));	?>
 						</td>
 					</tr>
 				<?php endforeach; ?>
@@ -76,7 +72,7 @@
 		}
 	?>
 
-	<?php pr($teams); ?>
+	<!--?php pr($teams); ?-->
 
 </div>
 

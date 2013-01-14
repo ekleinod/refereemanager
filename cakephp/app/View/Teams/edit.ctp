@@ -9,13 +9,13 @@
 			</fieldset>
 
 			<?php echo $this->Form->button('Inhalte zurücksetzen', array('type' => 'reset')); ?>
-			<?php echo $this->Form->end(__('Erzeugen')); ?>
+			<?php echo $this->Form->end(__('Speichern')); ?>
 
 		<?php pr($team); ?>
 
 	<?php } else { ?>
 		<h2><?php  echo __('Team editieren'); ?></h2>
-		<p><?php echo __("Sie besitzen nicht genügend Rechte, um das Team zu editieren."); ?></p>
+		<p class="message"><?php echo __("Sie besitzen nicht genügend Rechte, um das Team zu editieren."); ?></p>
 	<?php }?>
 </div>
 
