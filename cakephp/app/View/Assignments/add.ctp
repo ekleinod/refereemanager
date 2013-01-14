@@ -9,7 +9,7 @@
 			</fieldset>
 
 			<?php echo $this->Form->button('Inhalte zurücksetzen', array('type' => 'reset')); ?>
-			<?php echo $this->Form->end(__('Erzeugen')); ?>
+			<?php echo $this->Form->end(__('Speichern')); ?>
 
 		<!-- ?php pr($assignment); ? -->
 

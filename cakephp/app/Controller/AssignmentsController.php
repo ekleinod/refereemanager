@@ -121,6 +121,35 @@ class AssignmentsController extends AppController {
 	}
 
 	/**
+	 * Delete method: show the assignment with the given id and ask for deletion.
+	 *
+	 * @param $id id of assignment
+	 * @return void
+	 */
+	public function delete($id = null) {
+
+		// get and fill assignment
+		$this->Assignment->id = $id;
+		if (!$this->Assignment->exists()) {
+			throw new NotFoundException(__('Invalid assignment'));
+		}
+		$assignment = $this->Assignment->read(null, $id);
+		$this->fillAssignment($assignment);
+
+		// get changes
+		$changes = $this->getChangesForAssignment($assignment);;
+
+		// get venue
+		$venue = $this->getVenueForAssignment($assignment);;
+
+		// pass information to view
+		$this->set('assignment', $assignment);
+		$this->set('changes', $changes);
+		$this->set('venue', $venue);
+		$this->set('refereeroles', $this->getRefereeRoles());
+	}
+
+	/**
 	 * Prepares data for add/edit view and sets it.
 	 *
 	 */

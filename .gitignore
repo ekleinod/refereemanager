@@ -1,0 +1,9 @@
+*.bak
+*~
+empty
+*.default
+/cakephp/app/Console/
+/cakephp/app/tmp/
+/cakephp/lib/
+/cakephp/plugins/
+/cakephp/vendors/
