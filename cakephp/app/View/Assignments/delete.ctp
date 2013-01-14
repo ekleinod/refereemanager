@@ -14,9 +14,9 @@
 			</div>
 
 			<h3><?php echo __("Der Schiedsrichtereinsatz"); ?></h3>
-			<?php echo $this->element('assignments_view'); ?>
+			<?php echo $this->element('Assignments/view'); ?>
 
-			<?php echo $this->element('changes_table_small', array('changes' => $changes));	?>
+			<?php echo $this->element('Changes/table_small', array('changes' => $changes));	?>
 	<?php } else { ?>
 		<p class="message"><?php echo __("Sie besitzen nicht genügend Rechte, um den Schiedsrichtereinsatz zu löschen."); ?></p>
 	<?php }?>

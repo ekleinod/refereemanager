@@ -74,8 +74,7 @@
 		<p>Dieses Team ist noch für keine Spiele eingetragen.
 	<?php
 		} else {
-			echo $this->element('assignments_table_small',
-													array('assignments' => $team['Assignment']));
+			echo $this->element('Assignments/table_small', array('assignments' => $team['Assignment']));
 		}
 	?>
 </div>

@@ -5,7 +5,7 @@
 			<fieldset>
 				<legend><?php echo __('Team editieren'); ?></legend>
 
-				<?php echo $this->element('teams_form_edit'); ?>
+				<?php echo $this->element('Teams/form'); ?>
 			</fieldset>
 
 			<?php echo $this->Form->button('Inhalte zurücksetzen', array('type' => 'reset')); ?>

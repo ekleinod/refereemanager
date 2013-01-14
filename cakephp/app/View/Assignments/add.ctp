@@ -5,7 +5,7 @@
 			<fieldset>
 				<legend><?php echo __('Schiedsrichtereinsatz hinzufügen'); ?></legend>
 
-				<?php echo $this->element('assignments_form_edit'); ?>
+				<?php echo $this->element('Assignments/form'); ?>
 			</fieldset>
 
 			<?php echo $this->Form->button('Inhalte zurücksetzen', array('type' => 'reset')); ?>
