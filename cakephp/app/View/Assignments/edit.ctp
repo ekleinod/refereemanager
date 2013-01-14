@@ -15,7 +15,7 @@
 
 	<?php } else { ?>
 		<h2><?php  echo __('Schiedsrichtereinsatz editieren'); ?></h2>
-		<p><?php echo __("Sie besitzen nicht genügend Rechte, um den Schiedsrichtereinsatz zu editieren."); ?></p>
+		<p class="message"><?php echo __("Sie besitzen nicht genügend Rechte, um den Schiedsrichtereinsatz zu editieren."); ?></p>
 	<?php }?>
 </div>
 

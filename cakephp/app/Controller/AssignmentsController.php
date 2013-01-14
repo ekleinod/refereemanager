@@ -56,7 +56,7 @@ class AssignmentsController extends AppController {
 		// get and fill assignment
 		$this->Assignment->id = $id;
 		if (!$this->Assignment->exists()) {
-			throw new NotFoundException(__('Invalid assignment'));
+			throw new NotFoundException(__('Schiedsrichtereinsatz nicht vorhanden'));
 		}
 		$assignment = $this->Assignment->read(null, $id);
 		$this->fillAssignment($assignment);
@@ -103,7 +103,7 @@ class AssignmentsController extends AppController {
 		$this->Assignment->id = $id;
 
 		if (!$this->Assignment->exists()) {
-			throw new NotFoundException(__('Invalid assignment'));
+			throw new NotFoundException(__('Schiedsrichtereinsatz nicht vorhanden'));
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
@@ -121,7 +121,7 @@ class AssignmentsController extends AppController {
 	}
 
 	/**
-	 * Delete method: show the assignment with the given id and ask for deletion.
+	 * Delete method: show the assignment with the given id and ask for deletion or delete assignment.
 	 *
 	 * @param $id id of assignment
 	 * @return void
@@ -131,8 +131,19 @@ class AssignmentsController extends AppController {
 		// get and fill assignment
 		$this->Assignment->id = $id;
 		if (!$this->Assignment->exists()) {
-			throw new NotFoundException(__('Invalid assignment'));
+			throw new NotFoundException(__('Schiedsrichtereinsatz nicht vorhanden'));
 		}
+
+		if ($this->request->is('post') || $this->request->is('put')) {
+//		if ($this->Assignment->delete()) {
+			if (false) {
+				$this->Session->setFlash(__('Schiedsrichtereinsatz gelöscht'));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('Schiedsrichtereinsatz nicht gelöscht'));
+			}
+		}
+
 		$assignment = $this->Assignment->read(null, $id);
 		$this->fillAssignment($assignment);
 
