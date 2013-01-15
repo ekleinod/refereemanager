@@ -115,7 +115,7 @@ class Team extends AppModel {
 	 */
 	public static function getTitle($theTeam) {
 
-		if (is_null($theTeam['Team']['name'])) {
+		if (is_null($theTeam['Team']['name']) || empty($theTeam['Team']['name'])) {
 			if (array_key_exists('Club', $theTeam)) {
 				$name = is_null($theTeam['Club']['shortname']) ? $theTeam['Club']['name'] : $theTeam['Club']['shortname'];
 			} else {

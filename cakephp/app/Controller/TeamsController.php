@@ -74,13 +74,8 @@ class TeamsController extends AppController {
 				$this->Session->setFlash(__('Das Team konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
 			}
 		}
-		$addresses = $this->Team->Address->find('list');
-		$clubs = $this->Team->Club->find('list');
-		$assignments = $this->Team->Assignment->find('list');
-		$seasons = $this->Team->Season->find('list');
-		$leagues = $this->Team->League->find('list');
-		$people = $this->Team->Person->find('list');
-		$this->set(compact('addresses', 'clubs', 'assignments', 'seasons', 'leagues', 'people'));
+
+		$this->prepareAndSetAddEdit();
 	}
 
 	/**
