@@ -1,22 +1,27 @@
 <!DOCTYPE html>
-<html lang="de">
+<!--[if lt IE 7 ]><html class="ie ie6" lang="de"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="de"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="de"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="de"> <!--<![endif]-->
 
 	<head>
 
-		<!-- technical declarations -->
-		<?php echo $this->Html->charset(); ?>
-
-		<!-- references -->
-		<?php echo $this->Html->meta('icon'); ?>
-
-		<?php echo $this->Html->css('cake.generic'); ?>
-
-		<?php echo $this->fetch('meta'); ?>
 		<?php
-			$this->Html->css('refereemanager', null, array('inline' => false));
+			// character encoding
+			echo $this->Html->charset();
+
+			// meta tags
+			$this->Html->meta(array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, maximum-scale=1'), null, array('inline' => false));
+			echo $this->fetch('meta');
+
+			// css files
+			$this->Html->css('base', null, array('inline' => false));
+			$this->Html->css('skeleton', null, array('inline' => false));
+			$this->Html->css('layout', null, array('inline' => false));
 			echo $this->fetch('css');
+
+			// favicons
 		?>
-		<?php echo $this->fetch('script'); ?>
 
 		<!-- title -->
 		<title><?php echo $title_for_layout; ?></title>
@@ -47,5 +52,11 @@
 			<?php echo $this->Html->link(__('Schiedsrichter-Homepage'), 'http://schiri.bettv.de/'); ?>
 			<?php echo $this->element('sql_dump'); ?>
 		</footer>
+
+		<?php
+			// load scripts at end of page in order to improve page load speed
+			echo $this->fetch('script');
+		?>
+
 	</body>
 </html>
