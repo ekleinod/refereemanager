@@ -1,8 +1,14 @@
-<!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="de"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="de"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="de"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="de"> <!--<![endif]-->
+<?php echo $this->Html->docType('html5'); ?>
+<?php
+	$attLang = Configure::read('Config.language');
+	if (strpos($attLang, "-")) {
+		$attLang = substr($attLang, 0, strpos($attLang, "-"));
+	}
+?>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="<?php echo $attLang; ?>"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="<?php echo $attLang; ?>"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="<?php echo $attLang; ?>"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="<?php echo $attLang; ?>"> <!--<![endif]-->
 
 	<head>
 
@@ -19,39 +25,110 @@
 			$this->Html->css('skeleton', null, array('inline' => false));
 			$this->Html->css('layout', null, array('inline' => false));
 			echo $this->fetch('css');
-
-			// favicons
 		?>
+
+		<!-- favicons by hand, maybe later using cakephp methods -->
+		<link rel="shortcut icon" href="img/favicon.ico" />
+		<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png" />
 
 		<!-- title -->
 		<title><?php echo $title_for_layout; ?></title>
 
 	</head>
 	<body>
-		<header>
-			<h1><?php echo $title_for_layout; ?></h1>
-		</header>
 
-		<nav>
-			<ul class="actions">
-				<li><?php echo $this->Html->link(__('Schiedsrichtereinsätze'), array('action' => 'index', 'controller' => 'assignments'), array('class' => 'active')); ?></li>
-				<li><?php echo $this->Html->link(__('Teams'), array('action' => 'index', 'controller' => 'teams'), array('class' => '')); ?></li>
-				<li><?php echo $this->Html->link(__('Login'), array('action' => 'login', 'controller' => 'users'), array('class' => '')); ?></li>
-				<li><?php echo $this->Html->link(__('Logout'), array('action' => 'logout', 'controller' => 'users'), array('class' => '')); ?></li>
-			</ul>
-		</nav>
+		<div class="page">
 
-		<article>
-			<div id="flash"><?php echo $this->Session->flash(); ?></div>
-			<div id="content">
-				<?php echo $this->fetch('content'); ?>
-			</div>
-		</article>
+			<div class="band header">
 
-		<footer>
-			<?php echo $this->Html->link(__('Schiedsrichter-Homepage'), 'http://schiri.bettv.de/'); ?>
-			<?php echo $this->element('sql_dump'); ?>
-		</footer>
+				<header class="container main">
+
+					<div class="sixteen columns">
+
+						<header>
+							<h1><?php echo __('Schiedsrichterverwaltung'); ?></h1>
+						</header>
+
+					</div><!-- end sixteen -->
+
+				</header><!-- end container -->
+
+			</div><!-- end band header -->
+
+			<div class="band navigation">
+
+				<nav class="container primary">
+
+					<div class="sixteen columns">
+
+						<?php
+
+							echo $this->element('navigation');
+						?>
+
+					</div><!-- end sixteen -->
+
+				</nav><!-- end container -->
+
+			</div><!-- end band navigation -->
+
+			<div class="band content">
+
+				<div class="container">
+
+					<div class="sixteen columns">
+
+						<article>
+							<div id="flash"><?php echo $this->Session->flash(); ?></div>
+							<div id="content">
+								<?php echo $this->fetch('content'); ?>
+							</div>
+						</article>
+
+					</div><!-- end sixteen -->
+
+				</div><!-- end container -->
+
+			</div><!-- end band content -->
+
+			<div class="band footer">
+
+				<footer class="container main">
+
+					<div class="four columns">
+
+						<?php echo $this->Html->link(__('Schiedsrichter-Homepage'), 'http://schiri.bettv.de/'); ?>
+
+					</div><!-- end four -->
+
+					<div class="four columns">
+
+						<?php echo $this->Html->link(__('Login'), array('action' => 'login', 'controller' => 'users'), array('class' => '')); ?>
+						<?php echo $this->Html->link(__('Logout'), array('action' => 'logout', 'controller' => 'users'), array('class' => '')); ?>
+
+					</div><!-- end four -->
+
+				</div><!-- end container -->
+
+			</div><!-- end band footer -->
+
+			<div class="band sqldump">
+
+				<footer class="container">
+
+					<div class="sixteen columns">
+
+						<?php echo $this->element('sql_dump'); ?>
+
+					</div><!-- end sixteen -->
+
+				</div><!-- end container -->
+
+			</div><!-- end band footer -->
+
+		</div><!-- end page -->
 
 		<?php
 			// load scripts at end of page in order to improve page load speed

@@ -43,6 +43,9 @@ class AssignmentsController extends AppController {
 		$this->set('assignments', $assignments);
 		$this->set('season', $season);
 		$this->set('refereeroles', $this->getRefereeRoles());
+
+		// set title
+		$this->set('title_for_layout', __('Übersicht der Schiedsrichtereinsätze'));
 	}
 
 	/**

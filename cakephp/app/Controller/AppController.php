@@ -63,6 +63,9 @@ class AppController extends Controller {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
+
+			Configure::write('Config.language', $this->Session->read('Config.language'));
+
 		Security::setHash('sha512');
 		$this->Auth->allow('index', 'view');
 
