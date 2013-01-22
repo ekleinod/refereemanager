@@ -23,9 +23,9 @@
 					<th><?php echo __('Liga'); ?></th>
 					<th><?php echo __('Heimteam'); ?></th>
 					<th><?php echo __('Auswärtsteam'); ?></th>
-					<?php foreach ($refereeroles as $refereerole): ?>
+					<?php foreach ($refereeroles as $refereerole) { ?>
 						<th><?php echo '<span title="' . __($refereerole['title']) . '">' . __($refereerole['code']) . '</span>'; ?></th>
-					<?php endforeach; ?>
+					<?php } ?>
 					<th><?php echo __('Aktionen'); ?></th>
 				</tr>
 			</thead>
