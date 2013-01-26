@@ -7,39 +7,130 @@
 * 6/20/2012
 */
 
+/*
+* modified by Ekkart Kleinod
+*
+* some code taken from webdesign tuts+
+* http://webdesign.tutsplus.com/tutorials/complete-websites/building-a-responsive-layout-with-skeleton-starting-out/
+*/
+
 /* Table of Content
 ==================================================
+	#Font Corrections
+	#Baseline Corrections
 	#Site Styles
 	#Page Styles
 	#Media Queries
 	#Font-Face */
 
+
+/* #Font Corrections
+================================================== */
+	body {
+		font: 14px "DroidSansRegular", Helvetica, Arial, sans-serif;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-family: "DroidSerifBold", "Times New Roman", serif;
+	}
+
+	.button,
+	button,
+	input[type="submit"],
+	input[type="reset"],
+	input[type="button"] {
+		font-family: "DroidSansRegular", Helvetica, Arial, sans-serif;
+	}
+
+	input[type="text"],
+	input[type="password"],
+	input[type="email"],
+	textarea,
+	select {
+		font: 13px "DroidSansRegular", Helvetica, Arial, sans-serif;
+	}
+
+/* #Baseline Corrections
+	using a vertical grid of 7 px
+================================================== */
+
+/* Typography */
+
+	h1 {
+		line-height: 49px;
+		margin-bottom: 14px;
+	}
+	h2 {
+		line-height: 42px;
+		margin-bottom: 7px;
+	}
+	h3 {
+		line-height: 35px;
+		margin-bottom: 7px;
+	}
+	h4 {
+		line-height: 28px;
+		margin-bottom: 7px;
+	}
+	h5 {
+		line-height: 21px;
+	}
+
+	p {
+		margin: 0 0 21px 0;
+	}
+	p.lead {
+		line-height: 28px;
+	}
+
+
+/*	Blockquotes  */
+	blockquote, blockquote p {
+		line-height: 21px;
+	}
+	blockquote {
+		margin: 0 0 21px;
+		padding: 7px 20px 0 19px;
+	}
+
+	hr {
+		margin: 14px 0 28px;
+	}
+
+/* Lists */
+	ul, ol {
+		margin-bottom: 21px;
+	}
+	ul ul, ul ol,
+	ol ol, ol ul {
+		margin: 7px 0 7px 30px;
+	}
+	ul ul li, ul ol li,
+	ol ol li, ol ul li {
+		margin-bottom: 7px;
+	}
+	li {
+		line-height: 21px;
+		margin-bottom: 14px;
+	}
+
+
+
 /* #Site Styles
 ================================================== */
 
-/* droid fonts */
-body {
-	font: 14px/21px "DroidSansRegular", Helvetica, Arial, sans-serif;
+* {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
-h1, h2, h3, h4, h5, h6 {
-	font-family: "DroidSerifBold", "Times New Roman", serif;
+img {
+	max-width: 100%;
 }
 
-.button,
-button,
-input[type="submit"],
-input[type="reset"],
-input[type="button"] {
-	font-family: "DroidSansRegular", Helvetica, Arial, sans-serif;
-}
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-textarea,
-select {
-	font-family: 13px "DroidSansRegular", Helvetica, Arial, sans-serif;
+.band {
+	padding: 0 0 14px 0;
 }
 
 /* #Page Styles
