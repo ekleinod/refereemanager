@@ -1,0 +1,545 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="de"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="de"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="de"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="de"> <!--<![endif]-->
+
+	<head>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /><link rel="stylesheet" type="text/css" href="../css/base.css" /><link rel="stylesheet" type="text/css" href="../css/skeleton.css" /><link rel="stylesheet" type="text/css" href="../css/layout.css" />
+		<!-- favicons by hand, maybe later using cakephp methods -->
+		<link rel="shortcut icon" href="img/favicon.ico" />
+		<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png" />
+
+		<!-- title -->
+		<title>Teams</title>
+
+	</head>
+	<body>
+
+		<div class="page">
+
+			<div class="band header">
+
+				<header class="container main">
+
+					<div class="sixteen columns">
+
+						<header>
+							<h1><a href="../">Schiedsrichterverwaltung</a></a></h1>
+						</header>
+
+					</div><!-- end sixteen -->
+
+				</header><!-- end container -->
+
+			</div><!-- end band header -->
+
+			<div class="band navigation">
+
+				<nav class="container primary">
+
+					<div class="sixteen columns">
+
+						<!-- main navigation for big devices -->
+<ul>
+			<li><a href="../assignments">Schiedsrichtereinsätze</a>							<ul>
+											<li><a href="../assignments">Ansehen</a></li>
+											<li><a href="../assignments/search">Suchen</a></li>
+											<li><a href="../assignments/add">Hinzufügen</a></li>
+									</ul>
+					</li>
+			<li><a href="../teams">Teams</a>							<ul>
+											<li><a href="../teams">Ansehen</a></li>
+											<li><a href="../teams/search">Suchen</a></li>
+											<li><a href="../teams/add">Hinzufügen</a></li>
+									</ul>
+					</li>
+	</ul>
+
+<!-- main navigation for small devices -->
+<select onchange="if ( this.value ) window.location.href=this.value">
+	<option selected="selected" value="">Go to...</option>
+			<option value="../assignments">Schiedsrichtereinsätze</option>
+							<option value="../assignments">- Ansehen</option>
+							<option value="../assignments/search">- Suchen</option>
+							<option value="../assignments/add">- Hinzufügen</option>
+						<option value="../teams">Teams</option>
+							<option value="../teams">- Ansehen</option>
+							<option value="../teams/search">- Suchen</option>
+							<option value="../teams/add">- Hinzufügen</option>
+				</select>
+
+
+					</div><!-- end sixteen -->
+
+				</nav><!-- end container -->
+
+			</div><!-- end band navigation -->
+
+			<div class="band content">
+
+				<div class="container">
+
+					<div class="sixteen columns">
+
+						<article>
+							<div id="flash"></div>
+							<div id="content">
+								<div class="teams form">
+	<form action="../teams/edit/1" id="TeamEditForm" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="PUT"/></div>			<fieldset>
+				<legend>Team editieren</legend>
+
+				<input type="hidden" name="data[Team][id]" value="1" id="TeamId"/><div class="input number required"><label for="TeamNumber">Team-Nummer</label><input name="data[Team][number]" type="number" placeholder="Nummer" title="Team-Nummer" min="1" pattern="[1-9][0-9]*" required="required" value="1" id="TeamNumber"/></div><div class="input text"><label for="TeamName">Name (wenn nicht angegeben, wird der Clubname verwendet)</label><input name="data[Team][name]" type="text" placeholder="Name" title="Team-Name" id="TeamName"/></div><div class="input textarea"><label for="TeamDescription">Beschreibung (textarea!)</label><input name="data[Team][description]" type="textarea" placeholder="Beschreibung" title="Beschreibung" id="TeamDescription"/></div><div class="input select required"><label for="TeamClubId">Club</label><select name="data[Team][club_id]" id="TeamClubId">
+<option value="4">ASV Berlin e.V.</option>
+<option value="8">BSC Eintracht/Südring 1931 e.V.</option>
+<option value="9">BSC Rehberge 1945 e.V.</option>
+<option value="10">BSV 63 Chemie Weißensee e.V.</option>
+<option value="11">BSV Akademie der Wissenschaften e.V</option>
+<option value="12">BTTC Grün-Weiß e.V.</option>
+<option value="13">BTTC Meteor e.V.</option>
+<option value="5">Berliner Sport-Club e.V.</option>
+<option value="6">Berliner Sport-Verein 1892 e.V.</option>
+<option value="7">Bernauer TTC e.V.</option>
+<option value="14">CFC Hertha 06 e.V.</option>
+<option value="15">CfL Berlin 65 e.V.</option>
+<option value="17">Charlottenburger TSV v. 1858 e.V.</option>
+<option value="16">Charlottenburger Tisch-Tennis Club </option>
+<option value="18">DJK Blau-Weiss</option>
+<option value="19">ESV Lok Berlin Schöneweide e.V.</option>
+<option value="20">Füchse Berlin-Reinickendorf</option>
+<option value="21">Hertha BSC e.V.</option>
+<option value="22">Hoppla Berlin e. V.</option>
+<option value="23">Justizvollzugsanstalt Tegel</option>
+<option value="25">KSF Anadol-Umutspor e.V.</option>
+<option value="24">Köpenicker Sportverein-Ajax e.V.</option>
+<option value="26">Lichtenrader SC 1973 e.V.</option>
+<option value="27">Lübarser TTC e.V.</option>
+<option value="29">OMEGA Tischtennis-Team Ostkreuz e.V</option>
+<option value="28">Olympischer Sport-Club Berlin</option>
+<option value="30">Pichelsberger Rudergesellschaft e.V</option>
+<option value="31">Polizei-Sport-Verein Berlin e.V.</option>
+<option value="32">Pro Sport Berlin 24 e.V.</option>
+<option value="33">Rehasport Berlin e.V.</option>
+<option value="35">SC Berlin e.V.</option>
+<option value="36">SC Eintracht Berlin e.V.</option>
+<option value="37">SC Siemensstadt e.V.</option>
+<option value="38">SG &quot;Grüne Trift&quot; Berlin e.V.</option>
+<option value="39">SG Bergmann Borsig e.V.</option>
+<option value="40">SG Blau-Weiß Buch e.V.</option>
+<option value="41">SG Empor Brandenburger Tor 1952 e.V</option>
+<option value="42">SG FEZ Berlin e. V.</option>
+<option value="44">SG Rot-Weiß Neuenhagen e.V.</option>
+<option value="43">SG Rotation Prenzlauer Berg e.V.</option>
+<option value="45">SG SV Lichtenberg 47 / VfB Stern Marzahn</option>
+<option value="50">SSV Friedrichshain 1949 e.V.</option>
+<option value="51">SSV Rotation Berlin e.V.</option>
+<option value="52">SV Bau-Union Berlin e.V.</option>
+<option value="55">SV Berlin-Friedrichstadt e.V.</option>
+<option value="1">SV Berliner Brauereien e.V.</option>
+<option value="53">SV Berliner Bären e.V.</option>
+<option value="54">SV Berliner Verkehrs-Betriebe 49 e.</option>
+<option value="56">SV Blau-Weiß Petershagen e.V.</option>
+<option value="57">SV Einheit Alexander e.V.</option>
+<option value="58">SV Karl-Friedrich-Friesen e.V.</option>
+<option value="59">SV Lichtenberg 47 e.V.</option>
+<option value="60">SV Luftfahrt Berlin e.V.</option>
+<option value="61">SV Motor Wildau e.V.</option>
+<option value="62">SV Sparta Lichtenberg 1911 Berlin e</option>
+<option value="63">SV Straßenwesen Berlin e.V.</option>
+<option value="64">SV Union-Viktoria 1898 e.V.</option>
+<option value="34">Saunafreunde Berlin Familiensportve</option>
+<option value="46">Spandauer Tischtennis Club e.V.</option>
+<option value="47">Sport Club Charlottenburg e.V.</option>
+<option value="48">Sport-Frei e. V.</option>
+<option value="49">Sportfreunde Kladow e.V.</option>
+<option value="69">TSC Berlin 1893 e.V.</option>
+<option value="70">TSG Landbau Schöneiche e.V.</option>
+<option value="71">TSG Oberschöneweide e.V.</option>
+<option value="72">TSV Berlin-Wittenau 1896 e.V.</option>
+<option value="73">TSV GutsMuths 1861 e.V.</option>
+<option value="74">TSV Marienfelde 1890 e.V.</option>
+<option value="75">TSV Marzahner Füchse e.V.</option>
+<option value="76">TSV Rudow 1888 e.V.</option>
+<option value="77">TSV Staaken 06 e.V.</option>
+<option value="78">TSV Tempelhof-Mariendorf e.V.</option>
+<option value="79">TTC &quot;Schwarz-Weiß&quot; e.V. Die Pinguin</option>
+<option value="80">TTC Berlin-Neukölln e.V.</option>
+<option value="81">TTC Blau-Gold e.V.</option>
+<option value="82">TTC Borussia Spandau e.V.</option>
+<option value="83">TTC Düppel Casa dentalis e.V.</option>
+<option value="84">TTC Heiligensee e.V.</option>
+<option value="85">TTC Lok Pankow</option>
+<option value="86">TTC Mariendorf e.V.</option>
+<option value="87">TTC Pallas Grunewald e.V.</option>
+<option value="88">TTC Pink! Berlin e.V</option>
+<option value="89">TTC Schwarz-Weiß Rudow</option>
+<option value="90">TTC Südost e.V.</option>
+<option value="91">TTC Zehlendorf e.V.</option>
+<option value="3">TTK Anröchte</option>
+<option value="92">TTV 1990 Friedrichsfelde e.V.</option>
+<option value="93">TTV Preußen 90 e.V.</option>
+<option value="94">TTV Springpfuhl e.V.</option>
+<option value="95">TTV Treptow 90 e.V.</option>
+<option value="96">TTV Wandlitz</option>
+<option value="97">TUS Buckow 1980 e.V.</option>
+<option value="107">TUSEM Essen</option>
+<option value="65">Tennis Borussia Berlin e.V.</option>
+<option value="66">Tischtennisclub Berlin eastside e.V</option>
+<option value="67">Tischtennisverein Friedrichshagen e.V.</option>
+<option value="68">Top Spin Bernau e.V.</option>
+<option value="98">TuS Hohenschönhausen von 1990 e.V.</option>
+<option value="99">TuS Lichterfelde v. 1887 e.V.</option>
+<option value="100">TuS Makkabi Berlin e.V.</option>
+<option value="101">Verein für Körperkultur Berlin-Südwest</option>
+<option value="102">VfB Hermsdorf e.V.</option>
+<option value="103">VfB Stern Marzahn e.V.</option>
+<option value="104">VfL Berliner Lehrer</option>
+<option value="2" selected="selected">VfL Tegel 1891 e.V.</option>
+<option value="105">Vorspiel SV für Schwule und Lesben </option>
+<option value="106">WSG Königs Wusterhausen e. V.</option>
+</select></div><div class="input select"><label for="TeamAddressId">Spielort (wenn nicht angegeben, wird die Clubadresse verwendet)</label><select name="data[Team][address_id]" id="TeamAddressId">
+<option value="">none</option>
+<option value="34">Adolph-Menzel-Ring 11,  Berlin</option>
+<option value="93">Am Fährweg 93,  Berlin</option>
+<option value="72">Am Luch 16,  Berlin</option>
+<option value="14">Am Rosenanger 30,  Berlin</option>
+<option value="50">Am Viertelsring 10 a,  Berlin</option>
+<option value="39">An der Felgenlake 54, 13589 Berlin</option>
+<option value="24">An der Wuhlheide 56 C,  Berlin</option>
+<option value="25">Anklamer Straße 11,  Berlin</option>
+<option value="79">Anton-Saefkow-Straße 19,  Berlin</option>
+<option value="87">Balatonstraße 24,  Berlin</option>
+<option value="91">Birkbuschgarten 11,  Berlin</option>
+<option value="88">Birkenstraße 13 b,  Berlin</option>
+<option value="27">Buchenhof 5,  Berlin</option>
+<option value="89">Deutsche Straße 17,  Berlin</option>
+<option value="42">Dolgenseestraße 21, 10319 Berlin</option>
+<option value="16">Durlacher Straße 26,  Berlin</option>
+<option value="20">Eibischstraße 6,  Berlin</option>
+<option value="26">Eichener Dorfstraße 15,  Berlin</option>
+<option value="67">Elbestraße 56, 15370 Berlin</option>
+<option value="64">Eldenaer Straße 24,  Berlin</option>
+<option value="17">Ella-Kay-Straße 30,  Berlin</option>
+<option value="15">Erholungsweg 44,  Berlin</option>
+<option value="65">Erich-Kurz-Straße 9,  Berlin</option>
+<option value="66">Erich-Kurz-Straße 9,  Berlin</option>
+<option value="28">Erich-Lodemann-Straße 127, 12437 Berlin</option>
+<option value="13">Erich-Lodemann-Straße 131, 12437 Berlin</option>
+<option value="44">Ernst-Reinke-Straße 23, 10369 Berlin</option>
+<option value="53">Fehmarner Straße 15,  Berlin</option>
+<option value="85">Fichtestraße 14,  Berlin</option>
+<option value="45">Filehner Straße 77,  Berlin</option>
+<option value="83">Flughafenstraße 42, 12053 Berlin</option>
+<option value="22">Flämingstraße 73, 12689 Berlin</option>
+<option value="43">Friedrichshagener Straße 49 A,  Berlin</option>
+<option value="56">Färberstraße 1, 12555 Berlin</option>
+<option value="86">Geinsheimer Weg 52 A,  Berlin</option>
+<option value="68">General-Barby-Straße 27,  Berlin</option>
+<option value="76">Georgenkirchstraße 11,  Berlin</option>
+<option value="84">Germaniastraße 165,  Berlin</option>
+<option value="92">Greifswalder Straße 152,  Berlin</option>
+<option value="57">Grimmstraße 37,  Berlin</option>
+<option value="12">Güntherstraße 1 A,  Berlin</option>
+<option value="60">Hallberger Zeile 15,  Berlin</option>
+<option value="3">Hatzfeldtallee 19, 13509 Berlin</option>
+<option value="90">Hauskavelweg 31,  Berlin</option>
+<option value="47">Heilmannring 54,  Berlin</option>
+<option value="77">Hubertusstraße 22,  Berlin</option>
+<option value="54">Ilsenhof 12,  Berlin</option>
+<option value="48">Karl-Liebknechtstraße 33,  Berlin</option>
+<option value="29">Karlstraße 11,  Berlin</option>
+<option value="80">Kirchsteig 57 B, 15711 Berlin</option>
+<option value="73">Konrad-Wolf-Straße 1,  Berlin</option>
+<option value="31">Koppenstraße 60,  Berlin</option>
+<option value="52">Kreuzstraße 17 A,  Berlin</option>
+<option value="11">Köhlerstraße 9 a,  Berlin</option>
+<option value="63">Landsberger Allee 231,  Berlin</option>
+<option value="10">Lindenufer 19,  Berlin</option>
+<option value="23">Lukasstraße 4 B,  Berlin</option>
+<option value="61">Manteuffelstraße 64 D, 12103 Berlin</option>
+<option value="81">Mariannenstraße 7,  Berlin</option>
+<option value="71">Marienfelder Allee 67,  Berlin</option>
+<option value="95">Markendorfer Straße 13,  Berlin</option>
+<option value="38">Massower Straße 38,  Berlin</option>
+<option value="46">Meyerbeerstraße 46,  Berlin</option>
+<option value="70">Märkische Allee 146,  Berlin</option>
+<option value="21">Neumarkplan 14 b,  Berlin</option>
+<option value="96">Pestalozzistraße, 17309 Pasewalk</option>
+<option value="1">Richard-Sorge-Straße 76, 10249 Berlin</option>
+<option value="82">Rieppelstraße 16,  Berlin</option>
+<option value="35">Rotkamp 27,  Berlin</option>
+<option value="75">Ruhlebener Straße 127,  Berlin</option>
+<option value="62">Rummelsburger Straße 137,  Berlin</option>
+<option value="49">Schöneweider Straße 6,  Berlin</option>
+<option value="18">Schönstraße 68,  Berlin</option>
+<option value="51">Schönwalder Straße 105 A,  Berlin</option>
+<option value="40">Seelenbinderstraße 11,  Berlin</option>
+<option value="59">Sitzendorfer Straße 12,  Berlin</option>
+<option value="55">Steinstraße 2,  Berlin</option>
+<option value="58">Stienitzstraße 18,  Berlin</option>
+<option value="33">Straße am Hochwald 10,  Berlin</option>
+<option value="36">Sundgauer Straße 96,  Berlin</option>
+<option value="19">Tennstedter Straße 3 B,  Berlin</option>
+<option value="4">Tile-Brügge-Weg 63, 13509 Berlin</option>
+<option value="78">Tschaikowskistraße 31,  Berlin</option>
+<option value="69">Uferstraße 17,  Berlin</option>
+<option value="94">Uhlandweg 8,  Berlin</option>
+<option value="37">Wilhelmshavener Straße 8,  Berlin</option>
+<option value="2">Winsstraße 40, 10240 Berlin</option>
+<option value="74">Wulfila Ufer 51,  Berlin</option>
+<option value="30">Zionskirchstraße 73,  Berlin</option>
+</select></div><div class="input select"><label for="TeamSeasonId">Saison</label><select name="data[Team][season_id]" id="TeamSeasonId">
+<option value="2">2011/2012</option>
+<option value="1">2012/2013</option>
+</select></div><div class="input select"><label for="TeamLeagueId">Liga</label><select name="data[Team][league_id]" id="TeamLeagueId">
+<option value="5">1. Bundesliga Damen</option>
+<option value="3">2. Bundesliga Damen</option>
+<option value="1">Oberliga Nordost Damen</option>
+<option value="4">Oberliga Nordost Herren</option>
+<option value="2">Regionalliga Nord Damen</option>
+</select></div><div class="input select"><label for="TeamPersonId">Ansprechperson (wenn nicht angegeben, wird die des Clubs verwendet)</label><select name="data[Team][person_id]" id="TeamPersonId">
+<option value="">none</option>
+<option value="10">Althoff, Michael</option>
+<option value="11">Arend, Hansheinrich</option>
+<option value="12">Armes, Manfred</option>
+<option value="13">Balzer, Dieter</option>
+<option value="14">Becker, Klaus</option>
+<option value="15">Becker, Martin</option>
+<option value="16">Biela, Piotr</option>
+<option value="17">Czerwinski, Marco</option>
+<option value="18">Dallmann, Roland</option>
+<option value="19">Eggert, Dietmar</option>
+<option value="20">Engel, Bettina</option>
+<option value="21">Engel, Gudrun</option>
+<option value="22">Gerhardi, Kay</option>
+<option value="23">Göhring, Torsten</option>
+<option value="24">Hachenberger, Yves</option>
+<option value="25">Haferkorn, Falk</option>
+<option value="26">Hammel, Frank</option>
+<option value="27">Handke, Klaus</option>
+<option value="28">Haupt, Wolfgang</option>
+<option value="29">Hengge-Rauchhaus, Ingrid</option>
+<option value="30">Hennig, Eckart</option>
+<option value="31">Herrmann, Eberhard</option>
+<option value="32">Hoffmann, Rainer</option>
+<option value="33">Hunger, Sascha</option>
+<option value="34">Karschunke, Manfred</option>
+<option value="35">Kirch, Michael</option>
+<option value="36">Klein, Joachim</option>
+<option value="1">Kleinod, Ekkart</option>
+<option value="37">Klomsdorff, Max</option>
+<option value="38">Klotz, Martin</option>
+<option value="39">Klump, Werner</option>
+<option value="40">Kobelt, Tobias</option>
+<option value="42">Kohl, Harry</option>
+<option value="43">Kolberg, Dr., Egon</option>
+<option value="44">Krecek, Dr., Werner</option>
+<option value="45">Kreklau, Dieter</option>
+<option value="46">Krüger, Daniel</option>
+<option value="47">Labitzke, Stefan</option>
+<option value="48">Langenickel, Sina</option>
+<option value="49">Lehmann, Bernd</option>
+<option value="50">Logsch, Peter</option>
+<option value="51">Maaß, Susanne</option>
+<option value="52">Meißner, Richard</option>
+<option value="53">Mihotovic, Lenjin</option>
+<option value="54">Morell, Andre</option>
+<option value="55">Müller, Maurice</option>
+<option value="56">Müller, Wolfgang</option>
+<option value="57">Nohl, Christian</option>
+<option value="58">Nostitz, Katrin</option>
+<option value="59">Ohle, Alexander</option>
+<option value="60">Overbeck, Ingo</option>
+<option value="61">Paulke, Gerd</option>
+<option value="62">Penzhorn, Jörg</option>
+<option value="63">Peter, Anselm</option>
+<option value="64">Pfitzner, Andrea</option>
+<option value="65">Plötz, Achim</option>
+<option value="66">Plötz, Richard</option>
+<option value="67">Pospiech, Harald</option>
+<option value="68">Quandt, Tristan</option>
+<option value="69">Radewaldt, Jacqueline</option>
+<option value="70">Röbisch, Frank</option>
+<option value="71">Schiemann, Michael</option>
+<option value="72">Schley, Toralf</option>
+<option value="73">Schnelle, Marleen</option>
+<option value="76">Schwartz, Marion</option>
+<option value="74">Schönebaum, Manfred</option>
+<option value="75">Schöneis, Torsten</option>
+<option value="77">Seidel, Ulrich</option>
+<option value="78">Semke, Peter</option>
+<option value="79">Siebmann, Joachim</option>
+<option value="80">Sonnabend, Ludolf</option>
+<option value="81">Stamm, Karsten</option>
+<option value="82">Teschner, Nick</option>
+<option value="83">Thein, Tin Tut</option>
+<option value="84">Turbay, Bahar</option>
+<option value="85">Uhthoff, Frank</option>
+<option value="86">Voigt, Harald</option>
+<option value="87">Voll, Thomas</option>
+<option value="88">Wagner, Matthias</option>
+<option value="89">Walder, Andre</option>
+<option value="90">Wiezorek, Dirk</option>
+<option value="91">Wilke, Peter</option>
+<option value="92">Winkler, Michael</option>
+<option value="93">Wolff, Peter</option>
+<option value="94">Wollschläger, Stefan</option>
+<option value="95">Zickert, Walter</option>
+</select></div>
+			</fieldset>
+
+			<button type="reset">Inhalte zurücksetzen</button>			<div class="submit"><input  type="submit" value="Speichern"/></div></form>
+		<pre>Array
+(
+		[Team] => Array
+				(
+						[id] => 1
+						[number] => 1
+						[name] =>
+						[description] =>
+						[club_id] => 2
+						[address_id] => 0
+						[created] => 2012-08-11 01:39:59
+						[modified] => 2012-08-11 01:46:55
+						[title_team] => 1 #1
+				)
+
+		[Address] => Array
+				(
+						[id] =>
+						[street] =>
+						[number] =>
+						[zip_code] =>
+						[city] =>
+						[description] =>
+						[created] =>
+						[modified] =>
+						[title_address] => ??, ??
+				)
+
+		[Club] => Array
+				(
+						[id] => 2
+						[name] => VfL Tegel 1891 e.V.
+						[shortname] =>
+						[description] =>
+						[address_id] => 3
+						[created] => 2012-08-11 01:35:07
+						[modified] => 2012-08-11 01:35:07
+				)
+
+		[Assignment] => Array
+				(
+						[0] => Array
+								(
+										[id] => 2
+										[game_number] => 29
+										[datetime] => 2012-10-27 16:00:00
+										[season_id] => 1
+										[league_id] => 3
+										[address_id] => 0
+										[created] => 2012-08-11 01:48:00
+										[modified] => 2012-08-11 01:48:00
+										[title_assignment] => 2 #29
+										[TeamAssignment] => Array
+												(
+														[id] => 1
+														[home] => 1
+														[assignment_id] => 2
+														[team_id] => 1
+														[created] => 2012-08-11 01:55:17
+														[modified] => 2012-08-11 01:55:17
+												)
+
+								)
+
+				)
+
+		[Season] => Array
+				(
+				)
+
+		[League] => Array
+				(
+				)
+
+		[Person] => Array
+				(
+				)
+
+)
+</pre>
+	</div>
+
+							</div>
+						</article>
+
+					</div><!-- end sixteen -->
+
+				</div><!-- end container -->
+
+			</div><!-- end band content -->
+
+			<div class="band footer">
+
+				<footer class="container main">
+
+					<div class="four columns">
+
+						<a href="http://schiri.bettv.de/">Schiedsrichter-Homepage</a>
+					</div><!-- end four -->
+
+					<div class="four columns">
+
+						<a href="../users/login" class="">Login</a>						<a href="../users/logout" class="">Logout</a>
+					</div><!-- end four -->
+
+				</div><!-- end container -->
+
+			</div><!-- end band footer -->
+
+			<div class="band sqldump">
+
+				<footer class="container">
+
+					<div class="sixteen columns">
+
+						<table class="cake-sql-log" id="cakeSqlLog_13593276315105b18f8490b3_07073289" summary="Cake SQL Log" cellspacing="0"><caption>(default) 20 queries took 1 ms</caption>	<thead>
+		<tr><th>Nr</th><th>Query</th><th>Error</th><th>Affected</th><th>Num. rows</th><th>Took (ms)</th></tr>
+	</thead>
+	<tbody>
+	<tr><td>1</td><td>SELECT COUNT(*) AS `count` FROM `refereemanager`.`rfrmgr_users` AS `User`   WHERE `User`.`id` = 2</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>2</td><td>SELECT `User`.`id`, `User`.`username`, `User`.`password`, `User`.`salt`, `User`.`user_role_id`, `User`.`person_id`, `User`.`created`, `User`.`modified`, `UserRole`.`id`, `UserRole`.`title`, `UserRole`.`description`, `UserRole`.`created`, `UserRole`.`modified`, `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person` FROM `refereemanager`.`rfrmgr_users` AS `User` LEFT JOIN `refereemanager`.`rfrmgr_user_roles` AS `UserRole` ON (`User`.`user_role_id` = `UserRole`.`id`) LEFT JOIN `refereemanager`.`rfrmgr_people` AS `Person` ON (`User`.`person_id` = `Person`.`id`)  WHERE `User`.`id` = 2    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>3</td><td>SELECT `ActivityLog`.`id`, `ActivityLog`.`table_name`, `ActivityLog`.`row_id`, `ActivityLog`.`column_name`, `ActivityLog`.`old_value`, `ActivityLog`.`new_value`, `ActivityLog`.`user_id`, `ActivityLog`.`description`, `ActivityLog`.`created` FROM `refereemanager`.`rfrmgr_activity_logs` AS `ActivityLog`   WHERE `ActivityLog`.`user_id` = (2)   </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>4</td><td>SELECT COUNT(*) AS `count` FROM `refereemanager`.`rfrmgr_users` AS `User`   WHERE `User`.`id` = 2</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>5</td><td>SELECT `User`.`id`, `User`.`username`, `User`.`password`, `User`.`salt`, `User`.`user_role_id`, `User`.`person_id`, `User`.`created`, `User`.`modified`, `UserRole`.`id`, `UserRole`.`title`, `UserRole`.`description`, `UserRole`.`created`, `UserRole`.`modified`, `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person` FROM `refereemanager`.`rfrmgr_users` AS `User` LEFT JOIN `refereemanager`.`rfrmgr_user_roles` AS `UserRole` ON (`User`.`user_role_id` = `UserRole`.`id`) LEFT JOIN `refereemanager`.`rfrmgr_people` AS `Person` ON (`User`.`person_id` = `Person`.`id`)  WHERE `User`.`id` = 2    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>6</td><td>SELECT `ActivityLog`.`id`, `ActivityLog`.`table_name`, `ActivityLog`.`row_id`, `ActivityLog`.`column_name`, `ActivityLog`.`old_value`, `ActivityLog`.`new_value`, `ActivityLog`.`user_id`, `ActivityLog`.`description`, `ActivityLog`.`created` FROM `refereemanager`.`rfrmgr_activity_logs` AS `ActivityLog`   WHERE `ActivityLog`.`user_id` = (2)   </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>7</td><td>SELECT COUNT(*) AS `count` FROM `refereemanager`.`rfrmgr_users` AS `User`   WHERE `User`.`id` = 2</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>8</td><td>SELECT `User`.`id`, `User`.`username`, `User`.`password`, `User`.`salt`, `User`.`user_role_id`, `User`.`person_id`, `User`.`created`, `User`.`modified`, `UserRole`.`id`, `UserRole`.`title`, `UserRole`.`description`, `UserRole`.`created`, `UserRole`.`modified`, `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person` FROM `refereemanager`.`rfrmgr_users` AS `User` LEFT JOIN `refereemanager`.`rfrmgr_user_roles` AS `UserRole` ON (`User`.`user_role_id` = `UserRole`.`id`) LEFT JOIN `refereemanager`.`rfrmgr_people` AS `Person` ON (`User`.`person_id` = `Person`.`id`)  WHERE `User`.`id` = 2    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>9</td><td>SELECT `ActivityLog`.`id`, `ActivityLog`.`table_name`, `ActivityLog`.`row_id`, `ActivityLog`.`column_name`, `ActivityLog`.`old_value`, `ActivityLog`.`new_value`, `ActivityLog`.`user_id`, `ActivityLog`.`description`, `ActivityLog`.`created` FROM `refereemanager`.`rfrmgr_activity_logs` AS `ActivityLog`   WHERE `ActivityLog`.`user_id` = (2)   </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">1</td></tr>
+<tr><td>10</td><td>SELECT COUNT(*) AS `count` FROM `refereemanager`.`rfrmgr_teams` AS `Team`   WHERE `Team`.`id` = 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>11</td><td>SELECT `Team`.`id`, `Team`.`number`, `Team`.`name`, `Team`.`description`, `Team`.`club_id`, `Team`.`address_id`, `Team`.`created`, `Team`.`modified`, (CONCAT(`Team`.`id`, IF(`Team`.`number` &gt; 0, CONCAT(&quot; #&quot;, `Team`.`number`), &quot;&quot;))) AS  `Team__title_team`, `Address`.`id`, `Address`.`street`, `Address`.`number`, `Address`.`zip_code`, `Address`.`city`, `Address`.`description`, `Address`.`created`, `Address`.`modified`, (CONCAT(IFNULL(`Address`.`street`, &quot;??&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`number`), &quot;&quot;), &quot;, &quot;, IFNULL(`Address`.`zip_code`, &quot;&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`city`), &quot;??&quot;))) AS  `Address__title_address`, `Club`.`id`, `Club`.`name`, `Club`.`shortname`, `Club`.`description`, `Club`.`address_id`, `Club`.`created`, `Club`.`modified` FROM `refereemanager`.`rfrmgr_teams` AS `Team` LEFT JOIN `refereemanager`.`rfrmgr_addresses` AS `Address` ON (`Team`.`address_id` = `Address`.`id`) LEFT JOIN `refereemanager`.`rfrmgr_clubs` AS `Club` ON (`Team`.`club_id` = `Club`.`id`)  WHERE `Team`.`id` = 1    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>12</td><td>SELECT `Assignment`.`id`, `Assignment`.`game_number`, `Assignment`.`datetime`, `Assignment`.`season_id`, `Assignment`.`league_id`, `Assignment`.`address_id`, `Assignment`.`created`, `Assignment`.`modified`, (CONCAT(`Assignment`.`id`, &quot; #&quot;, IFNULL(`Assignment`.`game_number`, &quot;??&quot;))) AS  `Assignment__title_assignment`, `TeamAssignment`.`id`, `TeamAssignment`.`home`, `TeamAssignment`.`assignment_id`, `TeamAssignment`.`team_id`, `TeamAssignment`.`created`, `TeamAssignment`.`modified` FROM `refereemanager`.`rfrmgr_assignments` AS `Assignment` JOIN `refereemanager`.`rfrmgr_team_assignments` AS `TeamAssignment` ON (`TeamAssignment`.`team_id` = 1 AND `TeamAssignment`.`assignment_id` = `Assignment`.`id`)    </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>13</td><td>SELECT `Season`.`id`, `Season`.`year_start`, `Season`.`description`, `Season`.`created`, `Season`.`modified`, (CONCAT(`Season`.`year_start`, &quot;/&quot;, `Season`.`year_start` + 1)) AS  `Season__title_season`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_seasons` AS `Season` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 1 AND `TeamSeasonsLeaguesSpokesperson`.`season_id` = `Season`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>14</td><td>SELECT `League`.`id`, `League`.`title`, `League`.`description`, `League`.`code`, `League`.`women`, `League`.`umpire_report_link`, `League`.`created`, `League`.`modified`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_leagues` AS `League` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 1 AND `TeamSeasonsLeaguesSpokesperson`.`league_id` = `League`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>15</td><td>SELECT `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_people` AS `Person` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 1 AND `TeamSeasonsLeaguesSpokesperson`.`person_id` = `Person`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>16</td><td>SELECT `Club`.`id`, `Club`.`name` FROM `refereemanager`.`rfrmgr_clubs` AS `Club`   WHERE 1 = 1</td><td></td><td style = "text-align: right">107</td><td style = "text-align: right">107</td><td style = "text-align: right">0</td></tr>
+<tr><td>17</td><td>SELECT `League`.`id`, `League`.`title` FROM `refereemanager`.`rfrmgr_leagues` AS `League`   WHERE 1 = 1</td><td></td><td style = "text-align: right">5</td><td style = "text-align: right">5</td><td style = "text-align: right">0</td></tr>
+<tr><td>18</td><td>SELECT `Season`.`id`, (CONCAT(`Season`.`year_start`, &quot;/&quot;, `Season`.`year_start` + 1)) AS  `Season__title_season` FROM `refereemanager`.`rfrmgr_seasons` AS `Season`   WHERE 1 = 1</td><td></td><td style = "text-align: right">2</td><td style = "text-align: right">2</td><td style = "text-align: right">0</td></tr>
+<tr><td>19</td><td>SELECT `Person`.`id`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person` FROM `refereemanager`.`rfrmgr_people` AS `Person`   WHERE 1 = 1</td><td></td><td style = "text-align: right">86</td><td style = "text-align: right">86</td><td style = "text-align: right">0</td></tr>
+<tr><td>20</td><td>SELECT `Address`.`id`, (CONCAT(IFNULL(`Address`.`street`, &quot;??&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`number`), &quot;&quot;), &quot;, &quot;, IFNULL(`Address`.`zip_code`, &quot;&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`city`), &quot;??&quot;))) AS  `Address__title_address` FROM `refereemanager`.`rfrmgr_addresses` AS `Address`   WHERE 1 = 1</td><td></td><td style = "text-align: right">89</td><td style = "text-align: right">89</td><td style = "text-align: right">0</td></tr>
+	</tbody></table>
+
+					</div><!-- end sixteen -->
+
+				</div><!-- end container -->
+
+			</div><!-- end band footer -->
+
+		</div><!-- end page -->
+
+
+	</body>
+</html>

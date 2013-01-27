@@ -1,0 +1,2192 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="de"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="de"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="de"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="de"> <!--<![endif]-->
+
+	<head>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /><link rel="stylesheet" type="text/css" href="../css/base.css" /><link rel="stylesheet" type="text/css" href="../css/skeleton.css" /><link rel="stylesheet" type="text/css" href="../css/layout.css" />
+		<!-- favicons by hand, maybe later using cakephp methods -->
+		<link rel="shortcut icon" href="img/favicon.ico" />
+		<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png" />
+
+		<!-- title -->
+		<title>Übersicht der Schiedsrichtereinsätze</title>
+
+	</head>
+	<body>
+
+		<div class="page">
+
+			<div class="band header">
+
+				<header class="container main">
+
+					<div class="sixteen columns">
+
+						<header>
+							<h1><a href="../">Schiedsrichterverwaltung</a></a></h1>
+						</header>
+
+					</div><!-- end sixteen -->
+
+				</header><!-- end container -->
+
+			</div><!-- end band header -->
+
+			<div class="band navigation">
+
+				<nav class="container primary">
+
+					<div class="sixteen columns">
+
+						<!-- main navigation for big devices -->
+<ul>
+			<li><a href="../assignments">Schiedsrichtereinsätze</a>							<ul>
+											<li><a href="../assignments">Ansehen</a></li>
+											<li><a href="../assignments/search">Suchen</a></li>
+											<li><a href="../assignments/add">Hinzufügen</a></li>
+									</ul>
+					</li>
+			<li><a href="../teams">Teams</a>							<ul>
+											<li><a href="../teams">Ansehen</a></li>
+											<li><a href="../teams/search">Suchen</a></li>
+											<li><a href="../teams/add">Hinzufügen</a></li>
+									</ul>
+					</li>
+	</ul>
+
+<!-- main navigation for small devices -->
+<select onchange="if ( this.value ) window.location.href=this.value">
+	<option selected="selected" value="">Go to...</option>
+			<option value="../assignments">Schiedsrichtereinsätze</option>
+							<option value="../assignments">- Ansehen</option>
+							<option value="../assignments/search">- Suchen</option>
+							<option value="../assignments/add">- Hinzufügen</option>
+						<option value="../teams">Teams</option>
+							<option value="../teams">- Ansehen</option>
+							<option value="../teams/search">- Suchen</option>
+							<option value="../teams/add">- Hinzufügen</option>
+				</select>
+
+
+					</div><!-- end sixteen -->
+
+				</nav><!-- end container -->
+
+			</div><!-- end band navigation -->
+
+			<div class="band content">
+
+				<div class="container">
+
+					<div class="sixteen columns">
+
+						<article>
+							<div id="flash"></div>
+							<div id="content">
+								<div class="assignments index">
+	<h2>Übersicht der Schiedsrichtereinsätze</h2>
+
+			<p class="actions"><a href="../assignments/add">Neuen Schiedsrichtereinsatz hinzufügen</a></p>
+
+	<p>Saison: 2012/2013</p>
+
+			<table>
+			<thead>
+				<tr>
+					<th>Datum</th>
+					<th>Zeit</th>
+					<th>Spiel-Nr.</th>
+					<th>Liga</th>
+					<th>Heimteam</th>
+					<th>Auswärtsteam</th>
+											<th><span title="Oberschiedsrichter">OSR</span></th>
+											<th><span title="Stellvertretender Oberschiedsrichter">Stellv. OSR</span></th>
+											<th><span title="Schiedsrichter">SR</span></th>
+										<th>Aktionen</th>
+				</tr>
+			</thead>
+			<tbody>
+									<tr>
+						<td><a href="../dates/view/2012-10-27">Sat 27.10.2012</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/2">29</a></td>
+						<td><a href="../leagues/view/3">2. Bundesliga Damen</a></td>
+						<td><a href="../teams/view/1">VfL Tegel 1891 e.V. 1</a></td>
+						<td><a href="../teams/view/3">TTK Anröchte</a></td>
+													<td></td>
+													<td></td>
+													<td><a href="../people/view/1">Kleinod, Ekkart</a></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/2">Ansehen</a>	<a href="../assignments/edit/2">Editieren</a>	<a href="../assignments/delete/2">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-01">Sat 01.09.2012</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/3">1</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/3">Ansehen</a>	<a href="../assignments/edit/3">Editieren</a>	<a href="../assignments/delete/3">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-08">Sat 08.09.2012</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/4">4</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/4">Ansehen</a>	<a href="../assignments/edit/4">Editieren</a>	<a href="../assignments/delete/4">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-09">Sun 09.09.2012</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/5">7</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/5">Ansehen</a>	<a href="../assignments/edit/5">Editieren</a>	<a href="../assignments/delete/5">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-15">Sat 15.09.2012</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/6">3</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/6">Ansehen</a>	<a href="../assignments/edit/6">Editieren</a>	<a href="../assignments/delete/6">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-15">Sat 15.09.2012</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/7">4</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/7">Ansehen</a>	<a href="../assignments/edit/7">Editieren</a>	<a href="../assignments/delete/7">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-15">Sat 15.09.2012</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/8">4</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/8">Ansehen</a>	<a href="../assignments/edit/8">Editieren</a>	<a href="../assignments/delete/8">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-15">Sat 15.09.2012</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/9">6</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/9">Ansehen</a>	<a href="../assignments/edit/9">Editieren</a>	<a href="../assignments/delete/9">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-16">Sun 16.09.2012</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/10">4</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/10">Ansehen</a>	<a href="../assignments/edit/10">Editieren</a>	<a href="../assignments/delete/10">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-16">Sun 16.09.2012</a></td>
+						<td>10:00</td>
+						<td><a href="../assignments/view/11">5</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/11">Ansehen</a>	<a href="../assignments/edit/11">Editieren</a>	<a href="../assignments/delete/11">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-16">Sun 16.09.2012</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/12">12</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/12">Ansehen</a>	<a href="../assignments/edit/12">Editieren</a>	<a href="../assignments/delete/12">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-28">Fri 28.09.2012</a></td>
+						<td>19:00</td>
+						<td><a href="../assignments/view/13">6</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/13">Ansehen</a>	<a href="../assignments/edit/13">Editieren</a>	<a href="../assignments/delete/13">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-29">Sat 29.09.2012</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/14">7</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/14">Ansehen</a>	<a href="../assignments/edit/14">Editieren</a>	<a href="../assignments/delete/14">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-29">Sat 29.09.2012</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/15">8</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/15">Ansehen</a>	<a href="../assignments/edit/15">Editieren</a>	<a href="../assignments/delete/15">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-29">Sat 29.09.2012</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/16">9</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/16">Ansehen</a>	<a href="../assignments/edit/16">Editieren</a>	<a href="../assignments/delete/16">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-29">Sat 29.09.2012</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/17">10</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/17">Ansehen</a>	<a href="../assignments/edit/17">Editieren</a>	<a href="../assignments/delete/17">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-30">Sun 30.09.2012</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/18">9</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/18">Ansehen</a>	<a href="../assignments/edit/18">Editieren</a>	<a href="../assignments/delete/18">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-09-30">Sun 30.09.2012</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/19">11</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/19">Ansehen</a>	<a href="../assignments/edit/19">Editieren</a>	<a href="../assignments/delete/19">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-06">Sat 06.10.2012</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/20">11</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/20">Ansehen</a>	<a href="../assignments/edit/20">Editieren</a>	<a href="../assignments/delete/20">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-06">Sat 06.10.2012</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/21">13</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/21">Ansehen</a>	<a href="../assignments/edit/21">Editieren</a>	<a href="../assignments/delete/21">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-06">Sat 06.10.2012</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/22">15</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/22">Ansehen</a>	<a href="../assignments/edit/22">Editieren</a>	<a href="../assignments/delete/22">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-07">Sun 07.10.2012</a></td>
+						<td>10:00</td>
+						<td><a href="../assignments/view/23">12</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/23">Ansehen</a>	<a href="../assignments/edit/23">Editieren</a>	<a href="../assignments/delete/23">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-07">Sun 07.10.2012</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/24">25</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/24">Ansehen</a>	<a href="../assignments/edit/24">Editieren</a>	<a href="../assignments/delete/24">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-20">Sat 20.10.2012</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/25">15</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/25">Ansehen</a>	<a href="../assignments/edit/25">Editieren</a>	<a href="../assignments/delete/25">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-20">Sat 20.10.2012</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/26">17</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/26">Ansehen</a>	<a href="../assignments/edit/26">Editieren</a>	<a href="../assignments/delete/26">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-20">Sat 20.10.2012</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/27">18</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/27">Ansehen</a>	<a href="../assignments/edit/27">Editieren</a>	<a href="../assignments/delete/27">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-20">Sat 20.10.2012</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/28">19</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/28">Ansehen</a>	<a href="../assignments/edit/28">Editieren</a>	<a href="../assignments/delete/28">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-20">Sat 20.10.2012</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/29">23</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/29">Ansehen</a>	<a href="../assignments/edit/29">Editieren</a>	<a href="../assignments/delete/29">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-26">Fri 26.10.2012</a></td>
+						<td>19:00</td>
+						<td><a href="../assignments/view/30">3</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/30">Ansehen</a>	<a href="../assignments/edit/30">Editieren</a>	<a href="../assignments/delete/30">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-27">Sat 27.10.2012</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/31">16</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/31">Ansehen</a>	<a href="../assignments/edit/31">Editieren</a>	<a href="../assignments/delete/31">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-27">Sat 27.10.2012</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/32">17</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/32">Ansehen</a>	<a href="../assignments/edit/32">Editieren</a>	<a href="../assignments/delete/32">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-27">Sat 27.10.2012</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/33">18</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/33">Ansehen</a>	<a href="../assignments/edit/33">Editieren</a>	<a href="../assignments/delete/33">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-27">Sat 27.10.2012</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/34">20</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/34">Ansehen</a>	<a href="../assignments/edit/34">Editieren</a>	<a href="../assignments/delete/34">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-28">Sun 28.10.2012</a></td>
+						<td>10:00</td>
+						<td><a href="../assignments/view/35">19</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/35">Ansehen</a>	<a href="../assignments/edit/35">Editieren</a>	<a href="../assignments/delete/35">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-28">Sun 28.10.2012</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/36">20</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/36">Ansehen</a>	<a href="../assignments/edit/36">Editieren</a>	<a href="../assignments/delete/36">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-28">Sun 28.10.2012</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/37">21</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/37">Ansehen</a>	<a href="../assignments/edit/37">Editieren</a>	<a href="../assignments/delete/37">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-10-28">Sun 28.10.2012</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/38">25</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/38">Ansehen</a>	<a href="../assignments/edit/38">Editieren</a>	<a href="../assignments/delete/38">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-03">Sat 03.11.2012</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/39">26</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/39">Ansehen</a>	<a href="../assignments/edit/39">Editieren</a>	<a href="../assignments/delete/39">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-03">Sat 03.11.2012</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/40">28</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/40">Ansehen</a>	<a href="../assignments/edit/40">Editieren</a>	<a href="../assignments/delete/40">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-04">Sun 04.11.2012</a></td>
+						<td>15:00</td>
+						<td><a href="../assignments/view/41">30</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/41">Ansehen</a>	<a href="../assignments/edit/41">Editieren</a>	<a href="../assignments/delete/41">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-10">Sat 10.11.2012</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/42">24</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/42">Ansehen</a>	<a href="../assignments/edit/42">Editieren</a>	<a href="../assignments/delete/42">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-10">Sat 10.11.2012</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/43">25</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/43">Ansehen</a>	<a href="../assignments/edit/43">Editieren</a>	<a href="../assignments/delete/43">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-10">Sat 10.11.2012</a></td>
+						<td>17:00</td>
+						<td><a href="../assignments/view/44">27</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/44">Ansehen</a>	<a href="../assignments/edit/44">Editieren</a>	<a href="../assignments/delete/44">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-10">Sat 10.11.2012</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/45">30</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/45">Ansehen</a>	<a href="../assignments/edit/45">Editieren</a>	<a href="../assignments/delete/45">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-10">Sat 10.11.2012</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/46">41</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/46">Ansehen</a>	<a href="../assignments/edit/46">Editieren</a>	<a href="../assignments/delete/46">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-11">Sun 11.11.2012</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/47">28</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/47">Ansehen</a>	<a href="../assignments/edit/47">Editieren</a>	<a href="../assignments/delete/47">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-11">Sun 11.11.2012</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/48">32</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/48">Ansehen</a>	<a href="../assignments/edit/48">Editieren</a>	<a href="../assignments/delete/48">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-17">Sat 17.11.2012</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/49">33</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/49">Ansehen</a>	<a href="../assignments/edit/49">Editieren</a>	<a href="../assignments/delete/49">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-17">Sat 17.11.2012</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/50">35</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/50">Ansehen</a>	<a href="../assignments/edit/50">Editieren</a>	<a href="../assignments/delete/50">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-17">Sat 17.11.2012</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/51">35</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/51">Ansehen</a>	<a href="../assignments/edit/51">Editieren</a>	<a href="../assignments/delete/51">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-17">Sat 17.11.2012</a></td>
+						<td>18:30</td>
+						<td><a href="../assignments/view/52">36</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/52">Ansehen</a>	<a href="../assignments/edit/52">Editieren</a>	<a href="../assignments/delete/52">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-17">Sat 17.11.2012</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/53">48</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/53">Ansehen</a>	<a href="../assignments/edit/53">Editieren</a>	<a href="../assignments/delete/53">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-18">Sun 18.11.2012</a></td>
+						<td>10:00</td>
+						<td><a href="../assignments/view/54">30</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/54">Ansehen</a>	<a href="../assignments/edit/54">Editieren</a>	<a href="../assignments/delete/54">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-18">Sun 18.11.2012</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/55">31</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/55">Ansehen</a>	<a href="../assignments/edit/55">Editieren</a>	<a href="../assignments/delete/55">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-18">Sun 18.11.2012</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/56">38</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/56">Ansehen</a>	<a href="../assignments/edit/56">Editieren</a>	<a href="../assignments/delete/56">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-24">Sat 24.11.2012</a></td>
+						<td>18:30</td>
+						<td><a href="../assignments/view/57">23</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td><a href="../teams/view/4">TTC eastside 1</a></td>
+						<td><a href="../teams/view/5">TUSEM Essen</a></td>
+													<td><a href="../people/view/61">Paulke, Gerd</a></td>
+													<td><a href="../people/view/59">Ohle, Alexander</a></td>
+													<td><a href="../people/view/13">Balzer, Dieter</a><br /><a href="../people/view/15">Becker, Martin</a><br /><a href="../people/view/70">Röbisch, Frank</a></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/57">Ansehen</a>	<a href="../assignments/edit/57">Editieren</a>	<a href="../assignments/delete/57">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-24">Sat 24.11.2012</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/58">32</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/58">Ansehen</a>	<a href="../assignments/edit/58">Editieren</a>	<a href="../assignments/delete/58">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-24">Sat 24.11.2012</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/59">34</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/59">Ansehen</a>	<a href="../assignments/edit/59">Editieren</a>	<a href="../assignments/delete/59">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-11-24">Sat 24.11.2012</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/60">53</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/60">Ansehen</a>	<a href="../assignments/edit/60">Editieren</a>	<a href="../assignments/delete/60">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-12-01">Sat 01.12.2012</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/61">41</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/61">Ansehen</a>	<a href="../assignments/edit/61">Editieren</a>	<a href="../assignments/delete/61">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-12-01">Sat 01.12.2012</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/62">43</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/62">Ansehen</a>	<a href="../assignments/edit/62">Editieren</a>	<a href="../assignments/delete/62">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-12-01">Sat 01.12.2012</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/63">50</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/63">Ansehen</a>	<a href="../assignments/edit/63">Editieren</a>	<a href="../assignments/delete/63">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-12-02">Sun 02.12.2012</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/64">36</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/64">Ansehen</a>	<a href="../assignments/edit/64">Editieren</a>	<a href="../assignments/delete/64">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-12-02">Sun 02.12.2012</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/65">42</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/65">Ansehen</a>	<a href="../assignments/edit/65">Editieren</a>	<a href="../assignments/delete/65">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-12-02">Sun 02.12.2012</a></td>
+						<td>15:00</td>
+						<td><a href="../assignments/view/66">61</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/66">Ansehen</a>	<a href="../assignments/edit/66">Editieren</a>	<a href="../assignments/delete/66">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2012-12-14">Fri 14.12.2012</a></td>
+						<td>19:00</td>
+						<td><a href="../assignments/view/67">29</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/67">Ansehen</a>	<a href="../assignments/edit/67">Editieren</a>	<a href="../assignments/delete/67">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-01-05">Sat 05.01.2013</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/68">1</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/68">Ansehen</a>	<a href="../assignments/edit/68">Editieren</a>	<a href="../assignments/delete/68">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-01-05">Sat 05.01.2013</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/69">1</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/69">Ansehen</a>	<a href="../assignments/edit/69">Editieren</a>	<a href="../assignments/delete/69">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-01-06">Sun 06.01.2013</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/70">2</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/70">Ansehen</a>	<a href="../assignments/edit/70">Editieren</a>	<a href="../assignments/delete/70">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-01-06">Sun 06.01.2013</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/71">2</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/71">Ansehen</a>	<a href="../assignments/edit/71">Editieren</a>	<a href="../assignments/delete/71">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-01-12">Sat 12.01.2013</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/72">3</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/72">Ansehen</a>	<a href="../assignments/edit/72">Editieren</a>	<a href="../assignments/delete/72">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-01-12">Sat 12.01.2013</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/73">3</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/73">Ansehen</a>	<a href="../assignments/edit/73">Editieren</a>	<a href="../assignments/delete/73">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-01-12">Sat 12.01.2013</a></td>
+						<td>17:00</td>
+						<td><a href="../assignments/view/74">5</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/74">Ansehen</a>	<a href="../assignments/edit/74">Editieren</a>	<a href="../assignments/delete/74">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-01-12">Sat 12.01.2013</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/75">47</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/75">Ansehen</a>	<a href="../assignments/edit/75">Editieren</a>	<a href="../assignments/delete/75">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-01-12">Sat 12.01.2013</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/76">51</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/76">Ansehen</a>	<a href="../assignments/edit/76">Editieren</a>	<a href="../assignments/delete/76">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-01-12">Sat 12.01.2013</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/77">59</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/77">Ansehen</a>	<a href="../assignments/edit/77">Editieren</a>	<a href="../assignments/delete/77">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-01-12">Sat 12.01.2013</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/78">70</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/78">Ansehen</a>	<a href="../assignments/edit/78">Editieren</a>	<a href="../assignments/delete/78">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-01-13">Sun 13.01.2013</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/79">7</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/79">Ansehen</a>	<a href="../assignments/edit/79">Editieren</a>	<a href="../assignments/delete/79">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-01-26">Sat 26.01.2013</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/80">8</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/80">Ansehen</a>	<a href="../assignments/edit/80">Editieren</a>	<a href="../assignments/delete/80">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-02">Sat 02.02.2013</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/81">9</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/81">Ansehen</a>	<a href="../assignments/edit/81">Editieren</a>	<a href="../assignments/delete/81">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-02">Sat 02.02.2013</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/82">10</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/82">Ansehen</a>	<a href="../assignments/edit/82">Editieren</a>	<a href="../assignments/delete/82">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-02">Sat 02.02.2013</a></td>
+						<td>17:00</td>
+						<td><a href="../assignments/view/83">11</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/83">Ansehen</a>	<a href="../assignments/edit/83">Editieren</a>	<a href="../assignments/delete/83">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-02">Sat 02.02.2013</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/84">12</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/84">Ansehen</a>	<a href="../assignments/edit/84">Editieren</a>	<a href="../assignments/delete/84">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-02">Sat 02.02.2013</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/85">67</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/85">Ansehen</a>	<a href="../assignments/edit/85">Editieren</a>	<a href="../assignments/delete/85">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-02">Sat 02.02.2013</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/86">84</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/86">Ansehen</a>	<a href="../assignments/edit/86">Editieren</a>	<a href="../assignments/delete/86">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-03">Sun 03.02.2013</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/87">12</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/87">Ansehen</a>	<a href="../assignments/edit/87">Editieren</a>	<a href="../assignments/delete/87">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-16">Sat 16.02.2013</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/88">57</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/88">Ansehen</a>	<a href="../assignments/edit/88">Editieren</a>	<a href="../assignments/delete/88">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-16">Sat 16.02.2013</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/89">75</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/89">Ansehen</a>	<a href="../assignments/edit/89">Editieren</a>	<a href="../assignments/delete/89">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-17">Sun 17.02.2013</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/90">15</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/90">Ansehen</a>	<a href="../assignments/edit/90">Editieren</a>	<a href="../assignments/delete/90">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-23">Sat 23.02.2013</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/91">16</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/91">Ansehen</a>	<a href="../assignments/edit/91">Editieren</a>	<a href="../assignments/delete/91">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-23">Sat 23.02.2013</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/92">22</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/92">Ansehen</a>	<a href="../assignments/edit/92">Editieren</a>	<a href="../assignments/delete/92">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-23">Sat 23.02.2013</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/93">23</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/93">Ansehen</a>	<a href="../assignments/edit/93">Editieren</a>	<a href="../assignments/delete/93">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-23">Sat 23.02.2013</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/94">77</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/94">Ansehen</a>	<a href="../assignments/edit/94">Editieren</a>	<a href="../assignments/delete/94">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-23">Sat 23.02.2013</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/95">78</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/95">Ansehen</a>	<a href="../assignments/edit/95">Editieren</a>	<a href="../assignments/delete/95">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-23">Sat 23.02.2013</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/96">99</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/96">Ansehen</a>	<a href="../assignments/edit/96">Editieren</a>	<a href="../assignments/delete/96">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-24">Sun 24.02.2013</a></td>
+						<td>10:00</td>
+						<td><a href="../assignments/view/97">17</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/97">Ansehen</a>	<a href="../assignments/edit/97">Editieren</a>	<a href="../assignments/delete/97">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-24">Sun 24.02.2013</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/98">19</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/98">Ansehen</a>	<a href="../assignments/edit/98">Editieren</a>	<a href="../assignments/delete/98">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-24">Sun 24.02.2013</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/99">24</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/99">Ansehen</a>	<a href="../assignments/edit/99">Editieren</a>	<a href="../assignments/delete/99">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-24">Sun 24.02.2013</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/100">26</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/100">Ansehen</a>	<a href="../assignments/edit/100">Editieren</a>	<a href="../assignments/delete/100">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-02-24">Sun 24.02.2013</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/101">62</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/101">Ansehen</a>	<a href="../assignments/edit/101">Editieren</a>	<a href="../assignments/delete/101">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-02">Sat 02.03.2013</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/102">20</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/102">Ansehen</a>	<a href="../assignments/edit/102">Editieren</a>	<a href="../assignments/delete/102">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-02">Sat 02.03.2013</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/103">21</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/103">Ansehen</a>	<a href="../assignments/edit/103">Editieren</a>	<a href="../assignments/delete/103">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-02">Sat 02.03.2013</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/104">22</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/104">Ansehen</a>	<a href="../assignments/edit/104">Editieren</a>	<a href="../assignments/delete/104">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-02">Sat 02.03.2013</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/105">27</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/105">Ansehen</a>	<a href="../assignments/edit/105">Editieren</a>	<a href="../assignments/delete/105">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-02">Sat 02.03.2013</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/106">28</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/106">Ansehen</a>	<a href="../assignments/edit/106">Editieren</a>	<a href="../assignments/delete/106">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-03">Sun 03.03.2013</a></td>
+						<td>10:00</td>
+						<td><a href="../assignments/view/107">23</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/107">Ansehen</a>	<a href="../assignments/edit/107">Editieren</a>	<a href="../assignments/delete/107">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-09">Sat 09.03.2013</a></td>
+						<td>17:00</td>
+						<td><a href="../assignments/view/108">24</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/108">Ansehen</a>	<a href="../assignments/edit/108">Editieren</a>	<a href="../assignments/delete/108">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-10">Sun 10.03.2013</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/109">25</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/109">Ansehen</a>	<a href="../assignments/edit/109">Editieren</a>	<a href="../assignments/delete/109">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-10">Sun 10.03.2013</a></td>
+						<td>11:00</td>
+						<td><a href="../assignments/view/110">35</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/110">Ansehen</a>	<a href="../assignments/edit/110">Editieren</a>	<a href="../assignments/delete/110">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-15">Fri 15.03.2013</a></td>
+						<td>19:00</td>
+						<td><a href="../assignments/view/111">51</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/111">Ansehen</a>	<a href="../assignments/edit/111">Editieren</a>	<a href="../assignments/delete/111">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-16">Sat 16.03.2013</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/112">44</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/112">Ansehen</a>	<a href="../assignments/edit/112">Editieren</a>	<a href="../assignments/delete/112">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-16">Sat 16.03.2013</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/113">69</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/113">Ansehen</a>	<a href="../assignments/edit/113">Editieren</a>	<a href="../assignments/delete/113">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-16">Sat 16.03.2013</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/114">72</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/114">Ansehen</a>	<a href="../assignments/edit/114">Editieren</a>	<a href="../assignments/delete/114">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-17">Sun 17.03.2013</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/115">73</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/115">Ansehen</a>	<a href="../assignments/edit/115">Editieren</a>	<a href="../assignments/delete/115">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-24">Sun 24.03.2013</a></td>
+						<td>10:00</td>
+						<td><a href="../assignments/view/116">28</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/116">Ansehen</a>	<a href="../assignments/edit/116">Editieren</a>	<a href="../assignments/delete/116">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-03-24">Sun 24.03.2013</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/117">79</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/117">Ansehen</a>	<a href="../assignments/edit/117">Editieren</a>	<a href="../assignments/delete/117">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-05">Fri 05.04.2013</a></td>
+						<td>19:00</td>
+						<td><a href="../assignments/view/118">61</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/118">Ansehen</a>	<a href="../assignments/edit/118">Editieren</a>	<a href="../assignments/delete/118">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-06">Sat 06.04.2013</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/119">40</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/119">Ansehen</a>	<a href="../assignments/edit/119">Editieren</a>	<a href="../assignments/delete/119">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-13">Sat 13.04.2013</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/120">32</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/120">Ansehen</a>	<a href="../assignments/edit/120">Editieren</a>	<a href="../assignments/delete/120">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-13">Sat 13.04.2013</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/121">34</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/121">Ansehen</a>	<a href="../assignments/edit/121">Editieren</a>	<a href="../assignments/delete/121">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-13">Sat 13.04.2013</a></td>
+						<td>13:00</td>
+						<td><a href="../assignments/view/122">41</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/122">Ansehen</a>	<a href="../assignments/edit/122">Editieren</a>	<a href="../assignments/delete/122">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-13">Sat 13.04.2013</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/123">42</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/123">Ansehen</a>	<a href="../assignments/edit/123">Editieren</a>	<a href="../assignments/delete/123">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-13">Sat 13.04.2013</a></td>
+						<td>16:00</td>
+						<td><a href="../assignments/view/124">43</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/124">Ansehen</a>	<a href="../assignments/edit/124">Editieren</a>	<a href="../assignments/delete/124">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-13">Sat 13.04.2013</a></td>
+						<td>19:00</td>
+						<td><a href="../assignments/view/125">44</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/125">Ansehen</a>	<a href="../assignments/edit/125">Editieren</a>	<a href="../assignments/delete/125">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-13">Sat 13.04.2013</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/126">128</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/126">Ansehen</a>	<a href="../assignments/edit/126">Editieren</a>	<a href="../assignments/delete/126">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-14">Sun 14.04.2013</a></td>
+						<td>10:00</td>
+						<td><a href="../assignments/view/127">35</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/127">Ansehen</a>	<a href="../assignments/edit/127">Editieren</a>	<a href="../assignments/delete/127">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-14">Sun 14.04.2013</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/128">36</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/128">Ansehen</a>	<a href="../assignments/edit/128">Editieren</a>	<a href="../assignments/delete/128">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-14">Sun 14.04.2013</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/129">45</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/129">Ansehen</a>	<a href="../assignments/edit/129">Editieren</a>	<a href="../assignments/delete/129">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-14">Sun 14.04.2013</a></td>
+						<td>12:00</td>
+						<td><a href="../assignments/view/130">88</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/130">Ansehen</a>	<a href="../assignments/edit/130">Editieren</a>	<a href="../assignments/delete/130">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-20">Sat 20.04.2013</a></td>
+						<td>18:00</td>
+						<td><a href="../assignments/view/131">131</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/131">Ansehen</a>	<a href="../assignments/edit/131">Editieren</a>	<a href="../assignments/delete/131">Löschen</a>
+						</td>
+					</tr>
+									<tr>
+						<td><a href="../dates/view/2013-04-21">Sun 21.04.2013</a></td>
+						<td>14:00</td>
+						<td><a href="../assignments/view/132">70</a></td>
+						<td><a href="../leagues/view/5">1. Bundesliga Damen</a></td>
+						<td>??</td>
+						<td>??</td>
+													<td></td>
+													<td></td>
+													<td></td>
+												<td class="actions">
+							<!--?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?-->
+							<a href="../assignments/view/132">Ansehen</a>	<a href="../assignments/edit/132">Editieren</a>	<a href="../assignments/delete/132">Löschen</a>
+						</td>
+					</tr>
+							</tbody>
+		</table>
+
+	<!--?php pr($assignments); ?-->
+
+</div>
+
+							</div>
+						</article>
+
+					</div><!-- end sixteen -->
+
+				</div><!-- end container -->
+
+			</div><!-- end band content -->
+
+			<div class="band footer">
+
+				<footer class="container main">
+
+					<div class="four columns">
+
+						<a href="http://schiri.bettv.de/">Schiedsrichter-Homepage</a>
+					</div><!-- end four -->
+
+					<div class="four columns">
+
+						<a href="../users/login" class="">Login</a>						<a href="../users/logout" class="">Logout</a>
+					</div><!-- end four -->
+
+				</div><!-- end container -->
+
+			</div><!-- end band footer -->
+
+			<div class="band sqldump">
+
+				<footer class="container">
+
+					<div class="sixteen columns">
+
+						<table class="cake-sql-log" id="cakeSqlLog_13593275545105b142a2e3a7_97395643" summary="Cake SQL Log" cellspacing="0"><caption>(default) 58 queries took 0 ms</caption>	<thead>
+		<tr><th>Nr</th><th>Query</th><th>Error</th><th>Affected</th><th>Num. rows</th><th>Took (ms)</th></tr>
+	</thead>
+	<tbody>
+	<tr><td>1</td><td>SELECT COUNT(*) AS `count` FROM `refereemanager`.`rfrmgr_users` AS `User`   WHERE `User`.`id` = 2</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>2</td><td>SELECT `User`.`id`, `User`.`username`, `User`.`password`, `User`.`salt`, `User`.`user_role_id`, `User`.`person_id`, `User`.`created`, `User`.`modified`, `UserRole`.`id`, `UserRole`.`title`, `UserRole`.`description`, `UserRole`.`created`, `UserRole`.`modified`, `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person` FROM `refereemanager`.`rfrmgr_users` AS `User` LEFT JOIN `refereemanager`.`rfrmgr_user_roles` AS `UserRole` ON (`User`.`user_role_id` = `UserRole`.`id`) LEFT JOIN `refereemanager`.`rfrmgr_people` AS `Person` ON (`User`.`person_id` = `Person`.`id`)  WHERE `User`.`id` = 2    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>3</td><td>SELECT `ActivityLog`.`id`, `ActivityLog`.`table_name`, `ActivityLog`.`row_id`, `ActivityLog`.`column_name`, `ActivityLog`.`old_value`, `ActivityLog`.`new_value`, `ActivityLog`.`user_id`, `ActivityLog`.`description`, `ActivityLog`.`created` FROM `refereemanager`.`rfrmgr_activity_logs` AS `ActivityLog`   WHERE `ActivityLog`.`user_id` = (2)   </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>4</td><td>SELECT COUNT(*) AS `count` FROM `refereemanager`.`rfrmgr_users` AS `User`   WHERE `User`.`id` = 2</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>5</td><td>SELECT `User`.`id`, `User`.`username`, `User`.`password`, `User`.`salt`, `User`.`user_role_id`, `User`.`person_id`, `User`.`created`, `User`.`modified`, `UserRole`.`id`, `UserRole`.`title`, `UserRole`.`description`, `UserRole`.`created`, `UserRole`.`modified`, `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person` FROM `refereemanager`.`rfrmgr_users` AS `User` LEFT JOIN `refereemanager`.`rfrmgr_user_roles` AS `UserRole` ON (`User`.`user_role_id` = `UserRole`.`id`) LEFT JOIN `refereemanager`.`rfrmgr_people` AS `Person` ON (`User`.`person_id` = `Person`.`id`)  WHERE `User`.`id` = 2    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>6</td><td>SELECT `ActivityLog`.`id`, `ActivityLog`.`table_name`, `ActivityLog`.`row_id`, `ActivityLog`.`column_name`, `ActivityLog`.`old_value`, `ActivityLog`.`new_value`, `ActivityLog`.`user_id`, `ActivityLog`.`description`, `ActivityLog`.`created` FROM `refereemanager`.`rfrmgr_activity_logs` AS `ActivityLog`   WHERE `ActivityLog`.`user_id` = (2)   </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>7</td><td>SELECT COUNT(*) AS `count` FROM `refereemanager`.`rfrmgr_users` AS `User`   WHERE `User`.`id` = 2</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>8</td><td>SELECT `User`.`id`, `User`.`username`, `User`.`password`, `User`.`salt`, `User`.`user_role_id`, `User`.`person_id`, `User`.`created`, `User`.`modified`, `UserRole`.`id`, `UserRole`.`title`, `UserRole`.`description`, `UserRole`.`created`, `UserRole`.`modified`, `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person` FROM `refereemanager`.`rfrmgr_users` AS `User` LEFT JOIN `refereemanager`.`rfrmgr_user_roles` AS `UserRole` ON (`User`.`user_role_id` = `UserRole`.`id`) LEFT JOIN `refereemanager`.`rfrmgr_people` AS `Person` ON (`User`.`person_id` = `Person`.`id`)  WHERE `User`.`id` = 2    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>9</td><td>SELECT `ActivityLog`.`id`, `ActivityLog`.`table_name`, `ActivityLog`.`row_id`, `ActivityLog`.`column_name`, `ActivityLog`.`old_value`, `ActivityLog`.`new_value`, `ActivityLog`.`user_id`, `ActivityLog`.`description`, `ActivityLog`.`created` FROM `refereemanager`.`rfrmgr_activity_logs` AS `ActivityLog`   WHERE `ActivityLog`.`user_id` = (2)   </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>10</td><td>SELECT `Assignment`.`id`, `Assignment`.`game_number`, `Assignment`.`datetime`, `Assignment`.`season_id`, `Assignment`.`league_id`, `Assignment`.`address_id`, `Assignment`.`created`, `Assignment`.`modified`, (CONCAT(`Assignment`.`id`, &quot; #&quot;, IFNULL(`Assignment`.`game_number`, &quot;??&quot;))) AS  `Assignment__title_assignment`, `Address`.`id`, `Address`.`street`, `Address`.`number`, `Address`.`zip_code`, `Address`.`city`, `Address`.`description`, `Address`.`created`, `Address`.`modified`, (CONCAT(IFNULL(`Address`.`street`, &quot;??&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`number`), &quot;&quot;), &quot;, &quot;, IFNULL(`Address`.`zip_code`, &quot;&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`city`), &quot;??&quot;))) AS  `Address__title_address`, `League`.`id`, `League`.`title`, `League`.`description`, `League`.`code`, `League`.`women`, `League`.`umpire_report_link`, `League`.`created`, `League`.`modified`, `Season`.`id`, `Season`.`year_start`, `Season`.`description`, `Season`.`created`, `Season`.`modified`, (CONCAT(`Season`.`year_start`, &quot;/&quot;, `Season`.`year_start` + 1)) AS  `Season__title_season` FROM `refereemanager`.`rfrmgr_assignments` AS `Assignment` LEFT JOIN `refereemanager`.`rfrmgr_addresses` AS `Address` ON (`Assignment`.`address_id` = `Address`.`id`) LEFT JOIN `refereemanager`.`rfrmgr_leagues` AS `League` ON (`Assignment`.`league_id` = `League`.`id`) LEFT JOIN `refereemanager`.`rfrmgr_seasons` AS `Season` ON (`Assignment`.`season_id` = `Season`.`id`)  WHERE `Season`.`year_start` = &#039;2012&#039;</td><td></td><td style = "text-align: right">131</td><td style = "text-align: right">131</td><td style = "text-align: right">0</td></tr>
+<tr><td>11</td><td>SELECT `Referee`.`id`, `Referee`.`license`, `Referee`.`last_referee_training`, `Referee`.`assignment_quantity_id`, `Referee`.`status_id`, `Referee`.`club_id`, `Referee`.`person_id`, `Referee`.`referee_kind_id`, `Referee`.`created`, `Referee`.`modified`, (CONCAT(`Referee`.`id`, &quot;-&quot;, `Referee`.`person_id`, &quot;-&quot;, `Referee`.`referee_kind_id`)) AS  `Referee__title_referee`, `RefereeAssignment`.`id`, `RefereeAssignment`.`assignment_id`, `RefereeAssignment`.`referee_assignment_role_id`, `RefereeAssignment`.`referee_id`, `RefereeAssignment`.`created`, `RefereeAssignment`.`modified` FROM `refereemanager`.`rfrmgr_referees` AS `Referee` JOIN `refereemanager`.`rfrmgr_referee_assignments` AS `RefereeAssignment` ON (`RefereeAssignment`.`assignment_id` IN (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132) AND `RefereeAssignment`.`referee_id` = `Referee`.`id`)    </td><td></td><td style = "text-align: right">6</td><td style = "text-align: right">6</td><td style = "text-align: right">0</td></tr>
+<tr><td>12</td><td>SELECT `Team`.`id`, `Team`.`number`, `Team`.`name`, `Team`.`description`, `Team`.`club_id`, `Team`.`address_id`, `Team`.`created`, `Team`.`modified`, (CONCAT(`Team`.`id`, IF(`Team`.`number` &gt; 0, CONCAT(&quot; #&quot;, `Team`.`number`), &quot;&quot;))) AS  `Team__title_team`, `TeamAssignment`.`id`, `TeamAssignment`.`home`, `TeamAssignment`.`assignment_id`, `TeamAssignment`.`team_id`, `TeamAssignment`.`created`, `TeamAssignment`.`modified` FROM `refereemanager`.`rfrmgr_teams` AS `Team` JOIN `refereemanager`.`rfrmgr_team_assignments` AS `TeamAssignment` ON (`TeamAssignment`.`assignment_id` IN (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132) AND `TeamAssignment`.`team_id` = `Team`.`id`)    </td><td></td><td style = "text-align: right">4</td><td style = "text-align: right">4</td><td style = "text-align: right">0</td></tr>
+<tr><td>13</td><td>SELECT `Team`.`id`, `Team`.`number`, `Team`.`name`, `Team`.`description`, `Team`.`club_id`, `Team`.`address_id`, `Team`.`created`, `Team`.`modified`, (CONCAT(`Team`.`id`, IF(`Team`.`number` &gt; 0, CONCAT(&quot; #&quot;, `Team`.`number`), &quot;&quot;))) AS  `Team__title_team`, `Address`.`id`, `Address`.`street`, `Address`.`number`, `Address`.`zip_code`, `Address`.`city`, `Address`.`description`, `Address`.`created`, `Address`.`modified`, (CONCAT(IFNULL(`Address`.`street`, &quot;??&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`number`), &quot;&quot;), &quot;, &quot;, IFNULL(`Address`.`zip_code`, &quot;&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`city`), &quot;??&quot;))) AS  `Address__title_address`, `Club`.`id`, `Club`.`name`, `Club`.`shortname`, `Club`.`description`, `Club`.`address_id`, `Club`.`created`, `Club`.`modified` FROM `refereemanager`.`rfrmgr_teams` AS `Team` LEFT JOIN `refereemanager`.`rfrmgr_addresses` AS `Address` ON (`Team`.`address_id` = `Address`.`id`) LEFT JOIN `refereemanager`.`rfrmgr_clubs` AS `Club` ON (`Team`.`club_id` = `Club`.`id`)  WHERE `Team`.`id` = 1    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>14</td><td>SELECT `Assignment`.`id`, `Assignment`.`game_number`, `Assignment`.`datetime`, `Assignment`.`season_id`, `Assignment`.`league_id`, `Assignment`.`address_id`, `Assignment`.`created`, `Assignment`.`modified`, (CONCAT(`Assignment`.`id`, &quot; #&quot;, IFNULL(`Assignment`.`game_number`, &quot;??&quot;))) AS  `Assignment__title_assignment`, `TeamAssignment`.`id`, `TeamAssignment`.`home`, `TeamAssignment`.`assignment_id`, `TeamAssignment`.`team_id`, `TeamAssignment`.`created`, `TeamAssignment`.`modified` FROM `refereemanager`.`rfrmgr_assignments` AS `Assignment` JOIN `refereemanager`.`rfrmgr_team_assignments` AS `TeamAssignment` ON (`TeamAssignment`.`team_id` = 1 AND `TeamAssignment`.`assignment_id` = `Assignment`.`id`)    </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>15</td><td>SELECT `Season`.`id`, `Season`.`year_start`, `Season`.`description`, `Season`.`created`, `Season`.`modified`, (CONCAT(`Season`.`year_start`, &quot;/&quot;, `Season`.`year_start` + 1)) AS  `Season__title_season`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_seasons` AS `Season` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 1 AND `TeamSeasonsLeaguesSpokesperson`.`season_id` = `Season`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>16</td><td>SELECT `League`.`id`, `League`.`title`, `League`.`description`, `League`.`code`, `League`.`women`, `League`.`umpire_report_link`, `League`.`created`, `League`.`modified`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_leagues` AS `League` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 1 AND `TeamSeasonsLeaguesSpokesperson`.`league_id` = `League`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>17</td><td>SELECT `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_people` AS `Person` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 1 AND `TeamSeasonsLeaguesSpokesperson`.`person_id` = `Person`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>18</td><td>SELECT `Team`.`id`, `Team`.`number`, `Team`.`name`, `Team`.`description`, `Team`.`club_id`, `Team`.`address_id`, `Team`.`created`, `Team`.`modified`, (CONCAT(`Team`.`id`, IF(`Team`.`number` &gt; 0, CONCAT(&quot; #&quot;, `Team`.`number`), &quot;&quot;))) AS  `Team__title_team`, `Address`.`id`, `Address`.`street`, `Address`.`number`, `Address`.`zip_code`, `Address`.`city`, `Address`.`description`, `Address`.`created`, `Address`.`modified`, (CONCAT(IFNULL(`Address`.`street`, &quot;??&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`number`), &quot;&quot;), &quot;, &quot;, IFNULL(`Address`.`zip_code`, &quot;&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`city`), &quot;??&quot;))) AS  `Address__title_address`, `Club`.`id`, `Club`.`name`, `Club`.`shortname`, `Club`.`description`, `Club`.`address_id`, `Club`.`created`, `Club`.`modified` FROM `refereemanager`.`rfrmgr_teams` AS `Team` LEFT JOIN `refereemanager`.`rfrmgr_addresses` AS `Address` ON (`Team`.`address_id` = `Address`.`id`) LEFT JOIN `refereemanager`.`rfrmgr_clubs` AS `Club` ON (`Team`.`club_id` = `Club`.`id`)  WHERE `Team`.`id` = 3    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>19</td><td>SELECT `Assignment`.`id`, `Assignment`.`game_number`, `Assignment`.`datetime`, `Assignment`.`season_id`, `Assignment`.`league_id`, `Assignment`.`address_id`, `Assignment`.`created`, `Assignment`.`modified`, (CONCAT(`Assignment`.`id`, &quot; #&quot;, IFNULL(`Assignment`.`game_number`, &quot;??&quot;))) AS  `Assignment__title_assignment`, `TeamAssignment`.`id`, `TeamAssignment`.`home`, `TeamAssignment`.`assignment_id`, `TeamAssignment`.`team_id`, `TeamAssignment`.`created`, `TeamAssignment`.`modified` FROM `refereemanager`.`rfrmgr_assignments` AS `Assignment` JOIN `refereemanager`.`rfrmgr_team_assignments` AS `TeamAssignment` ON (`TeamAssignment`.`team_id` = 3 AND `TeamAssignment`.`assignment_id` = `Assignment`.`id`)    </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>20</td><td>SELECT `Season`.`id`, `Season`.`year_start`, `Season`.`description`, `Season`.`created`, `Season`.`modified`, (CONCAT(`Season`.`year_start`, &quot;/&quot;, `Season`.`year_start` + 1)) AS  `Season__title_season`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_seasons` AS `Season` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 3 AND `TeamSeasonsLeaguesSpokesperson`.`season_id` = `Season`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>21</td><td>SELECT `League`.`id`, `League`.`title`, `League`.`description`, `League`.`code`, `League`.`women`, `League`.`umpire_report_link`, `League`.`created`, `League`.`modified`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_leagues` AS `League` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 3 AND `TeamSeasonsLeaguesSpokesperson`.`league_id` = `League`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>22</td><td>SELECT `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_people` AS `Person` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 3 AND `TeamSeasonsLeaguesSpokesperson`.`person_id` = `Person`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>23</td><td>SELECT `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person`, `Address`.`id`, `Address`.`street`, `Address`.`number`, `Address`.`zip_code`, `Address`.`city`, `Address`.`description`, `Address`.`created`, `Address`.`modified`, (CONCAT(IFNULL(`Address`.`street`, &quot;??&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`number`), &quot;&quot;), &quot;, &quot;, IFNULL(`Address`.`zip_code`, &quot;&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`city`), &quot;??&quot;))) AS  `Address__title_address` FROM `refereemanager`.`rfrmgr_people` AS `Person` LEFT JOIN `refereemanager`.`rfrmgr_addresses` AS `Address` ON (`Person`.`address_id` = `Address`.`id`)  WHERE `Person`.`id` = 1    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>24</td><td>SELECT `Email`.`id`, `Email`.`email`, `Email`.`description`, `Email`.`contact_kind_id`, `Email`.`person_id`, `Email`.`created`, `Email`.`modified` FROM `refereemanager`.`rfrmgr_emails` AS `Email`   WHERE `Email`.`person_id` = (1)   </td><td></td><td style = "text-align: right">2</td><td style = "text-align: right">2</td><td style = "text-align: right">0</td></tr>
+<tr><td>25</td><td>SELECT `PhoneNumber`.`id`, `PhoneNumber`.`number`, `PhoneNumber`.`description`, `PhoneNumber`.`contact_kind_id`, `PhoneNumber`.`person_id`, `PhoneNumber`.`created`, `PhoneNumber`.`modified` FROM `refereemanager`.`rfrmgr_phone_numbers` AS `PhoneNumber`   WHERE `PhoneNumber`.`person_id` = (1)   </td><td></td><td style = "text-align: right">3</td><td style = "text-align: right">3</td><td style = "text-align: right">0</td></tr>
+<tr><td>26</td><td>SELECT `UmpireReportRecipient`.`id`, `UmpireReportRecipient`.`league_id`, `UmpireReportRecipient`.`person_id`, `UmpireReportRecipient`.`season_id`, `UmpireReportRecipient`.`created`, `UmpireReportRecipient`.`modified` FROM `refereemanager`.`rfrmgr_umpire_report_recipients` AS `UmpireReportRecipient`   WHERE `UmpireReportRecipient`.`person_id` = (1)   </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>27</td><td>SELECT `RefereeAssignmentRole`.`id`, `RefereeAssignmentRole`.`code`, `RefereeAssignmentRole`.`title`, `RefereeAssignmentRole`.`description`, `RefereeAssignmentRole`.`created`, `RefereeAssignmentRole`.`modified` FROM `refereemanager`.`rfrmgr_referee_assignment_roles` AS `RefereeAssignmentRole`   WHERE 1 = 1</td><td></td><td style = "text-align: right">3</td><td style = "text-align: right">3</td><td style = "text-align: right">0</td></tr>
+<tr><td>28</td><td>SELECT `RefereeAssignment`.`id`, `RefereeAssignment`.`assignment_id`, `RefereeAssignment`.`referee_assignment_role_id`, `RefereeAssignment`.`referee_id`, `RefereeAssignment`.`created`, `RefereeAssignment`.`modified` FROM `refereemanager`.`rfrmgr_referee_assignments` AS `RefereeAssignment`   WHERE `RefereeAssignment`.`referee_assignment_role_id` IN (1, 2, 3)   </td><td></td><td style = "text-align: right">6</td><td style = "text-align: right">6</td><td style = "text-align: right">0</td></tr>
+<tr><td>29</td><td>SELECT `Team`.`id`, `Team`.`number`, `Team`.`name`, `Team`.`description`, `Team`.`club_id`, `Team`.`address_id`, `Team`.`created`, `Team`.`modified`, (CONCAT(`Team`.`id`, IF(`Team`.`number` &gt; 0, CONCAT(&quot; #&quot;, `Team`.`number`), &quot;&quot;))) AS  `Team__title_team`, `Address`.`id`, `Address`.`street`, `Address`.`number`, `Address`.`zip_code`, `Address`.`city`, `Address`.`description`, `Address`.`created`, `Address`.`modified`, (CONCAT(IFNULL(`Address`.`street`, &quot;??&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`number`), &quot;&quot;), &quot;, &quot;, IFNULL(`Address`.`zip_code`, &quot;&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`city`), &quot;??&quot;))) AS  `Address__title_address`, `Club`.`id`, `Club`.`name`, `Club`.`shortname`, `Club`.`description`, `Club`.`address_id`, `Club`.`created`, `Club`.`modified` FROM `refereemanager`.`rfrmgr_teams` AS `Team` LEFT JOIN `refereemanager`.`rfrmgr_addresses` AS `Address` ON (`Team`.`address_id` = `Address`.`id`) LEFT JOIN `refereemanager`.`rfrmgr_clubs` AS `Club` ON (`Team`.`club_id` = `Club`.`id`)  WHERE `Team`.`id` = 4    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>30</td><td>SELECT `Assignment`.`id`, `Assignment`.`game_number`, `Assignment`.`datetime`, `Assignment`.`season_id`, `Assignment`.`league_id`, `Assignment`.`address_id`, `Assignment`.`created`, `Assignment`.`modified`, (CONCAT(`Assignment`.`id`, &quot; #&quot;, IFNULL(`Assignment`.`game_number`, &quot;??&quot;))) AS  `Assignment__title_assignment`, `TeamAssignment`.`id`, `TeamAssignment`.`home`, `TeamAssignment`.`assignment_id`, `TeamAssignment`.`team_id`, `TeamAssignment`.`created`, `TeamAssignment`.`modified` FROM `refereemanager`.`rfrmgr_assignments` AS `Assignment` JOIN `refereemanager`.`rfrmgr_team_assignments` AS `TeamAssignment` ON (`TeamAssignment`.`team_id` = 4 AND `TeamAssignment`.`assignment_id` = `Assignment`.`id`)    </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>31</td><td>SELECT `Season`.`id`, `Season`.`year_start`, `Season`.`description`, `Season`.`created`, `Season`.`modified`, (CONCAT(`Season`.`year_start`, &quot;/&quot;, `Season`.`year_start` + 1)) AS  `Season__title_season`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_seasons` AS `Season` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 4 AND `TeamSeasonsLeaguesSpokesperson`.`season_id` = `Season`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>32</td><td>SELECT `League`.`id`, `League`.`title`, `League`.`description`, `League`.`code`, `League`.`women`, `League`.`umpire_report_link`, `League`.`created`, `League`.`modified`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_leagues` AS `League` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 4 AND `TeamSeasonsLeaguesSpokesperson`.`league_id` = `League`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>33</td><td>SELECT `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_people` AS `Person` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 4 AND `TeamSeasonsLeaguesSpokesperson`.`person_id` = `Person`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>34</td><td>SELECT `Team`.`id`, `Team`.`number`, `Team`.`name`, `Team`.`description`, `Team`.`club_id`, `Team`.`address_id`, `Team`.`created`, `Team`.`modified`, (CONCAT(`Team`.`id`, IF(`Team`.`number` &gt; 0, CONCAT(&quot; #&quot;, `Team`.`number`), &quot;&quot;))) AS  `Team__title_team`, `Address`.`id`, `Address`.`street`, `Address`.`number`, `Address`.`zip_code`, `Address`.`city`, `Address`.`description`, `Address`.`created`, `Address`.`modified`, (CONCAT(IFNULL(`Address`.`street`, &quot;??&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`number`), &quot;&quot;), &quot;, &quot;, IFNULL(`Address`.`zip_code`, &quot;&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`city`), &quot;??&quot;))) AS  `Address__title_address`, `Club`.`id`, `Club`.`name`, `Club`.`shortname`, `Club`.`description`, `Club`.`address_id`, `Club`.`created`, `Club`.`modified` FROM `refereemanager`.`rfrmgr_teams` AS `Team` LEFT JOIN `refereemanager`.`rfrmgr_addresses` AS `Address` ON (`Team`.`address_id` = `Address`.`id`) LEFT JOIN `refereemanager`.`rfrmgr_clubs` AS `Club` ON (`Team`.`club_id` = `Club`.`id`)  WHERE `Team`.`id` = 5    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>35</td><td>SELECT `Assignment`.`id`, `Assignment`.`game_number`, `Assignment`.`datetime`, `Assignment`.`season_id`, `Assignment`.`league_id`, `Assignment`.`address_id`, `Assignment`.`created`, `Assignment`.`modified`, (CONCAT(`Assignment`.`id`, &quot; #&quot;, IFNULL(`Assignment`.`game_number`, &quot;??&quot;))) AS  `Assignment__title_assignment`, `TeamAssignment`.`id`, `TeamAssignment`.`home`, `TeamAssignment`.`assignment_id`, `TeamAssignment`.`team_id`, `TeamAssignment`.`created`, `TeamAssignment`.`modified` FROM `refereemanager`.`rfrmgr_assignments` AS `Assignment` JOIN `refereemanager`.`rfrmgr_team_assignments` AS `TeamAssignment` ON (`TeamAssignment`.`team_id` = 5 AND `TeamAssignment`.`assignment_id` = `Assignment`.`id`)    </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>36</td><td>SELECT `Season`.`id`, `Season`.`year_start`, `Season`.`description`, `Season`.`created`, `Season`.`modified`, (CONCAT(`Season`.`year_start`, &quot;/&quot;, `Season`.`year_start` + 1)) AS  `Season__title_season`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_seasons` AS `Season` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 5 AND `TeamSeasonsLeaguesSpokesperson`.`season_id` = `Season`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>37</td><td>SELECT `League`.`id`, `League`.`title`, `League`.`description`, `League`.`code`, `League`.`women`, `League`.`umpire_report_link`, `League`.`created`, `League`.`modified`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_leagues` AS `League` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 5 AND `TeamSeasonsLeaguesSpokesperson`.`league_id` = `League`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>38</td><td>SELECT `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person`, `TeamSeasonsLeaguesSpokesperson`.`id`, `TeamSeasonsLeaguesSpokesperson`.`team_id`, `TeamSeasonsLeaguesSpokesperson`.`season_id`, `TeamSeasonsLeaguesSpokesperson`.`league_id`, `TeamSeasonsLeaguesSpokesperson`.`person_id`, `TeamSeasonsLeaguesSpokesperson`.`created`, `TeamSeasonsLeaguesSpokesperson`.`modified` FROM `refereemanager`.`rfrmgr_people` AS `Person` JOIN `refereemanager`.`rfrmgr_team_seasons_leagues_spokespeople` AS `TeamSeasonsLeaguesSpokesperson` ON (`TeamSeasonsLeaguesSpokesperson`.`team_id` = 5 AND `TeamSeasonsLeaguesSpokesperson`.`person_id` = `Person`.`id`)    </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>39</td><td>SELECT `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person`, `Address`.`id`, `Address`.`street`, `Address`.`number`, `Address`.`zip_code`, `Address`.`city`, `Address`.`description`, `Address`.`created`, `Address`.`modified`, (CONCAT(IFNULL(`Address`.`street`, &quot;??&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`number`), &quot;&quot;), &quot;, &quot;, IFNULL(`Address`.`zip_code`, &quot;&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`city`), &quot;??&quot;))) AS  `Address__title_address` FROM `refereemanager`.`rfrmgr_people` AS `Person` LEFT JOIN `refereemanager`.`rfrmgr_addresses` AS `Address` ON (`Person`.`address_id` = `Address`.`id`)  WHERE `Person`.`id` = 61    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>40</td><td>SELECT `Email`.`id`, `Email`.`email`, `Email`.`description`, `Email`.`contact_kind_id`, `Email`.`person_id`, `Email`.`created`, `Email`.`modified` FROM `refereemanager`.`rfrmgr_emails` AS `Email`   WHERE `Email`.`person_id` = (61)   </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>41</td><td>SELECT `PhoneNumber`.`id`, `PhoneNumber`.`number`, `PhoneNumber`.`description`, `PhoneNumber`.`contact_kind_id`, `PhoneNumber`.`person_id`, `PhoneNumber`.`created`, `PhoneNumber`.`modified` FROM `refereemanager`.`rfrmgr_phone_numbers` AS `PhoneNumber`   WHERE `PhoneNumber`.`person_id` = (61)   </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>42</td><td>SELECT `UmpireReportRecipient`.`id`, `UmpireReportRecipient`.`league_id`, `UmpireReportRecipient`.`person_id`, `UmpireReportRecipient`.`season_id`, `UmpireReportRecipient`.`created`, `UmpireReportRecipient`.`modified` FROM `refereemanager`.`rfrmgr_umpire_report_recipients` AS `UmpireReportRecipient`   WHERE `UmpireReportRecipient`.`person_id` = (61)   </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>43</td><td>SELECT `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person`, `Address`.`id`, `Address`.`street`, `Address`.`number`, `Address`.`zip_code`, `Address`.`city`, `Address`.`description`, `Address`.`created`, `Address`.`modified`, (CONCAT(IFNULL(`Address`.`street`, &quot;??&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`number`), &quot;&quot;), &quot;, &quot;, IFNULL(`Address`.`zip_code`, &quot;&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`city`), &quot;??&quot;))) AS  `Address__title_address` FROM `refereemanager`.`rfrmgr_people` AS `Person` LEFT JOIN `refereemanager`.`rfrmgr_addresses` AS `Address` ON (`Person`.`address_id` = `Address`.`id`)  WHERE `Person`.`id` = 59    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>44</td><td>SELECT `Email`.`id`, `Email`.`email`, `Email`.`description`, `Email`.`contact_kind_id`, `Email`.`person_id`, `Email`.`created`, `Email`.`modified` FROM `refereemanager`.`rfrmgr_emails` AS `Email`   WHERE `Email`.`person_id` = (59)   </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>45</td><td>SELECT `PhoneNumber`.`id`, `PhoneNumber`.`number`, `PhoneNumber`.`description`, `PhoneNumber`.`contact_kind_id`, `PhoneNumber`.`person_id`, `PhoneNumber`.`created`, `PhoneNumber`.`modified` FROM `refereemanager`.`rfrmgr_phone_numbers` AS `PhoneNumber`   WHERE `PhoneNumber`.`person_id` = (59)   </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>46</td><td>SELECT `UmpireReportRecipient`.`id`, `UmpireReportRecipient`.`league_id`, `UmpireReportRecipient`.`person_id`, `UmpireReportRecipient`.`season_id`, `UmpireReportRecipient`.`created`, `UmpireReportRecipient`.`modified` FROM `refereemanager`.`rfrmgr_umpire_report_recipients` AS `UmpireReportRecipient`   WHERE `UmpireReportRecipient`.`person_id` = (59)   </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>47</td><td>SELECT `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person`, `Address`.`id`, `Address`.`street`, `Address`.`number`, `Address`.`zip_code`, `Address`.`city`, `Address`.`description`, `Address`.`created`, `Address`.`modified`, (CONCAT(IFNULL(`Address`.`street`, &quot;??&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`number`), &quot;&quot;), &quot;, &quot;, IFNULL(`Address`.`zip_code`, &quot;&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`city`), &quot;??&quot;))) AS  `Address__title_address` FROM `refereemanager`.`rfrmgr_people` AS `Person` LEFT JOIN `refereemanager`.`rfrmgr_addresses` AS `Address` ON (`Person`.`address_id` = `Address`.`id`)  WHERE `Person`.`id` = 13    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>48</td><td>SELECT `Email`.`id`, `Email`.`email`, `Email`.`description`, `Email`.`contact_kind_id`, `Email`.`person_id`, `Email`.`created`, `Email`.`modified` FROM `refereemanager`.`rfrmgr_emails` AS `Email`   WHERE `Email`.`person_id` = (13)   </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>49</td><td>SELECT `PhoneNumber`.`id`, `PhoneNumber`.`number`, `PhoneNumber`.`description`, `PhoneNumber`.`contact_kind_id`, `PhoneNumber`.`person_id`, `PhoneNumber`.`created`, `PhoneNumber`.`modified` FROM `refereemanager`.`rfrmgr_phone_numbers` AS `PhoneNumber`   WHERE `PhoneNumber`.`person_id` = (13)   </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>50</td><td>SELECT `UmpireReportRecipient`.`id`, `UmpireReportRecipient`.`league_id`, `UmpireReportRecipient`.`person_id`, `UmpireReportRecipient`.`season_id`, `UmpireReportRecipient`.`created`, `UmpireReportRecipient`.`modified` FROM `refereemanager`.`rfrmgr_umpire_report_recipients` AS `UmpireReportRecipient`   WHERE `UmpireReportRecipient`.`person_id` = (13)   </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>51</td><td>SELECT `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person`, `Address`.`id`, `Address`.`street`, `Address`.`number`, `Address`.`zip_code`, `Address`.`city`, `Address`.`description`, `Address`.`created`, `Address`.`modified`, (CONCAT(IFNULL(`Address`.`street`, &quot;??&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`number`), &quot;&quot;), &quot;, &quot;, IFNULL(`Address`.`zip_code`, &quot;&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`city`), &quot;??&quot;))) AS  `Address__title_address` FROM `refereemanager`.`rfrmgr_people` AS `Person` LEFT JOIN `refereemanager`.`rfrmgr_addresses` AS `Address` ON (`Person`.`address_id` = `Address`.`id`)  WHERE `Person`.`id` = 15    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>52</td><td>SELECT `Email`.`id`, `Email`.`email`, `Email`.`description`, `Email`.`contact_kind_id`, `Email`.`person_id`, `Email`.`created`, `Email`.`modified` FROM `refereemanager`.`rfrmgr_emails` AS `Email`   WHERE `Email`.`person_id` = (15)   </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>53</td><td>SELECT `PhoneNumber`.`id`, `PhoneNumber`.`number`, `PhoneNumber`.`description`, `PhoneNumber`.`contact_kind_id`, `PhoneNumber`.`person_id`, `PhoneNumber`.`created`, `PhoneNumber`.`modified` FROM `refereemanager`.`rfrmgr_phone_numbers` AS `PhoneNumber`   WHERE `PhoneNumber`.`person_id` = (15)   </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>54</td><td>SELECT `UmpireReportRecipient`.`id`, `UmpireReportRecipient`.`league_id`, `UmpireReportRecipient`.`person_id`, `UmpireReportRecipient`.`season_id`, `UmpireReportRecipient`.`created`, `UmpireReportRecipient`.`modified` FROM `refereemanager`.`rfrmgr_umpire_report_recipients` AS `UmpireReportRecipient`   WHERE `UmpireReportRecipient`.`person_id` = (15)   </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+<tr><td>55</td><td>SELECT `Person`.`id`, `Person`.`name`, `Person`.`first_name`, `Person`.`birthday`, `Person`.`address_id`, `Person`.`created`, `Person`.`modified`, (CONCAT(`Person`.`name`, &#039;, &#039;, `Person`.`first_name`)) AS  `Person__title_person`, `Address`.`id`, `Address`.`street`, `Address`.`number`, `Address`.`zip_code`, `Address`.`city`, `Address`.`description`, `Address`.`created`, `Address`.`modified`, (CONCAT(IFNULL(`Address`.`street`, &quot;??&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`number`), &quot;&quot;), &quot;, &quot;, IFNULL(`Address`.`zip_code`, &quot;&quot;), IFNULL(CONCAT(&quot; &quot;, `Address`.`city`), &quot;??&quot;))) AS  `Address__title_address` FROM `refereemanager`.`rfrmgr_people` AS `Person` LEFT JOIN `refereemanager`.`rfrmgr_addresses` AS `Address` ON (`Person`.`address_id` = `Address`.`id`)  WHERE `Person`.`id` = 70    LIMIT 1</td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>56</td><td>SELECT `Email`.`id`, `Email`.`email`, `Email`.`description`, `Email`.`contact_kind_id`, `Email`.`person_id`, `Email`.`created`, `Email`.`modified` FROM `refereemanager`.`rfrmgr_emails` AS `Email`   WHERE `Email`.`person_id` = (70)   </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>57</td><td>SELECT `PhoneNumber`.`id`, `PhoneNumber`.`number`, `PhoneNumber`.`description`, `PhoneNumber`.`contact_kind_id`, `PhoneNumber`.`person_id`, `PhoneNumber`.`created`, `PhoneNumber`.`modified` FROM `refereemanager`.`rfrmgr_phone_numbers` AS `PhoneNumber`   WHERE `PhoneNumber`.`person_id` = (70)   </td><td></td><td style = "text-align: right">1</td><td style = "text-align: right">1</td><td style = "text-align: right">0</td></tr>
+<tr><td>58</td><td>SELECT `UmpireReportRecipient`.`id`, `UmpireReportRecipient`.`league_id`, `UmpireReportRecipient`.`person_id`, `UmpireReportRecipient`.`season_id`, `UmpireReportRecipient`.`created`, `UmpireReportRecipient`.`modified` FROM `refereemanager`.`rfrmgr_umpire_report_recipients` AS `UmpireReportRecipient`   WHERE `UmpireReportRecipient`.`person_id` = (70)   </td><td></td><td style = "text-align: right">0</td><td style = "text-align: right">0</td><td style = "text-align: right">0</td></tr>
+	</tbody></table>
+
+					</div><!-- end sixteen -->
+
+				</div><!-- end container -->
+
+			</div><!-- end band footer -->
+
+		</div><!-- end page -->
+
+
+	</body>
+</html>
