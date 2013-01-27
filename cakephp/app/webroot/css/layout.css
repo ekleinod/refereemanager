@@ -26,29 +26,29 @@
 
 /* #Font Corrections
 ================================================== */
-	body {
-		font: 14px "DroidSansRegular", Helvetica, Arial, sans-serif;
-	}
+body {
+	font: 14px "DroidSansRegular", Helvetica, Arial, sans-serif;
+}
 
-	h1, h2, h3, h4, h5, h6 {
-		font-family: "DroidSerifBold", "Times New Roman", serif;
-	}
+h1, h2, h3, h4, h5, h6 {
+	font-family: "DroidSerifBold", "Times New Roman", serif;
+}
 
-	.button,
-	button,
-	input[type="submit"],
-	input[type="reset"],
-	input[type="button"] {
-		font-family: "DroidSansRegular", Helvetica, Arial, sans-serif;
-	}
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+	font-family: "DroidSansRegular", Helvetica, Arial, sans-serif;
+}
 
-	input[type="text"],
-	input[type="password"],
-	input[type="email"],
-	textarea,
-	select {
-		font: 13px "DroidSansRegular", Helvetica, Arial, sans-serif;
-	}
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea,
+select {
+	font: 13px "DroidSansRegular", Helvetica, Arial, sans-serif;
+}
 
 /* #Baseline Corrections
 	using a vertical grid of 7 px
@@ -56,63 +56,64 @@
 
 /* Typography */
 
-	h1 {
-		line-height: 49px;
-		margin-bottom: 14px;
-	}
-	h2 {
-		line-height: 42px;
-		margin-bottom: 7px;
-	}
-	h3 {
-		line-height: 35px;
-		margin-bottom: 7px;
-	}
-	h4 {
-		line-height: 28px;
-		margin-bottom: 7px;
-	}
-	h5 {
-		line-height: 21px;
-	}
+h1 {
+	font-size: 42px;
+	line-height: 49px;
+	margin-bottom: 14px;
+}
+h2 {
+	line-height: 42px;
+	margin-bottom: 7px;
+}
+h3 {
+	line-height: 35px;
+	margin-bottom: 7px;
+}
+h4 {
+	line-height: 28px;
+	margin-bottom: 7px;
+}
+h5 {
+	line-height: 21px;
+}
 
-	p {
-		margin: 0 0 21px 0;
-	}
-	p.lead {
-		line-height: 28px;
-	}
+p {
+	margin: 0 0 21px 0;
+}
+p.lead {
+	line-height: 28px;
+}
 
 
 /*	Blockquotes  */
-	blockquote, blockquote p {
-		line-height: 21px;
-	}
-	blockquote {
-		margin: 0 0 21px;
-		padding: 7px 20px 0 19px;
-	}
+blockquote, blockquote p {
+	line-height: 21px;
+}
+blockquote {
+	margin: 0 0 21px;
+	padding: 7px 20px 0 19px;
+}
 
-	hr {
-		margin: 14px 0 28px;
-	}
+hr {
+	margin: 14px 0 28px;
+}
 
 /* Lists */
-	ul, ol {
-		margin-bottom: 21px;
-	}
-	ul ul, ul ol,
-	ol ol, ol ul {
-		margin: 7px 0 7px 30px;
-	}
-	ul ul li, ul ol li,
-	ol ol li, ol ul li {
-		margin-bottom: 7px;
-	}
-	li {
-		line-height: 21px;
-		margin-bottom: 14px;
-	}
+ul, ol {
+	margin-bottom: 21px;
+}
+ul ul, ul ol,
+ol ol, ol ul {
+	margin: 7px 0 7px 30px;
+}
+ul ul li, ul ol li,
+ol ol li, ol ul li {
+	margin-bottom: 7px;
+}
+li {
+	line-height: 21px;
+	margin-bottom: 14px;
+}
 
 
 
@@ -130,8 +131,43 @@ img {
 }
 
 .band {
-	padding: 0 0 14px 0;
+	padding: 0;
 }
+
+.band header {
+	background-color: #EEE;
+	padding: 28px 0 21px;
+}
+
+.band.navigation {
+	background-color: #063;
+	padding: 0;
+	color: #e0e0e0;
+}
+
+.band.footer {
+	background: url(../images/stitch_large.png) left top repeat-x,
+				url(../images/bg_dark.png) repeat left 2px,
+				#343434;
+	padding: 49px 0 14px 0;
+	color: #e0e0e0;
+}
+
+.band.bottom {
+	background: url(../images/stitch_staggered.png) left top repeat-x,
+				url(../images/bg_bottom.png) repeat,
+				#343434;
+	padding: 28px 0 7px 0;
+	color: #e0e0e0;
+}
+
+/* heading */
+header a {
+	text-decoration: none;
+	color: #063;
+}
+
+
 
 /* #Page Styles
 ================================================== */

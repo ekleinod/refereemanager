@@ -48,7 +48,7 @@
 					<div class="sixteen columns">
 
 						<header>
-							<h1><?php echo __('Schiedsrichterverwaltung'); ?></h1>
+							<h1><?php echo $this->Html->link(__('Schiedsrichterverwaltung'), array('controller' => 'pages', 'action' => 'display', 'home')); ?></a></h1>
 						</header>
 
 					</div><!-- end sixteen -->
@@ -89,7 +89,7 @@
 
 			</div><!-- end band navigation -->
 
-			<div class="content">
+			<div class="band content">
 
 				<div class="container">
 
