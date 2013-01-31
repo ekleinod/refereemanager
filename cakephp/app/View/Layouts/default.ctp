@@ -85,7 +85,7 @@
 
 					</div><!-- end sixteen -->
 
-				</nav><!-- end container -->
+				</nav><!-- end container primary -->
 
 			</div><!-- end band navigation -->
 
