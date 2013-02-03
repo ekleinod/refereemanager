@@ -135,8 +135,7 @@ img {
 	background-color: #fff;
 }
 
-.band.header,
-.band.footer {
+.band.header {
 	background-color: #eee;
 	padding: 28px 0 21px;
 }
@@ -151,23 +150,30 @@ img {
 	padding: 21px 0 14px;
 }
 
+.band.footer {
+	background-color: #eee;
+	padding: 14px 0 7px;
+}
+
 .band.sqldump {
 	background-color: #CCC;
 	padding: 28px 0 7px 0;
 	color: #000;
 }
 
+/* links */
+a:hover {
+	text-decoration: none;
+}
+
 /* heading */
 header a,
-.band.footer a,
-header a:visited,
-.band.footer a:visited {
+header a:visited {
 	text-decoration: none;
 	color: #032;
 }
 
-header a:hover,
-.band.footer a:hover {
+header a:hover {
 	color: #063;
 }
 
@@ -262,6 +268,54 @@ nav.primary ul li:hover > a {
 	background-color: #ddd;
 }
 
+/* images */
+figure {
+	padding: 6px;
+	border: 1px solid #ededed;
+	background: #fff;
+	line-height: 0px;
+}
+
+figcaption {
+	font-size: .75em;
+	text-align: center;
+	padding: 14px 0;
+}
+
+/* tables */
+thead {
+	border-bottom: 1px solid #555;
+}
+
+tfoot {
+	border-top: 1px solid #555;
+}
+
+thead, tfoot {
+	font-family: "DroidSansBold", sans-serif;
+	text-align: left;
+}
+
+th, td {
+	padding: 0 1em 0 0;
+}
+
+/* footer */
+footer ul li a,
+footer ul li a:visited {
+	color: #032;
+}
+
+footer ul li a:hover {
+	text-decoration: none;
+	color: #063;
+}
+
+/*footer lists*/
+footer li {
+	padding: 0;
+	margin: 0;
+}
 
 
 /* #Page Styles
@@ -277,7 +331,17 @@ nav.primary ul li:hover > a {
 	@media only screen and (min-width: 768px) and (max-width: 959px) {}
 
 	/* All Mobile Sizes (devices and browser) */
-	@media only screen and (max-width: 767px) {}
+	@media only screen and (max-width: 767px) {
+
+		nav.primary select {
+			display: block;
+		}
+
+		nav.primary ul {
+			display: none;
+		}
+
+	}
 
 	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
 	@media only screen and (min-width: 480px) and (max-width: 767px) {}

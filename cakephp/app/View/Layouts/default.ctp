@@ -110,22 +110,26 @@
 
 			<div class="band footer">
 
-				<footer class="container main">
+				<footer class="container">
 
 					<div class="four columns">
 
-						<?php echo $this->Html->link(__('Schiedsrichter-Homepage'), 'http://schiri.bettv.de/'); ?>
+						<ul>
+							<li><?php echo $this->Html->link(__('Schiedsrichter-Homepage'), 'http://schiri.bettv.de/'); ?></li>
+						</ul>
 
 					</div><!-- end four -->
 
 					<div class="four columns">
 
-						<?php echo $this->Html->link(__('Login'), array('action' => 'login', 'controller' => 'users'), array('class' => '')); ?>
-						<?php echo $this->Html->link(__('Logout'), array('action' => 'logout', 'controller' => 'users'), array('class' => '')); ?>
+						<ul>
+							<li><?php echo $this->Html->link(__('Login'), array('action' => 'login', 'controller' => 'users'), array('class' => '')); ?></li>
+							<li><?php echo $this->Html->link(__('Logout'), array('action' => 'logout', 'controller' => 'users'), array('class' => '')); ?></li>
+						</ul>
 
 					</div><!-- end four -->
 
-				</div><!-- end container -->
+				</footer><!-- end container -->
 
 			</div><!-- end band footer -->
 
