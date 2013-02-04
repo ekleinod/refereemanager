@@ -300,6 +300,14 @@ th, td {
 	padding: 0 1em 0 0;
 }
 
+tbody tr:nth-of-type(odd) {
+	background: #eee;
+}
+
+tr .refrole {
+	font-family: "DroidSansBold", sans-serif;
+}
+
 /* footer */
 footer ul li a,
 footer ul li a:visited {
