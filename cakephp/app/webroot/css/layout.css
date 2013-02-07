@@ -283,6 +283,10 @@ figcaption {
 }
 
 /* tables */
+table {
+	width: auto;
+}
+
 thead {
 	border-bottom: 1px solid #555;
 }
@@ -341,12 +345,51 @@ footer li {
 	/* All Mobile Sizes (devices and browser) */
 	@media only screen and (max-width: 767px) {
 
+		/* primary navigation: hide list, show select */
 		nav.primary select {
 			display: block;
 		}
 
 		nav.primary ul {
 			display: none;
+		}
+
+		/*
+			tables: reformat as small table
+			code taken from <http://codepen.io/aarongustafson/pen/ucJGv>
+		*/
+		table {
+			width: 100%;
+			display: block;
+		}
+
+		caption {
+			display: block;
+		}
+
+		thead {
+			display: none;
+		}
+
+		tbody, tr, th, td {
+			border: 0;
+			display: block;
+			padding: 0;
+			text-align: left;
+			white-space: normal;
+		}
+
+		tr {
+			margin-bottom: 14px;
+		}
+
+		td[data-title]:before {
+			content: attr(data-title) ":\00A0";
+			font-family: "DroidSansBold", sans-serif;
+		}
+
+		td:empty {
+				display: none;
 		}
 
 	}

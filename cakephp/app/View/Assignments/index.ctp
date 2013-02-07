@@ -35,20 +35,20 @@
 				foreach ($assignments as $assignment): ?>
 					<tr>
 
-						<td>
-							<?php echo $this->Html->link($this->RefereeFormat->format($assignment['Assignment']['datetime'], 'longdate'), array('controller' => 'dates', 'action' => 'view', $this->RefereeFormat->format($assignment['Assignment']['datetime'], 'datereverse'))); ?><br />
-							<?php echo h($this->RefereeFormat->format($assignment['Assignment']['datetime'], 'time')); ?>
+						<td data-title="<?php echo __('Datum/Zeit'); ?>">
+							<?php echo $this->Html->link($this->RefereeFormat->format($assignment['Assignment']['datetime'], 'longdate'), array('controller' => 'dates', 'action' => 'view', $this->RefereeFormat->format($assignment['Assignment']['datetime'], 'datereverse'))); ?>,
+							<?php echo h($this->RefereeFormat->format($assignment['Assignment']['datetime'], 'time')); ?>&nbsp;Uhr
 						</td>
 
-						<td><?php echo $this->Html->link($assignment['Assignment']['game_number'], array('controller' => 'assignments', 'action' => 'view', $assignment['Assignment']['id'])); ?></td>
+						<td data-title="<?php echo __('Spiel'); ?>"><?php echo $this->Html->link($assignment['Assignment']['game_number'], array('controller' => 'assignments', 'action' => 'view', $assignment['Assignment']['id'])); ?></td>
 
-						<td><?php echo $this->Html->link($assignment['League']['code'], array('controller' => 'leagues', 'action' => 'view', $assignment['League']['id'])); ?></td>
+						<td data-title="<?php echo __('Liga'); ?>"><?php echo $this->Html->link($assignment['League']['code'], array('controller' => 'leagues', 'action' => 'view', $assignment['League']['id'])); ?></td>
 
-						<td><?php echo (array_key_exists('HomeTeam', $assignment)) ? $this->Html->link($assignment['HomeTeam']['Team']['title_team'], array('controller' => 'teams', 'action' => 'view', $assignment['HomeTeam']['Team']['id'])) : h('??'); ?></td>
+						<td data-title="<?php echo __('Heimteam'); ?>"><?php echo (array_key_exists('HomeTeam', $assignment)) ? $this->Html->link($assignment['HomeTeam']['Team']['title_team'], array('controller' => 'teams', 'action' => 'view', $assignment['HomeTeam']['Team']['id'])) : h('??'); ?></td>
 
-						<td><?php echo (array_key_exists('RoadTeam', $assignment)) ? $this->Html->link($assignment['RoadTeam']['Team']['title_team'], array('controller' => 'teams', 'action' => 'view', $assignment['RoadTeam']['Team']['id'])) : h('??'); ?></td>
+						<td data-title="<?php echo __('Auswärtsteam'); ?>"><?php echo (array_key_exists('RoadTeam', $assignment)) ? $this->Html->link($assignment['RoadTeam']['Team']['title_team'], array('controller' => 'teams', 'action' => 'view', $assignment['RoadTeam']['Team']['id'])) : h('??'); ?></td>
 
-						<td>
+						<td data-title="<?php echo __('Schiedsrichter'); ?>">
 							<?php foreach ($refereeroles as $refereerole) { ?>
 								<?php
 									if (array_key_exists($refereerole['code'], $assignment)) {
@@ -80,7 +80,7 @@
 								?>
 							<?php } ?>
 						</td>
-						<td class="actions">
+						<td class="actions" data-title="<?php echo __('Aktionen'); ?>">
 							<?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?>
 							<?php echo $this->element('actions_table', array('id' => $assignment['Assignment']['id']));	?>
 						</td>

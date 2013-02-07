@@ -143,7 +143,7 @@
 
 					</div><!-- end sixteen -->
 
-				</div><!-- end container -->
+				</footer><!-- end container -->
 
 			</div><!-- end band footer -->
 
