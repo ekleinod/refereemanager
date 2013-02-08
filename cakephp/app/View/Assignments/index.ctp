@@ -81,7 +81,7 @@
 							<?php } ?>
 						</td>
 						<td class="actions" data-title="<?php echo __('Aktionen'); ?>">
-							<?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id'])); ?>
+							<?php echo $this->Html->link(__('iCal File'), array('action' => 'ics', $assignment['Assignment']['id']), array('class' => 'button-link')); ?>
 							<?php echo $this->element('actions_table', array('id' => $assignment['Assignment']['id']));	?>
 						</td>
 					</tr>

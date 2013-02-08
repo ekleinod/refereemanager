@@ -47,9 +47,7 @@
 
 					<div class="sixteen columns">
 
-						<header>
-							<h1><?php echo $this->Html->link(__('Schiedsrichterverwaltung'), array('controller' => 'pages', 'action' => 'display', 'home')); ?></a></h1>
-						</header>
+						<h1><?php echo $this->Html->link(__('Schiedsrichterverwaltung'), array('controller' => 'pages', 'action' => 'display', 'home')); ?></h1>
 
 					</div><!-- end sixteen -->
 
