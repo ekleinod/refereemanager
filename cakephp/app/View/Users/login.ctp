@@ -1,5 +1,7 @@
 <div class="users form">
+
 <?php echo $this->Session->flash('auth'); ?>
+
 <?php echo $this->Form->create('User'); ?>
 	<fieldset>
 		<legend><?php echo __('Bitte geben Sie Nutzername und Passwort ein.'); ?></legend>
@@ -9,5 +11,6 @@
 		?>
 	</fieldset>
 <?php echo $this->Form->end(__('Einloggen')); ?>
+
 </div>
 

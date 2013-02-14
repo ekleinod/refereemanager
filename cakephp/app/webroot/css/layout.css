@@ -323,7 +323,7 @@ footer ul li a:hover {
 	color: #063;
 }
 
-/*footer lists*/
+/* footer lists */
 footer li {
 	padding: 0;
 	margin: 0;
@@ -344,7 +344,7 @@ a.button-link {
 		-webkit-border-radius: 4px;
 		-moz-border-radius: 4px;
 		border-radius: 4px;
-		border: solid 1px #20538D;
+		border: solid 1px #032;
 		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
 		-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
 		-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -352,10 +352,10 @@ a.button-link {
 		-webkit-transition-duration: 0.2s;
 		-moz-transition-duration: 0.2s;
 		transition-duration: 0.2s;
-		-webkit-user-select:none;
-		-moz-user-select:none;
-		-ms-user-select:none;
-		user-select:none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 }
 
 a.button-link:hover,
@@ -363,6 +363,14 @@ a.button-link:active {
 		color: #063;
 		background-color: #ddd;
 		text-decoration: none;
+}
+
+a.access-editor {
+		background: #aa3;
+}
+
+a.access-admin {
+		background: #a63;
 }
 
 
