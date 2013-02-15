@@ -331,46 +331,62 @@ footer li {
 
 /* links that look like buttons */
 a.button-link {
-		text-transform: uppercase;
-		text-decoration: none;
-		font-family: "DroidSansBold", sans-serif;
-		font-size: 12px;
+	text-transform: uppercase;
+	text-decoration: none;
+	font-family: "DroidSansBold", sans-serif;
+	font-size: 12px;
+	letter-spacing: 0.08em;
 
-		padding: 0 10px;
-		line-height: 35px;
-		background: #063;
-		color: #FFF;
+	padding: 0 10px;
+	line-height: 35px;
+	background: #063;
+	color: #fff;
 
-		-webkit-border-radius: 4px;
-		-moz-border-radius: 4px;
-		border-radius: 4px;
-		border: solid 1px #032;
-		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
-		-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-		-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-		-webkit-transition-duration: 0.2s;
-		-moz-transition-duration: 0.2s;
-		transition-duration: 0.2s;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border: solid 1px #032;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+	-webkit-transition-duration: 0.2s;
+	-moz-transition-duration: 0.2s;
+	transition-duration: 0.2s;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 a.button-link:hover,
 a.button-link:active {
-		color: #063;
-		background-color: #ddd;
-		text-decoration: none;
+	color: #063;
+	background-color: #ddd;
+	text-decoration: none;
 }
 
 a.access-editor {
-		background: #aa3;
+	background: #aa3;
 }
 
 a.access-admin {
-		background: #a63;
+	background: #c63;
+}
+
+/* flash messages: errors, warnings etc. */
+.message {
+	color: #fff;
+	background: #c63;
+	padding: 7px 14px;
+	margin-bottom: 7px;
+
+	text-transform: uppercase;
+	font-family: "DroidSansBold", sans-serif;
+	letter-spacing: 0.08em;
+
+	display: block;
+	width: 100%;
 }
 
 
