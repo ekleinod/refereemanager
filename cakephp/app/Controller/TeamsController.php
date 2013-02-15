@@ -32,8 +32,12 @@ class TeamsController extends AppController {
 			}
 		}
 
+		// pass information to view
 		$this->set('teams', $teams);
 		$this->set('season', $season);
+
+		// set title
+		$this->set('title_for_layout', __('Übersicht der Teams'));
 	}
 
 	/**
