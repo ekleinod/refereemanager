@@ -96,6 +96,7 @@
 						<article>
 							<div id="flash"><?php echo $this->Session->flash(); ?></div>
 							<div id="content">
+								<h2><?php echo $title_for_layout; ?></h2>
 								<?php echo $this->fetch('content'); ?>
 							</div>
 						</article>
