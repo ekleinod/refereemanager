@@ -329,8 +329,9 @@ footer li {
 	margin: 0;
 }
 
-/* links that look like buttons */
-a.button-link {
+/* links that look like buttons, and buttons */
+a.button-link,
+form button {
 	text-transform: uppercase;
 	text-decoration: none;
 	font-family: "DroidSansBold", sans-serif;
@@ -360,13 +361,15 @@ a.button-link {
 }
 
 a.button-link:hover,
-a.button-link:active {
+a.button-link:active,
+form button:hover {
 	color: #063;
 	background-color: #ddd;
 	text-decoration: none;
 }
 
-a.access-editor {
+a.access-editor,
+form button[type=reset]{
 	background: #aa3;
 }
 
@@ -389,6 +392,76 @@ a.access-admin {
 	width: 100%;
 }
 
+/* forms (see <http://24ways.org/2009/have-a-field-day-with-html5-forms/>) */
+form fieldset {
+	margin-bottom: 10px;
+}
+
+form fieldset:last-of-type {
+	margin-bottom: 0;
+}
+
+form legend {
+	color: #063;
+	padding-bottom: 7px;
+	text-shadow: 0 1px 1px #c0d576;
+}
+
+form fieldset fieldset legend {
+	color: #111111;
+	font-size: 13px;
+	font-weight: normal;
+	padding-bottom: 0;
+}
+
+form ol li {
+	line-height: 21px;
+	list-style: none;
+	padding: 0 7px;
+}
+
+form ol ol li {
+	float: left;
+}
+
+form label {
+	font-weight: normal;
+	float: left;
+	width: 105px;
+}
+
+form fieldset fieldset label {
+	line-height: 21px;
+	padding: 0 0 0 28px;
+	width: auto;
+}
+
+form fieldset fieldset label:hover {
+	cursor: pointer;
+}
+
+form input:not([type=radio]),
+form textarea {
+	outline: none;
+	padding: 2px 7px;
+	width: 210px;
+}
+
+form input:not([type=submit]):focus,
+form textarea:focus {
+	border-color: #063;
+}
+
+form input[type=radio] {
+	float: left;
+	margin-right: 5px;
+}
+
+form button {
+	line-height: 21px;
+	padding: 0 21px;
+	width: auto;
+}
 
 /* #Page Styles
 ================================================== */

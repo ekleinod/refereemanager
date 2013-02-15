@@ -34,14 +34,13 @@
 						array('class' => 'input password required')
 				);
 			?>
-
-			<!--
-			<label for="UserUsername">Nutzername</label><input name="data[User][username]" maxlength="100" type="text" id="UserUsername"/></div>
-			<div class="input password required"><label for="UserPassword">Passwort</label><input name="data[User][password]" type="password" id="UserPassword"/></div>
-			-->
 		</ol>
 	</fieldset>
-<?php echo $this->Form->end(__('Einloggen')); ?>
+	<fieldset>
+		<?php echo $this->Form->button(__('Einloggen'), array('type' => 'submit')); ?>
+		<?php echo $this->Form->button(__('Inhalte zurücksetzen'), array('type' => 'reset')); ?>
+	</fieldset>
+<?php echo $this->Form->end(); ?>
 
 </div>
 
