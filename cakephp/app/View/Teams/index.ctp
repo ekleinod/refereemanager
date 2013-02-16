@@ -1,9 +1,5 @@
 <!-- header actions -->
-<?php if ($isEditor) { ?>
-	<div class="actions">
-		<p><?php echo $this->Html->link(__('Neues Team hinzufügen'), array('action' => 'add'), array('class' => 'button-link access-editor')); ?></p>
-	</div>
-<?php } ?>
+<?php echo $this->element('actions_header');	?>
 
 <!-- view filters -->
 <div class="filter">

@@ -61,6 +61,9 @@ class TeamsController extends AppController {
 		// pass information to view
 		$this->set('team', $team);
 		$this->set('changes', $changes);
+
+		// set title
+		$this->set('title_for_layout', __('Team "%s"', $team['Team']['title_team']));
 	}
 
 	/**
