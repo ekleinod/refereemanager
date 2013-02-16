@@ -61,18 +61,25 @@ h1 {
 	line-height: 49px;
 	margin-bottom: 14px;
 }
+
 h2 {
+	font-size: 28px;
 	line-height: 42px;
 	margin-bottom: 7px;
 }
+
 h3 {
+	font-size: 21px;
 	line-height: 35px;
+	margin-top: 14px;
 	margin-bottom: 7px;
 }
+
 h4 {
 	line-height: 28px;
 	margin-bottom: 7px;
 }
+
 h5 {
 	line-height: 21px;
 }
@@ -80,15 +87,12 @@ h5 {
 p {
 	margin: 0 0 21px 0;
 }
-p.lead {
-	line-height: 28px;
-}
-
 
 /*	Blockquotes  */
 blockquote, blockquote p {
 	line-height: 21px;
 }
+
 blockquote {
 	margin: 0 0 21px;
 	padding: 7px 20px 0 19px;

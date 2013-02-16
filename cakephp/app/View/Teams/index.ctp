@@ -3,7 +3,7 @@
 
 <!-- view filters -->
 <div class="filter">
-	<p>Saison: <?php echo $season . "/" . ($season + 1); ?></p>
+	Saison: <?php echo $season . "/" . ($season + 1); ?>
 </div>
 
 <!-- view content -->
@@ -26,6 +26,17 @@
 				<th><?php echo __('Aktionen'); ?></th>
 			</tr>
 		</thead>
+		<tfoot>
+			<tr>
+				<th><?php echo __('Name'); ?></th>
+				<th><?php echo __('Beschreibung'); ?></th>
+				<th><?php echo __('Club'); ?></th>
+				<th><?php echo __('Liga'); ?></th>
+				<th><?php echo __('Ansprechpartner'); ?></th>
+				<th><?php echo __('Spielort'); ?></th>
+				<th><?php echo __('Aktionen'); ?></th>
+			</tr>
+		</tfoot>
 		<tbody>
 			<?php
 				foreach ($teams as $team) {
