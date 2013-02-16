@@ -299,13 +299,17 @@ tfoot {
 	border-top: 1px solid #555;
 }
 
-thead, tfoot {
+th {
 	font-family: "DroidSansBold", sans-serif;
 	text-align: left;
 }
 
 th, td {
-	padding: 0 1em 0 0;
+	padding: 0 1em 0 .5em;
+}
+
+th.th-col {
+	border-right: 1px dotted #555;
 }
 
 tbody tr:nth-of-type(odd) {
