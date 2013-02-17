@@ -150,6 +150,14 @@ img {
 	color: #e0e0e0;
 }
 
+.band.username {
+	border-top: dashed .5px #063;
+	border-bottom: dashed .5px #063;
+	background-color: #eee;
+	padding: 0;
+	margin: 7px 0;
+}
+
 .band.content {
 	padding: 21px 0 14px;
 }
@@ -181,7 +189,7 @@ header a:hover {
 	color: #063;
 }
 
-/*navigation*/
+/* navigation */
 nav.primary ul,
 nav.primary ul li {
 	margin: 0px;

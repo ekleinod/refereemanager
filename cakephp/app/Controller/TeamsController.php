@@ -72,6 +72,12 @@ class TeamsController extends AppController {
 	 * @return void
 	 */
 	public function add() {
+
+		if (!$this->isEditor($this->Auth->user())) {
+			$this->Session->setFlash(__('Keine Berechtigung zum Hinzufügen eines Teams.'));
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
+		}
+
 		if ($this->request->is('post')) {
 			$this->Team->create();
 			if ($this->Team->save($this->request->data)) {
@@ -83,6 +89,9 @@ class TeamsController extends AppController {
 		}
 
 		$this->prepareAndSetAddEdit();
+
+		// set title
+		$this->set('title_for_layout', __('Neues Team hinzufügen'));
 	}
 
 	/**

@@ -1,21 +1,13 @@
-<div class="teams form">
-	<?php
-		if ($isEditor) {
-			echo $this->Form->create('Team'); ?>
-			<fieldset>
-				<legend><?php echo __('Neues Team hinzufügen'); ?></legend>
+<?php echo $this->Form->create('Team'); ?>
 
-				<?php echo $this->element('Teams/form'); ?>
-			</fieldset>
+<fieldset>
+	<legend><?php echo __('Neues Team hinzufügen'); ?></legend>
 
-			<?php echo $this->Form->button('Inhalte zurücksetzen', array('type' => 'reset')); ?>
-			<?php echo $this->Form->end(__('Speichern')); ?>
+	<?php echo $this->element('Teams/form'); ?>
+</fieldset>
 
-		<!-- ?php pr($team); ? -->
+<?php echo $this->Form->button('Inhalte zurücksetzen', array('type' => 'reset')); ?>
+<?php echo $this->Form->end(__('Speichern')); ?>
 
-	<?php } else { ?>
-		<h2><?php  echo __('Team hinzufügen'); ?></h2>
-		<p class="message"><?php echo __("Sie besitzen nicht genügend Rechte, um ein Team hinzuzufügen."); ?></p>
-	<?php }?>
-</div>
+<!-- ?php pr($team); ? -->
 

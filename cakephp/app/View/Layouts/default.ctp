@@ -87,6 +87,16 @@
 
 			</div><!-- end band navigation -->
 
+			<?php if (isset($username)) { ?>
+				<div class="band username">
+					<div class="container">
+						<div class="sixteen columns">
+							<p>Eingeloggt als: "<?php echo $username; ?>"</p>
+						</div><!-- end sixteen -->
+					</div><!-- end container -->
+				</div><!-- end band content -->
+			<?php } ?>
+
 			<div class="band content">
 
 				<div class="container">

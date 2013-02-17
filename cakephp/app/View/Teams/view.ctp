@@ -43,7 +43,7 @@
 </table>
 
 <h3><?php echo __('Saisons des Teams'); ?></h3>
-<p>todo</p>
+<p>todo (empty und Anzeige)</p>
 <table>
 	<thead>
 		<tr>

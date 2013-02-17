@@ -1,5 +1,3 @@
-<div class="users form">
-
 <?php echo $this->Session->flash('auth'); ?>
 
 <?php echo $this->Form->create('User'); ?>
@@ -41,6 +39,4 @@
 		<?php echo $this->Form->button(__('Inhalte zurücksetzen'), array('type' => 'reset')); ?>
 	</fieldset>
 <?php echo $this->Form->end(); ?>
-
-</div>
 

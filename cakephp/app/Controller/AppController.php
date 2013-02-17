@@ -51,8 +51,8 @@ class AppController extends Controller {
 	public $components = array(
 		'Session',
 		'Auth' => array(
-			'loginRedirect' => array('controller' => 'posts', 'action' => 'index'),
-			'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home'),
+			'loginRedirect' => array('controller' => 'assignments', 'action' => 'index'),
+			'logoutRedirect' => array('controller' => 'assignments', 'action' => 'index'),
 			'authenticate' => array('SaltForm') // use own authentication class
 		)
 	);
@@ -70,9 +70,15 @@ class AppController extends Controller {
 		$this->Auth->allow('index', 'view');
 
 		// set user role checks
-		$this->set('isReferee', $this->isReferee($this->Auth->user()));
-		$this->set('isEditor', $this->isEditor($this->Auth->user()));
-		$this->set('isAdmin', $this->isAdmin($this->Auth->user()));
+		$user = $this->Auth->user();
+		$this->set('isReferee', $this->isReferee($user));
+		$this->set('isEditor', $this->isEditor($user));
+		$this->set('isAdmin', $this->isAdmin($user));
+
+		// set user name
+		if (($user != null) && !empty($user) && ($user['id'] !== null)) {
+			$this->set('username', $user['username']);
+		}
 	}
 
 	/**
