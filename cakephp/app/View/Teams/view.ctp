@@ -43,46 +43,50 @@
 </table>
 
 <h3><?php echo __('Saisons des Teams'); ?></h3>
-<p>todo (empty und Anzeige)</p>
-<table>
-	<thead>
-		<tr>
-			<th><?php echo __('Saison'); ?></th>
-			<th><?php echo __('Liga'); ?></th>
-			<th><?php echo __('Ansprechpartner'); ?></th>
-		</tr>
-	</thead>
-	<tfoot>
-		<tr>
-			<th><?php echo __('Saison'); ?></th>
-			<th><?php echo __('Liga'); ?></th>
-			<th><?php echo __('Ansprechpartner'); ?></th>
-		</tr>
-	</tfoot>
-	<tbody>
-		<tr>
-			<td data-title="<?php echo __('Saison'); ?>"><?php
-				if (!empty($team['Season'])) {
-					echo $this->Html->link($team['Season'][0]['title_season'], array('controller' => 'seasons', 'action' => 'view', $team['Season'][0]['id']));
-				}
-			?></td>
-			<td data-title="<?php echo __('Liga'); ?>"><?php
-				if (!empty($team['League'])) {
-					echo $this->Html->link($team['League'][0]['title'], array('controller' => 'leagues', 'action' => 'view', $team['League'][0]['id']));
-				}
-			?></td>
-			<td data-title="<?php echo __('Ansprechpartner'); ?>"><?php
-				if (!empty($team['Person'])) {
-					echo $this->Html->link($team['Person'][0]['title_person'], array('controller' => 'people', 'action' => 'view', $team['Person'][0]['id']));
-				}
-			?></td>
-		</tr>
-	</tbody>
-<table>
+<p>todo (Anzeige)</p>
+
+<?php if (empty($team['Season'])) { ?>
+	<p><?php echo __('Dieses Team ist noch für keine Saison eingetragen.'); ?></p>
+<?php } else { ?>
+	<table>
+		<thead>
+			<tr>
+				<th><?php echo __('Saison'); ?></th>
+				<th><?php echo __('Liga'); ?></th>
+				<th><?php echo __('Ansprechpartner'); ?></th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th><?php echo __('Saison'); ?></th>
+				<th><?php echo __('Liga'); ?></th>
+				<th><?php echo __('Ansprechpartner'); ?></th>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr>
+				<td data-title="<?php echo __('Saison'); ?>"><?php
+					if (!empty($team['Season'])) {
+						echo $this->Html->link($team['Season'][0]['title_season'], array('controller' => 'seasons', 'action' => 'view', $team['Season'][0]['id']));
+					}
+				?></td>
+				<td data-title="<?php echo __('Liga'); ?>"><?php
+					if (!empty($team['League'])) {
+						echo $this->Html->link($team['League'][0]['title'], array('controller' => 'leagues', 'action' => 'view', $team['League'][0]['id']));
+					}
+				?></td>
+				<td data-title="<?php echo __('Ansprechpartner'); ?>"><?php
+					if (!empty($team['Person'])) {
+						echo $this->Html->link($team['Person'][0]['title_person'], array('controller' => 'people', 'action' => 'view', $team['Person'][0]['id']));
+					}
+				?></td>
+			</tr>
+		</tbody>
+	<table>
+<?php } ?>
 
 <h3><?php echo __('Spiele des Teams'); ?></h3>
 
-<p>todo</p>
 <?php if (empty($team['Assignment'])) { ?>
 	<p><?php echo __('Dieses Team ist noch für keine Spiele eingetragen.'); ?></p>
 <?php
