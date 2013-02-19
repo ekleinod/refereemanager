@@ -456,6 +456,10 @@ form fieldset fieldset label:hover {
 	cursor: pointer;
 }
 
+form li.required label {
+	font-family: "DroidSansBold", sans-serif;
+}
+
 form input:not([type=radio]),
 form textarea {
 	outline: none;
@@ -477,6 +481,11 @@ form button {
 	line-height: 21px;
 	padding: 0 21px;
 	width: auto;
+}
+
+form .remark {
+	font-family: "DroidSerifItalic", serif;
+	font-size: smaller;
 }
 
 /* #Page Styles

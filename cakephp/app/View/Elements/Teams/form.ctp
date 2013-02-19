@@ -39,8 +39,12 @@
 					array('type' => 'text',
 								'placeholder' => __('Name'), 'title' => __('Team-Name'))
 			);
+			$remark = $this->Html->tag('span',
+					_('Wenn nicht angegeben, wird der des Clubs verwendet.'),
+					array('class' => 'remark')
+			);
 			echo $this->Html->tag('li',
-					$label . $input,
+					$label . $input . $remark,
 					array('class' => 'input text')
 			);
 
@@ -60,9 +64,13 @@
 			$input = $this->Form->select('Team.address_id',
 					$addresses
 			);
+			$remark = $this->Html->tag('span',
+					_('Wenn nicht angegeben, wird der des Clubs verwendet.'),
+					array('class' => 'remark')
+			);
 			echo $this->Html->tag('li',
-					$label . $input,
-					array('class' => 'input select required')
+					$label . $input . $remark,
+					array('class' => 'input select')
 			);
 
 ?>
@@ -76,14 +84,41 @@
 	<ol>
 <?php
 
-	// season
-		echo $this->Form->input('Team.season_id', array('label' => __('Saison')));
+		// season
+			$label = $this->Form->label('Team.season_id', __('Saison'));
+			$input = $this->Form->select('Team.season_id',
+					$seasons,
+					array('required' => 'required')
+			);
+			echo $this->Html->tag('li',
+					$label . $input,
+					array('class' => 'input select required')
+			);
 
-	// league
-		echo $this->Form->input('Team.league_id', array('label' => __('Liga')));
+		// league
+			$label = $this->Form->label('Team.league_id', __('Liga'));
+			$input = $this->Form->select('Team.league_id',
+					$leagues,
+					array('required' => 'required')
+			);
+			echo $this->Html->tag('li',
+					$label . $input,
+					array('class' => 'input select required')
+			);
 
-	// venue
-		echo $this->Form->input('Team.person_id', array('label' => __('Ansprechperson (wenn nicht angegeben, wird die des Clubs verwendet)'), 'empty' => __('none')));
+		// person
+			$label = $this->Form->label('Team.person_id', __('Ansprechperson'));
+			$input = $this->Form->select('Team.person_id',
+					$people
+			);
+			$remark = $this->Html->tag('span',
+					_('Wenn nicht angegeben, wird die des Clubs verwendet.'),
+					array('class' => 'remark')
+			);
+			echo $this->Html->tag('li',
+					$label . $input . $remark,
+					array('class' => 'input select')
+			);
 
 ?>
 	</ol>
