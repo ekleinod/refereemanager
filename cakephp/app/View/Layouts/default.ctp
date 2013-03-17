@@ -63,18 +63,25 @@
 
 						<?php
 						$navarray = array(
+															array('title' => __('Schiedsrichter'), 'routing' => array('action' => 'index', 'controller' => 'referees'),
+																		'subnav' => array(
+																											array('title' => __('Ansehen'), 'routing' => array('action' => 'index', 'controller' => 'referees')),
+																											//array('title' => __('Suchen'), 'routing' => array('action' => 'search', 'controller' => 'referees')),
+																											//array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'referees')),
+																											)
+																		),
 															array('title' => __('Schiedsrichtereinsätze'), 'routing' => array('action' => 'index', 'controller' => 'assignments'),
 																		'subnav' => array(
 																											array('title' => __('Ansehen'), 'routing' => array('action' => 'index', 'controller' => 'assignments')),
-																											array('title' => __('Suchen'), 'routing' => array('action' => 'search', 'controller' => 'assignments')),
-																											array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'assignments')),
+																											//array('title' => __('Suchen'), 'routing' => array('action' => 'search', 'controller' => 'assignments')),
+																											//array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'assignments')),
 																											)
 																		),
 															array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams'),
 																		'subnav' => array(
 																											array('title' => __('Ansehen'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
-																											array('title' => __('Suchen'), 'routing' => array('action' => 'search', 'controller' => 'teams')),
-																											array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'teams')),
+																											//array('title' => __('Suchen'), 'routing' => array('action' => 'search', 'controller' => 'teams')),
+																											//array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'teams')),
 																											)
 																		),
 															);

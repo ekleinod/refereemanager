@@ -119,6 +119,10 @@ li {
 	margin-bottom: 14px;
 }
 
+ul.legend li {
+	margin: 0 0 0 14px;
+}
+
 
 
 /* #Site Styles
@@ -486,6 +490,23 @@ form button {
 form .remark {
 	font-family: "DroidSerifItalic", serif;
 	font-size: smaller;
+}
+
+/* Legend */
+.referee-more {
+	font-family: "DroidSansBold", sans-serif;
+}
+
+.referee-notactive {
+	color: #a00;
+}
+
+.referee-notactiveseason {
+	color: #aa0;
+}
+
+.referee-nolicense {
+	text-decoration: line-through;
 }
 
 /* #Page Styles
