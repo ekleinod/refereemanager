@@ -25,6 +25,9 @@
 	<table>
 		<thead>
 			<tr>
+				<?php if ($isReferee) { ?>
+					<th><?php echo __('Bild'); ?></th>
+				<?php } ?>
 				<th><?php echo __('Vorname'); ?></th>
 				<th><?php echo __('Name'); ?></th>
 				<th><?php echo __('Club'); ?></th>
@@ -46,6 +49,9 @@
 		</thead>
 		<tfoot>
 			<tr>
+				<?php if ($isReferee) { ?>
+					<th><?php echo __('Bild'); ?></th>
+				<?php } ?>
 				<th><?php echo __('Vorname'); ?></th>
 				<th><?php echo __('Name'); ?></th>
 				<th><?php echo __('Club'); ?></th>
@@ -70,6 +76,10 @@
 				foreach ($referees as $referee) {
 			?>
 					<tr>
+						<?php if ($isReferee) { ?>
+							<td><?php echo $this->Html->image('http://placekitten.com/50/50', array('alt' => __('Bild von %s', $referee['Person']['title_person']), 'title' => $referee['Person']['title_person'])); ?></td>
+						<?php } ?>
+
 						<td data-title="<?php echo __('Vorname'); ?>"><?php echo $this->Html->link($referee['Person']['first_name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id'])); ?></td>
 
 						<td data-title="<?php echo __('Name'); ?>"><?php echo $this->Html->link($referee['Person']['name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']));  ?></td>

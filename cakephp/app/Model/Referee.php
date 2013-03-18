@@ -35,11 +35,11 @@ class Referee extends AppModel {
 	 */
 	public $displayField = 'title_referee';
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'license' => array(
 			'date' => array(
