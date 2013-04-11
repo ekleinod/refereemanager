@@ -4,28 +4,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_addresses`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_addresses` ;
-
-CREATE  TABLE IF NOT EXISTS `rfrmgr_addresses` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `street` VARCHAR(100) NOT NULL ,
-  `number` VARCHAR(100) NULL ,
-  `zip_code` VARCHAR(100) NULL ,
-  `city` VARCHAR(100) NOT NULL ,
-  `description` TEXT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'All addresses.';
-
-
--- -----------------------------------------------------
 -- Table `rfrmgr_user_roles`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rfrmgr_user_roles` ;
@@ -68,19 +46,38 @@ COMMENT = 'User table for access rights.';
 
 
 -- -----------------------------------------------------
+-- Table `frmgr_pictures`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `frmgr_pictures` ;
+
+CREATE  TABLE IF NOT EXISTS `frmgr_pictures` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `person_id` INT UNSIGNED NOT NULL ,
+  `url` VARCHAR(200) NOT NULL ,
+  `description` TEXT NULL ,
+  `created` DATETIME NOT NULL ,
+  `modified` DATETIME NOT NULL ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+COMMENT = 'Lookup table for sexes.\nThere is no description here in orde' /* comment truncated */;
+
+
+-- -----------------------------------------------------
 -- Table `rfrmgr_people`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rfrmgr_people` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_people` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(100) NOT NULL ,
   `first_name` VARCHAR(100) NULL ,
+  `name` VARCHAR(100) NOT NULL ,
   `birthday` DATE NULL ,
-  `address_id` INT UNSIGNED NOT NULL ,
+  `sex_id` INT UNSIGNED NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -140,7 +137,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_umpire_report_recipients` (
   `season_id` INT NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
+  PRIMARY KEY (`id`, `person_id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -211,16 +208,58 @@ COMMENT = 'Possible assignment quantities, such as normal, many, less.';
 
 
 -- -----------------------------------------------------
+-- Table `rfrmgr_contacts`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_contacts` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_contacts` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `description` TEXT NULL ,
+  `contact_kind_id` INT UNSIGNED NOT NULL ,
+  `person_id` INT UNSIGNED NULL ,
+  `created` DATETIME NOT NULL ,
+  `modified` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Base table for contacts. Specialized to email, phone etc.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_addresses`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_addresses` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_addresses` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `contact_id` INT UNSIGNED NOT NULL ,
+  `street` VARCHAR(100) NOT NULL ,
+  `number` VARCHAR(100) NOT NULL ,
+  `zip_code` VARCHAR(100) NULL ,
+  `city` VARCHAR(100) NOT NULL ,
+  `created` DATETIME NOT NULL ,
+  `modified` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'All addresses.';
+
+
+-- -----------------------------------------------------
 -- Table `rfrmgr_phone_numbers`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rfrmgr_phone_numbers` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_phone_numbers` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `contact_id` INT UNSIGNED NOT NULL ,
+  `country code` VARCHAR(10) NOT NULL ,
+  `area code` VARCHAR(10) NOT NULL ,
   `number` VARCHAR(20) NOT NULL ,
-  `description` TEXT NULL ,
-  `contact_kind_id` INT NOT NULL ,
-  `person_id` INT UNSIGNED NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
@@ -232,16 +271,33 @@ COMMENT = 'All phone numbers.';
 
 
 -- -----------------------------------------------------
+-- Table `rfrmgr_contact_kinds`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_contact_kinds` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_contact_kinds` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `sid` VARCHAR(10) NOT NULL ,
+  `created` DATETIME NOT NULL ,
+  `modified` DATETIME NOT NULL ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Possible kinds of contacts, such as private, working.';
+
+
+-- -----------------------------------------------------
 -- Table `rfrmgr_emails`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rfrmgr_emails` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_emails` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `contact_id` INT UNSIGNED NOT NULL ,
   `email` VARCHAR(100) NOT NULL ,
-  `description` TEXT NULL ,
-  `contact_kind_id` INT NOT NULL ,
-  `person_id` INT NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
@@ -250,25 +306,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'All email adresses.';
-
-
--- -----------------------------------------------------
--- Table `rfrmgr_contact_kinds`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_contact_kinds` ;
-
-CREATE  TABLE IF NOT EXISTS `rfrmgr_contact_kinds` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `title` VARCHAR(100) NOT NULL ,
-  `description` TEXT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'Possible kinds of telephone numbers, such as private, workin' /* comment truncated */;
 
 
 -- -----------------------------------------------------
@@ -281,10 +318,10 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_clubs` (
   `name` VARCHAR(100) NOT NULL ,
   `shortname` VARCHAR(100) NULL ,
   `description` TEXT NULL ,
-  `address_id` INT NULL COMMENT 'standard address of the club. To be used if no address for a team is given.' ,
+  `address_id` INT NOT NULL COMMENT 'standard address of the club. To be used if no address for a team is given.' ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
+  PRIMARY KEY (`id`, `address_id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -323,10 +360,10 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_teams` (
   `name` VARCHAR(100) NULL ,
   `description` TEXT NULL ,
   `club_id` INT UNSIGNED NOT NULL ,
-  `address_id` INT UNSIGNED NULL COMMENT 'standard address of the club. To be used if no address for a team is given.' ,
+  `address_id` INT UNSIGNED NOT NULL COMMENT 'standard address of the club. To be used if no address for a team is given.' ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
+  PRIMARY KEY (`id`, `address_id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -452,7 +489,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_team_seasons_leagues_spokespeople` (
   `person_id` INT NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
+  PRIMARY KEY (`id`, `person_id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -460,7 +497,44 @@ COLLATE = utf8_general_ci
 COMMENT = 'Teams are assigned a league, in a season. They have a spokes' /* comment truncated */;
 
 
+-- -----------------------------------------------------
+-- Table `frmgr_sexes`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `frmgr_sexes` ;
+
+CREATE  TABLE IF NOT EXISTS `frmgr_sexes` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `sid` VARCHAR(10) NOT NULL ,
+  `created` DATETIME NOT NULL ,
+  `modified` DATETIME NOT NULL ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+COMMENT = 'Lookup table for sexes.\nThere is no description here in orde' /* comment truncated */;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `rfrmgr_contact_kinds`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`, `created`, `modified`) VALUES (1, 'p', '2013-04-11 23:47:00', '2013-04-11 23:47:00');
+INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`, `created`, `modified`) VALUES (2, 'b', '2013-04-11 23:47:00', '2013-04-11 23:47:00');
+INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`, `created`, `modified`) VALUES (3, 'o', '2013-04-11 23:47:00', '2013-04-11 23:47:00');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `frmgr_sexes`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `frmgr_sexes` (`id`, `sid`, `created`, `modified`) VALUES (1, 'f', '2013-04-08 02:08:00', '2013-04-08 02:08:00');
+INSERT INTO `frmgr_sexes` (`id`, `sid`, `created`, `modified`) VALUES (2, 'm', '2013-04-08 02:08:00', '2013-04-08 02:08:00');
+INSERT INTO `frmgr_sexes` (`id`, `sid`, `created`, `modified`) VALUES (3, 'o', '2013-04-08 02:08:00', '2013-04-08 02:08:00');
+
+COMMIT;
