@@ -137,12 +137,32 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_umpire_report_recipients` (
   `season_id` INT NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`, `person_id`) ,
+  PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'Recipients of umpire reports.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_referees_training_levels`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_referees_training_levels` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_referees_training_levels` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `referee_id` INT UNSIGNED NOT NULL ,
+  `training_level_id` INT UNSIGNED NOT NULL ,
+  `since` DATE NULL ,
+  `created` DATETIME NOT NULL ,
+  `modified` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Achieved training levels for referees.';
 
 
 -- -----------------------------------------------------
@@ -152,13 +172,10 @@ DROP TABLE IF EXISTS `rfrmgr_referees` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_referees` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `person_id` INT NOT NULL ,
   `license` DATE NULL ,
   `last_referee_training` DATE NULL ,
-  `assignment_quantity_id` INT NOT NULL ,
-  `status_id` INT NOT NULL ,
   `club_id` INT NOT NULL ,
-  `person_id` INT NOT NULL ,
-  `referee_kind_id` INT NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
@@ -170,41 +187,22 @@ COMMENT = 'Storage of all referees.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_statuses`
+-- Table `rfrmgr_activities`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_statuses` ;
+DROP TABLE IF EXISTS `rfrmgr_activities` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_statuses` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_activities` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `title` VARCHAR(100) NOT NULL ,
-  `description` TEXT NULL ,
+  `sid` VARCHAR(10) NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Possible referee statuses, such as active, not active, not a' /* comment truncated */;
-
-
--- -----------------------------------------------------
--- Table `rfrmgr_assignment_quantities`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_assignment_quantities` ;
-
-CREATE  TABLE IF NOT EXISTS `rfrmgr_assignment_quantities` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `title` VARCHAR(100) NOT NULL ,
-  `description` TEXT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'Possible assignment quantities, such as normal, many, less.';
+COMMENT = 'Possible referee activity statuses such as \"interested in ma' /* comment truncated */;
 
 
 -- -----------------------------------------------------
@@ -330,23 +328,22 @@ COMMENT = 'All clubs.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_referee_kinds`
+-- Table `rfrmgr_training_levels`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_referee_kinds` ;
+DROP TABLE IF EXISTS `rfrmgr_training_levels` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_kinds` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_training_levels` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `code` VARCHAR(20) NOT NULL ,
-  `title` VARCHAR(100) NOT NULL ,
-  `description` TEXT NULL ,
+  `sid` VARCHAR(10) NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Possible kinds of referees such as international referee, Ge' /* comment truncated */;
+COMMENT = 'Possible training levels such as international referee, Germ' /* comment truncated */;
 
 
 -- -----------------------------------------------------
@@ -489,7 +486,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_team_seasons_leagues_spokespeople` (
   `person_id` INT NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`, `person_id`) ,
+  PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -520,12 +517,35 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
+-- Data for table `rfrmgr_activities`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `rfrmgr_activities` (`id`, `sid`, `created`, `modified`) VALUES (1, 'many', '2013-04-14 01:20:00', '2013-04-14 01:20:00');
+INSERT INTO `rfrmgr_activities` (`id`, `sid`, `created`, `modified`) VALUES (2, 'normal', '2013-04-14 01:20:00', '2013-04-14 01:20:00');
+INSERT INTO `rfrmgr_activities` (`id`, `sid`, `created`, `modified`) VALUES (3, 'nathis', '2013-04-14 01:20:00', '2013-04-14 01:20:00');
+INSERT INTO `rfrmgr_activities` (`id`, `sid`, `created`, `modified`) VALUES (4, 'na', '2013-04-14 01:20:00', '2013-04-14 01:20:00');
+INSERT INTO `rfrmgr_activities` (`id`, `sid`, `created`, `modified`) VALUES (5, 'o', '2013-04-14 01:20:00', '2013-04-14 01:20:00');
+
+COMMIT;
+
+-- -----------------------------------------------------
 -- Data for table `rfrmgr_contact_kinds`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`, `created`, `modified`) VALUES (1, 'p', '2013-04-11 23:47:00', '2013-04-11 23:47:00');
-INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`, `created`, `modified`) VALUES (2, 'b', '2013-04-11 23:47:00', '2013-04-11 23:47:00');
+INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`, `created`, `modified`) VALUES (1, 'priv', '2013-04-11 23:47:00', '2013-04-11 23:47:00');
+INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`, `created`, `modified`) VALUES (2, 'bsn', '2013-04-11 23:47:00', '2013-04-11 23:47:00');
 INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`, `created`, `modified`) VALUES (3, 'o', '2013-04-11 23:47:00', '2013-04-11 23:47:00');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `rfrmgr_training_levels`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `rfrmgr_training_levels` (`id`, `sid`, `created`, `modified`) VALUES (1, 'aump', '2013-04-14 01:22:00', '2013-04-14 01:22:00');
+INSERT INTO `rfrmgr_training_levels` (`id`, `sid`, `created`, `modified`) VALUES (2, 'nump', '2013-04-14 01:22:00', '2013-04-14 01:22:00');
+INSERT INTO `rfrmgr_training_levels` (`id`, `sid`, `created`, `modified`) VALUES (3, 'nref', '2013-04-14 01:22:00', '2013-04-14 01:22:00');
+INSERT INTO `rfrmgr_training_levels` (`id`, `sid`, `created`, `modified`) VALUES (4, 'iump', '2013-04-14 01:22:00', '2013-04-14 01:22:00');
 
 COMMIT;
 
