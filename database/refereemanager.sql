@@ -12,8 +12,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_user_roles` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `title` VARCHAR(100) NOT NULL ,
   `description` TEXT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -46,18 +44,15 @@ COMMENT = 'User table for access rights.';
 
 
 -- -----------------------------------------------------
--- Table `frmgr_pictures`
+-- Table `frmgr_sexes`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmgr_pictures` ;
+DROP TABLE IF EXISTS `frmgr_sexes` ;
 
-CREATE  TABLE IF NOT EXISTS `frmgr_pictures` (
+CREATE  TABLE IF NOT EXISTS `frmgr_sexes` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `person_id` INT UNSIGNED NOT NULL ,
-  `url` VARCHAR(200) NOT NULL ,
-  `description` TEXT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
+  `sid` VARCHAR(10) NOT NULL ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 COMMENT = 'Lookup table for sexes.\nThere is no description here in orde' /* comment truncated */;
@@ -70,12 +65,10 @@ DROP TABLE IF EXISTS `rfrmgr_people` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_people` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `sex_id` INT UNSIGNED NOT NULL ,
   `first_name` VARCHAR(100) NULL ,
   `name` VARCHAR(100) NOT NULL ,
   `birthday` DATE NULL ,
-  `sex_id` INT UNSIGNED NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
@@ -96,8 +89,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_leagues` (
   `code` VARCHAR(20) NOT NULL ,
   `women` TINYINT(1) NOT NULL ,
   `umpire_report_link` VARCHAR(100) NOT NULL COMMENT '\n' ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -115,8 +106,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_seasons` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `year_start` YEAR NOT NULL ,
   `description` TEXT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -135,55 +124,12 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_umpire_report_recipients` (
   `league_id` INT NOT NULL ,
   `person_id` INT NOT NULL ,
   `season_id` INT NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'Recipients of umpire reports.';
-
-
--- -----------------------------------------------------
--- Table `rfrmgr_referees_training_levels`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_referees_training_levels` ;
-
-CREATE  TABLE IF NOT EXISTS `rfrmgr_referees_training_levels` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `referee_id` INT UNSIGNED NOT NULL ,
-  `training_level_id` INT UNSIGNED NOT NULL ,
-  `since` DATE NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'Achieved training levels for referees.';
-
-
--- -----------------------------------------------------
--- Table `rfrmgr_referees`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_referees` ;
-
-CREATE  TABLE IF NOT EXISTS `rfrmgr_referees` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `person_id` INT NOT NULL ,
-  `license` DATE NULL ,
-  `last_referee_training` DATE NULL ,
-  `club_id` INT NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'Storage of all referees.';
 
 
 -- -----------------------------------------------------
@@ -194,8 +140,6 @@ DROP TABLE IF EXISTS `rfrmgr_activities` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_activities` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `sid` VARCHAR(10) NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
@@ -203,6 +147,40 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'Possible referee activity statuses such as \"interested in ma' /* comment truncated */;
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_referees`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_referees` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_referees` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `person_id` INT UNSIGNED NOT NULL ,
+  `activity_id` INT UNSIGNED NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Storage of all referees.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_contact_kinds`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_contact_kinds` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_contact_kinds` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `sid` VARCHAR(10) NOT NULL ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Possible kinds of contacts, such as private, working.';
 
 
 -- -----------------------------------------------------
@@ -215,8 +193,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_contacts` (
   `description` TEXT NULL ,
   `contact_kind_id` INT UNSIGNED NOT NULL ,
   `person_id` INT UNSIGNED NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -237,8 +213,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_addresses` (
   `number` VARCHAR(100) NOT NULL ,
   `zip_code` VARCHAR(100) NULL ,
   `city` VARCHAR(100) NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -258,33 +232,12 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_phone_numbers` (
   `country code` VARCHAR(10) NOT NULL ,
   `area code` VARCHAR(10) NOT NULL ,
   `number` VARCHAR(20) NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'All phone numbers.';
-
-
--- -----------------------------------------------------
--- Table `rfrmgr_contact_kinds`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_contact_kinds` ;
-
-CREATE  TABLE IF NOT EXISTS `rfrmgr_contact_kinds` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `sid` VARCHAR(10) NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'Possible kinds of contacts, such as private, working.';
 
 
 -- -----------------------------------------------------
@@ -296,8 +249,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_emails` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `contact_id` INT UNSIGNED NOT NULL ,
   `email` VARCHAR(100) NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -317,8 +268,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_clubs` (
   `shortname` VARCHAR(100) NULL ,
   `description` TEXT NULL ,
   `address_id` INT NOT NULL COMMENT 'standard address of the club. To be used if no address for a team is given.' ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`, `address_id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -335,8 +284,6 @@ DROP TABLE IF EXISTS `rfrmgr_training_levels` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_training_levels` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `sid` VARCHAR(10) NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
@@ -358,9 +305,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_teams` (
   `description` TEXT NULL ,
   `club_id` INT UNSIGNED NOT NULL ,
   `address_id` INT UNSIGNED NOT NULL COMMENT 'standard address of the club. To be used if no address for a team is given.' ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`, `address_id`) ,
+  PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -382,7 +327,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_activity_logs` (
   `new_value` TEXT NOT NULL ,
   `user_id` INT NOT NULL COMMENT '\n' ,
   `description` TEXT NULL ,
-  `created` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -403,8 +347,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_assignments` (
   `season_id` INT NOT NULL ,
   `league_id` INT NOT NULL ,
   `address_id` INT NULL COMMENT 'Only filled if team plays outside their normal location.' ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -423,8 +365,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_assignment_roles` (
   `code` VARCHAR(20) NOT NULL ,
   `title` VARCHAR(100) NOT NULL ,
   `description` TEXT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -443,8 +383,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_assignments` (
   `assignment_id` INT NOT NULL ,
   `referee_assignment_role_id` INT NOT NULL ,
   `referee_id` INT NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -463,8 +401,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_team_assignments` (
   `home` TINYINT(1) NOT NULL ,
   `assignment_id` INT NOT NULL ,
   `team_id` INT NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -484,8 +420,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_team_seasons_leagues_spokespeople` (
   `season_id` INT NOT NULL ,
   `league_id` INT NOT NULL ,
   `person_id` INT NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -495,20 +429,89 @@ COMMENT = 'Teams are assigned a league, in a season. They have a spokes' /* comm
 
 
 -- -----------------------------------------------------
--- Table `frmgr_sexes`
+-- Table `frmgr_pictures`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmgr_sexes` ;
+DROP TABLE IF EXISTS `frmgr_pictures` ;
 
-CREATE  TABLE IF NOT EXISTS `frmgr_sexes` (
+CREATE  TABLE IF NOT EXISTS `frmgr_pictures` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `sid` VARCHAR(10) NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
+  `person_id` INT UNSIGNED NOT NULL ,
+  `url` VARCHAR(200) NOT NULL ,
+  `description` TEXT NULL ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 COMMENT = 'Lookup table for sexes.\nThere is no description here in orde' /* comment truncated */;
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_referees_training_levels`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_referees_training_levels` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_referees_training_levels` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `referee_id` INT UNSIGNED NOT NULL ,
+  `training_level_id` INT UNSIGNED NOT NULL ,
+  `since` DATE NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Achieved training levels for referees.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_training_updates`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_training_updates` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_training_updates` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `referee_training_level_id` INT UNSIGNED NOT NULL ,
+  `update` DATE NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Updates of the training levels.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_club_relations`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_club_relations` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_club_relations` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `sid` VARCHAR(10) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Possible relations of a referee to a club (member, prefer, a' /* comment truncated */;
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_referees_clubs`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_referees_clubs` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_referees_clubs` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `referee_id` INT UNSIGNED NOT NULL ,
+  `club_id` INT UNSIGNED NOT NULL ,
+  `club_relation_id` INT UNSIGNED NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Associations between referees and clubs.';
 
 
 
@@ -517,14 +520,24 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
+-- Data for table `frmgr_sexes`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `frmgr_sexes` (`id`, `sid`) VALUES (1, 'f');
+INSERT INTO `frmgr_sexes` (`id`, `sid`) VALUES (2, 'm');
+INSERT INTO `frmgr_sexes` (`id`, `sid`) VALUES (3, 'o');
+
+COMMIT;
+
+-- -----------------------------------------------------
 -- Data for table `rfrmgr_activities`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_activities` (`id`, `sid`, `created`, `modified`) VALUES (1, 'many', '2013-04-14 01:20:00', '2013-04-14 01:20:00');
-INSERT INTO `rfrmgr_activities` (`id`, `sid`, `created`, `modified`) VALUES (2, 'normal', '2013-04-14 01:20:00', '2013-04-14 01:20:00');
-INSERT INTO `rfrmgr_activities` (`id`, `sid`, `created`, `modified`) VALUES (3, 'nathis', '2013-04-14 01:20:00', '2013-04-14 01:20:00');
-INSERT INTO `rfrmgr_activities` (`id`, `sid`, `created`, `modified`) VALUES (4, 'na', '2013-04-14 01:20:00', '2013-04-14 01:20:00');
-INSERT INTO `rfrmgr_activities` (`id`, `sid`, `created`, `modified`) VALUES (5, 'o', '2013-04-14 01:20:00', '2013-04-14 01:20:00');
+INSERT INTO `rfrmgr_activities` (`id`, `sid`) VALUES (1, 'many');
+INSERT INTO `rfrmgr_activities` (`id`, `sid`) VALUES (2, 'normal');
+INSERT INTO `rfrmgr_activities` (`id`, `sid`) VALUES (3, 'nathis');
+INSERT INTO `rfrmgr_activities` (`id`, `sid`) VALUES (4, 'na');
+INSERT INTO `rfrmgr_activities` (`id`, `sid`) VALUES (5, 'o');
 
 COMMIT;
 
@@ -532,9 +545,9 @@ COMMIT;
 -- Data for table `rfrmgr_contact_kinds`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`, `created`, `modified`) VALUES (1, 'priv', '2013-04-11 23:47:00', '2013-04-11 23:47:00');
-INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`, `created`, `modified`) VALUES (2, 'bsn', '2013-04-11 23:47:00', '2013-04-11 23:47:00');
-INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`, `created`, `modified`) VALUES (3, 'o', '2013-04-11 23:47:00', '2013-04-11 23:47:00');
+INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`) VALUES (1, 'priv');
+INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`) VALUES (2, 'bsn');
+INSERT INTO `rfrmgr_contact_kinds` (`id`, `sid`) VALUES (3, 'o');
 
 COMMIT;
 
@@ -542,19 +555,19 @@ COMMIT;
 -- Data for table `rfrmgr_training_levels`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_training_levels` (`id`, `sid`, `created`, `modified`) VALUES (1, 'aump', '2013-04-14 01:22:00', '2013-04-14 01:22:00');
-INSERT INTO `rfrmgr_training_levels` (`id`, `sid`, `created`, `modified`) VALUES (2, 'nump', '2013-04-14 01:22:00', '2013-04-14 01:22:00');
-INSERT INTO `rfrmgr_training_levels` (`id`, `sid`, `created`, `modified`) VALUES (3, 'nref', '2013-04-14 01:22:00', '2013-04-14 01:22:00');
-INSERT INTO `rfrmgr_training_levels` (`id`, `sid`, `created`, `modified`) VALUES (4, 'iump', '2013-04-14 01:22:00', '2013-04-14 01:22:00');
+INSERT INTO `rfrmgr_training_levels` (`id`, `sid`) VALUES (1, 'aump');
+INSERT INTO `rfrmgr_training_levels` (`id`, `sid`) VALUES (2, 'nump');
+INSERT INTO `rfrmgr_training_levels` (`id`, `sid`) VALUES (3, 'nref');
+INSERT INTO `rfrmgr_training_levels` (`id`, `sid`) VALUES (4, 'iump');
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `frmgr_sexes`
+-- Data for table `rfrmgr_club_relations`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `frmgr_sexes` (`id`, `sid`, `created`, `modified`) VALUES (1, 'f', '2013-04-08 02:08:00', '2013-04-08 02:08:00');
-INSERT INTO `frmgr_sexes` (`id`, `sid`, `created`, `modified`) VALUES (2, 'm', '2013-04-08 02:08:00', '2013-04-08 02:08:00');
-INSERT INTO `frmgr_sexes` (`id`, `sid`, `created`, `modified`) VALUES (3, 'o', '2013-04-08 02:08:00', '2013-04-08 02:08:00');
+INSERT INTO `rfrmgr_club_relations` (`id`, `sid`) VALUES (1, 'member');
+INSERT INTO `rfrmgr_club_relations` (`id`, `sid`) VALUES (2, 'prefer');
+INSERT INTO `rfrmgr_club_relations` (`id`, `sid`) VALUES (3, 'avoid');
 
 COMMIT;
