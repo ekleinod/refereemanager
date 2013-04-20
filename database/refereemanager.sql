@@ -10,14 +10,14 @@ DROP TABLE IF EXISTS `rfrmgr_user_roles` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_user_roles` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `title` VARCHAR(100) NOT NULL ,
-  `description` TEXT NULL ,
+  `sid` VARCHAR(20) NOT NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Roles of users, such as admin, reader, editor.';
+COMMENT = 'Roles of users, such as admin, editor.';
 
 
 -- -----------------------------------------------------
@@ -44,11 +44,11 @@ COMMENT = 'User table for access rights.';
 
 
 -- -----------------------------------------------------
--- Table `frmgr_sexes`
+-- Table `frmgr_sex_types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmgr_sexes` ;
+DROP TABLE IF EXISTS `frmgr_sex_types` ;
 
-CREATE  TABLE IF NOT EXISTS `frmgr_sexes` (
+CREATE  TABLE IF NOT EXISTS `frmgr_sex_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `title` VARCHAR(100) NOT NULL ,
   `remark` TEXT NULL ,
@@ -66,7 +66,7 @@ DROP TABLE IF EXISTS `rfrmgr_people` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_people` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `sex_id` INT UNSIGNED NOT NULL ,
+  `sex_type_id` INT UNSIGNED NOT NULL ,
   `first_name` VARCHAR(100) NULL ,
   `name` VARCHAR(100) NOT NULL ,
   `birthday` DATE NULL ,
@@ -153,11 +153,11 @@ COMMENT = 'Recipients of umpire reports.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_activities`
+-- Table `rfrmgr_status_types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_activities` ;
+DROP TABLE IF EXISTS `rfrmgr_status_types` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_activities` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_status_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `title` VARCHAR(100) NOT NULL ,
   `remark` TEXT NULL ,
@@ -167,7 +167,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_activities` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Possible referee activity statuses such as \"interested in ma' /* comment truncated */;
+COMMENT = 'Possible referee statuses such as \"interested in many assign' /* comment truncated */;
 
 
 -- -----------------------------------------------------
@@ -178,7 +178,7 @@ DROP TABLE IF EXISTS `rfrmgr_referees` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_referees` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `person_id` INT UNSIGNED NOT NULL ,
-  `activity_id` INT UNSIGNED NOT NULL ,
+  `status_type_id` INT UNSIGNED NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -188,11 +188,11 @@ COMMENT = 'Storage of all referees.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_contact_kinds`
+-- Table `rfrmgr_contact_types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_contact_kinds` ;
+DROP TABLE IF EXISTS `rfrmgr_contact_types` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_contact_kinds` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_contact_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `title` VARCHAR(100) NOT NULL ,
   `remark` TEXT NULL ,
@@ -202,7 +202,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_contact_kinds` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Possible kinds of contacts, such as private, working.';
+COMMENT = 'Possible types of contacts, such as private, working.';
 
 
 -- -----------------------------------------------------
@@ -213,7 +213,7 @@ DROP TABLE IF EXISTS `rfrmgr_contacts` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_contacts` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `remark` TEXT NULL ,
-  `contact_kind_id` INT UNSIGNED NOT NULL ,
+  `contact_type_id` INT UNSIGNED NOT NULL ,
   `person_id` INT UNSIGNED NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
@@ -287,10 +287,10 @@ DROP TABLE IF EXISTS `rfrmgr_clubs` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_clubs` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(100) NOT NULL ,
-  `shortname` VARCHAR(100) NULL ,
+  `abbreviation` VARCHAR(100) NULL ,
   `description` TEXT NULL ,
   `address_id` INT NOT NULL COMMENT 'standard address of the club. To be used if no address for a team is given.' ,
-  PRIMARY KEY (`id`, `address_id`) ,
+  PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -299,13 +299,14 @@ COMMENT = 'All clubs.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_training_levels`
+-- Table `rfrmgr_training_level_types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_training_levels` ;
+DROP TABLE IF EXISTS `rfrmgr_training_level_types` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_training_levels` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_training_level_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `title` VARCHAR(100) NOT NULL ,
+  `abbreviation` VARCHAR(20) NULL ,
   `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
@@ -323,11 +324,11 @@ DROP TABLE IF EXISTS `rfrmgr_teams` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_teams` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `number` INT UNSIGNED NOT NULL ,
-  `name` VARCHAR(100) NULL ,
-  `description` TEXT NULL ,
   `club_id` INT UNSIGNED NOT NULL ,
   `address_id` INT UNSIGNED NOT NULL COMMENT 'standard address of the club. To be used if no address for a team is given.' ,
+  `number` INT UNSIGNED NULL ,
+  `name` VARCHAR(100) NULL ,
+  `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -337,13 +338,30 @@ COMMENT = 'All teams.';
 
 
 -- -----------------------------------------------------
+-- Table `rfrmgr_database_tables`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_database_tables` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_database_tables` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `sid` VARCHAR(30) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'All database tables that have to be logged,';
+
+
+-- -----------------------------------------------------
 -- Table `rfrmgr_activity_logs`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rfrmgr_activity_logs` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_activity_logs` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `table_name` VARCHAR(100) NOT NULL ,
+  `database_table_id` INT UNSIGNED NOT NULL ,
   `row_id` INT NOT NULL ,
   `column_name` VARCHAR(100) NOT NULL ,
   `old_value` TEXT NULL ,
@@ -365,25 +383,22 @@ DROP TABLE IF EXISTS `rfrmgr_assignments` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_assignments` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `game_number` INT UNSIGNED NOT NULL ,
-  `datetime` DATETIME NOT NULL ,
-  `season_id` INT NOT NULL ,
-  `league_id` INT NOT NULL ,
-  `address_id` INT NULL COMMENT 'Only filled if team plays outside their normal location.' ,
+  `start` DATETIME NOT NULL ,
+  `end` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Assignments for referees.';
+COMMENT = 'Assignments.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_assignment_types`
+-- Table `rfrmgr_referee_assignment_types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_assignment_types` ;
+DROP TABLE IF EXISTS `rfrmgr_referee_assignment_types` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_assignment_types` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_assignment_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `abbreviation` VARCHAR(10) NOT NULL ,
   `title` VARCHAR(100) NOT NULL ,
@@ -405,9 +420,9 @@ DROP TABLE IF EXISTS `rfrmgr_referee_assignments` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_assignments` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `assignment_id` INT NOT NULL ,
-  `referee_assignment_role_id` INT NOT NULL ,
-  `referee_id` INT NOT NULL ,
+  `assignment_id` INT UNSIGNED NOT NULL ,
+  `referee_assignment_type_id` INT UNSIGNED NOT NULL ,
+  `referee_id` INT UNSIGNED NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -417,40 +432,99 @@ COMMENT = 'Referee\'s assignments with their role.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_team_assignments`
+-- Table `rfrmgr_league_games`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_team_assignments` ;
+DROP TABLE IF EXISTS `rfrmgr_league_games` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_team_assignments` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_league_games` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `home` TINYINT(1) NOT NULL ,
-  `assignment_id` INT NOT NULL ,
-  `team_id` INT NOT NULL ,
+  `assignment_id` INT UNSIGNED NOT NULL ,
+  `game_number` INT UNSIGNED NOT NULL ,
+  `season_id` INT UNSIGNED NOT NULL ,
+  `league_id` INT UNSIGNED NOT NULL ,
+  `address_id` INT UNSIGNED NULL COMMENT 'Only filled if team plays outside their normal location.' ,
+  `filled_referee_report_url` VARCHAR(200) NULL ,
+  `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Team\'s assignments: home or road team.';
+COMMENT = 'Assignments for league games.\nLeague and season can be deduc' /* comment truncated */;
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_team_seasons_leagues_spokespeople`
+-- Table `rfrmgr_league_game_team_types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_team_seasons_leagues_spokespeople` ;
+DROP TABLE IF EXISTS `rfrmgr_league_game_team_types` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_team_seasons_leagues_spokespeople` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_league_game_team_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `team_id` INT NOT NULL ,
-  `season_id` INT NOT NULL ,
-  `league_id` INT NOT NULL ,
-  `person_id` INT NOT NULL ,
+  `abbreviation` VARCHAR(10) NOT NULL ,
+  `title` VARCHAR(100) NOT NULL ,
+  `remark` TEXT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `abbreviation_UNIQUE` (`abbreviation` ASC) ,
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Types of league game teams, such as home team, off team, etc' /* comment truncated */;
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_team_seasons`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_team_seasons` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_team_seasons` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `team_id` INT UNSIGNED NOT NULL ,
+  `season_id` INT UNSIGNED NOT NULL ,
+  `league_id` INT UNSIGNED NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Teams are assigned a league, in a season. They have a spokes' /* comment truncated */;
+COMMENT = 'Association of teams in a specified season.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_league_game_teams`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_league_game_teams` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_league_game_teams` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `league_game_id` INT UNSIGNED NOT NULL ,
+  `league_game_team_type_id` INT UNSIGNED NOT NULL ,
+  `team_season_id` INT UNSIGNED NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Teams of a league game and their role: home or off team.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_spokespeople`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_spokespeople` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_spokespeople` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `person_id` INT UNSIGNED NOT NULL ,
+  `team_season_id` INT UNSIGNED NULL ,
+  `club_id` INT UNSIGNED NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Spokespeople of teams and clubs.';
 
 
 -- -----------------------------------------------------
@@ -470,14 +544,14 @@ COMMENT = 'Lookup table for sexes.\nThere is no description here in orde' /* com
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_referees_training_levels`
+-- Table `rfrmgr_training_levels`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_referees_training_levels` ;
+DROP TABLE IF EXISTS `rfrmgr_training_levels` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_referees_training_levels` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_training_levels` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `referee_id` INT UNSIGNED NOT NULL ,
-  `training_level_id` INT UNSIGNED NOT NULL ,
+  `training_level_type_id` INT UNSIGNED NOT NULL ,
   `since` DATE NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
@@ -494,7 +568,7 @@ DROP TABLE IF EXISTS `rfrmgr_training_updates` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_training_updates` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `referee_training_level_id` INT UNSIGNED NOT NULL ,
+  `training_level_id` INT UNSIGNED NOT NULL ,
   `update` DATE NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
@@ -505,39 +579,39 @@ COMMENT = 'Updates of the training levels.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_club_relations`
+-- Table `rfrmgr_referee_relation_types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_club_relations` ;
+DROP TABLE IF EXISTS `rfrmgr_referee_relation_types` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_club_relations` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_relation_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `title` VARCHAR(100) NOT NULL ,
-  `remark` TEXT NULL ,
+  `sid` VARCHAR(10) NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  UNIQUE INDEX `title_UNIQUE` (`title` ASC) )
+  UNIQUE INDEX `title_UNIQUE` (`sid` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Possible relations of a referee to a club (member, prefer, a' /* comment truncated */;
+COMMENT = 'Possible relations of a referee to a club or league (member,' /* comment truncated */;
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_referees_clubs`
+-- Table `rfrmgr_referees_relations`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_referees_clubs` ;
+DROP TABLE IF EXISTS `rfrmgr_referees_relations` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_referees_clubs` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_referees_relations` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `referee_id` INT UNSIGNED NOT NULL ,
-  `club_relation_id` INT UNSIGNED NOT NULL ,
-  `club_id` INT UNSIGNED NOT NULL ,
+  `referee_relation_type_id` INT UNSIGNED NOT NULL ,
+  `club_id` INT UNSIGNED NULL ,
+  `league_id` INT UNSIGNED NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Associations between referees and clubs.';
+COMMENT = 'Relations between referees and clubs resp. leagues.\nClubs: m' /* comment truncated */;
 
 
 -- -----------------------------------------------------
@@ -595,7 +669,79 @@ COLLATE = utf8_general_ci
 COMMENT = 'All league types.';
 
 
+-- -----------------------------------------------------
+-- Table `rfrmgr_tournaments`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_tournaments` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_tournaments` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(10) NOT NULL ,
+  `start` DATETIME NOT NULL ,
+  `end` DATETIME NOT NULL ,
+  `address_id` INT UNSIGNED NOT NULL ,
+  `announcement_url` VARCHAR(200) NULL ,
+  `information_url` VARCHAR(200) NULL ,
+  `club_id` INT UNSIGNED NULL ,
+  `person_id` INT UNSIGNED NULL ,
+  `remark` TEXT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `abbreviation_UNIQUE` (`name` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Tournaments with games.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_tournament_games`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_tournament_games` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_tournament_games` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `assignment_id` INT UNSIGNED NOT NULL ,
+  `tournament_id` INT UNSIGNED NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Assignments for tournament games.';
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `rfrmgr_user_roles`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `rfrmgr_user_roles` (`id`, `sid`) VALUES (1, 'referee');
+INSERT INTO `rfrmgr_user_roles` (`id`, `sid`) VALUES (2, 'statistician');
+INSERT INTO `rfrmgr_user_roles` (`id`, `sid`) VALUES (3, 'editor');
+INSERT INTO `rfrmgr_user_roles` (`id`, `sid`) VALUES (4, 'administrator');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `rfrmgr_database_tables`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `rfrmgr_database_tables` (`id`, `sid`) VALUES (1, 'people');
+INSERT INTO `rfrmgr_database_tables` (`id`, `sid`) VALUES (2, 'pictures');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `rfrmgr_referee_relation_types`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `rfrmgr_referee_relation_types` (`id`, `sid`) VALUES (1, 'member');
+INSERT INTO `rfrmgr_referee_relation_types` (`id`, `sid`) VALUES (2, 'prefer');
+INSERT INTO `rfrmgr_referee_relation_types` (`id`, `sid`) VALUES (3, 'avoid');
+
+COMMIT;
