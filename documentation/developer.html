@@ -2,14 +2,50 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<title>Referee Manager Configuration</title>
+	<title>Referee Manager Developer Documentation</title>
 	<meta name="author" content="Ekkart Kleinod"/>
-	<meta name="date" content="06.01.2013"/>
+	<meta name="date" content="21.04.2013"/>
 </head>
 <body>
 
-<p>Important: the whole installation is meant for development, not production.
-Therefore, no real passwords are used etc.</p>
+<h3 id="preface">Preface</h3>
+
+<p>This documentation focuses on the development aspect of the referee manager.
+Thus, there is no description for setting up the referee manager in a production environment.
+This is part of the user documentation.</p>
+
+<p>Therefor be aware, that your passwords etc. are not secured during development, if you don&#8217;t secure them yourselves.
+The same goes for other security aspects.</p>
+
+<p>I develop the referee manager in a virtual machine with no access from the internet, or on a laptop with no reading access from the internet.
+I urge you to do so yourselves, unless you know what you are doing.</p>
+
+<h4 id="usedlanguage">Used Language</h4>
+
+<p>The developer&#8217;s documentation is in English, because I think more people understand English than German and thus more people can use the referee manager.
+As I am a German native speaker, you can ask German questions every time.</p>
+
+<p>Die Dokumentation ist auf Englisch, damit mehr Leute die Schiedsrichterverwaltung nutzen können.
+Da ich Deutsch als Mutterspreche spreche, können Sie natürlich jederzeit auch deutsche Fragen stellen.</p>
+
+<h3 id="structureandgitrepositories">Structure and git repositories</h3>
+
+<p>There are three git sources used for development:</p>
+
+<ul>
+<li>CakePHP (<a href="http://cakephp.org/" title="CakePHP Homepage">Homepage</a>, <a href="git://github.com/cakephp/cakephp.git" title="CakePHP Git Access">Git</a>)</li>
+<li>phpMyAdmin (<a href="http://www.phpmyadmin.net/" title="phpMyAdmin Homepage">Homepage</a>, <a href="git://github.com/phpmyadmin/phpmyadmin.git" title="phpMyAdmin Git Access">Git</a>)</li>
+<li>Referee Manager (<a href="http://sourceforge.net/projects/refereemanager/" title="Referee Manager Sourceforge Home">Homepage</a>, <a href="http://git.code.sf.net/p/refereemanager/code" title="Referee Manager Sourceforge Git Access">Git</a>)</li>
+</ul>
+
+<p>The first two are read-only, the third, referee manager is read/write if you watn to develop.</p>
+
+<p>During the development process, several files have to be locatede in directories of CakePHP and phpMyAdmin resp.
+In order to avoid having several files mixed up, therefore making it difficult to seperate referee manager files from original files, the development directories are separated from the git sources.</p>
+
+<p>This means: updates of CakePHP and/or phpMyAdmin have to be copied to the development directories.
+In order to avoid cluttering, in this case the development directories are deleted first.
+After updates the referee manager files have to be copied to the development directories.</p>
 
 <h3 id="software">Software</h3>
 

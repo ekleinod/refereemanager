@@ -1,10 +1,46 @@
-Title:							Referee Manager Configuration
+Title:							Referee Manager Developer Documentation
 Author:							Ekkart Kleinod
-Date:								06.01.2013
+Date:								21.04.2013
 Base Header Level:	3
 
-Important: the whole installation is meant for development, not production.
-Therefore, no real passwords are used etc.
+# Preface
+
+This documentation focuses on the development aspect of the referee manager.
+Thus, there is no description for setting up the referee manager in a production environment.
+This is part of the user documentation.
+
+Therefor be aware, that your passwords etc. are not secured during development, if you don't secure them yourselves.
+The same goes for other security aspects.
+
+I develop the referee manager in a virtual machine with no access from the internet, or on a laptop with no reading access from the internet.
+I urge you to do so yourselves, unless you know what you are doing.
+
+## Used Language
+
+The developer's documentation is in English, because I think more people understand English than German and thus more people can use the referee manager.
+As I am a German native speaker, you can ask German questions every time.
+
+Die Dokumentation ist auf Englisch, damit mehr Leute die Schiedsrichterverwaltung nutzen können.
+Da ich Deutsch als Mutterspreche spreche, können Sie natürlich jederzeit auch deutsche Fragen stellen.
+
+# Structure and git repositories
+
+There are three git sources used for development:
+
+- CakePHP ([Homepage][url:cake], [Git][url:cake:git])
+- phpMyAdmin ([Homepage][url:pma], [Git][url:pma:git])
+- Referee Manager ([Homepage][url:refman], [Git][url:refman:git])
+
+The first two are read-only, the third, referee manager is read/write if you watn to develop.
+
+During the development process, several files have to be locatede in directories of CakePHP and phpMyAdmin resp.
+In order to avoid having several files mixed up, therefore making it difficult to seperate referee manager files from original files, the development directories are separated from the git sources.
+
+This means: updates of CakePHP and/or phpMyAdmin have to be copied to the development directories.
+In order to avoid cluttering, in this case the development directories are deleted first.
+After updates the referee manager files have to be copied to the development directories.
+
+
 
 # Software
 
@@ -144,4 +180,12 @@ Create the database tables using the code of
 	<...>/refereemanager-code/database/refereemanager.sql
 
 Fill the database with your data if you have some.
+
+[url:refman]: http://sourceforge.net/projects/refereemanager/ "Referee Manager Sourceforge Home"
+[url:refman:wiki]: http://sourceforge.net/p/refereemanager/wiki/Home/ "Referee Manager Sourceforge Wiki"
+[url:refman:git]: http://git.code.sf.net/p/refereemanager/code "Referee Manager Sourceforge Git Access"
+[url:cake]: http://cakephp.org/ "CakePHP Homepage"
+[url:cake:git]: git://github.com/cakephp/cakephp.git "CakePHP Git Access"
+[url:pma]: http://www.phpmyadmin.net/ "phpMyAdmin Homepage"
+[url:pma:git]: git://github.com/phpmyadmin/phpmyadmin.git "phpMyAdmin Git Access"
 
