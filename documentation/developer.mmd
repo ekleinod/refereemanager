@@ -9,7 +9,7 @@ This documentation focuses on the development aspect of the referee manager.
 Thus, there is no description for setting up the referee manager in a production environment.
 This is part of the user documentation.
 
-Therefor be aware, that your passwords etc. are not secured during development, if you don't secure them yourselves.
+Therefore, be aware, that your passwords etc. are not secured during development, if you don't secure them yourselves.
 The same goes for other security aspects.
 
 I develop the referee manager in a virtual machine with no access from the internet, or on a laptop with no reading access from the internet.
@@ -31,39 +31,219 @@ There are three git sources used for development:
 - phpMyAdmin ([Homepage][url:pma], [Git][url:pma:git])
 - Referee Manager ([Homepage][url:refman], [Git][url:refman:git])
 
-The first two are read-only, the third, referee manager is read/write if you watn to develop.
+The first two are read-only, the third, referee manager should be read/write if you want to develop.
 
-During the development process, several files have to be locatede in directories of CakePHP and phpMyAdmin resp.
-In order to avoid having several files mixed up, therefore making it difficult to seperate referee manager files from original files, the development directories are separated from the git sources.
+During the development process, several files have to be located in directories of CakePHP and phpMyAdmin resp.
+In order to avoid having several files mixed up, therefore making it difficult to separate referee manager files from original files, the development directories are separated from the git sources.
+This means, that the development files have to be copied to and from the corresponding directories.
 
-This means: updates of CakePHP and/or phpMyAdmin have to be copied to the development directories.
-In order to avoid cluttering, in this case the development directories are deleted first.
-After updates the referee manager files have to be copied to the development directories.
+This will be described in detail later (see [sec:process][]).
+
+We refer to the needed diretories as follows:
+
+<...>/apache/refereemanager/
+: development directory
+: contains the actual website in development
+: no git allowed here
+
+<...>/apache/phpmyadmin/
+: phpMyAdmin directory containing a copy of the phpMyAdmin files and the configuration file
+: no git allowed here
+
+<...>/git/refereemanager/
+: referee manager git repository
+: development and configuration files reside here
+: development of CakePHP files does not take place here, files are copied here
+
+<...>/git/phpmyadmin/
+: phpMyAdmin git repository
+: no development files here
+
+<...>/git/cakephp/
+: CakePHP git repository
+: no development files here
 
 
 
-# Software
+# Required software
 
-You will need at least:
+In order to develop the referee manager, you will need at least:
 
 - Git
-- Apache (incl. mysql module)
-- PHP
-- Referee Manager
+- Ant (Java)
+- Apache (incl. mysql module) and PHP
+- MySQL
 
-# Code and CakePHP
+Please install the applications for your platform.
+I tested development with XUbuntu so far.
 
-It is a bit difficult to set up the code and cakephp.
-Maybe I provide an ant script for this task, for now you have to do this by hand.
-It is not "impossible" difficult, but nonetheless, follow the instruction given below.
+## Git
 
-- clone the code of the referee manager (example with ssh access, for other possibilities see [http://sourceforge.net/projects/refereemanager/](http://sourceforge.net/projects/refereemanager/))
+You need *git* for handling the developed code.
 
-	$ git clone ssh://git.code.sf.net/p/refereemanager/code refereemanager-code
+There are no special installation or configuration steps required in order to develop the referee manager.
 
-- rename the folder `app` in `cakephp/app` to `app.xyz`
-	- explanation: we will copy the `app` folder of CakePHP here, so this folder has to be out of the way for now
-- download the latest version of CakePHP http://cakephp.org/
+## Ant
+
+You need *ant* for execution of the setup and maintenance scripts.
+*Ant* requires *Java*.
+You can choose not to use *ant*, in this case you have to execute the required scripts by hand.
+
+There are no special installation or configuration steps required in order to develop the referee manager.
+
+## Apache and PHP
+
+Install *apache* according to your platform.
+Make sure you install the *mysql* module.
+
+Install *PHP* as well.
+Preferably combine the installation steps in order to ensure your *apache* server executes *PHP* correctly.
+In order to use CakePHP scripts *PHP* has to be executable by command line too.
+
+After each change restart apache with
+
+	$ sudo apachectl -k restart
+
+Execute the following configuration steps.
+
+### Access restrictions
+
+In standard configuration, all sites in *apache2* have access restrictions.
+You have to allow access explicitely.
+
+Handle this situation with care if you are on a live system.
+In my test system I can allow access to all sites withour having to consider security issues.
+
+After the changes, check if <http://localhost/> (still) works.
+
+Change the following files:
+
+- apache2.conf
+- httpd.conf
+- default
+
+as follows:
+
+#### apache2.conf
+
+For some reason in newer *apache* installations the file `apache2.conf` does not link to `httpd.conf` anymore.
+I don't know if this is a bug, a feature, a security thing or else.
+In that case, add the following line to `apache2.conf`
+
+	# Include all the user configurations:
+	Include httpd.conf
+
+Add the line before
+
+	Include ports.conf
+
+The file is provided in the referee manager git repository, check if a link is needed or the changes are made faster by hand.
+The linking solution:
+
+	$ cd /etc/apache2/
+	$ sudo ln -s <...>/git/refereemanager/configuration/apache2/httpd.conf
+
+#### httpd.conf
+
+Add the file `httpd.conf` to the directory `/etc/apache2` or link the given `httpd.conf` file from the referee manager git repository.
+Check if the file exists first, merge existing files if you have to.
+
+Important changes content of `httpd.conf` in section `Directory /`:
+
+	Options FollowSymLinks
+	AllowOverride All
+
+At the end of the file:
+
+	LoadModule rewrite_module /usr/lib/apache2/modules/mod_rewrite.so
+
+The linking solution:
+
+	$ cd /etc/apache2/
+	$ sudo ln -s <...>/git/refereemanager/configuration/apache2/httpd.conf
+
+In both cases it is important to allow the following of symbolic links and the override.
+
+#### default
+
+Change `default` in `/etc/apache2/sites-available/` (to be tested if this change is needed).
+Here too allow override and following of symbolic links in sections `Directory /` and `Directory /var/www`.
+
+You can link to the git-stored file as well:
+
+	$ cd /etc/apache2/sites-available/
+	$ sudo ln -s <...>/git/refereemanager/configuration/apache2/sites-available/default
+
+## Known problems
+
+If you choose to link the needed files, there may be problems in case you encrypt your home directory.
+In that case, the links can only be resolved after you log in.
+You have to restart *apache* every time you log in (see [Apache and PHP][]).
+
+## MySQL
+
+You need *MySQL* as database server.
+
+Make sure you install the database with the default settings and without database password.
+If you choose otherwise, note the values in order to put them in the configuration files.
+
+
+# Setup your working environment
+
+Now, it is time to set up your working environment.
+In order to do this, follow these steps:
+
+1. check out the git sources
+2. create and link your apache target directories
+3. alter the configuration file
+4. copy phpMyAdmin
+5. copy CakePHP
+6. copy referee manager
+7. ready
+
+## Check out the git sources
+
+clone the code of the referee manager
+
+	$ git clone http://git.code.sf.net/p/refereemanager/code <...>/git/refereemanager/
+
+clone the code of CakePHP
+
+	$ git clone git://github.com/cakephp/cakephp.git <...>/git/cakephp/
+
+clone the code of phpMyAdmin
+
+	$ git clone git://github.com/phpmyadmin/phpmyadmin.git <...>/git/phpmyadmin/
+
+## Create and link your apache target directories
+
+Check if the directories exist.
+If yes: delete them (check if they contain valueable files first):
+
+	$ rm -rf <...>/apache/phpmyadmin/
+	$ rm -rf <...>/apache/refereemanager/
+
+Now create the directories:
+
+	$ mkdir <...>/apache/phpmyadmin/
+	$ mkdir <...>/apache/refereemanager/
+
+Now link the directories to your apache home directory:
+
+	$ cd /var/www/
+	/var/www/$ sudo ln -s <...>/apache/phpmyadmin/
+	/var/www/$ sudo ln -s <...>/apache/refereemanager/
+
+
+## Alter the configuration file
+## Copy phpMyAdmin
+## Copy CakePHP
+## Copy referee manager
+## Start development
+
+
+
+	- download the latest version of CakePHP http://cakephp.org/
 - extract the files
 - copy all files to the `cakephp` folder of the referee manager
 	- do not forget the *hidden* files (ctrl+h in most file managers)
@@ -82,84 +262,6 @@ Now some folder have to be given more access rights in order for the application
 	$ chmod 777 tmp
 	$ cd tmp
 	$ find -type d -exec chmod 777 {} \;
-
-# Apache
-
-Sometimes apache did not start when the file `default` was linked into the directory `sites-available` (see below).
-In that case, restart apache as stated below.
-I did not research if this is a bug or a feature or an error on my side.
-
-After each change restart apache
-	$ sudo apachectl -k restart
-
-## Include referee manager code and phpmyadmin
-
-Create a symbolic link to the two needed directories.
-The links have to be created in
-
-	/var/www/
-
-	/var/www/$ sudo ln -s <...>/refereemanager-code/cakephp/
-	/var/www/$ sudo ln -s <...>/phpmyadmin
-
-## Access restrictions
-
-In standard configuration, all sites in apache2 have access restrictions.
-You have to allow access explicitely.
-
-Handle this situation with care if you are on a live system.
-In my test system that is working local in a VM, I can allow access to all sites withour having to consider security issues.
-
-After the changes, check if [http://localhost/](http://localhost/) (still) works.
-
-### apache2.conf
-
-For some reason in newer apache installations the file `apache2.conf` does not lin to `httpd.conf` anymore.
-I don't know if this is a bug, a feature, a security thing or else.
-In that case, add the following line to `apache2.conf`
-
-	# Include all the user configurations:
-	Include httpd.conf
-
-Add the line before
-
-	Include ports.conf
-
-The file is provided in git too, check if a link is needed or the changes are made faster by hand.
-
-### httpd.conf
-
-Add the file `httpd.conf` to the directory `/etc/apache2` or link the given `httpd.conf` file from git.
-Check if the file exists first, merge existing files if you have to.
-
-Important changes content of `httpd.conf` in section `Directory /`:
-
-	Options FollowSymLinks
-	AllowOverride All
-
-At the end of the file:
-
-	LoadModule rewrite_module /usr/lib/apache2/modules/mod_rewrite.so
-
-Or (the linking solution):
-
-	$ cd /etc/apache2/
-	$ sudo ln -s <...>/refereemanager-code/configuration/apache2/httpd.conf
-
-In both cases it is important to allow the following of symbolic links and the override.
-
-### default
-
-Change `default` in `/etc/apache2/sites-available/` (to be tested if this change is needed).
-Here too allow override and following of symbolic links in sections `Directory /` and `Directory /var/www`.
-
-You can link to the git-stored file as well:
-
-	$ cd /etc/apache2/sites-available/
-	$ sudo ln -s <...>/refereemanager-code/configuration/apache2/sites-available/default
-
-Sometimes apache did not start with a linked `default`.
-In that case restart apache by hand, see explanation above.
 
 # Setup database
 
@@ -180,6 +282,13 @@ Create the database tables using the code of
 	<...>/refereemanager-code/database/refereemanager.sql
 
 Fill the database with your data if you have some.
+
+This means: updates of CakePHP and/or phpMyAdmin have to be copied to the development directories.
+In order to avoid cluttering, in this case the development directories are deleted first.
+After updates the referee manager files have to be copied to the development directories.
+
+
+
 
 [url:refman]: http://sourceforge.net/projects/refereemanager/ "Referee Manager Sourceforge Home"
 [url:refman:wiki]: http://sourceforge.net/p/refereemanager/wiki/Home/ "Referee Manager Sourceforge Wiki"
