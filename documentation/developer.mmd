@@ -25,10 +25,10 @@ Da ich Deutsch als Mutterspreche spreche, können Sie natürlich jederzeit auch 
 
 # Structure and git repositories
 
-There are three git sources used for development:
+There are three git sources or downloads used for development:
 
 - CakePHP ([Homepage][url:cake], [Git][url:cake:git])
-- phpMyAdmin ([Homepage][url:pma], [Git][url:pma:git])
+- phpMyAdmin ([Homepage][url:pma], [Git][url:pma:git], [Downloads][url:pma:down])
 - Referee Manager ([Homepage][url:refman], [Git][url:refman:git])
 
 The first two are read-only, the third, referee manager should be read/write if you want to develop.
@@ -39,7 +39,9 @@ This means, that the development files have to be copied to and from the corresp
 
 This will be described in detail later (see [sec:process][]).
 
-We refer to the needed diretories as follows:
+If you do not want to use the git sources, feel free to download available snapshots and place their files in the directories stated below.
+
+We refer to the needed directories as follows:
 
 <...>/apache/refereemanager/
 : development directory
@@ -201,6 +203,17 @@ In order to do this, follow these steps:
 6. copy referee manager
 7. ready
 
+You should use the provided *ant* scripts for some of these tasks.
+Simply call
+
+	$ cd <...>/git/refereemanager/scripts/
+	$ ant
+
+For a short help message, stating the available targets and a short description.
+If you are not familiar with *ant*, refer to the [Ant Manual][url:ant:manual].
+
+**Important:** All scripts work without security warnings.
+
 ## Check out the git sources
 
 clone the code of the referee manager
@@ -234,22 +247,57 @@ Now link the directories to your apache home directory:
 	/var/www/$ sudo ln -s <...>/apache/phpmyadmin/
 	/var/www/$ sudo ln -s <...>/apache/refereemanager/
 
-
 ## Alter the configuration file
+
+You have to tell the scripts, where to find your directories.
+Default structure is:
+
+	../
+		apache/
+			refereemanager/
+			phpmyadmin/
+		git/
+			refereemanager/
+			cakephp/
+			phpmyadmin/
+
+If your directory structure is the same, you do not have to change the configuration file.
+
+Otherwise, edit the file
+
+	<...>/git/refereemanager/scripts/configuration.xml
+
+Change the file according to your needs.
+You can check your settings with
+
+	$ cd <...>/git/refereemanager/scripts/
+	$ ant echoproperties
+
 ## Copy phpMyAdmin
+
+Now copy the *phpMyAdmin* files in your phpmyadmin apache directory.
+
+Ant target
+: `phpmyadmin2apache`
+: call: `ant phpmyadmin2apache`
+
+Source directory
+: `<...>/git/phpmyadmin`
+
+Target directory
+: `<...>/apache/phpmyadmin`
+
+The script executes the following steps:
+
+1. check if target directory exists -- failure otherwise
+2. delete all files and directories in the target directory
+3. copy all files and directories from source directory to target directory
+
 ## Copy CakePHP
 ## Copy referee manager
 ## Start development
 
 
-
-	- download the latest version of CakePHP http://cakephp.org/
-- extract the files
-- copy all files to the `cakephp` folder of the referee manager
-	- do not forget the *hidden* files (ctrl+h in most file managers)
-- copy the content of the `app.xyz` folder to `app`
-	- choose overwrite for existing files
-- ready
 
 Now some folder have to be given more access rights in order for the application to work nicely.
 
@@ -297,4 +345,6 @@ After updates the referee manager files have to be copied to the development dir
 [url:cake:git]: git://github.com/cakephp/cakephp.git "CakePHP Git Access"
 [url:pma]: http://www.phpmyadmin.net/ "phpMyAdmin Homepage"
 [url:pma:git]: git://github.com/phpmyadmin/phpmyadmin.git "phpMyAdmin Git Access"
+[url:pma:down]: http://www.phpmyadmin.net/home_page/downloads.php "phpMyAdmin Downloads"
+[url:ant:manual]: http://ant.apache.org/manual/ "Ant Manual"
 

@@ -30,11 +30,11 @@ Da ich Deutsch als Mutterspreche spreche, können Sie natürlich jederzeit auch 
 
 <h3 id="structureandgitrepositories">Structure and git repositories</h3>
 
-<p>There are three git sources used for development:</p>
+<p>There are three git sources or downloads used for development:</p>
 
 <ul>
 <li>CakePHP (<a href="http://cakephp.org/" title="CakePHP Homepage">Homepage</a>, <a href="git://github.com/cakephp/cakephp.git" title="CakePHP Git Access">Git</a>)</li>
-<li>phpMyAdmin (<a href="http://www.phpmyadmin.net/" title="phpMyAdmin Homepage">Homepage</a>, <a href="git://github.com/phpmyadmin/phpmyadmin.git" title="phpMyAdmin Git Access">Git</a>)</li>
+<li>phpMyAdmin (<a href="http://www.phpmyadmin.net/" title="phpMyAdmin Homepage">Homepage</a>, <a href="git://github.com/phpmyadmin/phpmyadmin.git" title="phpMyAdmin Git Access">Git</a>, <a href="http://www.phpmyadmin.net/home_page/downloads.php" title="phpMyAdmin Downloads">Downloads</a>)</li>
 <li>Referee Manager (<a href="http://sourceforge.net/projects/refereemanager/" title="Referee Manager Sourceforge Home">Homepage</a>, <a href="http://git.code.sf.net/p/refereemanager/code" title="Referee Manager Sourceforge Git Access">Git</a>)</li>
 </ul>
 
@@ -46,7 +46,9 @@ This means, that the development files have to be copied to and from the corresp
 
 <p>This will be described in detail later (see [sec:process][]).</p>
 
-<p>We refer to the needed diretories as follows:</p>
+<p>If you do not want to use the git sources, feel free to download available snapshots and place their files in the directories stated below.</p>
+
+<p>We refer to the needed directories as follows:</p>
 <dl>
 <dt>&lt;&#8230;&gt;/apache/refereemanager/</dt>
 <dd>development directory</dd>
@@ -228,6 +230,18 @@ In order to do this, follow these steps:</p>
 <li>ready</li>
 </ol>
 
+<p>You should use the provided <em>ant</em> scripts for some of these tasks.
+Simply call</p>
+
+<pre><code>$ cd &lt;...&gt;/git/refereemanager/scripts/
+$ ant
+</code></pre>
+
+<p>For a short help message, stating the available targets and a short description.
+If you are not familiar with <em>ant</em>, refer to the <a href="http://ant.apache.org/manual/" title="Ant Manual">Ant Manual</a>.</p>
+
+<p><strong>Important:</strong> All scripts work without security warnings.</p>
+
 <h4 id="checkoutthegitsources">Check out the git sources</h4>
 
 <p>clone the code of the referee manager</p>
@@ -269,31 +283,63 @@ $ mkdir &lt;...&gt;/apache/refereemanager/
 
 <h4 id="altertheconfigurationfile">Alter the configuration file</h4>
 
+<p>You have to tell the scripts, where to find your directories.
+Default structure is:</p>
+
+<pre><code>../
+    apache/
+        refereemanager/
+        phpmyadmin/
+    git/
+        refereemanager/
+        cakephp/
+        phpmyadmin/
+</code></pre>
+
+<p>If your directory structure is the same, you do not have to change the configuration file.</p>
+
+<p>Otherwise, edit the file</p>
+
+<pre><code>&lt;...&gt;/git/refereemanager/scripts/configuration.xml
+</code></pre>
+
+<p>Change the file according to your needs.
+You can check your settings with</p>
+
+<pre><code>$ cd &lt;...&gt;/git/refereemanager/scripts/
+$ ant echoproperties
+</code></pre>
+
 <h4 id="copyphpmyadmin">Copy phpMyAdmin</h4>
+
+<p>Now copy the <em>phpMyAdmin</em> files in your phpmyadmin apache directory.</p>
+<dl>
+<dt>Ant target</dt>
+<dd><code>phpmyadmin2apache</code></dd>
+
+<dd>call: <code>ant phpmyadmin2apache</code></dd>
+
+<dt>Source directory</dt>
+<dd><code>&lt;...&gt;/git/phpmyadmin</code></dd>
+
+<dt>Target directory</dt>
+<dd><code>&lt;...&gt;/apache/phpmyadmin</code></dd>
+</dl>
+
+
+<p>The script executes the following steps:</p>
+
+<ol>
+<li>check if target directory exists &#8211; failure otherwise</li>
+<li>delete all files and directories in the target directory</li>
+<li>copy all files and directories from source directory to target directory</li>
+</ol>
 
 <h4 id="copycakephp">Copy CakePHP</h4>
 
 <h4 id="copyrefereemanager">Copy referee manager</h4>
 
 <h4 id="startdevelopment">Start development</h4>
-
-<pre><code>- download the latest version of CakePHP http://cakephp.org/
-</code></pre>
-
-<ul>
-<li>extract the files</li>
-<li>copy all files to the <code>cakephp</code> folder of the referee manager
-
-<ul>
-<li>do not forget the <em>hidden</em> files (ctrl+h in most file managers)</li>
-</ul></li>
-<li>copy the content of the <code>app.xyz</code> folder to <code>app</code>
-
-<ul>
-<li>choose overwrite for existing files</li>
-</ul></li>
-<li>ready</li>
-</ul>
 
 <p>Now some folder have to be given more access rights in order for the application to work nicely.</p>
 

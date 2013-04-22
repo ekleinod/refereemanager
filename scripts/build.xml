@@ -32,6 +32,36 @@
 		<echoproperties />
 	</target>
 
+	<target name="phpmyadmin2apache" description="Copies phpMyAdmin to apache directory (deletes existing files first).">
+		<antcall target="deleteandcopy">
+			<param name="path:source" value="${path:git:phpmyadmin}" />
+			<param name="path:target" value="${path:apache:phpmyadmin}" />
+		</antcall>
+	</target>
+
+	<target name="deleteandcopy">
+		<echo message="Copy ${path:source} to ${path:target}." />
+
+		<echo message="Check if ${path:target} exists." />
+		<antcall target="checkdir"><param name="dir:target" value="${path:target}" /></antcall>
+
+		<echo message="Delete content of ${path:target}." />
+		<delete dir="${path:target}" includeemptydirs="true">
+			<fileset includes="**/*" />
+		</delete>
+
+	</target>
+
+	<target name="checkdir">
+		<!-- Fail if target dir exists, otherwise the dir would be created. -->
+		<condition property="target:missing">
+			<not>
+				<available file="${dir:target}" />
+			</not>
+		</condition>
+		<fail if="${target:missing}">Target directory is missing: '${dir:target}'.</fail>
+	</target>
+
 </project>
 
 <!-- EOF -->
