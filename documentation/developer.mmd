@@ -1,23 +1,23 @@
-Title:							Referee Manager Developer Documentation
+Title:							RefereeManager Developer Documentation
 Author:							Ekkart Kleinod
 Date:								21.04.2013
 Base Header Level:	3
 
 # Preface
 
-This documentation focuses on the development aspect of the referee manager.
-Thus, there is no description for setting up the referee manager in a production environment.
+This documentation focuses on the development aspect of the RefereeManager.
+Thus, there is no description for setting up the RefereeManager in a production environment.
 This is part of the user documentation.
 
 Therefore, be aware, that your passwords etc. are not secured during development, if you don't secure them yourselves.
 The same goes for other security aspects.
 
-I develop the referee manager in a virtual machine with no access from the internet, or on a laptop with no reading access from the internet.
+I develop the RefereeManager in a virtual machine with no access from the internet, or on a laptop with no reading access from the internet.
 I urge you to do so yourselves, unless you know what you are doing.
 
 ## Used Language
 
-The developer's documentation is in English, because I think more people understand English than German and thus more people can use the referee manager.
+The developer's documentation is in English, because I think more people understand English than German and thus more people can use the RefereeManager.
 As I am a German native speaker, you can ask German questions every time.
 
 Die Dokumentation ist auf Englisch, damit mehr Leute die Schiedsrichterverwaltung nutzen können.
@@ -29,12 +29,12 @@ There are three git sources or downloads used for development:
 
 - CakePHP ([Homepage][url:cake], [Git][url:cake:git])
 - phpMyAdmin ([Homepage][url:pma], [Git][url:pma:git], [Downloads][url:pma:down])
-- Referee Manager ([Homepage][url:refman], [Git][url:refman:git])
+- RefereeManager ([Homepage][url:refman], [Git][url:refman:git])
 
-The first two are read-only, the third, referee manager should be read/write if you want to develop.
+The first two are read-only, the third, RefereeManager should be read/write if you want to develop.
 
 During the development process, several files have to be located in directories of CakePHP and phpMyAdmin resp.
-In order to avoid having several files mixed up, therefore making it difficult to separate referee manager files from original files, the development directories are separated from the git sources.
+In order to avoid having several files mixed up, therefore making it difficult to separate RefereeManager files from original files, the development directories are separated from the git sources.
 This means, that the development files have to be copied to and from the corresponding directories.
 
 This will be described in detail later (see [sec:process][]).
@@ -53,7 +53,7 @@ We refer to the needed directories as follows:
 : no git allowed here
 
 <...>/git/refereemanager/
-: referee manager git repository
+: RefereeManager git repository
 : development and configuration files reside here
 : development of CakePHP files does not take place here, files are copied here
 
@@ -69,7 +69,7 @@ We refer to the needed directories as follows:
 
 # Required software
 
-In order to develop the referee manager, you will need at least:
+In order to develop the RefereeManager, you will need at least:
 
 - Git
 - Ant (Java)
@@ -83,7 +83,7 @@ I tested development with XUbuntu so far.
 
 You need *git* for handling the developed code.
 
-There are no special installation or configuration steps required in order to develop the referee manager.
+There are no special installation or configuration steps required in order to develop the RefereeManager.
 
 ## Ant
 
@@ -91,7 +91,7 @@ You need *ant* for execution of the setup and maintenance scripts.
 *Ant* requires *Java*.
 You can choose not to use *ant*, in this case you have to execute the required scripts by hand.
 
-There are no special installation or configuration steps required in order to develop the referee manager.
+There are no special installation or configuration steps required in order to develop the RefereeManager.
 
 ## Apache and PHP
 
@@ -139,7 +139,7 @@ Add the line before
 
 	Include ports.conf
 
-The file is provided in the referee manager git repository, check if a link is needed or the changes are made faster by hand.
+The file is provided in the RefereeManager git repository, check if a link is needed or the changes are made faster by hand.
 The linking solution:
 
 	$ cd /etc/apache2/
@@ -147,7 +147,7 @@ The linking solution:
 
 #### httpd.conf
 
-Add the file `httpd.conf` to the directory `/etc/apache2` or link the given `httpd.conf` file from the referee manager git repository.
+Add the file `httpd.conf` to the directory `/etc/apache2` or link the given `httpd.conf` file from the RefereeManager git repository.
 Check if the file exists first, merge existing files if you have to.
 
 Important changes content of `httpd.conf` in section `Directory /`:
@@ -195,12 +195,12 @@ If you choose otherwise, note the values in order to put them in the configurati
 Now, it is time to set up your working environment.
 In order to do this, follow these steps:
 
-1. check out the git sources
+1. check out the git sources resp. download it
 2. create and link your apache target directories
-3. alter the configuration file
+3. alter the configuration files
 4. copy phpMyAdmin
 5. copy CakePHP
-6. copy referee manager
+6. copy RefereeManager
 7. ready
 
 You should use the provided *ant* scripts for some of these tasks.
@@ -214,17 +214,17 @@ If you are not familiar with *ant*, refer to the [Ant Manual][url:ant:manual].
 
 **Important:** All scripts work without security warnings.
 
-## Check out the git sources
+## Check out the git sources resp. download it
 
-clone the code of the referee manager
+Clone the code of the *RefereeManager*.
 
 	$ git clone http://git.code.sf.net/p/refereemanager/code <...>/git/refereemanager/
 
-clone the code of CakePHP
+Clone the code of *CakePHP*, alternatively download and unzip a version.
 
 	$ git clone git://github.com/cakephp/cakephp.git <...>/git/cakephp/
 
-clone the code of phpMyAdmin
+Clone the code of *phpMyAdmin*, alternatively download and unzip a version.
 
 	$ git clone git://github.com/phpmyadmin/phpmyadmin.git <...>/git/phpmyadmin/
 
@@ -247,9 +247,14 @@ Now link the directories to your apache home directory:
 	/var/www/$ sudo ln -s <...>/apache/phpmyadmin/
 	/var/www/$ sudo ln -s <...>/apache/refereemanager/
 
-## Alter the configuration file
+All directories that are referenced by apache have to be given read rights for apache.
+Make sure, the whole path is readable for apache, don't forget to check the home folder.
 
-You have to tell the scripts, where to find your directories.
+## Alter the configuration files
+
+### RefereeManager scripts
+
+You have to tell the scripts where to find your directories.
 Default structure is:
 
 	../
@@ -273,9 +278,27 @@ You can check your settings with
 	$ cd <...>/git/refereemanager/scripts/
 	$ ant echoproperties
 
+### phpMyAdmin configuration
+
+Change the *phpMyAdmin* configuration according to your installation.
+You find a configuration for the installation defaults in the RefereeManager configuration directory:
+
+	<...>/git/refereemanager/configuration/phpmyadmin/config.inc.php
+
+If you leave your altered file at this place, it is copied by the scripts to and from the apache directory.
+
+### CakePHP database configuration
+
+Change the *CakePHP* database configuration according to your installation.
+You find a configuration for the installation defaults in the RefereeManager repository:
+
+	<...>/git/refereemanager/cakephp/app/Config/database.php
+
+If you leave your altered file at this place, it is copied by the scripts to and from the apache directory.
+
 ## Copy phpMyAdmin
 
-Now copy the *phpMyAdmin* files in your phpmyadmin apache directory.
+Copy the *phpMyAdmin* files in your phpmyadmin apache directory.
 
 Ant target
 : `phpmyadmin2apache`
@@ -293,18 +316,37 @@ The script executes the following steps:
 2. delete all files and directories in the target directory
 3. copy all files and directories from source directory to target directory
 
-*Important:* Your *phpMyAdmin* configuration file is deleted too, restore it in the step [Copy referee manager][].
+*Important:* Your *phpMyAdmin* configuration file is deleted too, restore it in the step [Copy RefereeManager][].
 
 ## Copy CakePHP
-## Copy referee manager
+
+Copy the *CakePHP* files in your refereemanager apache directory.
+
+Ant target
+: `cakephp2apache`
+: call: `ant cakephp2apache`
+
+Source directory
+: `<...>/git/cakephp`
+
+Target directory
+: `<...>/apache/refereemanager`
+
+The script executes the following steps:
+
+1. check if target directory exists -- failure otherwise
+2. delete all files and directories in the target directory
+3. copy all files and directories from source directory to target directory
+4. change access rights for `<...>/apache/refereemanager/app/tmp/` and it's files and subdirectories to read/write/execute for all users (so *apache* can change there)
+
+*Important:* Your *RefereeManager* files and configurations are deleted too, restore them in the step [Copy RefereeManager][].
+Be sure you don't have unsaved changes before executing this step.
+
+## Copy RefereeManager
 ## Start development
 
 
 
-Now some folder have to be given more access rights in order for the application to work nicely.
-
-- all folders that are referenced by apache have to be given read rights for apache
-	- the whole path has to be readable, especially the home folder
 - in `refereemanager-code/cakephp/` the following folders have to be writeable for apache:
 	- `app/tmp` and all its subfolders
 
@@ -335,14 +377,14 @@ Fill the database with your data if you have some.
 
 This means: updates of CakePHP and/or phpMyAdmin have to be copied to the development directories.
 In order to avoid cluttering, in this case the development directories are deleted first.
-After updates the referee manager files have to be copied to the development directories.
+After updates the RefereeManager files have to be copied to the development directories.
 
 
 
 
-[url:refman]: http://sourceforge.net/projects/refereemanager/ "Referee Manager Sourceforge Home"
-[url:refman:wiki]: http://sourceforge.net/p/refereemanager/wiki/Home/ "Referee Manager Sourceforge Wiki"
-[url:refman:git]: http://git.code.sf.net/p/refereemanager/code "Referee Manager Sourceforge Git Access"
+[url:refman]: http://sourceforge.net/projects/refereemanager/ "RefereeManager Sourceforge Home"
+[url:refman:wiki]: http://sourceforge.net/p/refereemanager/wiki/Home/ "RefereeManager Sourceforge Wiki"
+[url:refman:git]: http://git.code.sf.net/p/refereemanager/code "RefereeManager Sourceforge Git Access"
 [url:cake]: http://cakephp.org/ "CakePHP Homepage"
 [url:cake:git]: git://github.com/cakephp/cakephp.git "CakePHP Git Access"
 [url:pma]: http://www.phpmyadmin.net/ "phpMyAdmin Homepage"

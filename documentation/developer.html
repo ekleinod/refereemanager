@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<title>Referee Manager Developer Documentation</title>
+	<title>RefereeManager Developer Documentation</title>
 	<meta name="author" content="Ekkart Kleinod"/>
 	<meta name="date" content="21.04.2013"/>
 </head>
@@ -10,19 +10,19 @@
 
 <h3 id="preface">Preface</h3>
 
-<p>This documentation focuses on the development aspect of the referee manager.
-Thus, there is no description for setting up the referee manager in a production environment.
+<p>This documentation focuses on the development aspect of the RefereeManager.
+Thus, there is no description for setting up the RefereeManager in a production environment.
 This is part of the user documentation.</p>
 
 <p>Therefore, be aware, that your passwords etc. are not secured during development, if you don&#8217;t secure them yourselves.
 The same goes for other security aspects.</p>
 
-<p>I develop the referee manager in a virtual machine with no access from the internet, or on a laptop with no reading access from the internet.
+<p>I develop the RefereeManager in a virtual machine with no access from the internet, or on a laptop with no reading access from the internet.
 I urge you to do so yourselves, unless you know what you are doing.</p>
 
 <h4 id="usedlanguage">Used Language</h4>
 
-<p>The developer&#8217;s documentation is in English, because I think more people understand English than German and thus more people can use the referee manager.
+<p>The developer&#8217;s documentation is in English, because I think more people understand English than German and thus more people can use the RefereeManager.
 As I am a German native speaker, you can ask German questions every time.</p>
 
 <p>Die Dokumentation ist auf Englisch, damit mehr Leute die Schiedsrichterverwaltung nutzen können.
@@ -35,13 +35,13 @@ Da ich Deutsch als Mutterspreche spreche, können Sie natürlich jederzeit auch 
 <ul>
 <li>CakePHP (<a href="http://cakephp.org/" title="CakePHP Homepage">Homepage</a>, <a href="git://github.com/cakephp/cakephp.git" title="CakePHP Git Access">Git</a>)</li>
 <li>phpMyAdmin (<a href="http://www.phpmyadmin.net/" title="phpMyAdmin Homepage">Homepage</a>, <a href="git://github.com/phpmyadmin/phpmyadmin.git" title="phpMyAdmin Git Access">Git</a>, <a href="http://www.phpmyadmin.net/home_page/downloads.php" title="phpMyAdmin Downloads">Downloads</a>)</li>
-<li>Referee Manager (<a href="http://sourceforge.net/projects/refereemanager/" title="Referee Manager Sourceforge Home">Homepage</a>, <a href="http://git.code.sf.net/p/refereemanager/code" title="Referee Manager Sourceforge Git Access">Git</a>)</li>
+<li>RefereeManager (<a href="http://sourceforge.net/projects/refereemanager/" title="RefereeManager Sourceforge Home">Homepage</a>, <a href="http://git.code.sf.net/p/refereemanager/code" title="RefereeManager Sourceforge Git Access">Git</a>)</li>
 </ul>
 
-<p>The first two are read-only, the third, referee manager should be read/write if you want to develop.</p>
+<p>The first two are read-only, the third, RefereeManager should be read/write if you want to develop.</p>
 
 <p>During the development process, several files have to be located in directories of CakePHP and phpMyAdmin resp.
-In order to avoid having several files mixed up, therefore making it difficult to separate referee manager files from original files, the development directories are separated from the git sources.
+In order to avoid having several files mixed up, therefore making it difficult to separate RefereeManager files from original files, the development directories are separated from the git sources.
 This means, that the development files have to be copied to and from the corresponding directories.</p>
 
 <p>This will be described in detail later (see [sec:process][]).</p>
@@ -63,7 +63,7 @@ This means, that the development files have to be copied to and from the corresp
 <dd>no git allowed here</dd>
 
 <dt>&lt;&#8230;&gt;/git/refereemanager/</dt>
-<dd>referee manager git repository</dd>
+<dd>RefereeManager git repository</dd>
 
 <dd>development and configuration files reside here</dd>
 
@@ -83,7 +83,7 @@ This means, that the development files have to be copied to and from the corresp
 
 <h3 id="requiredsoftware">Required software</h3>
 
-<p>In order to develop the referee manager, you will need at least:</p>
+<p>In order to develop the RefereeManager, you will need at least:</p>
 
 <ul>
 <li>Git</li>
@@ -99,7 +99,7 @@ I tested development with XUbuntu so far.</p>
 
 <p>You need <em>git</em> for handling the developed code.</p>
 
-<p>There are no special installation or configuration steps required in order to develop the referee manager.</p>
+<p>There are no special installation or configuration steps required in order to develop the RefereeManager.</p>
 
 <h4 id="ant">Ant</h4>
 
@@ -107,7 +107,7 @@ I tested development with XUbuntu so far.</p>
 <em>Ant</em> requires <em>Java</em>.
 You can choose not to use <em>ant</em>, in this case you have to execute the required scripts by hand.</p>
 
-<p>There are no special installation or configuration steps required in order to develop the referee manager.</p>
+<p>There are no special installation or configuration steps required in order to develop the RefereeManager.</p>
 
 <h4 id="apacheandphp">Apache and PHP</h4>
 
@@ -160,7 +160,7 @@ Include httpd.conf
 <pre><code>Include ports.conf
 </code></pre>
 
-<p>The file is provided in the referee manager git repository, check if a link is needed or the changes are made faster by hand.
+<p>The file is provided in the RefereeManager git repository, check if a link is needed or the changes are made faster by hand.
 The linking solution:</p>
 
 <pre><code>$ cd /etc/apache2/
@@ -169,7 +169,7 @@ $ sudo ln -s &lt;...&gt;/git/refereemanager/configuration/apache2/httpd.conf
 
 <h6 id="httpd.conf">httpd.conf</h6>
 
-<p>Add the file <code>httpd.conf</code> to the directory <code>/etc/apache2</code> or link the given <code>httpd.conf</code> file from the referee manager git repository.
+<p>Add the file <code>httpd.conf</code> to the directory <code>/etc/apache2</code> or link the given <code>httpd.conf</code> file from the RefereeManager git repository.
 Check if the file exists first, merge existing files if you have to.</p>
 
 <p>Important changes content of <code>httpd.conf</code> in section <code>Directory /</code>:</p>
@@ -221,12 +221,12 @@ If you choose otherwise, note the values in order to put them in the configurati
 In order to do this, follow these steps:</p>
 
 <ol>
-<li>check out the git sources</li>
+<li>check out the git sources resp. download it</li>
 <li>create and link your apache target directories</li>
-<li>alter the configuration file</li>
+<li>alter the configuration files</li>
 <li>copy phpMyAdmin</li>
 <li>copy CakePHP</li>
-<li>copy referee manager</li>
+<li>copy RefereeManager</li>
 <li>ready</li>
 </ol>
 
@@ -242,19 +242,19 @@ If you are not familiar with <em>ant</em>, refer to the <a href="http://ant.apac
 
 <p><strong>Important:</strong> All scripts work without security warnings.</p>
 
-<h4 id="checkoutthegitsources">Check out the git sources</h4>
+<h4 id="checkoutthegitsourcesresp.downloadit">Check out the git sources resp. download it</h4>
 
-<p>clone the code of the referee manager</p>
+<p>Clone the code of the <em>RefereeManager</em>.</p>
 
 <pre><code>$ git clone http://git.code.sf.net/p/refereemanager/code &lt;...&gt;/git/refereemanager/
 </code></pre>
 
-<p>clone the code of CakePHP</p>
+<p>Clone the code of <em>CakePHP</em>, alternatively download and unzip a version.</p>
 
 <pre><code>$ git clone git://github.com/cakephp/cakephp.git &lt;...&gt;/git/cakephp/
 </code></pre>
 
-<p>clone the code of phpMyAdmin</p>
+<p>Clone the code of <em>phpMyAdmin</em>, alternatively download and unzip a version.</p>
 
 <pre><code>$ git clone git://github.com/phpmyadmin/phpmyadmin.git &lt;...&gt;/git/phpmyadmin/
 </code></pre>
@@ -281,9 +281,14 @@ $ mkdir &lt;...&gt;/apache/refereemanager/
 /var/www/$ sudo ln -s &lt;...&gt;/apache/refereemanager/
 </code></pre>
 
-<h4 id="altertheconfigurationfile">Alter the configuration file</h4>
+<p>All directories that are referenced by apache have to be given read rights for apache.
+Make sure, the whole path is readable for apache, don&#8217;t forget to check the home folder.</p>
 
-<p>You have to tell the scripts, where to find your directories.
+<h4 id="altertheconfigurationfiles">Alter the configuration files</h4>
+
+<h5 id="refereemanagerscripts">RefereeManager scripts</h5>
+
+<p>You have to tell the scripts where to find your directories.
 Default structure is:</p>
 
 <pre><code>../
@@ -310,9 +315,29 @@ You can check your settings with</p>
 $ ant echoproperties
 </code></pre>
 
+<h5 id="phpmyadminconfiguration">phpMyAdmin configuration</h5>
+
+<p>Change the <em>phpMyAdmin</em> configuration according to your installation.
+You find a configuration for the installation defaults in the RefereeManager configuration directory:</p>
+
+<pre><code>&lt;...&gt;/git/refereemanager/configuration/phpmyadmin/config.inc.php
+</code></pre>
+
+<p>If you leave your altered file at this place, it is copied by the scripts to and from the apache directory.</p>
+
+<h5 id="cakephpdatabaseconfiguration">CakePHP database configuration</h5>
+
+<p>Change the <em>CakePHP</em> database configuration according to your installation.
+You find a configuration for the installation defaults in the RefereeManager repository:</p>
+
+<pre><code>&lt;...&gt;/git/refereemanager/cakephp/app/Config/database.php
+</code></pre>
+
+<p>If you leave your altered file at this place, it is copied by the scripts to and from the apache directory.</p>
+
 <h4 id="copyphpmyadmin">Copy phpMyAdmin</h4>
 
-<p>Now copy the <em>phpMyAdmin</em> files in your phpmyadmin apache directory.</p>
+<p>Copy the <em>phpMyAdmin</em> files in your phpmyadmin apache directory.</p>
 <dl>
 <dt>Ant target</dt>
 <dd><code>phpmyadmin2apache</code></dd>
@@ -335,11 +360,37 @@ $ ant echoproperties
 <li>copy all files and directories from source directory to target directory</li>
 </ol>
 
-<p><em>Important:</em> Your <em>phpMyAdmin</em> configuration file is deleted too, restore it in the step <a href="#copyrefereemanager">Copy referee manager</a>.</p>
+<p><em>Important:</em> Your <em>phpMyAdmin</em> configuration file is deleted too, restore it in the step <a href="#copyrefereemanager">Copy RefereeManager</a>.</p>
 
 <h4 id="copycakephp">Copy CakePHP</h4>
 
-<h4 id="copyrefereemanager">Copy referee manager</h4>
+<p>Copy the <em>CakePHP</em> files in your refereemanager apache directory.</p>
+<dl>
+<dt>Ant target</dt>
+<dd><code>cakephp2apache</code></dd>
+
+<dd>call: <code>ant cakephp2apache</code></dd>
+
+<dt>Source directory</dt>
+<dd><code>&lt;...&gt;/git/cakephp</code></dd>
+
+<dt>Target directory</dt>
+<dd><code>&lt;...&gt;/apache/refereemanager</code></dd>
+</dl>
+
+
+<p>The script executes the following steps:</p>
+
+<ol>
+<li>check if target directory exists &#8211; failure otherwise</li>
+<li>delete all files and directories in the target directory</li>
+<li>copy all files and directories from source directory to target directory</li>
+</ol>
+
+<p><em>Important:</em> Your <em>RefereeManager</em> files and configurations are deleted too, restore them in the step <a href="#copyrefereemanager">Copy RefereeManager</a>.
+Be sure you don&#8217;t have unsaved changes before executing this step.</p>
+
+<h4 id="copyrefereemanager">Copy RefereeManager</h4>
 
 <h4 id="startdevelopment">Start development</h4>
 
@@ -388,7 +439,7 @@ $ ln -s &lt;...&gt;/refereemanager-code/configuration/phpmyadmin/config.inc.php
 
 <p>This means: updates of CakePHP and/or phpMyAdmin have to be copied to the development directories.
 In order to avoid cluttering, in this case the development directories are deleted first.
-After updates the referee manager files have to be copied to the development directories.</p>
+After updates the RefereeManager files have to be copied to the development directories.</p>
 
 </body>
 </html>
