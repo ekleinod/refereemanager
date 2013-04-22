@@ -59,6 +59,127 @@
 		</chmod>
 	</target>
 
+	<target name="refman2apache" description="Copies RefereeManager git files to development directory.">
+		<antcall target="copyrefmanfiles">
+			<param name="path:source" value="${path:git:refereemanager}cakephp${file.separator}" />
+			<param name="path:target" value="${path:apache:refereemanager}" />
+		</antcall>
+		<copy todir="${path:apache:phpmyadmin}${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:git:refereemanager}configuration${file.separator}phpmyadmin${file.separator}">
+				<include name="config.inc.php" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="apache2refman" description="Copies RefereeManager development files to git repository.">
+		<antcall target="copyrefmanfiles">
+			<param name="path:source" value="${path:apache:refereemanager}" />
+			<param name="path:target" value="${path:git:refereemanager}cakephp${file.separator}" />
+		</antcall>
+		<copy todir="${path:git:refereemanager}configuration${file.separator}phpmyadmin${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:apache:phpmyadmin}${file.separator}">
+				<include name="config.inc.php" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="copyrefmanfiles">
+
+		<!-- Config -->
+		<copy todir="${path:target}app${file.separator}Config${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}Config${file.separator}">
+				<include name="core.php" />
+				<include name="database.php" />
+			</fileset>
+		</copy>
+
+		<!-- Controller -->
+		<copy todir="${path:target}app${file.separator}Controller${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}Controller${file.separator}">
+				<include name="*.php" />
+				<exclude name="PagesController.php" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}Controller${file.separator}Component${file.separator}Auth${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}Controller${file.separator}Component${file.separator}Auth${file.separator}">
+				<include name="*.php" />
+			</fileset>
+		</copy>
+
+		<!-- Model -->
+		<copy todir="${path:target}app${file.separator}Model${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}Model${file.separator}">
+				<include name="*.php" />
+				<exclude name="AppModel.php" />
+			</fileset>
+		</copy>
+
+		<!-- View -->
+		<copy todir="${path:target}app${file.separator}View${file.separator}Assignments${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}Assignments${file.separator}">
+				<include name="*.ctp" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}View${file.separator}Elements${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}Elements${file.separator}">
+				<include name="**/*" />
+				<exclude name="empty" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}View${file.separator}Helper${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}Helper${file.separator}">
+				<include name="*.php" />
+				<exclude name="AppHelper.php" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}View${file.separator}Layouts${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}Layouts${file.separator}">
+				<include name="default.ctp" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}View${file.separator}Referees${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}Referees${file.separator}">
+				<include name="*.ctp" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}View${file.separator}Teams${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}Teams${file.separator}">
+				<include name="*.ctp" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}View${file.separator}Users${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}Users${file.separator}">
+				<include name="*.ctp" />
+			</fileset>
+		</copy>
+
+		<!-- webroot -->
+		<copy todir="${path:target}app${file.separator}webroot${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}webroot${file.separator}">
+				<include name="phpinfo.php" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}webroot${file.separator}css${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}webroot${file.separator}css${file.separator}">
+				<include name="*.css" />
+				<exclude name="cake.generic.css" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}webroot${file.separator}fonts${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}webroot${file.separator}fonts${file.separator}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}webroot${file.separator}img${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}webroot${file.separator}img${file.separator}">
+				<include name="*.png" />
+				<include name="*.ico" />
+				<exclude name="cake.*" />
+				<exclude name="test-*" />
+			</fileset>
+		</copy>
+	</target>
+
 	<target name="deleteandcopy">
 		<echo message="Copy ${path:source} to ${path:target}." />
 

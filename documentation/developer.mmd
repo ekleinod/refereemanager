@@ -343,17 +343,30 @@ The script executes the following steps:
 Be sure you don't have unsaved changes before executing this step.
 
 ## Copy RefereeManager
+
+Copy the *RefereeManager* files in your refereemanager apache directory.
+
+Ant target
+: `refman2apache`
+: call: `ant refman2apache`
+
+Source directory
+: `<...>/git/refereemanager`
+
+Target directory
+: `<...>/apache/refereemanager`
+
+The script executes the following steps:
+
+1. check if target directory exists -- failure otherwise
+2. copy all relevant files and directories from source directory to target directory
+
+*Important:* Your *RefereeManager* files and configurations are overwritten.
+
+
 ## Start development
 
 
-
-- in `refereemanager-code/cakephp/` the following folders have to be writeable for apache:
-	- `app/tmp` and all its subfolders
-
-	$ cd <...>/refereemanager-code/cakephp/app/
-	$ chmod 777 tmp
-	$ cd tmp
-	$ find -type d -exec chmod 777 {} \;
 
 # Setup database
 

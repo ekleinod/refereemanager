@@ -385,6 +385,7 @@ You find a configuration for the installation defaults in the RefereeManager rep
 <li>check if target directory exists &#8211; failure otherwise</li>
 <li>delete all files and directories in the target directory</li>
 <li>copy all files and directories from source directory to target directory</li>
+<li>change access rights for <code>&lt;...&gt;/apache/refereemanager/app/tmp/</code> and it&#8217;s files and subdirectories to read/write/execute for all users (so <em>apache</em> can change there)</li>
 </ol>
 
 <p><em>Important:</em> Your <em>RefereeManager</em> files and configurations are deleted too, restore them in the step <a href="#copyrefereemanager">Copy RefereeManager</a>.
@@ -392,27 +393,31 @@ Be sure you don&#8217;t have unsaved changes before executing this step.</p>
 
 <h4 id="copyrefereemanager">Copy RefereeManager</h4>
 
+<p>Copy the <em>RefereeManager</em> files in your refereemanager apache directory.</p>
+<dl>
+<dt>Ant target</dt>
+<dd><code>refman2apache</code></dd>
+
+<dd>call: <code>ant refman2apache</code></dd>
+
+<dt>Source directory</dt>
+<dd><code>&lt;...&gt;/git/refereemanager</code></dd>
+
+<dt>Target directory</dt>
+<dd><code>&lt;...&gt;/apache/refereemanager</code></dd>
+</dl>
+
+
+<p>The script executes the following steps:</p>
+
+<ol>
+<li>check if target directory exists &#8211; failure otherwise</li>
+<li>copy all relevant files and directories from source directory to target directory</li>
+</ol>
+
+<p><em>Important:</em> Your <em>RefereeManager</em> files and configurations are overwritten.</p>
+
 <h4 id="startdevelopment">Start development</h4>
-
-<p>Now some folder have to be given more access rights in order for the application to work nicely.</p>
-
-<ul>
-<li>all folders that are referenced by apache have to be given read rights for apache
-
-<ul>
-<li>the whole path has to be readable, especially the home folder</li>
-</ul></li>
-<li>in <code>refereemanager-code/cakephp/</code> the following folders have to be writeable for apache:
-
-<ul>
-<li><code>app/tmp</code> and all its subfolders</li>
-</ul>
-
-<p>$ cd &lt;&#8230;&gt;/refereemanager-code/cakephp/app/
-$ chmod 777 tmp
-$ cd tmp
-$ find -type d -exec chmod 777 {} \;</p></li>
-</ul>
 
 <h3 id="setupdatabase">Setup database</h3>
 
