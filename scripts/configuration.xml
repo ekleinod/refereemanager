@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+	Configure your directories here.
+
+	Even if this is hard to read: use ${file.separator} if you want your script to be platform independent.
+
+	(c) 2013 by Ekkart Kleinod
+
+	@author Ekkart Kleinod
+-->
+
+<project name="configuration" basedir=".">
+
+	<!-- Git repositories -->
+
+	<!--
+		Path to the directory containing the git repositories.
+		Declare this path relative to the build.xml or absolute in your file system (relative recommended).
+		Original: "../../" = "..${file.separator}..${file.separator}"
+	-->
+	<property name="path:git" value="..${file.separator}..${file.separator}" />
+
+	<!--
+		Path to your refereemanager git repository.
+		The declaration uses your git path, change if necessary.
+		Original: "<git-path>refereemanager/" = "${path:git}refereemanager${file.separator}"
+	-->
+	<property name="path:git:refereemanager" value="${path:git}refereemanager${file.separator}" />
+
+	<!--
+		Path to your CakePHP git repository.
+		The declaration uses your git path, change if necessary.
+		Original: "<git-path>cakephp/" = "${path:git}cakephp${file.separator}"
+	-->
+	<property name="path:git:cakephp" value="${path:git}cakephp${file.separator}" />
+
+	<!--
+		Path to your phpMyAdmin git repository.
+		The declaration uses your git path, change if necessary.
+		Original: "<git-path>phpmyadmin/" = "${path:git}phpmyadmin${file.separator}"
+	-->
+	<property name="path:git:phpmyadmin" value="${path:git}phpmyadmin${file.separator}" />
+
+
+
+	<!-- Apache www home -->
+
+	<!--
+		Path to your chosen apache home directory.
+		Declare this path relative to the build.xml or absolute in your file system (relative recommended).
+		Original: "../../../apache/" = "..${file.separator}..${file.separator}..${file.separator}apache${file.separator}"
+	-->
+	<property name="path:apache" value="..${file.separator}..${file.separator}..${file.separator}apache${file.separator}" />
+
+	<!--
+		Path to your phpMyAdmin apache directory.
+		The declaration uses your apache home path, change if necessary.
+		Original: "<apache-path>phpmyadmin/" = "${path:apache}phpmyadmin${file.separator}"
+	-->
+	<property name="path:apache:phpmyadmin" value="${path:apache}phpmyadmin${file.separator}" />
+
+	<!--
+		Path to your refereemanager apache directory.
+		The declaration uses your apache home path, change if necessary.
+		Original: "<apache-path>refereemanager/" = "${path:apache}refereemanager${file.separator}"
+	-->
+	<property name="path:apache:refereemanager" value="${path:apache}refereemanager${file.separator}" />
+
+
+
+</project>
+
+<!-- EOF -->
+

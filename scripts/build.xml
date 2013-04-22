@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+	Development scripts for referee manager.
+
+	Do not change this file unless you know exactly what you do.
+	If you have useful changes, let me know to include them in the master.
+
+	(c) 2013 by Ekkart Kleinod
+
+	@author Ekkart Kleinod
+-->
+
+<project name="refereemanager" default="help" basedir=".">
+
+	<import file="configuration.xml" />
+
+	<target name="help" description="Shows help text.">
+		<echo>Referee manager</echo>
+		<echo>---------------</echo>
+		<echo>You can use the following targets:</echo>
+
+		<!-- show all available targets -->
+		<java classname="org.apache.tools.ant.Main">
+			<arg value="-projecthelp" />
+			<arg value="-buildfile" />
+			<arg value="${ant.file}" />
+		</java>
+	</target>
+
+	<target name="echoproperties" description="Shows all available properties.">
+		<echoproperties />
+	</target>
+
+</project>
+
+<!-- EOF -->
+
