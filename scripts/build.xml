@@ -46,9 +46,14 @@
 		<antcall target="checkdir"><param name="dir:target" value="${path:target}" /></antcall>
 
 		<echo message="Delete content of ${path:target}." />
-		<delete dir="${path:target}" includeemptydirs="true">
-			<fileset includes="**/*" />
+		<delete includeemptydirs="true">
+			<fileset dir="${path:target}" includes="**/*" />
 		</delete>
+
+		<echo message="Copy files." />
+		<copy todir="${path:target}">
+			<fileset dir="${path:source}" includes="**/*"/>
+		</copy>
 
 	</target>
 
