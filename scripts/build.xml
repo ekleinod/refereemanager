@@ -188,12 +188,12 @@
 
 		<echo message="Delete content of ${path:target}." />
 		<delete includeemptydirs="true">
-			<fileset dir="${path:target}" includes="**/*" />
+			<fileset dir="${path:target}" includes="**/*" defaultexcludes="false" />
 		</delete>
 
 		<echo message="Copy files." />
 		<copy todir="${path:target}">
-			<fileset dir="${path:source}" includes="**/*"/>
+			<fileset dir="${path:source}" includes="**/*" excludes=".git" />
 		</copy>
 
 	</target>
