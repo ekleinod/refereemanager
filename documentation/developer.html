@@ -227,7 +227,8 @@ In order to do this, follow these steps:</p>
 <li>copy phpMyAdmin</li>
 <li>copy CakePHP</li>
 <li>copy RefereeManager</li>
-<li>ready</li>
+<li>setup database</li>
+<li>start development</li>
 </ol>
 
 <p>You should use the provided <em>ant</em> scripts for some of these tasks.
@@ -327,6 +328,8 @@ You find a configuration for the installation defaults in the RefereeManager con
 
 <h5 id="cakephpdatabaseconfiguration">CakePHP database configuration</h5>
 
+<p><em>Note:</em> Set your server settings, the database name (default: <code>refereemanager</code>), and the database table prefix (default: <code>rfrmgr_</code>).</p>
+
 <p>Change the <em>CakePHP</em> database configuration according to your installation.
 You find a configuration for the installation defaults in the RefereeManager repository:</p>
 
@@ -417,34 +420,42 @@ Be sure you don&#8217;t have unsaved changes before executing this step.</p>
 
 <p><em>Important:</em> Your <em>RefereeManager</em> files and configurations are overwritten.</p>
 
-<h4 id="startdevelopment">Start development</h4>
+<h4 id="setupdatabase">Setup database</h4>
 
-<h3 id="setupdatabase">Setup database</h3>
-
-<p>Now we are ready to set up the database.
-First, link the phpmyadmin configuration file to your PHPMyAdmin folder:</p>
-
-<pre><code>$ cd &lt;...&gt;/phpmyadmin
-$ ln -s &lt;...&gt;/refereemanager-code/configuration/phpmyadmin/config.inc.php
-</code></pre>
-
-<p>Now you should be able to access your database with:</p>
+<p>Set up the database.
+You should be able to access your database with:</p>
 
 <pre><code>https://localhost/phpmyadmin/
 </code></pre>
 
-<p>Now create a database called &#8220;refereemanager&#8221;.</p>
+<p>If not, check:</p>
+
+<ul>
+<li>the apache www server</li>
+<li>the link of <code>phpmyadmin</code> in the apache www root (see <a href="#createandlinkyourapachetargetdirectories">Create and link your apache target directories</a>)</li>
+<li>your phpMyAdmin configuration (see <a href="#phpmyadminconfiguration">phpMyAdmin configuration</a>)</li>
+</ul>
+
+<p>Create a database called <code>refereemanager</code>.
+If you choose another name, alter your CakePHP configuration file accordnigly (see <a href="#cakephpdatabaseconfiguration">CakePHP database configuration</a>).</p>
 
 <p>Create the database tables using the code of</p>
 
 <pre><code>&lt;...&gt;/refereemanager-code/database/refereemanager.sql
 </code></pre>
 
+<p>Fill the database with the default configuration data of your language</p>
+
+<pre><code>&lt;...&gt;/refereemanager-code/database/&lt;lang&gt;/configuration.sql
+</code></pre>
+
 <p>Fill the database with your data if you have some.</p>
 
-<p>This means: updates of CakePHP and/or phpMyAdmin have to be copied to the development directories.
-In order to avoid cluttering, in this case the development directories are deleted first.
-After updates the RefereeManager files have to be copied to the development directories.</p>
+<h4 id="startdevelopment">Start development</h4>
+
+<p>Everything is ready for development.</p>
+
+<h3 id="developmentsteps">Development steps</h3>
 
 </body>
 </html>
