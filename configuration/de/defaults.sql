@@ -61,7 +61,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (1, 'SR', 'Schiedsrichter_in.');
-INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (2, 'SRAss', 'Schiedsrichter_in-Assistent_in.');
+INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (2, 'SRA', 'Schiedsrichter_in-Assistent_in.');
 INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (3, 'OSR', 'Oberschiedsrichter_in.');
 INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (4, 'St. OSR', 'Stellvertretende_r Oberschiedsrichter_in.');
 INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (5, 'SK', 'Schlägerkontrolle.');
@@ -79,24 +79,13 @@ INSERT INTO `rfrmgr_league_game_team_types` (`id`, `abbreviation`, `title`, `rem
 COMMIT;
 
 -- -----------------------------------------------------
--- Daten für die Tabelle `rfrmgr_assignment_status_types`
+-- Daten für die Tabelle `rfrmgr_assignment_remark_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_assignment_status_types` (`id`, `title`, `remark`) VALUES (1, 'noch kein Kontakt', 'Schiedsrichter_in wurde noch nicht kontaktiert.');
-INSERT INTO `rfrmgr_assignment_status_types` (`id`, `title`, `remark`) VALUES (2, 'nein', 'Schiedsrichter_in nimmt Einsatz nicht wahr.');
-INSERT INTO `rfrmgr_assignment_status_types` (`id`, `title`, `remark`) VALUES (3, 'evtl.', 'Schiedsrichter_in hat sich noch nicht entschieden.');
-INSERT INTO `rfrmgr_assignment_status_types` (`id`, `title`, `remark`) VALUES (4, 'ja', 'Schiedsrichter_in nimmt Einsatz wahr.');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Daten für die Tabelle `rfrmgr_contact_remark_types`
--- -----------------------------------------------------
-START TRANSACTION;
-INSERT INTO `rfrmgr_contact_remark_types` (`id`, `title`, `remark`) VALUES (1, 'AB', 'Auf Anrufbeantworter gesprochen.');
-INSERT INTO `rfrmgr_contact_remark_types` (`id`, `title`, `remark`) VALUES (1, 'Rückruf', 'Schiedsrichter_in möchte zurückgerufen werden.');
-INSERT INTO `rfrmgr_contact_remark_types` (`id`, `title`, `remark`) VALUES (1, 'Mail zurück', 'Mail wurde nicht angenommen.');
-INSERT INTO `rfrmgr_contact_remark_types` (`id`, `title`, `remark`) VALUES (1, 'anderes', NULL);
+INSERT INTO `rfrmgr_assignment_remark_types` (`id`, `title`, `remark`) VALUES (1, 'AB', 'Auf Anrufbeantworter gesprochen.');
+INSERT INTO `rfrmgr_assignment_remark_types` (`id`, `title`, `remark`) VALUES (2, 'Rückruf', 'Schiedsrichter_in möchte zurückgerufen werden.');
+INSERT INTO `rfrmgr_assignment_remark_types` (`id`, `title`, `remark`) VALUES (3, 'Mail zurück', 'Mail wurde nicht angenommen.');
+INSERT INTO `rfrmgr_assignment_remark_types` (`id`, `title`, `remark`) VALUES (4, 'anderes', NULL);
 
 COMMIT;
 

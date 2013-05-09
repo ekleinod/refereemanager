@@ -79,24 +79,13 @@ INSERT INTO `rfrmgr_league_game_team_types` (`id`, `abbreviation`, `title`, `rem
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `rfrmgr_assignment_status_types`
+-- Data for table `rfrmgr_assignment_remark_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_assignment_status_types` (`id`, `title`, `remark`) VALUES (1, 'not contacted yet', 'No contact made to the referee yet.');
-INSERT INTO `rfrmgr_assignment_status_types` (`id`, `title`, `remark`) VALUES (2, 'no', 'Referee does not take the assignment.');
-INSERT INTO `rfrmgr_assignment_status_types` (`id`, `title`, `remark`) VALUES (3, 'maybe', 'Referee may take the assignment.');
-INSERT INTO `rfrmgr_assignment_status_types` (`id`, `title`, `remark`) VALUES (4, 'yes', 'Referee does take the assignment.');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `rfrmgr_contact_remark_types`
--- -----------------------------------------------------
-START TRANSACTION;
-INSERT INTO `rfrmgr_contact_remark_types` (`id`, `title`, `remark`) VALUES (1, 'answering machine', 'Spoke to the answering machine.');
-INSERT INTO `rfrmgr_contact_remark_types` (`id`, `title`, `remark`) VALUES (1, 'call back', 'Referee wants to be called back.');
-INSERT INTO `rfrmgr_contact_remark_types` (`id`, `title`, `remark`) VALUES (1, 'mail returned', 'Mail was returned.');
-INSERT INTO `rfrmgr_contact_remark_types` (`id`, `title`, `remark`) VALUES (1, 'other', NULL);
+INSERT INTO `rfrmgr_assignment_remark_types` (`id`, `title`, `remark`) VALUES (1, 'answering machine', 'Spoke to the answering machine.');
+INSERT INTO `rfrmgr_assignment_remark_types` (`id`, `title`, `remark`) VALUES (2, 'call back', 'Referee wants to be called back.');
+INSERT INTO `rfrmgr_assignment_remark_types` (`id`, `title`, `remark`) VALUES (3, 'mail returned', 'Mail was returned.');
+INSERT INTO `rfrmgr_assignment_remark_types` (`id`, `title`, `remark`) VALUES (4, 'other', NULL);
 
 COMMIT;
 

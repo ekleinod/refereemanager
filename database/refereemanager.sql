@@ -385,6 +385,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_assignments` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `start` DATETIME NOT NULL ,
   `end` DATETIME NULL ,
+  `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -414,6 +415,23 @@ COMMENT = 'Possible types of referee\'s assignments such as umpire, stan' /* com
 
 
 -- -----------------------------------------------------
+-- Table `rfrmgr_assignment_status_types`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_assignment_status_types` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_assignment_status_types` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `sid` VARCHAR(10) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `title_UNIQUE` (`sid` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Possible assignment status of a referee (yes, no, maybe). Mo' /* comment truncated */;
+
+
+-- -----------------------------------------------------
 -- Table `rfrmgr_referee_assignments`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rfrmgr_referee_assignments` ;
@@ -423,6 +441,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_assignments` (
   `assignment_id` INT UNSIGNED NOT NULL ,
   `referee_assignment_type_id` INT UNSIGNED NOT NULL ,
   `referee_id` INT UNSIGNED NOT NULL ,
+  `assignment_status_type_id` INT UNSIGNED NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -444,7 +463,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_league_games` (
   `league_id` INT UNSIGNED NOT NULL ,
   `address_id` INT UNSIGNED NULL COMMENT 'Only filled if team plays outside their normal location.' ,
   `filled_referee_report_url` VARCHAR(200) NULL ,
-  `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
@@ -711,6 +729,42 @@ COLLATE = utf8_general_ci
 COMMENT = 'Assignments for tournament games.';
 
 
+-- -----------------------------------------------------
+-- Table `rfrmgr_assignment_remark_types`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_assignment_remark_types` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_assignment_remark_types` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `title` VARCHAR(100) NOT NULL ,
+  `remark` TEXT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Types of assignment remarks such as answering machine, call ' /* comment truncated */;
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_assignment_remark`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_assignment_remark` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_assignment_remark` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `referee_assignment_id` INT UNSIGNED NOT NULL ,
+  `assignment_remark_type_id` INT UNSIGNED NOT NULL ,
+  `remark` TEXT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Remark to a referee assignment.';
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -733,6 +787,16 @@ COMMIT;
 START TRANSACTION;
 INSERT INTO `rfrmgr_database_tables` (`id`, `sid`) VALUES (1, 'people');
 INSERT INTO `rfrmgr_database_tables` (`id`, `sid`) VALUES (2, 'pictures');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `rfrmgr_assignment_status_types`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `rfrmgr_assignment_status_types` (`id`, `sid`) VALUES (1, 'no');
+INSERT INTO `rfrmgr_assignment_status_types` (`id`, `sid`) VALUES (2, 'maybe');
+INSERT INTO `rfrmgr_assignment_status_types` (`id`, `sid`) VALUES (3, 'yes');
 
 COMMIT;
 
