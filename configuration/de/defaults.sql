@@ -37,10 +37,10 @@ COMMIT;
 -- Daten für die Tabelle `rfrmgr_training_level_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (1, 'association umpire', 'aump', NULL);
-INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (2, 'national umpire', 'nump', NULL);
-INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (3, 'national referee', 'nref', NULL);
-INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (4, 'international umpire', 'iu', NULL);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (1, 'Verbandsschiedsrichter', 'VSR', NULL);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (2, 'Nationaler Schiedsrichter', 'NSR', NULL);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (3, 'Nationaler Oberschiedsrichter ', 'NOSR', NULL);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (4, 'Internationaler Schiedsrichter', 'IU', NULL);
 
 COMMIT;
 
