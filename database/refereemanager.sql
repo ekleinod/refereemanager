@@ -251,8 +251,8 @@ DROP TABLE IF EXISTS `rfrmgr_phone_numbers` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_phone_numbers` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `contact_id` INT UNSIGNED NOT NULL ,
-  `country code` VARCHAR(10) NOT NULL ,
-  `area code` VARCHAR(10) NOT NULL ,
+  `country_code` VARCHAR(10) NOT NULL ,
+  `area_code` VARCHAR(10) NOT NULL ,
   `number` VARCHAR(20) NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
