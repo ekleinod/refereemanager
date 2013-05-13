@@ -368,6 +368,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_activity_logs` (
   `new_value` TEXT NOT NULL ,
   `user_id` INT NOT NULL COMMENT '\n' ,
   `description` TEXT NULL ,
+  `created` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
