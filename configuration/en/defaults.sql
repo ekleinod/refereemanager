@@ -14,7 +14,9 @@ COMMIT;
 START TRANSACTION;
 INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `remark`) VALUES (1, 'private', 'Private contacts.');
 INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `remark`) VALUES (2, 'business', 'Business contacts.');
-INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `remark`) VALUES (3, 'other', 'Other contacts.');
+INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `remark`) VALUES (3, 'venue', 'Venue contacts.');
+INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `remark`) VALUES (4, 'office', 'Office contacts.');
+INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `remark`) VALUES (5, 'other', 'Other contacts.');
 
 COMMIT;
 
@@ -88,5 +90,4 @@ INSERT INTO `rfrmgr_assignment_remark_types` (`id`, `title`, `remark`) VALUES (3
 INSERT INTO `rfrmgr_assignment_remark_types` (`id`, `title`, `remark`) VALUES (4, 'other', NULL);
 
 COMMIT;
-
 

@@ -615,16 +615,17 @@ COMMENT = 'Possible relations of a referee to a club or league (member,' /* comm
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_referees_relations`
+-- Table `rfrmgr_referee_relations`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_referees_relations` ;
+DROP TABLE IF EXISTS `rfrmgr_referee_relations` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_referees_relations` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_relations` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `referee_id` INT UNSIGNED NOT NULL ,
   `referee_relation_type_id` INT UNSIGNED NOT NULL ,
   `club_id` INT UNSIGNED NULL ,
   `league_id` INT UNSIGNED NULL ,
+  `sex_type_id` INT UNSIGNED NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
