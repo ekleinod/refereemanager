@@ -44,11 +44,11 @@ COMMENT = 'User table for access rights.';
 
 
 -- -----------------------------------------------------
--- Table `frmgr_sex_types`
+-- Table `rfrmgr_sex_types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmgr_sex_types` ;
+DROP TABLE IF EXISTS `rfrmgr_sex_types` ;
 
-CREATE  TABLE IF NOT EXISTS `frmgr_sex_types` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_sex_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `title` VARCHAR(100) NOT NULL ,
   `remark` TEXT NULL ,
@@ -547,11 +547,11 @@ COMMENT = 'Spokespeople of teams and clubs.';
 
 
 -- -----------------------------------------------------
--- Table `frmgr_pictures`
+-- Table `rfrmgr_pictures`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmgr_pictures` ;
+DROP TABLE IF EXISTS `rfrmgr_pictures` ;
 
-CREATE  TABLE IF NOT EXISTS `frmgr_pictures` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_pictures` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `person_id` INT UNSIGNED NOT NULL ,
   `url` VARCHAR(200) NOT NULL ,
