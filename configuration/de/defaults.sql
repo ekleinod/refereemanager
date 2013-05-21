@@ -62,12 +62,12 @@ COMMIT;
 -- Daten für die Tabelle `rfrmgr_referee_assignment_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (1, 'SR', 'Schiedsrichter_in.');
-INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (2, 'SRA', 'Schiedsrichter_in-Assistent_in.');
-INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (3, 'OSR', 'Oberschiedsrichter_in.');
-INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (4, 'St. OSR', 'Stellvertretende_r Oberschiedsrichter_in.');
-INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (5, 'SK', 'Schlägerkontrolle.');
-INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (6, 'TM', 'Turniermanagement.');
+INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (1, 'SR', 'Schiedsrichter_in.', NULL);
+INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (2, 'SRA', 'Schiedsrichter_in-Assistent_in.', NULL);
+INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (3, 'OSR', 'Oberschiedsrichter_in.', NULL);
+INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (4, 'St. OSR', 'Stellvertretende_r Oberschiedsrichter_in.', NULL);
+INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (5, 'SK', 'Schlägerkontrolle.', NULL);
+INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (6, 'TM', 'Turniermanagement.', NULL);
 
 COMMIT;
 
@@ -75,8 +75,8 @@ COMMIT;
 -- Daten für die Tabelle `rfrmgr_league_game_team_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_league_game_team_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (1, 'H', 'Heimmannschaft.');
-INSERT INTO `rfrmgr_league_game_team_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (2, 'A', 'Auswärtsmannschaft.');
+INSERT INTO `rfrmgr_league_game_team_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (1, 'H', 'Heimmannschaft.', NULL);
+INSERT INTO `rfrmgr_league_game_team_types` (`id`, `abbreviation`, `title`, `remark`) VALUES (2, 'A', 'Auswärtsmannschaft.', NULL);
 
 COMMIT;
 
