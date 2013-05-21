@@ -439,17 +439,19 @@ You should be able to access your database with:</p>
 <p>Create a database called <code>refereemanager</code>.
 If you choose another name, alter your CakePHP configuration file accordnigly (see <a href="#cakephpdatabaseconfiguration">CakePHP database configuration</a>).</p>
 
-<p>Create the database tables using the code of</p>
+<p>Create the database tables using the code of:</p>
 
 <pre><code>&lt;...&gt;/refereemanager-code/database/refereemanager.sql
 </code></pre>
 
-<p>Fill the database with the default configuration data of your language</p>
+<p>Fill the database with the default configuration data of your language (skip if you want to use a database dump that contains the default values):</p>
 
-<pre><code>&lt;...&gt;/refereemanager-code/database/&lt;lang&gt;/configuration.sql
+<pre><code>&lt;...&gt;/refereemanager-code/database/&lt;lang&gt;/defaults.sql
 </code></pre>
 
 <p>Fill the database with your data if you have some.</p>
+
+<p><em>Important:</em> If you fill your database with a dump, you will most likely overwrite the loaded defaults.</p>
 
 <h4 id="startdevelopment">Start development</h4>
 

@@ -382,15 +382,17 @@ If not, check:
 Create a database called `refereemanager`.
 If you choose another name, alter your CakePHP configuration file accordnigly (see [CakePHP database configuration][]).
 
-Create the database tables using the code of
+Create the database tables using the code of:
 
 	<...>/refereemanager-code/database/refereemanager.sql
 
-Fill the database with the default configuration data of your language
+Fill the database with the default configuration data of your language (skip if you want to use a database dump that contains the default values):
 
-	<...>/refereemanager-code/database/<lang>/configuration.sql
+	<...>/refereemanager-code/database/<lang>/defaults.sql
 
 Fill the database with your data if you have some.
+
+*Important:* If you fill your database with a dump, you will most likely overwrite the loaded defaults.
 
 ## Start development
 
