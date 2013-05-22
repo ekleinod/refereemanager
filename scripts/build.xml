@@ -94,20 +94,20 @@
 		</copy>
 
 		<!-- Controller -->
-		<copy todir="${path:target}app${file.separator}Controller${file.separator}" failonerror="true" overwrite="true">
+		<copy todir="${path:target}app${file.separator}Controller${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}Controller${file.separator}">
 				<include name="*.php" />
 				<exclude name="PagesController.php" />
 			</fileset>
 		</copy>
-		<copy todir="${path:target}app${file.separator}Controller${file.separator}Component${file.separator}Auth${file.separator}" failonerror="true" overwrite="true">
+		<copy todir="${path:target}app${file.separator}Controller${file.separator}Component${file.separator}Auth${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}Controller${file.separator}Component${file.separator}Auth${file.separator}">
 				<include name="*.php" />
 			</fileset>
 		</copy>
 
 		<!-- Model -->
-		<copy todir="${path:target}app${file.separator}Model${file.separator}" failonerror="true" overwrite="true">
+		<copy todir="${path:target}app${file.separator}Model${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}Model${file.separator}">
 				<include name="*.php" />
 				<exclude name="AppModel.php" />
@@ -115,39 +115,39 @@
 		</copy>
 
 		<!-- View -->
-		<copy todir="${path:target}app${file.separator}View${file.separator}Assignments${file.separator}" failonerror="true" overwrite="true">
+		<copy todir="${path:target}app${file.separator}View${file.separator}Assignments${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Assignments${file.separator}">
 				<include name="*.ctp" />
 			</fileset>
 		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Elements${file.separator}" failonerror="true" overwrite="true">
+		<copy todir="${path:target}app${file.separator}View${file.separator}Elements${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Elements${file.separator}">
 				<include name="**/*" />
 				<exclude name="empty" />
 			</fileset>
 		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Helper${file.separator}" failonerror="true" overwrite="true">
+		<copy todir="${path:target}app${file.separator}View${file.separator}Helper${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Helper${file.separator}">
 				<include name="*.php" />
 				<exclude name="AppHelper.php" />
 			</fileset>
 		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Layouts${file.separator}" failonerror="true" overwrite="true">
+		<copy todir="${path:target}app${file.separator}View${file.separator}Layouts${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Layouts${file.separator}">
 				<include name="default.ctp" />
 			</fileset>
 		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Referees${file.separator}" failonerror="true" overwrite="true">
+		<copy todir="${path:target}app${file.separator}View${file.separator}Referees${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Referees${file.separator}">
 				<include name="*.ctp" />
 			</fileset>
 		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Teams${file.separator}" failonerror="true" overwrite="true">
+		<copy todir="${path:target}app${file.separator}View${file.separator}Teams${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Teams${file.separator}">
 				<include name="*.ctp" />
 			</fileset>
 		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Users${file.separator}" failonerror="true" overwrite="true">
+		<copy todir="${path:target}app${file.separator}View${file.separator}Users${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Users${file.separator}">
 				<include name="*.ctp" />
 			</fileset>
