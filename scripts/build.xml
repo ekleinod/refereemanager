@@ -45,6 +45,12 @@
 			<param name="path:target" value="${path:apache:refereemanager}" />
 		</antcall>
 
+		<echo message="Chmod for ${path:apache:refereemanager}app${file.separator}Console${file.separator}cake." />
+		<chmod perm="775" type="dir" dir="${path:apache:refereemanager}app${file.separator}Console${file.separator}cake" />
+
+		<echo message="Chmod for ${path:apache:refereemanager}lib${file.separator}Cake${file.separator}Console${file.separator}cake." />
+		<chmod perm="775" type="dir" dir="${path:apache:refereemanager}lib${file.separator}Cake${file.separator}Console${file.separator}cake" />
+
 		<echo message="Chmod for ${path:apache:refereemanager}app${file.separator}tmp${file.separator}." />
 		<chmod perm="777" type="dir" dir="${path:apache:refereemanager}app${file.separator}tmp${file.separator}" />
 		<chmod perm="777" type="dir">
