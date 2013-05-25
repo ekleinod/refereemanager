@@ -288,7 +288,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_clubs` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(100) NOT NULL ,
   `abbreviation` VARCHAR(100) NULL ,
-  `description` TEXT NULL ,
+  `remark` TEXT NULL ,
   `address_id` INT NOT NULL COMMENT 'standard address of the club. To be used if no address for a team is given.' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
@@ -367,7 +367,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_activity_logs` (
   `old_value` TEXT NULL ,
   `new_value` TEXT NOT NULL ,
   `user_id` INT NOT NULL COMMENT '\n' ,
-  `description` TEXT NULL ,
+  `remark` TEXT NULL ,
   `created` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
@@ -559,7 +559,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_pictures` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-COMMENT = 'Lookup table for sexes.\nThere is no description here in orde' /* comment truncated */;
+COMMENT = 'Picture storage (link to pictures, not the pics themselves.';
 
 
 -- -----------------------------------------------------
