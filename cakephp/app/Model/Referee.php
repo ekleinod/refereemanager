@@ -1,5 +1,7 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * Referee Model
  *
@@ -11,18 +13,41 @@ App::uses('AppModel', 'Model');
  */
 class Referee extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'id';
+	/**
+	 * Declare virtual display field in constructor to be alias-safe.
+	 *
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		// I can't get this one working with persons name, so I program a simple (but possibly bad) workaround
+		$this->virtualFields['display_referee'] = sprintf(
+			'CONCAT(%1$s.id, "-", %1$s.person_id)',
+			$this->alias
+		);
+	}
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @var string
+	 */
+	public $name = 'Referee';
+
+	/**
+	 * Display field
+	 *
+	 * @var string
+	 */
+	public $displayField = 'display_referee';
+
+
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'id' => array(
 			'uuid' => array(
@@ -56,75 +81,21 @@ class Referee extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
+	public $belongsTo = array('Person', 'StatusType');
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'person_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'StatusType' => array(
-			'className' => 'StatusType',
-			'foreignKey' => 'status_type_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'RefereeAssignment' => array(
-			'className' => 'RefereeAssignment',
-			'foreignKey' => 'referee_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'RefereeRelation' => array(
-			'className' => 'RefereeRelation',
-			'foreignKey' => 'referee_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'TrainingLevel' => array(
-			'className' => 'TrainingLevel',
-			'foreignKey' => 'referee_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
+	public $hasMany = array('RefereeAssignment', 'RefereeRelation', 'TrainingLevel');
 
 }
+
+/* EOF */
+
