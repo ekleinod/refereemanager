@@ -56,6 +56,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_sex_types` (
   UNIQUE INDEX `sid_UNIQUE` (`title` ASC) ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Lookup table for sexes.';
 
 
@@ -559,6 +561,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_pictures` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
 COMMENT = 'Picture storage (link to pictures, not the pics themselves.';
 
 
