@@ -49,16 +49,6 @@ class Referee extends AppModel {
 	 * @var array
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 		'person_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),

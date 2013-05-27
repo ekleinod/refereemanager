@@ -37,6 +37,9 @@ class AppController extends Controller {
 	/** Role: referee. */
 	const ROLE_REFEREE = 'referee';
 
+	/** Role: statistician. */
+	const ROLE_STATISTICIAN = 'statistician';
+
 	/** Role: editor. */
 	const ROLE_EDITOR = 'editor';
 
@@ -72,6 +75,7 @@ class AppController extends Controller {
 		// set user role checks
 		$user = $this->Auth->user();
 		$this->set('isReferee', $this->isReferee($user));
+		$this->set('isStatistician', $this->isStatistician($user));
 		$this->set('isEditor', $this->isEditor($user));
 		$this->set('isAdmin', $this->isAdmin($user));
 
@@ -79,17 +83,64 @@ class AppController extends Controller {
 		if (($user != null) && !empty($user) && ($user['id'] !== null)) {
 			$this->set('username', $user['username']);
 		}
+
 	}
 
 	/**
 	 * Returns if the user has the rights of a referee.
 	 *
-	 * This includes editors and admins.
+	 * This includes statisticians, editors and admins.
 	 *
 	 * @param $user user to check
 	 * @return true = referee, false = no referee
 	 */
 	public function isReferee($user = null) {
+
+		// no user given
+		if ($user == null) {
+			return false;
+		}
+
+		// user not logged in
+		if (empty($user) || ($user['id'] == null)) {
+			return false;
+		}
+
+		// hierarchy
+		if ($this->isAdmin($user)) {
+			return true;
+		}
+		if ($this->isEditor($user)) {
+			return true;
+		}
+		if ($this->isStatistician($user)) {
+			return true;
+		}
+
+		// check rights
+		$this->loadModel('User');
+		$this->User->id = $user['id'];
+		if (!$this->User->exists()) {
+			throw new NotFoundException(__('Ungültiger Nutzer: ') . $user['id']);
+		}
+		$theUser = $this->User->read(null, $user['id']);
+
+		if ($theUser['UserRole']['sid'] == self::ROLE_REFEREE) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns if the user has the rights of a statistician.
+	 *
+	 * This includes editors and admins.
+	 *
+	 * @param $user user to check
+	 * @return true = statistician, false = no referee
+	 */
+	public function isStatistician($user = null) {
 
 		// no user given
 		if ($user == null) {
@@ -117,7 +168,7 @@ class AppController extends Controller {
 		}
 		$theUser = $this->User->read(null, $user['id']);
 
-		if ($theUser['UserRole']['title'] == self::ROLE_REFEREE) {
+		if ($theUser['UserRole']['sid'] == self::ROLE_STATISTICIAN) {
 			return true;
 		}
 
@@ -157,7 +208,7 @@ class AppController extends Controller {
 		}
 		$theUser = $this->User->read(null, $user['id']);
 
-		if ($theUser['UserRole']['title'] == self::ROLE_EDITOR) {
+		if ($theUser['UserRole']['sid'] == self::ROLE_EDITOR) {
 			return true;
 		}
 
@@ -190,7 +241,7 @@ class AppController extends Controller {
 		}
 		$theUser = $this->User->read(null, $user['id']);
 
-		if ($theUser['UserRole']['title'] == self::ROLE_ADMIN) {
+		if ($theUser['UserRole']['sid'] == self::ROLE_ADMIN) {
 			return true;
 		}
 

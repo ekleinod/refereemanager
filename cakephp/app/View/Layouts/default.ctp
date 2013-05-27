@@ -98,7 +98,10 @@
 				<div class="band username">
 					<div class="container">
 						<div class="sixteen columns">
-							<p>Eingeloggt als: "<?php echo $username; ?>"</p>
+							<p>
+								Eingeloggt als: "<?php echo $username; ?>"
+								(<?php echo $this->Html->link(__('Logout'), array('action' => 'logout', 'controller' => 'users'), array('class' => '')); ?>)
+							</p>
 						</div><!-- end sixteen -->
 					</div><!-- end container -->
 				</div><!-- end band content -->

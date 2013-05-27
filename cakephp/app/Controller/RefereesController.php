@@ -21,7 +21,6 @@ class RefereesController extends AppController {
 
 		// pass information to view
 		$this->set('referees', $referees);
-		$this->set('referees', array());
 
 		// set title
 		$this->set('title_for_layout', __('Übersicht der Schiedsrichter'));
