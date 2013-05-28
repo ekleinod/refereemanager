@@ -9,6 +9,9 @@ App::uses('AppController', 'Controller');
  */
 class RefereesController extends AppController {
 
+	/** Needed helper classes. */
+	public $helpers = array('PhpExcel');
+
 	/**
 	 * index method
 	 *

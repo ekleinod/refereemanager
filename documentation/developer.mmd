@@ -30,7 +30,7 @@ There are four git sources or downloads used for development:
 - CakePHP ([Homepage][url:cake], [Git][url:cake:git])
 - phpMyAdmin ([Homepage][url:pma], [Git][url:pma:git], [Downloads][url:pma:down])
 - RefereeManager ([Homepage][url:refman], [Git][url:refman:git])
-- PHPExcel ([Homepage][url:phpexcel], [Helper Git][url:phpexcel:git])
+- PHPExcel ([Homepage][url:phpexcel], [SVN][url:phpexcel:svn])
 
 RefereeManager should be read/write if you want to develop, the other are read-only.
 
@@ -67,7 +67,7 @@ We refer to the needed directories as follows:
 : no development files here
 
 <...>/git/phpexcel/
-: PhpExcel Helper git repository
+: PHPExcel svn repository
 : no development files here
 
 
@@ -77,6 +77,7 @@ We refer to the needed directories as follows:
 In order to develop the RefereeManager, you will need at least:
 
 - Git
+- SVN
 - Ant (Java)
 - Apache (incl. mysql module) and PHP
 - MySQL
@@ -87,6 +88,13 @@ I tested development with XUbuntu so far.
 ## Git
 
 You need *git* for handling the developed code.
+
+There are no special installation or configuration steps required in order to develop the RefereeManager.
+
+## SVN
+
+You need *svn* for accessing the *PHPExcel* code.
+If you prefer to use downloaded Archives of *PHPExcel* you won't need *svn*.
 
 There are no special installation or configuration steps required in order to develop the RefereeManager.
 
@@ -205,7 +213,7 @@ In order to do this, follow these steps:
 3. alter the configuration files
 4. copy phpMyAdmin
 5. copy CakePHP
-6. copy PhpExcel
+6. copy PHPExcel
 7. copy RefereeManager
 8. setup database
 9. start development
@@ -235,9 +243,9 @@ Clone the code of *phpMyAdmin*, alternatively download and unzip a version.
 
 	$ git clone git://github.com/phpmyadmin/phpmyadmin.git <...>/git/phpmyadmin/
 
-Clone the code of the *PhpExcel* Helper.
+Checkout the code of *PHPExcel*.
 
-	$ git clone https://github.com/segy/PhpExcel.git <...>/git/phpexcel/
+	$ svn checkout https://phpexcel.svn.codeplex.com/svn/trunk/ <...>/git/phpexcel/
 
 ## Create and link your apache target directories
 
@@ -356,9 +364,9 @@ The script executes the following steps:
 *Important:* Your *RefereeManager* files and configurations are deleted too, restore them in the step [Copy RefereeManager][].
 Be sure you don't have unsaved changes before executing this step.
 
-## Copy PhpExcel Helper
+## Copy PHPExcel
 
-Copy the *PhpExcel* Helper files in your refereemanager apache directory.
+Copy the *PHPExcel* files in your refereemanager apache directory.
 
 Ant target
 : `phpexcel2apache`
@@ -375,7 +383,7 @@ The script executes the following steps:
 1. check if target directory exists -- failure otherwise
 2. copy the helper file from source directory to target directory
 
-*Important:* Your *PhpExcel* Helper file will be overwritten.
+*Important:* Your *PHPExcel* files will be overwritten.
 
 ## Copy RefereeManager
 
@@ -446,6 +454,6 @@ Everything is ready for development.
 [url:pma:git]: git://github.com/phpmyadmin/phpmyadmin.git "phpMyAdmin Git Access"
 [url:pma:down]: http://www.phpmyadmin.net/home_page/downloads.php "phpMyAdmin Downloads"
 [url:phpexcel]: http://phpexcel.codeplex.com/ "PHPExcel Homepage"
-[url:phpexcel:git]: https://github.com/segy/PhpExcel.git "PhpExcel helper Git Access"
+[url:phpexcel:svn]: https://phpexcel.svn.codeplex.com/svn "PhpExcel SVN Access"
 [url:ant:manual]: http://ant.apache.org/manual/ "Ant Manual"
 

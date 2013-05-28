@@ -65,10 +65,11 @@
 		</chmod>
 	</target>
 
-	<target name="phpexcel2apache" description="Copies PhpExcel Helper git file to development directory.">
-		<copy todir="${path:apache:refereemanager}app${file.separator}View${file.separator}Helper${file.separator}" failonerror="true" overwrite="true">
-			<fileset dir="${path:git:phpexcel}View${file.separator}Helper${file.separator}">
-				<include name="PhpExcelHelper.php" />
+	<target name="phpexcel2apache" description="Copies PHPExcel files to development directory.">
+		<mkdir dir="${path:apache:refereemanager}app${file.separator}Vendor${file.separator}PHPExcel${file.separator}Classes${file.separator}" />
+		<copy todir="${path:apache:refereemanager}app${file.separator}Vendor${file.separator}PHPExcel${file.separator}Classes${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:git:phpexcel}Classes${file.separator}">
+				<include name="**/*" />
 			</fileset>
 		</copy>
 	</target>
@@ -144,7 +145,6 @@
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Helper${file.separator}">
 				<include name="*.php" />
 				<exclude name="AppHelper.php" />
-				<exclude name="PhpExcelHelper.php" />
 			</fileset>
 		</copy>
 		<copy todir="${path:target}app${file.separator}View${file.separator}Layouts${file.separator}" failonerror="false" overwrite="true">

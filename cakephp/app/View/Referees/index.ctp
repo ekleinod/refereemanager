@@ -19,6 +19,11 @@
 	?>
 <?php
 	} else {
+
+		if ($export == 'excel') {
+			$this->PhpExcel->createWorksheet();
+			$this->PhpExcel->setDefaultFont('Calibri', 11);
+		}
 ?>
 	<p>Legende:</p>
 	<ul class="legend">
@@ -125,6 +130,12 @@
 		</tbody>
 	</table>
 <?php
+
+		if ($export == 'excel') {
+			$this->PhpExcel->addTableFooter();
+			$this->PhpExcel->output('VSR.xlsx');
+		}
+
 	}
 ?>
 
