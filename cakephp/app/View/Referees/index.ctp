@@ -10,6 +10,13 @@
 	if (empty($referees)) {
 ?>
 	<p><?php echo __('Es sind keine Schiedsrichter gespeichert.'); ?></p>
+	<?php
+		if ($export != null) {
+	?>
+		<p><?php echo __('Daher wurde kein Export durchgeführt.'); ?></p>
+	<?php
+		}
+	?>
 <?php
 	} else {
 ?>
@@ -120,6 +127,8 @@
 <?php
 	}
 ?>
+
+<p><?php echo $this->Html->link('Export to Excel', array('controller' => 'referees', 'action' => 'index', 'excel')); ?></p>
 
 <?php pr($referees); ?>
 

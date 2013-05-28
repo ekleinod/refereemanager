@@ -14,13 +14,14 @@ class RefereesController extends AppController {
 	 *
 	 * @return void
 	 */
-	public function index() {
+	public function index($export = null) {
 		// find referees
 		$referees = $this->Referee->find('all');
 		usort($referees, array('RefereesController', 'compareTo'));
 
 		// pass information to view
 		$this->set('referees', $referees);
+		$this->set('export', $export);
 
 		// set title
 		$this->set('title_for_layout', __('Übersicht der Schiedsrichter'));
