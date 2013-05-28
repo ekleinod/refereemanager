@@ -10,20 +10,8 @@
 	if (empty($referees)) {
 ?>
 	<p><?php echo __('Es sind keine Schiedsrichter gespeichert.'); ?></p>
-	<?php
-		if ($export != null) {
-	?>
-		<p><?php echo __('Daher wurde kein Export durchgeführt.'); ?></p>
-	<?php
-		}
-	?>
 <?php
 	} else {
-
-		if ($export == 'excel') {
-			$this->PhpExcel->createWorksheet();
-			$this->PhpExcel->setDefaultFont('Calibri', 11);
-		}
 ?>
 	<p>Legende:</p>
 	<ul class="legend">
@@ -130,16 +118,10 @@
 		</tbody>
 	</table>
 <?php
-
-		if ($export == 'excel') {
-			$this->PhpExcel->addTableFooter();
-			$this->PhpExcel->output('VSR.xlsx');
-		}
-
 	}
 ?>
 
-<p><?php echo $this->Html->link('Export to Excel', array('controller' => 'referees', 'action' => 'index', 'excel')); ?></p>
+<p><?php echo $this->Html->link('Export to Excel', array('controller' => 'referees', 'action' => 'export', 'excel')); ?></p>
 
 <?php pr($referees); ?>
 
