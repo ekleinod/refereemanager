@@ -1,6 +1,6 @@
 Title:							RefereeManager Developer Documentation
 Author:							Ekkart Kleinod
-Date:								21.04.2013
+Date:								28.05.2013
 Base Header Level:	3
 
 # Preface
@@ -25,13 +25,14 @@ Da ich Deutsch als Mutterspreche spreche, können Sie natürlich jederzeit auch 
 
 # Structure and git repositories
 
-There are three git sources or downloads used for development:
+There are four git sources or downloads used for development:
 
 - CakePHP ([Homepage][url:cake], [Git][url:cake:git])
 - phpMyAdmin ([Homepage][url:pma], [Git][url:pma:git], [Downloads][url:pma:down])
 - RefereeManager ([Homepage][url:refman], [Git][url:refman:git])
+- PHPExcel ([Homepage][url:phpexcel], [Helper Git][url:phpexcel:git])
 
-The first two are read-only, the third, RefereeManager should be read/write if you want to develop.
+RefereeManager should be read/write if you want to develop, the other are read-only.
 
 During the development process, several files have to be located in directories of CakePHP and phpMyAdmin resp.
 In order to avoid having several files mixed up, therefore making it difficult to separate RefereeManager files from original files, the development directories are separated from the git sources.
@@ -63,6 +64,10 @@ We refer to the needed directories as follows:
 
 <...>/git/cakephp/
 : CakePHP git repository
+: no development files here
+
+<...>/git/phpexcel/
+: PhpExcel Helper git repository
 : no development files here
 
 
@@ -200,9 +205,10 @@ In order to do this, follow these steps:
 3. alter the configuration files
 4. copy phpMyAdmin
 5. copy CakePHP
-6. copy RefereeManager
-7. setup database
-8. start development
+6. copy PhpExcel
+7. copy RefereeManager
+8. setup database
+9. start development
 
 You should use the provided *ant* scripts for some of these tasks.
 Simply call
@@ -228,6 +234,10 @@ Clone the code of *CakePHP*, alternatively download and unzip a version.
 Clone the code of *phpMyAdmin*, alternatively download and unzip a version.
 
 	$ git clone git://github.com/phpmyadmin/phpmyadmin.git <...>/git/phpmyadmin/
+
+Clone the code of the *PhpExcel* Helper.
+
+	$ git clone https://github.com/segy/PhpExcel.git <...>/git/phpexcel/
 
 ## Create and link your apache target directories
 
@@ -266,6 +276,7 @@ Default structure is:
 			refereemanager/
 			cakephp/
 			phpmyadmin/
+			phpexcel/
 
 If your directory structure is the same, you do not have to change the configuration file.
 
@@ -345,6 +356,27 @@ The script executes the following steps:
 *Important:* Your *RefereeManager* files and configurations are deleted too, restore them in the step [Copy RefereeManager][].
 Be sure you don't have unsaved changes before executing this step.
 
+## Copy PhpExcel Helper
+
+Copy the *PhpExcel* Helper files in your refereemanager apache directory.
+
+Ant target
+: `phpexcel2apache`
+: call: `ant phpexcel2apache`
+
+Source directory
+: `<...>/git/phpexcel`
+
+Target directory
+: `<...>/apache/refereemanager`
+
+The script executes the following steps:
+
+1. check if target directory exists -- failure otherwise
+2. copy the helper file from source directory to target directory
+
+*Important:* Your *PhpExcel* Helper file will be overwritten.
+
 ## Copy RefereeManager
 
 Copy the *RefereeManager* files in your refereemanager apache directory.
@@ -413,5 +445,7 @@ Everything is ready for development.
 [url:pma]: http://www.phpmyadmin.net/ "phpMyAdmin Homepage"
 [url:pma:git]: git://github.com/phpmyadmin/phpmyadmin.git "phpMyAdmin Git Access"
 [url:pma:down]: http://www.phpmyadmin.net/home_page/downloads.php "phpMyAdmin Downloads"
+[url:phpexcel]: http://phpexcel.codeplex.com/ "PHPExcel Homepage"
+[url:phpexcel:git]: https://github.com/segy/PhpExcel.git "PhpExcel helper Git Access"
 [url:ant:manual]: http://ant.apache.org/manual/ "Ant Manual"
 

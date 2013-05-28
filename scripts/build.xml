@@ -65,6 +65,14 @@
 		</chmod>
 	</target>
 
+	<target name="phpexcel2apache" description="Copies PhpExcel Helper git file to development directory.">
+		<copy todir="${path:apache:refereemanager}app${file.separator}View${file.separator}Helper${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:git:phpexcel}View${file.separator}Helper${file.separator}">
+				<include name="PhpExcelHelper.php" />
+			</fileset>
+		</copy>
+	</target>
+
 	<target name="refman2apache" description="Copies RefereeManager git files to development directory.">
 		<antcall target="copyrefmanfiles">
 			<param name="path:source" value="${path:git:refereemanager}cakephp${file.separator}" />
@@ -136,6 +144,7 @@
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Helper${file.separator}">
 				<include name="*.php" />
 				<exclude name="AppHelper.php" />
+				<exclude name="PhpExcelHelper.php" />
 			</fileset>
 		</copy>
 		<copy todir="${path:target}app${file.separator}View${file.separator}Layouts${file.separator}" failonerror="false" overwrite="true">
