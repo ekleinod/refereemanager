@@ -36,7 +36,7 @@ Da ich Deutsch als Mutterspreche spreche, können Sie natürlich jederzeit auch 
 <li>CakePHP (<a href="http://cakephp.org/" title="CakePHP Homepage">Homepage</a>, <a href="git://github.com/cakephp/cakephp.git" title="CakePHP Git Access">Git</a>)</li>
 <li>phpMyAdmin (<a href="http://www.phpmyadmin.net/" title="phpMyAdmin Homepage">Homepage</a>, <a href="git://github.com/phpmyadmin/phpmyadmin.git" title="phpMyAdmin Git Access">Git</a>, <a href="http://www.phpmyadmin.net/home_page/downloads.php" title="phpMyAdmin Downloads">Downloads</a>)</li>
 <li>RefereeManager (<a href="http://sourceforge.net/projects/refereemanager/" title="RefereeManager Sourceforge Home">Homepage</a>, <a href="http://git.code.sf.net/p/refereemanager/code" title="RefereeManager Sourceforge Git Access">Git</a>)</li>
-<li>PHPExcel (<a href="http://phpexcel.codeplex.com/" title="PHPExcel Homepage">Homepage</a>, <a href="https://github.com/segy/PhpExcel.git" title="PhpExcel helper Git Access">Helper Git</a>)</li>
+<li>PHPExcel (<a href="http://phpexcel.codeplex.com/" title="PHPExcel Homepage">Homepage</a>, <a href="https://phpexcel.svn.codeplex.com/svn" title="PhpExcel SVN Access">SVN</a>)</li>
 </ul>
 
 <p>RefereeManager should be read/write if you want to develop, the other are read-only.</p>
@@ -81,7 +81,7 @@ This means, that the development files have to be copied to and from the corresp
 <dd>no development files here</dd>
 
 <dt>&lt;&#8230;&gt;/git/phpexcel/</dt>
-<dd>PhpExcel Helper git repository</dd>
+<dd>PHPExcel svn repository</dd>
 
 <dd>no development files here</dd>
 </dl>
@@ -93,6 +93,7 @@ This means, that the development files have to be copied to and from the corresp
 
 <ul>
 <li>Git</li>
+<li>SVN</li>
 <li>Ant (Java)</li>
 <li>Apache (incl. mysql module) and PHP</li>
 <li>MySQL</li>
@@ -104,6 +105,13 @@ I tested development with XUbuntu so far.</p>
 <h4 id="git">Git</h4>
 
 <p>You need <em>git</em> for handling the developed code.</p>
+
+<p>There are no special installation or configuration steps required in order to develop the RefereeManager.</p>
+
+<h4 id="svn">SVN</h4>
+
+<p>You need <em>svn</em> for accessing the <em>PHPExcel</em> code.
+If you prefer to use downloaded Archives of <em>PHPExcel</em> you won&#8217;t need <em>svn</em>.</p>
 
 <p>There are no special installation or configuration steps required in order to develop the RefereeManager.</p>
 
@@ -232,7 +240,7 @@ In order to do this, follow these steps:</p>
 <li>alter the configuration files</li>
 <li>copy phpMyAdmin</li>
 <li>copy CakePHP</li>
-<li>copy PhpExcel</li>
+<li>copy PHPExcel</li>
 <li>copy RefereeManager</li>
 <li>setup database</li>
 <li>start development</li>
@@ -267,9 +275,9 @@ If you are not familiar with <em>ant</em>, refer to the <a href="http://ant.apac
 <pre><code>$ git clone git://github.com/phpmyadmin/phpmyadmin.git &lt;...&gt;/git/phpmyadmin/
 </code></pre>
 
-<p>Clone the code of the <em>PhpExcel</em> Helper.</p>
+<p>Checkout the code of <em>PHPExcel</em>.</p>
 
-<pre><code>$ git clone https://github.com/segy/PhpExcel.git &lt;...&gt;/git/phpexcel/
+<pre><code>$ svn checkout https://phpexcel.svn.codeplex.com/svn/trunk/ &lt;...&gt;/git/phpexcel/
 </code></pre>
 
 <h4 id="createandlinkyourapachetargetdirectories">Create and link your apache target directories</h4>
@@ -407,9 +415,9 @@ You find a configuration for the installation defaults in the RefereeManager rep
 <p><em>Important:</em> Your <em>RefereeManager</em> files and configurations are deleted too, restore them in the step <a href="#copyrefereemanager">Copy RefereeManager</a>.
 Be sure you don&#8217;t have unsaved changes before executing this step.</p>
 
-<h4 id="copyphpexcelhelper">Copy PhpExcel Helper</h4>
+<h4 id="copyphpexcel">Copy PHPExcel</h4>
 
-<p>Copy the <em>PhpExcel</em> Helper files in your refereemanager apache directory.</p>
+<p>Copy the <em>PHPExcel</em> files in your refereemanager apache directory.</p>
 <dl>
 <dt>Ant target</dt>
 <dd><code>phpexcel2apache</code></dd>
@@ -431,7 +439,7 @@ Be sure you don&#8217;t have unsaved changes before executing this step.</p>
 <li>copy the helper file from source directory to target directory</li>
 </ol>
 
-<p><em>Important:</em> Your <em>PhpExcel</em> Helper file will be overwritten.</p>
+<p><em>Important:</em> Your <em>PHPExcel</em> files will be overwritten.</p>
 
 <h4 id="copyrefereemanager">Copy RefereeManager</h4>
 
