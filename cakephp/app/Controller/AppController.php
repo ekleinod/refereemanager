@@ -54,8 +54,8 @@ class AppController extends Controller {
 	public $components = array(
 		'Session',
 		'Auth' => array(
-			'loginRedirect' => array('controller' => 'assignments', 'action' => 'index'),
-			'logoutRedirect' => array('controller' => 'assignments', 'action' => 'index'),
+			'loginRedirect' => array('controller' => 'referees', 'action' => 'index'),
+			'logoutRedirect' => array('controller' => 'referees', 'action' => 'index'),
 			'authenticate' => array('SaltForm') // use own authentication class
 		)
 	);
@@ -67,10 +67,10 @@ class AppController extends Controller {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-			Configure::write('Config.language', $this->Session->read('Config.language'));
+		Configure::write('Config.language', $this->Session->read('Config.language'));
 
 		Security::setHash('sha512');
-		$this->Auth->allow('index', 'view');
+		$this->Auth->allow('index', 'view', 'export');
 
 		// set user role checks
 		$user = $this->Auth->user();

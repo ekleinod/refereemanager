@@ -87,14 +87,15 @@ class PhpExcelHelper extends AppHelper {
 	 */
 	public function addTableHeader($data, $params = array()) {
 		// offset
+		$offset = 0;
 		if (array_key_exists('offset', $params))
 			$offset = is_numeric($params['offset']) ? (int)$params['offset'] : PHPExcel_Cell::columnIndexFromString($params['offset']);
 		// font name
 		if (array_key_exists('font', $params))
-			$this->xls->getActiveSheet()->getStyle($this->row)->getFont()->setName($params['font_name']);
+			$this->xls->getActiveSheet()->getStyle($this->row)->getFont()->setName($params['font']);
 		// font size
 		if (array_key_exists('size', $params))
-			$this->xls->getActiveSheet()->getStyle($this->row)->getFont()->setSize($params['font_size']);
+			$this->xls->getActiveSheet()->getStyle($this->row)->getFont()->setSize($params['size']);
 		// bold
 		if (array_key_exists('bold', $params))
 			$this->xls->getActiveSheet()->getStyle($this->row)->getFont()->setBold($params['bold']);

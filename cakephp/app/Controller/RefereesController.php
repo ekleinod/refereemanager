@@ -14,13 +14,10 @@ class RefereesController extends AppController {
 
 	/**
 	 * index method
-	 *
-	 * @return void
 	 */
 	public function index() {
-		// find referees
-		$referees = $this->Referee->find('all');
-		usort($referees, array('RefereesController', 'compareTo'));
+
+		$referees = $this->getReferees();
 
 		// pass information to view
 		$this->set('referees', $referees);
@@ -32,19 +29,31 @@ class RefereesController extends AppController {
 	/**
 	 * export method
 	 *
-	 * @return void
+	 * @param type export type (default: excel)
 	 */
 	public function export($type = 'excel') {
-		// find referees
-		$referees = $this->Referee->find('all');
-		usort($referees, array('RefereesController', 'compareTo'));
+
+		$referees = $this->getReferees();
 
 		// pass information to view
 		$this->set('referees', $referees);
 		$this->set('type', $type);
 
 		// set title
-		$this->set('title_for_layout', __('Übersicht der Schiedsrichter'));
+		$this->set('title_for_layout', __('Export der Schiedsrichter'));
+	}
+
+	/**
+	 * Returns the referees.
+	 *
+	 * @return array of referees
+	 */
+	private function getReferees() {
+		// find referees
+		$referees = $this->Referee->find('all');
+		usort($referees, array('RefereesController', 'compareTo'));
+
+		return $referees;
 	}
 
 	/**
