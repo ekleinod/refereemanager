@@ -21,6 +21,7 @@ class RefereesController extends AppController {
 
 		// pass information to view
 		$this->set('referees', $referees);
+		$this->set('statustypes', $this->getStatusTypes($referees));
 
 		// set title
 		$this->set('title_for_layout', __('Übersicht der Schiedsrichter'));
@@ -37,6 +38,7 @@ class RefereesController extends AppController {
 
 		// pass information to view
 		$this->set('referees', $referees);
+		$this->set('statustypes', $this->getStatusTypes($referees));
 		$this->set('type', $type);
 
 		// set title
@@ -54,6 +56,25 @@ class RefereesController extends AppController {
 		usort($referees, array('RefereesController', 'compareTo'));
 
 		return $referees;
+	}
+
+	/**
+	 * Returns the stytus types used by the referees.
+	 *
+	 * @return array of status types
+	 */
+	private function getStatusTypes($referees = array()) {
+		$statustypes = array();
+
+		foreach ($referees as $referee) {
+			if (!array_key_exists($referee['StatusType']['id'], $statustypes)) {
+				$statustypes[$referee['StatusType']['id']] = $referee['StatusType'];
+			}
+		}
+
+		ksort($statustypes);
+
+		return $statustypes;
 	}
 
 	/**

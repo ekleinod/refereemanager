@@ -50,11 +50,11 @@ COMMIT;
 -- Data for table `rfrmgr_status_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_status_types` (`id`, `title`, `remark`) VALUES (1, 'many assignments', 'The referee is interested in many assigments.');
-INSERT INTO `rfrmgr_status_types` (`id`, `title`, `remark`) VALUES (2, 'normal', NULL);
-INSERT INTO `rfrmgr_status_types` (`id`, `title`, `remark`) VALUES (3, 'not active this season', 'The referee is not active in this season.');
-INSERT INTO `rfrmgr_status_types` (`id`, `title`, `remark`) VALUES (4, 'not active', 'The referee is not active.');
-INSERT INTO `rfrmgr_status_types` (`id`, `title`, `remark`) VALUES (5, 'other', NULL);
+INSERT INTO `rfrmgr_status_types` (`id`, `title`, `style`, `color`, `remark`) VALUES (1, 'many assignments', 'bold', NULL, 'The referee is interested in many assigments.');
+INSERT INTO `rfrmgr_status_types` (`id`, `title`, `style`, `color`, `remark`) VALUES (2, 'normal', NULL, NULL, 'No special activity.');
+INSERT INTO `rfrmgr_status_types` (`id`, `title`, `style`, `color`, `remark`) VALUES (3, 'not active this season', NULL, 'FFD373', 'The referee is not active in this season.');
+INSERT INTO `rfrmgr_status_types` (`id`, `title`, `style`, `color`, `remark`) VALUES (4, 'not active', NULL, 'FFE573', 'The referee is not active.');
+INSERT INTO `rfrmgr_status_types` (`id`, `title`, `style`, `color`, `remark`) VALUES (5, 'other', 'italic', NULL, 'Other activity.');
 
 COMMIT;
 

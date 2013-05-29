@@ -15,12 +15,36 @@
 ?>
 	<p>Legende:</p>
 	<ul class="legend">
-		<li class="referee-more">an besonders vielen Einsätzen interessiert</li>
-		<li class="referee-notactive">nicht aktiv</li>
-		<li class="referee-notactiveseason">nicht aktiv in dieser Saison</li>
-		<?php if ($isEditor) { ?>
-			<li class="referee-nolicense">Lizenz entzogen</li>
-		<?php } ?>
+		<?php
+			foreach ($statustypes as &$statustype) {
+				$style = '';
+				if ($statustype['style'] || $statustype['color']) {
+					$style = ' style="';
+
+					switch ($statustype['style']) {
+						case 'italic':
+						case 'oblique':
+							$style .= sprintf('font-style: %s; ', $statustype['style']);
+							break;
+						case 'bold':
+						case 'bolder':
+						case 'lighter':
+							$style .= sprintf('font-weight: %s; ', $statustype['style']);
+							break;
+					}
+
+					if ($statustype['color']) {
+						 $style .= sprintf('color: #%s; ', $statustype['color']);
+					}
+
+					$style .= '"';
+				}
+				$statustype['htmlstyle'] = $style;
+		?>
+			<li<?php echo $statustype['htmlstyle']; ?>><?php echo ($statustype['remark']) ? $statustype['remark'] : $statustype['title']; ?></li>
+		<?php
+			}
+		?>
 	</ul>
 	<table>
 		<thead>
@@ -80,30 +104,30 @@
 							<td><?php echo $this->Html->image('http://placekitten.com/50/50', array('alt' => __('Bild von %s', $referee['Person']['title_person']), 'title' => $referee['Person']['title_person'])); ?></td>
 						<?php } ?>
 
-						<td data-title="<?php echo __('Vorname'); ?>"><?php echo $this->Html->link($referee['Person']['first_name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id'])); ?></td>
+						<td data-title="<?php echo __('Vorname'); ?>"<?php echo $statustypes[$referee['StatusType']['id']]['htmlstyle']; ?>><?php echo $this->Html->link($referee['Person']['first_name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id'])); ?></td>
 
-						<td data-title="<?php echo __('Name'); ?>"><?php echo $this->Html->link($referee['Person']['name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']));  ?></td>
+						<td data-title="<?php echo __('Name'); ?>"<?php echo $statustypes[$referee['StatusType']['id']]['htmlstyle']; ?>><?php echo $this->Html->link($referee['Person']['name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']));  ?></td>
 
-						<td data-title="<?php echo __('Club'); ?>"><?php
+						<td data-title="<?php echo __('Club'); ?>"<?php echo $statustypes[$referee['StatusType']['id']]['htmlstyle']; ?>><?php
 							if (!empty($referee['Club'])) {
 								echo $this->Html->link($referee['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $referee['Club']['id']));
 							}
 						?></td>
 
 						<?php if ($isReferee) { ?>
-							<td><?php echo __('E-Mail'); ?></td>
-							<td><?php echo __('Telefon'); ?></td>
+							<td<?php echo $statustypes[$referee['StatusType']['id']]['htmlstyle']; ?>><?php echo __('E-Mail'); ?></td>
+							<td<?php echo $statustypes[$referee['StatusType']['id']]['htmlstyle']; ?>><?php echo __('Telefon'); ?></td>
 						<?php } ?>
 
 						<?php if ($isEditor) { ?>
-							<td><?php echo __('Adresse'); ?></td>
-							<td><?php echo __('Geschlecht'); ?></td>
-							<td><?php echo __('Geburtstag'); ?></td>
-							<td><?php echo __('Ausbildung'); ?></td>
-							<td><?php echo __('Letzte Fortbildung'); ?></td>
-							<td><?php echo __('Status'); ?></td>
+							<td<?php echo $statustypes[$referee['StatusType']['id']]['htmlstyle']; ?>><?php echo __('Adresse'); ?></td>
+							<td<?php echo $statustypes[$referee['StatusType']['id']]['htmlstyle']; ?>><?php echo __('Geschlecht'); ?></td>
+							<td<?php echo $statustypes[$referee['StatusType']['id']]['htmlstyle']; ?>><?php echo __('Geburtstag'); ?></td>
+							<td<?php echo $statustypes[$referee['StatusType']['id']]['htmlstyle']; ?>><?php echo __('Ausbildung'); ?></td>
+							<td<?php echo $statustypes[$referee['StatusType']['id']]['htmlstyle']; ?>><?php echo __('Letzte Fortbildung'); ?></td>
+							<td<?php echo $statustypes[$referee['StatusType']['id']]['htmlstyle']; ?>><?php echo __('Status'); ?></td>
 
-							<td data-title="<?php echo __('Anmerkung'); ?>"><?php
+							<td data-title="<?php echo __('Anmerkung'); ?>"<?php echo $statustypes[$referee['StatusType']['id']]['htmlstyle']; ?>><?php
 								if (!empty($referee['Referee']['description'])) {
 									echo h($referee['Referee']['description']);
 								}

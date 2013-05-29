@@ -50,11 +50,11 @@ COMMIT;
 -- Daten für die Tabelle `rfrmgr_status_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_status_types` (`id`, `title`, `remark`) VALUES (1, 'viele', 'Schiedsrichter_in ist an besonders vielen Einsätzen interessiert.');
-INSERT INTO `rfrmgr_status_types` (`id`, `title`, `remark`) VALUES (2, 'normal', NULL);
-INSERT INTO `rfrmgr_status_types` (`id`, `title`, `remark`) VALUES (3, 'nicht aktiv diese Saison', 'Schiedsrichter_in ist diese Saison nicht aktiv.');
-INSERT INTO `rfrmgr_status_types` (`id`, `title`, `remark`) VALUES (4, 'nicht aktiv', 'Schiedsrichter_in ist nicht aktiv.');
-INSERT INTO `rfrmgr_status_types` (`id`, `title`, `remark`) VALUES (5, 'anderes', NULL);
+INSERT INTO `rfrmgr_status_types` (`id`, `title`, `style`, `color`, `remark`) VALUES (1, 'viele', 'bold', NULL, 'Schiedsrichter_in ist an besonders vielen Einsätzen interessiert.');
+INSERT INTO `rfrmgr_status_types` (`id`, `title`, `style`, `color`, `remark`) VALUES (2, 'normal', NULL, NULL, 'Keine spezielle Angabe.');
+INSERT INTO `rfrmgr_status_types` (`id`, `title`, `style`, `color`, `remark`) VALUES (3, 'nicht aktiv diese Saison', NULL, 'FFD373', 'Schiedsrichter_in ist diese Saison nicht aktiv.');
+INSERT INTO `rfrmgr_status_types` (`id`, `title`, `style`, `color`, `remark`) VALUES (4, 'nicht aktiv', NULL, 'FFE573', 'Schiedsrichter_in ist nicht aktiv.');
+INSERT INTO `rfrmgr_status_types` (`id`, `title`, `style`, `color`, `remark`) VALUES (5, 'anderes', 'italic', NULL, 'Andere Aktivität.');
 
 COMMIT;
 
