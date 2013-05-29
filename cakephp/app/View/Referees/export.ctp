@@ -23,6 +23,25 @@
 
 		$this->PhpExcel->addTableHeader($header, array('bold' => true, 'size' => 10));
 
+		// datarows
+		foreach ($referees as $referee) {
+			$datarow = array();
+			$datarow[] = $referee['Person']['first_name'];
+			$datarow[] = $referee['Person']['name'];
+			$datarow[] = (empty($referee['Club'])) ? '' : $referee['Club']['name'];
+
+			if ($isReferee) {
+				$datarow[] = __('E-Mail');
+				$datarow[] = __('Telefon');
+			}
+
+			if ($isEditor) {
+				$datarow[] = __('Adresse');
+			}
+
+			$this->PhpExcel->addTableRow($datarow);
+		}
+
 		// footer
 		$this->PhpExcel->addTableFooter();
 
