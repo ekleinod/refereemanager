@@ -42,6 +42,13 @@
 			$this->PhpExcel->addTableRow($datarow);
 		}
 
+		// legend
+		$this->PhpExcel->addTableRow(array());
+		$this->PhpExcel->addTableRow(array(__('Legende:')));
+		foreach ($statustypes as $statustype) {
+			$this->PhpExcel->addTableRow(array(($statustype['remark']) ? $statustype['remark'] : $statustype['title']));
+		}
+
 		// footer
 		$this->PhpExcel->addTableFooter();
 

@@ -13,7 +13,7 @@
 <?php
 	} else {
 ?>
-	<p>Legende:</p>
+	<p><?php echo __('Legende:'); ?></p>
 	<ul class="legend">
 		<?php
 			foreach ($statustypes as &$statustype) {
