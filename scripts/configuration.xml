@@ -43,11 +43,18 @@
 	<property name="path:git:phpmyadmin" value="${path:git}phpmyadmin${file.separator}" />
 
 	<!--
-		Path to your PhpExcel Helper git repository.
+		Path to your PHPExcel git repository.
 		The declaration uses your git path, change if necessary.
 		Original: "<git-path>phpexcel/" = "${path:git}phpexcel${file.separator}"
 	-->
 	<property name="path:git:phpexcel" value="${path:git}phpexcel${file.separator}" />
+
+	<!--
+		Path to your PHPExcelHelper git repository.
+		The declaration uses your git path, change if necessary.
+		Original: "<git-path>phpexcelhelper/" = "${path:git}phpexcelhelper${file.separator}"
+	-->
+	<property name="path:git:phpexcelhelper" value="${path:git}phpexcelhelper${file.separator}" />
 
 
 

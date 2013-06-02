@@ -25,12 +25,13 @@ Da ich Deutsch als Mutterspreche spreche, können Sie natürlich jederzeit auch 
 
 # Structure and git repositories
 
-There are four git sources or downloads used for development:
+There are five sources or downloads used for development:
 
 - CakePHP ([Homepage][url:cake], [Git][url:cake:git])
 - phpMyAdmin ([Homepage][url:pma], [Git][url:pma:git], [Downloads][url:pma:down])
 - RefereeManager ([Homepage][url:refman], [Git][url:refman:git])
 - PHPExcel ([Homepage][url:phpexcel], [SVN][url:phpexcel:svn])
+- PHPExcelHelper ([Homepage][url:phpexcelhelper], [Git][url:phpexcelhelper:git])
 
 RefereeManager should be read/write if you want to develop, the other are read-only.
 
@@ -68,6 +69,10 @@ We refer to the needed directories as follows:
 
 <...>/git/phpexcel/
 : PHPExcel svn repository
+: no development files here
+
+<...>/git/phpexcelhelper/
+: PHPExcelHelper git repository
 : no development files here
 
 
@@ -214,9 +219,10 @@ In order to do this, follow these steps:
 4. copy phpMyAdmin
 5. copy CakePHP
 6. copy PHPExcel
-7. copy RefereeManager
-8. setup database
-9. start development
+7. copy PHPExcelHelper
+8. copy RefereeManager
+9. setup database
+10. start development
 
 You should use the provided *ant* scripts for some of these tasks.
 Simply call
@@ -240,12 +246,17 @@ Clone the code of *CakePHP*, alternatively download and unzip a version.
 	$ git clone git://github.com/cakephp/cakephp.git <...>/git/cakephp/
 
 Clone the code of *phpMyAdmin*, alternatively download and unzip a version.
+Due to the size of the sources I use a download here.
 
 	$ git clone git://github.com/phpmyadmin/phpmyadmin.git <...>/git/phpmyadmin/
 
 Checkout the code of *PHPExcel*.
 
 	$ svn checkout https://phpexcel.svn.codeplex.com/svn/trunk/ <...>/git/phpexcel/
+
+Clone the code of *PHPExcelHelper*, alternatively download and unzip a version.
+
+	$ git clone git://github.com/ekleinod/PHPExcelHelper.git <...>/git/phpexcelhelper/
 
 ## Create and link your apache target directories
 
@@ -320,7 +331,7 @@ If you leave your altered file at this place, it is copied by the scripts to and
 
 ## Copy phpMyAdmin
 
-Copy the *phpMyAdmin* files in your phpmyadmin apache directory.
+Copy the *phpMyAdmin* files to your phpmyadmin apache directory.
 
 Ant target
 : `phpmyadmin2apache`
@@ -342,7 +353,7 @@ The script executes the following steps:
 
 ## Copy CakePHP
 
-Copy the *CakePHP* files in your refereemanager apache directory.
+Copy the *CakePHP* files to your refereemanager apache directory.
 
 Ant target
 : `cakephp2apache`
@@ -366,7 +377,7 @@ Be sure you don't have unsaved changes before executing this step.
 
 ## Copy PHPExcel
 
-Copy the *PHPExcel* files in your refereemanager apache directory.
+Copy the *PHPExcel* files to your refereemanager apache directory.
 
 Ant target
 : `phpexcel2apache`
@@ -384,6 +395,27 @@ The script executes the following steps:
 2. copy the helper file from source directory to target directory
 
 *Important:* Your *PHPExcel* files will be overwritten.
+
+## Copy PHPExcelHelper
+
+Copy the *PHPExcelHelper* files to your refereemanager apache directory.
+
+Ant target
+: `phpexcelhelper2apache`
+: call: `ant phpexcelhelper2apache`
+
+Source directory
+: `<...>/git/phpexcelhelper`
+
+Target directory
+: `<...>/apache/refereemanager`
+
+The script executes the following steps:
+
+1. check if target directory exists -- failure otherwise
+2. copy the helper file from source directory to target directory
+
+*Important:* Your *PHPExcelHelper* files will be overwritten.
 
 ## Copy RefereeManager
 
@@ -455,5 +487,7 @@ Everything is ready for development.
 [url:pma:down]: http://www.phpmyadmin.net/home_page/downloads.php "phpMyAdmin Downloads"
 [url:phpexcel]: http://phpexcel.codeplex.com/ "PHPExcel Homepage"
 [url:phpexcel:svn]: https://phpexcel.svn.codeplex.com/svn "PhpExcel SVN Access"
+[url:phpexcelhelper]: https://github.com/ekleinod/PHPExcelHelper "PHPExcelHelper Github Page"
+[url:phpexcelhelper:git]: git://github.com/ekleinod/PHPExcelHelper.git "PHPExcelHelper Git Access"
 [url:ant:manual]: http://ant.apache.org/manual/ "Ant Manual"
 

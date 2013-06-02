@@ -74,6 +74,14 @@
 		</copy>
 	</target>
 
+	<target name="phpexcelhelper2apache" description="Copies PHPExcelHelper files to development directory.">
+		<copy todir="${path:apache:refereemanager}app${file.separator}View${file.separator}Helper${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:git:phpexcelhelper}View${file.separator}Helper${file.separator}">
+				<include name="PHPExcelHelper.php" />
+			</fileset>
+		</copy>
+	</target>
+
 	<target name="refman2apache" description="Copies RefereeManager git files to development directory.">
 		<antcall target="copyrefmanfiles">
 			<param name="path:source" value="${path:git:refereemanager}cakephp${file.separator}" />
@@ -145,6 +153,7 @@
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Helper${file.separator}">
 				<include name="*.php" />
 				<exclude name="AppHelper.php" />
+				<exclude name="PHPExcelHelper.php" />
 			</fileset>
 		</copy>
 		<copy todir="${path:target}app${file.separator}View${file.separator}Layouts${file.separator}" failonerror="false" overwrite="true">
