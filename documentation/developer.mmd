@@ -161,7 +161,7 @@ The file is provided in the RefereeManager git repository, check if a link is ne
 The linking solution:
 
 	$ cd /etc/apache2/
-	$ sudo ln -s <...>/git/refereemanager/configuration/apache2/httpd.conf
+	$ sudo ln -s <...>/git/refereemanager/configuration/apache2/ports.conf
 
 #### httpd.conf
 
@@ -196,9 +196,27 @@ You can link to the git-stored file as well:
 
 ## Known problems
 
+### Apache did not start
+
 If you choose to link the needed files, there may be problems in case you encrypt your home directory.
 In that case, the links can only be resolved after you log in.
 You have to restart *apache* every time you log in (see [Apache and PHP][]).
+
+### The mysql extension is missing
+
+Make sure you installed the *mysql* extension correctly **and** restarted *apache* (you figured *that* out by yourselves)
+
+If you use `localhost` you have to deactivate local file access with `LOAD DATA` statements
+In order to do that, edit `php.ini`, usually located in `/etc/php5/apache2/'.
+Uncomment the lines
+
+	mysql.allow_local_infile = On
+	mysqli.allow_local_infile = On
+
+as follows
+
+	;mysql.allow_local_infile = On
+	;mysqli.allow_local_infile = On
 
 ## MySQL
 
