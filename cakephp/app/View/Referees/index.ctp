@@ -1,5 +1,5 @@
-<!-- header actions -->
 <?php echo $this->element('actions_header');	?>
+<!-- header actions -->
 
 <!-- view filters -->
 <div class="filter">
