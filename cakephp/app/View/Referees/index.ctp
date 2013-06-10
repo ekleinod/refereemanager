@@ -23,10 +23,12 @@
 				if ($statustype['style'] || $statustype['color']) {
 
 					switch ($statustype['style']) {
+						case 'normal':
 						case 'italic':
 						case 'oblique':
 							$style .= sprintf('font-style: %s; ', $statustype['style']);
 							break;
+						case 'normal':
 						case 'bold':
 						case 'bolder':
 						case 'lighter':
