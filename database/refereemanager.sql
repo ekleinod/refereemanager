@@ -164,6 +164,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_status_types` (
   `title` VARCHAR(100) NOT NULL ,
   `style` VARCHAR(10) NULL ,
   `color` VARCHAR(6) NULL ,
+  `bgcolor` VARCHAR(6) NULL ,
   `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
