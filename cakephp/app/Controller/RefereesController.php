@@ -13,14 +13,6 @@ class RefereesController extends AppController {
 	public $helpers = array('PHPExcel');
 
 	/**
-	 * full method (test of PHPExcel)
-	 */
-	public function full() {
-		// set title
-		$this->set('title_for_layout', __('Übersicht der Schiedsrichter'));
-	}
-
-	/**
 	 * index method
 	 */
 	public function index() {
