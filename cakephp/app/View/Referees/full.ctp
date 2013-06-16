@@ -6,42 +6,52 @@
 
 		// header
 		$header = array();
-		$header[] = array('text' => 'Header 1', 'column' => array('font-weight' => 'bold'));
-		$header[] = array('text' => 'Header 2', 'font-name' => 'Serif', 'font-size' => '8', 'font-weight' => 'bold', 'font-style' => 'italic', 'color' => '0000FF', 'bg-color' => '00DD00', 'width' => 'auto', 'wrap' => true);
-		$header[] = array('text' => 'Header 3', 'font-size' => '15', 'width' => 75, 'wrap' => false);
-		$header[] = array('text' => 'Header 4', 'font-weight' => 'bold', 'font-style' => 'normal');
-		$header[] = array('text' => 'Header 5', 'wrap' => false);
-		$header[] = array('text' => 'Header 6', 'column' => array('wrap' => true));
-		$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'color' => '008800', 'wrap' => true), 2, true);
+			$header[] = array('text' => 'Attribute', 'width' => 20, 'column' => array('font-weight' => 'bold'));
+			$header[] = array('text' => 'text');
+			$header[] = array('text' => 'font-name');
+			$header[] = array('text' => 'font-size');
+			$header[] = array('text' => 'font-weight');
+			$header[] = array('text' => 'font-style');
+			$header[] = array('text' => 'color');
+			$header[] = array('text' => 'bg-color');
+			$header[] = array('text' => 'wrap');
+			$header[] = array('text' => 'width');
+			$header[] = array('text' => 'column');
+		$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'));
 
 		// normal rows
-		$this->PHPExcel->addTableTexts(array('I am text in the first column.',
-																	 'I am text in the second column.',
-																	 'I am text in the third column.',
-																	 'I am text in the fourth column.',
-																	 'I am text in the fifth column.',
-																	 'I am text in the sixth column.'));
+		$this->PHPExcel->addTableTexts('Values', '<text in cell>', '<name>', '<size in pt>',
+																	 '"normal" or "bold" or "bolder" or "lighter"',
+																	 '"normal" or "italic" or "oblique"',
+																	 '<rgb>', '<rgb>', '"true" or "false"',
+																	 '"auto" or <size in pt>', '<all attributes>');
 
 		$data = array();
-			$data[] = array('text' => 'I am text in the first column.');
-			$data[] = array('text' => 'I am text in the second column.');
-			$data[] = array('text' => 'I am text in the third column.');
-			$data[] = array('text' => 'I am text in the fourth column.');
-			$data[] = array('text' => 'I am text in the fifth column.');
-			$data[] = array('text' => 'I am text in the sixth column.');
-		$this->PHPExcel->addTableRow($data, array('bg-color' => 'CCCCCC'));
+		$this->PHPExcel->addTableRow($data);
 
 		$data = array();
-			$data[] = array('text' => 'I am text in the first column.', 'font-weight' => 'normal');
-			$data[] = array('text' => 'I am text in the second column.');
+			$data[] = array('text' => 'Remarks');
 			$data[] = array();
-			$data[] = array('text' => 'I am text in the fourth column.');
-			$data[] = array('text' => 'I am text in the fifth column.');
-			$data[] = array('text' => 'I am text in the sixth column.');
+			$data[] = array();
+			$data[] = array();
+			$data[] = array();
+			$data[] = array('text' => 'format like "0080FF"', 'font-style' => 'italic');
+			$data[] = array('text' => 'format like "0080FF"', 'font-style' => 'italic');
+			$data[] = array();
+			$data[] = array();
+			$data[] = array('text' => 'header cells only', 'font-style' => 'italic');
+			$data[] = array('text' => 'header cells only', 'font-style' => 'italic');
+		$this->PHPExcel->addTableRow($data);
+
+		$data = array();
+		$this->PHPExcel->addTableRow($data);
+
+		$data = array();
+			$data[] = array('text' => 'Cell definitions override row definitions override column definitions.', 'font-weight' => 'normal');
 		$this->PHPExcel->addTableRow($data);
 
 		// output
-		$this->PHPExcel->output('Full.xlsx');
+		$this->PHPExcel->output('Attributes.xlsx');
 
 ?>
 
