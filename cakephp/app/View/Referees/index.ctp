@@ -20,7 +20,7 @@
 
 				$style = '';
 
-				if ($statustype['style'] || $statustype['color']) {
+				if ($statustype['style'] || $statustype['color'] || $statustype['bgcolor']) {
 
 					switch ($statustype['style']) {
 						case 'normal':
@@ -40,6 +40,10 @@
 						 $style .= sprintf('color: #%s; ', $statustype['color']);
 					}
 
+					if ($statustype['bgcolor']) {
+						 $style .= sprintf('background-color: #%s; ', $statustype['bgcolor']);
+					}
+
 				}
 				$statustype['htmlstyle'] = $style;
 		?>
@@ -48,6 +52,9 @@
 			}
 		?>
 	</ul>
+
+	<p><?php echo $this->Html->link('Export to Excel', array('controller' => 'referees', 'action' => 'export', 'excel')); ?></p>
+
 	<table>
 		<thead>
 			<tr>
@@ -146,8 +153,6 @@
 <?php
 	}
 ?>
-
-<p><?php echo $this->Html->link('Export to Excel', array('controller' => 'referees', 'action' => 'export', 'excel')); ?></p>
 
 <?php pr($referees); ?>
 
