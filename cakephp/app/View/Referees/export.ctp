@@ -2,6 +2,36 @@
 
 	if ($type == 'excel') {
 
+		// compute different styles
+		foreach ($statustypes as &$statustypeedit) {
+			$statustypeedit['outputstyle'] = array();
+			if ($statustypeedit['style'] || $statustypeedit['color'] || $statustypeedit['bgcolor']) {
+
+				switch ($statustypeedit['style']) {
+					case 'normal':
+					case 'italic':
+					case 'oblique':
+						$statustypeedit['outputstyle']['font-style'] = $statustypeedit['style'];
+						break;
+					case 'normal':
+					case 'bold':
+					case 'bolder':
+					case 'lighter':
+						$statustypeedit['outputstyle']['font-weight'] = $statustypeedit['style'];
+						break;
+				}
+
+				if ($statustypeedit['color']) {
+					$statustypeedit['outputstyle']['color'] = $statustypeedit['color'];
+				}
+
+				if ($statustypeedit['bgcolor']) {
+					$statustypeedit['outputstyle']['bg-color'] = $statustypeedit['bgcolor'];
+				}
+
+			}
+		}
+
 		// start table
 		$this->PhpExcel->createWorksheet();
 		$this->PhpExcel->setDefaultFont('Calibri', 11);
@@ -41,14 +71,14 @@
 				$datarow[] = array('text' => __('Adresse'));
 			}
 
-			$this->PhpExcel->addTableRow($datarow);
+			$this->PhpExcel->addTableRow($datarow, $statustypes[$referee['StatusType']['id']]['outputstyle']);
 		}
 
 		// legend
 		$this->PhpExcel->addTableRow(array());
 		$this->PhpExcel->addTableRow(array('text' => array(__('Legende:'))));
 		foreach ($statustypes as $statustype) {
-			$this->PhpExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])));
+			$this->PhpExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), $statustype['outputstyle']);
 		}
 
 		// output

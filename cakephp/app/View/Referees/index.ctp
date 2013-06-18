@@ -16,6 +16,7 @@
 	<p><?php echo __('Legende:'); ?></p>
 	<ul class="legend">
 		<?php
+			// compute different styles
 			foreach ($statustypes as &$statustype) {
 
 				$style = '';
@@ -37,17 +38,17 @@
 					}
 
 					if ($statustype['color']) {
-						 $style .= sprintf('color: #%s; ', $statustype['color']);
+						$style .= sprintf('color: #%s; ', $statustype['color']);
 					}
 
 					if ($statustype['bgcolor']) {
-						 $style .= sprintf('background-color: #%s; ', $statustype['bgcolor']);
+						$style .= sprintf('background-color: #%s; ', $statustype['bgcolor']);
 					}
 
 				}
-				$statustype['htmlstyle'] = $style;
+				$statustype['outputstyle'] = $style;
 		?>
-			<li style="<?php echo $statustype['htmlstyle']; ?>"><?php echo ($statustype['remark']) ? $statustype['remark'] : $statustype['title']; ?></li>
+			<li style="<?php echo $statustype['outputstyle']; ?>"><?php echo ($statustype['remark']) ? $statustype['remark'] : $statustype['title']; ?></li>
 		<?php
 			}
 		?>
@@ -113,13 +114,13 @@
 							<td><?php echo $this->Html->image('http://placekitten.com/50/50', array('alt' => __('Bild von %s', $referee['Person']['title_person']), 'title' => $referee['Person']['title_person'])); ?></td>
 						<?php } ?>
 
-						<td data-title="<?php echo __('Vorname'); ?>"><?php echo $this->Html->link($referee['Person']['first_name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['htmlstyle'])); ?></td>
+						<td data-title="<?php echo __('Vorname'); ?>"><?php echo $this->Html->link($referee['Person']['first_name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle'])); ?></td>
 
-						<td data-title="<?php echo __('Name'); ?>"><?php echo $this->Html->link($referee['Person']['name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['htmlstyle']));  ?></td>
+						<td data-title="<?php echo __('Name'); ?>"><?php echo $this->Html->link($referee['Person']['name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));  ?></td>
 
 						<td data-title="<?php echo __('Club'); ?>"><?php
 							if (!empty($referee['Club'])) {
-								echo $this->Html->link($referee['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $referee['Club']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['htmlstyle']));
+								echo $this->Html->link($referee['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $referee['Club']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));
 							}
 						?></td>
 
