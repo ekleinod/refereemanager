@@ -34,7 +34,7 @@
 
 		// start table
 		$this->PhpExcel->createWorksheet();
-		$this->PhpExcel->setDefaultFont('Calibri', 11);
+		$this->PhpExcel->setDefaultFont('DejaVu Sans', 11);
 
 		// header
 		$header = array();

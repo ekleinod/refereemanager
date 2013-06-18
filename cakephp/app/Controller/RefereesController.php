@@ -55,6 +55,26 @@ class RefereesController extends AppController {
 		$referees = $this->Referee->find('all');
 		usort($referees, array('RefereesController', 'compareTo'));
 
+		// add member club to referees
+		$this->loadModel('RefereeRelationType');
+		$this->RefereeRelationType->recursive = -1;
+		$memberRelationType = $this->RefereeRelationType->findBySid('member');
+		$memberRelationTypeID = $memberRelationType['RefereeRelationType']['id'];
+		$this->set('ektest', $memberRelationTypeID);
+
+		$this->loadModel('Club');
+		$this->Club->recursive = -1;
+		foreach ($referees as &$referee) {
+			foreach ($referee['RefereeRelation'] as $refereeRelation) {
+				if ($refereeRelation['referee_relation_type_id'] == $memberRelationTypeID) {
+					$memberClub = $this->Club->findById($refereeRelation['club_id']);
+					if (!empty($memberClub)) {
+						$referee['Club'] = $memberClub['Club'];
+					}
+				}
+			}
+		}
+
 		return $referees;
 	}
 

@@ -155,5 +155,6 @@
 	}
 ?>
 
+<p>---<?php pr($ektest); ?>---</p>
 <?php pr($referees); ?>
 
