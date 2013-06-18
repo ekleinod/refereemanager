@@ -74,178 +74,126 @@ class AppController extends Controller {
 
 		// set user role checks
 		$user = $this->Auth->user();
-		$this->set('isReferee', $this->isReferee($user));
-		$this->set('isStatistician', $this->isStatistician($user));
-		$this->set('isEditor', $this->isEditor($user));
-		$this->set('isAdmin', $this->isAdmin($user));
+		$theUserRoleSID = null;
+		if (($user != null) && !empty($user) && ($user['id'] != null)) {
+			// get user role sid
+			$this->loadModel('User');
+			$this->User->recursive = -1;
+			$theUser = $this->User->findById($user['id']);
+			$this->loadModel('UserRole');
+			$this->UserRole->recursive = -1;
+			$theUserRole = $this->UserRole->findById($theUser['User']['user_role_id']);
+			$theUserRoleSID = $theUserRole['UserRole']['sid'];
 
-		// set user name
-		if (($user != null) && !empty($user) && ($user['id'] !== null)) {
+			// set user name
 			$this->set('username', $user['username']);
 		}
 
+		$theUserRoleSID = 'adminn';
+		$this->set('isReferee', $this->isReferee($theUserRoleSID));
+		$this->set('isStatistician', $this->isStatistician($theUserRoleSID));
+		$this->set('isEditor', $this->isEditor($theUserRoleSID));
+		$this->set('isAdmin', $this->isAdmin($theUserRoleSID));
+
 	}
 
 	/**
-	 * Returns if the user has the rights of a referee.
+	 * Returns if the userrole is a referee.
 	 *
 	 * This includes statisticians, editors and admins.
 	 *
-	 * @param $user user to check
+	 * @param $userrole user to check
 	 * @return true = referee, false = no referee
 	 */
-	public function isReferee($user = null) {
+	private function isReferee($userrole) {
 
 		// no user given
-		if ($user == null) {
-			return false;
-		}
-
-		// user not logged in
-		if (empty($user) || ($user['id'] == null)) {
+		if ($userrole == null) {
 			return false;
 		}
 
 		// hierarchy
-		if ($this->isAdmin($user)) {
+		if ($this->isAdmin($userrole)) {
 			return true;
 		}
-		if ($this->isEditor($user)) {
+		if ($this->isEditor($userrole)) {
 			return true;
 		}
-		if ($this->isStatistician($user)) {
-			return true;
-		}
-
-		// check rights
-		$this->loadModel('User');
-		$this->User->id = $user['id'];
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Ungültiger Nutzer: ') . $user['id']);
-		}
-		$theUser = $this->User->read(null, $user['id']);
-
-		if ($theUser['UserRole']['sid'] == self::ROLE_REFEREE) {
+		if ($this->isStatistician($userrole)) {
 			return true;
 		}
 
-		return false;
+		// check
+		return $userrole === self::ROLE_REFEREE;
 	}
 
 	/**
-	 * Returns if the user has the rights of a statistician.
+	 * Returns if the userrole is a statistician.
 	 *
 	 * This includes editors and admins.
 	 *
-	 * @param $user user to check
+	 * @param $userrole user to check
 	 * @return true = statistician, false = no referee
 	 */
-	public function isStatistician($user = null) {
+	private function isStatistician($userrole) {
 
 		// no user given
-		if ($user == null) {
-			return false;
-		}
-
-		// user not logged in
-		if (empty($user) || ($user['id'] == null)) {
+		if ($userrole == null) {
 			return false;
 		}
 
 		// hierarchy
-		if ($this->isAdmin($user)) {
+		if ($this->isAdmin($userrole)) {
 			return true;
 		}
-		if ($this->isEditor($user)) {
-			return true;
-		}
-
-		// check rights
-		$this->loadModel('User');
-		$this->User->id = $user['id'];
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Ungültiger Nutzer: ') . $user['id']);
-		}
-		$theUser = $this->User->read(null, $user['id']);
-
-		if ($theUser['UserRole']['sid'] == self::ROLE_STATISTICIAN) {
+		if ($this->isEditor($userrole)) {
 			return true;
 		}
 
-		return false;
+		// check
+		return $userrole === self::ROLE_STATISTICIAN;
 	}
 
 	/**
-	 * Returns if the user has the rights of an editor.
+	 * Returns if the userrole is an editor.
 	 *
 	 * This includes admins.
 	 *
-	 * @param $user user to check
+	 * @param $userrole user to check
 	 * @return true = editor, false = no editor
 	 */
-	public function isEditor($user = null) {
+	private function isEditor($userrole) {
 
 		// no user given
-		if ($user == null) {
-			return false;
-		}
-
-		// user not logged in
-		if (empty($user) || ($user['id'] == null)) {
+		if ($userrole == null) {
 			return false;
 		}
 
 		// hierarchy
-		if ($this->isAdmin($user)) {
+		if ($this->isAdmin($userrole)) {
 			return true;
 		}
 
-		// check rights
-		$this->loadModel('User');
-		$this->User->id = $user['id'];
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Ungültiger Nutzer: ') . $user['id']);
-		}
-		$theUser = $this->User->read(null, $user['id']);
-
-		if ($theUser['UserRole']['sid'] == self::ROLE_EDITOR) {
-			return true;
-		}
-
-		return false;
+		// check
+		return $userrole === self::ROLE_EDITOR;
 	}
 
 	/**
-	 * Returns if the user has the rights of an admin.
+	 * Returns if the userrole is an admin.
 	 *
-	 * @param $user user to check
+	 * @param $userrole user to check
 	 * @return true = admin, false = no admin
 	 */
-	public function isAdmin($user = null) {
+	private function isAdmin($userrole) {
 
 		// no user given
-		if ($user == null) {
+		if ($userrole == null) {
 			return false;
 		}
 
-		// user not logged in
-		if (empty($user) || ($user['id'] == null)) {
-			return false;
-		}
-
-		// check rights
-		$this->loadModel('User');
-		$this->User->id = $user['id'];
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Ungültiger Nutzer: ') . $user['id']);
-		}
-		$theUser = $this->User->read(null, $user['id']);
-
-		if ($theUser['UserRole']['sid'] == self::ROLE_ADMIN) {
-			return true;
-		}
-
+		// check
 		return false;
+		//return strcmp($userrole, self::ROLE_ADMIN);
 	}
 
 }

@@ -67,8 +67,8 @@ class RefereesController extends AppController {
 		foreach ($referees as &$referee) {
 			foreach ($referee['RefereeRelation'] as $refereeRelation) {
 				if ($refereeRelation['referee_relation_type_id'] == $memberRelationTypeID) {
-					$memberClub = $this->Club->findById($refereeRelation['club_id']);
-					if (!empty($memberClub)) {
+					if ($refereeRelation['club_id'] > 0) {
+						$memberClub = $this->Club->findById($refereeRelation['club_id']);
 						$referee['Club'] = $memberClub['Club'];
 					}
 				}
