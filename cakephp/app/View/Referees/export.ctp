@@ -50,6 +50,8 @@
 			if ($isEditor) {
 				$header[] = array('text' => __('Adresse'));
 			}
+
+		$header[] = array('text' => __('Anmerkung'));
 		$this->PhpExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), 0, true);
 
 		// datarows
@@ -70,6 +72,8 @@
 			if ($isEditor) {
 				$datarow[] = array('text' => __('Adresse'));
 			}
+
+			$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : $referee['Person']['remark']);
 
 			$this->PhpExcel->addTableRow($datarow, $statustypes[$referee['StatusType']['id']]['outputstyle']);
 		}

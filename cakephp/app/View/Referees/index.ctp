@@ -76,8 +76,8 @@
 					<th><?php echo __('Ausbildung'); ?></th>
 					<th><?php echo __('Letzte Fortbildung'); ?></th>
 					<th><?php echo __('Status'); ?></th>
-					<th><?php echo __('Anmerkung'); ?></th>
 				<?php } ?>
+				<th><?php echo __('Anmerkung'); ?></th>
 				<th><?php echo __('Aktionen'); ?></th>
 			</tr>
 		</thead>
@@ -100,18 +100,22 @@
 					<th><?php echo __('Ausbildung'); ?></th>
 					<th><?php echo __('Letzte Fortbildung'); ?></th>
 					<th><?php echo __('Status'); ?></th>
-					<th><?php echo __('Anmerkung'); ?></th>
 				<?php } ?>
+				<th><?php echo __('Anmerkung'); ?></th>
 				<th><?php echo __('Aktionen'); ?></th>
 			</tr>
 		</tfoot>
 		<tbody>
 			<?php
-				foreach (array() as $referee) {
+				foreach ($referees as $referee) {
 			?>
 					<tr>
 						<?php if ($isReferee) { ?>
-							<td><?php echo $this->Html->image('http://placekitten.com/50/50', array('alt' => __('Bild von %s', $referee['Person']['title_person']), 'title' => $referee['Person']['title_person'])); ?></td>
+							<td data-title="<?php echo __('Bild'); ?>"><?php
+								if (!empty($referee['Picture'])) {
+									echo $this->Html->image($referee['Picture']['url'], array('width' => '50', 'alt' => __('Bild von %s %s', $referee['Person']['first_name'], $referee['Person']['name']), 'title' => __('%s %s', $referee['Person']['first_name'], $referee['Person']['name'])));
+								}
+							?></td>
 						<?php } ?>
 
 						<td data-title="<?php echo __('Vorname'); ?>"><?php echo $this->Html->link($referee['Person']['first_name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle'])); ?></td>
@@ -136,13 +140,13 @@
 							<td><?php echo __('Ausbildung'); ?></td>
 							<td><?php echo __('Letzte Fortbildung'); ?></td>
 							<td><?php echo __('Status'); ?></td>
-
-							<td data-title="<?php echo __('Anmerkung'); ?>"><?php
-								if (!empty($referee['Referee']['description'])) {
-									echo h($referee['Referee']['description']);
-								}
-							?></td>
 						<?php } ?>
+
+						<td data-title="<?php echo __('Anmerkung'); ?>"><?php
+							if (!empty($referee['Person']['remark'])) {
+								echo h($referee['Person']['remark']);
+							}
+						?></td>
 
 						<td class="actions" data-title="<?php echo __('Aktionen'); ?>">
 							<?php echo $this->element('actions_table', array('id' => $referee['Referee']['id']));	?>
