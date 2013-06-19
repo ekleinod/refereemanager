@@ -89,7 +89,6 @@ class AppController extends Controller {
 			$this->set('username', $user['username']);
 		}
 
-		$theUserRoleSID = 'adminn';
 		$this->set('isReferee', $this->isReferee($theUserRoleSID));
 		$this->set('isStatistician', $this->isStatistician($theUserRoleSID));
 		$this->set('isEditor', $this->isEditor($theUserRoleSID));
@@ -108,7 +107,7 @@ class AppController extends Controller {
 	private function isReferee($userrole) {
 
 		// no user given
-		if ($userrole == null) {
+		if ($userrole === null) {
 			return false;
 		}
 
@@ -138,7 +137,7 @@ class AppController extends Controller {
 	private function isStatistician($userrole) {
 
 		// no user given
-		if ($userrole == null) {
+		if ($userrole === null) {
 			return false;
 		}
 
@@ -165,7 +164,7 @@ class AppController extends Controller {
 	private function isEditor($userrole) {
 
 		// no user given
-		if ($userrole == null) {
+		if ($userrole === null) {
 			return false;
 		}
 
@@ -187,13 +186,12 @@ class AppController extends Controller {
 	private function isAdmin($userrole) {
 
 		// no user given
-		if ($userrole == null) {
+		if ($userrole === null) {
 			return false;
 		}
 
 		// check
-		return false;
-		//return strcmp($userrole, self::ROLE_ADMIN);
+		return $userrole === self::ROLE_ADMIN;
 	}
 
 }

@@ -107,7 +107,7 @@
 		</tfoot>
 		<tbody>
 			<?php
-				foreach ($referees as $referee) {
+				foreach (array() as $referee) {
 			?>
 					<tr>
 						<?php if ($isReferee) { ?>
@@ -155,6 +155,5 @@
 	}
 ?>
 
-<p>---<?php pr($ektest); ?>---</p>
 <?php pr($referees); ?>
 

@@ -60,7 +60,6 @@ class RefereesController extends AppController {
 		$this->RefereeRelationType->recursive = -1;
 		$memberRelationType = $this->RefereeRelationType->findBySid('member');
 		$memberRelationTypeID = $memberRelationType['RefereeRelationType']['id'];
-		$this->set('ektest', $memberRelationTypeID);
 
 		$this->loadModel('Club');
 		$this->Club->recursive = -1;
