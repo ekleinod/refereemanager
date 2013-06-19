@@ -61,11 +61,12 @@ class RefereesController extends AppController {
 		$memberRelationType = $this->RefereeRelationType->findBySid('member');
 		$memberRelationTypeID = $memberRelationType['RefereeRelationType']['id'];
 
-		// add club, picture
+		// add club, picture, contacts
 		$this->loadModel('Club');
 		$this->Club->recursive = -1;
 		$this->loadModel('Picture');
 		$this->Picture->recursive = -1;
+		$this->loadModel('Contact');
 
 		foreach ($referees as &$referee) {
 
@@ -83,6 +84,12 @@ class RefereesController extends AppController {
 			$picture = $this->Picture->findByPersonId($referee['Person']['id']);
 			if ($picture) {
 				$referee['Picture'] = $picture['Picture'];
+			}
+
+			// contacts
+			$contacts = $this->Contact->findAllByPersonId($referee['Person']['id']);
+			if ($contacts) {
+				$referee['Contact'] = $contacts;
 			}
 		}
 

@@ -129,7 +129,12 @@
 						?></td>
 
 						<?php if ($isReferee) { ?>
-							<td><?php echo __('E-Mail'); ?></td>
+							<td data-title="<?php echo __('E-Mail'); ?>"><?php
+								$hasMore = false;
+								if ($hasMore) {
+									echo '<br />';
+								}
+							?></td>
 							<td><?php echo __('Telefon'); ?></td>
 						<?php } ?>
 
