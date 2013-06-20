@@ -55,6 +55,44 @@ class RefereesController extends AppController {
 		$referees = $this->Referee->find('all');
 		usort($referees, array('RefereesController', 'compareTo'));
 
+		// member club
+		$this->loadModel('RefereeRelationType');
+		$this->RefereeRelationType->recursive = -1;
+		$memberRelationType = $this->RefereeRelationType->findBySid('member');
+		$memberRelationTypeID = $memberRelationType['RefereeRelationType']['id'];
+
+		// add club, picture, contacts
+		$this->loadModel('Club');
+		$this->Club->recursive = -1;
+		$this->loadModel('Picture');
+		$this->Picture->recursive = -1;
+		$this->loadModel('Contact');
+
+		foreach ($referees as &$referee) {
+
+			// club
+			foreach ($referee['RefereeRelation'] as $refereeRelation) {
+				if ($refereeRelation['referee_relation_type_id'] == $memberRelationTypeID) {
+					if ($refereeRelation['club_id'] > 0) {
+						$memberClub = $this->Club->findById($refereeRelation['club_id']);
+						$referee['Club'] = $memberClub['Club'];
+					}
+				}
+			}
+
+			// picture
+			$picture = $this->Picture->findByPersonId($referee['Person']['id']);
+			if ($picture) {
+				$referee['Picture'] = $picture['Picture'];
+			}
+
+			// contacts
+			$contacts = $this->Contact->findAllByPersonId($referee['Person']['id']);
+			if ($contacts) {
+				$referee['Contact'] = $contacts;
+			}
+		}
+
 		return $referees;
 	}
 

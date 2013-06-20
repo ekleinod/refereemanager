@@ -2,26 +2,57 @@
 
 	if ($type == 'excel') {
 
+		// compute different styles
+		foreach ($statustypes as &$statustypeedit) {
+			$statustypeedit['outputstyle'] = array();
+			if ($statustypeedit['style'] || $statustypeedit['color'] || $statustypeedit['bgcolor']) {
+
+				switch ($statustypeedit['style']) {
+					case 'normal':
+					case 'italic':
+					case 'oblique':
+						$statustypeedit['outputstyle']['font-style'] = $statustypeedit['style'];
+						break;
+					case 'normal':
+					case 'bold':
+					case 'bolder':
+					case 'lighter':
+						$statustypeedit['outputstyle']['font-weight'] = $statustypeedit['style'];
+						break;
+				}
+
+				if ($statustypeedit['color']) {
+					$statustypeedit['outputstyle']['color'] = $statustypeedit['color'];
+				}
+
+				if ($statustypeedit['bgcolor']) {
+					$statustypeedit['outputstyle']['bg-color'] = $statustypeedit['bgcolor'];
+				}
+
+			}
+		}
+
 		// start table
 		$this->PhpExcel->createWorksheet();
-		$this->PhpExcel->setDefaultFont('Calibri', 11);
+		$this->PhpExcel->setDefaultFont('DejaVu Sans', 11);
 
 		// header
 		$header = array();
-		$header[] = array('label' => __('Vorname'), 'width' => 'auto');
-		$header[] = array('label' => __('Name'), 'width' => 'auto');
-		$header[] = array('label' => __('Club'), 'width' => 'auto', 'filter' => true);
+			$header[] = array('text' => __('Vorname'), 'width' => '15');
+			$header[] = array('text' => __('Name'));
+			$header[] = array('text' => __('Club'));
 
-		if ($isReferee) {
-			$header[] = array('label' => __('E-Mail'), 'width' => 'auto');
-			$header[] = array('label' => __('Telefon'), 'width' => 'auto');
-		}
+			if ($isReferee) {
+				$header[] = array('text' => __('E-Mail'));
+				$header[] = array('text' => __('Telefon'));
+			}
 
-		if ($isEditor) {
-			$header[] = array('label' => __('Adresse'), 'width' => 'auto', 'wrap' => true);
-		}
+			if ($isEditor) {
+				$header[] = array('text' => __('Adresse'));
+			}
 
-		$this->PhpExcel->addTableHeader($header, array('bold' => true, 'size' => 10));
+		$header[] = array('text' => __('Anmerkung'));
+		$this->PhpExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), 0, true);
 
 		// datarows
 		foreach ($referees as $referee) {
@@ -29,31 +60,30 @@
 			$refformat = array();
 
 			$datarow = array();
-			$datarow[] = array('label' => $referee['Person']['first_name']);
-			$datarow[] = array('label' => $referee['Person']['name']);
-			$datarow[] = array('label' => (empty($referee['Club'])) ? '' : $referee['Club']['name']);
+			$datarow[] = array('text' => $referee['Person']['first_name']);
+			$datarow[] = array('text' => $referee['Person']['name']);
+			$datarow[] = array('text' => (empty($referee['Club'])) ? '' : $referee['Club']['name']);
 
 			if ($isReferee) {
-				$datarow[] = array('label' => __('E-Mail'));
-				$datarow[] = array('label' => __('Telefon'));
+				$datarow[] = array('text' => __('E-Mail'));
+				$datarow[] = array('text' => __('Telefon'));
 			}
 
 			if ($isEditor) {
-				$datarow[] = array('label' => __('Adresse'));
+				$datarow[] = array('text' => __('Adresse'));
 			}
 
-			$this->PhpExcel->addTableRow($datarow);
+			$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : $referee['Person']['remark']);
+
+			$this->PhpExcel->addTableRow($datarow, $statustypes[$referee['StatusType']['id']]['outputstyle']);
 		}
 
 		// legend
 		$this->PhpExcel->addTableRow(array());
-		$this->PhpExcel->addTableRow(array('label' => array(__('Legende:'))));
+		$this->PhpExcel->addTableRow(array('text' => array(__('Legende:'))));
 		foreach ($statustypes as $statustype) {
-			$this->PhpExcel->addTableRow(array(array('label' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])));
+			$this->PhpExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), $statustype['outputstyle']);
 		}
-
-		// footer
-		$this->PhpExcel->addTableFooter();
 
 		// output
 		$this->PhpExcel->output('VSR.xlsx');

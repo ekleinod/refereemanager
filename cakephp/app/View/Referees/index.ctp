@@ -16,11 +16,12 @@
 	<p><?php echo __('Legende:'); ?></p>
 	<ul class="legend">
 		<?php
+			// compute different styles
 			foreach ($statustypes as &$statustype) {
 
 				$style = '';
 
-				if ($statustype['style'] || $statustype['color']) {
+				if ($statustype['style'] || $statustype['color'] || $statustype['bgcolor']) {
 
 					switch ($statustype['style']) {
 						case 'normal':
@@ -37,17 +38,24 @@
 					}
 
 					if ($statustype['color']) {
-						 $style .= sprintf('color: #%s; ', $statustype['color']);
+						$style .= sprintf('color: #%s; ', $statustype['color']);
+					}
+
+					if ($statustype['bgcolor']) {
+						$style .= sprintf('background-color: #%s; ', $statustype['bgcolor']);
 					}
 
 				}
-				$statustype['htmlstyle'] = $style;
+				$statustype['outputstyle'] = $style;
 		?>
-			<li style="<?php echo $statustype['htmlstyle']; ?>"><?php echo ($statustype['remark']) ? $statustype['remark'] : $statustype['title']; ?></li>
+			<li style="<?php echo $statustype['outputstyle']; ?>"><?php echo ($statustype['remark']) ? $statustype['remark'] : $statustype['title']; ?></li>
 		<?php
 			}
 		?>
 	</ul>
+
+	<p><?php echo $this->Html->link('Export to Excel', array('controller' => 'referees', 'action' => 'export', 'excel')); ?></p>
+
 	<table>
 		<thead>
 			<tr>
@@ -68,8 +76,8 @@
 					<th><?php echo __('Ausbildung'); ?></th>
 					<th><?php echo __('Letzte Fortbildung'); ?></th>
 					<th><?php echo __('Status'); ?></th>
-					<th><?php echo __('Anmerkung'); ?></th>
 				<?php } ?>
+				<th><?php echo __('Anmerkung'); ?></th>
 				<th><?php echo __('Aktionen'); ?></th>
 			</tr>
 		</thead>
@@ -92,8 +100,8 @@
 					<th><?php echo __('Ausbildung'); ?></th>
 					<th><?php echo __('Letzte Fortbildung'); ?></th>
 					<th><?php echo __('Status'); ?></th>
-					<th><?php echo __('Anmerkung'); ?></th>
 				<?php } ?>
+				<th><?php echo __('Anmerkung'); ?></th>
 				<th><?php echo __('Aktionen'); ?></th>
 			</tr>
 		</tfoot>
@@ -103,21 +111,30 @@
 			?>
 					<tr>
 						<?php if ($isReferee) { ?>
-							<td><?php echo $this->Html->image('http://placekitten.com/50/50', array('alt' => __('Bild von %s', $referee['Person']['title_person']), 'title' => $referee['Person']['title_person'])); ?></td>
+							<td data-title="<?php echo __('Bild'); ?>"><?php
+								if (!empty($referee['Picture'])) {
+									echo $this->Html->image($referee['Picture']['url'], array('width' => '50', 'alt' => __('Bild von %s %s', $referee['Person']['first_name'], $referee['Person']['name']), 'title' => __('%s %s', $referee['Person']['first_name'], $referee['Person']['name'])));
+								}
+							?></td>
 						<?php } ?>
 
-						<td data-title="<?php echo __('Vorname'); ?>"><?php echo $this->Html->link($referee['Person']['first_name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['htmlstyle'])); ?></td>
+						<td data-title="<?php echo __('Vorname'); ?>"><?php echo $this->Html->link($referee['Person']['first_name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle'])); ?></td>
 
-						<td data-title="<?php echo __('Name'); ?>"><?php echo $this->Html->link($referee['Person']['name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['htmlstyle']));  ?></td>
+						<td data-title="<?php echo __('Name'); ?>"><?php echo $this->Html->link($referee['Person']['name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));  ?></td>
 
 						<td data-title="<?php echo __('Club'); ?>"><?php
 							if (!empty($referee['Club'])) {
-								echo $this->Html->link($referee['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $referee['Club']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['htmlstyle']));
+								echo $this->Html->link($referee['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $referee['Club']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));
 							}
 						?></td>
 
 						<?php if ($isReferee) { ?>
-							<td><?php echo __('E-Mail'); ?></td>
+							<td data-title="<?php echo __('E-Mail'); ?>"><?php
+								$hasMore = false;
+								if ($hasMore) {
+									echo '<br />';
+								}
+							?></td>
 							<td><?php echo __('Telefon'); ?></td>
 						<?php } ?>
 
@@ -128,13 +145,13 @@
 							<td><?php echo __('Ausbildung'); ?></td>
 							<td><?php echo __('Letzte Fortbildung'); ?></td>
 							<td><?php echo __('Status'); ?></td>
-
-							<td data-title="<?php echo __('Anmerkung'); ?>"><?php
-								if (!empty($referee['Referee']['description'])) {
-									echo h($referee['Referee']['description']);
-								}
-							?></td>
 						<?php } ?>
+
+						<td data-title="<?php echo __('Anmerkung'); ?>"><?php
+							if (!empty($referee['Person']['remark'])) {
+								echo h($referee['Person']['remark']);
+							}
+						?></td>
 
 						<td class="actions" data-title="<?php echo __('Aktionen'); ?>">
 							<?php echo $this->element('actions_table', array('id' => $referee['Referee']['id']));	?>
@@ -146,8 +163,6 @@
 <?php
 	}
 ?>
-
-<p><?php echo $this->Html->link('Export to Excel', array('controller' => 'referees', 'action' => 'export', 'excel')); ?></p>
 
 <?php pr($referees); ?>
 
