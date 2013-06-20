@@ -12,11 +12,11 @@ COMMIT;
 -- Daten für die Tabelle `rfrmgr_contact_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `remark`) VALUES (1, 'privat', 'Privater Kontakt.');
-INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `remark`) VALUES (2, 'geschäftlich', 'Geschäftskontakt.');
-INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `remark`) VALUES (3, 'Halle', 'Spielortkontakt.');
-INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `remark`) VALUES (4, 'Geschäftsstelle', 'Geschäftsstelle.');
-INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `remark`) VALUES (5, 'andere', 'Anderer Kontakt.');
+INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `short`, `remark`) VALUES (1, 'privat', 'p', 'Privater Kontakt.');
+INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `short`, `remark`) VALUES (2, 'geschäftlich', 'd', 'Geschäftskontakt.');
+INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `short`, `remark`) VALUES (3, 'Halle', 'SO', 'Spielortkontakt.');
+INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `short`, `remark`) VALUES (4, 'Geschäftsstelle', 'GS', 'Geschäftsstelle.');
+INSERT INTO `rfrmgr_contact_types` (`id`, `title`, `short`, `remark`) VALUES (5, 'andere', 'and.', 'Anderer Kontakt.');
 
 COMMIT;
 

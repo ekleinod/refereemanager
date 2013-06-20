@@ -130,9 +130,18 @@
 
 						<?php if ($isReferee) { ?>
 							<td data-title="<?php echo __('E-Mail'); ?>"><?php
-								$hasMore = false;
-								if ($hasMore) {
-									echo '<br />';
+								if (array_key_exists('Contact', $referee) && array_key_exists('Email', $referee['Contact'])) {
+									$hasMore = false;
+									foreach ($referee['Contact']['Email'] as $contacttype => $emailkind) {
+										foreach ($emailkind as $email) {
+											if ($hasMore) {
+												echo '<br />';
+											}
+											echo __('%s: ', $contacttypes[$contacttype]['short']);
+											echo $this->Html->link($email['email'], __('mailto:%s', $email['email']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));
+											$hasMore = true;
+										}
+									}
 								}
 							?></td>
 							<td><?php echo __('Telefon'); ?></td>

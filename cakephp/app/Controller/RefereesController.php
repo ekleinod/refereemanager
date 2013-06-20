@@ -22,6 +22,7 @@ class RefereesController extends AppController {
 		// pass information to view
 		$this->set('referees', $referees);
 		$this->set('statustypes', $this->getStatusTypes($referees));
+		$this->set('contacttypes', $this->getContactTypes());
 
 		// set title
 		$this->set('title_for_layout', __('Übersicht der Schiedsrichter'));
@@ -39,6 +40,7 @@ class RefereesController extends AppController {
 		// pass information to view
 		$this->set('referees', $referees);
 		$this->set('statustypes', $this->getStatusTypes($referees));
+		$this->set('contacttypes', $this->getContactTypes());
 		$this->set('type', $type);
 
 		// set title
@@ -88,8 +90,13 @@ class RefereesController extends AppController {
 
 			// contacts
 			$contacts = $this->Contact->findAllByPersonId($referee['Person']['id']);
-			if ($contacts) {
-				$referee['Contact'] = $contacts;
+			$contactkinds = array('Address', 'Email', 'Url', 'PhoneNumber');
+			foreach ($contacts as $contact) {
+				foreach ($contactkinds as $contactkind) {
+					if ($contact[$contactkind]) {
+						$referee['Contact'][$contactkind][$contact['ContactType']['id']][] = $contact[$contactkind][0];
+					}
+				}
 			}
 		}
 
@@ -97,7 +104,7 @@ class RefereesController extends AppController {
 	}
 
 	/**
-	 * Returns the stytus types used by the referees.
+	 * Returns the status types used by the referees.
 	 *
 	 * @return array of status types
 	 */
@@ -113,6 +120,21 @@ class RefereesController extends AppController {
 		ksort($statustypes);
 
 		return $statustypes;
+	}
+
+	/**
+	 * Returns the contact types.
+	 *
+	 * @return array of contact types
+	 */
+	private function getContactTypes() {
+		$this->loadModel('ContactType');
+		$this->ContactType->recursive = -1;
+		$contacttypes = array();
+		foreach ($this->ContactType->find('all') as $contacttype) {
+			$contacttypes[$contacttype['ContactType']['id']] = $contacttype['ContactType'];
+		}
+		return $contacttypes;
 	}
 
 	/**
