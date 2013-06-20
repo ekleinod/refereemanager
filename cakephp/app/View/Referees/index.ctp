@@ -138,7 +138,7 @@
 											if ($hasMore) {
 												echo '<br />';
 											}
-											if ($printType || ($contacttype != 1)) {
+											if ($printType || ($contacttype != $defaultcontacttypeid)) {
 												echo __('%s: ', $contacttypes[$contacttype]['short']);
 											}
 											echo $this->Html->link($email['email'], __('mailto:%s', $email['email']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));

@@ -75,7 +75,7 @@
 							if ($hasMore) {
 								$text .= ', ';
 							}
-							if ($printType || ($contacttype != 1)) {
+							if ($printType || ($contacttype != $defaultcontacttypeid)) {
 								$text .=  __('%s: ', $contacttypes[$contacttype]['short']);
 							}
 							$text .= $email['email'];
