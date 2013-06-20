@@ -200,6 +200,7 @@ DROP TABLE IF EXISTS `rfrmgr_contact_types` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_contact_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `title` VARCHAR(100) NOT NULL ,
+  `short` VARCHAR(10) NOT NULL ,
   `remark` TEXT NULL ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   UNIQUE INDEX `sid_UNIQUE` (`title` ASC) ,
