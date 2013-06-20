@@ -65,7 +65,27 @@
 			$datarow[] = array('text' => (empty($referee['Club'])) ? '' : $referee['Club']['name']);
 
 			if ($isReferee) {
-				$datarow[] = array('text' => __('E-Mail'));
+				// email
+				$text = '';
+				if (array_key_exists('Contact', $referee) && array_key_exists('Email', $referee['Contact'])) {
+					$hasMore = false;
+					$printType = (count($referee['Contact']['Email']) > 1);
+					foreach ($referee['Contact']['Email'] as $contacttype => $emailkind) {
+						foreach ($emailkind as $email) {
+							if ($hasMore) {
+								$text .= ', ';
+							}
+							if ($printType || ($contacttype != 1)) {
+								$text .=  __('%s: ', $contacttypes[$contacttype]['short']);
+							}
+							$text .= $email['email'];
+							$hasMore = true;
+						}
+					}
+				}
+				$datarow[] = array('text' => $text);
+
+				// phone
 				$datarow[] = array('text' => __('Telefon'));
 			}
 

@@ -132,12 +132,15 @@
 							<td data-title="<?php echo __('E-Mail'); ?>"><?php
 								if (array_key_exists('Contact', $referee) && array_key_exists('Email', $referee['Contact'])) {
 									$hasMore = false;
+									$printType = (count($referee['Contact']['Email']) > 1);
 									foreach ($referee['Contact']['Email'] as $contacttype => $emailkind) {
 										foreach ($emailkind as $email) {
 											if ($hasMore) {
 												echo '<br />';
 											}
-											echo __('%s: ', $contacttypes[$contacttype]['short']);
+											if ($printType || ($contacttype != 1)) {
+												echo __('%s: ', $contacttypes[$contacttype]['short']);
+											}
 											echo $this->Html->link($email['email'], __('mailto:%s', $email['email']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));
 											$hasMore = true;
 										}
