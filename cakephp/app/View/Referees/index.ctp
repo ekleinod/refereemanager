@@ -57,54 +57,38 @@
 	<p><?php echo $this->Html->link('Export to Excel', array('controller' => 'referees', 'action' => 'export', 'excel')); ?></p>
 
 	<table>
-		<thead>
-			<tr>
-				<?php if ($isReferee) { ?>
-					<th><?php echo __('Bild'); ?></th>
-				<?php } ?>
-				<th><?php echo __('Vorname'); ?></th>
-				<th><?php echo __('Name'); ?></th>
-				<th><?php echo __('Club'); ?></th>
-				<?php if ($isReferee) { ?>
-					<th><?php echo __('E-Mail'); ?></th>
-					<th><?php echo __('Telefon'); ?></th>
-				<?php } ?>
-				<?php if ($isEditor) { ?>
-					<th><?php echo __('Adresse'); ?></th>
-					<th><?php echo __('Geschlecht'); ?></th>
-					<th><?php echo __('Geburtstag'); ?></th>
-					<th><?php echo __('Ausbildung'); ?></th>
-					<th><?php echo __('Letzte Fortbildung'); ?></th>
-					<th><?php echo __('Status'); ?></th>
-				<?php } ?>
-				<th><?php echo __('Anmerkung'); ?></th>
-				<th><?php echo __('Aktionen'); ?></th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<?php if ($isReferee) { ?>
-					<th><?php echo __('Bild'); ?></th>
-				<?php } ?>
-				<th><?php echo __('Vorname'); ?></th>
-				<th><?php echo __('Name'); ?></th>
-				<th><?php echo __('Club'); ?></th>
-				<?php if ($isReferee) { ?>
-					<th><?php echo __('E-Mail'); ?></th>
-					<th><?php echo __('Telefon'); ?></th>
-				<?php } ?>
-				<?php if ($isEditor) { ?>
-					<th><?php echo __('Adresse'); ?></th>
-					<th><?php echo __('Geschlecht'); ?></th>
-					<th><?php echo __('Geburtstag'); ?></th>
-					<th><?php echo __('Ausbildung'); ?></th>
-					<th><?php echo __('Letzte Fortbildung'); ?></th>
-					<th><?php echo __('Status'); ?></th>
-				<?php } ?>
-				<th><?php echo __('Anmerkung'); ?></th>
-				<th><?php echo __('Aktionen'); ?></th>
-			</tr>
-		</tfoot>
+		<?php
+			$columns = array();
+				if ($isReferee) {
+					$columns[] = __('Bild');
+				}
+				$columns[] = __('Vorname');
+				$columns[] = __('Name');
+				$columns[] = __('Club');
+				if ($isReferee) {
+					$columns[] = __('E-Mail');
+					$columns[] = __('Telefon');
+				}
+				if ($isEditor) {
+					$columns[] = __('Adresse');
+					$columns[] = __('Geschlecht');
+					$columns[] = __('Geburtstag');
+					$columns[] = __('Ausbildung (seit)');
+					$columns[] = __('Letzte Fortbildung');
+					$columns[] = __('Nächste Fortbildung');
+				}
+				$columns[] = __('Anmerkung');
+				$columns[] = __('Aktionen');
+			$table = array('thead', 'tfoot');
+
+			foreach ($table as $tabletag) {
+				echo sprintf('<%s><tr>', $tabletag);
+				foreach ($columns as $column) {
+					echo sprintf('<th>%s</th>', $column);
+				}
+				echo sprintf('</tr></%s>', $tabletag);
+			}
+		?>
 		<tbody>
 			<?php
 				foreach ($referees as $referee) {
@@ -178,9 +162,9 @@
 							<td><?php echo __('Adresse'); ?></td>
 							<td><?php echo __('Geschlecht'); ?></td>
 							<td><?php echo __('Geburtstag'); ?></td>
-							<td><?php echo __('Ausbildung'); ?></td>
+							<td><?php echo __('Ausbildung (seit)'); ?></td>
 							<td><?php echo __('Letzte Fortbildung'); ?></td>
-							<td><?php echo __('Status'); ?></td>
+							<td><?php echo __('Nächste Fortbildung'); ?></td>
 						<?php } ?>
 
 						<td data-title="<?php echo __('Anmerkung'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
