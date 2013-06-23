@@ -73,7 +73,7 @@
 					foreach ($referee['Contact']['Email'] as $contacttype => $emailkind) {
 						foreach ($emailkind as $email) {
 							if ($hasMore) {
-								$text .= ', ';
+								$text .= "\n";
 							}
 							if ($printType || ($contacttype != $defaultcontacttypeid)) {
 								$text .=  __('%s: ', $contacttypes[$contacttype]['short']);
