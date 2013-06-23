@@ -111,29 +111,30 @@
 			?>
 					<tr>
 						<?php if ($isReferee) { ?>
-							<td data-title="<?php echo __('Bild'); ?>"><?php
+							<td data-title="<?php echo __('Bild'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
 								if (!empty($referee['Picture'])) {
 									echo $this->Html->image($referee['Picture']['url'], array('width' => '50', 'alt' => __('Bild von %s %s', $referee['Person']['first_name'], $referee['Person']['name']), 'title' => __('%s %s', $referee['Person']['first_name'], $referee['Person']['name'])));
 								}
 							?></td>
 						<?php } ?>
 
-						<td data-title="<?php echo __('Vorname'); ?>"><?php echo $this->Html->link($referee['Person']['first_name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle'])); ?></td>
+						<td data-title="<?php echo __('Vorname'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php echo $this->Html->link($referee['Person']['first_name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle'])); ?></td>
 
-						<td data-title="<?php echo __('Name'); ?>"><?php echo $this->Html->link($referee['Person']['name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));  ?></td>
+						<td data-title="<?php echo __('Name'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php echo $this->Html->link($referee['Person']['name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));  ?></td>
 
-						<td data-title="<?php echo __('Club'); ?>"><?php
+						<td data-title="<?php echo __('Club'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
 							if (!empty($referee['Club'])) {
 								echo $this->Html->link($referee['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $referee['Club']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));
 							}
 						?></td>
 
 						<?php if ($isReferee) { ?>
-							<td data-title="<?php echo __('E-Mail'); ?>"><?php
+							<td data-title="<?php echo __('E-Mail'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
 								if (array_key_exists('Contact', $referee) && array_key_exists('Email', $referee['Contact'])) {
 									$hasMore = false;
 									$printType = (count($referee['Contact']['Email']) > 1);
 									foreach ($referee['Contact']['Email'] as $contacttype => $emailkind) {
+										$printType |= (count($emailkind) > 1);
 										foreach ($emailkind as $email) {
 											if ($hasMore) {
 												echo '<br />';
@@ -147,7 +148,30 @@
 									}
 								}
 							?></td>
-							<td><?php echo __('Telefon'); ?></td>
+							<td data-title="<?php echo __('Telefon'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+								if (array_key_exists('Contact', $referee) && array_key_exists('PhoneNumber', $referee['Contact'])) {
+									$hasMore = false;
+									$printType = (count($referee['Contact']['PhoneNumber']) > 1);
+									foreach ($referee['Contact']['PhoneNumber'] as $contacttype => $phonekind) {
+										$printType |= (count($phonekind) > 1);
+										foreach ($phonekind as $phone) {
+											if ($hasMore) {
+												echo '<br />';
+											}
+											if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
+												echo __('%s: ', $contacttypes[$contacttype]['short']);
+											}
+											if (($phone['country_code'] != '') && ($phone['country_code'] != Configure::read('RefMan.defaultcountrycode'))) {
+												echo __('+%s %s ', $phone['country_code'], ($phone['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $phone['area_code']);
+											} else {
+												echo __('0%s ', ($phone['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $phone['area_code']);
+											}
+											echo $phone['number'];
+											$hasMore = true;
+										}
+									}
+								}
+							?></td>
 						<?php } ?>
 
 						<?php if ($isEditor) { ?>
@@ -159,7 +183,7 @@
 							<td><?php echo __('Status'); ?></td>
 						<?php } ?>
 
-						<td data-title="<?php echo __('Anmerkung'); ?>"><?php
+						<td data-title="<?php echo __('Anmerkung'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
 							if (!empty($referee['Person']['remark'])) {
 								echo h($referee['Person']['remark']);
 							}

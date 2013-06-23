@@ -96,7 +96,9 @@ class AppController extends Controller {
 
 		// configuration: tbd.
 		Configure::write('RefMan',
-										 array('defaultcontacttypeid' => 1));
+										 array('defaultcontacttypeid' => 1,
+													 'defaultcountrycode' => '49',
+													 'defaultareacode' => '30'));
 
 	}
 

@@ -71,6 +71,7 @@
 					$hasMore = false;
 					$printType = (count($referee['Contact']['Email']) > 1);
 					foreach ($referee['Contact']['Email'] as $contacttype => $emailkind) {
+						$printType |= (count($emailkind) > 1);
 						foreach ($emailkind as $email) {
 							if ($hasMore) {
 								$text .= "\n";
@@ -86,7 +87,30 @@
 				$datarow[] = array('text' => $text);
 
 				// phone
-				$datarow[] = array('text' => __('Telefon'));
+				$text = '';
+				if (array_key_exists('Contact', $referee) && array_key_exists('PhoneNumber', $referee['Contact'])) {
+					$hasMore = false;
+					$printType = (count($referee['Contact']['PhoneNumber']) > 1);
+					foreach ($referee['Contact']['PhoneNumber'] as $contacttype => $phonekind) {
+						$printType |= (count($phonekind) > 1);
+						foreach ($phonekind as $phone) {
+							if ($hasMore) {
+								$text .= "\n";
+							}
+							if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
+								$text .= __('%s: ', $contacttypes[$contacttype]['short']);
+							}
+							if (($phone['country_code'] != '') && ($phone['country_code'] != Configure::read('RefMan.defaultcountrycode'))) {
+								$text .= __('+%s %s ', $phone['country_code'], ($phone['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $phone['area_code']);
+							} else {
+								$text .= __('0%s ', ($phone['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $phone['area_code']);
+							}
+							$text .= $phone['number'];
+							$hasMore = true;
+						}
+					}
+				}
+				$datarow[] = array('text' => $text);
 			}
 
 			if ($isEditor) {
