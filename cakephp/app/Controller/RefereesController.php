@@ -23,7 +23,6 @@ class RefereesController extends AppController {
 		$this->set('referees', $referees);
 		$this->set('statustypes', $this->getStatusTypes($referees));
 		$this->set('contacttypes', $this->getContactTypes());
-		$this->set('defaultcontacttypeid', $this->getDefaultContactTypeID());
 
 		// set title
 		$this->set('title_for_layout', __('Übersicht der Schiedsrichter'));
@@ -42,7 +41,6 @@ class RefereesController extends AppController {
 		$this->set('referees', $referees);
 		$this->set('statustypes', $this->getStatusTypes($referees));
 		$this->set('contacttypes', $this->getContactTypes());
-		$this->set('defaultcontacttypeid', $this->getDefaultContactTypeID());
 		$this->set('type', $type);
 
 		// set title
@@ -137,18 +135,6 @@ class RefereesController extends AppController {
 			$contacttypes[$contacttype['ContactType']['id']] = $contacttype['ContactType'];
 		}
 		return $contacttypes;
-	}
-
-	/**
-	 * Returns the default contact type id.
-	 *
-	 * @return default contact type id
-	 */
-	private function getDefaultContactTypeID() {
-		$this->loadModel('ContactType');
-		$this->ContactType->recursive = -1;
-		$contacttype = $this->ContactType->find('first', array('order' => array('id')));
-		return $contacttype['ContactType']['id'];
 	}
 
 	/**

@@ -94,6 +94,10 @@ class AppController extends Controller {
 		$this->set('isEditor', $this->isEditor($theUserRoleSID));
 		$this->set('isAdmin', $this->isAdmin($theUserRoleSID));
 
+		// configuration: tbd.
+		Configure::write('RefMan',
+										 array('defaultcontacttypeid' => 1));
+
 	}
 
 	/**

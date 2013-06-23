@@ -75,7 +75,7 @@
 							if ($hasMore) {
 								$text .= "\n";
 							}
-							if ($printType || ($contacttype != $defaultcontacttypeid)) {
+							if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
 								$text .=  __('%s: ', $contacttypes[$contacttype]['short']);
 							}
 							$text .= $email['email'];
