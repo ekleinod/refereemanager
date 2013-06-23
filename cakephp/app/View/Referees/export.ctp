@@ -114,7 +114,40 @@
 			}
 
 			if ($isEditor) {
-				$datarow[] = array('text' => __('Adresse'));
+				// address
+				$text = '';
+				if (array_key_exists('Contact', $referee) && array_key_exists('Address', $referee['Contact'])) {
+					$hasMore = false;
+					$printType = (count($referee['Contact']['Address']) > 1);
+					foreach ($referee['Contact']['Address'] as $contacttype => $addresskind) {
+						$printType |= (count($addresskind) > 1);
+						foreach ($addresskind as $address) {
+							if ($hasMore) {
+								$text .= '<br />';
+							}
+							if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
+								$text .= __('%s: ', $contacttypes[$contacttype]['short']);
+							}
+							if ($address['street'] != '') {
+								$text .= __('%s', $address['street']);
+							}
+							if (($text != '') && ($address['number'] != '')) {
+								$text .= __(' %s', $address['number']);
+							}
+							if (($text != '') && (($address['zip_code'] != '') || ($address['city'] != ''))) {
+								$text .= __(',');
+							}
+							if ($address['zip_code'] != '') {
+								$text .= __(' %s', $address['zip_code']);
+							}
+							if ($address['city'] != '') {
+								$text .= __(' %s', $address['city']);
+							}
+							$hasMore = true;
+						}
+					}
+				}
+				$datarow[] = array('text' => $text);
 			}
 
 			$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : $referee['Person']['remark']);

@@ -114,6 +114,7 @@
 
 						<?php if ($isReferee) { ?>
 							<td data-title="<?php echo __('E-Mail'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+								$text = '';
 								if (array_key_exists('Contact', $referee) && array_key_exists('Email', $referee['Contact'])) {
 									$hasMore = false;
 									$printType = (count($referee['Contact']['Email']) > 1);
@@ -121,18 +122,20 @@
 										$printType |= (count($emailkind) > 1);
 										foreach ($emailkind as $email) {
 											if ($hasMore) {
-												echo '<br />';
+												$text .= '<br />';
 											}
 											if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
-												echo __('%s: ', $contacttypes[$contacttype]['short']);
+												$text .= __('%s: ', $contacttypes[$contacttype]['short']);
 											}
-											echo $this->Html->link($email['email'], __('mailto:%s', $email['email']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));
+											$text .= $this->Html->link($email['email'], __('mailto:%s', $email['email']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));
 											$hasMore = true;
 										}
 									}
 								}
+								echo $text;
 							?></td>
 							<td data-title="<?php echo __('Telefon'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+								$text = '';
 								if (array_key_exists('Contact', $referee) && array_key_exists('PhoneNumber', $referee['Contact'])) {
 									$hasMore = false;
 									$printType = (count($referee['Contact']['PhoneNumber']) > 1);
@@ -140,26 +143,61 @@
 										$printType |= (count($phonekind) > 1);
 										foreach ($phonekind as $phone) {
 											if ($hasMore) {
-												echo '<br />';
+												$text .= '<br />';
 											}
 											if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
-												echo __('%s: ', $contacttypes[$contacttype]['short']);
+												$text .= __('%s: ', $contacttypes[$contacttype]['short']);
 											}
 											if (($phone['country_code'] != '') && ($phone['country_code'] != Configure::read('RefMan.defaultcountrycode'))) {
-												echo __('+%s %s ', $phone['country_code'], ($phone['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $phone['area_code']);
+												$text .= __('+%s %s ', $phone['country_code'], ($phone['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $phone['area_code']);
 											} else {
-												echo __('0%s ', ($phone['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $phone['area_code']);
+												$text .= __('0%s ', ($phone['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $phone['area_code']);
 											}
-											echo $phone['number'];
+											$text .= $phone['number'];
 											$hasMore = true;
 										}
 									}
 								}
+								echo $text;
 							?></td>
 						<?php } ?>
 
 						<?php if ($isEditor) { ?>
-							<td><?php echo __('Adresse'); ?></td>
+							<td data-title="<?php echo __('Adresse'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+								$text = '';
+								if (array_key_exists('Contact', $referee) && array_key_exists('Address', $referee['Contact'])) {
+									$hasMore = false;
+									$printType = (count($referee['Contact']['Address']) > 1);
+									foreach ($referee['Contact']['Address'] as $contacttype => $addresskind) {
+										$printType |= (count($addresskind) > 1);
+										foreach ($addresskind as $address) {
+											if ($hasMore) {
+												$text .= '<br />';
+											}
+											if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
+												$text .= __('%s: ', $contacttypes[$contacttype]['short']);
+											}
+											if ($address['street'] != '') {
+												$text .= __('%s', $address['street']);
+											}
+											if (($text != '') && ($address['number'] != '')) {
+												$text .= __(' %s', $address['number']);
+											}
+											if (($text != '') && (($address['zip_code'] != '') || ($address['city'] != ''))) {
+												$text .= __(',');
+											}
+											if ($address['zip_code'] != '') {
+												$text .= __(' %s', $address['zip_code']);
+											}
+											if ($address['city'] != '') {
+												$text .= __(' %s', $address['city']);
+											}
+											$hasMore = true;
+										}
+									}
+								}
+								echo $text;
+							?></td>
 							<td><?php echo __('Geschlecht'); ?></td>
 							<td><?php echo __('Geburtstag'); ?></td>
 							<td><?php echo __('Ausbildung (seit)'); ?></td>
