@@ -34,7 +34,7 @@
 
 		// start table
 		$this->PhpExcel->createWorksheet();
-		$this->PhpExcel->setDefaultFont('DejaVu Sans', 11);
+		$this->PhpExcel->setDefaultFont('DejaVu Sans', 11, PHPExcel_Style_Alignment::VERTICAL_TOP, PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
 		// header
 		$header = array();
