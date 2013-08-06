@@ -49,6 +49,7 @@
 
 			if ($isEditor) {
 				$header[] = array('text' => __('Adresse'));
+				$header[] = array('text' => __('Geschlecht'));
 			}
 
 		$header[] = array('text' => __('Anmerkung'));
@@ -123,7 +124,7 @@
 						$printType |= (count($addresskind) > 1);
 						foreach ($addresskind as $address) {
 							if ($hasMore) {
-								$text .= '<br />';
+								$text .= '\n';
 							}
 							if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
 								$text .= __('%s: ', $contacttypes[$contacttype]['short']);
@@ -148,6 +149,10 @@
 					}
 				}
 				$datarow[] = array('text' => $text);
+
+				// sex
+				$datarow[] = array('text' => $sextypes[$referee['Person']['sex_type_id']]['title']);
+
 			}
 
 			$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : $referee['Person']['remark']);

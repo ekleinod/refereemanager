@@ -134,6 +134,7 @@
 								}
 								echo $text;
 							?></td>
+
 							<td data-title="<?php echo __('Telefon'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
 								$text = '';
 								if (array_key_exists('Contact', $referee) && array_key_exists('PhoneNumber', $referee['Contact'])) {
@@ -198,7 +199,7 @@
 								}
 								echo $text;
 							?></td>
-							<td><?php echo __('Geschlecht'); ?></td>
+							<td data-title="<?php echo __('Geschlecht'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php echo $sextypes[$referee['Person']['sex_type_id']]['title']; ?></td>
 							<td><?php echo __('Geburtstag'); ?></td>
 							<td><?php echo __('Ausbildung (seit)'); ?></td>
 							<td><?php echo __('Letzte Fortbildung'); ?></td>

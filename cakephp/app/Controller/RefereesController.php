@@ -17,14 +17,8 @@ class RefereesController extends AppController {
 	 */
 	public function index() {
 
-		$referees = $this->getReferees();
+		$this->setAndGetStandard();
 
-		// pass information to view
-		$this->set('referees', $referees);
-		$this->set('statustypes', $this->getStatusTypes($referees));
-		$this->set('contacttypes', $this->getContactTypes());
-
-		// set title
 		$this->set('title_for_layout', __('Übersicht der Schiedsrichter'));
 	}
 
@@ -35,16 +29,24 @@ class RefereesController extends AppController {
 	 */
 	public function export($type = 'excel') {
 
-		$referees = $this->getReferees();
+		$this->setAndGetStandard();
 
-		// pass information to view
-		$this->set('referees', $referees);
-		$this->set('statustypes', $this->getStatusTypes($referees));
-		$this->set('contacttypes', $this->getContactTypes());
 		$this->set('type', $type);
 
-		// set title
 		$this->set('title_for_layout', __('Export der Schiedsrichter'));
+	}
+
+	/**
+	 * Set and get standard values.
+	 */
+	private function setAndGetStandard() {
+
+		$referees = $this->getReferees();
+
+		$this->set('referees', $referees);
+		$this->set('statustypes', $this->getStatusTypes($referees));
+		$this->set('sextypes', $this->getSexTypes());
+		$this->set('contacttypes', $this->getContactTypes());
 	}
 
 	/**
@@ -135,6 +137,21 @@ class RefereesController extends AppController {
 			$contacttypes[$contacttype['ContactType']['id']] = $contacttype['ContactType'];
 		}
 		return $contacttypes;
+	}
+
+	/**
+	 * Returns the sex types.
+	 *
+	 * @return array of sex types
+	 */
+	private function getSexTypes() {
+		$this->loadModel('SexType');
+		$this->SexType->recursive = -1;
+		$sextypes = array();
+		foreach ($this->SexType->find('all') as $sextype) {
+			$sextypes[$sextype['SexType']['id']] = $sextype['SexType'];
+		}
+		return $sextypes;
 	}
 
 	/**
