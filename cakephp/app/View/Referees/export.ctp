@@ -50,6 +50,7 @@
 			if ($isEditor) {
 				$header[] = array('text' => __('Adresse'));
 				$header[] = array('text' => __('Geschlecht'));
+				$header[] = array('text' => __('Geburtstag'));
 			}
 
 		$header[] = array('text' => __('Anmerkung'));
@@ -152,6 +153,11 @@
 
 				// sex
 				$datarow[] = array('text' => $sextypes[$referee['Person']['sex_type_id']]['title']);
+
+				// birthday
+				if (!empty($referee['Person']['birthday'])) {
+					$datarow[] = array('text' => $this->RefereeFormat->format($referee['Person']['birthday'], 'date'));
+				}
 
 			}
 

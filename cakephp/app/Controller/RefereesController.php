@@ -10,7 +10,7 @@ App::uses('AppController', 'Controller');
 class RefereesController extends AppController {
 
 	/** Needed helper classes. */
-	public $helpers = array('PHPExcel');
+	public $helpers = array('PHPExcel','RefereeFormat');
 
 	/**
 	 * index method

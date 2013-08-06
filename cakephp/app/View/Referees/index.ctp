@@ -199,8 +199,16 @@
 								}
 								echo $text;
 							?></td>
+
 							<td data-title="<?php echo __('Geschlecht'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php echo $sextypes[$referee['Person']['sex_type_id']]['title']; ?></td>
-							<td><?php echo __('Geburtstag'); ?></td>
+
+							<td data-title="<?php echo __('Geburtstag'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+								if (!empty($referee['Person']['birthday'])) {
+									echo $this->RefereeFormat->format($referee['Person']['birthday'], 'date');
+								}
+							?></td>
+
+
 							<td><?php echo __('Ausbildung (seit)'); ?></td>
 							<td><?php echo __('Letzte Fortbildung'); ?></td>
 							<td><?php echo __('Nächste Fortbildung'); ?></td>
