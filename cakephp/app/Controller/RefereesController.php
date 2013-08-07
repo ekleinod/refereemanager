@@ -165,6 +165,9 @@ class RefereesController extends AppController {
 			if (!array_key_exists($referee['StatusType']['id'], $statustypes)) {
 				$statustypes[$referee['StatusType']['id']] = $referee['StatusType'];
 			}
+			if ($statustypes[$referee['StatusType']['id']]['is_special']) {
+				$statustypes[$referee['StatusType']['id']]['referees'][] = $referee['Person'];
+			}
 		}
 
 		ksort($statustypes);

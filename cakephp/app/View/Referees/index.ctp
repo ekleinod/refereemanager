@@ -47,9 +47,12 @@
 
 				}
 				$statustype['outputstyle'] = $style;
+
+				if ($statustype['is_special']) {
 		?>
-			<li style="<?php echo $statustype['outputstyle']; ?>"><?php echo ($statustype['remark']) ? $statustype['remark'] : $statustype['title']; ?></li>
+			<li style="<?php echo $statustype['outputstyle']; ?>"><?php echo ($statustype['remark']) ? h($statustype['remark']) : h($statustype['title']); ?></li>
 		<?php
+				}
 			}
 		?>
 	</ul>
@@ -255,9 +258,35 @@
 			<?php } ?>
 		</tbody>
 	</table>
+
+	<h3><?php echo __('Zusatzinformationen'); ?></h3>
+	<?php
+		foreach ($statustypes as $outstatustype) {
+			if ($outstatustype['is_special']) {
+	?>
+		<p><strong><?php echo ($outstatustype['remark']) ? h($outstatustype['remark']) : h($outstatustype['title']); ?></strong></p>
+		<p>
+			<?php
+				$hasMore = false;
+				$text = '';
+				foreach ($outstatustype['referees'] as $referee) {
+					if ($hasMore) {
+						$text .= ', ';
+					}
+					$text .= __('%s %s', $referee['first_name'], $referee['name']);
+					$hasMore = true;
+				}
+				echo $text;
+			?>
+		</p>
+	<?php
+			}
+		}
+	?>
+
 <?php
 	}
 ?>
 
-<?php pr($referees); ?>
+<!--?php pr($referees); ?-->
 

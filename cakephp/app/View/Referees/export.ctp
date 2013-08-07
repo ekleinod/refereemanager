@@ -199,9 +199,30 @@
 
 		// legend
 		$this->PhpExcel->addTableRow(array());
-		$this->PhpExcel->addTableRow(array('text' => array(__('Legende:'))));
+		$this->PhpExcel->addTableRow(array('text' => array(__('Legende:'))), array('font-weight' => 'bold', 'font-size' => 10));
 		foreach ($statustypes as $statustype) {
-			$this->PhpExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), $statustype['outputstyle']);
+			if ($statustype['is_special']) {
+				$this->PhpExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), $statustype['outputstyle']);
+			}
+		}
+
+		$this->PhpExcel->addTableRow(array());
+		$this->PhpExcel->addTableRow(array('text' => array(__('Zusatzinformationen'))), array('font-weight' => 'bold', 'font-size' => 10));
+		foreach ($statustypes as $statustype) {
+			if ($statustype['is_special']) {
+				$this->PhpExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), array('font-weight' => 'bold', 'font-size' => 10));
+
+				$hasMore = false;
+				$text = '';
+				foreach ($statustype['referees'] as $referee) {
+					if ($hasMore) {
+						$text .= ', ';
+					}
+					$text .= __('%s %s', $referee['first_name'], $referee['name']);
+					$hasMore = true;
+				}
+				$this->PhpExcel->addTableTexts($text);
+			}
 		}
 
 		// output
