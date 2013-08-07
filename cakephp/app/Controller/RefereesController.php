@@ -71,6 +71,8 @@ class RefereesController extends AppController {
 		$this->loadModel('Picture');
 		$this->Picture->recursive = -1;
 		$this->loadModel('Contact');
+		$this->loadModel('TrainingLevelType');
+		$this->TrainingLevelType->recursive = -1;
 
 		foreach ($referees as &$referee) {
 
@@ -97,6 +99,21 @@ class RefereesController extends AppController {
 				foreach ($contactkinds as $contactkind) {
 					if ($contact[$contactkind]) {
 						$referee['Contact'][$contactkind][$contact['ContactType']['id']][] = $contact[$contactkind][0];
+					}
+				}
+			}
+
+			// training level type
+			foreach ($referee['TrainingLevel'] as $trainingLevel) {
+				$trainingLevelType = $this->TrainingLevelType->findById($trainingLevel['training_level_type_id']);
+				$useLevel = empty($referee['TrainingLevelType']);
+				if (!$useLevel) {
+					$useLevel = $trainingLevelType['TrainingLevelType']['rank'] > $referee['TrainingLevelType']['rank'];
+				}
+				if ($useLevel) {
+					$referee['TrainingLevelType'] = $trainingLevelType['TrainingLevelType'];
+					if (!empty($trainingLevel['since'])) {
+						$referee['TrainingLevelType']['since'] = $trainingLevel['since'];
 					}
 				}
 			}
@@ -152,6 +169,21 @@ class RefereesController extends AppController {
 			$sextypes[$sextype['SexType']['id']] = $sextype['SexType'];
 		}
 		return $sextypes;
+	}
+
+	/**
+	 * Returns the training level types.
+	 *
+	 * @return array of training level types
+	 */
+	private function getTrainingLevelTypes() {
+		$this->loadModel('TrainingLevelType');
+		$this->TrainingLevelType->recursive = -1;
+		$trainingleveltypes = array();
+		foreach ($this->TrainingLevelType->find('all') as $trainingleveltype) {
+			$trainingleveltypes[$trainingleveltype['TrainingLevelType']['id']] = $trainingleveltype['TrainingLevelType'];
+		}
+		return $trainingleveltypes;
 	}
 
 	/**

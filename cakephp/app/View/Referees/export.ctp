@@ -51,6 +51,7 @@
 				$header[] = array('text' => __('Adresse'));
 				$header[] = array('text' => __('Geschlecht'));
 				$header[] = array('text' => __('Geburtstag'));
+				$header[] = array('text' => __('Ausbildung (seit)'));
 			}
 
 		$header[] = array('text' => __('Anmerkung'));
@@ -152,16 +153,31 @@
 				$datarow[] = array('text' => $text);
 
 				// sex
-				$datarow[] = array('text' => $sextypes[$referee['Person']['sex_type_id']]['title']);
+				$text = '';
+				$text .= __($sextypes[$referee['Person']['sex_type_id']]['title']);
+				$datarow[] = array('text' => $text);
 
 				// birthday
+				$text = '';
 				if (!empty($referee['Person']['birthday'])) {
-					$datarow[] = array('text' => $this->RefereeFormat->format($referee['Person']['birthday'], 'date'));
+					$text .= $this->RefereeFormat->format($referee['Person']['birthday'], 'date');
 				}
+				$datarow[] = array('text' => $text);
+
+				// training level
+				$text = '';
+				if (!empty($referee['TrainingLevelType'])) {
+					$text .= __($referee['TrainingLevelType']['abbreviation']);
+					if (!empty($referee['TrainingLevelType']['since'])) {
+						$text .= __(' (%s)', $this->RefereeFormat->format($referee['TrainingLevelType']['since'], 'date'));
+					}
+				}
+				$datarow[] = array('text' => $text);
+
 
 			}
 
-			$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : $referee['Person']['remark']);
+			$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
 
 			$this->PhpExcel->addTableRow($datarow, $statustypes[$referee['StatusType']['id']]['outputstyle']);
 		}

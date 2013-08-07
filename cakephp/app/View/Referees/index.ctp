@@ -200,16 +200,32 @@
 								echo $text;
 							?></td>
 
-							<td data-title="<?php echo __('Geschlecht'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php echo $sextypes[$referee['Person']['sex_type_id']]['title']; ?></td>
+							<td data-title="<?php echo __('Geschlecht'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+								$text = '';
+								$text .= __($sextypes[$referee['Person']['sex_type_id']]['title']);
+								echo $text;
+							?></td>
 
 							<td data-title="<?php echo __('Geburtstag'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+								$text = '';
 								if (!empty($referee['Person']['birthday'])) {
-									echo $this->RefereeFormat->format($referee['Person']['birthday'], 'date');
+									$text .= $this->RefereeFormat->format($referee['Person']['birthday'], 'date');
 								}
+								echo $text;
+							?></td>
+
+							<td data-title="<?php echo __('Ausbildung (seit)'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+								$text = '';
+								if (!empty($referee['TrainingLevelType'])) {
+									$text .= __($referee['TrainingLevelType']['abbreviation']);
+									if (!empty($referee['TrainingLevelType']['since'])) {
+										$text .= __(' (%s)', $this->RefereeFormat->format($referee['TrainingLevelType']['since'], 'date'));
+									}
+								}
+								echo $text;
 							?></td>
 
 
-							<td><?php echo __('Ausbildung (seit)'); ?></td>
 							<td><?php echo __('Letzte Fortbildung'); ?></td>
 							<td><?php echo __('Nächste Fortbildung'); ?></td>
 						<?php } ?>
