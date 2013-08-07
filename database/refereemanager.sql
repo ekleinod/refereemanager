@@ -69,6 +69,7 @@ DROP TABLE IF EXISTS `rfrmgr_people` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_people` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `sex_type_id` INT UNSIGNED NOT NULL ,
+  `title` VARCHAR(50) NULL ,
   `first_name` VARCHAR(100) NULL ,
   `name` VARCHAR(100) NOT NULL ,
   `birthday` DATE NULL ,
