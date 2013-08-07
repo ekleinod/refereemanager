@@ -44,7 +44,7 @@ class AppController extends Controller {
 	const ROLE_EDITOR = 'editor';
 
 	/** Role: admin. */
-	const ROLE_ADMIN = 'admin';
+	const ROLE_ADMIN = 'administrator';
 
 	/**
 	 * Extend components array by Auth component for simple authentication.
