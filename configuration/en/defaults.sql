@@ -39,10 +39,10 @@ COMMIT;
 -- Data for table `rfrmgr_training_level_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (1, 'association umpire', 'aump', NULL);
-INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (2, 'national umpire', 'nump', NULL);
-INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (3, 'national referee', 'nref', NULL);
-INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (4, 'international umpire', 'iu', NULL);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `rank`, `remark`) VALUES (1, 'association umpire', 'aump', 1, NULL);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `rank`, `remark`) VALUES (2, 'national umpire', 'nump', 2, NULL);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `rank`, `remark`) VALUES (3, 'national referee', 'nref', 3, NULL);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `rank`, `remark`) VALUES (4, 'international umpire', 'iu', 4, NULL);
 
 COMMIT;
 

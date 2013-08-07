@@ -39,10 +39,10 @@ COMMIT;
 -- Daten für die Tabelle `rfrmgr_training_level_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (1, 'Verbandsschiedsrichter', 'VSR', NULL);
-INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (2, 'Nationaler Schiedsrichter', 'NSR', NULL);
-INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (3, 'Nationaler Oberschiedsrichter ', 'NOSR', NULL);
-INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `remark`) VALUES (4, 'Internationaler Schiedsrichter', 'IU', NULL);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `rank`, `remark`) VALUES (1, 'Verbandsschiedsrichter', 'VSR', 1, NULL);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `rank`, `remark`) VALUES (2, 'Nationaler Schiedsrichter', 'NSR', 2, NULL);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `rank`, `remark`) VALUES (3, 'Nationaler Oberschiedsrichter ', 'NOSR', 3, NULL);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `title`, `abbreviation`, `rank`, `remark`) VALUES (4, 'Internationaler Schiedsrichter', 'IU', 4, NULL);
 
 COMMIT;
 
