@@ -17,13 +17,13 @@ class RefereeFormatHelper extends AppHelper {
 	public $helpers = array('Time');
 
 	/**
-	 * Format given data according to specified type.
+	 * Format given date/time according to specified type.
 	 *
-	 * @param string $data data to format
-	 * @param string $type data type
+	 * @param string $data date/time to format
+	 * @param string $type format type
 	 * @return string formatted string
 	 */
-	public function format($data, $type) {
+	public function formatDate($data, $type) {
 
 		$formatted = NULL;
 

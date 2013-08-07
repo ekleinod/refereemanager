@@ -212,7 +212,7 @@
 							<td data-title="<?php echo __('Geburtstag'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
 								$text = '';
 								if (!empty($referee['Person']['birthday'])) {
-									$text .= $this->RefereeFormat->format($referee['Person']['birthday'], 'date');
+									$text .= $this->RefereeFormat->formatDate($referee['Person']['birthday'], 'date');
 								}
 								echo $text;
 							?></td>
@@ -222,7 +222,7 @@
 								if (!empty($referee['TrainingLevelInfo'])) {
 									$text .= __($referee['TrainingLevelInfo']['abbreviation']);
 									if (!empty($referee['TrainingLevelInfo']['since'])) {
-										$text .= __(' (%s)', $this->RefereeFormat->format($referee['TrainingLevelInfo']['since'], 'date'));
+										$text .= __(' (%s)', $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['since'], 'date'));
 									}
 								}
 								echo $text;
@@ -231,7 +231,7 @@
 							<td data-title="<?php echo __('Letzte Fortbildung'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
 								$text = '';
 								if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['lastupdate'])) {
-									$text .= $this->RefereeFormat->format($referee['TrainingLevelInfo']['lastupdate'], 'date');
+									$text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['lastupdate'], 'date');
 								}
 								echo $text;
 							?></td>
@@ -239,7 +239,7 @@
 							<td data-title="<?php echo __('Nächste Fortbildung'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
 								$text = '';
 								if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['nextupdate'])) {
-									$text .= $this->RefereeFormat->format($referee['TrainingLevelInfo']['nextupdate'], 'year');
+									$text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['nextupdate'], 'year');
 								}
 								echo $text;
 							?></td>

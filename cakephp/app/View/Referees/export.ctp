@@ -162,7 +162,7 @@
 				// birthday
 				$text = '';
 				if (!empty($referee['Person']['birthday'])) {
-					$text .= $this->RefereeFormat->format($referee['Person']['birthday'], 'date');
+					$text .= $this->RefereeFormat->formatDate($referee['Person']['birthday'], 'date');
 				}
 				$datarow[] = array('text' => $text);
 
@@ -171,7 +171,7 @@
 				if (!empty($referee['TrainingLevelInfo'])) {
 					$text .= __($referee['TrainingLevelInfo']['abbreviation']);
 					if (!empty($referee['TrainingLevelInfo']['since'])) {
-						$text .= __(' (%s)', $this->RefereeFormat->format($referee['TrainingLevelInfo']['since'], 'date'));
+						$text .= __(' (%s)', $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['since'], 'date'));
 					}
 				}
 				$datarow[] = array('text' => $text);
@@ -179,14 +179,14 @@
 				// last update
 				$text = '';
 				if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['lastupdate'])) {
-					$text .= $this->RefereeFormat->format($referee['TrainingLevelInfo']['lastupdate'], 'date');
+					$text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['lastupdate'], 'date');
 				}
 				$datarow[] = array('text' => $text);
 
 				// next update
 				$text = '';
 				if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['nextupdate'])) {
-					$text .= $this->RefereeFormat->format($referee['TrainingLevelInfo']['nextupdate'], 'year');
+					$text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['nextupdate'], 'year');
 				}
 				$datarow[] = array('text' => $text);
 
