@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('RefManRefereeFormat', 'Utility');
 
 /**
  * Referees Controller
@@ -19,7 +20,7 @@ class RefereesController extends AppController {
 
 		$this->setAndGetStandard();
 
-		$this->set('title_for_layout', __('Übersicht der Schiedsrichter'));
+		$this->set('title_for_layout', __('Übersicht der Schiedsrichter_innen'));
 	}
 
 	/**
@@ -33,7 +34,26 @@ class RefereesController extends AppController {
 
 		$this->set('type', $type);
 
-		$this->set('title_for_layout', __('Export der Schiedsrichter'));
+		$this->set('title_for_layout', __('Export der Schiedsrichter_innen'));
+	}
+
+	/**
+	 * View method: show the referee with the given id.
+	 *
+	 * @param $id id of referee
+	 * @return void
+	 */
+	public function view($id = null) {
+
+		$this->Referee->id = $id;
+		if (!$this->Referee->exists()) {
+			throw new NotFoundException(__('Schiedsrichter_in mit der ID \'%s\' existiert nicht.', $id));
+		}
+		$referee = $this->Referee->read(null, $id);
+
+		// pass information to view
+		$this->set('referee', $referee);
+		$this->set('title_for_layout', __('Schiedsrichter_in \'%s\'',  RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
 	}
 
 	/**

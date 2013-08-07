@@ -129,6 +129,13 @@
 			</fileset>
 		</copy>
 
+		<!-- Lib -->
+		<copy todir="${path:target}app${file.separator}Lib${file.separator}Utility${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}Lib${file.separator}Utility${file.separator}">
+				<include name="*.php" />
+			</fileset>
+		</copy>
+
 		<!-- Model -->
 		<copy todir="${path:target}app${file.separator}Model${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}Model${file.separator}">

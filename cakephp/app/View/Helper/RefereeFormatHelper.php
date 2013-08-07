@@ -5,6 +5,7 @@
  */
 
 App::uses('AppHelper', 'View/Helper');
+App::uses('RefManRefereeFormat', 'Utility');
 
 /**
  * RefereeFormat Helper class for referee manager specific formatting.
@@ -13,218 +14,42 @@ App::uses('AppHelper', 'View/Helper');
  */
 class RefereeFormatHelper extends AppHelper {
 
-	/** Helpers that are used within this class. */
-	public $helpers = array('Time', 'Html');
+	/**
+	 * RefManRefereeFormat instance
+	 *
+	 * @var RefManRefereeFormat
+	 */
+	protected $_engine = null;
 
 	/**
-	 * Format given date/time according to specified type.
+	 * Default Constructor
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @return string formatted string
+	 * ### Settings:
+	 *
+	 * - `engine` Class name to use to replace CakeNumber functionality
+	 *            The class needs to be placed in the `Utility` directory.
+	 *
+	 * @param View $View The View this helper is being attached to.
+	 * @param array $settings Configuration settings for the helper
+	 * @throws CakeException When the engine class could not be found.
 	 */
-	public function formatDate($data, $type) {
-
-		if (($data === null) || empty($data)) {
-			return '';
+	public function __construct(View $View, $settings = array()) {
+		$settings = Hash::merge(array('engine' => 'RefManRefereeFormat'), $settings);
+		parent::__construct($View, $settings);
+		list($plugin, $engineClass) = pluginSplit($settings['engine'], true);
+		App::uses($engineClass, $plugin . 'Utility');
+		if (class_exists($engineClass)) {
+			$this->_engine = new $engineClass($settings);
+		} else {
+			throw new CakeException(__d('cake_dev', '%s could not be found', $engineClass));
 		}
-
-		switch ($type) {
-			case 'longdate':
-				$formatted = $this->Time->format('D d.m.Y', $data);
-				break;
-			case 'date':
-				$formatted = $this->Time->format('d.m.Y', $data);
-				break;
-			case 'datereverse':
-				$formatted = $this->Time->format('Y-m-d', $data);
-				break;
-			case 'datetime':
-				$formatted = $this->Time->format('d.m.Y, H:i', $data);
-				break;
-			case 'time':
-				$formatted = $this->Time->format('H:i', $data);
-				break;
-			case 'year':
-				$formatted = $this->Time->format('Y', $data);
-				break;
-			default:
-				$formatted = $data;
-				break;
-		}
-
-		return $formatted;
 	}
 
 	/**
-	 * Format given person according to specified type.
-	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @return string formatted string
+	 * Call methods from RefManRefereeFormat utility class
 	 */
-	public function formatPerson($data, $type) {
-
-		if (($data === null) || empty($data)) {
-			return '';
-		}
-
-		switch ($type) {
-			case 'birthday':
-				$formatted = (empty($data['birthday'])) ? '' : $this->formatDate($data['birthday'], 'date');
-				break;
-			case 'first_name':
-				$formatted = (empty($data['first_name'])) ? '' : $data['first_name'];
-				break;
-			case 'fullname':
-				$formatted = __('%s%s%s',
-												((empty($data['title'])) ? '' : __('%s ', $data['title'])),
-												((empty($data['first_name'])) ? '' : __('%s ', $data['first_name'])),
-												$data['name']);
-				break;
-			case 'name':
-				$formatted = $data['name'];
-				break;
-			case 'title':
-				$formatted = (empty($data['title'])) ? '' : $data['title'];
-				break;
-			default:
-				$formatted = $data;
-				break;
-		}
-
-		return $formatted;
-	}
-
-	/**
-	 * Format given email according to specified type.
-	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @return string formatted string
-	 */
-	public function formatEMail($data, $type) {
-
-		if (($data === null) || empty($data)) {
-			return '';
-		}
-
-		switch ($type) {
-			case 'link':
-				$formatted = $this->Html->link($data['email'], __('mailto:%s', $data['email']));
-				break;
-			case 'text':
-				$formatted = $data['email'];
-				break;
-			default:
-				$formatted = $data;
-				break;
-		}
-
-		return $formatted;
-	}
-
-	/**
-	 * Format given phone number according to specified type.
-	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @return string formatted string
-	 */
-	public function formatPhone($data, $type) {
-
-		if (($data === null) || empty($data)) {
-			return '';
-		}
-
-		switch ($type) {
-			case 'international':
-				$formatted = __('+%s %s ', ($data['country_code'] === '') ? Configure::read('RefMan.defaultcountrycode') : $data['country_code'], ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
-				$formatted .= $data['number'];
-				break;
-			case 'normal':
-				$formatted = '';
-				if (($data['country_code'] != '') && ($data['country_code'] != Configure::read('RefMan.defaultcountrycode'))) {
-					$formatted .= __('+%s %s ', $data['country_code'], ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
-				} else {
-					$formatted .= __('0%s ', ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
-				}
-				$formatted .= $data['number'];
-				break;
-			default:
-				$formatted = $data;
-				break;
-		}
-
-		return $formatted;
-	}
-
-	/**
-	 * Format given url according to specified type.
-	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @return string formatted string
-	 */
-	public function formatURL($data, $type) {
-
-		if (($data === null) || empty($data)) {
-			return '';
-		}
-
-		switch ($type) {
-			case 'link':
-				$formatted = $this->Html->link($data['url'], $data['url']);
-				break;
-			case 'text':
-				$formatted = $data['url'];
-				break;
-			default:
-				$formatted = $data;
-				break;
-		}
-
-		return $formatted;
-	}
-
-	/**
-	 * Format given address according to specified type.
-	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @return string formatted string
-	 */
-	public function formatAddress($data, $type) {
-
-		if (($data === null) || empty($data)) {
-			return '';
-		}
-
-		switch ($type) {
-			case 'fulladdress':
-				$formatted = '';
-				if ($data['street'] != '') {
-					$formatted .= __('%s', $data['street']);
-				}
-				if (($formatted != '') && ($data['number'] != '')) {
-					$formatted .= __(' %s', $data['number']);
-				}
-				if (($formatted != '') && (($data['zip_code'] != '') || ($data['city'] != ''))) {
-					$formatted .= __(',');
-				}
-				if ($data['zip_code'] != '') {
-					$formatted .= __(' %s', $data['zip_code']);
-				}
-				if ($data['city'] != '') {
-					$formatted .= __(' %s', $data['city']);
-				}
-				break;
-			default:
-				$formatted = $data;
-				break;
-		}
-
-		return $formatted;
+	public function __call($method, $params) {
+		return call_user_func_array(array($this->_engine, $method), $params);
 	}
 
 }
