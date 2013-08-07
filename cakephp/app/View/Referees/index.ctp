@@ -130,7 +130,7 @@
 											if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
 												$text .= __('%s: ', $contacttypes[$contacttype]['short']);
 											}
-											$text .= $this->Html->link($email['email'], __('mailto:%s', $email['email']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));
+											$text .= $this->RefereeFormat->formatEMail($email, 'link');
 											$hasMore = true;
 										}
 									}
@@ -288,5 +288,5 @@
 	}
 ?>
 
-<!--?php pr($referees); ?-->
+<?php pr($referees); ?>
 

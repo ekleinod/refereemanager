@@ -84,7 +84,7 @@
 							if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
 								$text .=  __('%s: ', $contacttypes[$contacttype]['short']);
 							}
-							$text .= $email['email'];
+							$text .= $this->RefereeFormat->formatEMail($email, 'text');
 							$hasMore = true;
 						}
 					}

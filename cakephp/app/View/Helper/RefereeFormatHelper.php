@@ -14,18 +14,16 @@ App::uses('AppHelper', 'View/Helper');
 class RefereeFormatHelper extends AppHelper {
 
 	/** Helpers that are used within this class. */
-	public $helpers = array('Time');
+	public $helpers = array('Time', 'Html');
 
 	/**
 	 * Format given date/time according to specified type.
 	 *
-	 * @param string $data date/time to format
+	 * @param string $data data to format
 	 * @param string $type format type
 	 * @return string formatted string
 	 */
 	public function formatDate($data, $type) {
-
-		$formatted = NULL;
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -61,13 +59,11 @@ class RefereeFormatHelper extends AppHelper {
 	/**
 	 * Format given person according to specified type.
 	 *
-	 * @param string $data person to format
+	 * @param string $data data to format
 	 * @param string $type format type
 	 * @return string formatted string
 	 */
 	public function formatPerson($data, $type) {
-
-		$formatted = NULL;
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -91,6 +87,34 @@ class RefereeFormatHelper extends AppHelper {
 				break;
 			case 'title':
 				$formatted = (empty($data['title'])) ? '' : $data['title'];
+				break;
+			default:
+				$formatted = $data;
+				break;
+		}
+
+		return $formatted;
+	}
+
+	/**
+	 * Format given email according to specified type.
+	 *
+	 * @param string $data data to format
+	 * @param string $type format type
+	 * @return string formatted string
+	 */
+	public function formatEMail($data, $type) {
+
+		if (($data === null) || empty($data)) {
+			return '';
+		}
+
+		switch ($type) {
+			case 'link':
+				$formatted = $this->Html->link($data['email'], __('mailto:%s', $data['email']));
+				break;
+			case 'text':
+				$formatted = $data['email'];
 				break;
 			default:
 				$formatted = $data;
