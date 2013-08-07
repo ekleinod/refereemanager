@@ -65,8 +65,8 @@
 			$refformat = array();
 
 			$datarow = array();
-			$datarow[] = array('text' => $referee['Person']['first_name']);
-			$datarow[] = array('text' => $referee['Person']['name']);
+			$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'));
+			$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'name'));
 			$datarow[] = array('text' => (empty($referee['Club'])) ? '' : $referee['Club']['name']);
 
 			if ($isReferee) {
@@ -162,7 +162,7 @@
 				// birthday
 				$text = '';
 				if (!empty($referee['Person']['birthday'])) {
-					$text .= $this->RefereeFormat->formatDate($referee['Person']['birthday'], 'date');
+					$text .= $this->RefereeFormat->formatPerson($referee['Person'], 'birthday');
 				}
 				$datarow[] = array('text' => $text);
 
@@ -218,7 +218,7 @@
 					if ($hasMore) {
 						$text .= ', ';
 					}
-					$text .= __('%s %s', $referee['first_name'], $referee['name']);
+					$text .= __($this->RefereeFormat->formatPerson($referee, 'fullname'));
 					$hasMore = true;
 				}
 				$this->PhpExcel->addTableTexts($text);

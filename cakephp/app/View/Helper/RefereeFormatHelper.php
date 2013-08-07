@@ -27,6 +27,10 @@ class RefereeFormatHelper extends AppHelper {
 
 		$formatted = NULL;
 
+		if (($data === null) || empty($data)) {
+			return '';
+		}
+
 		switch ($type) {
 			case 'longdate':
 				$formatted = $this->Time->format('D d.m.Y', $data);
@@ -45,6 +49,48 @@ class RefereeFormatHelper extends AppHelper {
 				break;
 			case 'year':
 				$formatted = $this->Time->format('Y', $data);
+				break;
+			default:
+				$formatted = $data;
+				break;
+		}
+
+		return $formatted;
+	}
+
+	/**
+	 * Format given person according to specified type.
+	 *
+	 * @param string $data person to format
+	 * @param string $type format type
+	 * @return string formatted string
+	 */
+	public function formatPerson($data, $type) {
+
+		$formatted = NULL;
+
+		if (($data === null) || empty($data)) {
+			return '';
+		}
+
+		switch ($type) {
+			case 'birthday':
+				$formatted = (empty($data['birthday'])) ? '' : $this->formatDate($data['birthday'], 'date');
+				break;
+			case 'first_name':
+				$formatted = (empty($data['first_name'])) ? '' : $data['first_name'];
+				break;
+			case 'fullname':
+				$formatted = __('%s%s%s',
+												((empty($data['title'])) ? '' : __('%s ', $data['title'])),
+												((empty($data['first_name'])) ? '' : __('%s ', $data['first_name'])),
+												$data['name']);
+				break;
+			case 'name':
+				$formatted = $data['name'];
+				break;
+			case 'title':
+				$formatted = (empty($data['title'])) ? '' : $data['title'];
 				break;
 			default:
 				$formatted = $data;

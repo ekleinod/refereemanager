@@ -105,9 +105,9 @@
 							?></td>
 						<?php } ?>
 
-						<td data-title="<?php echo __('Vorname'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php echo $this->Html->link($referee['Person']['first_name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle'])); ?></td>
+						<td data-title="<?php echo __('Vorname'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php echo $this->Html->link($this->RefereeFormat->formatPerson($referee['Person'], 'first_name'), array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle'])); ?></td>
 
-						<td data-title="<?php echo __('Name'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php echo $this->Html->link($referee['Person']['name'], array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));  ?></td>
+						<td data-title="<?php echo __('Name'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php echo $this->Html->link($this->RefereeFormat->formatPerson($referee['Person'], 'name'), array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));  ?></td>
 
 						<td data-title="<?php echo __('Club'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
 							if (!empty($referee['Club'])) {
@@ -212,7 +212,7 @@
 							<td data-title="<?php echo __('Geburtstag'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
 								$text = '';
 								if (!empty($referee['Person']['birthday'])) {
-									$text .= $this->RefereeFormat->formatDate($referee['Person']['birthday'], 'date');
+									$text .= $this->RefereeFormat->formatPerson($referee['Person'], 'birthday');
 								}
 								echo $text;
 							?></td>
@@ -273,7 +273,7 @@
 					if ($hasMore) {
 						$text .= ', ';
 					}
-					$text .= __('%s %s', $referee['first_name'], $referee['name']);
+					$text .= __($this->RefereeFormat->formatPerson($referee, 'fullname'));
 					$hasMore = true;
 				}
 				echo $text;
