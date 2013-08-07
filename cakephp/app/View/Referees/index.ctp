@@ -216,18 +216,30 @@
 
 							<td data-title="<?php echo __('Ausbildung (seit)'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
 								$text = '';
-								if (!empty($referee['TrainingLevelType'])) {
-									$text .= __($referee['TrainingLevelType']['abbreviation']);
-									if (!empty($referee['TrainingLevelType']['since'])) {
-										$text .= __(' (%s)', $this->RefereeFormat->format($referee['TrainingLevelType']['since'], 'date'));
+								if (!empty($referee['TrainingLevelInfo'])) {
+									$text .= __($referee['TrainingLevelInfo']['abbreviation']);
+									if (!empty($referee['TrainingLevelInfo']['since'])) {
+										$text .= __(' (%s)', $this->RefereeFormat->format($referee['TrainingLevelInfo']['since'], 'date'));
 									}
 								}
 								echo $text;
 							?></td>
 
+							<td data-title="<?php echo __('Letzte Fortbildung'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+								$text = '';
+								if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['lastupdate'])) {
+									$text .= $this->RefereeFormat->format($referee['TrainingLevelInfo']['lastupdate'], 'date');
+								}
+								echo $text;
+							?></td>
 
-							<td><?php echo __('Letzte Fortbildung'); ?></td>
-							<td><?php echo __('Nächste Fortbildung'); ?></td>
+							<td data-title="<?php echo __('Nächste Fortbildung'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+								$text = '';
+								if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['nextupdate'])) {
+									$text .= $this->RefereeFormat->format($referee['TrainingLevelInfo']['nextupdate'], 'year');
+								}
+								echo $text;
+							?></td>
 						<?php } ?>
 
 						<td data-title="<?php echo __('Anmerkung'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php

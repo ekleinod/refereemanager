@@ -52,6 +52,8 @@
 				$header[] = array('text' => __('Geschlecht'));
 				$header[] = array('text' => __('Geburtstag'));
 				$header[] = array('text' => __('Ausbildung (seit)'));
+				$header[] = array('text' => __('Letzte Fortbildung'));
+				$header[] = array('text' => __('Nächste Fortbildung'));
 			}
 
 		$header[] = array('text' => __('Anmerkung'));
@@ -166,14 +168,27 @@
 
 				// training level
 				$text = '';
-				if (!empty($referee['TrainingLevelType'])) {
-					$text .= __($referee['TrainingLevelType']['abbreviation']);
-					if (!empty($referee['TrainingLevelType']['since'])) {
-						$text .= __(' (%s)', $this->RefereeFormat->format($referee['TrainingLevelType']['since'], 'date'));
+				if (!empty($referee['TrainingLevelInfo'])) {
+					$text .= __($referee['TrainingLevelInfo']['abbreviation']);
+					if (!empty($referee['TrainingLevelInfo']['since'])) {
+						$text .= __(' (%s)', $this->RefereeFormat->format($referee['TrainingLevelInfo']['since'], 'date'));
 					}
 				}
 				$datarow[] = array('text' => $text);
 
+				// last update
+				$text = '';
+				if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['lastupdate'])) {
+					$text .= $this->RefereeFormat->format($referee['TrainingLevelInfo']['lastupdate'], 'date');
+				}
+				$datarow[] = array('text' => $text);
+
+				// next update
+				$text = '';
+				if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['nextupdate'])) {
+					$text .= $this->RefereeFormat->format($referee['TrainingLevelInfo']['nextupdate'], 'year');
+				}
+				$datarow[] = array('text' => $text);
 
 			}
 

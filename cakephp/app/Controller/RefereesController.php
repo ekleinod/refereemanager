@@ -60,10 +60,7 @@ class RefereesController extends AppController {
 		usort($referees, array('RefereesController', 'compareTo'));
 
 		// member club
-		$this->loadModel('RefereeRelationType');
-		$this->RefereeRelationType->recursive = -1;
-		$memberRelationType = $this->RefereeRelationType->findBySid('member');
-		$memberRelationTypeID = $memberRelationType['RefereeRelationType']['id'];
+		$memberRelationTypeID = $this->getMemberRelationTypeID();
 
 		// add club, picture, contacts
 		$this->loadModel('Club');
@@ -73,6 +70,8 @@ class RefereesController extends AppController {
 		$this->loadModel('Contact');
 		$this->loadModel('TrainingLevelType');
 		$this->TrainingLevelType->recursive = -1;
+		$this->loadModel('TrainingUpdate');
+		$this->TrainingUpdate->recursive = -1;
 
 		foreach ($referees as &$referee) {
 
@@ -106,20 +105,52 @@ class RefereesController extends AppController {
 			// training level type
 			foreach ($referee['TrainingLevel'] as $trainingLevel) {
 				$trainingLevelType = $this->TrainingLevelType->findById($trainingLevel['training_level_type_id']);
-				$useLevel = empty($referee['TrainingLevelType']);
+				$useLevel = empty($referee['TrainingLevelInfo']);
 				if (!$useLevel) {
-					$useLevel = $trainingLevelType['TrainingLevelType']['rank'] > $referee['TrainingLevelType']['rank'];
+					$useLevel = $trainingLevelType['TrainingLevelType']['rank'] > $referee['TrainingLevelInfo']['rank'];
 				}
 				if ($useLevel) {
-					$referee['TrainingLevelType'] = $trainingLevelType['TrainingLevelType'];
+					$referee['TrainingLevelInfo'] = $trainingLevelType['TrainingLevelType'];
+					$referee['TrainingLevelInfo']['training_level_id'] = $trainingLevel['id'];
 					if (!empty($trainingLevel['since'])) {
-						$referee['TrainingLevelType']['since'] = $trainingLevel['since'];
+						$referee['TrainingLevelInfo']['since'] = $trainingLevel['since'];
 					}
 				}
+			}
+
+			// last training update
+			$trainingupdate = $this->TrainingUpdate->findByTrainingLevelId($referee['TrainingLevelInfo']['training_level_id'], array(), array('TrainingUpdate.update' => 'desc'));
+			if (!empty($trainingupdate) && !empty($trainingupdate['TrainingUpdate'])) {
+				$referee['TrainingLevelInfo']['lastupdate'] = $trainingupdate['TrainingUpdate']['update'];
+			}
+			if (!empty($referee['TrainingLevelInfo']['since'])) {
+				if (empty($referee['TrainingLevelInfo']['lastupdate']) || (strtotime($referee['TrainingLevelInfo']['since']) > strtotime($referee['TrainingLevelInfo']['lastupdate']))) {
+					$referee['TrainingLevelInfo']['lastupdate'] = $referee['TrainingLevelInfo']['since'];
+				}
+			}
+
+
+			// next training update
+			if (!empty($referee['TrainingLevelInfo']['lastupdate'])) {
+				$referee['TrainingLevelInfo']['nextupdate'] = strtotime('+2 years', strtotime($referee['TrainingLevelInfo']['lastupdate']));
 			}
 		}
 
 		return $referees;
+	}
+
+	/**
+	 * Returns the member relation type id.
+	 *
+	 * @return member relation type id
+	 */
+	private function getMemberRelationTypeID() {
+		$this->loadModel('RefereeRelationType');
+		$this->RefereeRelationType->recursive = -1;
+
+		$memberRelationType = $this->RefereeRelationType->findBySid('member');
+
+		return $memberRelationType['RefereeRelationType']['id'];
 	}
 
 	/**

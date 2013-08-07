@@ -43,6 +43,9 @@ class RefereeFormatHelper extends AppHelper {
 			case 'time':
 				$formatted = $this->Time->format('H:i', $data);
 				break;
+			case 'year':
+				$formatted = $this->Time->format('Y', $data);
+				break;
 			default:
 				$formatted = $data;
 				break;
