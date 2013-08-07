@@ -187,6 +187,46 @@ class RefereeFormatHelper extends AppHelper {
 		return $formatted;
 	}
 
+	/**
+	 * Format given address according to specified type.
+	 *
+	 * @param string $data data to format
+	 * @param string $type format type
+	 * @return string formatted string
+	 */
+	public function formatAddress($data, $type) {
+
+		if (($data === null) || empty($data)) {
+			return '';
+		}
+
+		switch ($type) {
+			case 'fulladdress':
+				$formatted = '';
+				if ($data['street'] != '') {
+					$formatted .= __('%s', $data['street']);
+				}
+				if (($formatted != '') && ($data['number'] != '')) {
+					$formatted .= __(' %s', $data['number']);
+				}
+				if (($formatted != '') && (($data['zip_code'] != '') || ($data['city'] != ''))) {
+					$formatted .= __(',');
+				}
+				if ($data['zip_code'] != '') {
+					$formatted .= __(' %s', $data['zip_code']);
+				}
+				if ($data['city'] != '') {
+					$formatted .= __(' %s', $data['city']);
+				}
+				break;
+			default:
+				$formatted = $data;
+				break;
+		}
+
+		return $formatted;
+	}
+
 }
 
 /* EOF */

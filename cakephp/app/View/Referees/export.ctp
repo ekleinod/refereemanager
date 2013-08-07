@@ -128,21 +128,7 @@
 							if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
 								$text .= __('%s: ', $contacttypes[$contacttype]['short']);
 							}
-							if ($address['street'] != '') {
-								$text .= __('%s', $address['street']);
-							}
-							if (($text != '') && ($address['number'] != '')) {
-								$text .= __(' %s', $address['number']);
-							}
-							if (($text != '') && (($address['zip_code'] != '') || ($address['city'] != ''))) {
-								$text .= __(',');
-							}
-							if ($address['zip_code'] != '') {
-								$text .= __(' %s', $address['zip_code']);
-							}
-							if ($address['city'] != '') {
-								$text .= __(' %s', $address['city']);
-							}
+							$text .= $this->RefereeFormat->formatAddress($address, 'fulladdress');
 							$hasMore = true;
 						}
 					}
