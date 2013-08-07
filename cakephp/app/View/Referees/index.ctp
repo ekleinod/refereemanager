@@ -152,12 +152,7 @@
 											if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
 												$text .= __('%s: ', $contacttypes[$contacttype]['short']);
 											}
-											if (($phone['country_code'] != '') && ($phone['country_code'] != Configure::read('RefMan.defaultcountrycode'))) {
-												$text .= __('+%s %s ', $phone['country_code'], ($phone['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $phone['area_code']);
-											} else {
-												$text .= __('0%s ', ($phone['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $phone['area_code']);
-											}
-											$text .= $phone['number'];
+											$text .= $this->RefereeFormat->formatPhone($phone, 'normal');
 											$hasMore = true;
 										}
 									}

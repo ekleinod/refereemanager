@@ -124,6 +124,41 @@ class RefereeFormatHelper extends AppHelper {
 		return $formatted;
 	}
 
+	/**
+	 * Format given phone number according to specified type.
+	 *
+	 * @param string $data data to format
+	 * @param string $type format type
+	 * @return string formatted string
+	 */
+	public function formatPhone($data, $type) {
+
+		if (($data === null) || empty($data)) {
+			return '';
+		}
+
+		switch ($type) {
+			case 'international':
+				$formatted = __('+%s %s ', ($data['country_code'] === '') ? Configure::read('RefMan.defaultcountrycode') : $data['country_code'], ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
+				$formatted .= $data['number'];
+				break;
+			case 'normal':
+				$formatted = '';
+				if (($data['country_code'] != '') && ($data['country_code'] != Configure::read('RefMan.defaultcountrycode'))) {
+					$formatted .= __('+%s %s ', $data['country_code'], ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
+				} else {
+					$formatted .= __('0%s ', ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
+				}
+				$formatted .= $data['number'];
+				break;
+			default:
+				$formatted = $data;
+				break;
+		}
+
+		return $formatted;
+	}
+
 }
 
 /* EOF */
