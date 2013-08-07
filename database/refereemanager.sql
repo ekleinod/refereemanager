@@ -312,11 +312,13 @@ DROP TABLE IF EXISTS `rfrmgr_training_level_types` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_training_level_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `title` VARCHAR(100) NOT NULL ,
-  `abbreviation` VARCHAR(20) NULL ,
+  `abbreviation` VARCHAR(20) NOT NULL ,
+  `rank` INT UNSIGNED NOT NULL ,
   `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  UNIQUE INDEX `sid_UNIQUE` (`title` ASC) )
+  UNIQUE INDEX `sid_UNIQUE` (`title` ASC) ,
+  UNIQUE INDEX `rank_UNIQUE` (`rank` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
