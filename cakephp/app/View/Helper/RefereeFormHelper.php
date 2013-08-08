@@ -19,12 +19,12 @@ class RefereeFormHelper extends AppHelper {
 	/**
 	 * Returns text label and field.
 	 */
-	public function getInputText($action, $fieldid, $title, $value = '', $required = false, $placeholder = '', $maxlength = 100, $autofocus = false) {
+	public function getInputField($action, $type, $fieldid, $title, $value = '', $required = false, $placeholder = '', $maxlength = 100, $autofocus = false) {
 
 		$cssclass = 'input text';
 
 		$inputparams = array();
-		$inputparams['type'] = 'text';
+		$inputparams['type'] = $type;
 
 		$inputparams['title'] = $title;
 		$inputparams['label'] = $title;

@@ -4,9 +4,7 @@
 		<legend><?php echo __('Die Person'); ?></legend>
 		<ol>
 			<?php
-				// first name
-				echo $this->RefereeForm->getInputText($action, 'Person.first_name', __('Vorname'), $referee['Person']['first_name'], true, __('Vorname'), 100, true);
-
+				echo $this->RefereeForm->getInputField($action, 'text', 'Person.first_name', __('Vorname'), $referee['Person']['first_name'], true, __('Vorname'), 100, true);
 			?>
 		</ol>
 	</fieldset>
