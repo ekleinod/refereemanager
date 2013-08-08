@@ -13,6 +13,12 @@ class RefereesController extends AppController {
 	/** Needed helper classes. */
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
+	/** Sex types. */
+	private static $sextypes = null;
+
+	/** Sex type array. */
+	private static $sextypearray = null;
+
 	/**
 	 * index method
 	 */
@@ -56,6 +62,7 @@ class RefereesController extends AppController {
 		// pass information to view
 		$this->set('referee', $referee);
 		$this->set('sextypes', $sextypes);
+		$this->set('sextypearray', $this->getSexTypeArray());
 		$this->set('contacttypes', $this->getContactTypes());
 
 		$this->set('id', $id);
@@ -219,16 +226,37 @@ class RefereesController extends AppController {
 	/**
 	 * Returns the sex types.
 	 *
+	 * @todo: maybe this method (and the other methods using static variables)
+	 * can be static too, but at the moment I don't know how to load and use models static
+	 *
 	 * @return array of sex types
 	 */
 	private function getSexTypes() {
-		$this->loadModel('SexType');
-		$this->SexType->recursive = -1;
-		$sextypes = array();
-		foreach ($this->SexType->find('all') as $sextype) {
-			$sextypes[$sextype['SexType']['id']] = $sextype['SexType'];
+		if (empty(RefereesController::$sextypes)) {
+			$this->loadModel('SexType');
+			$this->SexType->recursive = -1;
+			RefereesController::$sextypes = array();
+			foreach ($this->SexType->find('all') as $sextype) {
+				RefereesController::$sextypes[$sextype['SexType']['id']] = $sextype['SexType'];
+			}
 		}
-		return $sextypes;
+		return RefereesController::$sextypes;
+	}
+
+	/**
+	 * Returns the sex type array for use in select fields.
+	 *
+	 * @return array of sex types
+	 */
+	private function getSexTypeArray() {
+		if (empty(RefereesController::$sextypearray)) {
+			$sextypes = $this->getSexTypes();
+			RefereesController::$sextypearray = array();
+			foreach ($sextypes as $sextype) {
+				RefereesController::$sextypearray[$sextype['id']] = $sextype['title'];
+			}
+		}
+		return RefereesController::$sextypearray;
 	}
 
 	/**

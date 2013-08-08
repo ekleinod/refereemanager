@@ -19,7 +19,7 @@ class RefereeFormHelper extends AppHelper {
 	/**
 	 * Returns text label and field.
 	 */
-	public function getInputField($action, $type, $fieldid, $title, $value = '', $required = false, $placeholder = '', $maxlength = 100, $autofocus = false) {
+	public function getInputField($action, $type, $fieldid, $title, $value = null, $required = false, $placeholder = null, $maxlength = 100, $autofocus = false, $values = null) {
 
 		$cssclass = 'input text';
 
@@ -50,6 +50,10 @@ class RefereeFormHelper extends AppHelper {
 
 		if ($action === 'view') {
 			$inputparams['readonly'] = 'readonly';
+		}
+
+		if (!empty($values)) {
+			$inputparams['options'] = $values;
 		}
 
 		$inputparams['div'] = false;
