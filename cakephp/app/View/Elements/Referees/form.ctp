@@ -5,18 +5,7 @@
 		<ol>
 			<?php
 				// first name
-				$label = $this->Form->label('Person.first_name', __('Vorname'));
-				$input = $this->Form->text('Person.first_name',
-						array('type' => 'text',
-									'placeholder' => __('Vorname'), 'title' => __('Vorname'),
-									'maxlength' => '100',
-									'autofocus' => 'autofocus',
-									'readonly' => 'readonly')
-				);
-				echo $this->Html->tag('li',
-						$label . $input,
-						array('class' => 'input text')
-				);
+				echo $this->RefereeForm->getInputText($action, 'Person.first_name', __('Vorname'), $referee['Person']['first_name'], true, __('Vorname'), 100, true);
 
 			?>
 		</ol>
@@ -25,7 +14,6 @@
 <?php echo $this->Form->end(); ?>
 
 
-<p><?php echo $action; ?></p>
 <!--					$columns[] = __('Bild');
 				}
 				$columns[] = __('Vorname');

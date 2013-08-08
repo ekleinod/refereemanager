@@ -10,7 +10,7 @@ App::uses('RefManRefereeFormat', 'Utility');
 /**
  * RefereeFormat Helper class for referee manager specific formatting.
  *
- * @package       Cake.View.Helper
+ * @package       View.Helper
  */
 class RefereeFormatHelper extends AppHelper {
 

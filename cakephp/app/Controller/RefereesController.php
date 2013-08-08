@@ -11,7 +11,7 @@ App::uses('RefManRefereeFormat', 'Utility');
 class RefereesController extends AppController {
 
 	/** Needed helper classes. */
-	public $helpers = array('PHPExcel','RefereeFormat');
+	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/**
 	 * index method
