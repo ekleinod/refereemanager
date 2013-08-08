@@ -50,11 +50,13 @@ DROP TABLE IF EXISTS `rfrmgr_sex_types` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_sex_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `sid` VARCHAR(10) NOT NULL ,
   `title` VARCHAR(100) NOT NULL ,
   `remark` TEXT NULL ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   UNIQUE INDEX `sid_UNIQUE` (`title` ASC) ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
