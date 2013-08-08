@@ -54,7 +54,6 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_sex_types` (
   `title` VARCHAR(100) NOT NULL ,
   `remark` TEXT NULL ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  UNIQUE INDEX `sid_UNIQUE` (`title` ASC) ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
 ENGINE = InnoDB
