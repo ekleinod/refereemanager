@@ -2,9 +2,9 @@
 -- Daten für die Tabelle `rfrmgr_sex_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_sex_types` (`id`, `title`, `remark`) VALUES (1, 'weiblich', 'Mädchen und Frauen.');
-INSERT INTO `rfrmgr_sex_types` (`id`, `title`, `remark`) VALUES (2, 'männlich', 'Jungen und Männer.');
-INSERT INTO `rfrmgr_sex_types` (`id`, `title`, `remark`) VALUES (3, 'andere', 'Menschen anderen Geschlechts.');
+INSERT INTO `rfrmgr_sex_types` (`id`, `sid`, `title`, `remark`) VALUES (1, 'f', 'weiblich', 'Mädchen und Frauen.');
+INSERT INTO `rfrmgr_sex_types` (`id`, `sid`, `title`, `remark`) VALUES (2, 'm', 'männlich', 'Jungen und Männer.');
+INSERT INTO `rfrmgr_sex_types` (`id`, `sid`, `title`, `remark`) VALUES (3, 'o', 'andere', 'Menschen anderen Geschlechts.');
 
 COMMIT;
 

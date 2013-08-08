@@ -51,9 +51,15 @@ class RefereesController extends AppController {
 		}
 		$referee = $this->Referee->read(null, $id);
 
+		$sextypes = $this->getSexTypes();
+
 		// pass information to view
 		$this->set('referee', $referee);
-		$this->set('title_for_layout', __('Schiedsrichter_in \'%s\'',  RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
+		$this->set('sextypes', $sextypes);
+		$this->set('contacttypes', $this->getContactTypes());
+
+		$this->set('id', $id);
+		$this->set('title_for_layout', __('Schiedsrichter%s %s', ($sextypes[$referee['Person']['sex_type_id']]['sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
 	}
 
 	/**
