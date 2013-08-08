@@ -76,7 +76,9 @@
 					$columns[] = __('Adresse');
 					$columns[] = __('Geschlecht');
 					$columns[] = __('Geburtstag');
-					$columns[] = __('Ausbildung (seit)');
+				}
+				$columns[] = __('Ausbildung');
+				if ($isEditor) {
 					$columns[] = __('Letzte Fortbildung');
 					$columns[] = __('Nächste Fortbildung');
 				}
@@ -197,18 +199,17 @@
 								}
 								echo $text;
 							?></td>
+						<?php } ?>
 
-							<td data-title="<?php echo __('Ausbildung (seit)'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
-								$text = '';
-								if (!empty($referee['TrainingLevelInfo'])) {
-									$text .= __($referee['TrainingLevelInfo']['abbreviation']);
-									if (!empty($referee['TrainingLevelInfo']['since'])) {
-										$text .= __(' (%s)', $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['since'], 'date'));
-									}
-								}
-								echo $text;
-							?></td>
+						<td data-title="<?php echo __('Ausbildung'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+							$text = '';
+							if (!empty($referee['TrainingLevelInfo'])) {
+								$text .= __($referee['TrainingLevelInfo']['abbreviation']);
+							}
+							echo $text;
+						?></td>
 
+						<?php if ($isEditor) { ?>
 							<td data-title="<?php echo __('Letzte Fortbildung'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
 								$text = '';
 								if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['lastupdate'])) {
