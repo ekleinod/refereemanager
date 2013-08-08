@@ -21,19 +21,18 @@ class RefereeFormHelper extends AppHelper {
 	 */
 	public function getInputText($action, $fieldid, $title, $value = '', $required = false, $placeholder = '', $maxlength = 100, $autofocus = false) {
 
-		// css class
 		$cssclass = 'input text';
 
-		// label
-		$label = $this->Form->label($fieldid, $title);
-
-		// input
 		$inputparams = array();
 		$inputparams['type'] = 'text';
+
 		$inputparams['title'] = $title;
+		$inputparams['label'] = $title;
+
 		if (!empty($value)) {
 			$inputparams['value'] = $value;
 		}
+
 		if (($action !== 'view') && $required) {
 			$inputparams['required'] = 'required';
 			$cssclass .= ' required';
@@ -41,6 +40,7 @@ class RefereeFormHelper extends AppHelper {
 		if (($action !== 'view') && !empty($placeholder)) {
 			$inputparams['placeholder'] = $placeholder;
 		}
+
 		if (!empty($maxlength)) {
 			$inputparams['maxlength'] = $maxlength;
 		}
@@ -52,13 +52,11 @@ class RefereeFormHelper extends AppHelper {
 			$inputparams['readonly'] = 'readonly';
 		}
 
-		$input = $this->Form->text($fieldid, $inputparams);
+		$inputparams['div'] = false;
+		$inputparams['before'] = $this->Html->tag('li', null, array('class' => $cssclass));
+		$inputparams['after'] = '</li>';
 
-		// tag
-		return $this->Html->tag('li',
-				$label . $input,
-				array('class' => $cssclass)
-		);
+		return $this->Form->input($fieldid, $inputparams);
 
 	}
 
