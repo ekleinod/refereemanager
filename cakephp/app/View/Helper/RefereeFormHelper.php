@@ -25,6 +25,11 @@ class RefereeFormHelper extends AppHelper {
 
 		$inputparams = array();
 		$inputparams['type'] = $type;
+		// fix the not very pretty date input of cakephp
+		if (($type === 'date') || ($type === 'datetime') || ($type === 'time')) {
+			$inputparams['type'] = 'text';
+			$inputparams['class'] = $type;
+		}
 
 		$inputparams['title'] = $title;
 		$inputparams['label'] = $title;

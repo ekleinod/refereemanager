@@ -10,7 +10,7 @@
 
 				if ($isEditor) {
 					echo $this->RefereeForm->getInputField($action, 'select', 'Person.sex_type', __('Geschlecht'), $referee['Person']['sex_type_id'], true, '', 0, false, $sextypearray);
-//					echo $this->RefereeForm->getInputField($action, 'date', 'Person.birthday', __('Geburtstag'), $this->RefereeFormat->formatDate($referee['Person']['birthday'], 'date'), false, __('tt.mm.yyyy'), 20);
+					echo $this->RefereeForm->getInputField($action, 'date', 'Person.birthday', __('Geburtstag'), $this->RefereeFormat->formatDate($referee['Person']['birthday'], 'date'), false, __('tt.mm.yyyy'), 10);
 				}
 			?>
 		</ol>
