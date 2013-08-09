@@ -21,7 +21,7 @@ class RefereeFormHelper extends AppHelper {
 	 */
 	public function getInputField($action, $type, $fieldid, $title, $value = null, $required = false, $placeholder = null, $maxlength = 100, $autofocus = false, $values = null) {
 
-		$cssclass = 'input text';
+		$cssclass = 'input';
 
 		$inputparams = array();
 		$inputparams['type'] = $type;
@@ -33,14 +33,6 @@ class RefereeFormHelper extends AppHelper {
 			$inputparams['value'] = $value;
 		}
 
-		if (($action !== 'view') && $required) {
-			$inputparams['required'] = 'required';
-			$cssclass .= ' required';
-		}
-		if (($action !== 'view') && !empty($placeholder)) {
-			$inputparams['placeholder'] = $placeholder;
-		}
-
 		if (!empty($maxlength)) {
 			$inputparams['maxlength'] = $maxlength;
 		}
@@ -48,14 +40,36 @@ class RefereeFormHelper extends AppHelper {
 			$inputparams['autofocus'] = 'autofocus';
 		}
 
-		if ($action === 'view') {
-			$inputparams['readonly'] = 'readonly';
-		}
-
 		if (!empty($values)) {
 			$inputparams['options'] = $values;
 		}
 
+		// depending on action
+		if ($action === 'view') {
+
+			$inputparams['readonly'] = 'readonly';
+			if ($type === 'select') {
+				$inputparams['type'] = 'text';
+				if (!empty($values)) {
+					$inputparams['value'] = $values[$value];
+				}
+			}
+
+		} else {
+
+			if ($required) {
+				$inputparams['required'] = 'required';
+				$cssclass .= ' required';
+			}
+			if (!empty($placeholder)) {
+				$inputparams['placeholder'] = $placeholder;
+			}
+
+		}
+
+		$cssclass .= ' ' . $inputparams['type'];
+
+		// styling
 		$inputparams['div'] = false;
 		$inputparams['before'] = $this->Html->tag('li', null, array('class' => $cssclass));
 		$inputparams['after'] = '</li>';

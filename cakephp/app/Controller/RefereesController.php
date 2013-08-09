@@ -66,7 +66,33 @@ class RefereesController extends AppController {
 		$this->set('contacttypes', $this->getContactTypes());
 
 		$this->set('id', $id);
-		$this->set('title_for_layout', __('Schiedsrichter%s %s', ($sextypes[$referee['Person']['sex_type_id']]['sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
+		$this->set('title_for_layout', __('Detailanzeige Schiedsrichter%s %s', ($sextypes[$referee['Person']['sex_type_id']]['sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
+	}
+
+	/**
+	 * Edi method: edit the referee with the given id.
+	 *
+	 * @param $id id of referee
+	 * @return void
+	 */
+	public function edit($id = null) {
+
+		$this->Referee->id = $id;
+		if (!$this->Referee->exists()) {
+			throw new NotFoundException(__('Schiedsrichter_in mit der ID \'%s\' existiert nicht.', $id));
+		}
+		$referee = $this->Referee->read(null, $id);
+
+		$sextypes = $this->getSexTypes();
+
+		// pass information to view
+		$this->set('referee', $referee);
+		$this->set('sextypes', $sextypes);
+		$this->set('sextypearray', $this->getSexTypeArray());
+		$this->set('contacttypes', $this->getContactTypes());
+
+		$this->set('id', $id);
+		$this->set('title_for_layout', __('Schiedsrichter%s %s editieren', ($sextypes[$referee['Person']['sex_type_id']]['sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
 	}
 
 	/**
@@ -250,11 +276,9 @@ class RefereesController extends AppController {
 	 */
 	private function getSexTypeArray() {
 		if (empty(RefereesController::$sextypearray)) {
-			$sextypes = $this->getSexTypes();
-			RefereesController::$sextypearray = array();
-			foreach ($sextypes as $sextype) {
-				RefereesController::$sextypearray[$sextype['id']] = $sextype['title'];
-			}
+			$this->loadModel('SexType');
+			$this->SexType->recursive = -1;
+			RefereesController::$sextypearray = $this->SexType->find('list');
 		}
 		return RefereesController::$sextypearray;
 	}
