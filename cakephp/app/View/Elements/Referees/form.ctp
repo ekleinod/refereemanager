@@ -24,10 +24,20 @@
 		<legend><?php echo __('Verein'); ?></legend>
 		<ol>
 			<?php
-				echo $this->RefereeForm->getInputField($action, 'select', 'RefereeRelation.referee_relation_type_id', __('Mitglied bei'), $referee['RefereeRelation']['referee_relation_type_id'], true, '', 0, false, $clubtypearray);
+				foreach ($refereerelationtypes as $refereerelationtype) {
+					foreach ($referee['RefereeRelation'] as $refereerelation) {
 
-				if ($isEditor) {
+						if ($refereerelation['referee_relation_type_id'] == $refereerelationtype['id']) {
+							if ($refereerelationtype['is_membership'] == 1) {
+								echo $this->RefereeForm->getInputField($action, 'select', 'RefereeRelation.id', __($refereerelationtype['title']), $refereerelation['club_id'], true, '', 0, false, $clubarray);
+							} else {
+								if ($isEditor) {
+								echo $this->RefereeForm->getInputField($action, 'select', 'RefereeRelation.id', __($refereerelationtype['title']), $refereerelation['club_id'], false, '', 0, false, $clubarray);
+								}
+							}
+						}
 
+					}
 				}
 
 			?>

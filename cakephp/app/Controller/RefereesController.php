@@ -19,12 +19,18 @@ class RefereesController extends AppController {
 	/** Sex type array. */
 	private static $sextypearray = null;
 
+	/** Referee relation types. */
+	private static $refereerelationtypes = null;
+
+	/** Club array. */
+	private static $clubarray = null;
+
 	/**
 	 * index method
 	 */
 	public function index() {
 
-		$this->setAndGetStandard();
+		$this->setAndGetStandardIndexExport();
 
 		$this->set('title_for_layout', __('Übersicht der Schiedsrichter_innen'));
 	}
@@ -36,11 +42,24 @@ class RefereesController extends AppController {
 	 */
 	public function export($type = 'excel') {
 
-		$this->setAndGetStandard();
+		$this->setAndGetStandardIndexExport();
 
 		$this->set('type', $type);
 
 		$this->set('title_for_layout', __('Export der Schiedsrichter_innen'));
+	}
+
+	/**
+	 * Set and get standard values for index and export.
+	 */
+	private function setAndGetStandardIndexExport() {
+
+		$referees = $this->getReferees();
+
+		$this->set('referees', $referees);
+		$this->set('statustypes', $this->getStatusTypes($referees));
+		$this->set('sextypes', $this->getSexTypes());
+		$this->set('contacttypes', $this->getContactTypes());
 	}
 
 	/**
@@ -57,16 +76,8 @@ class RefereesController extends AppController {
 		}
 		$referee = $this->Referee->read(null, $id);
 
-		$sextypes = $this->getSexTypes();
-
-		// pass information to view
-		$this->set('referee', $referee);
-		$this->set('sextypes', $sextypes);
-		$this->set('sextypearray', $this->getSexTypeArray());
-		$this->set('contacttypes', $this->getContactTypes());
-
-		$this->set('id', $id);
-		$this->set('title_for_layout', __('Detailanzeige Schiedsrichter%s %s', ($sextypes[$referee['Person']['sex_type_id']]['sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
+		$this->setAndGetStandardNewAddView($referee);
+		$this->set('title_for_layout', __('Detailanzeige Schiedsrichter%s %s', ($referee['Person']['sex_type_sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
 	}
 
 	/**
@@ -83,29 +94,30 @@ class RefereesController extends AppController {
 		}
 		$referee = $this->Referee->read(null, $id);
 
+		$this->setAndGetStandardNewAddView($referee);
+
+		$this->set('title_for_layout', __('Schiedsrichter%s %s editieren', ($referee['Person']['sex_type_sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
+	}
+
+	/**
+	 * Set and get standard values for new, add, view.
+	 *
+	 * @param $referee referee
+	 */
+	private function setAndGetStandardNewAddView(&$referee) {
+
 		$sextypes = $this->getSexTypes();
+		$referee['Person']['sex_type_sid'] = $sextypes[$referee['Person']['sex_type_id']]['sid'];
 
 		// pass information to view
 		$this->set('referee', $referee);
 		$this->set('sextypes', $sextypes);
 		$this->set('sextypearray', $this->getSexTypeArray());
 		$this->set('contacttypes', $this->getContactTypes());
+		$this->set('refereerelationtypes', $this->getRefereeRelationTypes());
+		$this->set('clubarray', $this->getClubArray());
 
-		$this->set('id', $id);
-		$this->set('title_for_layout', __('Schiedsrichter%s %s editieren', ($sextypes[$referee['Person']['sex_type_id']]['sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
-	}
-
-	/**
-	 * Set and get standard values.
-	 */
-	private function setAndGetStandard() {
-
-		$referees = $this->getReferees();
-
-		$this->set('referees', $referees);
-		$this->set('statustypes', $this->getStatusTypes($referees));
-		$this->set('sextypes', $this->getSexTypes());
-		$this->set('contacttypes', $this->getContactTypes());
+		$this->set('id', $referee['Referee']['id']);
 	}
 
 	/**
@@ -199,20 +211,6 @@ class RefereesController extends AppController {
 	}
 
 	/**
-	 * Returns the member relation type id.
-	 *
-	 * @return member relation type id
-	 */
-	private function getMemberRelationTypeID() {
-		$this->loadModel('RefereeRelationType');
-		$this->RefereeRelationType->recursive = -1;
-
-		$memberRelationType = $this->RefereeRelationType->findByIsMembership('1');
-
-		return $memberRelationType['RefereeRelationType']['id'];
-	}
-
-	/**
 	 * Returns the status types used by the referees.
 	 *
 	 * @return array of status types
@@ -281,6 +279,57 @@ class RefereesController extends AppController {
 			RefereesController::$sextypearray = $this->SexType->find('list');
 		}
 		return RefereesController::$sextypearray;
+	}
+
+	/**
+	 * Returns the club array for use in select fields.
+	 *
+	 * @return array of club
+	 */
+	private function getClubArray() {
+		if (empty(RefereesController::$clubarray)) {
+			$this->loadModel('Club');
+			$this->Club->recursive = -1;
+			RefereesController::$clubarray = $this->Club->find('list');
+			asort(RefereesController::$clubarray, SORT_LOCALE_STRING);
+		}
+		return RefereesController::$clubarray;
+	}
+
+	/**
+	 * Returns the referee relation types.
+	 *
+	 * @todo: maybe this method (and the other methods using static variables)
+	 * can be static too, but at the moment I don't know how to load and use models static
+	 *
+	 * @return array of referee relation types
+	 */
+	private function getRefereeRelationTypes() {
+		if (empty(RefereesController::$refereerelationtypes)) {
+			$this->loadModel('RefereeRelationType');
+			$this->RefereeRelationType->recursive = -1;
+			RefereesController::$refereerelationtypes = array();
+			foreach ($this->RefereeRelationType->find('all') as $refereerelationtype) {
+				RefereesController::$refereerelationtypes[$refereerelationtype['RefereeRelationType']['id']] = $refereerelationtype['RefereeRelationType'];
+			}
+		}
+		return RefereesController::$refereerelationtypes;
+	}
+
+	/**
+	 * Returns the member relation type id.
+	 *
+	 * @return member relation type id
+	 */
+	private function getMemberRelationTypeID() {
+
+		foreach ($this->getRefereeRelationTypes() as $refereerelationtype) {
+			if ($refereerelationtype['is_membership'] == 1) {
+				return $refereerelationtype['id'];
+			}
+		}
+
+		return -1;
 	}
 
 	/**
