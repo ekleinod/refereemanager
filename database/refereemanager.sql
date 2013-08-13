@@ -619,6 +619,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_relation_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `title` VARCHAR(100) NOT NULL ,
   `is_membership` TINYINT(1) NOT NULL ,
+  `is_preferrance` TINYINT(1) NOT NULL ,
+  `is_avoidance` TINYINT(1) NOT NULL ,
   `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
