@@ -40,7 +40,7 @@
 		$header = array();
 			$header[] = array('text' => __('Vorname'), 'width' => '15');
 			$header[] = array('text' => __('Name'));
-			$header[] = array('text' => __('Club'));
+			$header[] = array('text' => __('Verein'));
 
 			if ($isReferee) {
 				$header[] = array('text' => __('E-Mail'));

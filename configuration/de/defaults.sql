@@ -91,4 +91,14 @@ INSERT INTO `rfrmgr_assignment_remark_types` (`id`, `title`, `remark`) VALUES (4
 
 COMMIT;
 
+-- -----------------------------------------------------
+-- Daten für die Tabelle `rfrmgr_referee_relation_types`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `rfrmgr_referee_relation_types` (`id`, `title`, `is_membership`, `is_preferrance`, `is_avoidance`, `remark`) VALUES (1, 'Mitglied', 1, 0, 0, 'Ist Mitglied des Vereins.');
+INSERT INTO `rfrmgr_referee_relation_types` (`id`, `title`, `is_membership`, `is_preferrance`, `is_avoidance`, `remark`) VALUES (2, 'Bevorzugt schiedsen', 0, 1, 0, 'Vereine, die bevorzugt geschiedst werden.');
+INSERT INTO `rfrmgr_referee_relation_types` (`id`, `title`, `is_membership`, `is_preferrance`, `is_avoidance`, `remark`) VALUES (3, 'Nicht schiedsen', 0, 0, 1, 'Vereine, die nicht geschiedst werden.');
+
+COMMIT;
+
 

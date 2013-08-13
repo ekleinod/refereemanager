@@ -207,7 +207,7 @@ class RefereesController extends AppController {
 		$this->loadModel('RefereeRelationType');
 		$this->RefereeRelationType->recursive = -1;
 
-		$memberRelationType = $this->RefereeRelationType->findBySid('member');
+		$memberRelationType = $this->RefereeRelationType->findByIsMembership('1');
 
 		return $memberRelationType['RefereeRelationType']['id'];
 	}

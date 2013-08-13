@@ -91,3 +91,14 @@ INSERT INTO `rfrmgr_assignment_remark_types` (`id`, `title`, `remark`) VALUES (4
 
 COMMIT;
 
+-- -----------------------------------------------------
+-- Data for table `rfrmgr_referee_relation_types`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `rfrmgr_referee_relation_types` (`id`, `title`, `is_membership`, `is_preferrance`, `is_avoidance`, `remark`) VALUES (1, 'Member', 1, 0, 0, 'Is member of the club.');
+INSERT INTO `rfrmgr_referee_relation_types` (`id`, `title`, `is_membership`, `is_preferrance`, `is_avoidance`, `remark`) VALUES (2, 'Prefer', 0, 1, 0, 'Prefer club for assignments.');
+INSERT INTO `rfrmgr_referee_relation_types` (`id`, `title`, `is_membership`, `is_preferrance`, `is_avoidance`, `remark`) VALUES (3, 'No assignment', 0, 0, 1, 'Do not assign to this club.');
+
+COMMIT;
+
+

@@ -7,11 +7,29 @@
 				echo $this->RefereeForm->getInputField($action, 'text', 'Person.title', __('Titel'), $referee['Person']['title'], false, __('Titel'), 50, true);
 				echo $this->RefereeForm->getInputField($action, 'text', 'Person.first_name', __('Vorname'), $referee['Person']['first_name'], false, __('Vorname'));
 				echo $this->RefereeForm->getInputField($action, 'text', 'Person.name', __('Nachname'), $referee['Person']['name'], true, __('Nachname'));
+				echo $this->RefereeForm->getInputField($action, 'textarea', 'Person.remark', __('Anmerkung'), $referee['Person']['remark'], false, __('Anmerkung'));
 
 				if ($isEditor) {
-					echo $this->RefereeForm->getInputField($action, 'select', 'Person.sex_type', __('Geschlecht'), $referee['Person']['sex_type_id'], true, '', 0, false, $sextypearray);
+
+					echo $this->RefereeForm->getInputField($action, 'select', 'Person.sex_type_id', __('Geschlecht'), $referee['Person']['sex_type_id'], true, '', 0, false, $sextypearray);
 					echo $this->RefereeForm->getInputField($action, 'date', 'Person.birthday', __('Geburtstag'), $this->RefereeFormat->formatDate($referee['Person']['birthday'], 'date'), false, __('tt.mm.yyyy'), 10);
+
 				}
+
+			?>
+		</ol>
+	</fieldset>
+
+	<fieldset>
+		<legend><?php echo __('Verein'); ?></legend>
+		<ol>
+			<?php
+				echo $this->RefereeForm->getInputField($action, 'select', 'RefereeRelation.referee_relation_type_id', __('Mitglied bei'), $referee['RefereeRelation']['referee_relation_type_id'], true, '', 0, false, $clubtypearray);
+
+				if ($isEditor) {
+
+				}
+
 			?>
 		</ol>
 	</fieldset>
@@ -26,22 +44,18 @@
 <?php echo $this->Form->end(); ?>
 
 
-<!--					$columns[] = __('Bild');
-				}
-				$columns[] = __('Vorname');
-				$columns[] = __('Name');
+<!--
+			$columns[] = __('Bild');
 				$columns[] = __('Club');
+					$columns[] = __('Ausbildung (seit)');
 				if ($isReferee) {
 					$columns[] = __('E-Mail');
 					$columns[] = __('Telefon');
 				}
 				if ($isEditor) {
 					$columns[] = __('Adresse');
-					$columns[] = __('Geschlecht');
-					$columns[] = __('Geburtstag');
-					$columns[] = __('Ausbildung (seit)');
 					$columns[] = __('Letzte Fortbildung');
 					$columns[] = __('Nächste Fortbildung');
 				}
-				$columns[] = __('Anmerkung');-->
+-->
 

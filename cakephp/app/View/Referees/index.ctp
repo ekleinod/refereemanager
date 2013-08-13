@@ -67,7 +67,7 @@
 				}
 				$columns[] = __('Vorname');
 				$columns[] = __('Name');
-				$columns[] = __('Club');
+				$columns[] = __('Verein');
 				if ($isReferee) {
 					$columns[] = __('E-Mail');
 					$columns[] = __('Telefon');
