@@ -617,10 +617,12 @@ DROP TABLE IF EXISTS `rfrmgr_referee_relation_types` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_relation_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `sid` VARCHAR(10) NOT NULL ,
+  `title` VARCHAR(100) NOT NULL ,
+  `is_membership` TINYINT(1) NOT NULL ,
+  `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  UNIQUE INDEX `title_UNIQUE` (`sid` ASC) )
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -812,15 +814,5 @@ START TRANSACTION;
 INSERT INTO `rfrmgr_assignment_status_types` (`id`, `sid`) VALUES (1, 'no');
 INSERT INTO `rfrmgr_assignment_status_types` (`id`, `sid`) VALUES (2, 'maybe');
 INSERT INTO `rfrmgr_assignment_status_types` (`id`, `sid`) VALUES (3, 'yes');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `rfrmgr_referee_relation_types`
--- -----------------------------------------------------
-START TRANSACTION;
-INSERT INTO `rfrmgr_referee_relation_types` (`id`, `sid`) VALUES (1, 'member');
-INSERT INTO `rfrmgr_referee_relation_types` (`id`, `sid`) VALUES (2, 'prefer');
-INSERT INTO `rfrmgr_referee_relation_types` (`id`, `sid`) VALUES (3, 'avoid');
 
 COMMIT;
