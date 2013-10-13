@@ -11,6 +11,8 @@ DROP TABLE IF EXISTS `rfrmgr_user_roles` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_user_roles` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `sid` VARCHAR(20) NOT NULL ,
+  `title` VARCHAR(100) NOT NULL ,
+  `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
@@ -157,28 +159,6 @@ COMMENT = 'Recipients of umpire reports.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_status_types`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_status_types` ;
-
-CREATE  TABLE IF NOT EXISTS `rfrmgr_status_types` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `title` VARCHAR(100) NOT NULL ,
-  `is_special` TINYINT(1) NOT NULL ,
-  `style` VARCHAR(10) NULL ,
-  `color` VARCHAR(6) NULL ,
-  `bgcolor` VARCHAR(6) NULL ,
-  `remark` TEXT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  UNIQUE INDEX `sid_UNIQUE` (`title` ASC) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'Possible referee statuses such as \"interested in many assign' /* comment truncated */;
-
-
--- -----------------------------------------------------
 -- Table `rfrmgr_referees`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rfrmgr_referees` ;
@@ -186,13 +166,35 @@ DROP TABLE IF EXISTS `rfrmgr_referees` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_referees` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `person_id` INT UNSIGNED NOT NULL ,
-  `status_type_id` INT UNSIGNED NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'Storage of all referees.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_status_types`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_status_types` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_status_types` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `sid` VARCHAR(10) NOT NULL ,
+  `title` VARCHAR(100) NOT NULL ,
+  `style` VARCHAR(10) NULL ,
+  `color` VARCHAR(6) NULL ,
+  `bgcolor` VARCHAR(6) NULL ,
+  `remark` TEXT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`title` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Possible referee statuses such as \"interested in many assign' /* comment truncated */;
 
 
 -- -----------------------------------------------------
@@ -355,14 +357,31 @@ DROP TABLE IF EXISTS `rfrmgr_database_tables` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_database_tables` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `sid` VARCHAR(30) NOT NULL ,
+  `table_name` VARCHAR(50) NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
+  UNIQUE INDEX `sid_UNIQUE` (`table_name` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'All database tables that have to be logged,';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_database_columns`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_database_columns` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_database_columns` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `column_name` VARCHAR(50) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`column_name` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'All database columns that have to be logged,';
 
 
 -- -----------------------------------------------------
@@ -373,8 +392,8 @@ DROP TABLE IF EXISTS `rfrmgr_activity_logs` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_activity_logs` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `database_table_id` INT UNSIGNED NOT NULL ,
+  `database_column_id` INT UNSIGNED NOT NULL ,
   `row_id` INT NOT NULL ,
-  `column_name` VARCHAR(100) NOT NULL ,
   `old_value` TEXT NULL ,
   `new_value` TEXT NOT NULL ,
   `user_id` INT NOT NULL COMMENT '\n' ,
@@ -434,6 +453,8 @@ DROP TABLE IF EXISTS `rfrmgr_assignment_status_types` ;
 CREATE  TABLE IF NOT EXISTS `rfrmgr_assignment_status_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `sid` VARCHAR(10) NOT NULL ,
+  `title` VARCHAR(100) NOT NULL ,
+  `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   UNIQUE INDEX `title_UNIQUE` (`sid` ASC) )
@@ -617,14 +638,13 @@ DROP TABLE IF EXISTS `rfrmgr_referee_relation_types` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_relation_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `sid` VARCHAR(10) NOT NULL ,
   `title` VARCHAR(100) NOT NULL ,
-  `is_membership` TINYINT(1) NOT NULL ,
-  `is_preferrance` TINYINT(1) NOT NULL ,
-  `is_avoidance` TINYINT(1) NOT NULL ,
   `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  UNIQUE INDEX `title_UNIQUE` (`title` ASC) )
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -784,37 +804,26 @@ COLLATE = utf8_general_ci
 COMMENT = 'Remark to a referee assignment.';
 
 
+-- -----------------------------------------------------
+-- Table `rfrmgr_referee_status`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_referee_status` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_status` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `referee_id` INT UNSIGNED NOT NULL ,
+  `status_type_id` INT UNSIGNED NOT NULL ,
+  `start_season_id` INT UNSIGNED NOT NULL ,
+  `end_season_id` INT UNSIGNED NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Referee\'s status.';
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
--- -----------------------------------------------------
--- Data for table `rfrmgr_user_roles`
--- -----------------------------------------------------
-START TRANSACTION;
-INSERT INTO `rfrmgr_user_roles` (`id`, `sid`) VALUES (1, 'referee');
-INSERT INTO `rfrmgr_user_roles` (`id`, `sid`) VALUES (2, 'statistician');
-INSERT INTO `rfrmgr_user_roles` (`id`, `sid`) VALUES (3, 'editor');
-INSERT INTO `rfrmgr_user_roles` (`id`, `sid`) VALUES (4, 'administrator');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `rfrmgr_database_tables`
--- -----------------------------------------------------
-START TRANSACTION;
-INSERT INTO `rfrmgr_database_tables` (`id`, `sid`) VALUES (1, 'people');
-INSERT INTO `rfrmgr_database_tables` (`id`, `sid`) VALUES (2, 'pictures');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `rfrmgr_assignment_status_types`
--- -----------------------------------------------------
-START TRANSACTION;
-INSERT INTO `rfrmgr_assignment_status_types` (`id`, `sid`) VALUES (1, 'no');
-INSERT INTO `rfrmgr_assignment_status_types` (`id`, `sid`) VALUES (2, 'maybe');
-INSERT INTO `rfrmgr_assignment_status_types` (`id`, `sid`) VALUES (3, 'yes');
-
-COMMIT;
