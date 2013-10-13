@@ -189,8 +189,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_status_types` (
   `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  UNIQUE INDEX `sid_UNIQUE` (`title` ASC) ,
-  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) ,
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -323,9 +323,9 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_training_level_types` (
   `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  UNIQUE INDEX `sid_UNIQUE` (`title` ASC) ,
   UNIQUE INDEX `rank_UNIQUE` (`rank` ASC) ,
-  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) ,
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
