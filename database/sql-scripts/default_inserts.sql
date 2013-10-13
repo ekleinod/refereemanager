@@ -27,6 +27,28 @@ INSERT INTO `rfrmgr_database_tables` (`id`, `table_name`) VALUES (2, 'referee_as
 COMMIT;
 
 -- -----------------------------------------------------
+-- Data for table `rfrmgr_league_game_team_types`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `rfrmgr_league_game_team_types` (`id`, `sid`) VALUES (1, 'home');
+INSERT INTO `rfrmgr_league_game_team_types` (`id`, `sid`) VALUES (2, 'off');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `rfrmgr_referee_assignment_types`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `sid`) VALUES (1, 'umpire');
+INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `sid`) VALUES (2, 'assump');
+INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `sid`) VALUES (3, 'referee');
+INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `sid`) VALUES (4, 'standbyref');
+INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `sid`) VALUES (5, 'racketctl');
+INSERT INTO `rfrmgr_referee_assignment_types` (`id`, `sid`) VALUES (6, 'tournmgr');
+
+COMMIT;
+
+-- -----------------------------------------------------
 -- Data for table `rfrmgr_referee_relation_types`
 -- -----------------------------------------------------
 START TRANSACTION;
@@ -55,6 +77,17 @@ INSERT INTO `rfrmgr_status_types` (`id`, `sid`) VALUES (2, 'normal');
 INSERT INTO `rfrmgr_status_types` (`id`, `sid`) VALUES (3, 'inactive');
 INSERT INTO `rfrmgr_status_types` (`id`, `sid`) VALUES (4, 'inactiveseason');
 INSERT INTO `rfrmgr_status_types` (`id`, `sid`) VALUES (5, 'other');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `rfrmgr_training_level_types`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `rfrmgr_training_level_types` (`id`, `sid`, `rank`) VALUES (1, 'assump', 1);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `sid`, `rank`) VALUES (2, 'natump', 2);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `sid`, `rank`) VALUES (3, 'natref', 3);
+INSERT INTO `rfrmgr_training_level_types` (`id`, `sid`, `rank`) VALUES (4, 'intump', 4);
 
 COMMIT;
 

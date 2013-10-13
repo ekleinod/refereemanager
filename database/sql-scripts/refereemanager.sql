@@ -316,14 +316,16 @@ DROP TABLE IF EXISTS `rfrmgr_training_level_types` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_training_level_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `sid` VARCHAR(20) NOT NULL ,
+  `rank` INT UNSIGNED NOT NULL ,
   `title` VARCHAR(100) NOT NULL ,
   `abbreviation` VARCHAR(20) NOT NULL ,
-  `rank` INT UNSIGNED NOT NULL ,
   `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   UNIQUE INDEX `sid_UNIQUE` (`title` ASC) ,
-  UNIQUE INDEX `rank_UNIQUE` (`rank` ASC) )
+  UNIQUE INDEX `rank_UNIQUE` (`rank` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -432,13 +434,15 @@ DROP TABLE IF EXISTS `rfrmgr_referee_assignment_types` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_assignment_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `abbreviation` VARCHAR(10) NOT NULL ,
+  `sid` VARCHAR(20) NOT NULL ,
   `title` VARCHAR(100) NOT NULL ,
+  `abbreviation` VARCHAR(10) NOT NULL ,
   `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   UNIQUE INDEX `abbreviation_UNIQUE` (`abbreviation` ASC) ,
-  UNIQUE INDEX `title_UNIQUE` (`title` ASC) )
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -511,13 +515,15 @@ DROP TABLE IF EXISTS `rfrmgr_league_game_team_types` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_league_game_team_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `abbreviation` VARCHAR(10) NOT NULL ,
+  `sid` VARCHAR(20) NOT NULL ,
   `title` VARCHAR(100) NOT NULL ,
+  `abbreviation` VARCHAR(10) NOT NULL ,
   `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   UNIQUE INDEX `abbreviation_UNIQUE` (`abbreviation` ASC) ,
-  UNIQUE INDEX `title_UNIQUE` (`title` ASC) )
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
