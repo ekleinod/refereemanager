@@ -829,6 +829,24 @@ COLLATE = utf8_general_ci
 COMMENT = 'Referee\'s status.';
 
 
+-- -----------------------------------------------------
+-- Table `rfrmgr_preferences`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_preferences` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_preferences` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `person_id` INT UNSIGNED NOT NULL ,
+  `language` VARCHAR(10) NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `sid_UNIQUE` (`person_id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'All database tables that have to be logged,';
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
