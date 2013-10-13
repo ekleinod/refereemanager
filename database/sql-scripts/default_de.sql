@@ -17,7 +17,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 UPDATE `rfrmgr_league_game_team_types` SET `title`='Heimmannschaft', `abbreviation`='H' WHERE `sid`='home';
-UPDATE `rfrmgr_league_game_team_types` SET `title`='Auswärtsmannschaft', `abbreviation`='A' WHERE `sid`='home';
+UPDATE `rfrmgr_league_game_team_types` SET `title`='Auswärtsmannschaft', `abbreviation`='A' WHERE `sid`='off';
 
 COMMIT;
 
