@@ -52,7 +52,7 @@ DROP TABLE IF EXISTS `rfrmgr_sex_types` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_sex_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `sid` VARCHAR(10) NOT NULL ,
+  `sid` VARCHAR(20) NOT NULL ,
   `title` VARCHAR(100) NOT NULL ,
   `remark` TEXT NULL ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
@@ -181,7 +181,7 @@ DROP TABLE IF EXISTS `rfrmgr_status_types` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_status_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `sid` VARCHAR(10) NOT NULL ,
+  `sid` VARCHAR(20) NOT NULL ,
   `title` VARCHAR(100) NOT NULL ,
   `style` VARCHAR(10) NULL ,
   `color` VARCHAR(6) NULL ,
@@ -452,7 +452,7 @@ DROP TABLE IF EXISTS `rfrmgr_assignment_status_types` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_assignment_status_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `sid` VARCHAR(10) NOT NULL ,
+  `sid` VARCHAR(20) NOT NULL ,
   `title` VARCHAR(100) NOT NULL ,
   `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
@@ -638,7 +638,7 @@ DROP TABLE IF EXISTS `rfrmgr_referee_relation_types` ;
 
 CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_relation_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `sid` VARCHAR(10) NOT NULL ,
+  `sid` VARCHAR(20) NOT NULL ,
   `title` VARCHAR(100) NOT NULL ,
   `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
