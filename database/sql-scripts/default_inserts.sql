@@ -53,6 +53,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 INSERT INTO `rfrmgr_referee_relation_types` (`sid`) VALUES ('member');
+INSERT INTO `rfrmgr_referee_relation_types` (`sid`) VALUES ('reffor');
 INSERT INTO `rfrmgr_referee_relation_types` (`sid`) VALUES ('prefer');
 INSERT INTO `rfrmgr_referee_relation_types` (`sid`) VALUES ('noassignment');
 

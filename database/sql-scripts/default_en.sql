@@ -39,6 +39,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 UPDATE `rfrmgr_referee_relation_types` SET `title`='member', `remark`='Is member of the club.' WHERE `sid`='member';
+UPDATE `rfrmgr_referee_relation_types` SET `title`='referee for', `remark`='Is referee for the club.' WHERE `sid`='reffor';
 UPDATE `rfrmgr_referee_relation_types` SET `title`='prefer', `remark`='Prefer club for assignments.' WHERE `sid`='prefer';
 UPDATE `rfrmgr_referee_relation_types` SET `title`='no assignment', `remark`='Do not assign to this club.' WHERE `sid`='noassignment';
 
@@ -70,10 +71,10 @@ COMMIT;
 -- Data for table `rfrmgr_training_level_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-UPDATE `rfrmgr_training_level_types` SET `title`='association umpire', `abbreviation`='aump' WHERE `sid`='assump';
-UPDATE `rfrmgr_training_level_types` SET `title`='national umpire', `abbreviation`='aump' WHERE `sid`='natump';
-UPDATE `rfrmgr_training_level_types` SET `title`='national referee', `abbreviation`='aump' WHERE `sid`='natref';
-UPDATE `rfrmgr_training_level_types` SET `title`='international umpire', `abbreviation`='aump' WHERE `sid`='intump';
+UPDATE `rfrmgr_training_level_types` SET `title`='association umpire', `abbreviation`='AU' WHERE `sid`='assump';
+UPDATE `rfrmgr_training_level_types` SET `title`='national umpire', `abbreviation`='NU' WHERE `sid`='natump';
+UPDATE `rfrmgr_training_level_types` SET `title`='national referee', `abbreviation`='NR' WHERE `sid`='natref';
+UPDATE `rfrmgr_training_level_types` SET `title`='international umpire', `abbreviation`='IU' WHERE `sid`='intump';
 
 COMMIT;
 
@@ -120,7 +121,6 @@ INSERT INTO `rfrmgr_league_types` (`title`, `remark`) VALUES ('seniors', 'Senior
 
 COMMIT;
 
-
 -- -----------------------------------------------------
 -- Data for table `rfrmgr_assignment_remark_types`
 -- -----------------------------------------------------
@@ -131,5 +131,4 @@ INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('mail r
 INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('other', NULL);
 
 COMMIT;
-
 
