@@ -19,7 +19,7 @@ class Referee extends AppModel {
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		// I can't get this one working with persons name, so I program a simple (but possibly bad) workaround
+		// I can't get this one working with person's name, so I program a simple (but possibly bad) workaround
 		$this->virtualFields['display_referee'] = sprintf(
 			'CONCAT(%1$s.id, "-", %1$s.person_id)',
 			$this->alias
@@ -49,9 +49,9 @@ class Referee extends AppModel {
 	 * @var array
 	 */
 	public $validate = array(
-		'person_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
+		'id' => array(
+			'uuid' => array(
+				'rule' => array('uuid'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -59,7 +59,7 @@ class Referee extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'status_type_id' => array(
+		'person_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -76,14 +76,14 @@ class Referee extends AppModel {
 	 *
 	 * @var array
 	 */
-	public $belongsTo = array('Person', 'StatusType');
+	public $belongsTo = array('Person');
 
 	/**
 	 * hasMany associations
 	 *
 	 * @var array
 	 */
-	public $hasMany = array('RefereeAssignment', 'RefereeRelation', 'TrainingLevel');
+	public $hasMany = array('RefereeAssignment', 'RefereeRelation', 'RefereeStatus', 'TrainingLevel');
 
 }
 
