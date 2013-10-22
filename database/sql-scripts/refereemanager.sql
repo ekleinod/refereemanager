@@ -811,11 +811,11 @@ COMMENT = 'Remark to a referee assignment.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_referee_status`
+-- Table `rfrmgr_referee_statuses`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_referee_status` ;
+DROP TABLE IF EXISTS `rfrmgr_referee_statuses` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_status` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_statuses` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `referee_id` INT UNSIGNED NOT NULL ,
   `status_type_id` INT UNSIGNED NOT NULL ,
