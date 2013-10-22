@@ -5,6 +5,8 @@
 <div class="filter">
 </div>
 
+	<p><?php echo pr($theUser); ?></p>
+
 <!-- view content -->
 <?php
 	if (empty($referees)) {
@@ -65,9 +67,10 @@
 				if ($isReferee) {
 					$columns[] = __('Bild');
 				}
-				$columns[] = __('Vorname');
 				$columns[] = __('Name');
-				$columns[] = __('Verein');
+				$columns[] = __('Vorname');
+				$columns[] = __('Schiedst für');
+				$columns[] = __('Mitglied');
 				if ($isReferee) {
 					$columns[] = __('E-Mail');
 					$columns[] = __('Telefon');

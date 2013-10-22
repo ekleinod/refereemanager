@@ -322,14 +322,10 @@ class RefereesController extends AppController {
 	 * @return member relation type id
 	 */
 	private function getMemberRelationTypeID() {
-
-		foreach ($this->getRefereeRelationTypes() as $refereerelationtype) {
-			if ($refereerelationtype['is_membership'] == 1) {
-				return $refereerelationtype['id'];
-			}
-		}
-
-		return -1;
+		$this->loadModel('RefereeRelationType');
+		$this->RefereeRelationType->recursive = -1;
+		$memberRelationType = $this->RefereeRelationType->findBySid('member');
+		return $memberRelationType['RefereeRelationType']['id'];
 	}
 
 	/**

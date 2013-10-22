@@ -87,6 +87,7 @@ class AppController extends Controller {
 
 			// set user name
 			$this->set('username', $user['username']);
+			$this->set('theUser', $theUser);
 		}
 
 		$this->set('isReferee', $this->isReferee($theUserRoleSID));
