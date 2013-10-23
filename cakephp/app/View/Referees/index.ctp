@@ -3,13 +3,14 @@
 
 <!-- view filters -->
 <div class="filter">
+	<p>Saison: <?php echo $season['title_season']; ?></p>
 </div>
 
 <!-- view content -->
 <?php
 	if (empty($referees)) {
 ?>
-	<p><?php echo __('Es sind keine Schiedsrichter gespeichert.'); ?></p>
+	<p><?php echo __('Es sind keine Schiedsrichter_innen gespeichert.'); ?></p>
 <?php
 	} else {
 ?>
@@ -271,5 +272,5 @@
 	}
 ?>
 
-<!--?php pr($referees); ?-->
+<?php pr($referees); ?>
 

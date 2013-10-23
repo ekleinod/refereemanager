@@ -5,17 +5,17 @@ App::uses('AppModel', 'Model');
 /**
  * Referee Model
  *
- * @property Person $Person
- * @property StatusType $StatusType
- * @property RefereeAssignment $RefereeAssignment
- * @property RefereeRelation $RefereeRelation
- * @property TrainingLevel $TrainingLevel
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class Referee extends AppModel {
 
 	/**
 	 * Declare virtual display field in constructor to be alias-safe.
 	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
@@ -31,14 +31,16 @@ class Referee extends AppModel {
 	 *
 	 * Good practice to include the model name.
 	 *
-	 * @var string
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public $name = 'Referee';
 
 	/**
 	 * Display field
 	 *
-	 * @var string
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public $displayField = 'display_referee';
 
@@ -46,7 +48,8 @@ class Referee extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @var array
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public $validate = array(
 		'id' => array(
@@ -74,14 +77,16 @@ class Referee extends AppModel {
 	/**
 	 * belongsTo associations
 	 *
-	 * @var array
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public $belongsTo = array('Person');
 
 	/**
 	 * hasMany associations
 	 *
-	 * @var array
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public $hasMany = array('RefereeAssignment', 'RefereeRelation', 'RefereeStatus', 'TrainingLevel');
 

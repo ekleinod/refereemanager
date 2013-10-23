@@ -6,7 +6,9 @@ App::uses('RefManRefereeFormat', 'Utility');
 /**
  * Referees Controller
  *
- * @property Referee $Referee
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class RefereesController extends AppController {
 
@@ -26,9 +28,14 @@ class RefereesController extends AppController {
 	private static $clubarray = null;
 
 	/**
-	 * index method
+	 * Index method.
+	 *
+	 * @param season season to export (default: null == current season)
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
-	public function index() {
+	public function index($season = null) {
 
 		$this->setAndGetStandardIndexExport();
 
@@ -36,11 +43,15 @@ class RefereesController extends AppController {
 	}
 
 	/**
-	 * export method
+	 * Export method.
 	 *
+	 * @param season season to export (default: null == current season)
 	 * @param type export type (default: excel)
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
-	public function export($type = 'excel') {
+	public function export($season = null, $type = 'excel') {
 
 		$this->setAndGetStandardIndexExport();
 
@@ -51,15 +62,24 @@ class RefereesController extends AppController {
 
 	/**
 	 * Set and get standard values for index and export.
+	 *
+	 * @param season season (default: null == current season)
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
-	private function setAndGetStandardIndexExport() {
+	private function setAndGetStandardIndexExport($season = null) {
 
 		$referees = $this->getReferees();
 
+		$this->loadModel('Season');
+		$theSeason = $this->Season->getSeason($season);
+
 		$this->set('referees', $referees);
-		$this->set('statustypes', $this->getStatusTypes($referees));
-		$this->set('sextypes', $this->getSexTypes());
-		$this->set('contacttypes', $this->getContactTypes());
+		$this->set('season', $theSeason);
+//		$this->set('statustypes', $this->getStatusTypes($referees));
+//		$this->set('sextypes', $this->getSexTypes());
+//		$this->set('contacttypes', $this->getContactTypes());
 	}
 
 	/**
@@ -67,6 +87,9 @@ class RefereesController extends AppController {
 	 *
 	 * @param $id id of referee
 	 * @return void
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public function view($id = null) {
 
@@ -85,6 +108,9 @@ class RefereesController extends AppController {
 	 *
 	 * @param $id id of referee
 	 * @return void
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public function edit($id = null) {
 
@@ -103,6 +129,9 @@ class RefereesController extends AppController {
 	 * Set and get standard values for new, add, view.
 	 *
 	 * @param $referee referee
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	private function setAndGetStandardNewAddView(&$referee) {
 
@@ -124,6 +153,9 @@ class RefereesController extends AppController {
 	 * Returns the referees.
 	 *
 	 * @return array of referees
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	private function getReferees() {
 		// find referees
@@ -214,6 +246,9 @@ class RefereesController extends AppController {
 	 * Returns the status types used by the referees.
 	 *
 	 * @return array of status types
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	private function getStatusTypes($referees = array()) {
 		$statustypes = array();
@@ -236,6 +271,9 @@ class RefereesController extends AppController {
 	 * Returns the contact types.
 	 *
 	 * @return array of contact types
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	private function getContactTypes() {
 		$this->loadModel('ContactType');
@@ -254,6 +292,9 @@ class RefereesController extends AppController {
 	 * can be static too, but at the moment I don't know how to load and use models static
 	 *
 	 * @return array of sex types
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	private function getSexTypes() {
 		if (empty(RefereesController::$sextypes)) {
@@ -271,6 +312,9 @@ class RefereesController extends AppController {
 	 * Returns the sex type array for use in select fields.
 	 *
 	 * @return array of sex types
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	private function getSexTypeArray() {
 		if (empty(RefereesController::$sextypearray)) {
@@ -285,6 +329,9 @@ class RefereesController extends AppController {
 	 * Returns the club array for use in select fields.
 	 *
 	 * @return array of club
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	private function getClubArray() {
 		if (empty(RefereesController::$clubarray)) {
@@ -303,6 +350,9 @@ class RefereesController extends AppController {
 	 * can be static too, but at the moment I don't know how to load and use models static
 	 *
 	 * @return array of referee relation types
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	private function getRefereeRelationTypes() {
 		if (empty(RefereesController::$refereerelationtypes)) {
@@ -320,6 +370,9 @@ class RefereesController extends AppController {
 	 * Returns the member relation type id.
 	 *
 	 * @return member relation type id
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	private function getMemberRelationTypeID() {
 		$this->loadModel('RefereeRelationType');
@@ -332,6 +385,9 @@ class RefereesController extends AppController {
 	 * Returns the training level types.
 	 *
 	 * @return array of training level types
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	private function getTrainingLevelTypes() {
 		$this->loadModel('TrainingLevelType');
@@ -352,6 +408,9 @@ class RefereesController extends AppController {
 	 *  @retval -1 a<b
 	 *  @retval 0 a==b
 	 *  @retval 1 a>b
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public static function compareTo($a, $b) {
 

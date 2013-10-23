@@ -5,6 +5,9 @@ App::uses('AppModel', 'Model');
 /**
  * RefereeStatus Model
  *
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class RefereeStatus extends AppModel {
 
@@ -13,21 +16,24 @@ class RefereeStatus extends AppModel {
 	 *
 	 * Good practice to include the model name.
 	 *
-	 * @var string
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public $name = 'RefereeStatus';
 
 	/**
 	 * Display field
 	 *
-	 * @var string
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public $displayField = 'id';
 
 	/**
 	 * Validation rules
 	 *
-	 * @var array
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public $validate = array(
 		'id' => array(
@@ -85,7 +91,8 @@ class RefereeStatus extends AppModel {
 	/**
 	 * belongsTo associations
 	 *
-	 * @var array
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public $belongsTo = array('Referee', 'StatusType',
 		'StartSeason' => array(
