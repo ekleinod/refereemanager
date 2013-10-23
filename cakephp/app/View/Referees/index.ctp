@@ -5,8 +5,6 @@
 <div class="filter">
 </div>
 
-	<p><?php echo pr($theUser); ?></p>
-
 <!-- view content -->
 <?php
 	if (empty($referees)) {
