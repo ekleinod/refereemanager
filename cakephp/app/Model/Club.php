@@ -1,28 +1,40 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * Club Model
  *
- * @property Address $Address
- * @property RefereeRelation $RefereeRelation
- * @property Spokesperson $Spokesperson
- * @property Team $Team
- * @property Tournament $Tournament
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class Club extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $name = 'Club';
+
+	/**
+	 * Display field
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $displayField = 'name';
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $validate = array(
 		'id' => array(
 			'uuid' => array(
@@ -56,81 +68,23 @@ class Club extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	/**
+	 * belongsTo associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $belongsTo = array('Address');
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Address' => array(
-			'className' => 'Address',
-			'foreignKey' => 'address_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'RefereeRelation' => array(
-			'className' => 'RefereeRelation',
-			'foreignKey' => 'club_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Spokesperson' => array(
-			'className' => 'Spokesperson',
-			'foreignKey' => 'club_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Team' => array(
-			'className' => 'Team',
-			'foreignKey' => 'club_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Tournament' => array(
-			'className' => 'Tournament',
-			'foreignKey' => 'club_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+	/**
+	 * hasMany associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $hasMany = array('RefereeRelation', 'Spokesperson', 'Team', 'Tournament');
 
 }
+
+/* EOF */
+

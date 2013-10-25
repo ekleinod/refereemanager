@@ -1,29 +1,54 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * League Model
  *
- * @property LeagueType $LeagueType
- * @property LeagueGame $LeagueGame
- * @property LeaguePlannedReferee $LeaguePlannedReferee
- * @property RefereeRelation $RefereeRelation
- * @property RefereeReport $RefereeReport
- * @property TeamSeason $TeamSeason
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class League extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'title';
+	/**
+	 * Declare virtual display field in constructor to be alias-safe.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['display_league'] = sprintf(
+			'CONCAT(%1$s.title, " (", %1$s.abbreviation, ")")',
+			$this->alias
+		);
+	}
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $name = 'League';
+
+	/**
+	 * Display field
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $displayField = 'display_league';
+
+	/**
+	 * Validation rules
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $validate = array(
 		'id' => array(
 			'uuid' => array(
@@ -67,94 +92,23 @@ class League extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	/**
+	 * belongsTo associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $belongsTo = array('LeagueType');
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'LeagueType' => array(
-			'className' => 'LeagueType',
-			'foreignKey' => 'league_type_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'LeagueGame' => array(
-			'className' => 'LeagueGame',
-			'foreignKey' => 'league_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'LeaguePlannedReferee' => array(
-			'className' => 'LeaguePlannedReferee',
-			'foreignKey' => 'league_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'RefereeRelation' => array(
-			'className' => 'RefereeRelation',
-			'foreignKey' => 'league_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'RefereeReport' => array(
-			'className' => 'RefereeReport',
-			'foreignKey' => 'league_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'TeamSeason' => array(
-			'className' => 'TeamSeason',
-			'foreignKey' => 'league_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+	/**
+	 * hasMany associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $hasMany = array('LeagueGame',  'LeaguePlannedReferee', 'RefereeRelation', 'RefereeReport', 'TeamSeason');
 
 }
+
+/* EOF */
+
