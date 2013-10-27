@@ -830,21 +830,40 @@ COMMENT = 'Referee\'s status.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_preferences`
+-- Table `rfrmgr_person_preferences`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_preferences` ;
+DROP TABLE IF EXISTS `rfrmgr_person_preferences` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_preferences` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_person_preferences` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `person_id` INT UNSIGNED NOT NULL ,
   `language` VARCHAR(10) NULL ,
+  `assignment_notification_interval` INT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   UNIQUE INDEX `sid_UNIQUE` (`person_id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'All database tables that have to be logged,';
+COMMENT = 'Preferences for a person.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_configuration`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_configuration` ;
+
+CREATE  TABLE IF NOT EXISTS `rfrmgr_configuration` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `default_contact_type` INT NULL ,
+  `default_country_code` VARCHAR(5) NULL ,
+  `default_area_code` VARCHAR(5) NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Preferences of the application.';
 
 
 
