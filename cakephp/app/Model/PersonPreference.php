@@ -3,24 +3,25 @@
 App::uses('AppModel', 'Model');
 
 /**
- * Person Model
+ * PersonPreference Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
  * @version 0.1
  * @since 0.1
  */
-class Person extends AppModel {
+class PersonPreference extends AppModel {
 
 	/**
-	 * Declare virtual field in constructor to be alias-safe.
+	 * Declare virtual display field in constructor to be alias-safe.
 	 *
 	 * @version 0.1
 	 * @since 0.1
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$this->virtualFields['title_person'] = sprintf(
-			'CONCAT(%1$s.name, ", ", %1$s.first_name)',
+		// I can't get this one working with person's name, so I program a simple (but possibly bad) workaround
+		$this->virtualFields['display_person_preference'] = sprintf(
+			'CONCAT(%1$s.id, "-", %1$s.person_id)',
 			$this->alias
 		);
 	}
@@ -33,7 +34,7 @@ class Person extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $name = 'Person';
+	public $name = 'PersonPreference';
 
 	/**
 	 * Display field
@@ -41,7 +42,8 @@ class Person extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $displayField = 'title_person';
+	public $displayField = 'display_person_preference';
+
 
 	/**
 	 * Validation rules
@@ -60,7 +62,7 @@ class Person extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'sex_type_id' => array(
+		'person_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -70,19 +72,9 @@ class Person extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'name' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'birthday' => array(
-			'date' => array(
-				'rule' => array('date'),
+		'assignment_notification_interval' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -98,15 +90,7 @@ class Person extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $belongsTo = array('SexType');
-
-	/**
-	 * hasMany associations
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public $hasMany = array('Contact', 'PersonPreferences', 'Picture', 'RefereeReportRecipient', 'Referee', 'Spokesperson', 'Tournament', 'User');
+	public $belongsTo = array('Person');
 
 }
 

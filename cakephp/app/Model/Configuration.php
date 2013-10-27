@@ -3,13 +3,13 @@
 App::uses('AppModel', 'Model');
 
 /**
- * Picture Model
+ * Configuration Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
  * @version 0.1
  * @since 0.1
  */
-class Picture extends AppModel {
+class Configuration extends AppModel {
 
 	/**
 	 * Model name.
@@ -19,7 +19,7 @@ class Picture extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $name = 'Picture';
+	public $name = 'Configuration';
 
 	/**
 	 * Display field
@@ -27,7 +27,8 @@ class Picture extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $displayField = 'url';
+	public $displayField = 'id';
+
 
 	/**
 	 * Validation rules
@@ -46,7 +47,7 @@ class Picture extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'person_id' => array(
+		'default_contact_type' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -56,25 +57,7 @@ class Picture extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'url' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 	);
-
-	/**
-	 * belongsTo associations
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public $belongsTo = array('Person');
 
 }
 
