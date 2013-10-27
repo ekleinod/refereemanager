@@ -849,11 +849,11 @@ COMMENT = 'Preferences for a person.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_configuration`
+-- Table `rfrmgr_configurations`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_configuration` ;
+DROP TABLE IF EXISTS `rfrmgr_configurations` ;
 
-CREATE  TABLE IF NOT EXISTS `rfrmgr_configuration` (
+CREATE  TABLE IF NOT EXISTS `rfrmgr_configurations` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `default_contact_type` INT NULL ,
   `default_country_code` VARCHAR(5) NULL ,
@@ -863,7 +863,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_configuration` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Preferences of the application.';
+COMMENT = 'Configuration of the application.';
 
 
 
