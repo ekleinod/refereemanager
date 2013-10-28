@@ -3,13 +3,13 @@
 App::uses('AppModel', 'Model');
 
 /**
- * DatabaseTable Model
+ * DatabaseColumn Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
  * @version 0.1
  * @since 0.1
  */
-class DatabaseTable extends AppModel {
+class DatabaseColumn extends AppModel {
 
 	/**
 	 * Model name.
@@ -19,7 +19,7 @@ class DatabaseTable extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $name = 'DatabaseTable';
+	public $name = 'DatabaseColumn';
 
 	/**
 	 * Display field
@@ -27,7 +27,7 @@ class DatabaseTable extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $displayField = 'table_name';
+	public $displayField = 'column_name';
 
 	/**
 	 * Validation rules
@@ -41,7 +41,7 @@ class DatabaseTable extends AppModel {
 				'rule' => array('uuid'),
 			),
 		),
-		'table_name' => array(
+		'column_name' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 			),
