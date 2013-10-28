@@ -50,6 +50,9 @@ class Url extends AppModel {
 			'notempty' => array(
 				'rule' => array('notempty'),
 			),
+			'url' => array(
+				'rule' => array('url'),
+			),
 		),
 	);
 
