@@ -1,128 +1,100 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * RefereeAssignment Model
  *
- * @property Assignment $Assignment
- * @property RefereeAssignmentType $RefereeAssignmentType
- * @property Referee $Referee
- * @property AssignmentStatusType $AssignmentStatusType
- * @property AssignmentRemark $AssignmentRemark
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class RefereeAssignment extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'id';
+	/**
+	 * Declare virtual display field in constructor to be alias-safe.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		// I can't get this one working with referee's name and game number
+		$this->virtualFields['display_referee_assignment'] = sprintf(
+			'CONCAT(%1$s.id, "-", %1$s.referee_id)',
+			$this->alias
+		);
+	}
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $name = 'RefereeAssignment';
+
+	/**
+	 * Display field
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $displayField = 'display_referee_assignment';
+
+	/**
+	 * Validation rules
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $validate = array(
 		'id' => array(
 			'uuid' => array(
 				'rule' => array('uuid'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'assignment_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'referee_assignment_type_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'referee_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'assignment_status_type_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 			),
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	/**
+	 * belongsTo associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $belongsTo = array('Assignment', 'RefereeAssignmentType', 'Referee', 'AssignmentStatusType');
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Assignment' => array(
-			'className' => 'Assignment',
-			'foreignKey' => 'assignment_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'RefereeAssignmentType' => array(
-			'className' => 'RefereeAssignmentType',
-			'foreignKey' => 'referee_assignment_type_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Referee' => array(
-			'className' => 'Referee',
-			'foreignKey' => 'referee_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'AssignmentStatusType' => array(
-			'className' => 'AssignmentStatusType',
-			'foreignKey' => 'assignment_status_type_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'AssignmentRemark' => array(
-			'className' => 'AssignmentRemark',
-			'foreignKey' => 'referee_assignment_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+	/**
+	 * hasMany associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $hasMany = array('AssignmentRemark');
 
 }
+
+/* EOF */
+

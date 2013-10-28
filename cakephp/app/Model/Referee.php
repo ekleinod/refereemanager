@@ -19,7 +19,7 @@ class Referee extends AppModel {
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		// I can't get this one working with person's name, so I program a simple (but possibly bad) workaround
+		// I can't get this one working with other tables
 		$this->virtualFields['display_referee'] = sprintf(
 			'CONCAT(%1$s.id, "-", %1$s.person_id)',
 			$this->alias
@@ -43,7 +43,6 @@ class Referee extends AppModel {
 	 * @since 0.1
 	 */
 	public $displayField = 'display_referee';
-
 
 	/**
 	 * Validation rules
