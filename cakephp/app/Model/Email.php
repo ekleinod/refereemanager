@@ -19,7 +19,7 @@ class Email extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $name = 'Referee';
+	public $name = 'Email';
 
 	/**
 	 * Display field
