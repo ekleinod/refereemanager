@@ -62,7 +62,6 @@ class AppController extends Controller {
 
 	/**
 	 * Defines actions to perform before the action method is executed.
-	 *
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();

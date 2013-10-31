@@ -12,8 +12,20 @@ App::uses('RefManRefereeFormat', 'Utility');
  */
 class RefereesController extends AppController {
 
-	/** Needed helper classes. */
+	/** Helper classes. */
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
+
+	/** Models. */
+	public $uses = array('Referee', 'League', 'RefereeRelationType');
+
+	/**
+	 * Defines actions to perform before the action method is executed.
+	 */
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->League->recursive = -1;
+		$this->RefereeRelationType->recursive = -1;
+	}
 
 	/**
 	 * Index method.
@@ -154,9 +166,6 @@ class RefereesController extends AppController {
 		// clean referee array
 		$arrReturn = array();
 
-		// member club
-		$memberRelationTypeID = $this->getMemberRelationTypeID();
-
 		// add club, picture, contacts
 		$this->loadModel('Club');
 		$this->Club->recursive = -1;
@@ -185,18 +194,37 @@ class RefereesController extends AppController {
 
 			if ($useReferee) {
 
+				$refTemp['Referee'] = $referee['Referee'];
 				$refTemp['Person'] = $referee['Person'];
-/*
-				// club
+
+				$refTemp['RefereeRelation'] = array();
 				foreach ($referee['RefereeRelation'] as $refereeRelation) {
-					if ($refereeRelation['referee_relation_type_id'] == $memberRelationTypeID) {
+					if ($refereeRelation['referee_relation_type_id'] == $this->RefereeRelationType->getRelationTypeID(RefereeRelationType::SID_MEMBER)) {
+						$refTemp['RefereeRelation'][RefereeRelationType::SID_MEMBER] = $this->Club->findById($refereeRelation['club_id']);
+					}
+					if ($refereeRelation['referee_relation_type_id'] == $this->RefereeRelationType->getRelationTypeID(RefereeRelationType::SID_REFFOR)) {
+						$memberClub = $this->Club->findById($refereeRelation['club_id']);
+						$refTemp['RefereeRelation'][RefereeRelationType::SID_REFFOR] = $this->Club->findById($refereeRelation['club_id']);
+					}
+					if ($refereeRelation['referee_relation_type_id'] == $this->RefereeRelationType->getRelationTypeID(RefereeRelationType::SID_PREFER)) {
 						if ($refereeRelation['club_id'] > 0) {
-							$memberClub = $this->Club->findById($refereeRelation['club_id']);
-							$referee['Club'] = $memberClub['Club'];
+							$refTemp['RefereeRelation'][RefereeRelationType::SID_PREFER][] = $this->Club->findById($refereeRelation['club_id']);
+						}
+						if ($refereeRelation['league_id'] > 0) {
+							$refTemp['RefereeRelation'][RefereeRelationType::SID_PREFER][] = $this->League->findById($refereeRelation['league_id']);
+						}
+					}
+					if ($refereeRelation['referee_relation_type_id'] == $this->RefereeRelationType->getRelationTypeID(RefereeRelationType::SID_NOASSIGNMENT)) {
+						if ($refereeRelation['club_id'] > 0) {
+							$refTemp['RefereeRelation'][RefereeRelationType::SID_NOASSIGNMENT][] = $this->Club->findById($refereeRelation['club_id']);
+						}
+						if ($refereeRelation['league_id'] > 0) {
+							$refTemp['RefereeRelation'][RefereeRelationType::SID_NOASSIGNMENT][] = $this->League->findById($refereeRelation['league_id']);
 						}
 					}
 				}
 
+/*
 				// picture
 				$picture = $this->Picture->findByPersonId($referee['Person']['id']);
 				if ($picture) {
@@ -378,21 +406,6 @@ class RefereesController extends AppController {
 		}
 
 		return $refereerelationtypes;
-	}
-
-	/**
-	 * Returns the member relation type id.
-	 *
-	 * @return member relation type id
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getMemberRelationTypeID() {
-		$this->loadModel('RefereeRelationType');
-		$this->RefereeRelationType->recursive = -1;
-		$memberRelationType = $this->RefereeRelationType->findBySid('member');
-		return $memberRelationType['RefereeRelationType']['id'];
 	}
 
 	/**

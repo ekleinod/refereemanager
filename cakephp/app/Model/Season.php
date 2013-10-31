@@ -73,6 +73,8 @@ class Season extends AppModel {
 	/**
 	 * Returns season for given start year.
 	 *
+	 * maybe later when I understand how to find things in a static method
+	 *
 	 * @param year start year of season (null == current season)
 	 * @return season for given start year, null if not present
 	 *
@@ -80,7 +82,6 @@ class Season extends AppModel {
 	 * @since 0.1
 	 */
 	public function getSeason($year = null) {
-		// maybe later when I understand how to find things in a static method
 		if ($year == null) {
 			$year = sprintf('%d', ((idate('m') < 8) ? (idate('Y') - 1) : idate('Y')));
 		}

@@ -76,6 +76,56 @@ class RefereeRelationType extends AppModel {
 	 */
 	public $hasMany = array('RefereeRelation');
 
+	// custom programming
+
+	/* Relation types. */
+	const SID_MEMBER = 'member';
+	const SID_REFFOR = 'reffor';
+	const SID_PREFER = 'prefer';
+	const SID_NOASSIGNMENT = 'noassignment';
+
+	/** Singleton for fast access to relation types. */
+	private $relationtypes = null;
+
+	/**
+	 * Returns relation type.
+	 *
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @param sid relation type's sid
+	 * @return relation type
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function getRelationType($sid) {
+		if ($this->relationtypes == null) {
+			$this->recursive = -1;
+			$this->relationtypes = array();
+			foreach ($this->find('all') as $relationtype) {
+				$this->relationtypes[$relationtype['RefereeRelationType']['sid']] = $relationtype['RefereeRelationType'];
+			}
+		}
+
+		return $this->relationtypes[$sid];
+	}
+
+	/**
+	 * Returns relation type's id.
+	 *
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @param sid relation type's sid
+	 * @return relation type's id
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function getRelationTypeID($sid) {
+		$relationtype = $this->getRelationType($sid);
+		return $relationtype['id'];
+	}
+
 }
 
 /* EOF */
