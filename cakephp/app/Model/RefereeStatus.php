@@ -66,17 +66,7 @@ class RefereeStatus extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'start_season_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'end_season_id' => array(
+		'season_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -94,22 +84,7 @@ class RefereeStatus extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $belongsTo = array('Referee', 'StatusType',
-		'StartSeason' => array(
-			'className' => 'Season',
-			'foreignKey' => 'start_season_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'EndSeason' => array(
-			'className' => 'Season',
-			'foreignKey' => 'end_season_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-	);
+	public $belongsTo = array('Referee', 'StatusType', 'Season');
 
 }
 
