@@ -16,15 +16,20 @@ class RefereesController extends AppController {
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Referee', 'League', 'RefereeRelationType');
+	public $uses = array('Referee', 'Club', 'Contact', 'League', 'Picture', 'RefereeRelationType', 'Season', 'StatusType', 'TrainingLevelType', 'TrainingUpdate');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
+		$this->Club->recursive = -1;
 		$this->League->recursive = -1;
+		$this->Picture->recursive = -1;
 		$this->RefereeRelationType->recursive = -1;
+		$this->StatusType->recursive = -1;
+		$this->TrainingLevelType->recursive = -1;
+		$this->TrainingUpdate->recursive = -1;
 	}
 
 	/**
@@ -70,7 +75,6 @@ class RefereesController extends AppController {
 	 */
 	private function setAndGetStandardIndexExport($season = null) {
 
-		$this->loadModel('Season');
 		$theSeason = $this->Season->getSeason($season);
 
 		$referees = $this->getReferees($theSeason);
@@ -163,21 +167,7 @@ class RefereesController extends AppController {
 		$referees = $this->Referee->find('all');
 		usort($referees, array('RefereesController', 'compareTo'));
 
-		// clean referee array
 		$arrReturn = array();
-
-		// add club, picture, contacts
-		$this->loadModel('Club');
-		$this->Club->recursive = -1;
-		$this->loadModel('Picture');
-		$this->Picture->recursive = -1;
-		$this->loadModel('Contact');
-		$this->loadModel('TrainingLevelType');
-		$this->TrainingLevelType->recursive = -1;
-		$this->loadModel('TrainingUpdate');
-		$this->TrainingUpdate->recursive = -1;
-		$this->loadModel('StatusType');
-		$this->StatusType->recursive = -1;
 
 		foreach ($referees as $referee) {
 
@@ -197,6 +187,7 @@ class RefereesController extends AppController {
 				$refTemp['Referee'] = $referee['Referee'];
 				$refTemp['Person'] = $referee['Person'];
 
+				// referee relations
 				$refTemp['RefereeRelation'] = array();
 				foreach ($referee['RefereeRelation'] as $refereeRelation) {
 					if ($refereeRelation['referee_relation_type_id'] == $this->RefereeRelationType->getRelationTypeID(RefereeRelationType::SID_MEMBER)) {
@@ -224,11 +215,10 @@ class RefereesController extends AppController {
 					}
 				}
 
-/*
 				// picture
 				$picture = $this->Picture->findByPersonId($referee['Person']['id']);
 				if ($picture) {
-					$referee['Picture'] = $picture['Picture'];
+					$refTemp['Picture'] = $picture['Picture'];
 				}
 
 				// contacts
@@ -237,7 +227,7 @@ class RefereesController extends AppController {
 				foreach ($contacts as $contact) {
 					foreach ($contactkinds as $contactkind) {
 						if ($contact[$contactkind]) {
-							$referee['Contact'][$contactkind][$contact['ContactType']['id']][] = $contact[$contactkind][0];
+							$refTemp['Contact'][$contactkind][$contact['ContactType']['id']][] = $contact[$contactkind][0];
 						}
 					}
 				}
@@ -250,30 +240,30 @@ class RefereesController extends AppController {
 						$useLevel = $trainingLevelType['TrainingLevelType']['rank'] > $referee['TrainingLevelInfo']['rank'];
 					}
 					if ($useLevel) {
-						$referee['TrainingLevelInfo'] = $trainingLevelType['TrainingLevelType'];
-						$referee['TrainingLevelInfo']['training_level_id'] = $trainingLevel['id'];
+						$refTemp['TrainingLevelInfo'] = $trainingLevelType['TrainingLevelType'];
+						$refTemp['TrainingLevelInfo']['training_level_id'] = $trainingLevel['id'];
 						if (!empty($trainingLevel['since'])) {
-							$referee['TrainingLevelInfo']['since'] = $trainingLevel['since'];
+							$refTemp['TrainingLevelInfo']['since'] = $trainingLevel['since'];
 						}
 					}
 				}
 
 				// last training update
-				$trainingupdate = $this->TrainingUpdate->findByTrainingLevelId($referee['TrainingLevelInfo']['training_level_id'], array(), array('TrainingUpdate.update' => 'desc'));
+				$trainingupdate = $this->TrainingUpdate->findByTrainingLevelId($refTemp['TrainingLevelInfo']['training_level_id'], array(), array('TrainingUpdate.update' => 'desc'));
 				if (!empty($trainingupdate) && !empty($trainingupdate['TrainingUpdate'])) {
-					$referee['TrainingLevelInfo']['lastupdate'] = $trainingupdate['TrainingUpdate']['update'];
+					$refTemp['TrainingLevelInfo']['lastupdate'] = $trainingupdate['TrainingUpdate']['update'];
 				}
-				if (!empty($referee['TrainingLevelInfo']['since'])) {
-					if (empty($referee['TrainingLevelInfo']['lastupdate']) || (strtotime($referee['TrainingLevelInfo']['since']) > strtotime($referee['TrainingLevelInfo']['lastupdate']))) {
-						$referee['TrainingLevelInfo']['lastupdate'] = $referee['TrainingLevelInfo']['since'];
+				if (!empty($refTemp['TrainingLevelInfo']['since'])) {
+					if (empty($refTemp['TrainingLevelInfo']['lastupdate']) || (strtotime($refTemp['TrainingLevelInfo']['since']) > strtotime($refTemp['TrainingLevelInfo']['lastupdate']))) {
+						$refTemp['TrainingLevelInfo']['lastupdate'] = $refTemp['TrainingLevelInfo']['since'];
 					}
 				}
 
 				// next training update
-				if (!empty($referee['TrainingLevelInfo']['lastupdate'])) {
-					$referee['TrainingLevelInfo']['nextupdate'] = strtotime('+2 years', strtotime($referee['TrainingLevelInfo']['lastupdate']));
+				if (!empty($refTemp['TrainingLevelInfo']['lastupdate'])) {
+					$refTemp['TrainingLevelInfo']['nextupdate'] = strtotime('+2 years', strtotime($refTemp['TrainingLevelInfo']['lastupdate']));
 				}
-*/
+
 //				$refTemp = $referee;
 
 				$arrReturn[] = $refTemp;
