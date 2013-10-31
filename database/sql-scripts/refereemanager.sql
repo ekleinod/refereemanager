@@ -819,8 +819,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_statuses` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `referee_id` INT UNSIGNED NOT NULL ,
   `status_type_id` INT UNSIGNED NOT NULL ,
-  `start_season_id` INT UNSIGNED NOT NULL ,
-  `end_season_id` INT UNSIGNED NULL ,
+  `season_id` INT UNSIGNED NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
