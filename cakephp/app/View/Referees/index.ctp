@@ -98,7 +98,7 @@
 		?>
 		<tbody>
 			<?php
-				foreach ($referees as $referee) {
+//				foreach ($referees as $referee) {
 			?>
 					<tr>
 						<?php if ($isReferee) { ?>
@@ -239,7 +239,9 @@
 							<?php echo $this->element('actions_table', array('id' => $referee['Referee']['id']));	?>
 						</td>
 					</tr>
-			<?php } ?>
+			<?php
+//				}
+			?>
 		</tbody>
 	</table>
 
@@ -272,5 +274,6 @@
 	}
 ?>
 
+<!--?php pr($statustypes); ?-->
 <?php pr($referees); ?>
 
