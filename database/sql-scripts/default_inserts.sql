@@ -76,7 +76,6 @@ START TRANSACTION;
 INSERT INTO `rfrmgr_status_types` (`sid`, `title`) VALUES ('many', 'many');
 INSERT INTO `rfrmgr_status_types` (`sid`, `title`) VALUES ('normal', 'normal');
 INSERT INTO `rfrmgr_status_types` (`sid`, `title`) VALUES ('inactiveseason', 'inactiveseason');
-INSERT INTO `rfrmgr_status_types` (`sid`, `title`) VALUES ('inactive', 'inactive');
 INSERT INTO `rfrmgr_status_types` (`sid`, `title`) VALUES ('other', 'other');
 
 COMMIT;
