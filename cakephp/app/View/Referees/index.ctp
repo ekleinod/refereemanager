@@ -49,7 +49,9 @@
 				}
 				$statustype['outputstyle'] = $style;
 
-				if ($statustype['is_special']) {
+				if (($statustype['sid'] == StatusType::SID_MANY) ||
+						($statustype['sid'] == StatusType::SID_INACTIVESEASON) ||
+						($statustype['sid'] == StatusType::SID_OTHER)) {
 		?>
 			<li style="<?php echo $statustype['outputstyle']; ?>"><?php echo ($statustype['remark']) ? h($statustype['remark']) : h($statustype['title']); ?></li>
 		<?php
@@ -248,7 +250,9 @@
 	<h3><?php echo __('Zusatzinformationen'); ?></h3>
 	<?php
 		foreach ($statustypes as $outstatustype) {
-			if ($outstatustype['is_special']) {
+			if (($outstatustype['sid'] == StatusType::SID_MANY) ||
+					($outstatustype['sid'] == StatusType::SID_INACTIVESEASON) ||
+					($outstatustype['sid'] == StatusType::SID_OTHER)) {
 	?>
 		<p><strong><?php echo ($outstatustype['remark']) ? h($outstatustype['remark']) : h($outstatustype['title']); ?></strong></p>
 		<p>
@@ -274,6 +278,6 @@
 	}
 ?>
 
-<!--?php pr($statustypes); ?-->
+<?php pr($statustypes); ?>
 <?php pr($referees); ?>
 

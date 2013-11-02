@@ -39,31 +39,16 @@ class StatusType extends AppModel {
 		'id' => array(
 			'uuid' => array(
 				'rule' => array('uuid'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'sid' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'title' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 	);
@@ -75,6 +60,14 @@ class StatusType extends AppModel {
 	 * @since 0.1
 	 */
 	public $hasMany = array('Referee');
+
+	// custom programming
+
+	/* Status types. */
+	const SID_MANY = 'many';
+	const SID_NORMAL = 'normal';
+	const SID_INACTIVESEASON = 'inactiveseason';
+	const SID_OTHER = 'other';
 
 }
 

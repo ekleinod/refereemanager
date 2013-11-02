@@ -163,12 +163,10 @@ class RefereesController extends AppController {
 	 * @since 0.1
 	 */
 	private function getReferees($season) {
-		// find referees
 		$referees = $this->Referee->find('all');
 		usort($referees, array('RefereesController', 'compareTo'));
 
 		$arrReturn = array();
-
 		foreach ($referees as $referee) {
 
 			$refTemp = $this->fillReferee($referee, $season);
@@ -311,20 +309,20 @@ class RefereesController extends AppController {
 	 * @since 0.1
 	 */
 	private function getStatusTypes($referees, $season) {
-		$this->loadModel('StatusType');
-		$this->StatusType->recursive = -1;
-
 		$statustypes = array();
-		foreach ($this->StatusType->find('all') as $statustype) {
-			$statustypes[$statustype['StatusType']['id']] = $statustype['StatusType'];
-		}
-		ksort($statustypes);
 
 		foreach ($referees as $referee) {
-//			if ($statustypes[$referee['StatusType']['id']]['is_special']) {
-//				$statustypes[$referee['RefereeStatus']['id']]['referees'][] = $referee['Person'];
-//			}
+			if (!array_key_exists($referee['RefereeStatus']['sid'], $statustypes)) {
+				$statustypes[$referee['RefereeStatus']['sid']] = $referee['RefereeStatus'];
+			}
+			if (($referee['RefereeStatus']['sid'] == StatusType::SID_MANY) ||
+					($referee['RefereeStatus']['sid'] == StatusType::SID_INACTIVESEASON) ||
+					($referee['RefereeStatus']['sid'] == StatusType::SID_OTHER)) {
+				$statustypes[$referee['RefereeStatus']['sid']]['referees'][] = $referee['Person'];
+			}
 		}
+
+		ksort($statustypes);
 
 		return $statustypes;
 	}
