@@ -214,7 +214,7 @@
 						<td data-title="<?php echo __('Ausbildung'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 							$text = '';
 							if (!empty($referee['TrainingLevelInfo'])) {
-								$text .= __($referee['TrainingLevelInfo']['abbreviation']);
+								$text .= $this->Html->link($referee['TrainingLevelInfo']['abbreviation'], array('controller' => 'trainingleveltype', 'action' => 'view', $referee['TrainingLevelInfo']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
 							}
 							echo $text;
 						?></td>
