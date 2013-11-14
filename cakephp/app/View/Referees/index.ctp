@@ -68,27 +68,34 @@
 				if ($isReferee) {
 					$columns[] = __('Bild');
 				}
+
 				$columns[] = __('Name');
 				$columns[] = __('Vorname');
 				$columns[] = __('Mitglied');
+
 				if ($hasreffor) {
 					$columns[] = __('Schiedst für');
 				}
+
 				if ($isReferee) {
 					$columns[] = __('E-Mail');
 					$columns[] = __('Telefon');
 				}
+
 				if ($isEditor) {
 					$columns[] = __('Adresse');
 					$columns[] = __('Geschlecht');
 					$columns[] = __('Geburtstag');
 				}
+
 				$columns[] = __('Ausbildung');
+
 				if ($isEditor) {
 					$columns[] = __('Letzte Fortbildung');
 					$columns[] = __('Nächste Fortbildung');
 					$columns[] = __('Anmerkung');
 				}
+
 				$columns[] = __('Aktionen');
 			$table = array('thead', 'tfoot');
 
