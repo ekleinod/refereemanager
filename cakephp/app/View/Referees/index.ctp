@@ -202,7 +202,7 @@
 
 							<td data-title="<?php echo __('Geschlecht'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								$text = '';
-								$text .= __($sextypes[$referee['Person']['sex_type_id']]['title']);
+								$text .= __($referee['SexType']['title']);
 								echo $text;
 							?></td>
 

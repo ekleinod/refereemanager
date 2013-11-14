@@ -39,31 +39,16 @@ class SexType extends AppModel {
 		'id' => array(
 			'uuid' => array(
 				'rule' => array('uuid'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'sid' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'title' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 	);
@@ -75,6 +60,39 @@ class SexType extends AppModel {
 	 * @since 0.1
 	 */
 	public $hasMany = array('Person', 'RefereeRelation');
+
+	// custom programming
+
+	/* Relation types. */
+	const SID_FEMALE = 'female';
+	const SID_MALE = 'male';
+	const SID_OTHER = 'other';
+
+	/** Singleton for fast access to sex types. */
+	private $sextypes = null;
+
+	/**
+	 * Returns sex type.
+	 *
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @param sid sex type's sid
+	 * @return sex type
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function getSexType($sid) {
+		if ($this->sextypes == null) {
+			$this->recursive = -1;
+			$this->sextypes = array();
+			foreach ($this->find('all') as $sextype) {
+				$this->sextypes[$sextype['SexType']['sid']] = $sextype['SexType'];
+			}
+		}
+
+		return $this->sextypes[$sid];
+	}
 
 }
 

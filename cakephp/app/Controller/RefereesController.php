@@ -16,7 +16,7 @@ class RefereesController extends AppController {
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Referee', 'Club', 'Contact', 'ContactType', 'League', 'Picture', 'RefereeRelationType', 'Season', 'StatusType', 'TrainingLevelType', 'TrainingUpdate');
+	public $uses = array('Referee', 'Club', 'Contact', 'ContactType', 'League', 'Picture', 'RefereeRelationType', 'Season', 'SexType', 'StatusType', 'TrainingLevelType', 'TrainingUpdate');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
@@ -29,6 +29,7 @@ class RefereesController extends AppController {
 		$this->League->recursive = -1;
 		$this->Picture->recursive = -1;
 		$this->RefereeRelationType->recursive = -1;
+		$this->SexType->recursive = -1;
 		$this->StatusType->recursive = -1;
 		$this->TrainingLevelType->recursive = -1;
 		$this->TrainingUpdate->recursive = -1;
@@ -86,7 +87,6 @@ class RefereesController extends AppController {
 		$this->set('statustypes', $this->getStatusTypes($referees, $theSeason));
 		$this->set('hasreffor', $this->hasRefFor($referees));
 		$this->set('contacttypes', $this->getContactTypes());
-//		$this->set('sextypes', $this->getSexTypes());
 	}
 
 	/**
@@ -217,6 +217,7 @@ class RefereesController extends AppController {
 
 		$refTemp = array();
 
+		// referee status
 		$useReferee = false;
 		foreach ($referee['RefereeStatus'] as $refereestatus) {
 			if ($season == null) {
@@ -315,6 +316,10 @@ class RefereesController extends AppController {
 			$refTemp['TrainingLevelInfo']['nextupdate'] = strtotime('+2 years', strtotime($refTemp['TrainingLevelInfo']['lastupdate']));
 		}
 
+		// sex type
+		$temp = $this->SexType->findById($refTemp['Person']['sex_type_id']);
+		$refTemp['SexType'] = $temp['SexType'];
+
 //				$refTemp = $referee;
 
 		return $refTemp;
@@ -366,42 +371,6 @@ class RefereesController extends AppController {
 	}
 
 	/**
-	 * Returns the sex types.
-	 *
-	 * @todo: maybe this method (and the other methods using static variables)
-	 * can be static too, but at the moment I don't know how to load and use models static
-	 *
-	 * @return array of sex types
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getSexTypes() {
-		$this->loadModel('SexType');
-		$this->SexType->recursive = -1;
-
-		$sextypes = array();
-		foreach ($this->SexType->find('all') as $sextype) {
-			$sextypes[$sextype['SexType']['id']] = $sextype['SexType'];
-		}
-		return $sextypes;
-	}
-
-	/**
-	 * Returns the sex type array for use in select fields.
-	 *
-	 * @return array of sex types
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getSexTypeArray() {
-		$this->loadModel('SexType');
-		$this->SexType->recursive = -1;
-		return $this->SexType->find('list');
-	}
-
-	/**
 	 * Returns the club array for use in select fields.
 	 *
 	 * @return array of club
@@ -421,9 +390,6 @@ class RefereesController extends AppController {
 
 	/**
 	 * Returns the referee relation types.
-	 *
-	 * @todo: maybe this method (and the other methods using static variables)
-	 * can be static too, but at the moment I don't know how to load and use models static
 	 *
 	 * @return array of referee relation types
 	 *
