@@ -33,11 +33,11 @@
 
 		// start table
 		$this->PhpExcel->createWorksheet();
-		$this->PhpExcel->setDefaultFont('', 11, PHPExcel_Style_Alignment::VERTICAL_TOP, PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+		$this->PhpExcel->setDefaultFont(null, 11, PHPExcel_Style_Alignment::VERTICAL_TOP, PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
 		// meta information
-//		$this->PhpExcel->addTableRow(array('text' => array(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))), array('font-weight' => 'bold', 'font-size' => 14));
-//		$this->PhpExcel->addTableRow(array());
+		$this->PhpExcel->addTableRow(array('text' => array(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))), array('font-weight' => 'normal', 'font-size' => 14));
+		$this->PhpExcel->addTableRow(array());
 
 		// header
 		$header = array();
@@ -67,7 +67,7 @@
 				$header[] = array('text' => __('Anmerkung'));
 			}
 
-		$this->PhpExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), 0, true);
+		$this->PhpExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
 
 		if (empty($referees)) {
 			$this->PhpExcel->addTableTexts(__('Es sind keine Schiedsrichter_innen gespeichert.'));
