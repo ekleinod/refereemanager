@@ -16,14 +16,16 @@ class RefereesController extends AppController {
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Referee', 'Club', 'Contact', 'League', 'Picture', 'RefereeRelationType', 'Season', 'StatusType', 'TrainingLevelType', 'TrainingUpdate');
+	public $uses = array('Referee', 'Club', 'Contact', 'ContactType', 'League', 'Picture', 'RefereeRelationType', 'Season', 'StatusType', 'TrainingLevelType', 'TrainingUpdate');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
+
 		$this->Club->recursive = -1;
+		$this->ContactType->recursive = -1;
 		$this->League->recursive = -1;
 		$this->Picture->recursive = -1;
 		$this->RefereeRelationType->recursive = -1;
@@ -83,8 +85,8 @@ class RefereesController extends AppController {
 		$this->set('season', $theSeason);
 		$this->set('statustypes', $this->getStatusTypes($referees, $theSeason));
 		$this->set('hasreffor', $this->hasRefFor($referees));
+		$this->set('contacttypes', $this->getContactTypes());
 //		$this->set('sextypes', $this->getSexTypes());
-//		$this->set('contacttypes', $this->getContactTypes());
 	}
 
 	/**
@@ -356,8 +358,6 @@ class RefereesController extends AppController {
 	 * @since 0.1
 	 */
 	private function getContactTypes() {
-		$this->loadModel('ContactType');
-		$this->ContactType->recursive = -1;
 		$contacttypes = array();
 		foreach ($this->ContactType->find('all') as $contacttype) {
 			$contacttypes[$contacttype['ContactType']['id']] = $contacttype['ContactType'];

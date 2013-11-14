@@ -86,7 +86,7 @@
 								$text .= "\n";
 							}
 							if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
-								$text .=  __('%s: ', $contacttypes[$contacttype]['short']);
+								$text .=  __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 							}
 							$text .= $this->RefereeFormat->formatEMail($email, 'text');
 							$hasMore = true;
@@ -107,7 +107,7 @@
 								$text .= "\n";
 							}
 							if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
-								$text .= __('%s: ', $contacttypes[$contacttype]['short']);
+								$text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 							}
 							$text .= $this->RefereeFormat->formatPhone($phone, 'normal');
 							$hasMore = true;
@@ -130,7 +130,7 @@
 								$text .= '\n';
 							}
 							if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
-								$text .= __('%s: ', $contacttypes[$contacttype]['short']);
+								$text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 							}
 							$text .= $this->RefereeFormat->formatAddress($address, 'fulladdress');
 							$hasMore = true;
