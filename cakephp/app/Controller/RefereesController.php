@@ -409,24 +409,6 @@ class RefereesController extends AppController {
 	}
 
 	/**
-	 * Returns the training level types.
-	 *
-	 * @return array of training level types
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getTrainingLevelTypes() {
-		$this->loadModel('TrainingLevelType');
-		$this->TrainingLevelType->recursive = -1;
-		$trainingleveltypes = array();
-		foreach ($this->TrainingLevelType->find('all') as $trainingleveltype) {
-			$trainingleveltypes[$trainingleveltype['TrainingLevelType']['id']] = $trainingleveltype['TrainingLevelType'];
-		}
-		return $trainingleveltypes;
-	}
-
-	/**
 	 * Compare two objects.
 	 *
 	 * @param a first object
