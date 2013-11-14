@@ -82,6 +82,7 @@ class RefereesController extends AppController {
 		$this->set('referees', $referees);
 		$this->set('season', $theSeason);
 		$this->set('statustypes', $this->getStatusTypes($referees, $theSeason));
+		$this->set('hasreffor', $this->hasRefFor($referees));
 //		$this->set('sextypes', $this->getSexTypes());
 //		$this->set('contacttypes', $this->getContactTypes());
 	}
@@ -178,6 +179,25 @@ class RefereesController extends AppController {
 		}
 
 		return $arrReturn;
+	}
+
+	/**
+	 * Returns if there are referees with reffor links.
+	 *
+	 * @param $referees array of referees
+	 * @return are there referees with reffor links (true), or not (false)
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	private function hasRefFor($referees) {
+		foreach ($referees as $referee) {
+			if (array_key_exists(RefereeRelationType::SID_REFFOR, $referee['RefereeRelation'])) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

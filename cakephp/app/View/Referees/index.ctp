@@ -71,7 +71,9 @@
 				$columns[] = __('Name');
 				$columns[] = __('Vorname');
 				$columns[] = __('Mitglied');
-				$columns[] = __('Schiedst für');
+				if ($hasreffor) {
+					$columns[] = __('Schiedst für');
+				}
 				if ($isReferee) {
 					$columns[] = __('E-Mail');
 					$columns[] = __('Telefon');
@@ -121,11 +123,13 @@
 							}
 						?></td>
 
-						<td data-title="<?php echo __('Schiedst für'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
-							if (!empty($referee['RefereeRelation']['reffor'])) {
-								echo $this->Html->link($referee['RefereeRelation']['reffor']['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $referee['RefereeRelation']['reffor']['Club']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
-							}
-						?></td>
+						<?php if ($hasreffor) { ?>
+							<td data-title="<?php echo __('Schiedst für'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
+								if (!empty($referee['RefereeRelation']['reffor'])) {
+									echo $this->Html->link($referee['RefereeRelation']['reffor']['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $referee['RefereeRelation']['reffor']['Club']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
+								}
+							?></td>
+						<?php } ?>
 
 						<?php if ($isReferee) { ?>
 							<td data-title="<?php echo __('E-Mail'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
