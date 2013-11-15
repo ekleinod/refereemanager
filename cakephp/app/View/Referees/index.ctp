@@ -208,9 +208,7 @@
 							?></td>
 
 							<td data-title="<?php echo __('Geschlecht'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
-								$text = '';
-								$text .= __($referee['SexType']['title']);
-								echo $text;
+								echo __($referee['SexType']['title']);
 							?></td>
 
 							<td data-title="<?php echo __('Geburtstag'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
