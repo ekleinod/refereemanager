@@ -40,8 +40,8 @@
 
 		// header
 		$header = array();
-			$header[] = array('text' => __('Vorname'), 'width' => '15');
-			$header[] = array('text' => __('Name'));
+			$header[] = array('text' => __('Name'), 'width' => '15');
+			$header[] = array('text' => __('Vorname'));
 			$header[] = array('text' => __('Mitglied'));
 			if ($hasreffor) {
 				$header[] = array('text' => __('Schiedst für'));
@@ -77,9 +77,24 @@
 				$refformat = array();
 
 				$datarow = array();
-				$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'));
 				$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'name'));
-				$datarow[] = array('text' => (empty($referee['Club'])) ? '' : $referee['Club']['name']);
+				$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'));
+
+				// member club
+				$text = '';
+				if (!empty($referee['RefereeRelation']['member'])) {
+					$text .= $referee['RefereeRelation']['member']['Club']['name'];
+				}
+				$datarow[] = array('text' => $text);
+
+				// referee for
+				if ($hasreffor) {
+					$text = '';
+					if (!empty($referee['RefereeRelation']['reffor'])) {
+						$text .= $referee['RefereeRelation']['reffor']['Club']['name'];
+					}
+					$datarow[] = array('text' => $text);
+				}
 
 				if ($isReferee) {
 					// email
@@ -148,9 +163,7 @@
 					$datarow[] = array('text' => $text);
 
 					// sex
-					$text = '';
-					$text .= __($sextypes[$referee['Person']['sex_type_id']]['title']);
-					$datarow[] = array('text' => $text);
+					$datarow[] = array('text' => __($referee['SexType']['title']));
 
 					// birthday
 					$text = '';
@@ -182,9 +195,9 @@
 					}
 					$datarow[] = array('text' => $text);
 
-				}
+					$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
 
-				$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
+				}
 
 				$this->PHPExcel->addTableRow($datarow, $statustypes[$referee['StatusType']['id']]['outputstyle']);
 			}
@@ -193,7 +206,9 @@
 			$this->PHPExcel->addTableRow(array());
 			$this->PHPExcel->addTableRow(array('text' => array(__('Legende:'))), array('font-weight' => 'bold', 'font-size' => 10));
 			foreach ($statustypes as $statustype) {
-				if ($statustype['is_special']) {
+				if (($statustype['sid'] == StatusType::SID_MANY) ||
+						($statustype['sid'] == StatusType::SID_INACTIVESEASON) ||
+						($statustype['sid'] == StatusType::SID_OTHER)) {
 					$this->PHPExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), $statustype['outputstyle']);
 				}
 			}
@@ -201,7 +216,9 @@
 			$this->PHPExcel->addTableRow(array());
 			$this->PHPExcel->addTableRow(array('text' => array(__('Zusatzinformationen'))), array('font-weight' => 'bold', 'font-size' => 10));
 			foreach ($statustypes as $statustype) {
-				if ($statustype['is_special']) {
+				if (($statustype['sid'] == StatusType::SID_MANY) ||
+						($statustype['sid'] == StatusType::SID_INACTIVESEASON) ||
+						($statustype['sid'] == StatusType::SID_OTHER)) {
 					$this->PHPExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), array('font-weight' => 'bold', 'font-size' => 10));
 
 					$hasMore = false;
