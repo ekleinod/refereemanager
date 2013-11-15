@@ -32,12 +32,11 @@
 		}
 
 		// start table
-		$this->PhpExcel->createWorksheet();
-		$this->PhpExcel->setDefaultFont(null, 11, PHPExcel_Style_Alignment::VERTICAL_TOP, PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+		$this->PHPExcel->createWorksheet(null, 11, PHPExcel_Style_Alignment::VERTICAL_TOP, PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
 		// meta information
-		$this->PhpExcel->addTableRow(array('text' => array(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))), array('font-weight' => 'normal', 'font-size' => 14));
-		$this->PhpExcel->addTableRow(array());
+		$this->PHPExcel->addTableRow(array('text' => array(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))), array('font-weight' => 'normal', 'font-size' => 14));
+		$this->PHPExcel->addTableRow(array());
 
 		// header
 		$header = array();
@@ -67,10 +66,10 @@
 				$header[] = array('text' => __('Anmerkung'));
 			}
 
-		$this->PhpExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
+		$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
 
 		if (empty($referees)) {
-			$this->PhpExcel->addTableTexts(__('Es sind keine Schiedsrichter_innen gespeichert.'));
+			$this->PHPExcel->addTableTexts(__('Es sind keine Schiedsrichter_innen gespeichert.'));
 		} else {
 			// datarows
 			foreach ($referees as $referee) {
@@ -187,23 +186,23 @@
 
 				$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
 
-				$this->PhpExcel->addTableRow($datarow, $statustypes[$referee['StatusType']['id']]['outputstyle']);
+				$this->PHPExcel->addTableRow($datarow, $statustypes[$referee['StatusType']['id']]['outputstyle']);
 			}
 
 			// legend
-			$this->PhpExcel->addTableRow(array());
-			$this->PhpExcel->addTableRow(array('text' => array(__('Legende:'))), array('font-weight' => 'bold', 'font-size' => 10));
+			$this->PHPExcel->addTableRow(array());
+			$this->PHPExcel->addTableRow(array('text' => array(__('Legende:'))), array('font-weight' => 'bold', 'font-size' => 10));
 			foreach ($statustypes as $statustype) {
 				if ($statustype['is_special']) {
-					$this->PhpExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), $statustype['outputstyle']);
+					$this->PHPExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), $statustype['outputstyle']);
 				}
 			}
 
-			$this->PhpExcel->addTableRow(array());
-			$this->PhpExcel->addTableRow(array('text' => array(__('Zusatzinformationen'))), array('font-weight' => 'bold', 'font-size' => 10));
+			$this->PHPExcel->addTableRow(array());
+			$this->PHPExcel->addTableRow(array('text' => array(__('Zusatzinformationen'))), array('font-weight' => 'bold', 'font-size' => 10));
 			foreach ($statustypes as $statustype) {
 				if ($statustype['is_special']) {
-					$this->PhpExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), array('font-weight' => 'bold', 'font-size' => 10));
+					$this->PHPExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), array('font-weight' => 'bold', 'font-size' => 10));
 
 					$hasMore = false;
 					$text = '';
@@ -214,13 +213,13 @@
 						$text .= __($this->RefereeFormat->formatPerson($referee, 'fullname'));
 						$hasMore = true;
 					}
-					$this->PhpExcel->addTableTexts($text);
+					$this->PHPExcel->addTableTexts($text);
 				}
 			}
 		}
 
 		// output
-		$this->PhpExcel->output('VSR.xlsx');
+		$this->PHPExcel->output('VSR.xlsx');
 
 	} else {
 		throw new CakeException(__('Exporttyp "%s" nicht unterstützt!', $type));
