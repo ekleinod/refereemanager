@@ -38,11 +38,14 @@
 		$this->PHPExcel->addTableRow(array('text' => array(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))), array('font-weight' => 'normal', 'font-size' => 14));
 		$this->PHPExcel->addTableRow(array());
 
-		$this->PHPExcel->getXLS()->getProperties()->setCreator(__('RefereeManager'));
-		$this->PHPExcel->getXLS()->getProperties()->setLastModifiedBy(__('RefereeManager'));
-		$this->PHPExcel->getXLS()->getProperties()->setTitle(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')));
-		$this->PHPExcel->getXLS()->getProperties()->setSubject(__('Verbandsschiedsrichter BTTV'));
-		$this->PHPExcel->getXLS()->getProperties()->setDescription(__('Übersicht der Verbandsschiedsrichter, exportiert aus dem RefereeManager'));
+		$this->PHPExcel->getXLS()->getProperties()
+				->setCreator(__('RefereeManager'))
+				->setLastModifiedBy(__('RefereeManager'))
+				->setTitle(__('Verbandsschiedsrichter des BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))
+				->setSubject(__('Verbandsschiedsrichter des BTTV'))
+				->setDescription(__('Übersicht der Verbandsschiedsrichter, exportiert aus dem RefereeManager'))
+				->setKeywords(__('Verbandsschiedsrichter BTTV %s', $season['title_season']))
+				->setCategory(__('Schiedsrichterliste'));
 
 		// header
 		$header = array();
