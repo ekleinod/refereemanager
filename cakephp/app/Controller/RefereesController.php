@@ -85,7 +85,7 @@ class RefereesController extends AppController {
 		$this->set('referees', $referees);
 		$this->set('season', $theSeason);
 		$this->set('statustypes', $this->getStatusTypes($referees, $theSeason));
-		$this->set('hasreffor', $this->hasRefFor($referees));
+		$this->set('refereerelationtypes', $this->getRefereeRelationTypes($referees));
 		$this->set('contacttypes', $this->getContactTypes());
 	}
 
@@ -184,22 +184,25 @@ class RefereesController extends AppController {
 	}
 
 	/**
-	 * Returns if there are referees with reffor links.
+	 * Returns used referee relation types of referees.
 	 *
 	 * @param $referees array of referees
-	 * @return are there referees with reffor links (true), or not (false)
+	 * @return used referee relation types
 	 *
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	private function hasRefFor($referees) {
+	private function getRefereeRelationTypes($referees) {
+		$refereerelationtypes = array();
 		foreach ($referees as $referee) {
-			if (array_key_exists(RefereeRelationType::SID_REFFOR, $referee['RefereeRelation'])) {
-				return true;
+			foreach ($referee['RefereeRelation'] as $sid => $relations) {
+				if (!array_key_exists($sid, $refereerelationtypes)) {
+					$refereerelationtypes[$sid] = $this->RefereeRelationType->getRelationTypeBySID($sid);
+				}
 			}
 		}
 
-		return false;
+		return $refereerelationtypes;
 	}
 
 	/**
@@ -242,28 +245,11 @@ class RefereesController extends AppController {
 		// referee relations
 		$refTemp['RefereeRelation'] = array();
 		foreach ($referee['RefereeRelation'] as $refereeRelation) {
-			if ($refereeRelation['referee_relation_type_id'] == $this->RefereeRelationType->getRelationTypeID(RefereeRelationType::SID_MEMBER)) {
-				$refTemp['RefereeRelation'][RefereeRelationType::SID_MEMBER] = $this->Club->findById($refereeRelation['club_id']);
+			if ($refereeRelation['club_id'] > 0) {
+				$refTemp['RefereeRelation'][$this->RefereeRelationType->getRelationTypeSID($refereeRelation['referee_relation_type_id'])][] = $this->Club->findById($refereeRelation['club_id']);
 			}
-			if ($refereeRelation['referee_relation_type_id'] == $this->RefereeRelationType->getRelationTypeID(RefereeRelationType::SID_REFFOR)) {
-				$memberClub = $this->Club->findById($refereeRelation['club_id']);
-				$refTemp['RefereeRelation'][RefereeRelationType::SID_REFFOR] = $this->Club->findById($refereeRelation['club_id']);
-			}
-			if ($refereeRelation['referee_relation_type_id'] == $this->RefereeRelationType->getRelationTypeID(RefereeRelationType::SID_PREFER)) {
-				if ($refereeRelation['club_id'] > 0) {
-					$refTemp['RefereeRelation'][RefereeRelationType::SID_PREFER][] = $this->Club->findById($refereeRelation['club_id']);
-				}
-				if ($refereeRelation['league_id'] > 0) {
-					$refTemp['RefereeRelation'][RefereeRelationType::SID_PREFER][] = $this->League->findById($refereeRelation['league_id']);
-				}
-			}
-			if ($refereeRelation['referee_relation_type_id'] == $this->RefereeRelationType->getRelationTypeID(RefereeRelationType::SID_NOASSIGNMENT)) {
-				if ($refereeRelation['club_id'] > 0) {
-					$refTemp['RefereeRelation'][RefereeRelationType::SID_NOASSIGNMENT][] = $this->Club->findById($refereeRelation['club_id']);
-				}
-				if ($refereeRelation['league_id'] > 0) {
-					$refTemp['RefereeRelation'][RefereeRelationType::SID_NOASSIGNMENT][] = $this->League->findById($refereeRelation['league_id']);
-				}
+			if ($refereeRelation['league_id'] > 0) {
+				$refTemp['RefereeRelation'][$this->RefereeRelationType->getRelationTypeSID($refereeRelation['referee_relation_type_id'])][] = $this->League->findById($refereeRelation['league_id']);
 			}
 		}
 
@@ -379,33 +365,10 @@ class RefereesController extends AppController {
 	 * @since 0.1
 	 */
 	private function getClubArray() {
-		$this->loadModel('Club');
-		$this->Club->recursive = -1;
-
 		$clubarray = $this->Club->find('list');
 		asort($clubarray, SORT_LOCALE_STRING);
 
 		return $clubarray;
-	}
-
-	/**
-	 * Returns the referee relation types.
-	 *
-	 * @return array of referee relation types
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getRefereeRelationTypes() {
-		$this->loadModel('RefereeRelationType');
-		$this->RefereeRelationType->recursive = -1;
-
-		$refereerelationtypes = array();
-		foreach ($this->RefereeRelationType->find('all') as $refereerelationtype) {
-			$refereerelationtypes[$refereerelationtype['RefereeRelationType']['id']] = $refereerelationtype['RefereeRelationType'];
-		}
-
-		return $refereerelationtypes;
 	}
 
 	/**

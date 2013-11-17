@@ -71,10 +71,11 @@
 
 				$columns[] = __('Name');
 				$columns[] = __('Vorname');
-				$columns[] = __('Mitglied');
 
-				if ($hasreffor) {
-					$columns[] = __('Schiedst für');
+				foreach ($refereerelationtypes as $sid => $refereerelationtype) {
+					if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
+						$columns[] = __($refereerelationtype['title']);
+					}
 				}
 
 				if ($isReferee) {
@@ -124,19 +125,32 @@
 
 						<td data-title="<?php echo __('Vorname'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php echo $this->Html->link($this->RefereeFormat->formatPerson($referee['Person'], 'first_name'), array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle'])); ?></td>
 
-						<td data-title="<?php echo __('Mitglied'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
-							if (!empty($referee['RefereeRelation']['member'])) {
-								echo $this->Html->link($referee['RefereeRelation']['member']['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $referee['RefereeRelation']['member']['Club']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
-							}
-						?></td>
-
-						<?php if ($hasreffor) { ?>
-							<td data-title="<?php echo __('Schiedst für'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
-								if (!empty($referee['RefereeRelation']['reffor'])) {
-									echo $this->Html->link($referee['RefereeRelation']['reffor']['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $referee['RefereeRelation']['reffor']['Club']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
+						<?php
+							foreach ($refereerelationtypes as $sid => $refereerelationtype) {
+								if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
+						?>
+							<td data-title="<?php echo __($refereerelationtype['title']); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
+								$text = '';
+								$hasMore = false;
+								foreach ($refereerelationtypes as $sid => $refereerelationtype) {
+									if (array_key_exists($sid, $referee['RefereeRelation'])) {
+										foreach ($referee['RefereeRelation'][$sid] as $refereerelation) {
+											if ($hasMore) {
+												$text .= '<br />';
+											}
+											if (array_key_exists('Club', $refereerelation)) {
+												$text = $this->Html->link($refereerelation['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $refereerelation['Club']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
+											}
+											$hasMore = true;
+										}
+									}
 								}
+								echo $text;
 							?></td>
-						<?php } ?>
+						<?php
+								}
+							}
+						?>
 
 						<?php if ($isReferee) { ?>
 							<td data-title="<?php echo __('E-Mail'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
@@ -293,6 +307,6 @@
 	}
 ?>
 
-<!--?php pr($statustypes); ?-->
+<?php pr($refereerelationtypes); ?>
 <?php pr($referees); ?>
 

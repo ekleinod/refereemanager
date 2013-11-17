@@ -39,31 +39,16 @@ class RefereeRelationType extends AppModel {
 		'id' => array(
 			'uuid' => array(
 				'rule' => array('uuid'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'sid' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'title' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 	);
@@ -98,7 +83,7 @@ class RefereeRelationType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public function getRelationType($sid) {
+	public function getRelationTypeBySID($sid) {
 		if ($this->relationtypes == null) {
 			$this->recursive = -1;
 			$this->relationtypes = array();
@@ -122,8 +107,24 @@ class RefereeRelationType extends AppModel {
 	 * @since 0.1
 	 */
 	public function getRelationTypeID($sid) {
-		$relationtype = $this->getRelationType($sid);
+		$relationtype = $this->getRelationTypeBySID($sid);
 		return $relationtype['id'];
+	}
+
+	/**
+	 * Returns relation type's sid.
+	 *
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @param id relation type's id
+	 * @return relation type's sid
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function getRelationTypeSID($id) {
+		$relationtype = $this->findById($id);
+		return $relationtype['RefereeRelationType']['sid'];
 	}
 
 }
