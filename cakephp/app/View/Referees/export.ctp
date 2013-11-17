@@ -77,7 +77,7 @@
 
 		$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
 
-		if (!empty($referees)) {
+		if (empty($referees)) {
 			$this->PHPExcel->addTableTexts(__('Es sind keine Schiedsrichter_innen gespeichert.'));
 		} else {
 			// datarows
@@ -208,7 +208,7 @@
 
 				}
 
-				$this->PHPExcel->addTableRow($datarow, $statustypes[$referee['StatusType']['id']]['outputstyle']);
+				$this->PHPExcel->addTableRow($datarow, $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']);
 			}
 
 			// legend
