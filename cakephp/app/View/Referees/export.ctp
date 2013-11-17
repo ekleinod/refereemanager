@@ -38,6 +38,12 @@
 		$this->PHPExcel->addTableRow(array('text' => array(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))), array('font-weight' => 'normal', 'font-size' => 14));
 		$this->PHPExcel->addTableRow(array());
 
+		$this->PHPExcel->getXLS()->getProperties()->setCreator(__('RefereeManager'));
+		$this->PHPExcel->getXLS()->getProperties()->setLastModifiedBy(__('RefereeManager'));
+		$this->PHPExcel->getXLS()->getProperties()->setTitle(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')));
+		$this->PHPExcel->getXLS()->getProperties()->setSubject(__('Verbandsschiedsrichter BTTV'));
+		$this->PHPExcel->getXLS()->getProperties()->setDescription(__('Übersicht der Verbandsschiedsrichter, exportiert aus dem RefereeManager'));
+
 		// header
 		$header = array();
 			$header[] = array('text' => __('Name'), 'width' => '15');
