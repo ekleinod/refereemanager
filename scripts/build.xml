@@ -145,11 +145,6 @@
 		</copy>
 
 		<!-- View -->
-		<copy todir="${path:target}app${file.separator}View${file.separator}Assignments${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}Assignments${file.separator}">
-				<include name="*.ctp" />
-			</fileset>
-		</copy>
 		<copy todir="${path:target}app${file.separator}View${file.separator}Elements${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Elements${file.separator}">
 				<include name="**/*" />
@@ -166,6 +161,11 @@
 		<copy todir="${path:target}app${file.separator}View${file.separator}Layouts${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Layouts${file.separator}">
 				<include name="default.ctp" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}View${file.separator}RefereeAssignments${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}RefereeAssignments${file.separator}">
+				<include name="*.ctp" />
 			</fileset>
 		</copy>
 		<copy todir="${path:target}app${file.separator}View${file.separator}Referees${file.separator}" failonerror="false" overwrite="true">
