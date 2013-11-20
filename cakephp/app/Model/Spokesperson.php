@@ -1,87 +1,87 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * Spokesperson Model
  *
- * @property Person $Person
- * @property TeamSeason $TeamSeason
- * @property Club $Club
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class Spokesperson extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'id';
+	/**
+	 * Declare virtual display field in constructor to be alias-safe.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		// I can't get this one working with other tables
+		$this->virtualFields['display_spokesperson'] = sprintf(
+			'CONCAT(%1$s.id, "-", %1$s.person_id, "-", %1$s.team_season_id)',
+			$this->alias
+		);
+	}
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $name = 'Spokesperson';
+
+	/**
+	 * Display field
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $displayField = 'display_spokesperson';
+
+	/**
+	 * Validation rules
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $validate = array(
 		'id' => array(
 			'uuid' => array(
 				'rule' => array('uuid'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'person_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'team_season_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 			),
 		),
 		'club_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	/**
+	 * belongsTo associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $belongsTo = array('Person', 'TeamSeason', 'Club');
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'person_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'TeamSeason' => array(
-			'className' => 'TeamSeason',
-			'foreignKey' => 'team_season_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Club' => array(
-			'className' => 'Club',
-			'foreignKey' => 'club_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
 }
+
+/* EOF */
+

@@ -30,13 +30,14 @@ Da ich Deutsch als Mutterspreche spreche, können Sie natürlich jederzeit auch 
 
 <h3 id="structureandgitrepositories">Structure and git repositories</h3>
 
-<p>There are four git sources or downloads used for development:</p>
+<p>There are five sources or downloads used for development:</p>
 
 <ul>
 <li>CakePHP (<a href="http://cakephp.org/" title="CakePHP Homepage">Homepage</a>, <a href="git://github.com/cakephp/cakephp.git" title="CakePHP Git Access">Git</a>)</li>
 <li>phpMyAdmin (<a href="http://www.phpmyadmin.net/" title="phpMyAdmin Homepage">Homepage</a>, <a href="git://github.com/phpmyadmin/phpmyadmin.git" title="phpMyAdmin Git Access">Git</a>, <a href="http://www.phpmyadmin.net/home_page/downloads.php" title="phpMyAdmin Downloads">Downloads</a>)</li>
 <li>RefereeManager (<a href="http://sourceforge.net/projects/refereemanager/" title="RefereeManager Sourceforge Home">Homepage</a>, <a href="http://git.code.sf.net/p/refereemanager/code" title="RefereeManager Sourceforge Git Access">Git</a>)</li>
 <li>PHPExcel (<a href="http://phpexcel.codeplex.com/" title="PHPExcel Homepage">Homepage</a>, <a href="https://phpexcel.svn.codeplex.com/svn" title="PhpExcel SVN Access">SVN</a>)</li>
+<li>PHPExcelHelper (<a href="https://github.com/ekleinod/PHPExcelHelper" title="PHPExcelHelper Github Page">Homepage</a>, <a href="git://github.com/ekleinod/PHPExcelHelper.git" title="PHPExcelHelper Git Access">Git</a>)</li>
 </ul>
 
 <p>RefereeManager should be read/write if you want to develop, the other are read-only.</p>
@@ -82,6 +83,11 @@ This means, that the development files have to be copied to and from the corresp
 
 <dt>&lt;&#8230;&gt;/git/phpexcel/</dt>
 <dd>PHPExcel svn repository</dd>
+
+<dd>no development files here</dd>
+
+<dt>&lt;&#8230;&gt;/git/phpexcelhelper/</dt>
+<dd>PHPExcelHelper git repository</dd>
 
 <dd>no development files here</dd>
 </dl>
@@ -178,7 +184,7 @@ Include httpd.conf
 The linking solution:</p>
 
 <pre><code>$ cd /etc/apache2/
-$ sudo ln -s &lt;...&gt;/git/refereemanager/configuration/apache2/httpd.conf
+$ sudo ln -s &lt;...&gt;/git/refereemanager/configuration/apache2/ports.conf
 </code></pre>
 
 <h6 id="httpd.conf">httpd.conf</h6>
@@ -218,9 +224,29 @@ $ sudo ln -s &lt;...&gt;/git/refereemanager/configuration/apache2/sites-availabl
 
 <h4 id="knownproblems">Known problems</h4>
 
+<h5 id="apachedidnotstart">Apache did not start</h5>
+
 <p>If you choose to link the needed files, there may be problems in case you encrypt your home directory.
 In that case, the links can only be resolved after you log in.
 You have to restart <em>apache</em> every time you log in (see <a href="#apacheandphp">Apache and PHP</a>).</p>
+
+<h5 id="themysqlextensionismissing">The mysql extension is missing</h5>
+
+<p>Make sure you installed the <em>mysql</em> extension correctly <strong>and</strong> restarted <em>apache</em> (you figured <em>that</em> out by yourselves)</p>
+
+<p>If you use <code>localhost</code> you have to deactivate local file access with <code>LOAD DATA</code> statements
+In order to do that, edit <code>php.ini</code>, usually located in `/etc/php5/apache2/&#8217;.
+Uncomment the lines</p>
+
+<pre><code>mysql.allow_local_infile = On
+mysqli.allow_local_infile = On
+</code></pre>
+
+<p>as follows</p>
+
+<pre><code>;mysql.allow_local_infile = On
+;mysqli.allow_local_infile = On
+</code></pre>
 
 <h4 id="mysql">MySQL</h4>
 
@@ -241,6 +267,7 @@ In order to do this, follow these steps:</p>
 <li>copy phpMyAdmin</li>
 <li>copy CakePHP</li>
 <li>copy PHPExcel</li>
+<li>copy PHPExcelHelper</li>
 <li>copy RefereeManager</li>
 <li>setup database</li>
 <li>start development</li>
@@ -270,7 +297,8 @@ If you are not familiar with <em>ant</em>, refer to the <a href="http://ant.apac
 <pre><code>$ git clone git://github.com/cakephp/cakephp.git &lt;...&gt;/git/cakephp/
 </code></pre>
 
-<p>Clone the code of <em>phpMyAdmin</em>, alternatively download and unzip a version.</p>
+<p>Clone the code of <em>phpMyAdmin</em>, alternatively download and unzip a version.
+Due to the size of the sources I use a download here.</p>
 
 <pre><code>$ git clone git://github.com/phpmyadmin/phpmyadmin.git &lt;...&gt;/git/phpmyadmin/
 </code></pre>
@@ -278,6 +306,11 @@ If you are not familiar with <em>ant</em>, refer to the <a href="http://ant.apac
 <p>Checkout the code of <em>PHPExcel</em>.</p>
 
 <pre><code>$ svn checkout https://phpexcel.svn.codeplex.com/svn/trunk/ &lt;...&gt;/git/phpexcel/
+</code></pre>
+
+<p>Clone the code of <em>PHPExcelHelper</em>, alternatively download and unzip a version.</p>
+
+<pre><code>$ git clone git://github.com/ekleinod/PHPExcelHelper.git &lt;...&gt;/git/phpexcelhelper/
 </code></pre>
 
 <h4 id="createandlinkyourapachetargetdirectories">Create and link your apache target directories</h4>
@@ -321,6 +354,7 @@ Default structure is:</p>
         cakephp/
         phpmyadmin/
         phpexcel/
+        phpexcelhelper/
 </code></pre>
 
 <p>If your directory structure is the same, you do not have to change the configuration file.</p>
@@ -361,7 +395,7 @@ You find a configuration for the installation defaults in the RefereeManager rep
 
 <h4 id="copyphpmyadmin">Copy phpMyAdmin</h4>
 
-<p>Copy the <em>phpMyAdmin</em> files in your phpmyadmin apache directory.</p>
+<p>Copy the <em>phpMyAdmin</em> files to your phpmyadmin apache directory.</p>
 <dl>
 <dt>Ant target</dt>
 <dd><code>phpmyadmin2apache</code></dd>
@@ -388,7 +422,7 @@ You find a configuration for the installation defaults in the RefereeManager rep
 
 <h4 id="copycakephp">Copy CakePHP</h4>
 
-<p>Copy the <em>CakePHP</em> files in your refereemanager apache directory.</p>
+<p>Copy the <em>CakePHP</em> files to your refereemanager apache directory.</p>
 <dl>
 <dt>Ant target</dt>
 <dd><code>cakephp2apache</code></dd>
@@ -417,7 +451,7 @@ Be sure you don&#8217;t have unsaved changes before executing this step.</p>
 
 <h4 id="copyphpexcel">Copy PHPExcel</h4>
 
-<p>Copy the <em>PHPExcel</em> files in your refereemanager apache directory.</p>
+<p>Copy the <em>PHPExcel</em> files to your refereemanager apache directory.</p>
 <dl>
 <dt>Ant target</dt>
 <dd><code>phpexcel2apache</code></dd>
@@ -440,6 +474,32 @@ Be sure you don&#8217;t have unsaved changes before executing this step.</p>
 </ol>
 
 <p><em>Important:</em> Your <em>PHPExcel</em> files will be overwritten.</p>
+
+<h4 id="copyphpexcelhelper">Copy PHPExcelHelper</h4>
+
+<p>Copy the <em>PHPExcelHelper</em> files to your refereemanager apache directory.</p>
+<dl>
+<dt>Ant target</dt>
+<dd><code>phpexcelhelper2apache</code></dd>
+
+<dd>call: <code>ant phpexcelhelper2apache</code></dd>
+
+<dt>Source directory</dt>
+<dd><code>&lt;...&gt;/git/phpexcelhelper</code></dd>
+
+<dt>Target directory</dt>
+<dd><code>&lt;...&gt;/apache/refereemanager</code></dd>
+</dl>
+
+
+<p>The script executes the following steps:</p>
+
+<ol>
+<li>check if target directory exists &#8211; failure otherwise</li>
+<li>copy the helper file from source directory to target directory</li>
+</ol>
+
+<p><em>Important:</em> Your <em>PHPExcelHelper</em> files will be overwritten.</p>
 
 <h4 id="copyrefereemanager">Copy RefereeManager</h4>
 

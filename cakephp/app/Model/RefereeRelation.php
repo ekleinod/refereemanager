@@ -1,28 +1,40 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * RefereeRelation Model
  *
- * @property Referee $Referee
- * @property RefereeRelationType $RefereeRelationType
- * @property Club $Club
- * @property League $League
- * @property SexType $SexType
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class RefereeRelation extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $name = 'RefereeRelation';
+
+	/**
+	 * Display field
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $displayField = 'id';
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $validate = array(
 		'id' => array(
 			'uuid' => array(
@@ -64,6 +76,16 @@ class RefereeRelation extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'club_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
 		'sex_type_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
@@ -76,48 +98,15 @@ class RefereeRelation extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	/**
+	 * belongsTo associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $belongsTo = array('Referee', 'RefereeRelationType', 'Club', 'League', 'SexType');
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Referee' => array(
-			'className' => 'Referee',
-			'foreignKey' => 'referee_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'RefereeRelationType' => array(
-			'className' => 'RefereeRelationType',
-			'foreignKey' => 'referee_relation_type_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Club' => array(
-			'className' => 'Club',
-			'foreignKey' => 'club_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'League' => array(
-			'className' => 'League',
-			'foreignKey' => 'league_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'SexType' => array(
-			'className' => 'SexType',
-			'foreignKey' => 'sex_type_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
 }
+
+/* EOF */
+

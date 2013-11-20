@@ -3,13 +3,13 @@
 App::uses('AppModel', 'Model');
 
 /**
- * ContactType Model
+ * RefereeStatus Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
  * @version 0.1
  * @since 0.1
  */
-class ContactType extends AppModel {
+class RefereeStatus extends AppModel {
 
 	/**
 	 * Model name.
@@ -19,7 +19,7 @@ class ContactType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $name = 'ContactType';
+	public $name = 'RefereeStatus';
 
 	/**
 	 * Display field
@@ -27,7 +27,7 @@ class ContactType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $displayField = 'title';
+	public $displayField = 'id';
 
 	/**
 	 * Validation rules
@@ -41,25 +41,30 @@ class ContactType extends AppModel {
 				'rule' => array('uuid'),
 			),
 		),
-		'title' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+		'referee_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 			),
 		),
-		'abbreviation' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+		'status_type_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+			),
+		),
+		'season_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 			),
 		),
 	);
 
 	/**
-	 * hasMany associations
+	 * belongsTo associations
 	 *
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $hasMany = array('Contact');
+	public $belongsTo = array('Referee', 'StatusType', 'Season');
 
 }
 

@@ -1,31 +1,54 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * Person Model
  *
- * @property SexType $SexType
- * @property Contact $Contact
- * @property Picture $Picture
- * @property RefereeReportRecipient $RefereeReportRecipient
- * @property Referee $Referee
- * @property Spokesperson $Spokesperson
- * @property Tournament $Tournament
- * @property User $User
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class Person extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'name';
+	/**
+	 * Declare virtual field in constructor to be alias-safe.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['title_person'] = sprintf(
+			'CONCAT(%1$s.name, ", ", %1$s.first_name)',
+			$this->alias
+		);
+	}
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $name = 'Person';
+
+	/**
+	 * Display field
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $displayField = 'title_person';
+
+	/**
+	 * Validation rules
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $validate = array(
 		'id' => array(
 			'uuid' => array(
@@ -69,120 +92,23 @@ class Person extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	/**
+	 * belongsTo associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $belongsTo = array('SexType');
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'SexType' => array(
-			'className' => 'SexType',
-			'foreignKey' => 'sex_type_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'Contact' => array(
-			'className' => 'Contact',
-			'foreignKey' => 'person_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Picture' => array(
-			'className' => 'Picture',
-			'foreignKey' => 'person_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'RefereeReportRecipient' => array(
-			'className' => 'RefereeReportRecipient',
-			'foreignKey' => 'person_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Referee' => array(
-			'className' => 'Referee',
-			'foreignKey' => 'person_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Spokesperson' => array(
-			'className' => 'Spokesperson',
-			'foreignKey' => 'person_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Tournament' => array(
-			'className' => 'Tournament',
-			'foreignKey' => 'person_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'User' => array(
-			'className' => 'User',
-			'foreignKey' => 'person_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+	/**
+	 * hasMany associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $hasMany = array('Contact', 'PersonPreferences', 'Picture', 'RefereeReportRecipient', 'Referee', 'Spokesperson', 'Tournament', 'User');
 
 }
+
+/* EOF */
+

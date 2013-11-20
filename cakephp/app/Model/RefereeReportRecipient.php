@@ -1,79 +1,82 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * RefereeReportRecipient Model
  *
- * @property RefereeReport $RefereeReport
- * @property Person $Person
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class RefereeReportRecipient extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'id';
+	/**
+	 * Declare virtual display field in constructor to be alias-safe.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['display_referee_report_recipient'] = sprintf(
+			'CONCAT(%1$s.id, ": ", %1$s.referee_report_id, " - ", %1$s.person_id)',
+			$this->alias
+		);
+	}
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $name = 'RefereeReportRecipient';
+
+	/**
+	 * Display field
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $displayField = 'display_referee_report_recipient';
+
+
+	/**
+	 * Validation rules
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $validate = array(
 		'id' => array(
 			'uuid' => array(
 				'rule' => array('uuid'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'referee_report_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'person_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	/**
+	 * belongsTo associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $belongsTo = array('RefereeReport', 'Person');
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'RefereeReport' => array(
-			'className' => 'RefereeReport',
-			'foreignKey' => 'referee_report_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'person_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
 }
+
+/* EOF */
+

@@ -1,29 +1,40 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * Contact Model
  *
- * @property ContactType $ContactType
- * @property Person $Person
- * @property Address $Address
- * @property Email $Email
- * @property PhoneNumber $PhoneNumber
- * @property Url $Url
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class Contact extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $name = 'Contact';
+
+	/**
+	 * Display field
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $displayField = 'id';
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $validate = array(
 		'id' => array(
 			'uuid' => array(
@@ -59,86 +70,23 @@ class Contact extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'ContactType' => array(
-			'className' => 'ContactType',
-			'foreignKey' => 'contact_type_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'person_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+	/**
+	 * belongsTo associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $belongsTo = array('ContactType', 'Person');
 
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'Address' => array(
-			'className' => 'Address',
-			'foreignKey' => 'contact_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Email' => array(
-			'className' => 'Email',
-			'foreignKey' => 'contact_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'PhoneNumber' => array(
-			'className' => 'PhoneNumber',
-			'foreignKey' => 'contact_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Url' => array(
-			'className' => 'Url',
-			'foreignKey' => 'contact_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+	/**
+	 * hasMany associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $hasMany = array('Address', 'Email', 'PhoneNumber', 'Url');
 
 }
+
+/* EOF */
+

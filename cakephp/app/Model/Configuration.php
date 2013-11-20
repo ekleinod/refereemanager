@@ -3,13 +3,13 @@
 App::uses('AppModel', 'Model');
 
 /**
- * ContactType Model
+ * Configuration Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
  * @version 0.1
  * @since 0.1
  */
-class ContactType extends AppModel {
+class Configuration extends AppModel {
 
 	/**
 	 * Model name.
@@ -19,7 +19,7 @@ class ContactType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $name = 'ContactType';
+	public $name = 'Configuration';
 
 	/**
 	 * Display field
@@ -27,7 +27,7 @@ class ContactType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $displayField = 'title';
+	public $displayField = 'id';
 
 	/**
 	 * Validation rules
@@ -41,25 +41,12 @@ class ContactType extends AppModel {
 				'rule' => array('uuid'),
 			),
 		),
-		'title' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'abbreviation' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+		'default_contact_type' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 			),
 		),
 	);
-
-	/**
-	 * hasMany associations
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public $hasMany = array('Contact');
 
 }
 

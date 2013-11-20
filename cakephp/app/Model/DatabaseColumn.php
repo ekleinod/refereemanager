@@ -3,13 +3,13 @@
 App::uses('AppModel', 'Model');
 
 /**
- * ContactType Model
+ * DatabaseColumn Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
  * @version 0.1
  * @since 0.1
  */
-class ContactType extends AppModel {
+class DatabaseColumn extends AppModel {
 
 	/**
 	 * Model name.
@@ -19,7 +19,7 @@ class ContactType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $name = 'ContactType';
+	public $name = 'DatabaseColumn';
 
 	/**
 	 * Display field
@@ -27,7 +27,7 @@ class ContactType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $displayField = 'title';
+	public $displayField = 'column_name';
 
 	/**
 	 * Validation rules
@@ -41,12 +41,7 @@ class ContactType extends AppModel {
 				'rule' => array('uuid'),
 			),
 		),
-		'title' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'abbreviation' => array(
+		'column_name' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 			),
@@ -59,7 +54,7 @@ class ContactType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $hasMany = array('Contact');
+	public $hasMany = array('ActivityLog');
 
 }
 

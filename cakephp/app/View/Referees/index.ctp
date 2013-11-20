@@ -3,13 +3,14 @@
 
 <!-- view filters -->
 <div class="filter">
+	<p>Saison: <?php echo $season['title_season']; ?></p>
 </div>
 
 <!-- view content -->
 <?php
 	if (empty($referees)) {
 ?>
-	<p><?php echo __('Es sind keine Schiedsrichter gespeichert.'); ?></p>
+	<p><?php echo __('Es sind keine Schiedsrichter_innen gespeichert.'); ?></p>
 <?php
 	} else {
 ?>
@@ -48,7 +49,9 @@
 				}
 				$statustype['outputstyle'] = $style;
 
-				if ($statustype['is_special']) {
+				if (($statustype['sid'] == StatusType::SID_MANY) ||
+						($statustype['sid'] == StatusType::SID_INACTIVESEASON) ||
+						($statustype['sid'] == StatusType::SID_OTHER)) {
 		?>
 			<li style="<?php echo $statustype['outputstyle']; ?>"><?php echo ($statustype['remark']) ? h($statustype['remark']) : h($statustype['title']); ?></li>
 		<?php
@@ -65,24 +68,35 @@
 				if ($isReferee) {
 					$columns[] = __('Bild');
 				}
-				$columns[] = __('Vorname');
+
 				$columns[] = __('Name');
-				$columns[] = __('Verein');
+				$columns[] = __('Vorname');
+
+				foreach ($refereerelationtypes as $sid => $refereerelationtype) {
+					if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
+						$columns[] = __($refereerelationtype['title']);
+					}
+				}
+
 				if ($isReferee) {
 					$columns[] = __('E-Mail');
 					$columns[] = __('Telefon');
 				}
+
 				if ($isEditor) {
 					$columns[] = __('Adresse');
 					$columns[] = __('Geschlecht');
 					$columns[] = __('Geburtstag');
 				}
+
 				$columns[] = __('Ausbildung');
+
 				if ($isEditor) {
 					$columns[] = __('Letzte Fortbildung');
 					$columns[] = __('Nächste Fortbildung');
+					$columns[] = __('Anmerkung');
 				}
-				$columns[] = __('Anmerkung');
+
 				$columns[] = __('Aktionen');
 			$table = array('thead', 'tfoot');
 
@@ -100,25 +114,47 @@
 			?>
 					<tr>
 						<?php if ($isReferee) { ?>
-							<td data-title="<?php echo __('Bild'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+							<td data-title="<?php echo __('Bild'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								if (!empty($referee['Picture'])) {
-									echo $this->Html->image($referee['Picture']['url'], array('width' => '50', 'alt' => __('Bild von %s %s', $referee['Person']['first_name'], $referee['Person']['name']), 'title' => __('%s %s', $referee['Person']['first_name'], $referee['Person']['name'])));
+									echo $this->Html->link($this->Html->image($referee['Picture']['url'], array('width' => '50', 'alt' => __('Bild von %s %s', $referee['Person']['first_name'], $referee['Person']['name']), 'title' => __('%s %s', $referee['Person']['first_name'], $referee['Person']['name']))), $referee['Picture']['url'], array('escape' => false));
 								}
 							?></td>
 						<?php } ?>
 
-						<td data-title="<?php echo __('Vorname'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php echo $this->Html->link($this->RefereeFormat->formatPerson($referee['Person'], 'first_name'), array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle'])); ?></td>
+						<td data-title="<?php echo __('Name'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php echo $this->Html->link($this->RefereeFormat->formatPerson($referee['Person'], 'name'), array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));  ?></td>
 
-						<td data-title="<?php echo __('Name'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php echo $this->Html->link($this->RefereeFormat->formatPerson($referee['Person'], 'name'), array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));  ?></td>
+						<td data-title="<?php echo __('Vorname'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php echo $this->Html->link($this->RefereeFormat->formatPerson($referee['Person'], 'first_name'), array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle'])); ?></td>
 
-						<td data-title="<?php echo __('Club'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
-							if (!empty($referee['Club'])) {
-								echo $this->Html->link($referee['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $referee['Club']['id']), array('style' => $statustypes[$referee['StatusType']['id']]['outputstyle']));
+						<?php
+							foreach ($refereerelationtypes as $sid => $refereerelationtype) {
+								if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
+						?>
+							<td data-title="<?php echo __($refereerelationtype['title']); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
+								$text = '';
+								$hasMore = false;
+								if (array_key_exists($sid, $referee['RefereeRelation'])) {
+									foreach ($referee['RefereeRelation'][$sid] as $refereerelation) {
+										if ($hasMore) {
+											$text .= '; ';
+										}
+										if (array_key_exists('Club', $refereerelation)) {
+											$text .= $this->Html->link($refereerelation['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $refereerelation['Club']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
+										}
+										if (array_key_exists('League', $refereerelation)) {
+											$text .= $this->Html->link($refereerelation['League']['title'], array('controller' => 'leagues', 'action' => 'view', $refereerelation['League']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
+										}
+										$hasMore = true;
+									}
+								}
+								echo $text;
+							?></td>
+						<?php
+								}
 							}
-						?></td>
+						?>
 
 						<?php if ($isReferee) { ?>
-							<td data-title="<?php echo __('E-Mail'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+							<td data-title="<?php echo __('E-Mail'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								$text = '';
 								if (array_key_exists('Contact', $referee) && array_key_exists('Email', $referee['Contact'])) {
 									$hasMore = false;
@@ -130,7 +166,7 @@
 												$text .= '<br />';
 											}
 											if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
-												$text .= __('%s: ', $contacttypes[$contacttype]['short']);
+												$text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 											}
 											$text .= $this->RefereeFormat->formatEMail($email, 'link');
 											$hasMore = true;
@@ -140,7 +176,7 @@
 								echo $text;
 							?></td>
 
-							<td data-title="<?php echo __('Telefon'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+							<td data-title="<?php echo __('Telefon'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								$text = '';
 								if (array_key_exists('Contact', $referee) && array_key_exists('PhoneNumber', $referee['Contact'])) {
 									$hasMore = false;
@@ -152,7 +188,7 @@
 												$text .= '<br />';
 											}
 											if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
-												$text .= __('%s: ', $contacttypes[$contacttype]['short']);
+												$text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 											}
 											$text .= $this->RefereeFormat->formatPhone($phone, 'normal');
 											$hasMore = true;
@@ -164,7 +200,7 @@
 						<?php } ?>
 
 						<?php if ($isEditor) { ?>
-							<td data-title="<?php echo __('Adresse'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+							<td data-title="<?php echo __('Adresse'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								$text = '';
 								if (array_key_exists('Contact', $referee) && array_key_exists('Address', $referee['Contact'])) {
 									$hasMore = false;
@@ -176,7 +212,7 @@
 												$text .= '<br />';
 											}
 											if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
-												$text .= __('%s: ', $contacttypes[$contacttype]['short']);
+												$text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 											}
 											$text .= $this->RefereeFormat->formatAddress($address, 'fulladdress');
 											$hasMore = true;
@@ -186,13 +222,11 @@
 								echo $text;
 							?></td>
 
-							<td data-title="<?php echo __('Geschlecht'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
-								$text = '';
-								$text .= __($sextypes[$referee['Person']['sex_type_id']]['title']);
-								echo $text;
+							<td data-title="<?php echo __('Geschlecht'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
+								echo __($referee['SexType']['title']);
 							?></td>
 
-							<td data-title="<?php echo __('Geburtstag'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+							<td data-title="<?php echo __('Geburtstag'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								$text = '';
 								if (!empty($referee['Person']['birthday'])) {
 									$text .= $this->RefereeFormat->formatPerson($referee['Person'], 'birthday');
@@ -201,16 +235,16 @@
 							?></td>
 						<?php } ?>
 
-						<td data-title="<?php echo __('Ausbildung'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+						<td data-title="<?php echo __('Ausbildung'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 							$text = '';
 							if (!empty($referee['TrainingLevelInfo'])) {
-								$text .= __($referee['TrainingLevelInfo']['abbreviation']);
+								$text .= $this->Html->link($referee['TrainingLevelInfo']['abbreviation'], array('controller' => 'trainingleveltype', 'action' => 'view', $referee['TrainingLevelInfo']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
 							}
 							echo $text;
 						?></td>
 
 						<?php if ($isEditor) { ?>
-							<td data-title="<?php echo __('Letzte Fortbildung'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+							<td data-title="<?php echo __('Letzte Fortbildung'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								$text = '';
 								if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['lastupdate'])) {
 									$text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['lastupdate'], 'date');
@@ -218,33 +252,37 @@
 								echo $text;
 							?></td>
 
-							<td data-title="<?php echo __('Nächste Fortbildung'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
+							<td data-title="<?php echo __('Nächste Fortbildung'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								$text = '';
 								if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['nextupdate'])) {
 									$text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['nextupdate'], 'year');
 								}
 								echo $text;
 							?></td>
-						<?php } ?>
 
-						<td data-title="<?php echo __('Anmerkung'); ?>" style="<?php echo $statustypes[$referee['StatusType']['id']]['outputstyle']; ?>"><?php
-							if (!empty($referee['Person']['remark'])) {
-								echo h($referee['Person']['remark']);
-							}
-						?></td>
+							<td data-title="<?php echo __('Anmerkung'); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
+								if (!empty($referee['Person']['remark'])) {
+									echo h($referee['Person']['remark']);
+								}
+							?></td>
+						<?php } ?>
 
 						<td class="actions" data-title="<?php echo __('Aktionen'); ?>">
 							<?php echo $this->element('actions_table', array('id' => $referee['Referee']['id']));	?>
 						</td>
 					</tr>
-			<?php } ?>
+			<?php
+				}
+			?>
 		</tbody>
 	</table>
 
 	<h3><?php echo __('Zusatzinformationen'); ?></h3>
 	<?php
 		foreach ($statustypes as $outstatustype) {
-			if ($outstatustype['is_special']) {
+			if (($outstatustype['sid'] == StatusType::SID_MANY) ||
+					($outstatustype['sid'] == StatusType::SID_INACTIVESEASON) ||
+					($outstatustype['sid'] == StatusType::SID_OTHER)) {
 	?>
 		<p><strong><?php echo ($outstatustype['remark']) ? h($outstatustype['remark']) : h($outstatustype['title']); ?></strong></p>
 		<p>
@@ -270,5 +308,6 @@
 	}
 ?>
 
-<!--?php pr($referees); ?-->
+<?php pr($refereerelationtypes); ?>
+<?php pr($referees); ?>
 

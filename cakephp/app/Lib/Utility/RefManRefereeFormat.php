@@ -61,9 +61,10 @@ class RefManRefereeFormat {
 	 *
 	 * @param string $data data to format
 	 * @param string $type format type
+	 * @param string $datetype format type for dates (default 'date')
 	 * @return string formatted string
 	 */
-	public function formatPerson($data, $type) {
+	public function formatPerson($data, $type, $datetype = 'date') {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -71,7 +72,7 @@ class RefManRefereeFormat {
 
 		switch ($type) {
 			case 'birthday':
-				$formatted = (empty($data['birthday'])) ? '' : $this->formatDate($data['birthday'], 'date');
+				$formatted = (empty($data['birthday'])) ? '' : $this->formatDate($data['birthday'], $datetype);
 				break;
 			case 'first_name':
 				$formatted = (empty($data['first_name'])) ? '' : $data['first_name'];

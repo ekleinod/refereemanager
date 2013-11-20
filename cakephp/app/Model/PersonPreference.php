@@ -3,13 +3,13 @@
 App::uses('AppModel', 'Model');
 
 /**
- * RefereeAssignment Model
+ * PersonPreference Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
  * @version 0.1
  * @since 0.1
  */
-class RefereeAssignment extends AppModel {
+class PersonPreference extends AppModel {
 
 	/**
 	 * Declare virtual display field in constructor to be alias-safe.
@@ -19,9 +19,9 @@ class RefereeAssignment extends AppModel {
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		// I can't get this one working with referee's name and game number
-		$this->virtualFields['display_referee_assignment'] = sprintf(
-			'CONCAT(%1$s.id, "-", %1$s.referee_id)',
+		// I can't get this one working with person's name, so I program a simple (but possibly bad) workaround
+		$this->virtualFields['display_person_preference'] = sprintf(
+			'CONCAT(%1$s.id, "-", %1$s.person_id)',
 			$this->alias
 		);
 	}
@@ -34,7 +34,7 @@ class RefereeAssignment extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $name = 'RefereeAssignment';
+	public $name = 'PersonPreference';
 
 	/**
 	 * Display field
@@ -42,7 +42,8 @@ class RefereeAssignment extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $displayField = 'display_referee_assignment';
+	public $displayField = 'display_person_preference';
+
 
 	/**
 	 * Validation rules
@@ -56,22 +57,12 @@ class RefereeAssignment extends AppModel {
 				'rule' => array('uuid'),
 			),
 		),
-		'assignment_id' => array(
+		'person_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 			),
 		),
-		'referee_assignment_type_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'referee_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'assignment_status_type_id' => array(
+		'assignment_notification_interval' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 			),
@@ -84,15 +75,7 @@ class RefereeAssignment extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $belongsTo = array('Assignment', 'RefereeAssignmentType', 'Referee', 'AssignmentStatusType');
-
-	/**
-	 * hasMany associations
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public $hasMany = array('AssignmentRemark');
+	public $belongsTo = array('Person');
 
 }
 
