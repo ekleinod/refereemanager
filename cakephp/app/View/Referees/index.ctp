@@ -132,17 +132,18 @@
 							<td data-title="<?php echo __($refereerelationtype['title']); ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								$text = '';
 								$hasMore = false;
-								foreach ($refereerelationtypes as $sid => $refereerelationtype) {
-									if (array_key_exists($sid, $referee['RefereeRelation'])) {
-										foreach ($referee['RefereeRelation'][$sid] as $refereerelation) {
-											if ($hasMore) {
-												$text .= '<br />';
-											}
-											if (array_key_exists('Club', $refereerelation)) {
-												$text = $this->Html->link($refereerelation['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $refereerelation['Club']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
-											}
-											$hasMore = true;
+								if (array_key_exists($sid, $referee['RefereeRelation'])) {
+									foreach ($referee['RefereeRelation'][$sid] as $refereerelation) {
+										if ($hasMore) {
+											$text .= '; ';
 										}
+										if (array_key_exists('Club', $refereerelation)) {
+											$text .= $this->Html->link($refereerelation['Club']['name'], array('controller' => 'clubs', 'action' => 'view', $refereerelation['Club']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
+										}
+										if (array_key_exists('League', $refereerelation)) {
+											$text .= $this->Html->link($refereerelation['League']['title'], array('controller' => 'leagues', 'action' => 'view', $refereerelation['League']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
+										}
+										$hasMore = true;
 									}
 								}
 								echo $text;
