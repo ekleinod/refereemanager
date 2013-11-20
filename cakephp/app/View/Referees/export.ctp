@@ -51,9 +51,11 @@
 		$header = array();
 			$header[] = array('text' => __('Name'), 'width' => '15');
 			$header[] = array('text' => __('Vorname'));
-			$header[] = array('text' => __('Mitglied'));
-			if ($hasreffor) {
-				$header[] = array('text' => __('Schiedst für'));
+
+			foreach ($refereerelationtypes as $sid => $refereerelationtype) {
+				if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
+					$header[] = array('text' => __($refereerelationtype['title']));
+				}
 			}
 
 			if ($isReferee) {
@@ -89,20 +91,27 @@
 				$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'name'));
 				$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'));
 
-				// member club
-				$text = '';
-				if (!empty($referee['RefereeRelation']['member'])) {
-					$text .= $referee['RefereeRelation']['member']['Club']['name'];
-				}
-				$datarow[] = array('text' => $text);
-
-				// referee for
-				if ($hasreffor) {
-					$text = '';
-					if (!empty($referee['RefereeRelation']['reffor'])) {
-						$text .= $referee['RefereeRelation']['reffor']['Club']['name'];
+				// relations
+				foreach ($refereerelationtypes as $sid => $refereerelationtype) {
+					if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
+						$text = '';
+						$hasMore = false;
+						if (array_key_exists($sid, $referee['RefereeRelation'])) {
+							foreach ($referee['RefereeRelation'][$sid] as $refereerelation) {
+								if ($hasMore) {
+									$text .= '; ';
+								}
+								if (array_key_exists('Club', $refereerelation)) {
+									$text .= $refereerelation['Club']['name'];
+								}
+								if (array_key_exists('League', $refereerelation)) {
+									$text .= $refereerelation['League']['title'];
+								}
+								$hasMore = true;
+							}
+						}
+						$datarow[] = array('text' => $text);
 					}
-					$datarow[] = array('text' => $text);
 				}
 
 				if ($isReferee) {
