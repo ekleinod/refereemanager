@@ -30,9 +30,6 @@ class RefManRefereeFormat {
 		}
 
 		switch ($type) {
-			case 'longdate':
-				$formatted = CakeTime::format('D d.m.Y', $data);
-				break;
 			case 'date':
 				$formatted = CakeTime::format('d.m.Y', $data);
 				break;
@@ -41,6 +38,12 @@ class RefManRefereeFormat {
 				break;
 			case 'datetime':
 				$formatted = CakeTime::format('d.m.Y, H:i', $data);
+				break;
+			case 'longdate':
+				$formatted = CakeTime::format('D d.m.Y', $data);
+				break;
+			case 'longdatereverse':
+				$formatted = CakeTime::format('d.m.Y (D)', $data);
 				break;
 			case 'time':
 				$formatted = CakeTime::format('H:i', $data);
