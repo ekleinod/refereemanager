@@ -89,6 +89,11 @@ class RefManRefereeFormat {
 			case 'name':
 				$formatted = $data['name'];
 				break;
+			case 'name_title':
+				$formatted = __('%s%s',
+												$data['name'],
+												((empty($data['title'])) ? '' : __(', %s', $data['title'])));
+				break;
 			case 'title':
 				$formatted = (empty($data['title'])) ? '' : $data['title'];
 				break;
