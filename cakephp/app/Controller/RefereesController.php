@@ -287,13 +287,15 @@ class RefereesController extends AppController {
 		}
 
 		// last training update
-		$trainingupdate = $this->TrainingUpdate->findByTrainingLevelId($refTemp['TrainingLevelInfo']['training_level_id'], array(), array('TrainingUpdate.update' => 'desc'));
-		if (!empty($trainingupdate) && !empty($trainingupdate['TrainingUpdate'])) {
-			$refTemp['TrainingLevelInfo']['lastupdate'] = $trainingupdate['TrainingUpdate']['update'];
-		}
-		if (!empty($refTemp['TrainingLevelInfo']['since'])) {
-			if (empty($refTemp['TrainingLevelInfo']['lastupdate']) || (strtotime($refTemp['TrainingLevelInfo']['since']) > strtotime($refTemp['TrainingLevelInfo']['lastupdate']))) {
-				$refTemp['TrainingLevelInfo']['lastupdate'] = $refTemp['TrainingLevelInfo']['since'];
+		if ($refTemp['TrainingLevelInfo']['sid'] == TrainingLevelType::SID_ASSUMP) {
+			$trainingupdate = $this->TrainingUpdate->findByTrainingLevelId($refTemp['TrainingLevelInfo']['training_level_id'], array(), array('TrainingUpdate.update' => 'desc'));
+			if (!empty($trainingupdate) && !empty($trainingupdate['TrainingUpdate'])) {
+				$refTemp['TrainingLevelInfo']['lastupdate'] = $trainingupdate['TrainingUpdate']['update'];
+			}
+			if (!empty($refTemp['TrainingLevelInfo']['since'])) {
+				if (empty($refTemp['TrainingLevelInfo']['lastupdate']) || (strtotime($refTemp['TrainingLevelInfo']['since']) > strtotime($refTemp['TrainingLevelInfo']['lastupdate']))) {
+					$refTemp['TrainingLevelInfo']['lastupdate'] = $refTemp['TrainingLevelInfo']['since'];
+				}
 			}
 		}
 
@@ -305,8 +307,6 @@ class RefereesController extends AppController {
 		// sex type
 		$temp = $this->SexType->findById($refTemp['Person']['sex_type_id']);
 		$refTemp['SexType'] = $temp['SexType'];
-
-//				$refTemp = $referee;
 
 		return $refTemp;
 	}
