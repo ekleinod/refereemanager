@@ -117,12 +117,12 @@
 						<?php if ($isReferee) { ?>
 							<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								if (!empty($referee['Picture'])) {
-									echo $this->Html->link($this->Html->image($referee['Picture']['url'], array('width' => '50', 'alt' => __('Bild von %s %s', $referee['Person']['first_name'], $referee['Person']['name']), 'title' => __('%s %s', $referee['Person']['first_name'], $referee['Person']['name']))), $referee['Picture']['url'], array('escape' => false));
+									echo $this->Html->link($this->Html->image($referee['Picture']['url'], array('width' => '50', 'alt' => __('Bild von %s', $this->RefereeFormat->formatPerson($referee['Person'], 'fullname')), 'title' => h($this->RefereeFormat->formatPerson($referee['Person'], 'fullname')))), $referee['Picture']['url'], array('escape' => false));
 								}
 							?></td>
 						<?php } ?>
 
-						<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php echo $this->Html->link($this->RefereeFormat->formatPerson($referee['Person'], 'name'), array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));  ?></td>
+						<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php echo $this->Html->link($this->RefereeFormat->formatPerson($referee['Person'], 'name_title'), array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));  ?></td>
 
 						<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php echo $this->Html->link($this->RefereeFormat->formatPerson($referee['Person'], 'first_name'), array('controller' => 'referees', 'action' => 'view', $referee['Referee']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle'])); ?></td>
 
@@ -294,7 +294,7 @@
 					if ($hasMore) {
 						$text .= ', ';
 					}
-					$text .= __($this->RefereeFormat->formatPerson($referee, 'fullname'));
+					$text .= h($this->RefereeFormat->formatPerson($referee, 'fullname'));
 					$hasMore = true;
 				}
 				echo $text;

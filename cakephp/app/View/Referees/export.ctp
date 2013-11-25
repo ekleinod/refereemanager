@@ -88,7 +88,7 @@
 				$refformat = array();
 
 				$datarow = array();
-				$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'name'));
+				$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'name_title'));
 				$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'));
 
 				// relations
