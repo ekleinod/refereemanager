@@ -62,6 +62,8 @@
 
 	<p>
 		<?php echo $this->Html->link('Export to Excel', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'excel')); ?>
+		|
+		<?php echo $this->Html->link('Export to Zip', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'zip')); ?>
 	</p>
 
 	<table>
