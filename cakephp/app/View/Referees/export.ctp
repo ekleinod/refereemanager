@@ -1,6 +1,6 @@
 <?php
 
-	if ($type == 'excel') {
+	if ($type === 'excel') {
 
 		// compute different styles
 		foreach ($statustypes as &$statustypeedit) {
