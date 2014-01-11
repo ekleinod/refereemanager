@@ -1,6 +1,6 @@
 <?php
 
-	if ($type == 'excel') {
+	if ($type === 'excel') {
 
 		// compute different styles
 		foreach ($statustypes as &$statustypeedit) {
@@ -255,6 +255,20 @@
 
 		// output
 		$this->PHPExcel->output('VSR.xlsx');
+
+	} else if ($type === 'zip') {
+
+		// just a simple test, nothing important right now
+		$zip = new ZipArchive();
+		$res = $zip->open('test.zip', ZipArchive::CREATE);
+		if ($res === TRUE) {
+			$zip->addFromString('file1', 'content 1');
+			$zip->addFromString('file2', 'content 2');
+			$zip->close();
+			echo 'ok';
+		} else {
+			echo 'failed';
+		}
 
 	} else {
 		throw new CakeException(__('Exporttyp "%s" nicht unterstützt!', $type));
