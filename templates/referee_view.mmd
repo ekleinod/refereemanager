@@ -1,19 +1,19 @@
 Quotes Language:		german
 Base Header Level:	3
-latex input:				kleinod-mmd-scrartcl
-MyOptions:					author=schiri, font=droid,notitlepage, pagestyle=fuss
+latex input:				kleinod-mmd-scrlttr2
+MyOptions:					author=schiri, font=droid, layout=infospaltefett
 latex input:				kleinod-mmd-style
-Title:							#Vorname Name#
+Title:							#Titel#
 Date:								#10. Januar 2014#
-MySubtitle:					Übersicht der gespeicherten Daten
-MyVersion:
-MyAdresszusatz:
-MyTitelzusatz:
-latex input:				kleinod-mmd-begin-doc
-
-<!-- \maketitle -->
-
-Hallo #Vorname#,
+MyAnA:							#Titel#
+MyAnB:							#Strasse#
+MyAnC:							#PLZ# #Ort#
+MyBetreff:					Übersicht der gespeicherten Daten
+MyAnrede:						Hallo #Vorname#,
+MyGruss:						Mit sportlichen Grüßen,
+MyUnterschrift:			Ekkart.
+latex input:				kleinod-mmd-begin-lttr
+latex footer:				kleinod-mmd-end-lttr
 
 dies ist der jährliche Auszug der über Dich beim Verbandsschiedsrichterausschuss gespeicherten Daten.
 Du erhältst den Auszug aus zwei Gründen:
@@ -21,15 +21,31 @@ Du erhältst den Auszug aus zwei Gründen:
 1. damit Du weißt, welche Daten gespeichert sind, wofür sie verwendet werden und wer die Daten sieht
 2. damit Du kontrollieren kannst, ob die Daten korrekt sind und eventuelle Änderungen mitteilen kannst
 
-<!--
-\begin{longtabu}[l]{@{}>{\bfseries\small\sffamily}lll@{}}
-	\toprule
-	\textbf{\small\sffamily Art} & \textbf{\small\sffamily Inhalt} & \textbf{\small\sffamily Verwendung} \\
-	\midrule
-	-->Vorname<!-- & -->#Vorname#<!-- & -->öffentlich, alle Listen<!-- \\
-	-->Name<!-- & -->#Name#<!-- & -->öffentlich, alle Listen<!-- \\
-	\bottomrule
-\end{longtabu}
+# Öffentliche Informationen
 
+Vorname
+: Vorname
+
+Nachname
+: Nachname
+
+<!--
+	\begin{tabbing}
+		Nachnamem\=\kill
+
+		\textsf{\textbf{\small Vorname}}\>-->#Vorname#<!--\\
+		\textsf{\textbf{\small Nachname}}\>-->#Nachname#<!--
+	\end{tabbing}
+-->
+
+<!--
+\begin{longtabu}[l]{@{}>{\bfseries\small\sffamily}ll@{}}
+	 \toprule
+	 \textbf{\small\sffamily Art} & \textbf{\small\sffamily Inhalt} \\
+	 \midrule
+	 -->Vorname<!-- & -->#Vorname#<!-- \\
+	 -->Name<!-- & -->#Name#<!-- \\
+	 \bottomrule
+\end{longtabu}
 -->
 
