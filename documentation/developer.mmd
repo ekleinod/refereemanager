@@ -198,7 +198,7 @@ You can link to the git-stored file as well:
 
 ### Apache did not start
 
-If you choose to link the needed files, there may be problems in case you encrypt your home directory.
+If you choose to link the needed files, there may be problems in case you encrypt your home.
 In that case, the links can only be resolved after you log in.
 You have to restart *apache* every time you log in (see [Apache and PHP][]).
 
@@ -207,7 +207,7 @@ You have to restart *apache* every time you log in (see [Apache and PHP][]).
 Make sure you installed the *mysql* extension correctly **and** restarted *apache* (you figured *that* out by yourselves)
 
 If you use `localhost` you have to deactivate local file access with `LOAD DATA` statements
-In order to do that, edit `php.ini`, usually located in `/etc/php5/apache2/'.
+In order to do that, edit `php.ini`, usually located in `/etc/php5/apache2/`.
 Uncomment the lines
 
 	mysql.allow_local_infile = On
@@ -471,7 +471,7 @@ If not, check:
 - your phpMyAdmin configuration (see [phpMyAdmin configuration][])
 
 Create a database called `refereemanager`.
-If you choose another name, alter your CakePHP configuration file accordnigly (see [CakePHP database configuration][]).
+If you choose another name, alter your CakePHP configuration file accordingly (see [CakePHP database configuration][]).
 
 Create the database tables using the code of:
 
@@ -490,15 +490,10 @@ Fill the database with your data if you have some.
 Everything is ready for development.
 
 
-# Development steps
 
-
-
-
-
-[url:refman]: http://sourceforge.net/projects/refereemanager/ "RefereeManager Sourceforge Home"
-[url:refman:wiki]: http://sourceforge.net/p/refereemanager/wiki/Home/ "RefereeManager Sourceforge Wiki"
-[url:refman:git]: http://git.code.sf.net/p/refereemanager/code "RefereeManager Sourceforge Git Access"
+[url:refman]: https://github.com/ekleinod/refereemanager "RefereeManager Github Home"
+[url:refman:wiki]: https://github.com/ekleinod/refereemanager/wiki "RefereeManager Github Wiki"
+[url:refman:git]: https://github.com/ekleinod/refereemanager.git "RefereeManager Github Git Access"
 [url:cake]: http://cakephp.org/ "CakePHP Homepage"
 [url:cake:git]: git://github.com/cakephp/cakephp.git "CakePHP Git Access"
 [url:pma]: http://www.phpmyadmin.net/ "phpMyAdmin Homepage"
