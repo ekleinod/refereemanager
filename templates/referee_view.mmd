@@ -3,13 +3,13 @@ Base Header Level:	3
 latex input:				kleinod-mmd-scrlttr2
 MyOptions:					author=schiri, font=droid, layout=infospaltefett
 latex input:				kleinod-mmd-style
-Title:							#Titel#
-Date:								#10. Januar 2014#
-MyAnA:							#Titel#
-MyAnB:							#Strasse#
-MyAnC:							#PLZ# #Ort#
+Title:							Dr. Max Mustermann
+Date:								10. Januar 2014
+MyAnA:							Dr. Max Mustermann
+MyAnB:							Musterstraße 27
+MyAnC:							10000 Berlin
 MyBetreff:					Übersicht der gespeicherten Daten
-MyAnrede:						Hallo #Vorname#,
+MyAnrede:						Hallo Max,
 MyGruss:						Mit sportlichen Grüßen,
 MyUnterschrift:			Ekkart.
 latex input:				kleinod-mmd-begin-lttr
@@ -23,29 +23,50 @@ Du erhältst den Auszug aus zwei Gründen:
 
 # Öffentliche Informationen
 
-Vorname
-: Vorname
-
-Nachname
-: Nachname
+Diese Informationen sind für jedermann sichtbar.
+Nutzungsbeispiel: Einsatzplan.
 
 <!--
-	\begin{tabbing}
-		Nachnamem\=\kill
-
-		\textsf{\textbf{\small Vorname}}\>-->#Vorname#<!--\\
-		\textsf{\textbf{\small Nachname}}\>-->#Nachname#<!--
-	\end{tabbing}
+\begin{longtable}[l]{@{}>{\small\sffamily\bfseries}p{.3\textwidth}@{\hspace{.02\textwidth}}p{.78\textwidth}@{}}
+	 -->Titel<!-- & -->Dr.<!-- \\
+	 -->Vorname<!-- & -->Max<!-- \\
+	 -->Name<!-- & -->Mustermann<!-- \\
+	 -->Ausbildung<!-- & -->Verbandsschiedsrichter (VSR)<!-- \\
+	 -->Einsatzhäufigkeit<!-- & -->normal<!-- \\
+\end{longtable}
 -->
+
+# Informationen für andere Schiedsrichter
+
+Diese Informationen sind nur für andere Schiedsrichter nach Login sichtbar.
+Nutzungsbeispiel: Kontakttabelle der Schiedsrichter.
 
 <!--
-\begin{longtabu}[l]{@{}>{\bfseries\small\sffamily}ll@{}}
-	 \toprule
-	 \textbf{\small\sffamily Art} & \textbf{\small\sffamily Inhalt} \\
-	 \midrule
-	 -->Vorname<!-- & -->#Vorname#<!-- \\
-	 -->Name<!-- & -->#Name#<!-- \\
-	 \bottomrule
-\end{longtabu}
+\begin{longtable}[l]{@{}>{\small\sffamily\bfseries}p{.3\textwidth}@{\hspace{.02\textwidth}}p{.78\textwidth}@{}}
+	 -->Mitglied bei<!-- & -->TTC Borussia Spandau e.V.<!-- \\
+	 -->Schiedst für<!-- & -->Mitgliedsverein<!-- \\
+	 -->E-Mail<!-- & -->max.mustermann@beispiel.de<!-- \\
+	 -->Telefon<!-- & -->p: 030 1234567<!-- \newline -->p: 0177 1234567<!-- \\
+\end{longtable}
 -->
+
+# Informationen für VSRA
+
+Diese Informationen sind nur für den Verbandsschiedsrichterausschuss sichtbar.
+Nutzungsbeispiel: Verwaltung der Einsätze.
+
+<!--
+\begin{longtable}[l]{@{}>{\small\sffamily\bfseries}p{.3\textwidth}@{\hspace{.02\textwidth}}p{.78\textwidth}@{}}
+	 -->Adresse<!-- & -->Musterstraße 27<!-- \newline -->10000 Berlin<!-- \\
+	 -->Bevorzugt schiedsen bei<!-- & -->TuS Lichterfelde v. 1887 e.V.<!-- \\
+	 -->Nicht schiedsen bei<!-- & -->---<!-- \\
+	 -->Geschlecht<!-- & -->männlich<!-- \\
+	 -->Geburtstag<!-- & -->26.10.1956<!-- \\
+	 -->Letzte Fortbildung<!-- & -->01.01.2013<!-- \\
+	 -->Nächste Fortbildung<!-- & -->2015<!-- \\
+	 -->Anmerkung<!-- & -->Aus gesundheitlichen Gründen vorerst nicht mehr einsetzen.<!-- \\
+\end{longtable}
+-->
+
+Bitte prüfe die Informationen auf Korrektheit und Unvollständigkeit und gib mir Bescheid, wenn Änderungen nötig sind.
 
