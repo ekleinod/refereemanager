@@ -1,6 +1,6 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 
 -- -----------------------------------------------------
@@ -77,12 +77,13 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_people` (
   `name` VARCHAR(100) NOT NULL ,
   `birthday` DATE NULL ,
   `remark` TEXT NULL ,
+  `internal_remark` TEXT NULL ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Alle people go here, specializations, such as referees, have' /* comment truncated */;
+COMMENT = 'Alle people go here, specializations, such as referees, have /* comment truncated */ /* their own table.*/';
 
 
 -- -----------------------------------------------------
@@ -194,7 +195,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_status_types` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Possible referee statuses such as \"interested in many assign' /* comment truncated */;
+COMMENT = 'Possible referee statuses such as \"interested in many assign /* comment truncated */ /*ments", "not active", etc.*/';
 
 
 -- -----------------------------------------------------
@@ -329,7 +330,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_training_level_types` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Possible training levels such as international referee, Germ' /* comment truncated */;
+COMMENT = 'Possible training levels such as international referee, Germ /* comment truncated */ /*an referee.*/';
 
 
 -- -----------------------------------------------------
@@ -406,7 +407,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_activity_logs` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Activity log of selected data tables. Only those tables are ' /* comment truncated */;
+COMMENT = 'Activity log of selected data tables. Only those tables are  /* comment truncated */ /*logged that are important to the user.*/';
 
 
 -- -----------------------------------------------------
@@ -446,7 +447,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_assignment_types` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Possible types of referee\'s assignments such as umpire, stan' /* comment truncated */;
+COMMENT = 'Possible types of referee\'s assignments such as umpire, stan /* comment truncated */ /*dby umpire, referee, racket control.*/';
 
 
 -- -----------------------------------------------------
@@ -465,7 +466,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_assignment_status_types` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Possible assignment status of a referee (yes, no, maybe). Mo' /* comment truncated */;
+COMMENT = 'Possible assignment status of a referee (yes, no, maybe). Mo /* comment truncated */ /*stly relevant for tournament games.*/';
 
 
 -- -----------------------------------------------------
@@ -505,7 +506,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_league_games` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Assignments for league games.\nLeague and season can be deduc' /* comment truncated */;
+COMMENT = 'Assignments for league games.\nLeague and season can be deduc /* comment truncated */ /*ed from the associated teams, they are stored because no team could be specified or teams of different seasons/leagues (e.g. relegation games).*/';
 
 
 -- -----------------------------------------------------
@@ -527,7 +528,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_league_game_team_types` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Types of league game teams, such as home team, off team, etc' /* comment truncated */;
+COMMENT = 'Types of league game teams, such as home team, off team, etc /* comment truncated */ /*.*/';
 
 
 -- -----------------------------------------------------
@@ -654,7 +655,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_relation_types` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Possible relations of a referee to a club or league (member,' /* comment truncated */;
+COMMENT = 'Possible relations of a referee to a club or league (member, /* comment truncated */ /* prefer, avoid).*/';
 
 
 -- -----------------------------------------------------
@@ -674,7 +675,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_relations` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Relations between referees and clubs resp. leagues.\nClubs: m' /* comment truncated */;
+COMMENT = 'Relations between referees and clubs resp. leagues.\nClubs: m /* comment truncated */ /*ember, prefer, avoid.
+Leagues: prefer. avoid.*/';
 
 
 -- -----------------------------------------------------
@@ -789,7 +791,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_assignment_remark_types` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Types of assignment remarks such as answering machine, call ' /* comment truncated */;
+COMMENT = 'Types of assignment remarks such as answering machine, call  /* comment truncated */ /*back.*/';
 
 
 -- -----------------------------------------------------
