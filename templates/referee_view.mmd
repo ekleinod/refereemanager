@@ -3,13 +3,13 @@ Base Header Level:	3
 latex input:				kleinod-mmd-scrlttr2
 MyOptions:					author=schiri, font=droid, layout=infospaltefett
 latex input:				kleinod-mmd-style
-Title:							Dr. Max Mustermann
+Title:							#fullname#
 Date:								10. Januar 2014
-MyAnA:							Dr. Max Mustermann
-MyAnB:							Musterstraße 27
-MyAnC:							10000 Berlin
+MyAnA:							#fullname#
+MyAnB:							#street# #number#
+MyAnC:							#zip_code# #city#
 MyBetreff:					Übersicht der gespeicherten Daten
-MyAnrede:						Hallo Max,
+MyAnrede:						Hallo #first_name#,
 MyGruss:						Mit sportlichen Grüßen,
 MyUnterschrift:			Ekkart.
 latex input:				kleinod-mmd-begin-lttr
@@ -28,11 +28,11 @@ Nutzungsbeispiel: Einsatzplan.
 
 <!--
 \begin{longtable}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
-	 -->Titel<!-- & -->Dr.<!-- \\
-	 -->Vorname<!-- & -->Max<!-- \\
-	 -->Name<!-- & -->Mustermann<!-- \\
-	 -->Ausbildung<!-- & -->Verbandsschiedsrichter (VSR)<!-- \\
-	 -->Einsatzhäufigkeit<!-- & -->normal<!-- \\
+	 -->Titel<!-- & -->#title#<!-- \\
+	 -->Vorname<!-- & -->#first_name#<!-- \\
+	 -->Name<!-- & -->#name#<!-- \\
+	 -->Ausbildung<!-- & -->#training_level# (#training_level_abbr#)<!-- \\
+	 -->Einsatzhäufigkeit<!-- & -->#status_type#<!-- \\
 \end{longtable}
 -->
 
@@ -43,10 +43,10 @@ Nutzungsbeispiel: Kontakttabelle der Schiedsrichter.
 
 <!--
 \begin{longtable}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
-	 -->E-Mail<!-- & -->`max.mustermann@beispiel.de`<!-- \\
-	 -->Telefon<!-- & -->p: `030 1234567`<!-- \newline -->p: `0177 1234567`<!-- \\
-	 -->Mitglied bei<!-- & -->TTC Borussia Spandau e.V.<!-- \\
-	 -->Schiedst für<!-- & -->Mitgliedsverein<!-- \\
+	 -->E-Mail<!-- & -->#email#<!-- \\
+	 -->Telefon<!-- & -->#phone#<!-- \\
+	 -->Mitglied bei<!-- & -->#member#<!-- \\
+	 -->Schiedst für<!-- & -->#reffor#<!-- \\
 \end{longtable}
 -->
 
@@ -57,14 +57,15 @@ Nutzungsbeispiel: Verwaltung der Einsätze.
 
 <!--
 \begin{longtable}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
-	 -->Adresse<!-- & -->Musterstraße 27<!-- \newline -->10000 Berlin<!-- \\
-	 -->Geburtstag<!-- & -->`26.10.1956`<!-- \\
-	 -->Geschlecht<!-- & -->männlich<!-- \\
-	 -->Bevorzugt schiedsen bei<!-- & -->TuS Lichterfelde v. 1887 e.V.<!-- \\
-	 -->Nicht schiedsen bei<!-- & -->---<!-- \\
-	 -->Letzte Fortbildung<!-- & -->`01.01.2013`<!-- \\
-	 -->Nächste Fortbildung<!-- & -->`2015`<!-- \\
-	 -->Anmerkung<!-- & -->Aus gesundheitlichen Gründen vorerst nicht mehr einsetzen.<!-- \\
+	 -->Adresse<!-- & -->#street# #number#<!-- \newline -->#zip_code# #city#<!-- \\
+	 -->Geburtstag<!-- & -->#birthday#<!-- \\
+	 -->Geschlecht<!-- & -->#sex_type#<!-- \\
+	 -->Bevorzugt schiedsen bei<!-- & -->#prefer#<!-- \\
+	 -->Nicht schiedsen bei<!-- & -->#noassignment#<!-- \\
+	 -->Letzte Ausbildung<!-- & -->#since#<!-- \\
+	 -->Letzte Fortbildung<!-- & -->#last_update#<!-- \\
+	 -->Nächste Fortbildung<!-- & -->#next_update#<!-- \\
+	 -->Anmerkung<!-- & -->#remark#<!-- \\
 \end{longtable}
 -->
 
