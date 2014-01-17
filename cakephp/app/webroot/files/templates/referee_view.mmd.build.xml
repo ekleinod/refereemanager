@@ -38,13 +38,16 @@
 
 	<target name="createtexfiles" description="Create tex files from mmd files.">
 
+		<mkdir dir="${path:generated}" />
+
 		<apply executable="multimarkdown" parallel="false">
-			<arg value="-t latex"/>
-			<srcfile/>
-			<arg value="-o"/>
-			<targetfile/>
-			<!--fileset dir="${path:generated}" includes="*.mmd"/-->
-			<mapper type="glob" from="${path:mmd}/*.mmd" to="${path:generated}/*.tex"/>
+			<arg value="-o" />
+			<targetfile />
+			<arg value="-t" />
+			<arg value="latex" />
+			<srcfile />
+			<fileset dir="${path:mmd}" includes="*.mmd" />
+			<mapper type="glob" from="*.mmd" to="${path:generated}/*.tex" />
 		</apply>
 	</target>
 
