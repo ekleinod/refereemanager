@@ -207,7 +207,6 @@
 		<copy todir="${path:target}app${file.separator}webroot${file.separator}files${file.separator}templates${file.separator}" failonerror="true" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}webroot${file.separator}files${file.separator}templates${file.separator}">
 				<include name="**/*.mmd" />
-				<include name="**/*.xml" />
 			</fileset>
 		</copy>
 	</target>

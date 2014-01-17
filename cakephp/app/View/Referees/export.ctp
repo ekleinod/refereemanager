@@ -86,6 +86,14 @@
 			$template = file_get_contents(sprintf('%s%s%s', WWW_ROOT, Configure::read('RefMan.template.path'), Configure::read('RefMan.template.referee_view')));
 			$tpltoken = '#%s#';
 			$nbrtoken = '`%s`';
+
+			$zip = new ZipArchive();
+			$zipfile = sprintf('%s%s.zip', TMP, Configure::read('RefMan.template.referee_view'));
+			if ($zip->open($zipfile, ZipArchive::OVERWRITE) === TRUE) {
+				$zip->addFile(sprintf('%s%s%s.build.xml', WWW_ROOT, Configure::read('RefMan.template.path'), Configure::read('RefMan.template.referee_view')), 'build.xml');
+			} else {
+				echo __('Zip-Archiv "%s" konnte nicht angelegt werden.', $zipfile);
+			}
 		}
 
 		if (empty($referees)) {
@@ -97,6 +105,7 @@
 			}
 		} else {
 			// datarows
+			$refcount = 0;
 			foreach ($referees as $referee) {
 
 				if ($type === 'excel') {
@@ -332,7 +341,7 @@
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'remark';
-						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $excel_text, $filledTemplate);
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']), $filledTemplate);
 					}
 
 				}
@@ -346,6 +355,10 @@
 							$statustypes[$referee['RefereeStatus']['sid']]['remark'] :
 							$statustypes[$referee['RefereeStatus']['sid']]['title'];
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
+				}
+
+				if ($type === 'referee_view_zip') {
+					$zip->addFromString(sprintf('referee%04d.mmd', ++$refcount), $filledTemplate);
 				}
 			}
 
@@ -390,24 +403,9 @@
 		}
 
 		if ($type === 'referee_view_zip') {
-			echo '<h3>filled template</h3><pre>';
-			echo $filledTemplate;
-			echo '</pre>';
-		}
-
-	} else if ($type === 'referee_view_zip') {
-
-/*		// just a simple test, nothing important right now
-		$zip = new ZipArchive();
-		$res = $zip->open('test.zip', ZipArchive::CREATE);
-		if ($res === TRUE) {
-			$zip->addFromString('file1', 'content 1');
-			$zip->addFromString('file2', 'content 2');
 			$zip->close();
-			echo 'ok';
-		} else {
-			echo 'failed';
-		}*/
+			echo 'ready.';
+		}
 
 	} else {
 		throw new CakeException(__('Exporttyp "%s" nicht unterstützt!', $type));
