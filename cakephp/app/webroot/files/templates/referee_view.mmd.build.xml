@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!--
-	Development scripts for referee manager.
+<!-- Create all pdfs from mmd. -->
 
-	Do not change this file unless you know exactly what you do.
-	If you have useful changes, let me know to include them in the master.
+<project name="mmd2pdf" default="help" basedir=".">
 
-	(c) 2013 by Ekkart Kleinod
+	<property name="file:all" value="referee_view_all" />
 
-	@author Ekkart Kleinod
--->
-
-<project name="refereemanager" default="help" basedir=".">
-
-	<import file="configuration.xml" />
+	<property name="path:mmd" value="mmd" />
+	<property name="path:generated" value="generated" />
 
 	<target name="help" description="Shows help text.">
-		<echo>Referee manager</echo>
-		<echo>---------------</echo>
 		<echo>You can use the following targets:</echo>
 
 		<!-- show all available targets -->
@@ -28,214 +20,59 @@
 		</java>
 	</target>
 
-	<target name="echoproperties" description="Shows all available properties.">
-		<echoproperties />
+	<target name="all" description="Create one merged pdf file from mmd.">
+
+		<echo message="Create pdf file: start."/>
+
+		<antcall target="clear" />
+
+		<antcall target="createtexfiles" />
+		<antcall target="createpdffiles" />
+		<antcall target="mergepdffiles" />
+
+		<antcall target="clear" />
+
+		<echo message="Create pdf file: stop."/>
+
 	</target>
 
-	<target name="phpmyadmin2apache" description="Copies phpMyAdmin to apache directory (deletes existing files first).">
-		<antcall target="deleteandcopy">
-			<param name="path:source" value="${path:git:phpmyadmin}" />
-			<param name="path:target" value="${path:apache:phpmyadmin}" />
-		</antcall>
+	<target name="createtexfiles" description="Create tex files from mmd files.">
+
+		<apply executable="multimarkdown" parallel="false">
+			<arg value="-t latex"/>
+			<srcfile/>
+			<arg value="-o"/>
+			<targetfile/>
+			<!--fileset dir="${path:generated}" includes="*.mmd"/-->
+			<mapper type="glob" from="${path:mmd}/*.mmd" to="${path:generated}/*.tex"/>
+		</apply>
 	</target>
 
-	<target name="cakephp2apache" description="Copies CakePHP to apache directory (deletes existing files first).">
-		<antcall target="deleteandcopy">
-			<param name="path:source" value="${path:git:cakephp}" />
-			<param name="path:target" value="${path:apache:refereemanager}" />
-		</antcall>
+	<target name="createpdffiles" description="Create pdf files from tex files.">
+		<echo message="createpdffiles"/>
 
-		<echo message="Chmod for ${path:apache:refereemanager}app${file.separator}Console${file.separator}cake." />
-		<chmod perm="775" type="dir" dir="${path:apache:refereemanager}app${file.separator}Console${file.separator}cake" />
-
-		<echo message="Chmod for ${path:apache:refereemanager}lib${file.separator}Cake${file.separator}Console${file.separator}cake." />
-		<chmod perm="775" type="dir" dir="${path:apache:refereemanager}lib${file.separator}Cake${file.separator}Console${file.separator}cake" />
-
-		<echo message="Chmod for ${path:apache:refereemanager}app${file.separator}tmp${file.separator}." />
-		<chmod perm="777" type="dir" dir="${path:apache:refereemanager}app${file.separator}tmp${file.separator}" />
-		<chmod perm="777" type="dir">
-			<fileset dir="${path:apache:refereemanager}app${file.separator}tmp${file.separator}">
-				<include name="**/*"/>
-			</fileset>
-		</chmod>
-		<chmod perm="666" type="file">
-			<fileset dir="${path:apache:refereemanager}app${file.separator}tmp${file.separator}">
-				<include name="**/*"/>
-			</fileset>
-		</chmod>
+		<apply executable="pdflatex" parallel="false">
+			<arg value="-interaction=nonstopmode"/>
+			<srcfile/>
+			<targetfile/>
+			<!--fileset dir="${path:generated}" includes="*.svg"/-->
+			<mapper type="glob" from="${path:generated}/*.tex" to="${path:generated}/*.pdf"/>
+		</apply>
 	</target>
 
-	<target name="phpexcel2apache" description="Copies PHPExcel files to development directory.">
-		<mkdir dir="${path:apache:refereemanager}app${file.separator}Vendor${file.separator}PHPExcel${file.separator}Classes${file.separator}" />
-		<copy todir="${path:apache:refereemanager}app${file.separator}Vendor${file.separator}PHPExcel${file.separator}Classes${file.separator}" failonerror="true" overwrite="true">
-			<fileset dir="${path:git:phpexcel}Classes${file.separator}">
-				<include name="**/*" />
-			</fileset>
-		</copy>
+	<target name="mergepdffiles" description="Create merged pdf file from pdf files.">
+		<exec executable="pdflatex" output="${file:all}.log">
+			<arg line="-interaction=nonstopmode ${file:all}.tex" />
+		</exec>
 	</target>
 
-	<target name="phpexcelhelper2apache" description="Copies PHPExcelHelper files to development directory.">
-		<copy todir="${path:apache:refereemanager}app${file.separator}View${file.separator}Helper${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:git:phpexcelhelper}View${file.separator}Helper${file.separator}">
-				<include name="PHPExcelHelper.php" />
-			</fileset>
-		</copy>
-	</target>
-
-	<target name="refman2apache" description="Copies RefereeManager git files to development directory.">
-		<antcall target="copyrefmanfiles">
-			<param name="path:source" value="${path:git:refereemanager}cakephp${file.separator}" />
-			<param name="path:target" value="${path:apache:refereemanager}" />
-		</antcall>
-		<copy todir="${path:apache:phpmyadmin}${file.separator}" failonerror="true" overwrite="true">
-			<fileset dir="${path:git:refereemanager}configuration${file.separator}phpmyadmin${file.separator}">
-				<include name="config.inc.php" />
-			</fileset>
-		</copy>
-	</target>
-
-	<target name="apache2refman" description="Copies RefereeManager development files to git repository.">
-		<antcall target="copyrefmanfiles">
-			<param name="path:source" value="${path:apache:refereemanager}" />
-			<param name="path:target" value="${path:git:refereemanager}cakephp${file.separator}" />
-		</antcall>
-		<copy todir="${path:git:refereemanager}configuration${file.separator}phpmyadmin${file.separator}" failonerror="true" overwrite="true">
-			<fileset dir="${path:apache:phpmyadmin}${file.separator}">
-				<include name="config.inc.php" />
-			</fileset>
-		</copy>
-	</target>
-
-	<target name="copyrefmanfiles">
-
-		<!-- Config -->
-		<copy todir="${path:target}app${file.separator}Config${file.separator}" failonerror="true" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}Config${file.separator}">
-				<include name="core.php" />
-				<include name="database.php" />
-			</fileset>
-		</copy>
-
-		<!-- Controller -->
-		<copy todir="${path:target}app${file.separator}Controller${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}Controller${file.separator}">
-				<include name="*.php" />
-				<exclude name="PagesController.php" />
-			</fileset>
-		</copy>
-		<copy todir="${path:target}app${file.separator}Controller${file.separator}Component${file.separator}Auth${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}Controller${file.separator}Component${file.separator}Auth${file.separator}">
-				<include name="*.php" />
-			</fileset>
-		</copy>
-
-		<!-- Lib -->
-		<copy todir="${path:target}app${file.separator}Lib${file.separator}Utility${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}Lib${file.separator}Utility${file.separator}">
-				<include name="*.php" />
-			</fileset>
-		</copy>
-
-		<!-- Model -->
-		<copy todir="${path:target}app${file.separator}Model${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}Model${file.separator}">
-				<include name="*.php" />
-				<exclude name="AppModel.php" />
-			</fileset>
-		</copy>
-
-		<!-- View -->
-		<copy todir="${path:target}app${file.separator}View${file.separator}Elements${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}Elements${file.separator}">
-				<include name="**/*" />
-				<exclude name="empty" />
-			</fileset>
-		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Helper${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}Helper${file.separator}">
-				<include name="*.php" />
-				<exclude name="AppHelper.php" />
-				<exclude name="PHPExcelHelper.php" />
-			</fileset>
-		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Layouts${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}Layouts${file.separator}">
-				<include name="default.ctp" />
-			</fileset>
-		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}RefereeAssignments${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}RefereeAssignments${file.separator}">
-				<include name="*.ctp" />
-			</fileset>
-		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Referees${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}Referees${file.separator}">
-				<include name="*.ctp" />
-			</fileset>
-		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Users${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}Users${file.separator}">
-				<include name="*.ctp" />
-			</fileset>
-		</copy>
-
-		<!-- webroot -->
-		<copy todir="${path:target}app${file.separator}webroot${file.separator}" failonerror="true" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}webroot${file.separator}">
-				<include name="phpinfo.php" />
-			</fileset>
-		</copy>
-		<copy todir="${path:target}app${file.separator}webroot${file.separator}css${file.separator}" failonerror="true" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}webroot${file.separator}css${file.separator}">
-				<include name="*.css" />
-				<exclude name="cake.generic.css" />
-			</fileset>
-		</copy>
-		<copy todir="${path:target}app${file.separator}webroot${file.separator}fonts${file.separator}" failonerror="true" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}webroot${file.separator}fonts${file.separator}">
-				<include name="**/*" />
-			</fileset>
-		</copy>
-		<copy todir="${path:target}app${file.separator}webroot${file.separator}img${file.separator}" failonerror="true" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}webroot${file.separator}img${file.separator}">
-				<include name="*.png" />
-				<include name="*.ico" />
-				<exclude name="cake.*" />
-				<exclude name="test-*" />
-			</fileset>
-		</copy>
-		<copy todir="${path:target}app${file.separator}webroot${file.separator}files${file.separator}templates${file.separator}" failonerror="true" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}webroot${file.separator}files${file.separator}templates${file.separator}">
-				<include name="**/*.mmd" />
-			</fileset>
-		</copy>
-	</target>
-
-	<target name="deleteandcopy">
-		<echo message="Copy ${path:source} to ${path:target}." />
-
-		<echo message="Check if ${path:target} exists." />
-		<antcall target="checkdir"><param name="dir:target" value="${path:target}" /></antcall>
-
-		<echo message="Delete content of ${path:target}." />
-		<delete includeemptydirs="true">
-			<fileset dir="${path:target}" includes="**/*" defaultexcludes="false" />
+	<target name="clear" description="Remove temporary files and directories.">
+		<delete dir="${path:generated}" />
+		<defaultexcludes remove="**/*~" />
+		<delete>
+			<fileset dir="." includes="**/*.aux, **/*.bak.vthought, **/*.bak, **/*.bbl, **/*.blg, **/*.dvi, **/*.idx, **/*.ilg, **/*.ind, **/*.lof, **/*.log, **/*.lot, **/*.lop, **/*.nav, **/*.out, **/*.ps, **/*.snm, **/*.toc, **/*.url, **/*.*~"/>
 		</delete>
-
-		<echo message="Copy files." />
-		<copy todir="${path:target}">
-			<fileset dir="${path:source}" includes="**/*" excludes=".git" />
-		</copy>
-
-	</target>
-
-	<target name="checkdir">
-		<condition property="target:missing">
-			<not>
-				<available file="${dir:target}" />
-			</not>
-		</condition>
-		<fail if="${target:missing}">Target directory is missing: '${dir:target}'.</fail>
+		<defaultexcludes default="true" />
 	</target>
 
 </project>
