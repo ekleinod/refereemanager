@@ -54,12 +54,12 @@
 	<target name="createpdffiles" description="Create pdf files from tex files.">
 		<echo message="createpdffiles"/>
 
-		<apply executable="pdflatex" parallel="false">
-			<arg value="-interaction=nonstopmode"/>
-			<srcfile/>
-			<targetfile/>
-			<!--fileset dir="${path:generated}" includes="*.svg"/-->
-			<mapper type="glob" from="${path:generated}/*.tex" to="${path:generated}/*.pdf"/>
+		<apply executable="pdflatex" parallel="false" output="${file:all}.single.log">
+			<arg value="-interaction=nonstopmode" />
+			<arg value="-output-directory=${path:generated}" />
+			<srcfile />
+			<fileset dir="${path:generated}" includes="*.tex" />
+			<mapper type="glob" from="*.tex" to="${path:generated}/*.pdf"/>
 		</apply>
 	</target>
 
