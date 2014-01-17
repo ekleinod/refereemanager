@@ -45,6 +45,9 @@ class RefManRefereeFormat {
 			case 'longdatereverse':
 				$formatted = CakeTime::format('d.m.Y (D)', $data);
 				break;
+			case 'medium':
+				$formatted = CakeTime::format('d. F Y', $data);
+				break;
 			case 'time':
 				$formatted = CakeTime::format('H:i', $data);
 				break;
@@ -223,6 +226,24 @@ class RefManRefereeFormat {
 				}
 				if ($data['zip_code'] != '') {
 					$formatted .= __(' %s', $data['zip_code']);
+				}
+				if ($data['city'] != '') {
+					$formatted .= __(' %s', $data['city']);
+				}
+				break;
+			case 'streetnumber':
+				$formatted = '';
+				if ($data['street'] != '') {
+					$formatted .= __('%s', $data['street']);
+				}
+				if (($formatted != '') && ($data['number'] != '')) {
+					$formatted .= __(' %s', $data['number']);
+				}
+				break;
+			case 'zipcity':
+				$formatted = '';
+				if ($data['zip_code'] != '') {
+					$formatted .= __('%s', $data['zip_code']);
 				}
 				if ($data['city'] != '') {
 					$formatted .= __(' %s', $data['city']);

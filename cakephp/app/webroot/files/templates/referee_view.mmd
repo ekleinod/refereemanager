@@ -4,16 +4,16 @@ latex input:				kleinod-mmd-scrlttr2
 MyOptions:					author=schiri, font=droid, layout=infospaltefett
 latex input:				kleinod-mmd-style
 Title:							#fullname#
-Date:								10. Januar 2014
+Date:							#date#
 MyAnA:							#fullname#
-MyAnB:							#street# #number#
-MyAnC:							#zip_code# #city#
+MyAnB:							#streetnumber#
+MyAnC:							#zipcity#
 MyBetreff:					Übersicht der gespeicherten Daten
-MyAnrede:						Hallo #first_name#,
+MyAnrede:					Hallo #first_name#,
 MyGruss:						Mit sportlichen Grüßen,
-MyUnterschrift:			Ekkart.
+MyUnterschrift:		Ekkart.
 latex input:				kleinod-mmd-begin-lttr
-latex footer:				kleinod-mmd-end-lttr
+latex footer:			kleinod-mmd-end-lttr
 
 dies ist der jährliche Auszug der über Dich beim Verbandsschiedsrichterausschuss gespeicherten Daten.
 Du erhältst den Auszug aus zwei Gründen:
@@ -57,7 +57,7 @@ Nutzungsbeispiel: Verwaltung der Einsätze.
 
 <!--
 \begin{longtable}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
-	 -->Adresse<!-- & -->#street# #number#<!-- \newline -->#zip_code# #city#<!-- \\
+	 -->Adresse<!-- & -->#streetnumber#<!-- \newline -->#zipcity#<!-- \\
 	 -->Geburtstag<!-- & -->#birthday#<!-- \\
 	 -->Geschlecht<!-- & -->#sex_type#<!-- \\
 	 -->Bevorzugt schiedsen bei<!-- & -->#prefer#<!-- \\

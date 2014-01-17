@@ -1,122 +1,162 @@
 <?php
 
-	if ($type === 'excel') {
+	if (($type === 'excel') || ($type === 'referee_view_zip')) {
 
-		// compute different styles
-		foreach ($statustypes as &$statustypeedit) {
-			$statustypeedit['outputstyle'] = array();
+		if ($type === 'excel') {
+			// compute different styles
+			foreach ($statustypes as &$statustypeedit) {
+				$statustypeedit['outputstyle'] = array();
 
-			if ($statustypeedit['style']) {
-				switch ($statustypeedit['style']) {
-					case 'normal':
-					case 'italic':
-					case 'oblique':
-						$statustypeedit['outputstyle']['font-style'] = $statustypeedit['style'];
-						break;
-					case 'normal':
-					case 'bold':
-					case 'bolder':
-					case 'lighter':
-						$statustypeedit['outputstyle']['font-weight'] = $statustypeedit['style'];
-						break;
+				if ($statustypeedit['style']) {
+					switch ($statustypeedit['style']) {
+						case 'normal':
+						case 'italic':
+						case 'oblique':
+							$statustypeedit['outputstyle']['font-style'] = $statustypeedit['style'];
+							break;
+						case 'normal':
+						case 'bold':
+						case 'bolder':
+						case 'lighter':
+							$statustypeedit['outputstyle']['font-weight'] = $statustypeedit['style'];
+							break;
+					}
+				}
+
+				if ($statustypeedit['color']) {
+					$statustypeedit['outputstyle']['color'] = $statustypeedit['color'];
+				}
+
+				if ($statustypeedit['bgcolor']) {
+					$statustypeedit['outputstyle']['bg-color'] = $statustypeedit['bgcolor'];
 				}
 			}
 
-			if ($statustypeedit['color']) {
-				$statustypeedit['outputstyle']['color'] = $statustypeedit['color'];
-			}
+			// start table
+			$this->PHPExcel->createWorksheet(null, 11, PHPExcel_Style_Alignment::VERTICAL_TOP, PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
-			if ($statustypeedit['bgcolor']) {
-				$statustypeedit['outputstyle']['bg-color'] = $statustypeedit['bgcolor'];
-			}
+			// meta information
+			$this->PHPExcel->addTableRow(array('text' => array(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))), array('font-weight' => 'normal', 'font-size' => 14));
+			$this->PHPExcel->addTableRow(array());
+
+			$this->PHPExcel->getXLS()->getProperties()
+					->setCreator(__('RefereeManager'))
+					->setLastModifiedBy(__('RefereeManager'))
+					->setTitle(__('Verbandsschiedsrichter des BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))
+					->setSubject(__('Verbandsschiedsrichter des BTTV'))
+					->setDescription(__('Übersicht der Verbandsschiedsrichter, exportiert aus dem RefereeManager'))
+					->setKeywords(__('Verbandsschiedsrichter BTTV %s', $season['title_season']))
+					->setCategory(__('Schiedsrichterliste'));
+
+			// header
+			$header = array();
+				$header[] = array('text' => __('Name'), 'width' => '15');
+				$header[] = array('text' => __('Vorname'));
+
+				foreach ($allrefereerelationtypes as $sid => $refereerelationtype) {
+					if (array_key_exists($sid, $refereerelationtypes) && (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor)) {
+						$header[] = array('text' => __($refereerelationtype['title']));
+					}
+				}
+
+				if ($isReferee) {
+					$header[] = array('text' => __('E-Mail'));
+					$header[] = array('text' => __('Telefon'));
+				}
+
+				if ($isEditor) {
+					$header[] = array('text' => __('Adresse'));
+					$header[] = array('text' => __('Geschlecht'));
+					$header[] = array('text' => __('Geburtstag'));
+				}
+
+				$header[] = array('text' => __('Ausbildung'));
+
+				if ($isEditor) {
+					$header[] = array('text' => __('Letzte Ausbildung'));
+					$header[] = array('text' => __('Letzte Fortbildung'));
+					$header[] = array('text' => __('Nächste Fortbildung'));
+					$header[] = array('text' => __('Anmerkung'));
+				}
+
+			$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
 		}
 
-		// start table
-		$this->PHPExcel->createWorksheet(null, 11, PHPExcel_Style_Alignment::VERTICAL_TOP, PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-
-		// meta information
-		$this->PHPExcel->addTableRow(array('text' => array(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))), array('font-weight' => 'normal', 'font-size' => 14));
-		$this->PHPExcel->addTableRow(array());
-
-		$this->PHPExcel->getXLS()->getProperties()
-				->setCreator(__('RefereeManager'))
-				->setLastModifiedBy(__('RefereeManager'))
-				->setTitle(__('Verbandsschiedsrichter des BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))
-				->setSubject(__('Verbandsschiedsrichter des BTTV'))
-				->setDescription(__('Übersicht der Verbandsschiedsrichter, exportiert aus dem RefereeManager'))
-				->setKeywords(__('Verbandsschiedsrichter BTTV %s', $season['title_season']))
-				->setCategory(__('Schiedsrichterliste'));
-
-		// header
-		$header = array();
-			$header[] = array('text' => __('Name'), 'width' => '15');
-			$header[] = array('text' => __('Vorname'));
-
-			foreach ($refereerelationtypes as $sid => $refereerelationtype) {
-				if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-					$header[] = array('text' => __($refereerelationtype['title']));
-				}
-			}
-
-			if ($isReferee) {
-				$header[] = array('text' => __('E-Mail'));
-				$header[] = array('text' => __('Telefon'));
-			}
-
-			if ($isEditor) {
-				$header[] = array('text' => __('Adresse'));
-				$header[] = array('text' => __('Geschlecht'));
-				$header[] = array('text' => __('Geburtstag'));
-			}
-
-			$header[] = array('text' => __('Ausbildung'));
-
-			if ($isEditor) {
-				$header[] = array('text' => __('Letzte Fortbildung'));
-				$header[] = array('text' => __('Nächste Fortbildung'));
-				$header[] = array('text' => __('Anmerkung'));
-			}
-
-		$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
+		if ($type === 'referee_view_zip') {
+			$template = file_get_contents(sprintf('%s%s%s', WWW_ROOT, Configure::read('RefMan.template.path'), Configure::read('RefMan.template.referee_view')));
+			$tpltoken = '#%s#';
+			$nbrtoken = '`%s`';
+		}
 
 		if (empty($referees)) {
-			$this->PHPExcel->addTableTexts(__('Es sind keine Schiedsrichter_innen gespeichert.'));
+			if ($type === 'excel') {
+				$this->PHPExcel->addTableTexts(__('Es sind keine Schiedsrichter_innen gespeichert.'));
+			}
+			if ($type === 'referee_view_zip') {
+				echo __('Es sind keine Schiedsrichter_innen gespeichert.');
+			}
 		} else {
 			// datarows
 			foreach ($referees as $referee) {
 
-				$refformat = array();
+				if ($type === 'excel') {
+					$refformat = array();
+					$datarow = array();
+				}
+				if ($type === 'referee_view_zip') {
+					$filledTemplate = $template;
+					$repltoken = 'date';
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatDate(time(), 'medium'), $filledTemplate);
+				}
 
-				$datarow = array();
-				$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'name_title'));
-				$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'));
+				if ($type === 'excel') {
+					$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'name_title'));
+					$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'));
+				}
+				if ($type === 'referee_view_zip') {
+					$repltoken = 'fullname';
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatPerson($referee['Person'], 'fullname'), $filledTemplate);
+					$repltoken = 'title';
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatPerson($referee['Person'], 'title'), $filledTemplate);
+					$repltoken = 'first_name';
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'), $filledTemplate);
+					$repltoken = 'name';
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatPerson($referee['Person'], 'name'), $filledTemplate);
+				}
 
 				// relations
-				foreach ($refereerelationtypes as $sid => $refereerelationtype) {
+				foreach ($allrefereerelationtypes as $sid => $refereerelationtype) {
 					if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-						$text = '';
+						$excel_text = '';
 						$hasMore = false;
 						if (array_key_exists($sid, $referee['RefereeRelation'])) {
 							foreach ($referee['RefereeRelation'][$sid] as $refereerelation) {
 								if ($hasMore) {
-									$text .= '; ';
+									$excel_text .= '; ';
 								}
 								if (array_key_exists('Club', $refereerelation)) {
-									$text .= $refereerelation['Club']['name'];
+									$excel_text .= $refereerelation['Club']['name'];
 								}
 								if (array_key_exists('League', $refereerelation)) {
-									$text .= $refereerelation['League']['title'];
+									$excel_text .= $refereerelation['League']['title'];
 								}
 								$hasMore = true;
 							}
 						}
-						$datarow[] = array('text' => $text);
+						if (($type === 'excel') && array_key_exists($sid, $refereerelationtypes)) {
+							$datarow[] = array('text' => $excel_text);
+						}
+						if ($type === 'referee_view_zip') {
+							$repltoken = $sid;
+							$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $excel_text, $filledTemplate);
+						}
 					}
 				}
 
 				if ($isReferee) {
 					// email
-					$text = '';
+					$excel_text = '';
+					$refview_text = '';
 					if (array_key_exists('Contact', $referee) && array_key_exists('Email', $referee['Contact'])) {
 						$hasMore = false;
 						$printType = (count($referee['Contact']['Email']) > 1);
@@ -124,20 +164,30 @@
 							$printType |= (count($emailkind) > 1);
 							foreach ($emailkind as $email) {
 								if ($hasMore) {
-									$text .= "\n";
+									$excel_text .= "\n";
+									$refview_text .= "<!-- \\newline -->";
 								}
 								if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
-									$text .=  __('%s: ', $contacttypes[$contacttype]['abbreviation']);
+									$excel_text .=  __('%s: ', $contacttypes[$contacttype]['abbreviation']);
+									$refview_text .=  __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 								}
-								$text .= $this->RefereeFormat->formatEMail($email, 'text');
+								$excel_text .= $this->RefereeFormat->formatEMail($email, 'text');
+								$refview_text .= sprintf($nbrtoken, $this->RefereeFormat->formatEMail($email, 'text'));
 								$hasMore = true;
 							}
 						}
 					}
-					$datarow[] = array('text' => $text);
+					if ($type === 'excel') {
+						$datarow[] = array('text' => $excel_text);
+					}
+					if ($type === 'referee_view_zip') {
+						$repltoken = 'email';
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
+					}
 
 					// phone
-					$text = '';
+					$excel_text = '';
+					$refview_text = '';
 					if (array_key_exists('Contact', $referee) && array_key_exists('PhoneNumber', $referee['Contact'])) {
 						$hasMore = false;
 						$printType = (count($referee['Contact']['PhoneNumber']) > 1);
@@ -145,22 +195,31 @@
 							$printType |= (count($phonekind) > 1);
 							foreach ($phonekind as $phone) {
 								if ($hasMore) {
-									$text .= "\n";
+									$excel_text .= "\n";
+									$refview_text .= "<!-- \\newline -->";
 								}
 								if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
-									$text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
+									$excel_text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
+									$refview_text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 								}
-								$text .= $this->RefereeFormat->formatPhone($phone, 'normal');
+								$excel_text .= $this->RefereeFormat->formatPhone($phone, 'normal');
+								$refview_text .= sprintf($nbrtoken, $this->RefereeFormat->formatPhone($phone, 'normal'));
 								$hasMore = true;
 							}
 						}
 					}
-					$datarow[] = array('text' => $text);
+					if ($type === 'excel') {
+						$datarow[] = array('text' => $excel_text);
+					}
+					if ($type === 'referee_view_zip') {
+						$repltoken = 'phone';
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
+					}
 				}
 
 				if ($isEditor) {
 					// address
-					$text = '';
+					$excel_text = '';
 					if (array_key_exists('Contact', $referee) && array_key_exists('Address', $referee['Contact'])) {
 						$hasMore = false;
 						$printType = (count($referee['Contact']['Address']) > 1);
@@ -168,97 +227,177 @@
 							$printType |= (count($addresskind) > 1);
 							foreach ($addresskind as $address) {
 								if ($hasMore) {
-									$text .= '\n';
+									$excel_text .= '\n';
 								}
 								if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
-									$text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
+									$excel_text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 								}
-								$text .= $this->RefereeFormat->formatAddress($address, 'fulladdress');
+								$excel_text .= $this->RefereeFormat->formatAddress($address, 'fulladdress');
 								$hasMore = true;
 							}
 						}
 					}
-					$datarow[] = array('text' => $text);
+					if ($type === 'excel') {
+						$datarow[] = array('text' => $excel_text);
+					}
+					if ($type === 'referee_view_zip') {
+						$repltoken = 'streetnumber';
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatAddress($address, $repltoken), $filledTemplate);
+						$repltoken = 'zipcity';
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatAddress($address, $repltoken), $filledTemplate);
+					}
 
 					// sex
-					$datarow[] = array('text' => __($referee['SexType']['title']));
+					if ($type === 'excel') {
+						$datarow[] = array('text' => __($referee['SexType']['title']));
+					}
+					if ($type === 'referee_view_zip') {
+						$repltoken = 'sex_type';
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), __($referee['SexType']['title']), $filledTemplate);
+					}
 
 					// birthday
-					$text = '';
+					$excel_text = '';
 					if (!empty($referee['Person']['birthday'])) {
-						$text .= $this->RefereeFormat->formatPerson($referee['Person'], 'birthday');
+						$excel_text .= $this->RefereeFormat->formatPerson($referee['Person'], 'birthday');
 					}
-					$datarow[] = array('text' => $text);
+					if ($type === 'excel') {
+						$datarow[] = array('text' => $excel_text);
+					}
+					if ($type === 'referee_view_zip') {
+						$repltoken = 'birthday';
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), sprintf($nbrtoken, $excel_text), $filledTemplate);
+					}
 				}
 
 				// training level
-				$text = '';
+				$excel_text = '';
+				$refview_text = '';
 				if (!empty($referee['TrainingLevelInfo'])) {
-					$text .= __($referee['TrainingLevelInfo']['abbreviation']);
+					$excel_text .= __($referee['TrainingLevelInfo']['abbreviation']);
+					$refview_text .= __($referee['TrainingLevelInfo']['title']);
 				}
-				$datarow[] = array('text' => $text);
+				if ($type === 'excel') {
+					$datarow[] = array('text' => $excel_text);
+				}
+				if ($type === 'referee_view_zip') {
+					$repltoken = 'training_level';
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
+					$repltoken = 'training_level_abbr';
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $excel_text, $filledTemplate);
+				}
 
 				if ($isEditor) {
-					// last update
-					$text = '';
-					if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['lastupdate'])) {
-						$text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['lastupdate'], 'date');
+					// since
+					$excel_text = '';
+					if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['since'])) {
+						$excel_text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['since'], 'date');
 					}
-					$datarow[] = array('text' => $text);
+					if ($type === 'excel') {
+						$datarow[] = array('text' => $excel_text);
+					}
+					if ($type === 'referee_view_zip') {
+						$repltoken = 'since';
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), sprintf($nbrtoken, $excel_text), $filledTemplate);
+					}
+
+					// last update
+					$excel_text = '';
+					if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['lastupdate'])) {
+						$excel_text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['lastupdate'], 'date');
+					}
+					if ($type === 'excel') {
+						$datarow[] = array('text' => $excel_text);
+					}
+					if ($type === 'referee_view_zip') {
+						$repltoken = 'last_update';
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), sprintf($nbrtoken, $excel_text), $filledTemplate);
+					}
 
 					// next update
-					$text = '';
+					$excel_text = '';
 					if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['nextupdate'])) {
-						$text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['nextupdate'], 'year');
+						$excel_text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['nextupdate'], 'year');
 					}
-					$datarow[] = array('text' => $text);
+					if ($type === 'excel') {
+						$datarow[] = array('text' => $excel_text);
+					}
+					if ($type === 'referee_view_zip') {
+						$repltoken = 'next_update';
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), sprintf($nbrtoken, $excel_text), $filledTemplate);
+					}
 
-					$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
+					if ($type === 'excel') {
+						$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
+					}
+					if ($type === 'referee_view_zip') {
+						$repltoken = 'remark';
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $excel_text, $filledTemplate);
+					}
 
 				}
 
-				$this->PHPExcel->addTableRow($datarow, $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']);
-			}
-
-			// legend
-			$this->PHPExcel->addTableRow(array());
-			$this->PHPExcel->addTableRow(array('text' => array(__('Legende:'))), array('font-weight' => 'bold', 'font-size' => 10));
-			foreach ($statustypes as $statustype) {
-				if (($statustype['sid'] == StatusType::SID_MANY) ||
-						($statustype['sid'] == StatusType::SID_INACTIVESEASON) ||
-						($statustype['sid'] == StatusType::SID_OTHER)) {
-					$this->PHPExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), $statustype['outputstyle']);
+				if ($type === 'excel') {
+					$this->PHPExcel->addTableRow($datarow, $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']);
+				}
+				if ($type === 'referee_view_zip') {
+					$repltoken = 'status_type';
+					$refview_text = ($statustypes[$referee['RefereeStatus']['sid']]['remark']) ?
+							$statustypes[$referee['RefereeStatus']['sid']]['remark'] :
+							$statustypes[$referee['RefereeStatus']['sid']]['title'];
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 				}
 			}
 
-			$this->PHPExcel->addTableRow(array());
-			$this->PHPExcel->addTableRow(array('text' => array(__('Zusatzinformationen'))), array('font-weight' => 'bold', 'font-size' => 10));
-			foreach ($statustypes as $statustype) {
-				if (($statustype['sid'] == StatusType::SID_MANY) ||
-						($statustype['sid'] == StatusType::SID_INACTIVESEASON) ||
-						($statustype['sid'] == StatusType::SID_OTHER)) {
-					$this->PHPExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), array('font-weight' => 'bold', 'font-size' => 10));
+			if ($type === 'excel') {
+				// legend
+				$this->PHPExcel->addTableRow(array());
+				$this->PHPExcel->addTableRow(array('text' => array(__('Legende:'))), array('font-weight' => 'bold', 'font-size' => 10));
+				foreach ($statustypes as $statustype) {
+					if (($statustype['sid'] == StatusType::SID_MANY) ||
+							($statustype['sid'] == StatusType::SID_INACTIVESEASON) ||
+							($statustype['sid'] == StatusType::SID_OTHER)) {
+						$this->PHPExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), $statustype['outputstyle']);
+					}
+				}
 
-					$hasMore = false;
-					$text = '';
-					foreach ($statustype['referees'] as $referee) {
-						if ($hasMore) {
-							$text .= ', ';
+				$this->PHPExcel->addTableRow(array());
+				$this->PHPExcel->addTableRow(array('text' => array(__('Zusatzinformationen'))), array('font-weight' => 'bold', 'font-size' => 10));
+				foreach ($statustypes as $statustype) {
+					if (($statustype['sid'] == StatusType::SID_MANY) ||
+							($statustype['sid'] == StatusType::SID_INACTIVESEASON) ||
+							($statustype['sid'] == StatusType::SID_OTHER)) {
+						$this->PHPExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), array('font-weight' => 'bold', 'font-size' => 10));
+
+						$hasMore = false;
+						$excel_text = '';
+						foreach ($statustype['referees'] as $referee) {
+							if ($hasMore) {
+								$excel_text .= ', ';
+							}
+							$excel_text .= __($this->RefereeFormat->formatPerson($referee, 'fullname'));
+							$hasMore = true;
 						}
-						$text .= __($this->RefereeFormat->formatPerson($referee, 'fullname'));
-						$hasMore = true;
+						$this->PHPExcel->addTableTexts($excel_text);
 					}
-					$this->PHPExcel->addTableTexts($text);
 				}
 			}
 		}
 
-		// output
-		$this->PHPExcel->output('VSR.xlsx');
+		if ($type === 'excel') {
+			// output
+			$this->PHPExcel->output('VSR.xlsx');
+		}
 
-	} else if ($type === 'zip') {
+		if ($type === 'referee_view_zip') {
+			echo '<h3>filled template</h3><pre>';
+			echo $filledTemplate;
+			echo '</pre>';
+		}
 
-		// just a simple test, nothing important right now
+	} else if ($type === 'referee_view_zip') {
+
+/*		// just a simple test, nothing important right now
 		$zip = new ZipArchive();
 		$res = $zip->open('test.zip', ZipArchive::CREATE);
 		if ($res === TRUE) {
@@ -268,7 +407,7 @@
 			echo 'ok';
 		} else {
 			echo 'failed';
-		}
+		}*/
 
 	} else {
 		throw new CakeException(__('Exporttyp "%s" nicht unterstützt!', $type));

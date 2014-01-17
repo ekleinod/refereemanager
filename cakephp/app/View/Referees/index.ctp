@@ -62,8 +62,11 @@
 
 	<p>
 		<?php echo $this->Html->link('Export to Excel', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'excel')); ?>
-		|
-		<?php echo $this->Html->link('Export to Zip', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'zip')); ?>
+		<?php if ($isEditor) { ?>
+			|
+			<?php echo $this->Html->link('Datenübersicht (zip)', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'referee_view_zip')); ?>
+		<?php } ?>
+
 	</p>
 
 	<table>
@@ -96,6 +99,7 @@
 				$columns[] = __('Ausbildung');
 
 				if ($isEditor) {
+					$columns[] = __('Letzte Ausbildung');
 					$columns[] = __('Letzte Fortbildung');
 					$columns[] = __('Nächste Fortbildung');
 					$columns[] = __('Anmerkung');
@@ -249,6 +253,14 @@
 						?></td>
 
 						<?php if ($isEditor) { ?>
+							<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
+								$text = '';
+								if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['since'])) {
+									$text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['since'], 'date');
+								}
+								echo $text;
+							?></td>
+
 							<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								$text = '';
 								if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['lastupdate'])) {

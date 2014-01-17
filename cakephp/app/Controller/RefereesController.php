@@ -86,6 +86,7 @@ class RefereesController extends AppController {
 		$this->set('season', $theSeason);
 		$this->set('statustypes', $this->getStatusTypes($referees, $theSeason));
 		$this->set('refereerelationtypes', $this->getRefereeRelationTypes($referees));
+		$this->set('allrefereerelationtypes', $this->getAllRefereeRelationTypes());
 		$this->set('contacttypes', $this->getContactTypes());
 	}
 
@@ -203,6 +204,22 @@ class RefereesController extends AppController {
 		}
 
 		return $refereerelationtypes;
+	}
+
+	/**
+	 * Returns all referee relation types.
+	 *
+	 * @return all referee relation types
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	private function getAllRefereeRelationTypes() {
+		$allrefereerelationtypes = array();
+		foreach ($this->RefereeRelationType->find('all') as $refereerelationtype) {
+			$allrefereerelationtypes[$refereerelationtype['RefereeRelationType']['sid']] = $refereerelationtype['RefereeRelationType'];
+		}
+		return $allrefereerelationtypes;
 	}
 
 	/**

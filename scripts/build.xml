@@ -173,11 +173,6 @@
 				<include name="*.ctp" />
 			</fileset>
 		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Teams${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}Teams${file.separator}">
-				<include name="*.ctp" />
-			</fileset>
-		</copy>
 		<copy todir="${path:target}app${file.separator}View${file.separator}Users${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Users${file.separator}">
 				<include name="*.ctp" />
@@ -207,6 +202,11 @@
 				<include name="*.ico" />
 				<exclude name="cake.*" />
 				<exclude name="test-*" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}webroot${file.separator}files${file.separator}templates${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}webroot${file.separator}files${file.separator}templates${file.separator}">
+				<include name="**/*.mmd" />
 			</fileset>
 		</copy>
 	</target>
