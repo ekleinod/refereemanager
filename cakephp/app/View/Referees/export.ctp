@@ -410,6 +410,9 @@
 			$latexallrefs = str_replace(sprintf($tpltoken, 'includepdf'), '', $latexallrefs);
 			$zip->addFromString(Configure::read('RefMan.template.referee_view_all'), $latexallrefs);
 			$zip->close();
+
+			$this->response->file($zipfile);
+			echo $this->response;
 		}
 
 	} else {
