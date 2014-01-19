@@ -103,6 +103,7 @@
 					$columns[] = __('Letzte Fortbildung');
 					$columns[] = __('Nächste Fortbildung');
 					$columns[] = __('Anmerkung');
+					$columns[] = __('Interne Anmerkung');
 				}
 
 				$columns[] = __('Aktionen');
@@ -280,6 +281,12 @@
 							<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								if (!empty($referee['Person']['remark'])) {
 									echo h($referee['Person']['remark']);
+								}
+							?></td>
+
+							<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
+								if (!empty($referee['Person']['internal_remark'])) {
+									echo h($referee['Person']['internal_remark']);
 								}
 							?></td>
 						<?php } ?>
