@@ -31,9 +31,8 @@
 		<antcall target="createpdffiles" />
 		<antcall target="mergepdffiles" />
 
-		<antcall target="clear" />
-
 		<echo message="Create pdf file: stop."/>
+		<echo message="Call target 'clear' to remove temporary files."/>
 
 	</target>
 
