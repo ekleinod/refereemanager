@@ -87,6 +87,10 @@
 			$tpltoken = '#%s#';
 			$nbrtoken = '`%s`';
 
+			$latexallrefs = file_get_contents(sprintf('%s%s%s', WWW_ROOT, Configure::read('RefMan.template.path'), Configure::read('RefMan.template.referee_view_all')));
+			$fletoken = 'mmd/referee%04d';
+			$latexreftoken = sprintf("\t\\includepdf{%s.pdf}\n", $fletoken);
+
 			$zip = new ZipArchive();
 			$zipfile = sprintf('%s%s.zip', TMP, Configure::read('RefMan.template.referee_view'));
 			if ($zip->open($zipfile, ZipArchive::OVERWRITE) === TRUE) {
@@ -358,7 +362,8 @@
 				}
 
 				if ($type === 'referee_view_zip') {
-					$zip->addFromString(sprintf('referee%04d.mmd', ++$refcount), $filledTemplate);
+					$zip->addFromString(sprintf('%s.mmd', sprintf($fletoken, ++$refcount)), $filledTemplate);
+					$latexallrefs = str_replace(sprintf($tpltoken, 'includepdf'), sprintf('%s%s', sprintf($latexreftoken, $refcount), sprintf($tpltoken, 'includepdf')), $latexallrefs);
 				}
 			}
 
@@ -398,13 +403,13 @@
 		}
 
 		if ($type === 'excel') {
-			// output
 			$this->PHPExcel->output('VSR.xlsx');
 		}
 
 		if ($type === 'referee_view_zip') {
+			$latexallrefs = str_replace(sprintf($tpltoken, 'includepdf'), '', $latexallrefs);
+			$zip->addFromString(Configure::read('RefMan.template.referee_view_all'), $latexallrefs);
 			$zip->close();
-			echo 'ready.';
 		}
 
 	} else {

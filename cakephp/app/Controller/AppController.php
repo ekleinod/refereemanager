@@ -96,6 +96,7 @@ class AppController extends Controller {
 													 'defaultareacode' => '30'));
 		Configure::write('RefMan.template.path', 'files/templates/');
 		Configure::write('RefMan.template.referee_view', 'referee_view.mmd');
+		Configure::write('RefMan.template.referee_view_all', 'referee_view_all.tex');
 
 	}
 
