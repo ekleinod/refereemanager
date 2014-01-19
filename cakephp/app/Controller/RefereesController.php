@@ -233,7 +233,7 @@ class RefereesController extends AppController {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	private function fillReferee($referee, $season = null) {
+	private function fillReferee($referee, $season) {
 
 		$refTemp = array();
 
@@ -342,13 +342,15 @@ class RefereesController extends AppController {
 		$statustypes = array();
 
 		foreach ($referees as $referee) {
-			if (!array_key_exists($referee['RefereeStatus']['sid'], $statustypes)) {
-				$statustypes[$referee['RefereeStatus']['sid']] = $referee['RefereeStatus'];
-			}
-			if (($referee['RefereeStatus']['sid'] == StatusType::SID_MANY) ||
-					($referee['RefereeStatus']['sid'] == StatusType::SID_INACTIVESEASON) ||
-					($referee['RefereeStatus']['sid'] == StatusType::SID_OTHER)) {
-				$statustypes[$referee['RefereeStatus']['sid']]['referees'][] = $referee['Person'];
+			if ($referee['RefereeStatus']) {
+				if (!array_key_exists($referee['RefereeStatus']['sid'], $statustypes)) {
+					$statustypes[$referee['RefereeStatus']['sid']] = $referee['RefereeStatus'];
+				}
+				if (($referee['RefereeStatus']['sid'] == StatusType::SID_MANY) ||
+						($referee['RefereeStatus']['sid'] == StatusType::SID_INACTIVESEASON) ||
+						($referee['RefereeStatus']['sid'] == StatusType::SID_OTHER)) {
+					$statustypes[$referee['RefereeStatus']['sid']]['referees'][] = $referee['Person'];
+				}
 			}
 		}
 
