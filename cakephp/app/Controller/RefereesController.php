@@ -45,7 +45,7 @@ class RefereesController extends AppController {
 	 */
 	public function index($season = null) {
 
-		$this->setAndGetStandardIndexExport();
+		$this->setAndGetStandardIndexExport($season);
 
 		$this->set('title_for_layout', __('Übersicht der Schiedsrichter_innen'));
 	}
@@ -61,7 +61,7 @@ class RefereesController extends AppController {
 	 */
 	public function export($season = null, $type = 'excel') {
 
-		$this->setAndGetStandardIndexExport();
+		$this->setAndGetStandardIndexExport($season);
 
 		$this->set('type', $type);
 
