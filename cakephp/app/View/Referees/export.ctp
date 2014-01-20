@@ -86,6 +86,7 @@
 			$template = file_get_contents(sprintf('%s%s%s', WWW_ROOT, Configure::read('RefMan.template.path'), Configure::read('RefMan.template.referee_view')));
 			$tpltoken = '#%s#';
 			$nbrtoken = '`%s`';
+			$refview_empty = '---';
 
 			$latexallrefs = file_get_contents(sprintf('%s%s%s', WWW_ROOT, Configure::read('RefMan.template.path'), Configure::read('RefMan.template.referee_view_all')));
 			$fletoken = 'referee%04d';
@@ -130,11 +131,17 @@
 					$repltoken = 'fullname';
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatPerson($referee['Person'], 'fullname'), $filledTemplate);
 					$repltoken = 'title';
-					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatPerson($referee['Person'], 'title'), $filledTemplate);
+					$refview_text = $this->RefereeFormat->formatPerson($referee['Person'], 'title');
+					$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					$repltoken = 'first_name';
-					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'), $filledTemplate);
+					$refview_text = $this->RefereeFormat->formatPerson($referee['Person'], 'first_name');
+					$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					$repltoken = 'name';
-					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatPerson($referee['Person'], 'name'), $filledTemplate);
+					$refview_text = $this->RefereeFormat->formatPerson($referee['Person'], 'name');
+					$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 				}
 
 				// relations
@@ -161,7 +168,8 @@
 						}
 						if ($type === 'referee_view_zip') {
 							$repltoken = $sid;
-							$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $excel_text, $filledTemplate);
+							$refview_text = (empty($excel_text)) ? $refview_empty : $excel_text;
+							$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 						}
 					}
 				}
@@ -195,6 +203,7 @@
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'email';
+						$refview_text = (empty($refview_text) || ($refview_text === $nbrtoken)) ? $refview_empty : $refview_text;
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
 
@@ -226,11 +235,13 @@
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'phone';
+						$refview_text = (empty($refview_text) || ($refview_text === $nbrtoken)) ? $refview_empty : $refview_text;
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
 				}
 
 				if ($isEditor) {
+
 					// address
 					$excel_text = '';
 					if (array_key_exists('Contact', $referee) && array_key_exists('Address', $referee['Contact'])) {
@@ -255,9 +266,13 @@
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'streetnumber';
-						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatAddress($address, $repltoken), $filledTemplate);
+						$refview_text = $this->RefereeFormat->formatAddress($address, $repltoken);
+						$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 						$repltoken = 'zipcity';
-						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatAddress($address, $repltoken), $filledTemplate);
+						$refview_text = $this->RefereeFormat->formatAddress($address, $repltoken);
+						$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
 
 					// sex
@@ -266,7 +281,9 @@
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'sex_type';
-						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), __($referee['SexType']['title']), $filledTemplate);
+						$refview_text = __($referee['SexType']['title']);
+						$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
 
 					// birthday
@@ -279,7 +296,8 @@
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'birthday';
-						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), sprintf($nbrtoken, $excel_text), $filledTemplate);
+						$refview_text = (empty($excel_text)) ? $refview_empty : sprintf($nbrtoken, $excel_text);
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
 				}
 
@@ -295,9 +313,11 @@
 				}
 				if ($type === 'referee_view_zip') {
 					$repltoken = 'training_level';
+					$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					$repltoken = 'training_level_abbr';
-					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $excel_text, $filledTemplate);
+					$refview_text = (empty($excel_text)) ? $refview_empty : $excel_text;
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 				}
 
 				if ($isEditor) {
@@ -311,7 +331,8 @@
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'since';
-						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), sprintf($nbrtoken, $excel_text), $filledTemplate);
+						$refview_text = (empty($excel_text)) ? $refview_empty : sprintf($nbrtoken, $excel_text);
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
 
 					// last update
@@ -324,7 +345,8 @@
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'last_update';
-						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), sprintf($nbrtoken, $excel_text), $filledTemplate);
+						$refview_text = (empty($excel_text)) ? $refview_empty : sprintf($nbrtoken, $excel_text);
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
 
 					// next update
@@ -337,7 +359,8 @@
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'next_update';
-						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), sprintf($nbrtoken, $excel_text), $filledTemplate);
+						$refview_text = (empty($excel_text)) ? $refview_empty : sprintf($nbrtoken, $excel_text);
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
 
 					if ($type === 'excel') {
@@ -345,7 +368,7 @@
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'remark';
-						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']), $filledTemplate);
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), (empty($referee['Person']['remark'])) ? $refview_empty : __($referee['Person']['remark']), $filledTemplate);
 					}
 
 				}
@@ -358,6 +381,7 @@
 					$refview_text = ($statustypes[$referee['RefereeStatus']['sid']]['remark']) ?
 							$statustypes[$referee['RefereeStatus']['sid']]['remark'] :
 							$statustypes[$referee['RefereeStatus']['sid']]['title'];
+					$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 				}
 

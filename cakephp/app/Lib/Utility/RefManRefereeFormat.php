@@ -31,7 +31,7 @@ class RefManRefereeFormat {
 
 		switch ($type) {
 			case 'date':
-				$formatted = CakeTime::format('d.m.Y', $data);
+				$formatted = CakeTime::format($data, '%d.%m.%Y');
 				break;
 			case 'datereverse':
 				$formatted = CakeTime::format('Y-m-d', $data);
