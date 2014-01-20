@@ -88,8 +88,8 @@
 			$nbrtoken = '`%s`';
 
 			$latexallrefs = file_get_contents(sprintf('%s%s%s', WWW_ROOT, Configure::read('RefMan.template.path'), Configure::read('RefMan.template.referee_view_all')));
-			$fletoken = 'mmd/referee%04d';
-			$latexreftoken = sprintf("\t\\includepdf{%s.pdf}\n", $fletoken);
+			$fletoken = 'referee%04d';
+			$latexreftoken = sprintf("\t\\includepdf{generated/%s.pdf}\n", $fletoken);
 
 			$zip = new ZipArchive();
 			$zipfile = sprintf('%s%s.zip', TMP, Configure::read('RefMan.template.referee_view'));
@@ -362,7 +362,7 @@
 				}
 
 				if ($type === 'referee_view_zip') {
-					$zip->addFromString(sprintf('%s.mmd', sprintf($fletoken, ++$refcount)), $filledTemplate);
+					$zip->addFromString(sprintf('mmd/%s.mmd', sprintf($fletoken, ++$refcount)), $filledTemplate);
 					$latexallrefs = str_replace(sprintf($tpltoken, 'includepdf'), sprintf('%s%s', sprintf($latexreftoken, $refcount), sprintf($tpltoken, 'includepdf')), $latexallrefs);
 				}
 			}
