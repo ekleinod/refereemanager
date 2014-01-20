@@ -77,15 +77,16 @@
 					$header[] = array('text' => __('Letzte Fortbildung'));
 					$header[] = array('text' => __('Nächste Fortbildung'));
 					$header[] = array('text' => __('Anmerkung'));
+					$header[] = array('text' => __('Interne Anmerkung'));
 				}
 
 			$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
 		}
 
+		$nbrtoken = '`%s`';
 		if ($type === 'referee_view_zip') {
 			$template = file_get_contents(sprintf('%s%s%s', WWW_ROOT, Configure::read('RefMan.template.path'), Configure::read('RefMan.template.referee_view')));
 			$tpltoken = '#%s#';
-			$nbrtoken = '`%s`';
 			$refview_empty = '---';
 
 			$latexallrefs = file_get_contents(sprintf('%s%s%s', WWW_ROOT, Configure::read('RefMan.template.path'), Configure::read('RefMan.template.referee_view_all')));
@@ -175,6 +176,7 @@
 				}
 
 				if ($isReferee) {
+
 					// email
 					$excel_text = '';
 					$refview_text = '';

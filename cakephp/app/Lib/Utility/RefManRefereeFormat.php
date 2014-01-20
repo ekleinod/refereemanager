@@ -52,7 +52,7 @@ class RefManRefereeFormat {
 				$formatted = CakeTime::format('H:i', $data);
 				break;
 			case 'year':
-				$formatted = CakeTime::format('Y', $data);
+				$formatted = CakeTime::format($data, '%Y');
 				break;
 			default:
 				$formatted = $data;
