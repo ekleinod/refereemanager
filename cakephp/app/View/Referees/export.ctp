@@ -122,6 +122,8 @@
 					$filledTemplate = $template;
 					$repltoken = 'date';
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatDate(time(), 'medium'), $filledTemplate);
+					$repltoken = 'season';
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $season['title_season'], $filledTemplate);
 				}
 
 				if ($type === 'excel') {

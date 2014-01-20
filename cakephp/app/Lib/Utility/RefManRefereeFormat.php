@@ -34,22 +34,22 @@ class RefManRefereeFormat {
 				$formatted = CakeTime::format($data, '%d.%m.%Y');
 				break;
 			case 'datereverse':
-				$formatted = CakeTime::format('Y-m-d', $data);
+				$formatted = CakeTime::format($data, '%Y-%m-%d');
 				break;
 			case 'datetime':
-				$formatted = CakeTime::format('d.m.Y, H:i', $data);
+				$formatted = CakeTime::format($data, '%d.%m.%Y, %H:%M');
 				break;
 			case 'longdate':
-				$formatted = CakeTime::format('D d.m.Y', $data);
+				$formatted = CakeTime::format($data, '%a %d.%m.%Y');
 				break;
 			case 'longdatereverse':
-				$formatted = CakeTime::format('d.m.Y (D)', $data);
+				$formatted = CakeTime::format($data, '%d.%m.%Y (%a)');
 				break;
 			case 'medium':
-				$formatted = CakeTime::format('d. F Y', $data);
+				$formatted = CakeTime::format($data, '%e. %B %Y');
 				break;
 			case 'time':
-				$formatted = CakeTime::format('H:i', $data);
+				$formatted = CakeTime::format($data, '%H:%M');
 				break;
 			case 'year':
 				$formatted = CakeTime::format($data, '%Y');
