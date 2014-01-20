@@ -373,6 +373,10 @@
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), (empty($referee['Person']['remark'])) ? $refview_empty : __($referee['Person']['remark']), $filledTemplate);
 					}
 
+					if ($type === 'excel') {
+						$datarow[] = array('text' => (empty($referee['Person']['internal_remark'])) ? '' : __($referee['Person']['internal_remark']));
+					}
+
 				}
 
 				if ($type === 'excel') {
