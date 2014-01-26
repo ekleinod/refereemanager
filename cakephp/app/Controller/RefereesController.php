@@ -66,6 +66,12 @@ class RefereesController extends AppController {
 		$this->set('type', $type);
 
 		$this->set('title_for_layout', __('Export der Schiedsrichter_innen'));
+
+		if ($type === 'pdf') {
+			$this->layout = 'pdf';
+			$this->render();
+		}
+
 	}
 
 	/**

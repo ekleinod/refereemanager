@@ -447,6 +447,31 @@
 			echo $this->response;
 		}
 
+	} else if ($type === 'pdf') {
+
+		App::import('Vendor','RefManTCPDF');
+
+		$tcpdf = new RefManTCPDF();
+		$textfont = Configure::read('RefMan.pdf.textfont');
+
+		$tcpdf->SetAuthor('Referee Manager');
+		$tcpdf->SetAutoPageBreak(false);
+		$tcpdf->setHeaderFont(array($textfont,'',40));
+		$tcpdf->xheadercolor = array(150,0,0);
+		$tcpdf->xheadertext = 'Referee Manager';
+		$tcpdf->xfootertext = 'page of';
+
+		// add a page (required with recent versions of tcpdf)
+		$tcpdf->AddPage();
+
+		// Now you position and print your page content
+		// example:
+		$tcpdf->SetTextColor(0, 0, 0);
+		$tcpdf->SetFont($textfont,'B',20);
+		$tcpdf->Cell(0,14, "Hello World", 0,1,'L');
+
+		echo $tcpdf->Output('filename.pdf', 'D');
+
 	} else {
 		throw new CakeException(__('Exporttyp "%s" nicht unterstützt!', $type));
 	}

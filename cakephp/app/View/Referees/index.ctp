@@ -6,6 +6,7 @@
 	<p>Saison: <?php echo $season['title_season']; ?></p>
 </div>
 
+
 <!-- view content -->
 <?php
 	if (empty($referees)) {
@@ -62,9 +63,9 @@
 
 	<p>
 		<?php echo $this->Html->link('Export als Excel-Datei', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'excel')); ?>
+		|
+		<?php echo $this->Html->link('Export als PDF', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'pdf')); ?>
 		<?php if ($isEditor) { ?>
-			|
-			<?php echo $this->Html->link('Export als PDF', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'pdf')); ?>
 			|
 			<?php echo $this->Html->link('Datenübersicht (zip)', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'referee_view_zip')); ?>
 		<?php } ?>

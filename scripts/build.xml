@@ -171,6 +171,7 @@
 		<copy todir="${path:target}app${file.separator}View${file.separator}Layouts${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Layouts${file.separator}">
 				<include name="default.ctp" />
+				<include name="pdf.ctp" />
 			</fileset>
 		</copy>
 		<copy todir="${path:target}app${file.separator}View${file.separator}RefereeAssignments${file.separator}" failonerror="false" overwrite="true">
@@ -186,6 +187,13 @@
 		<copy todir="${path:target}app${file.separator}View${file.separator}Users${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Users${file.separator}">
 				<include name="*.ctp" />
+			</fileset>
+		</copy>
+
+		<!-- Vendor -->
+		<copy todir="${path:target}app${file.separator}Vendor${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}Vendor${file.separator}">
+				<include name="RefManTCPDF.php" />
 			</fileset>
 		</copy>
 
