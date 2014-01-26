@@ -1,6 +1,6 @@
-Title:							RefereeManager Developer Documentation
-Author:							Ekkart Kleinod
-Date:								28.05.2013
+Title:	 RefereeManager Developer Documentation
+Author: Ekkart Kleinod
+Date: 26.01.2014
 Base Header Level:	3
 
 # Preface
@@ -32,6 +32,7 @@ There are five sources or downloads used for development:
 - RefereeManager ([Homepage][url:refman], [Git][url:refman:git])
 - PHPExcel ([Homepage][url:phpexcel], [SVN][url:phpexcel:svn])
 - PHPExcelHelper ([Homepage][url:phpexcelhelper], [Git][url:phpexcelhelper:git])
+- TCPDF ([Homepage][url:cpdf], [Git][url:tcpdf:git])
 
 RefereeManager should be read/write if you want to develop, the other are read-only.
 
@@ -73,6 +74,10 @@ We refer to the needed directories as follows:
 
 <...>/git/phpexcelhelper/
 : PHPExcelHelper git repository
+: no development files here
+
+<...>/git/tcpdf/
+: TCPDF git repository
 : no development files here
 
 
@@ -238,9 +243,10 @@ In order to do this, follow these steps:
 5. copy CakePHP
 6. copy PHPExcel
 7. copy PHPExcelHelper
-8. copy RefereeManager
-9. setup database
-10. start development
+8. copy TCPDF
+9. copy RefereeManager
+10. setup database
+11. start development
 
 You should use the provided *ant* scripts for some of these tasks.
 Simply call
@@ -257,7 +263,7 @@ If you are not familiar with *ant*, refer to the [Ant Manual][url:ant:manual].
 
 Clone the code of the *RefereeManager*.
 
-	$ git clone http://git.code.sf.net/p/refereemanager/code <...>/git/refereemanager/
+	$ git clone https://github.com/ekleinod/refereemanager.git <...>/git/refereemanager/
 
 Clone the code of *CakePHP*, alternatively download and unzip a version.
 
@@ -275,6 +281,10 @@ Checkout the code of *PHPExcel*.
 Clone the code of *PHPExcelHelper*, alternatively download and unzip a version.
 
 	$ git clone git://github.com/ekleinod/PHPExcelHelper.git <...>/git/phpexcelhelper/
+
+Clone the code of *TCPDF*, alternatively download and unzip a version.
+
+	$ git clone http://git.code.sf.net/p/tcpdf/code <...>/git/phpexcelhelper/
 
 ## Create and link your apache target directories
 
@@ -436,6 +446,27 @@ The script executes the following steps:
 
 *Important:* Your *PHPExcelHelper* files will be overwritten.
 
+## Copy TCPDF
+
+Copy the *TCPDF* files to your refereemanager apache directory.
+
+Ant target
+: `tcpdf2apache`
+: call: `ant tcpdf2apache`
+
+Source directory
+: `<...>/git/tcpdf`
+
+Target directory
+: `<...>/apache/refereemanager`
+
+The script executes the following steps:
+
+1. check if target directory exists -- failure otherwise
+2. copy the helper file from source directory to target directory
+
+*Important:* Your *TCPDF* files will be overwritten.
+
 ## Copy RefereeManager
 
 Copy the *RefereeManager* files in your refereemanager apache directory.
@@ -491,9 +522,7 @@ Everything is ready for development.
 
 
 
-[url:refman]: https://github.com/ekleinod/refereemanager "RefereeManager Github Home"
-[url:refman:wiki]: https://github.com/ekleinod/refereemanager/wiki "RefereeManager Github Wiki"
-[url:refman:git]: https://github.com/ekleinod/refereemanager.git "RefereeManager Github Git Access"
+[url:ant:manual]: http://ant.apache.org/manual/ "Ant Manual"
 [url:cake]: http://cakephp.org/ "CakePHP Homepage"
 [url:cake:git]: git://github.com/cakephp/cakephp.git "CakePHP Git Access"
 [url:pma]: http://www.phpmyadmin.net/ "phpMyAdmin Homepage"
@@ -503,5 +532,9 @@ Everything is ready for development.
 [url:phpexcel:svn]: https://phpexcel.svn.codeplex.com/svn "PhpExcel SVN Access"
 [url:phpexcelhelper]: https://github.com/ekleinod/PHPExcelHelper "PHPExcelHelper Github Page"
 [url:phpexcelhelper:git]: git://github.com/ekleinod/PHPExcelHelper.git "PHPExcelHelper Git Access"
-[url:ant:manual]: http://ant.apache.org/manual/ "Ant Manual"
+[url:refman]: https://github.com/ekleinod/refereemanager "RefereeManager Github Home"
+[url:refman:wiki]: https://github.com/ekleinod/refereemanager/wiki "RefereeManager Github Wiki"
+[url:refman:git]: https://github.com/ekleinod/refereemanager.git "RefereeManager Github Git Access"
+[url:tcpdf]: http://www.tcpdf.org/ "TCPDF Homepage"
+[url:tcpdf:git]: http://git.code.sf.net/p/tcpdf/code "TCPDF Git Access"
 
