@@ -29,6 +29,10 @@ class RefManRefereeFormat {
 			return '';
 		}
 
+		// @todo set locale correctly, still very mysterious
+		$arrlocale = explode('-', Configure::read('Config.language'));
+		setlocale(LC_TIME, sprintf('%s_%s.utf8', $arrlocale[0], strtoupper($arrlocale[1])));
+
 		switch ($type) {
 			case 'date':
 				$formatted = CakeTime::format($data, '%d.%m.%Y');
