@@ -94,10 +94,10 @@ class AppController extends Controller {
 										 array('defaultcontacttypeid' => 1,
 													 'defaultcountrycode' => '49',
 													 'defaultareacode' => '30'));
+
 		Configure::write('RefMan.template.path', 'files/templates/');
 		Configure::write('RefMan.template.referee_view', 'referee_view.mmd');
 		Configure::write('RefMan.template.referee_view_all', 'referee_view_all.tex');
-		Configure::write('RefMan.pdf.textfont', 'freesans');
 
 	}
 

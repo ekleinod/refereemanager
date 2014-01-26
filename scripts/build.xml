@@ -196,6 +196,11 @@
 				<include name="RefManTCPDF.php" />
 			</fileset>
 		</copy>
+		<copy todir="${path:target}app${file.separator}Vendor${file.separator}TCPDF${file.separator}config${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}Vendor${file.separator}TCPDF${file.separator}config${file.separator}">
+				<include name="tcpdf_config.php" />
+			</fileset>
+		</copy>
 
 		<!-- webroot -->
 		<copy todir="${path:target}app${file.separator}webroot${file.separator}" failonerror="true" overwrite="true">

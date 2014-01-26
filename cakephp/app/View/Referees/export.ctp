@@ -452,14 +452,14 @@
 		App::import('Vendor','RefManTCPDF');
 
 		$tcpdf = new RefManTCPDF();
-		$textfont = Configure::read('RefMan.pdf.textfont');
-
-		$tcpdf->SetAuthor('Referee Manager');
 		$tcpdf->SetAutoPageBreak(false);
-		$tcpdf->setHeaderFont(array($textfont,'',40));
-		$tcpdf->xheadercolor = array(150,0,0);
-		$tcpdf->xheadertext = 'Referee Manager';
-		$tcpdf->xfootertext = 'page of';
+
+		$tcpdf->setTitle(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')));
+		$tcpdf->setSubject(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')));
+		$tcpdf->setCreator(PDF_CREATOR);
+		$tcpdf->setAuthor(PDF_AUTHOR);
+		$tcpdf->rmSetHeader(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')),
+												__('Seite %s von %s'));
 
 		// add a page (required with recent versions of tcpdf)
 		$tcpdf->AddPage();
@@ -467,10 +467,9 @@
 		// Now you position and print your page content
 		// example:
 		$tcpdf->SetTextColor(0, 0, 0);
-		$tcpdf->SetFont($textfont,'B',20);
-		$tcpdf->Cell(0,14, "Hello World", 0,1,'L');
+		$tcpdf->Cell(0, 14, "Hello World", 0,1,'L');
 
-		echo $tcpdf->Output('filename.pdf', 'D');
+		echo $tcpdf->Output('referees.pdf', 'D');
 
 	} else {
 		throw new CakeException(__('Exporttyp "%s" nicht unterstützt!', $type));
