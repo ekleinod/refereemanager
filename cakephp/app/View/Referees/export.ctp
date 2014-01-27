@@ -1,37 +1,69 @@
 <?php
 
-	if (($type === 'excel') || ($type === 'referee_view_zip')) {
+	if (($type === 'excel') || ($type === 'referee_view_zip') || ($type === 'pdf')) {
 
-		if ($type === 'excel') {
-			// compute different styles
-			foreach ($statustypes as &$statustypeedit) {
-				$statustypeedit['outputstyle'] = array();
+		// compute different styles
+		foreach ($statustypes as &$statustypeedit) {
+			$statustypeedit['outputstyle'] = array();
 
-				if ($statustypeedit['style']) {
-					switch ($statustypeedit['style']) {
-						case 'normal':
-						case 'italic':
-						case 'oblique':
-							$statustypeedit['outputstyle']['font-style'] = $statustypeedit['style'];
-							break;
-						case 'normal':
-						case 'bold':
-						case 'bolder':
-						case 'lighter':
-							$statustypeedit['outputstyle']['font-weight'] = $statustypeedit['style'];
-							break;
-					}
-				}
-
-				if ($statustypeedit['color']) {
-					$statustypeedit['outputstyle']['color'] = $statustypeedit['color'];
-				}
-
-				if ($statustypeedit['bgcolor']) {
-					$statustypeedit['outputstyle']['bg-color'] = $statustypeedit['bgcolor'];
+			if ($statustypeedit['style']) {
+				switch ($statustypeedit['style']) {
+					case 'normal':
+					case 'italic':
+					case 'oblique':
+						$statustypeedit['outputstyle']['font-style'] = $statustypeedit['style'];
+						break;
+					case 'normal':
+					case 'bold':
+					case 'bolder':
+					case 'lighter':
+						$statustypeedit['outputstyle']['font-weight'] = $statustypeedit['style'];
+						break;
 				}
 			}
 
+			if ($statustypeedit['color']) {
+				$statustypeedit['outputstyle']['color'] = $statustypeedit['color'];
+			}
+
+			if ($statustypeedit['bgcolor']) {
+				$statustypeedit['outputstyle']['bg-color'] = $statustypeedit['bgcolor'];
+			}
+		}
+
+		// header
+		$header = array();
+			$header[] = array('text' => __('Name'), 'width' => '15');
+			$header[] = array('text' => __('Vorname'));
+
+			foreach ($allrefereerelationtypes as $sid => $refereerelationtype) {
+				if (array_key_exists($sid, $refereerelationtypes) && (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor)) {
+					$header[] = array('text' => __($refereerelationtype['title']));
+				}
+			}
+
+			if ($isReferee) {
+				$header[] = array('text' => __('E-Mail'));
+				$header[] = array('text' => __('Telefon'));
+			}
+
+			if ($isEditor) {
+				$header[] = array('text' => __('Adresse'));
+				$header[] = array('text' => __('Geschlecht'));
+				$header[] = array('text' => __('Geburtstag'));
+			}
+
+			$header[] = array('text' => __('Ausbildung'));
+
+			if ($isEditor) {
+				$header[] = array('text' => __('Letzte Ausbildung'));
+				$header[] = array('text' => __('Letzte Fortbildung'));
+				$header[] = array('text' => __('Nächste Fortbildung'));
+				$header[] = array('text' => __('Anmerkung'));
+				$header[] = array('text' => __('Interne Anmerkung'));
+			}
+
+		if ($type === 'excel') {
 			// start table
 			$this->PHPExcel->createWorksheet(null, 11, PHPExcel_Style_Alignment::VERTICAL_TOP, PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
@@ -47,38 +79,6 @@
 					->setDescription(__('Übersicht der Verbandsschiedsrichter, exportiert aus dem RefereeManager'))
 					->setKeywords(__('Verbandsschiedsrichter BTTV %s', $season['title_season']))
 					->setCategory(__('Schiedsrichterliste'));
-
-			// header
-			$header = array();
-				$header[] = array('text' => __('Name'), 'width' => '15');
-				$header[] = array('text' => __('Vorname'));
-
-				foreach ($allrefereerelationtypes as $sid => $refereerelationtype) {
-					if (array_key_exists($sid, $refereerelationtypes) && (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor)) {
-						$header[] = array('text' => __($refereerelationtype['title']));
-					}
-				}
-
-				if ($isReferee) {
-					$header[] = array('text' => __('E-Mail'));
-					$header[] = array('text' => __('Telefon'));
-				}
-
-				if ($isEditor) {
-					$header[] = array('text' => __('Adresse'));
-					$header[] = array('text' => __('Geschlecht'));
-					$header[] = array('text' => __('Geburtstag'));
-				}
-
-				$header[] = array('text' => __('Ausbildung'));
-
-				if ($isEditor) {
-					$header[] = array('text' => __('Letzte Ausbildung'));
-					$header[] = array('text' => __('Letzte Fortbildung'));
-					$header[] = array('text' => __('Nächste Fortbildung'));
-					$header[] = array('text' => __('Anmerkung'));
-					$header[] = array('text' => __('Interne Anmerkung'));
-				}
 
 			$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
 		}
@@ -102,6 +102,34 @@
 			}
 		}
 
+		if ($type === 'pdf') {
+			App::import('Vendor','RefManTCPDF');
+
+			$tcpdf = new RefManTCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+			$tcpdf->SetAutoPageBreak(false);
+
+			$tcpdf->setTitle(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')));
+			$tcpdf->setSubject(__('Verbandsschiedsrichter des BTTV'));
+			$tcpdf->setCreator(PDF_CREATOR);
+			$tcpdf->setAuthor(PDF_AUTHOR);
+			$tcpdf->setKeywords(__('Verbandsschiedsrichter BTTV %s', $season['title_season']));
+			$tcpdf->rmSetHeader(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')),
+													__('Seite %s von %s'));
+
+			$tcpdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+			$tcpdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+			$tcpdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+			$tcpdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+			$tcpdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+			$tcpdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+			$tcpdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+
+			$tcpdf->AddPage();
+
+		}
+
 		if (empty($referees)) {
 			if ($type === 'excel') {
 				$this->PHPExcel->addTableTexts(__('Es sind keine Schiedsrichter_innen gespeichert.'));
@@ -109,7 +137,20 @@
 			if ($type === 'referee_view_zip') {
 				echo __('Es sind keine Schiedsrichter_innen gespeichert.');
 			}
+			if ($type === 'pdf') {
+				$tcpdf->Write(0, __('Es sind keine Schiedsrichter_innen gespeichert.'));
+			}
 		} else {
+
+			if ($type === 'pdf') {
+				$pdf_text = '<table>';
+				$pdf_text .= '<thead><tr>';
+				foreach($header as $theHeader) {
+					$pdf_text .= sprintf('<th>%s</th>', $theHeader['text']);
+				}
+				$pdf_text .= '</tr></thead>';
+			}
+
 			// datarows
 			$refcount = 0;
 			foreach ($referees as $referee) {
@@ -432,6 +473,13 @@
 					}
 				}
 			}
+
+			if ($type === 'pdf') {
+				$pdf_text .= '</table>';
+				$tcpdf->writeHTML($pdf_text, true, false, true, false, '');
+				$tcpdf->Write(0, __('Legende:'));
+			}
+
 		}
 
 		if ($type === 'excel') {
@@ -447,29 +495,9 @@
 			echo $this->response;
 		}
 
-	} else if ($type === 'pdf') {
-
-		App::import('Vendor','RefManTCPDF');
-
-		$tcpdf = new RefManTCPDF();
-		$tcpdf->SetAutoPageBreak(false);
-
-		$tcpdf->setTitle(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')));
-		$tcpdf->setSubject(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')));
-		$tcpdf->setCreator(PDF_CREATOR);
-		$tcpdf->setAuthor(PDF_AUTHOR);
-		$tcpdf->rmSetHeader(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')),
-												__('Seite %s von %s'));
-
-		// add a page (required with recent versions of tcpdf)
-		$tcpdf->AddPage();
-
-		// Now you position and print your page content
-		// example:
-		$tcpdf->SetTextColor(0, 0, 0);
-		$tcpdf->Cell(0, 14, "Hello World", 0,1,'L');
-
-		echo $tcpdf->Output('referees.pdf', 'D');
+		if ($type === 'pdf') {
+			echo $tcpdf->Output('referees.pdf', 'D');
+		}
 
 	} else {
 		throw new CakeException(__('Exporttyp "%s" nicht unterstützt!', $type));

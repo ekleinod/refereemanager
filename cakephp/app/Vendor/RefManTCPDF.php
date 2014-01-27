@@ -24,7 +24,7 @@ class RefManTCPDF extends TCPDF {
 	 */
 	public function Header() {
 		$this->setY(10);
-		$this->Cell(0, 10, $this->headerText, 'B', 1, 'L', false);
+		$this->Cell(0, 8, $this->headerText, 'B', 1, 'L', false);
 	}
 
 	/**
@@ -32,7 +32,7 @@ class RefManTCPDF extends TCPDF {
 	 */
 	public function Footer() {
 		$this->SetY(-15);
-		$this->Cell(0, 10, sprintf($this->footerText, $this->getAliasNumPage(), $this->getAliasNbPages()), 'T', 1, 'C', false);
+		$this->Cell(0, 8, sprintf($this->footerText, $this->getAliasNumPage(), $this->getAliasNbPages()), 'T', 1, 'L', false);
 	}
 
 }
