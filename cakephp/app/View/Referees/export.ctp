@@ -5,6 +5,7 @@
 		// compute different styles
 		foreach ($statustypes as &$statustypeedit) {
 			$statustypeedit['outputstyle'] = array();
+			$statustypeedit['htmlstyle'] = '';
 
 			if ($statustypeedit['style']) {
 				switch ($statustypeedit['style']) {
@@ -12,22 +13,26 @@
 					case 'italic':
 					case 'oblique':
 						$statustypeedit['outputstyle']['font-style'] = $statustypeedit['style'];
+						$statustypeedit['htmlstyle'] .= sprintf('font-style: %s; ', $statustypeedit['style']);
 						break;
 					case 'normal':
 					case 'bold':
 					case 'bolder':
 					case 'lighter':
 						$statustypeedit['outputstyle']['font-weight'] = $statustypeedit['style'];
+						$statustypeedit['htmlstyle'] .= sprintf('font-weight: %s; ', $statustypeedit['style']);
 						break;
 				}
 			}
 
 			if ($statustypeedit['color']) {
 				$statustypeedit['outputstyle']['color'] = $statustypeedit['color'];
+				$statustypeedit['htmlstyle'] .= sprintf('color: #%s; ', $statustypeedit['color']);
 			}
 
 			if ($statustypeedit['bgcolor']) {
 				$statustypeedit['outputstyle']['bg-color'] = $statustypeedit['bgcolor'];
+				$statustypeedit['htmlstyle'] .= sprintf('background-color: #%s; ', $statustypeedit['bgcolor']);
 			}
 		}
 
@@ -105,7 +110,7 @@
 		if ($type === 'pdf') {
 			App::import('Vendor','RefManTCPDF');
 
-			$tcpdf = new RefManTCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+			$tcpdf = new RefManTCPDF("L", PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 			$tcpdf->SetAutoPageBreak(false);
 
 			$tcpdf->setTitle(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')));
@@ -146,7 +151,7 @@
 				$pdf_text = '<table>';
 				$pdf_text .= '<thead><tr>';
 				foreach($header as $theHeader) {
-					$pdf_text .= sprintf('<th>%s</th>', $theHeader['text']);
+					$pdf_text .= sprintf('<th style="border-bottom: .5px dotted gray; font-size: small; background-color: lightgray;">%s</th>', $theHeader['text']);
 				}
 				$pdf_text .= '</tr></thead>';
 			}
@@ -155,6 +160,7 @@
 			$refcount = 0;
 			foreach ($referees as $referee) {
 
+				// prepare
 				if ($type === 'excel') {
 					$refformat = array();
 					$datarow = array();
@@ -165,6 +171,9 @@
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatDate(time(), 'medium'), $filledTemplate);
 					$repltoken = 'season';
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $season['title_season'], $filledTemplate);
+				}
+				if ($type === 'pdf') {
+					$pdf_text .= sprintf('<tr style="%s">', $statustypes[$referee['RefereeStatus']['sid']]['htmlstyle']);
 				}
 
 				if ($type === 'excel') {
@@ -186,6 +195,10 @@
 					$refview_text = $this->RefereeFormat->formatPerson($referee['Person'], 'name');
 					$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
+				}
+				if ($type === 'pdf') {
+					$pdf_text .= sprintf('<td>%s</td>', $this->RefereeFormat->formatPerson($referee['Person'], 'name_title'));
+					$pdf_text .= sprintf('<td>%s</td>', $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'));
 				}
 
 				// relations
@@ -214,6 +227,9 @@
 							$repltoken = $sid;
 							$refview_text = (empty($excel_text)) ? $refview_empty : $excel_text;
 							$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
+						}
+						if ($type === 'pdf') {
+							$pdf_text .= sprintf('<td>%s</td>', $excel_text);
 						}
 					}
 				}
@@ -364,6 +380,9 @@
 					$refview_text = (empty($excel_text)) ? $refview_empty : $excel_text;
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 				}
+				if ($type === 'pdf') {
+					$pdf_text .= sprintf('<td>%s</td>', $excel_text);
+				}
 
 				if ($isEditor) {
 					// since
@@ -422,6 +441,7 @@
 
 				}
 
+				// finish row
 				if ($type === 'excel') {
 					$this->PHPExcel->addTableRow($datarow, $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']);
 				}
@@ -438,8 +458,13 @@
 					$zip->addFromString(sprintf('mmd/%s.mmd', sprintf($fletoken, ++$refcount)), $filledTemplate);
 					$latexallrefs = str_replace(sprintf($tpltoken, 'includepdf'), sprintf('%s%s', sprintf($latexreftoken, $refcount), sprintf($tpltoken, 'includepdf')), $latexallrefs);
 				}
+
+				if ($type === 'pdf') {
+					$pdf_text .= '</tr>';
+				}
 			}
 
+			// finish
 			if ($type === 'excel') {
 				// legend
 				$this->PHPExcel->addTableRow(array());
@@ -477,7 +502,10 @@
 			if ($type === 'pdf') {
 				$pdf_text .= '</table>';
 				$tcpdf->writeHTML($pdf_text, true, false, true, false, '');
-				$tcpdf->Write(0, __('Legende:'));
+				$tcpdf->WriteHTML(sprintf('<h2>%s</h2>', __('Legende')), true, false, true, false, '');
+				foreach ($statustypes as $stleg) {
+					$tcpdf->WriteHTML(sprintf('<p style="%s">%s</p>', $stleg['htmlstyle'], ($stleg['remark']) ? h($stleg['remark']) : h($stleg['title'])), true, false, true, false, '');
+				}
 			}
 
 		}

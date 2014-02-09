@@ -21,34 +21,31 @@
 			// compute different styles
 			foreach ($statustypes as &$statustype) {
 
-				$style = '';
+				$statustype['outputstyle'] = '';
 
-				if ($statustype['style'] || $statustype['color'] || $statustype['bgcolor']) {
-
+				if ($statustype['style']) {
 					switch ($statustype['style']) {
 						case 'normal':
 						case 'italic':
 						case 'oblique':
-							$style .= sprintf('font-style: %s; ', $statustype['style']);
+							$statustype['outputstyle'] .= sprintf('font-style: %s; ', $statustype['style']);
 							break;
 						case 'normal':
 						case 'bold':
 						case 'bolder':
 						case 'lighter':
-							$style .= sprintf('font-weight: %s; ', $statustype['style']);
+							$statustype['outputstyle'] .= sprintf('font-weight: %s; ', $statustype['style']);
 							break;
 					}
-
-					if ($statustype['color']) {
-						$style .= sprintf('color: #%s; ', $statustype['color']);
-					}
-
-					if ($statustype['bgcolor']) {
-						$style .= sprintf('background-color: #%s; ', $statustype['bgcolor']);
-					}
-
 				}
-				$statustype['outputstyle'] = $style;
+
+				if ($statustype['color']) {
+					$statustype['outputstyle'] .= sprintf('color: #%s; ', $statustype['color']);
+				}
+
+				if ($statustype['bgcolor']) {
+					$statustype['outputstyle'] .= sprintf('background-color: #%s; ', $statustype['bgcolor']);
+				}
 
 				if (($statustype['sid'] == StatusType::SID_MANY) ||
 						($statustype['sid'] == StatusType::SID_INACTIVESEASON) ||
