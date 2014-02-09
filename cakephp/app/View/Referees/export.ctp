@@ -232,7 +232,7 @@
 							$refview_text = (empty($excel_text)) ? $refview_empty : $excel_text;
 							$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 						}
-						if ($type === 'pdf') {
+						if (($type === 'pdf') && array_key_exists($sid, $refereerelationtypes)) {
 							$pdf_page .= sprintf('<td>%s</td>', $excel_text);
 						}
 					}
@@ -323,6 +323,7 @@
 
 					// address
 					$excel_text = '';
+					$pdf_text = '';
 					if (array_key_exists('Contact', $referee) && array_key_exists('Address', $referee['Contact'])) {
 						$hasMore = false;
 						$printType = (count($referee['Contact']['Address']) > 1);
@@ -331,11 +332,14 @@
 							foreach ($addresskind as $address) {
 								if ($hasMore) {
 									$excel_text .= '\n';
+									$pdf_text .= "<br />";
 								}
 								if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
 									$excel_text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
+									$pdf_text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 								}
 								$excel_text .= $this->RefereeFormat->formatAddress($address, 'fulladdress');
+								$pdf_text .= $this->RefereeFormat->formatAddress($address, 'fulladdress');
 								$hasMore = true;
 							}
 						}
@@ -353,6 +357,9 @@
 						$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
+					if ($type === 'pdf') {
+						$pdf_page .= sprintf('<td>%s</td>', $pdf_text);
+					}
 
 					// sex
 					if ($type === 'excel') {
@@ -363,6 +370,9 @@
 						$refview_text = __($referee['SexType']['title']);
 						$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
+					}
+					if ($type === 'pdf') {
+						$pdf_page .= sprintf('<td>%s</td>', __($referee['SexType']['title']));
 					}
 
 					// birthday
@@ -377,6 +387,9 @@
 						$repltoken = 'birthday';
 						$refview_text = (empty($excel_text)) ? $refview_empty : sprintf($nbrtoken, $excel_text);
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
+					}
+					if ($type === 'pdf') {
+						$pdf_page .= sprintf('<td>%s</td>', $excel_text);
 					}
 				}
 
@@ -416,6 +429,9 @@
 						$refview_text = (empty($excel_text)) ? $refview_empty : sprintf($nbrtoken, $excel_text);
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
+					if ($type === 'pdf') {
+						$pdf_page .= sprintf('<td>%s</td>', $excel_text);
+					}
 
 					// last update
 					$excel_text = '';
@@ -429,6 +445,9 @@
 						$repltoken = 'last_update';
 						$refview_text = (empty($excel_text)) ? $refview_empty : sprintf($nbrtoken, $excel_text);
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
+					}
+					if ($type === 'pdf') {
+						$pdf_page .= sprintf('<td>%s</td>', $excel_text);
 					}
 
 					// next update
@@ -444,7 +463,11 @@
 						$refview_text = (empty($excel_text)) ? $refview_empty : sprintf($nbrtoken, $excel_text);
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
+					if ($type === 'pdf') {
+						$pdf_page .= sprintf('<td>%s</td>', $excel_text);
+					}
 
+					// remark
 					if ($type === 'excel') {
 						$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
 					}
@@ -452,9 +475,16 @@
 						$repltoken = 'remark';
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), (empty($referee['Person']['remark'])) ? $refview_empty : __($referee['Person']['remark']), $filledTemplate);
 					}
+					if ($type === 'pdf') {
+						$pdf_page .= sprintf('<td>%s</td>', (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
+					}
 
+					// internal remark
 					if ($type === 'excel') {
 						$datarow[] = array('text' => (empty($referee['Person']['internal_remark'])) ? '' : __($referee['Person']['internal_remark']));
+					}
+					if ($type === 'pdf') {
+						$pdf_page .= sprintf('<td>%s</td>', (empty($referee['Person']['internal_remark'])) ? '' : __($referee['Person']['internal_remark']));
 					}
 
 				}
