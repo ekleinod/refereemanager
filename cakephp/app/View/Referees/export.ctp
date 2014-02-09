@@ -148,10 +148,12 @@
 		} else {
 
 			if ($type === 'pdf') {
+				$altstyle[0] = 'background-color: #EEEEFF;';
+				$altstyle[1] = 'background-color: #FFFFFF;';
 				$pdf_text = '<table>';
 				$pdf_text .= '<thead><tr>';
 				foreach($header as $theHeader) {
-					$pdf_text .= sprintf('<th style="border-bottom: .5px dotted gray; font-size: small; background-color: lightgray;">%s</th>', $theHeader['text']);
+					$pdf_text .= sprintf('<th style="border-bottom: .5px dotted #333333; font-size: small; background-color: #CCCCCC;">%s</th>', $theHeader['text']);
 				}
 				$pdf_text .= '</tr></thead>';
 			}
@@ -159,6 +161,8 @@
 			// datarows
 			$refcount = 0;
 			foreach ($referees as $referee) {
+
+				$refcount++;
 
 				// prepare
 				if ($type === 'excel') {
@@ -173,7 +177,7 @@
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $season['title_season'], $filledTemplate);
 				}
 				if ($type === 'pdf') {
-					$pdf_text .= sprintf('<tr style="%s">', $statustypes[$referee['RefereeStatus']['sid']]['htmlstyle']);
+					$pdf_text .= sprintf('<tr style="%s %s">', $altstyle[$refcount % 2], $statustypes[$referee['RefereeStatus']['sid']]['htmlstyle']);
 				}
 
 				if ($type === 'excel') {
@@ -455,7 +459,7 @@
 				}
 
 				if ($type === 'referee_view_zip') {
-					$zip->addFromString(sprintf('mmd/%s.mmd', sprintf($fletoken, ++$refcount)), $filledTemplate);
+					$zip->addFromString(sprintf('mmd/%s.mmd', sprintf($fletoken, $refcount)), $filledTemplate);
 					$latexallrefs = str_replace(sprintf($tpltoken, 'includepdf'), sprintf('%s%s', sprintf($latexreftoken, $refcount), sprintf($tpltoken, 'includepdf')), $latexallrefs);
 				}
 
