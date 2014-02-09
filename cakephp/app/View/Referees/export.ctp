@@ -150,12 +150,12 @@
 			if ($type === 'pdf') {
 				$altstyle[0] = 'background-color: #EEEEFF;';
 				$altstyle[1] = 'background-color: #FFFFFF;';
-				$pdf_text = '<table>';
-				$pdf_text .= '<thead><tr>';
+				$pdf_page = '<table>';
+				$pdf_page .= '<thead><tr>';
 				foreach($header as $theHeader) {
-					$pdf_text .= sprintf('<th style="border-bottom: .5px dotted #333333; font-size: small; background-color: #CCCCCC;">%s</th>', $theHeader['text']);
+					$pdf_page .= sprintf('<th style="border-bottom: .5px dotted #333333; font-size: small; background-color: #CCCCCC;">%s</th>', $theHeader['text']);
 				}
-				$pdf_text .= '</tr></thead>';
+				$pdf_page .= '</tr></thead>';
 			}
 
 			// datarows
@@ -177,7 +177,7 @@
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $season['title_season'], $filledTemplate);
 				}
 				if ($type === 'pdf') {
-					$pdf_text .= sprintf('<tr style="%s %s">', $altstyle[$refcount % 2], $statustypes[$referee['RefereeStatus']['sid']]['htmlstyle']);
+					$pdf_page .= sprintf('<tr style="%s %s">', $altstyle[$refcount % 2], $statustypes[$referee['RefereeStatus']['sid']]['htmlstyle']);
 				}
 
 				if ($type === 'excel') {
@@ -201,8 +201,8 @@
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 				}
 				if ($type === 'pdf') {
-					$pdf_text .= sprintf('<td>%s</td>', $this->RefereeFormat->formatPerson($referee['Person'], 'name_title'));
-					$pdf_text .= sprintf('<td>%s</td>', $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'));
+					$pdf_page .= sprintf('<td>%s</td>', $this->RefereeFormat->formatPerson($referee['Person'], 'name_title'));
+					$pdf_page .= sprintf('<td>%s</td>', $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'));
 				}
 
 				// relations
@@ -233,7 +233,7 @@
 							$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 						}
 						if ($type === 'pdf') {
-							$pdf_text .= sprintf('<td>%s</td>', $excel_text);
+							$pdf_page .= sprintf('<td>%s</td>', $excel_text);
 						}
 					}
 				}
@@ -243,6 +243,7 @@
 					// email
 					$excel_text = '';
 					$refview_text = '';
+					$pdf_text = '';
 					if (array_key_exists('Contact', $referee) && array_key_exists('Email', $referee['Contact'])) {
 						$hasMore = false;
 						$printType = (count($referee['Contact']['Email']) > 1);
@@ -252,13 +253,16 @@
 								if ($hasMore) {
 									$excel_text .= "\n";
 									$refview_text .= "<!-- \\newline -->";
+									$pdf_text .= "<br />";
 								}
 								if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
 									$excel_text .=  __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 									$refview_text .=  __('%s: ', $contacttypes[$contacttype]['abbreviation']);
+									$pdf_text .=  __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 								}
 								$excel_text .= $this->RefereeFormat->formatEMail($email, 'text');
 								$refview_text .= sprintf($nbrtoken, $this->RefereeFormat->formatEMail($email, 'text'));
+								$pdf_text .= $this->RefereeFormat->formatEMail($email, 'text');
 								$hasMore = true;
 							}
 						}
@@ -271,10 +275,14 @@
 						$refview_text = (empty($refview_text) || ($refview_text === $nbrtoken)) ? $refview_empty : $refview_text;
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
+					if ($type === 'pdf') {
+						$pdf_page .= sprintf('<td>%s</td>', $pdf_text);
+					}
 
 					// phone
 					$excel_text = '';
 					$refview_text = '';
+					$pdf_text = '';
 					if (array_key_exists('Contact', $referee) && array_key_exists('PhoneNumber', $referee['Contact'])) {
 						$hasMore = false;
 						$printType = (count($referee['Contact']['PhoneNumber']) > 1);
@@ -284,13 +292,16 @@
 								if ($hasMore) {
 									$excel_text .= "\n";
 									$refview_text .= "<!-- \\newline -->";
+									$pdf_text .= "<br />";
 								}
 								if ($printType || ($contacttype != Configure::read('RefMan.defaultcontacttypeid'))) {
 									$excel_text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 									$refview_text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
+									$pdf_text .= __('%s: ', $contacttypes[$contacttype]['abbreviation']);
 								}
 								$excel_text .= $this->RefereeFormat->formatPhone($phone, 'normal');
 								$refview_text .= sprintf($nbrtoken, $this->RefereeFormat->formatPhone($phone, 'normal'));
+								$pdf_text .= $this->RefereeFormat->formatPhone($phone, 'normal');
 								$hasMore = true;
 							}
 						}
@@ -302,6 +313,9 @@
 						$repltoken = 'phone';
 						$refview_text = (empty($refview_text) || ($refview_text === $nbrtoken)) ? $refview_empty : $refview_text;
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
+					}
+					if ($type === 'pdf') {
+						$pdf_page .= sprintf('<td>%s</td>', $pdf_text);
 					}
 				}
 
@@ -385,7 +399,7 @@
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 				}
 				if ($type === 'pdf') {
-					$pdf_text .= sprintf('<td>%s</td>', $excel_text);
+					$pdf_page .= sprintf('<td>%s</td>', $excel_text);
 				}
 
 				if ($isEditor) {
@@ -464,7 +478,7 @@
 				}
 
 				if ($type === 'pdf') {
-					$pdf_text .= '</tr>';
+					$pdf_page .= '</tr>';
 				}
 			}
 
@@ -504,8 +518,8 @@
 			}
 
 			if ($type === 'pdf') {
-				$pdf_text .= '</table>';
-				$tcpdf->writeHTML($pdf_text, true, false, true, false, '');
+				$pdf_page .= '</table>';
+				$tcpdf->writeHTML($pdf_page, true, false, true, false, '');
 				$tcpdf->WriteHTML(sprintf('<h2>%s</h2>', __('Legende')), true, false, true, false, '');
 				foreach ($statustypes as $stleg) {
 					$tcpdf->WriteHTML(sprintf('<p style="%s">%s</p>', $stleg['htmlstyle'], ($stleg['remark']) ? h($stleg['remark']) : h($stleg['title'])), true, false, true, false, '');
