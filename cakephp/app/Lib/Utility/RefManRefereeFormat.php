@@ -101,6 +101,12 @@ class RefManRefereeFormat {
 												$data['name'],
 												((empty($data['title'])) ? '' : __(', %s', $data['title'])));
 				break;
+			case 'tablename':
+				$formatted = __('%s%s%s',
+												$data['name'],
+												((empty($data['title'])) ? '' : __(', %s', $data['title'])),
+												((empty($data['first_name'])) ? '' : __(' %s', $data['first_name'])));
+				break;
 			case 'title':
 				$formatted = (empty($data['title'])) ? '' : $data['title'];
 				break;
@@ -256,6 +262,59 @@ class RefManRefereeFormat {
 			default:
 				$formatted = $data;
 				break;
+		}
+
+		return $formatted;
+	}
+
+	/**
+	 * Format relation with sid using separator character.
+	 *
+	 * @param string $data data to format
+	 * @param string $sid sid of relation
+	 * @param string $sep separator
+	 * @return string formatted string
+	 */
+	public function formatRelationBySID($data, $sid, $sep = '; ') {
+
+		if (($data === null) || empty($data)) {
+			return '';
+		}
+
+		if (!array_key_exists($sid, $data)) {
+			return '';
+		}
+
+		return $this->formatRelation($data[$sid], $sep);
+	}
+
+	/**
+	 * Format relation using separator character.
+	 *
+	 * @param string $data data to format
+	 * @param string $sep separator
+	 * @return string formatted string
+	 */
+	public function formatRelation($data, $sep = '; ') {
+
+		if (($data === null) || empty($data)) {
+			return '';
+		}
+
+		$formatted = '';
+
+		$hasMore = false;
+		foreach ($data as $relation) {
+			if ($hasMore) {
+				$formatted .= $sep;
+			}
+			if (array_key_exists('Club', $relation)) {
+				$formatted .= $relation['Club']['name'];
+			}
+			if (array_key_exists('League', $relation)) {
+				$formatted .= $relation['League']['title'];
+			}
+			$hasMore = true;
 		}
 
 		return $formatted;
