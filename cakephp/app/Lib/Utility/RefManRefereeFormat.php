@@ -105,7 +105,7 @@ class RefManRefereeFormat {
 				$formatted = __('%s%s%s',
 												$data['name'],
 												((empty($data['title'])) ? '' : __(', %s', $data['title'])),
-												((empty($data['first_name'])) ? '' : __(' %s', $data['first_name'])));
+												((empty($data['first_name'])) ? '' : __(', %s', $data['first_name'])));
 				break;
 			case 'title':
 				$formatted = (empty($data['title'])) ? '' : $data['title'];
