@@ -197,10 +197,11 @@
 					}
 				}
 
-/*				if ($isReferee) {
+				if ($isReferee) {
+					$pdf_page .= sprintf($thtag, '', __('Kontakt'));
 					$pdf_page .= sprintf($thtag, '', __('Kontakt'));
 				}
-
+/*
 				if ($isEditor) {
 					$pdf_page .= sprintf($thtag, '', __('Adresse'));
 					$pdf_page .= sprintf($thtag, '', __('Geschlecht<br />Geburtstag'));
@@ -284,24 +285,9 @@
 				if ($type === 'pdf') {
 					$sid1 = RefereeRelationType::SID_MEMBER;
 					$sid2 = RefereeRelationType::SID_REFFOR;
-					if (array_key_exists($sid1, $referee['RefereeRelation']) || array_key_exists($sid2, $referee['RefereeRelation'])) {
+					if (array_key_exists($sid1, $refereerelationtypes) || array_key_exists($sid2, $refereerelationtypes)) {
 						$relout = '';
-						if (array_key_exists($sid1, $referee['RefereeRelation'])) {
-							$relout = $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid1);
-							if (array_key_exists($sid2, $referee['RefereeRelation'])) {
-								$relout .= sprintf('<br /><em>%s</em>', $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid2));
-							}
-						} else {
-							$relout = $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid2);
-						}
-
-						$pdf_page .= sprintf($tdtag, '', $relout);
-					}
-					if ($isEditor) {
-						$sid1 = RefereeRelationType::SID_PREFER;
-						$sid2 = RefereeRelationType::SID_NOASSIGNMENT;
 						if (array_key_exists($sid1, $referee['RefereeRelation']) || array_key_exists($sid2, $referee['RefereeRelation'])) {
-							$relout = '';
 							if (array_key_exists($sid1, $referee['RefereeRelation'])) {
 								$relout = $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid1);
 								if (array_key_exists($sid2, $referee['RefereeRelation'])) {
@@ -310,7 +296,24 @@
 							} else {
 								$relout = $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid2);
 							}
-
+						}
+						$pdf_page .= sprintf($tdtag, '', $relout);
+					}
+					if ($isEditor) {
+						$sid1 = RefereeRelationType::SID_PREFER;
+						$sid2 = RefereeRelationType::SID_NOASSIGNMENT;
+						if (array_key_exists($sid1, $refereerelationtypes) || array_key_exists($sid2, $refereerelationtypes)) {
+							$relout = '';
+							if (array_key_exists($sid1, $referee['RefereeRelation']) || array_key_exists($sid2, $referee['RefereeRelation'])) {
+								if (array_key_exists($sid1, $referee['RefereeRelation'])) {
+									$relout = $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid1);
+									if (array_key_exists($sid2, $referee['RefereeRelation'])) {
+										$relout .= sprintf('<br /><em>%s</em>', $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid2));
+									}
+								} else {
+									$relout = $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid2);
+								}
+							}
 							$pdf_page .= sprintf($tdtag, '', $relout);
 						}
 					}
