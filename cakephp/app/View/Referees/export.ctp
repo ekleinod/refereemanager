@@ -634,11 +634,32 @@
 
 			if ($type === 'pdf') {
 				$pdf_page .= '</table>';
-				$tcpdf->writeHTML($pdf_page, true, false, true, false, '');
+/*				$tcpdf->writeHTML($pdf_page, true, false, true, false, '');
 				$tcpdf->WriteHTML(sprintf('<strong>%s</strong>', __('Legende')), true, false, true, false, '');
 				foreach ($statustypes as $stleg) {
 					$tcpdf->WriteHTML(sprintf('<p style="%s %s">%s</p>', $tdstyle, $stleg['htmlstyle'], ($stleg['remark']) ? h($stleg['remark']) : h($stleg['title'])), true, false, true, false, '');
-				}
+				}*/
+				$tcpdf->printTable(array(
+																 array('text' => 'Test 1', 'width' => 50),
+																 array('text' => 'Test 2', 'width' => 30),
+																 array('text' => 'Test 3', 'width' => 45),
+																 array('text' => 'Test 4', 'width' => 0),
+																 ),
+													 array(
+																 array(
+																	 array('text' => 'Test 1'),
+																	 array('text' => "Test 2\nTest 22"),
+																	 array('text' => 'Test 3'),
+																	 array('text' => 'Test 4'),
+																	 ),
+																 array(
+																	 array('text' => 'Test 5'),
+																	 array('text' => "Test 6\nTest 66"),
+																	 array('text' => 'Test 7'),
+																	 array('text' => 'Test 8'),
+																	 )
+																 )
+													 );
 			}
 
 		}
