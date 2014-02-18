@@ -35,6 +35,50 @@ class RefManTCPDF extends TCPDF {
 		$this->Cell(0, 8, sprintf($this->footerText, $this->getAliasNumPage(), $this->getAliasNbPages()), 'T', 1, 'L', false);
 	}
 
+	/**
+	 * Prints table.
+	 */
+	public function getTable($header, $data) {
+
+		// start table
+		$table = '<table>';
+
+		// header
+		$table .= '<thead><tr>';
+		foreach($header as $headercell) {
+			$table .= sprintf('<th style="border-bottom: .5px dotted #333333; font-size: 9pt; background-color: #CCCCCC;" width="%s">%s</th>', $headercell['width'], $headercell['text']);
+		}
+		$table .= '</tr></thead>';
+
+		// data
+		$table .= '<tbody>';
+
+		$altstyle[0] = 'background-color: #EEEEFF; ';
+		$altstyle[1] = 'background-color: #FFFFFF; ';
+
+		$odd = false;
+		foreach($data as $datarow) {
+			$table .= sprintf('<tr style="font-size: 10pt; %s ">', $datarow['style']);
+			$iCell = 0;
+			foreach($datarow['data'] as $datacell) {
+				$table .= sprintf('<td style="font-size: 10pt; background-color: %s; %s " width="%s">%s</td>',
+													($odd) ? '#EEEEFF' : '#FFFFFF',
+													$datarow['style'],
+													$header[$iCell]['width'],
+													$datacell['text']);
+				$iCell++;
+			}
+			$table .= '</tr>';
+			$odd = !$odd;
+		}
+		$table .= '</tbody>';
+
+		// end table
+		$table .= '</table>';
+
+		return $table;
+	}
+
 }
 
 /* EOF */

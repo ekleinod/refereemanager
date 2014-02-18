@@ -152,17 +152,9 @@
 		} else {
 
 			if ($type === 'pdf') {
-				$altstyle[0] = 'background-color: #EEEEFF; ';
-				$altstyle[1] = 'background-color: #FFFFFF; ';
+				$pdf_header = array();
 
-				$thtag = '<th style="border-bottom: .5px dotted #333333; font-size: 9pt; background-color: #CCCCCC; %s width=%s;">%s</th>';
-				$tdstyle = 'font-size: 10pt; ';
-				$tdtag = '<td style="%s ">%s</td>';
-
-				$pdf_page = '<table style="width: 100%;">';
-				$pdf_page .= '<thead><tr>';
-
-				$pdf_page .= sprintf($thtag, '', '10em', __('Name'));
+				$pdf_header[] = array('text' => __('Name'), 'width' => 120);
 
 				$sid1 = RefereeRelationType::SID_MEMBER;
 				$sid2 = RefereeRelationType::SID_REFFOR;
@@ -177,7 +169,7 @@
 						$relout = __($allrefereerelationtypes[$sid2]['title']);
 					}
 
-					$pdf_page .= sprintf($thtag, '', '10em', $relout);
+					$pdf_header[] = array('text' => $relout, 'width' => 200);
 				}
 				if ($isEditor) {
 					$sid1 = RefereeRelationType::SID_PREFER;
@@ -193,41 +185,36 @@
 							$relout = __($allrefereerelationtypes[$sid2]['title']);
 						}
 
-						$pdf_page .= sprintf($thtag, '', '10em', $relout);
+						$pdf_header[] = array('text' => $relout, 'width' => 200);
 					}
 				}
 
 				if ($isReferee) {
-					$pdf_page .= sprintf($thtag, '', '10em', __('Kontakt'));
+					$pdf_header[] = array('text' => __('Kontakt'), 'width' => 200);
 				}
 /*
 				if ($isEditor) {
-					$pdf_page .= sprintf($thtag, '', 'auto', __('Adresse'));
-					$pdf_page .= sprintf($thtag, '', 'auto', __('Geschlecht<br />Geburtstag'));
+					$pdf_page .= sprintf($thtag, '', __('Adresse'));
+					$pdf_page .= sprintf($thtag, '', __('Geschlecht<br />Geburtstag'));
 					$header[] = array('text' => __('Adresse'));
 				}
 */
-				$pdf_page .= sprintf($thtag, '', '8em', __('Ausbildung'));
+				$pdf_header[] = array('text' => __('Ausbildung'), 'width' => 50);
 /*
 				if ($isEditor) {
-					$pdf_page .= sprintf($thtag, '', 'auto', __('Letzte Ausbildung<br />Letzte Fortbildung<br />Nächste Fortbildung'));
-					$pdf_page .= sprintf($thtag, '', 'auto', __('Anmerkungen'));
+					$pdf_page .= sprintf($thtag, '', __('Letzte Ausbildung<br />Letzte Fortbildung<br />Nächste Fortbildung'));
+					$pdf_page .= sprintf($thtag, '', __('Anmerkungen'));
 				}*/
 
-				$pdf_page .= '</tr></thead>';
+				$pdf_data = array();
 			}
 
 			// datarows
-			$refcount = 0;
 			foreach ($referees as $referee) {
 
-				$refcount++;
+				$datarow = array();
 
 				// prepare
-				if ($type === 'excel') {
-					$refformat = array();
-					$datarow = array();
-				}
 				if ($type === 'referee_view_zip') {
 					$filledTemplate = $template;
 					$repltoken = 'date';
@@ -235,13 +222,13 @@
 					$repltoken = 'season';
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $season['title_season'], $filledTemplate);
 				}
-				if ($type === 'pdf') {
-					$pdf_page .= sprintf('<tr style="%s %s %s">', $tdstyle, $altstyle[$refcount % 2], $statustypes[$referee['RefereeStatus']['sid']]['htmlstyle']);
-				}
 
 				if ($type === 'excel') {
 					$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'name_title'));
 					$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'));
+				}
+				if ($type === 'pdf') {
+					$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'tablename'));
 				}
 				if ($type === 'referee_view_zip') {
 					$repltoken = 'fullname';
@@ -258,9 +245,6 @@
 					$refview_text = $this->RefereeFormat->formatPerson($referee['Person'], 'name');
 					$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
-				}
-				if ($type === 'pdf') {
-					$pdf_page .= sprintf($tdtag, '', $this->RefereeFormat->formatPerson($referee['Person'], 'tablename'));
 				}
 
 				// relations
@@ -296,7 +280,7 @@
 								$pdf_text = $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid2);
 							}
 						}
-						$pdf_page .= sprintf($tdtag, '', $pdf_text);
+						$datarow[] = array('text' => $pdf_text);
 					}
 					if ($isEditor) {
 						$sid1 = RefereeRelationType::SID_PREFER;
@@ -313,7 +297,7 @@
 									$pdf_text = $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid2);
 								}
 							}
-							$pdf_page .= sprintf($tdtag, '', $pdf_text);
+							$datarow[] = array('text' => $pdf_text);
 						}
 					}
 				}
@@ -351,13 +335,13 @@
 					if ($type === 'excel') {
 						$datarow[] = array('text' => $excel_text);
 					}
+					if ($type === 'pdf') {
+						$datarow[] = array('text' => $pdf_text);
+					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'email';
 						$refview_text = (empty($refview_text) || ($refview_text === $nbrtoken)) ? $refview_empty : $refview_text;
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
-					}
-					if ($type === 'pdf') {
-						$pdf_email = $pdf_text;
 					}
 
 					// phone
@@ -390,17 +374,17 @@
 					if ($type === 'excel') {
 						$datarow[] = array('text' => $excel_text);
 					}
+					if ($type === 'pdf') {
+						if ($pdf_email === '') {
+							$datarow[] = array('text' => sprintf('<td>%s</td>', $pdf_text));
+						} else {
+							$datarow[] = array('text' => sprintf('<td>%s<br />%s</td>', $pdf_email, $pdf_text));
+						}
+					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'phone';
 						$refview_text = (empty($refview_text) || ($refview_text === $nbrtoken)) ? $refview_empty : $refview_text;
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
-					}
-					if ($type === 'pdf') {
-						if ($pdf_email === '') {
-							$pdf_page .= sprintf('<td>%s</td>', $pdf_text);
-						} else {
-							$pdf_page .= sprintf('<td>%s<br />%s</td>', $pdf_email, $pdf_text);
-						}
 					}
 				}
 
@@ -432,6 +416,9 @@
 					if ($type === 'excel') {
 						$datarow[] = array('text' => $excel_text);
 					}
+					if ($type === 'pdf') {
+						$datarow[] = array('text' => $pdf_text);
+					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'streetnumber';
 						$refview_text = $this->RefereeFormat->formatAddress($address, $repltoken);
@@ -442,12 +429,12 @@
 						$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
-					if ($type === 'pdf') {
-						$pdf_page .= sprintf('<td>%s</td>', $pdf_text);
-					}
 
 					// sex
 					if ($type === 'excel') {
+						$datarow[] = array('text' => __($referee['SexType']['title']));
+					}
+					if ($type === 'pdf') {
 						$datarow[] = array('text' => __($referee['SexType']['title']));
 					}
 					if ($type === 'referee_view_zip') {
@@ -455,9 +442,6 @@
 						$refview_text = __($referee['SexType']['title']);
 						$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
-					}
-					if ($type === 'pdf') {
-						$pdf_page .= sprintf('<td>%s</td>', __($referee['SexType']['title']));
 					}
 
 					// birthday
@@ -468,13 +452,13 @@
 					if ($type === 'excel') {
 						$datarow[] = array('text' => $excel_text);
 					}
+					if ($type === 'pdf') {
+						$datarow[] = array('text' => $excel_text);
+					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'birthday';
 						$refview_text = (empty($excel_text)) ? $refview_empty : sprintf($nbrtoken, $excel_text);
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
-					}
-					if ($type === 'pdf') {
-						$pdf_page .= sprintf('<td>%s</td>', $excel_text);
 					}
 				}
 
@@ -488,6 +472,9 @@
 				if ($type === 'excel') {
 					$datarow[] = array('text' => $excel_text);
 				}
+				if ($type === 'pdf') {
+					$datarow[] = array('text' => $excel_text);
+				}
 				if ($type === 'referee_view_zip') {
 					$repltoken = 'training_level';
 					$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
@@ -495,9 +482,6 @@
 					$repltoken = 'training_level_abbr';
 					$refview_text = (empty($excel_text)) ? $refview_empty : $excel_text;
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
-				}
-				if ($type === 'pdf') {
-					$pdf_page .= sprintf($tdtag, '', $excel_text);
 				}
 
 				if ($isEditor) {
@@ -509,13 +493,13 @@
 					if ($type === 'excel') {
 						$datarow[] = array('text' => $excel_text);
 					}
+					if ($type === 'pdf') {
+						$datarow[] = array('text' => $excel_text);
+					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'since';
 						$refview_text = (empty($excel_text)) ? $refview_empty : sprintf($nbrtoken, $excel_text);
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
-					}
-					if ($type === 'pdf') {
-						$pdf_page .= sprintf('<td>%s</td>', $excel_text);
 					}
 
 					// last update
@@ -526,13 +510,13 @@
 					if ($type === 'excel') {
 						$datarow[] = array('text' => $excel_text);
 					}
+					if ($type === 'pdf') {
+						$datarow[] = array('text' => $excel_text);
+					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'last_update';
 						$refview_text = (empty($excel_text)) ? $refview_empty : sprintf($nbrtoken, $excel_text);
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
-					}
-					if ($type === 'pdf') {
-						$pdf_page .= sprintf('<td>%s</td>', $excel_text);
 					}
 
 					// next update
@@ -543,25 +527,25 @@
 					if ($type === 'excel') {
 						$datarow[] = array('text' => $excel_text);
 					}
+					if ($type === 'pdf') {
+						$datarow[] = array('text' => $excel_text);
+					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'next_update';
 						$refview_text = (empty($excel_text)) ? $refview_empty : sprintf($nbrtoken, $excel_text);
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
-					}
-					if ($type === 'pdf') {
-						$pdf_page .= sprintf('<td>%s</td>', $excel_text);
 					}
 
 					// remark
 					if ($type === 'excel') {
 						$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
 					}
+					if ($type === 'pdf') {
+						$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
+					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'remark';
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), (empty($referee['Person']['remark'])) ? $refview_empty : __($referee['Person']['remark']), $filledTemplate);
-					}
-					if ($type === 'pdf') {
-						$pdf_page .= sprintf('<td>%s</td>', (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
 					}
 
 					// internal remark
@@ -569,7 +553,7 @@
 						$datarow[] = array('text' => (empty($referee['Person']['internal_remark'])) ? '' : __($referee['Person']['internal_remark']));
 					}
 					if ($type === 'pdf') {
-						$pdf_page .= sprintf('<td>%s</td>', (empty($referee['Person']['internal_remark'])) ? '' : __($referee['Person']['internal_remark']));
+						$datarow[] = array('text' => (empty($referee['Person']['internal_remark'])) ? '' : __($referee['Person']['internal_remark']));
 					}
 
 				}
@@ -578,6 +562,10 @@
 				if ($type === 'excel') {
 					$this->PHPExcel->addTableRow($datarow, $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']);
 				}
+				if ($type === 'pdf') {
+					$pdf_data[] = array('data' => $datarow, 'style' => $statustypes[$referee['RefereeStatus']['sid']]['htmlstyle']);
+				}
+
 				if ($type === 'referee_view_zip') {
 					$repltoken = 'status_type';
 					$refview_text = ($statustypes[$referee['RefereeStatus']['sid']]['remark']) ?
@@ -585,16 +573,11 @@
 							$statustypes[$referee['RefereeStatus']['sid']]['title'];
 					$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
+
+					$zip->addFromString(sprintf('mmd/%s.mmd', sprintf($fletoken, $referee['Referee']['id'])), $filledTemplate);
+					$latexallrefs = str_replace(sprintf($tpltoken, 'includepdf'), sprintf('%s%s', sprintf($latexreftoken, $referee['Referee']['id']), sprintf($tpltoken, 'includepdf')), $latexallrefs);
 				}
 
-				if ($type === 'referee_view_zip') {
-					$zip->addFromString(sprintf('mmd/%s.mmd', sprintf($fletoken, $refcount)), $filledTemplate);
-					$latexallrefs = str_replace(sprintf($tpltoken, 'includepdf'), sprintf('%s%s', sprintf($latexreftoken, $refcount), sprintf($tpltoken, 'includepdf')), $latexallrefs);
-				}
-
-				if ($type === 'pdf') {
-					$pdf_page .= '</tr>';
-				}
 			}
 
 			// finish
@@ -633,11 +616,10 @@
 			}
 
 			if ($type === 'pdf') {
-				$pdf_page .= '</table>';
-				$tcpdf->writeHTML($pdf_page, true, false, true, false, '');
+				$tcpdf->writeHTML($tcpdf->getTable($pdf_header, $pdf_data), true, false, true, false, '');
 				$tcpdf->WriteHTML(sprintf('<strong>%s</strong>', __('Legende')), true, false, true, false, '');
 				foreach ($statustypes as $stleg) {
-					$tcpdf->WriteHTML(sprintf('<p style="%s %s">%s</p>', $tdstyle, $stleg['htmlstyle'], ($stleg['remark']) ? h($stleg['remark']) : h($stleg['title'])), true, false, true, false, '');
+					$tcpdf->WriteHTML(sprintf('<p style="font-size: 10pt; %s">%s</p>', $stleg['htmlstyle'], ($stleg['remark']) ? h($stleg['remark']) : h($stleg['title'])), true, false, true, false, '');
 				}
 			}
 
