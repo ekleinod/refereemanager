@@ -79,7 +79,7 @@ class RefManTCPDF extends TCPDF {
 
 		// write cells
 		foreach ($row as $cell) {
-			$this->MultiCell($cell['width'], 0, $cell['text'], 'RB', 'L', true, 0, '', '', true, 0);
+			$this->writeHTMLCell($cell['width'], '', '', '', $cell['text'], 'RB', 0, true, true, '', true);
 		}
 
 		$this->Ln();

@@ -648,13 +648,13 @@
 													 array(
 																 array(
 																	 array('text' => 'Test 1'),
-																	 array('text' => "Test 2\nTest 22"),
+																	 array('text' => "Test 2<br />Test 22"),
 																	 array('text' => 'Test 3'),
 																	 array('text' => 'Test 4'),
 																	 ),
 																 array(
 																	 array('text' => 'Test 5'),
-																	 array('text' => "Test 6\nTest 66"),
+																	 array('text' => "Test 6<br />Test 66"),
 																	 array('text' => 'Test 7'),
 																	 array('text' => 'Test 8'),
 																	 )
