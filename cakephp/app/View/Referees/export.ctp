@@ -110,11 +110,8 @@
 		if ($type === 'pdf') {
 			App::import('Vendor','RefManTCPDF');
 
-			if ($isEditor) {
-				$tcpdf = new RefManTCPDF('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-			} else {
-				$tcpdf = new RefManTCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-			}
+			$orientation = ($isEditor) ? 'L' : PDF_PAGE_ORIENTATION;
+			$tcpdf = new RefManTCPDF($orientation, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 			$tcpdf->SetAutoPageBreak(false);
 
 			$tcpdf->setTitle(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')));
@@ -154,7 +151,14 @@
 			if ($type === 'pdf') {
 				$pdf_header = array();
 
-				$pdf_header[] = array('text' => __('Name'), 'width' => 120);
+				$width = 120;
+				if ($isReferee) {
+					$width = 110;
+				}
+				if ($isEditor) {
+					$width = 100;
+				}
+				$pdf_header[] = array('text' => __('Name'), 'width' => $width);
 
 				$sid1 = RefereeRelationType::SID_MEMBER;
 				$sid2 = RefereeRelationType::SID_REFFOR;
@@ -169,7 +173,14 @@
 						$relout = __($allrefereerelationtypes[$sid2]['title']);
 					}
 
-					$pdf_header[] = array('text' => $relout, 'width' => 200);
+					$width = 200;
+					if ($isReferee) {
+						$width = 170;
+					}
+					if ($isEditor) {
+						$width = 110;
+					}
+					$pdf_header[] = array('text' => $relout, 'width' => $width);
 				}
 				if ($isEditor) {
 					$sid1 = RefereeRelationType::SID_PREFER;
@@ -185,26 +196,33 @@
 							$relout = __($allrefereerelationtypes[$sid2]['title']);
 						}
 
-						$pdf_header[] = array('text' => $relout, 'width' => 200);
+						$width = 110;
+						$pdf_header[] = array('text' => $relout, 'width' => $width);
 					}
 				}
 
 				if ($isReferee) {
-					$pdf_header[] = array('text' => __('Kontakt'), 'width' => 200);
+					$width = 180;
+					if ($isEditor) {
+						$width = 150;
+					}
+					$pdf_header[] = array('text' => __('Kontakt'), 'width' => $width);
 				}
-/*
+
 				if ($isEditor) {
-					$pdf_page .= sprintf($thtag, '', __('Adresse'));
-					$pdf_page .= sprintf($thtag, '', __('Geschlecht<br />Geburtstag'));
-					$header[] = array('text' => __('Adresse'));
+					$width = 90;
+					$pdf_header[] = array('text' => __('Adresse'), 'width' => $width);
+					$width = 60;
+					$pdf_header[] = array('text' => __('Geschlecht<br />Geburtstag'), 'width' => $width);
 				}
-*/
-				$pdf_header[] = array('text' => __('Ausbildung'), 'width' => 50);
-/*
+
+				$width = 50;
+				$pdf_header[] = array('text' => __('Ausbildung'), 'width' => $width);
+
 				if ($isEditor) {
-					$pdf_page .= sprintf($thtag, '', __('Letzte Ausbildung<br />Letzte Fortbildung<br />Nächste Fortbildung'));
-					$pdf_page .= sprintf($thtag, '', __('Anmerkungen'));
-				}*/
+					$width = 85;
+					$pdf_header[] = array('text' => __('Letzte Ausbildung<br /><em>Letzte Fortbildung</em><br />Nächste Fortbildung'), 'width' => $width);
+				}
 
 				$pdf_data = array();
 			}
@@ -336,7 +354,7 @@
 						$datarow[] = array('text' => $excel_text);
 					}
 					if ($type === 'pdf') {
-						$datarow[] = array('text' => $pdf_text);
+						$pdf_email = $pdf_text;
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'email';
@@ -375,10 +393,10 @@
 						$datarow[] = array('text' => $excel_text);
 					}
 					if ($type === 'pdf') {
-						if ($pdf_email === '') {
-							$datarow[] = array('text' => sprintf('<td>%s</td>', $pdf_text));
+						if (empty($pdf_email)) {
+							$datarow[] = array('text' => $pdf_text);
 						} else {
-							$datarow[] = array('text' => sprintf('<td>%s<br />%s</td>', $pdf_email, $pdf_text));
+							$datarow[] = array('text' => sprintf('%s<br />%s', $pdf_email, $pdf_text));
 						}
 					}
 					if ($type === 'referee_view_zip') {
@@ -434,9 +452,6 @@
 					if ($type === 'excel') {
 						$datarow[] = array('text' => __($referee['SexType']['title']));
 					}
-					if ($type === 'pdf') {
-						$datarow[] = array('text' => __($referee['SexType']['title']));
-					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'sex_type';
 						$refview_text = __($referee['SexType']['title']);
@@ -453,7 +468,11 @@
 						$datarow[] = array('text' => $excel_text);
 					}
 					if ($type === 'pdf') {
-						$datarow[] = array('text' => $excel_text);
+						$pdf_text = __($referee['SexType']['title']);
+						if (!empty($excel_text)) {
+							$pdf_text .= sprintf('<br />%s', $excel_text);
+						}
+						$datarow[] = array('text' => $pdf_text);
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'birthday';
@@ -487,6 +506,7 @@
 				if ($isEditor) {
 					// since
 					$excel_text = '';
+					$pdf_text = '';
 					if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['since'])) {
 						$excel_text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['since'], 'date');
 					}
@@ -494,7 +514,7 @@
 						$datarow[] = array('text' => $excel_text);
 					}
 					if ($type === 'pdf') {
-						$datarow[] = array('text' => $excel_text);
+						$pdf_text .= $excel_text;
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'since';
@@ -511,7 +531,13 @@
 						$datarow[] = array('text' => $excel_text);
 					}
 					if ($type === 'pdf') {
-						$datarow[] = array('text' => $excel_text);
+						if (!empty($excel_text)) {
+							if (empty($pdf_text)) {
+								$pdf_text = sprintf('<em>%s</em>', $excel_text);
+							} else {
+								$pdf_text .= sprintf('<br /><em>%s</em>', $excel_text);
+							}
+						}
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'last_update';
@@ -528,7 +554,14 @@
 						$datarow[] = array('text' => $excel_text);
 					}
 					if ($type === 'pdf') {
-						$datarow[] = array('text' => $excel_text);
+						if (!empty($excel_text)) {
+							if (empty($pdf_text)) {
+								$pdf_text = $excel_text;
+							} else {
+								$pdf_text .= sprintf('<br />%s', $excel_text);
+							}
+						}
+						$datarow[] = array('text' => $pdf_text);
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'next_update';
@@ -540,9 +573,6 @@
 					if ($type === 'excel') {
 						$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
 					}
-					if ($type === 'pdf') {
-						$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
-					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'remark';
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), (empty($referee['Person']['remark'])) ? $refview_empty : __($referee['Person']['remark']), $filledTemplate);
@@ -552,8 +582,24 @@
 					if ($type === 'excel') {
 						$datarow[] = array('text' => (empty($referee['Person']['internal_remark'])) ? '' : __($referee['Person']['internal_remark']));
 					}
+
+					// remarks
 					if ($type === 'pdf') {
-						$datarow[] = array('text' => (empty($referee['Person']['internal_remark'])) ? '' : __($referee['Person']['internal_remark']));
+						if (!empty($referee['Person']['remark']) || !empty($referee['Person']['internal_remark'])) {
+							$pdf_data[] = array('data' => $datarow, 'style' => $statustypes[$referee['RefereeStatus']['sid']]['htmlstyle']);
+							$datarow = array();
+
+							$pdf_text = $referee['Person']['remark'];
+							if (!empty($referee['Person']['internal_remark'])) {
+								if (empty($pdf_text)) {
+									$pdf_text = sprintf('intern: %s', $referee['Person']['internal_remark']);
+								} else {
+									$pdf_text .= sprintf('<br />intern: %s', $referee['Person']['internal_remark']);
+								}
+							}
+							$datarow[] = array('text' => '');
+							$datarow[] = array('text' => $pdf_text, 'colspan' => 7);
+						}
 					}
 
 				}

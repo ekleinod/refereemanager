@@ -60,11 +60,14 @@ class RefManTCPDF extends TCPDF {
 		foreach($data as $datarow) {
 			$table .= sprintf('<tr style="font-size: 10pt; %s ">', $datarow['style']);
 			$iCell = 0;
+			if (empty($datarow['data'][0]['text'])) {
+				$odd = !$odd;
+			}
 			foreach($datarow['data'] as $datacell) {
-				$table .= sprintf('<td style="font-size: 10pt; background-color: %s; %s " width="%s">%s</td>',
+				$table .= sprintf('<td style="font-size: 10pt; background-color: %s; %s " %s>%s</td>',
 													($odd) ? '#EEEEFF' : '#FFFFFF',
 													$datarow['style'],
-													$header[$iCell]['width'],
+													(empty($datacell['colspan']) ? sprintf('width="%s"', $header[$iCell]['width']) : sprintf('colspan="%s"', $datacell['colspan'])),
 													$datacell['text']);
 				$iCell++;
 			}
