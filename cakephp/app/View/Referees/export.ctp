@@ -688,6 +688,22 @@
 			echo $tcpdf->Output('referees.pdf', 'D');
 		}
 
+	} else if ($type === 'email') {
+		echo "<p>E-Mails senden.</p>";
+
+		$to = "schiri@ekkart.de";
+		$subject = "Test Email";
+		$body = "This is only a test.";
+		$headers = "From: schiri@ekkart.de\r\n".
+							 "Reply-To: schiri@ekkart.de\r\n";
+		$cc = null;
+		$bcc = null;
+		$return_path = "schiri@ekkart.de";
+
+		// send the email using IMAP
+		$a = mail($to, $subject, $body);
+		echo "<p>E-Mail gesendet: " . $a . "</p>";
+
 	} else {
 		throw new CakeException(__('Exporttyp "%s" nicht unterstützt!', $type));
 	}
