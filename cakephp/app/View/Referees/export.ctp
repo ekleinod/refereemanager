@@ -122,7 +122,7 @@
 			$tcpdf->rmSetHeader(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')),
 													__('Seite %s von %s'));
 
-			$tcpdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+			$tcpdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_DATA));
 			$tcpdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 			$tcpdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
@@ -663,9 +663,13 @@
 
 			if ($type === 'pdf') {
 				$tcpdf->writeHTML($tcpdf->getTable($pdf_header, $pdf_data), true, false, true, false, '');
-				$tcpdf->WriteHTML(sprintf('<strong>%s</strong>', __('Legende')), true, false, true, false, '');
+				$tcpdf->WriteHTML(sprintf('<p style="font-size: %spt; font-weight: bold;">%s</p>', PDF_FONT_SIZE_MAIN, __('Legende')), true, false, true, false, '');
 				foreach ($statustypes as $stleg) {
-					$tcpdf->WriteHTML(sprintf('<p style="font-size: 10pt; %s">%s</p>', $stleg['htmlstyle'], ($stleg['remark']) ? h($stleg['remark']) : h($stleg['title'])), true, false, true, false, '');
+					$tcpdf->WriteHTML(sprintf('<p style="font-size: %spt; %s">%s</p>',
+																		PDF_FONT_SIZE_DATA,
+																		$stleg['htmlstyle'],
+																		($stleg['remark']) ? h($stleg['remark']) : h($stleg['title'])),
+														true, false, true, false, '');
 				}
 			}
 
@@ -687,22 +691,6 @@
 		if ($type === 'pdf') {
 			echo $tcpdf->Output('referees.pdf', 'D');
 		}
-
-	} else if ($type === 'email') {
-		echo "<p>E-Mails senden.</p>";
-
-		$to = "schiri@ekkart.de";
-		$subject = "Test Email";
-		$body = "This is only a test.";
-		$headers = "From: schiri@ekkart.de\r\n".
-							 "Reply-To: schiri@ekkart.de\r\n";
-		$cc = null;
-		$bcc = null;
-		$return_path = "schiri@ekkart.de";
-
-		// send the email using IMAP
-		$a = mail($to, $subject, $body);
-		echo "<p>E-Mail gesendet: " . $a . "</p>";
 
 	} else {
 		throw new CakeException(__('Exporttyp "%s" nicht unterstützt!', $type));

@@ -65,8 +65,6 @@
 		<?php if ($isEditor) { ?>
 			|
 			<?php echo $this->Html->link('Datenübersicht (zip)', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'referee_view_zip')); ?>
-			|
-			<?php echo $this->Html->link('E-Mails senden', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'email')); ?>
 		<?php } ?>
 
 	</p>
