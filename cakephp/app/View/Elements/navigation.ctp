@@ -1,26 +1,28 @@
 <!-- main navigation for big devices -->
 <ul>
 	<?php
-		foreach ( $navarray as $mainnav ) {
+		foreach ($navarray as $mainnav) {
+			if (!array_key_exists('role', $mainnav) || (array_key_exists('role', $mainnav) && ($mainnav['role'] === 'editor') && $isEditor)) {
 	?>
-		<li><?php echo $this->Html->link($mainnav['title'], $mainnav['routing']); ?>
-			<?php
-				if ( $mainnav['subnav'] ) {
-			?>
-				<ul>
-					<?php
-						foreach ( $mainnav['subnav'] as $subnav ) {
-					?>
-						<li><?php echo $this->Html->link($subnav['title'], $subnav['routing']); ?></li>
-					<?php
-						}
-					?>
-				</ul>
-			<?php
-				}
-			?>
-		</li>
+			<li><?php echo $this->Html->link($mainnav['title'], $mainnav['routing']); ?>
+				<?php
+					if ( $mainnav['subnav'] ) {
+				?>
+					<ul>
+						<?php
+							foreach ( $mainnav['subnav'] as $subnav ) {
+						?>
+							<li><?php echo $this->Html->link($subnav['title'], $subnav['routing']); ?></li>
+						<?php
+							}
+						?>
+					</ul>
+				<?php
+					}
+				?>
+			</li>
 	<?php
+			}
 		}
 	?>
 </ul>
@@ -30,16 +32,18 @@
 	<option selected="selected" value="">Go to...</option>
 	<?php
 		foreach ( $navarray as $mainnav ) {
+			if (!array_key_exists('role', $mainnav) || (array_key_exists('role', $mainnav) && ($mainnav['role'] === 'editor') && $isEditor)) {
 	?>
-		<option value="<?php echo Router::url($mainnav['routing']); ?>"><?php echo $mainnav['title']; ?></option>
-			<?php
-				foreach ( $mainnav['subnav'] as $subnav ) {
-			?>
-				<option value="<?php echo Router::url($subnav['routing']); ?>">- <?php echo $subnav['title']; ?></option>
-			<?php
-				}
-			?>
+			<option value="<?php echo Router::url($mainnav['routing']); ?>"><?php echo $mainnav['title']; ?></option>
+				<?php
+					foreach ( $mainnav['subnav'] as $subnav ) {
+				?>
+					<option value="<?php echo Router::url($subnav['routing']); ?>">- <?php echo $subnav['title']; ?></option>
+				<?php
+					}
+				?>
 	<?php
+			}
 		}
 	?>
 </select>

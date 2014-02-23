@@ -190,6 +190,12 @@
 			</fileset>
 		</copy>
 
+		<copy todir="${path:target}app${file.separator}View${file.separator}ToolsEditor${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}ToolsEditor${file.separator}">
+				<include name="*.ctp" />
+			</fileset>
+		</copy>
+
 		<!-- Vendor -->
 		<copy todir="${path:target}app${file.separator}Vendor${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}Vendor${file.separator}">

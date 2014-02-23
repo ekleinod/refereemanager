@@ -84,6 +84,12 @@
 																											//array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'teams')),
 																											)
 																		),
+															array('title' => __('Editor-Werkzeuge'), 'routing' => array('action' => 'index', 'controller' => 'tools_editor'),
+																		'role' => 'editor',
+																		'subnav' => array(
+																											array('title' => __('Nachricht'), 'routing' => array('action' => 'message', 'controller' => 'tools_editor')),
+																											)
+																		),
 															);
 							echo $this->element('navigation', array('navarray' => $navarray));
 						?>
