@@ -49,6 +49,43 @@ class ToolsEditorController extends AppController {
 		$seasonarray = $this->Season->find('list');
 		asort($seasonarray, SORT_LOCALE_STRING);
 		$this->set('seasonarray', $seasonarray);
+		$this->set('result', false);
+
+		// create messages
+		if (!empty($this->request->data)) {
+			$this->set('result', true);
+			$this->set('data', $this->request->data);
+
+			$referees = array();
+			switch ($this->request->data['ToolsEditor']['recipient']) {
+				case 'a':
+					// $referees = all referees in season
+					break;
+				case 'm':
+					// $referees = all referees in season with an email address
+					break;
+				case 's':
+					// $referees = all referees in season with an snail mail address without an email address
+					break;
+			}
+
+			// now an if because switch is too exclusive for 'a'
+			if (($this->request->data['ToolsEditor']['recipient'] === 'a') || ($this->request->data['ToolsEditor']['recipient'] === 'm')) {
+				//if (referee has email address) {
+					$addresslist = '';
+					$more = false;
+					foreach ($referees as $referee) {
+						if ($more) {
+							$addresslist .= '; ';
+						}
+						$more = true;
+						//$addresslist .= sprintf('%s <%s>', $this->RefereeFormat->formatPerson($referee['Person'], 'name_title'), $this->RefereeFormat->formatEMail($email, 'text'));
+					}
+				//}
+			}
+
+		}
+
 	}
 
 }
