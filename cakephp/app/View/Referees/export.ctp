@@ -95,7 +95,7 @@
 			$refview_empty = '---';
 
 			$latexallrefs = file_get_contents(sprintf('%s%s%s', WWW_ROOT, Configure::read('RefMan.template.path'), Configure::read('RefMan.template.referee_view_all')));
-			$fletoken = 'referee%04d';
+			$fletoken = 'referee%d';
 			$latexreftoken = sprintf("\t\\includepdf{generated/%s.pdf}\n", $fletoken);
 
 			$zip = new ZipArchive();
