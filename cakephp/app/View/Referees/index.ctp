@@ -6,6 +6,7 @@
 	<p>Saison: <?php echo $season['title_season']; ?></p>
 </div>
 
+
 <!-- view content -->
 <?php
 	if (empty($referees)) {
@@ -20,34 +21,31 @@
 			// compute different styles
 			foreach ($statustypes as &$statustype) {
 
-				$style = '';
+				$statustype['outputstyle'] = '';
 
-				if ($statustype['style'] || $statustype['color'] || $statustype['bgcolor']) {
-
+				if ($statustype['style']) {
 					switch ($statustype['style']) {
 						case 'normal':
 						case 'italic':
 						case 'oblique':
-							$style .= sprintf('font-style: %s; ', $statustype['style']);
+							$statustype['outputstyle'] .= sprintf('font-style: %s; ', $statustype['style']);
 							break;
 						case 'normal':
 						case 'bold':
 						case 'bolder':
 						case 'lighter':
-							$style .= sprintf('font-weight: %s; ', $statustype['style']);
+							$statustype['outputstyle'] .= sprintf('font-weight: %s; ', $statustype['style']);
 							break;
 					}
-
-					if ($statustype['color']) {
-						$style .= sprintf('color: #%s; ', $statustype['color']);
-					}
-
-					if ($statustype['bgcolor']) {
-						$style .= sprintf('background-color: #%s; ', $statustype['bgcolor']);
-					}
-
 				}
-				$statustype['outputstyle'] = $style;
+
+				if ($statustype['color']) {
+					$statustype['outputstyle'] .= sprintf('color: #%s; ', $statustype['color']);
+				}
+
+				if ($statustype['bgcolor']) {
+					$statustype['outputstyle'] .= sprintf('background-color: #%s; ', $statustype['bgcolor']);
+				}
 
 				if (($statustype['sid'] == StatusType::SID_MANY) ||
 						($statustype['sid'] == StatusType::SID_INACTIVESEASON) ||
@@ -61,9 +59,14 @@
 	</ul>
 
 	<p>
-		<?php echo $this->Html->link('Export to Excel', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'excel')); ?>
+		<?php echo $this->Html->link('Export als Excel-Datei', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'excel')); ?>
 		|
-		<?php echo $this->Html->link('Export to Zip', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'zip')); ?>
+		<?php echo $this->Html->link('Export als PDF', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'pdf')); ?>
+		<?php if ($isEditor) { ?>
+			|
+			<?php echo $this->Html->link('Datenübersicht (zip)', array('controller' => 'referees', 'action' => 'export', $season['year_start'], 'referee_view_zip')); ?>
+		<?php } ?>
+
 	</p>
 
 	<table>
@@ -96,9 +99,11 @@
 				$columns[] = __('Ausbildung');
 
 				if ($isEditor) {
+					$columns[] = __('Letzte Ausbildung');
 					$columns[] = __('Letzte Fortbildung');
 					$columns[] = __('Nächste Fortbildung');
 					$columns[] = __('Anmerkung');
+					$columns[] = __('Interne Anmerkung');
 				}
 
 				$columns[] = __('Aktionen');
@@ -251,6 +256,14 @@
 						<?php if ($isEditor) { ?>
 							<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								$text = '';
+								if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['since'])) {
+									$text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['since'], 'date');
+								}
+								echo $text;
+							?></td>
+
+							<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
+								$text = '';
 								if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['lastupdate'])) {
 									$text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['lastupdate'], 'date');
 								}
@@ -268,6 +281,12 @@
 							<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
 								if (!empty($referee['Person']['remark'])) {
 									echo h($referee['Person']['remark']);
+								}
+							?></td>
+
+							<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']; ?>"><?php
+								if (!empty($referee['Person']['internal_remark'])) {
+									echo h($referee['Person']['internal_remark']);
 								}
 							?></td>
 						<?php } ?>

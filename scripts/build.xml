@@ -82,6 +82,16 @@
 		</copy>
 	</target>
 
+	<target name="tcpdf2apache" description="Copies TCPDF files to development directory.">
+		<mkdir dir="${path:apache:refereemanager}app${file.separator}Vendor${file.separator}TCPDF${file.separator}" />
+		<copy todir="${path:apache:refereemanager}app${file.separator}Vendor${file.separator}TCPDF${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:git:tcpdf}">
+				<include name="**/*" />
+				<exclude name="**/examples/" />
+			</fileset>
+		</copy>
+	</target>
+
 	<target name="refman2apache" description="Copies RefereeManager git files to development directory.">
 		<antcall target="copyrefmanfiles">
 			<param name="path:source" value="${path:git:refereemanager}cakephp${file.separator}" />
@@ -161,6 +171,7 @@
 		<copy todir="${path:target}app${file.separator}View${file.separator}Layouts${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Layouts${file.separator}">
 				<include name="default.ctp" />
+				<include name="pdf.ctp" />
 			</fileset>
 		</copy>
 		<copy todir="${path:target}app${file.separator}View${file.separator}RefereeAssignments${file.separator}" failonerror="false" overwrite="true">
@@ -173,14 +184,27 @@
 				<include name="*.ctp" />
 			</fileset>
 		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Teams${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}Teams${file.separator}">
-				<include name="*.ctp" />
-			</fileset>
-		</copy>
 		<copy todir="${path:target}app${file.separator}View${file.separator}Users${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Users${file.separator}">
 				<include name="*.ctp" />
+			</fileset>
+		</copy>
+
+		<copy todir="${path:target}app${file.separator}View${file.separator}ToolsEditor${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}ToolsEditor${file.separator}">
+				<include name="*.ctp" />
+			</fileset>
+		</copy>
+
+		<!-- Vendor -->
+		<copy todir="${path:target}app${file.separator}Vendor${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}Vendor${file.separator}">
+				<include name="RefManTCPDF.php" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}Vendor${file.separator}TCPDF${file.separator}config${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}Vendor${file.separator}TCPDF${file.separator}config${file.separator}">
+				<include name="tcpdf_config.php" />
 			</fileset>
 		</copy>
 
@@ -207,6 +231,11 @@
 				<include name="*.ico" />
 				<exclude name="cake.*" />
 				<exclude name="test-*" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}webroot${file.separator}files${file.separator}templates${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}webroot${file.separator}files${file.separator}templates${file.separator}">
+				<include name="**/*" />
 			</fileset>
 		</copy>
 	</target>

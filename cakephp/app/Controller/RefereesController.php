@@ -45,7 +45,7 @@ class RefereesController extends AppController {
 	 */
 	public function index($season = null) {
 
-		$this->setAndGetStandardIndexExport();
+		$this->setAndGetStandardIndexExport($season);
 
 		$this->set('title_for_layout', __('Übersicht der Schiedsrichter_innen'));
 	}
@@ -61,11 +61,17 @@ class RefereesController extends AppController {
 	 */
 	public function export($season = null, $type = 'excel') {
 
-		$this->setAndGetStandardIndexExport();
+		$this->setAndGetStandardIndexExport($season);
 
 		$this->set('type', $type);
 
 		$this->set('title_for_layout', __('Export der Schiedsrichter_innen'));
+
+		if ($type === 'pdf') {
+			$this->layout = 'pdf';
+			$this->render();
+		}
+
 	}
 
 	/**
@@ -86,6 +92,7 @@ class RefereesController extends AppController {
 		$this->set('season', $theSeason);
 		$this->set('statustypes', $this->getStatusTypes($referees, $theSeason));
 		$this->set('refereerelationtypes', $this->getRefereeRelationTypes($referees));
+		$this->set('allrefereerelationtypes', $this->getAllRefereeRelationTypes());
 		$this->set('contacttypes', $this->getContactTypes());
 	}
 
@@ -206,6 +213,22 @@ class RefereesController extends AppController {
 	}
 
 	/**
+	 * Returns all referee relation types.
+	 *
+	 * @return all referee relation types
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	private function getAllRefereeRelationTypes() {
+		$allrefereerelationtypes = array();
+		foreach ($this->RefereeRelationType->find('all') as $refereerelationtype) {
+			$allrefereerelationtypes[$refereerelationtype['RefereeRelationType']['sid']] = $refereerelationtype['RefereeRelationType'];
+		}
+		return $allrefereerelationtypes;
+	}
+
+	/**
 	 * Fills the referee with the needed data.
 	 *
 	 * @param $referee referee to use
@@ -216,7 +239,7 @@ class RefereesController extends AppController {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	private function fillReferee($referee, $season = null) {
+	private function fillReferee($referee, $season) {
 
 		$refTemp = array();
 
@@ -325,13 +348,15 @@ class RefereesController extends AppController {
 		$statustypes = array();
 
 		foreach ($referees as $referee) {
-			if (!array_key_exists($referee['RefereeStatus']['sid'], $statustypes)) {
-				$statustypes[$referee['RefereeStatus']['sid']] = $referee['RefereeStatus'];
-			}
-			if (($referee['RefereeStatus']['sid'] == StatusType::SID_MANY) ||
-					($referee['RefereeStatus']['sid'] == StatusType::SID_INACTIVESEASON) ||
-					($referee['RefereeStatus']['sid'] == StatusType::SID_OTHER)) {
-				$statustypes[$referee['RefereeStatus']['sid']]['referees'][] = $referee['Person'];
+			if ($referee['RefereeStatus']) {
+				if (!array_key_exists($referee['RefereeStatus']['sid'], $statustypes)) {
+					$statustypes[$referee['RefereeStatus']['sid']] = $referee['RefereeStatus'];
+				}
+				if (($referee['RefereeStatus']['sid'] == StatusType::SID_MANY) ||
+						($referee['RefereeStatus']['sid'] == StatusType::SID_INACTIVESEASON) ||
+						($referee['RefereeStatus']['sid'] == StatusType::SID_OTHER)) {
+					$statustypes[$referee['RefereeStatus']['sid']]['referees'][] = $referee['Person'];
+				}
 			}
 		}
 

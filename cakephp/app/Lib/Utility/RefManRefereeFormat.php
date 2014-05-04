@@ -29,27 +29,34 @@ class RefManRefereeFormat {
 			return '';
 		}
 
+		// @todo set locale correctly, still very mysterious
+		$arrlocale = explode('-', Configure::read('Config.language'));
+		setlocale(LC_TIME, sprintf('%s_%s.utf8', $arrlocale[0], strtoupper($arrlocale[1])));
+
 		switch ($type) {
 			case 'date':
-				$formatted = CakeTime::format('d.m.Y', $data);
+				$formatted = CakeTime::format($data, '%d.%m.%Y');
 				break;
 			case 'datereverse':
-				$formatted = CakeTime::format('Y-m-d', $data);
+				$formatted = CakeTime::format($data, '%Y-%m-%d');
 				break;
 			case 'datetime':
-				$formatted = CakeTime::format('d.m.Y, H:i', $data);
+				$formatted = CakeTime::format($data, '%d.%m.%Y, %H:%M');
 				break;
 			case 'longdate':
-				$formatted = CakeTime::format('D d.m.Y', $data);
+				$formatted = CakeTime::format($data, '%a %d.%m.%Y');
 				break;
 			case 'longdatereverse':
-				$formatted = CakeTime::format('d.m.Y (D)', $data);
+				$formatted = CakeTime::format($data, '%d.%m.%Y (%a)');
+				break;
+			case 'medium':
+				$formatted = CakeTime::format($data, '%e. %B %Y');
 				break;
 			case 'time':
-				$formatted = CakeTime::format('H:i', $data);
+				$formatted = CakeTime::format($data, '%H:%M');
 				break;
 			case 'year':
-				$formatted = CakeTime::format('Y', $data);
+				$formatted = CakeTime::format($data, '%Y');
 				break;
 			default:
 				$formatted = $data;
@@ -93,6 +100,12 @@ class RefManRefereeFormat {
 				$formatted = __('%s%s',
 												$data['name'],
 												((empty($data['title'])) ? '' : __(', %s', $data['title'])));
+				break;
+			case 'tablename':
+				$formatted = __('%s%s%s',
+												$data['name'],
+												((empty($data['title'])) ? '' : __(', %s', $data['title'])),
+												((empty($data['first_name'])) ? '' : __(', %s', $data['first_name'])));
 				break;
 			case 'title':
 				$formatted = (empty($data['title'])) ? '' : $data['title'];
@@ -228,9 +241,80 @@ class RefManRefereeFormat {
 					$formatted .= __(' %s', $data['city']);
 				}
 				break;
+			case 'streetnumber':
+				$formatted = '';
+				if ($data['street'] != '') {
+					$formatted .= __('%s', $data['street']);
+				}
+				if (($formatted != '') && ($data['number'] != '')) {
+					$formatted .= __(' %s', $data['number']);
+				}
+				break;
+			case 'zipcity':
+				$formatted = '';
+				if ($data['zip_code'] != '') {
+					$formatted .= __('%s', $data['zip_code']);
+				}
+				if ($data['city'] != '') {
+					$formatted .= __(' %s', $data['city']);
+				}
+				break;
 			default:
 				$formatted = $data;
 				break;
+		}
+
+		return $formatted;
+	}
+
+	/**
+	 * Format relation with sid using separator character.
+	 *
+	 * @param string $data data to format
+	 * @param string $sid sid of relation
+	 * @param string $sep separator
+	 * @return string formatted string
+	 */
+	public function formatRelationBySID($data, $sid, $sep = '; ') {
+
+		if (($data === null) || empty($data)) {
+			return '';
+		}
+
+		if (!array_key_exists($sid, $data)) {
+			return '';
+		}
+
+		return $this->formatRelation($data[$sid], $sep);
+	}
+
+	/**
+	 * Format relation using separator character.
+	 *
+	 * @param string $data data to format
+	 * @param string $sep separator
+	 * @return string formatted string
+	 */
+	public function formatRelation($data, $sep = '; ') {
+
+		if (($data === null) || empty($data)) {
+			return '';
+		}
+
+		$formatted = '';
+
+		$hasMore = false;
+		foreach ($data as $relation) {
+			if ($hasMore) {
+				$formatted .= $sep;
+			}
+			if (array_key_exists('Club', $relation)) {
+				$formatted .= $relation['Club']['name'];
+			}
+			if (array_key_exists('League', $relation)) {
+				$formatted .= $relation['League']['title'];
+			}
+			$hasMore = true;
 		}
 
 		return $formatted;
