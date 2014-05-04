@@ -1,82 +1,100 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * SexType Model
  *
- * @property Person $Person
- * @property RefereeRelation $RefereeRelation
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class SexType extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $name = 'SexType';
+
+	/**
+	 * Display field
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $displayField = 'title';
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $validate = array(
 		'id' => array(
 			'uuid' => array(
 				'rule' => array('uuid'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'sid' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
 			),
 		),
 		'title' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	/**
+	 * hasMany associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $hasMany = array('Person', 'RefereeRelation');
 
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'Person' => array(
-			'className' => 'Person',
-			'foreignKey' => 'sex_type_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'RefereeRelation' => array(
-			'className' => 'RefereeRelation',
-			'foreignKey' => 'sex_type_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+	// custom programming
+
+	/* Relation types. */
+	const SID_FEMALE = 'female';
+	const SID_MALE = 'male';
+	const SID_OTHER = 'other';
+
+	/** Singleton for fast access to sex types. */
+	private $sextypes = null;
+
+	/**
+	 * Returns sex type.
+	 *
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @param sid sex type's sid
+	 * @return sex type
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function getSexType($sid) {
+		if ($this->sextypes == null) {
+			$this->recursive = -1;
+			$this->sextypes = array();
+			foreach ($this->find('all') as $sextype) {
+				$this->sextypes[$sextype['SexType']['sid']] = $sextype['SexType'];
+			}
+		}
+
+		return $this->sextypes[$sid];
+	}
 
 }
+
+/* EOF */
+

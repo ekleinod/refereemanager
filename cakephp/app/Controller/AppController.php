@@ -62,7 +62,6 @@ class AppController extends Controller {
 
 	/**
 	 * Defines actions to perform before the action method is executed.
-	 *
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -78,12 +77,8 @@ class AppController extends Controller {
 		if (($user != null) && !empty($user) && ($user['id'] != null)) {
 			// get user role sid
 			$this->loadModel('User');
-			$this->User->recursive = -1;
 			$theUser = $this->User->findById($user['id']);
-			$this->loadModel('UserRole');
-			$this->UserRole->recursive = -1;
-			$theUserRole = $this->UserRole->findById($theUser['User']['user_role_id']);
-			$theUserRoleSID = $theUserRole['UserRole']['sid'];
+			$theUserRoleSID = $theUser['UserRole']['sid'];
 
 			// set user name
 			$this->set('username', $user['username']);
@@ -94,11 +89,15 @@ class AppController extends Controller {
 		$this->set('isEditor', $this->isEditor($theUserRoleSID));
 		$this->set('isAdmin', $this->isAdmin($theUserRoleSID));
 
-		// configuration: tbd.
+		// configuration: tbd.: load from database or file
 		Configure::write('RefMan',
 										 array('defaultcontacttypeid' => 1,
 													 'defaultcountrycode' => '49',
 													 'defaultareacode' => '30'));
+
+		Configure::write('RefMan.template.path', 'files/templates/');
+		Configure::write('RefMan.template.referee_view', 'referee_view.mmd');
+		Configure::write('RefMan.template.referee_view_all', 'referee_view_all.tex');
 
 	}
 

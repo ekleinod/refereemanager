@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Create all pdfs from mmd. -->
+
+<project name="mmd2pdf" default="help" basedir=".">
+
+	<property name="file:all" value="referee_view_all" />
+
+	<property name="path:mmd" value="mmd" />
+	<property name="path:generated" value="generated" />
+
+	<target name="help" description="Shows help text.">
+		<echo>You can use the following targets:</echo>
+
+		<!-- show all available targets -->
+		<java classname="org.apache.tools.ant.Main">
+			<arg value="-projecthelp" />
+			<arg value="-buildfile" />
+			<arg value="${ant.file}" />
+		</java>
+	</target>
+
+	<target name="all" description="Create one merged pdf file from mmd.">
+
+		<echo message="Create pdf file: start."/>
+
+		<antcall target="clear" />
+
+		<antcall target="createtexfiles" />
+		<antcall target="createpdffiles" />
+		<antcall target="createpdffiles" />
+		<antcall target="mergepdffiles" />
+
+		<echo message="Create pdf file: stop."/>
+		<echo message="Call target 'clear' to remove temporary files."/>
+
+	</target>
+
+	<target name="createtexfiles" description="Create tex files from mmd files.">
+
+		<mkdir dir="${path:generated}" />
+
+		<apply executable="multimarkdown" parallel="false">
+			<arg value="-o" />
+			<targetfile />
+			<arg value="-t" />
+			<arg value="latex" />
+			<srcfile />
+			<fileset dir="${path:mmd}" includes="*.mmd" />
+			<mapper type="glob" from="*.mmd" to="${path:generated}/*.tex" />
+		</apply>
+	</target>
+
+	<target name="createpdffiles" description="Create pdf files from tex files.">
+		<echo message="createpdffiles"/>
+
+		<!-- force is set, because we need at several LaTeX runs to be executed -->
+		<apply executable="pdflatex" parallel="false" output="${file:all}.single.log" force="true">
+			<arg value="-interaction=nonstopmode" />
+			<arg value="-output-directory=${path:generated}" />
+			<srcfile />
+			<fileset dir="${path:generated}" includes="*.tex" />
+			<mapper type="glob" from="*.tex" to="${path:generated}/*.pdf"/>
+		</apply>
+	</target>
+
+	<target name="mergepdffiles" description="Create merged pdf file from pdf files.">
+		<exec executable="pdflatex" output="${file:all}.log">
+			<arg line="-interaction=nonstopmode ${file:all}.tex" />
+		</exec>
+	</target>
+
+	<target name="clear" description="Remove temporary files and directories.">
+		<delete dir="${path:generated}" />
+		<defaultexcludes remove="**/*~" />
+		<delete>
+			<fileset dir="." includes="**/*.aux, **/*.bak.vthought, **/*.bak, **/*.bbl, **/*.blg, **/*.dvi, **/*.idx, **/*.ilg, **/*.ind, **/*.lof, **/*.log, **/*.lot, **/*.lop, **/*.nav, **/*.out, **/*.ps, **/*.snm, **/*.toc, **/*.url, **/*.*~"/>
+		</delete>
+		<defaultexcludes default="true" />
+	</target>
+
+</project>
+
+<!-- EOF -->
+

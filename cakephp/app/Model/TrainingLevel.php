@@ -1,26 +1,40 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * TrainingLevel Model
  *
- * @property Referee $Referee
- * @property TrainingLevelType $TrainingLevelType
- * @property TrainingUpdate $TrainingUpdate
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class TrainingLevel extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
+	/**
+	 * Model name.
+	 *
+	 * Good practice to include the model name.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $name = 'TrainingLevel';
+
+	/**
+	 * Display field
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $displayField = 'id';
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $validate = array(
 		'id' => array(
 			'uuid' => array(
@@ -64,49 +78,23 @@ class TrainingLevel extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	/**
+	 * belongsTo associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $belongsTo = array('Referee', 'TrainingLevelType');
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Referee' => array(
-			'className' => 'Referee',
-			'foreignKey' => 'referee_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'TrainingLevelType' => array(
-			'className' => 'TrainingLevelType',
-			'foreignKey' => 'training_level_type_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'TrainingUpdate' => array(
-			'className' => 'TrainingUpdate',
-			'foreignKey' => 'training_level_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+	/**
+	 * hasMany associations
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public $hasMany = array('TrainingUpdate');
 
 }
+
+/* EOF */
+

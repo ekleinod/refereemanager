@@ -5,9 +5,9 @@ App::uses('AppModel', 'Model');
 /**
  * User Model
  *
- * @property UserRole $UserRole
- * @property Person $Person
- * @property ActivityLog $ActivityLog
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.1
+ * @since 0.1
  */
 class User extends AppModel {
 
@@ -16,14 +16,16 @@ class User extends AppModel {
 	 *
 	 * Good practice to include the model name.
 	 *
-	 * @var string
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public $name = 'User';
 
 	/**
 	 * Display field.
 	 *
-	 * @var string
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public $displayField = 'username';
 
@@ -31,6 +33,9 @@ class User extends AppModel {
 	 * Hash the password before saving.
 	 *
 	 * @param options
+	 *
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public function beforeSave($options = array()) {
 		if (isset($this->data[$this->alias]['password']) && isset($this->data[$this->alias]['salt'])) {
@@ -40,11 +45,12 @@ class User extends AppModel {
 		return true;
 	}
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
 	public $validate = array(
 		'username' => array(
 			'notempty' => array(
@@ -93,19 +99,31 @@ class User extends AppModel {
 				'rule' => array('numeric'),
 			),
 		),
+		'created' => array(
+			'datetime' => array(
+				'rule' => array('datetime'),
+			),
+		),
+		'modified' => array(
+			'datetime' => array(
+				'rule' => array('datetime'),
+			),
+		),
 	);
 
 	/**
 	 * belongsTo associations
 	 *
-	 * @var array
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public $belongsTo = array('UserRole', 'Person');
 
 	/**
 	 * hasMany associations
 	 *
-	 * @var array
+	 * @version 0.1
+	 * @since 0.1
 	 */
 	public $hasMany = array('ActivityLog');
 

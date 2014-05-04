@@ -5,7 +5,7 @@
 
 	Even if this is hard to read: use ${file.separator} if you want your script to be platform independent.
 
-	(c) 2013 by Ekkart Kleinod
+	(c) 2013-2014 by Ekkart Kleinod
 
 	@author Ekkart Kleinod
 -->
@@ -55,6 +55,13 @@
 		Original: "<git-path>phpexcelhelper/" = "${path:git}phpexcelhelper${file.separator}"
 	-->
 	<property name="path:git:phpexcelhelper" value="${path:git}phpexcelhelper${file.separator}" />
+
+	<!--
+		Path to your TCPDF git repository.
+		The declaration uses your git path, change if necessary.
+		Original: "<git-path>tcpdf/" = "${path:git}tcpdf${file.separator}"
+	-->
+	<property name="path:git:tcpdf" value="${path:git}tcpdf${file.separator}" />
 
 
 

@@ -1,6 +1,6 @@
 Title:							RefereeManager Developer Documentation
 Author:							Ekkart Kleinod
-Date:								28.05.2013
+Date:								2004-05-04
 Base Header Level:	3
 
 # Preface
@@ -32,6 +32,7 @@ There are five sources or downloads used for development:
 - RefereeManager ([Homepage][url:refman], [Git][url:refman:git])
 - PHPExcel ([Homepage][url:phpexcel], [SVN][url:phpexcel:svn])
 - PHPExcelHelper ([Homepage][url:phpexcelhelper], [Git][url:phpexcelhelper:git])
+- TCPDF ([Homepage][url:cpdf], [Git][url:tcpdf:git])
 
 RefereeManager should be read/write if you want to develop, the other are read-only.
 
@@ -73,6 +74,10 @@ We refer to the needed directories as follows:
 
 <...>/git/phpexcelhelper/
 : PHPExcelHelper git repository
+: no development files here
+
+<...>/git/tcpdf/
+: TCPDF git repository
 : no development files here
 
 
@@ -198,7 +203,7 @@ You can link to the git-stored file as well:
 
 ### Apache did not start
 
-If you choose to link the needed files, there may be problems in case you encrypt your home directory.
+If you choose to link the needed files, there may be problems in case you encrypt your home.
 In that case, the links can only be resolved after you log in.
 You have to restart *apache* every time you log in (see [Apache and PHP][]).
 
@@ -207,7 +212,7 @@ You have to restart *apache* every time you log in (see [Apache and PHP][]).
 Make sure you installed the *mysql* extension correctly **and** restarted *apache* (you figured *that* out by yourselves)
 
 If you use `localhost` you have to deactivate local file access with `LOAD DATA` statements
-In order to do that, edit `php.ini`, usually located in `/etc/php5/apache2/'.
+In order to do that, edit `php.ini`, usually located in `/etc/php5/apache2/`.
 Uncomment the lines
 
 	mysql.allow_local_infile = On
@@ -238,9 +243,10 @@ In order to do this, follow these steps:
 5. copy CakePHP
 6. copy PHPExcel
 7. copy PHPExcelHelper
-8. copy RefereeManager
-9. setup database
-10. start development
+8. copy TCPDF
+9. copy RefereeManager
+10. setup database
+11. start development
 
 You should use the provided *ant* scripts for some of these tasks.
 Simply call
@@ -257,7 +263,7 @@ If you are not familiar with *ant*, refer to the [Ant Manual][url:ant:manual].
 
 Clone the code of the *RefereeManager*.
 
-	$ git clone http://git.code.sf.net/p/refereemanager/code <...>/git/refereemanager/
+	$ git clone https://github.com/ekleinod/refereemanager.git <...>/git/refereemanager/
 
 Clone the code of *CakePHP*, alternatively download and unzip a version.
 
@@ -275,6 +281,10 @@ Checkout the code of *PHPExcel*.
 Clone the code of *PHPExcelHelper*, alternatively download and unzip a version.
 
 	$ git clone git://github.com/ekleinod/PHPExcelHelper.git <...>/git/phpexcelhelper/
+
+Clone the code of *TCPDF*, alternatively download and unzip a version.
+
+	$ git clone http://git.code.sf.net/p/tcpdf/code <...>/git/phpexcelhelper/
 
 ## Create and link your apache target directories
 
@@ -314,6 +324,7 @@ Default structure is:
 			cakephp/
 			phpmyadmin/
 			phpexcel/
+			phpexcelhelper/
 
 If your directory structure is the same, you do not have to change the configuration file.
 
@@ -344,6 +355,17 @@ Change the *CakePHP* database configuration according to your installation.
 You find a configuration for the installation defaults in the RefereeManager repository:
 
 	<...>/git/refereemanager/cakephp/app/Config/database.php
+
+If you leave your altered file at this place, it is copied by the scripts to and from the apache directory.
+
+### TCPDF configuration
+
+*Note:* Set your preferred font, sont fize, creator text etc.
+
+Change the *TCPDF* configuration according to your preferences.
+You find a configuration with reasonable defaults in the RefereeManager repository:
+
+	<...>/git/refereemanager/cakephp/app/Vendor/TCPDF/config/tcpdf_config.php
 
 If you leave your altered file at this place, it is copied by the scripts to and from the apache directory.
 
@@ -435,6 +457,27 @@ The script executes the following steps:
 
 *Important:* Your *PHPExcelHelper* files will be overwritten.
 
+## Copy TCPDF
+
+Copy the *TCPDF* files to your refereemanager apache directory.
+
+Ant target
+: `tcpdf2apache`
+: call: `ant tcpdf2apache`
+
+Source directory
+: `<...>/git/tcpdf`
+
+Target directory
+: `<...>/apache/refereemanager`
+
+The script executes the following steps:
+
+1. check if target directory exists -- failure otherwise
+2. copy the helper file from source directory to target directory
+
+*Important:* Your *TCPDF* files will be overwritten.
+
 ## Copy RefereeManager
 
 Copy the *RefereeManager* files in your refereemanager apache directory.
@@ -470,7 +513,7 @@ If not, check:
 - your phpMyAdmin configuration (see [phpMyAdmin configuration][])
 
 Create a database called `refereemanager`.
-If you choose another name, alter your CakePHP configuration file accordnigly (see [CakePHP database configuration][]).
+If you choose another name, alter your CakePHP configuration file accordingly (see [CakePHP database configuration][]).
 
 Create the database tables using the code of:
 
@@ -489,15 +532,26 @@ Fill the database with your data if you have some.
 Everything is ready for development.
 
 
-# Development steps
+
+# Versions
+
+## v0.2
+
+*Released:* 2014-05-04
+
+- database for referees working
+- output of referee lists: HTML, PDF, Excel
+
+## v0.1
+
+*Released:* 2013-10-13
+
+- no special functionality
+- saving the code before introducing the new branching model [][url:branchingmodel]
 
 
 
-
-
-[url:refman]: http://sourceforge.net/projects/refereemanager/ "RefereeManager Sourceforge Home"
-[url:refman:wiki]: http://sourceforge.net/p/refereemanager/wiki/Home/ "RefereeManager Sourceforge Wiki"
-[url:refman:git]: http://git.code.sf.net/p/refereemanager/code "RefereeManager Sourceforge Git Access"
+[url:ant:manual]: http://ant.apache.org/manual/ "Ant Manual"
 [url:cake]: http://cakephp.org/ "CakePHP Homepage"
 [url:cake:git]: git://github.com/cakephp/cakephp.git "CakePHP Git Access"
 [url:pma]: http://www.phpmyadmin.net/ "phpMyAdmin Homepage"
@@ -507,5 +561,10 @@ Everything is ready for development.
 [url:phpexcel:svn]: https://phpexcel.svn.codeplex.com/svn "PhpExcel SVN Access"
 [url:phpexcelhelper]: https://github.com/ekleinod/PHPExcelHelper "PHPExcelHelper Github Page"
 [url:phpexcelhelper:git]: git://github.com/ekleinod/PHPExcelHelper.git "PHPExcelHelper Git Access"
-[url:ant:manual]: http://ant.apache.org/manual/ "Ant Manual"
+[url:refman]: https://github.com/ekleinod/refereemanager "RefereeManager Github Home"
+[url:refman:wiki]: https://github.com/ekleinod/refereemanager/wiki "RefereeManager Github Wiki"
+[url:refman:git]: https://github.com/ekleinod/refereemanager.git "RefereeManager Github Git Access"
+[url:tcpdf]: http://www.tcpdf.org/ "TCPDF Homepage"
+[url:tcpdf:git]: http://git.code.sf.net/p/tcpdf/code "TCPDF Git Access"
+[url:branchingmodel]: http://nvie.com/posts/a-successful-git-branching-model/ "A successful Git branching model"
 
