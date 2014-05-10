@@ -670,6 +670,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_relations` (
   `club_id` INT UNSIGNED NULL ,
   `league_id` INT UNSIGNED NULL ,
   `sex_type_id` INT UNSIGNED NULL ,
+  `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB
