@@ -76,6 +76,7 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_people` (
   `first_name` VARCHAR(100) NULL ,
   `name` VARCHAR(100) NOT NULL ,
   `birthday` DATE NULL ,
+  `dayofdeath` DATE NULL ,
   `remark` TEXT NULL ,
   `internal_remark` TEXT NULL ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
@@ -670,6 +671,8 @@ CREATE  TABLE IF NOT EXISTS `rfrmgr_referee_relations` (
   `club_id` INT UNSIGNED NULL ,
   `league_id` INT UNSIGNED NULL ,
   `sex_type_id` INT UNSIGNED NULL ,
+  `saturday` TINYINT(1) NULL ,
+  `sunday` TINYINT(1) NULL ,
   `remark` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
@@ -677,7 +680,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'Relations between referees and clubs resp. leagues.\nClubs: m /* comment truncated */ /*ember, prefer, avoid.
-Leagues: prefer. avoid.*/';
+Leagues: prefer. avoid.
+Saturday/Sunday: prefer*/';
 
 
 -- -----------------------------------------------------
