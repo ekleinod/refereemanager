@@ -84,6 +84,9 @@ class RefManRefereeFormat {
 			case 'birthday':
 				$formatted = (empty($data['birthday'])) ? '' : $this->formatDate($data['birthday'], $datetype);
 				break;
+			case 'dayofdeath':
+				$formatted = (empty($data['dayofdeath'])) ? '' : __('+%s', $this->formatDate($data['dayofdeath'], $datetype));
+				break;
 			case 'first_name':
 				$formatted = (empty($data['first_name'])) ? '' : $data['first_name'];
 				break;

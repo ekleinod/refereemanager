@@ -459,10 +459,13 @@
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
 
-					// birthday
+					// birthday/day of death
 					$excel_text = '';
 					if (!empty($referee['Person']['birthday'])) {
 						$excel_text .= $this->RefereeFormat->formatPerson($referee['Person'], 'birthday');
+					}
+					if (!empty($referee['Person']['dayofdeath'])) {
+						$excel_text .= __(' %s', $this->RefereeFormat->formatPerson($referee['Person'], 'dayofdeath'));
 					}
 					if ($type === 'excel') {
 						$datarow[] = array('text' => $excel_text);

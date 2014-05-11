@@ -253,6 +253,9 @@
 								if (!empty($referee['Person']['birthday'])) {
 									$text .= $this->RefereeFormat->formatPerson($referee['Person'], 'birthday');
 								}
+								if (!empty($referee['Person']['dayofdeath'])) {
+									$text .= __(' %s', $this->RefereeFormat->formatPerson($referee['Person'], 'dayofdeath'));
+								}
 								echo $text;
 							?></td>
 						<?php } ?>
