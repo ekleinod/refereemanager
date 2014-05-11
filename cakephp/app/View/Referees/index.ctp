@@ -154,7 +154,7 @@
 											$text .= $this->Html->link($refereerelation['League']['title'], array('controller' => 'leagues', 'action' => 'view', $refereerelation['League']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
 										}
 										if (array_key_exists('SexType', $refereerelation)) {
-											$text .= __('%s (%s)', $refereerelation['SexType']['title'], $refereerelation['SexType']['remark']);
+											$text .= h($refereerelation['SexType']['title']);
 										}
 										if (array_key_exists('Saturday', $refereerelation)) {
 											$text .= __('Sonnabend');

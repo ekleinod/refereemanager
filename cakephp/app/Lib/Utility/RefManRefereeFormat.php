@@ -318,7 +318,7 @@ class RefManRefereeFormat {
 				$formatted .= $relation['League']['title'];
 			}
 			if (array_key_exists('SexType', $relation)) {
-				$formatted .= __('%s (%s)', $relation['SexType']['title'], $relation['SexType']['remark']);
+				$formatted .= $relation['SexType']['title'];
 			}
 			if (array_key_exists('Saturday', $relation)) {
 				$formatted .= __('Sonnabend');
