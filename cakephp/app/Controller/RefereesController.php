@@ -274,6 +274,18 @@ class RefereesController extends AppController {
 			if ($refereeRelation['league_id'] > 0) {
 				$refTemp['RefereeRelation'][$this->RefereeRelationType->getRelationTypeSID($refereeRelation['referee_relation_type_id'])][] = $this->League->findById($refereeRelation['league_id']);
 			}
+			if ($refereeRelation['sex_type_id'] > 0) {
+				$refTemp['RefereeRelation'][$this->RefereeRelationType->getRelationTypeSID($refereeRelation['referee_relation_type_id'])][] = $this->SexType->findById($refereeRelation['sex_type_id']);
+			}
+			if (!empty($refereeRelation['saturday'])) {
+				$refTemp['RefereeRelation'][$this->RefereeRelationType->getRelationTypeSID($refereeRelation['referee_relation_type_id'])][]['Saturday'] = 'saturday';
+			}
+			if (!empty($refereeRelation['sunday'])) {
+				$refTemp['RefereeRelation'][$this->RefereeRelationType->getRelationTypeSID($refereeRelation['referee_relation_type_id'])][]['Sunday'] = 'sunday';
+			}
+			if (!empty($refereeRelation['remark'])) {
+				$refTemp['RefereeRelation'][$this->RefereeRelationType->getRelationTypeSID($refereeRelation['referee_relation_type_id'])][]['Remark'] = $refereeRelation['remark'];
+			}
 		}
 
 		// picture
