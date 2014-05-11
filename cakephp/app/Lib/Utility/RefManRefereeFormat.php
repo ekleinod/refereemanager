@@ -314,6 +314,18 @@ class RefManRefereeFormat {
 			if (array_key_exists('League', $relation)) {
 				$formatted .= $relation['League']['title'];
 			}
+			if (array_key_exists('SexType', $relation)) {
+				$formatted .= __('%s (%s)', $relation['SexType']['title'], $relation['SexType']['remark']);
+			}
+			if (array_key_exists('Saturday', $relation)) {
+				$formatted .= __('Sonnabend');
+			}
+			if (array_key_exists('Sunday', $relation)) {
+				$formatted .= __('Sonntag');
+			}
+			if (array_key_exists('Remark', $relation)) {
+				$formatted .= $relation['Remark'];
+			}
 			$hasMore = true;
 		}
 
