@@ -173,8 +173,7 @@ class RefereesController extends AppController {
 	 * @since 0.1
 	 */
 	private function getReferees($season) {
-		$referees = $this->Referee->find('all');
-		usort($referees, array('RefereesController', 'compareTo'));
+		$referees = $this->Referee->getReferees($season);
 
 		$arrReturn = array();
 		foreach ($referees as $referee) {
@@ -244,22 +243,15 @@ class RefereesController extends AppController {
 		$refTemp = array();
 
 		// referee status
-		$useReferee = false;
 		foreach ($referee['RefereeStatus'] as $refereestatus) {
 			if ($season == null) {
-				$useReferee = true;
 				$refTemp['RefereeStatus'][] = $refereestatus;
 			} else {
 				if ($refereestatus['season_id'] == $season['id']) {
-					$useReferee = true;
 					$temp = $this->StatusType->findById($refereestatus['status_type_id']);
 					$refTemp['RefereeStatus'] = $temp['StatusType'];
 				}
 			}
-		}
-
-		if (!$useReferee) {
-			return null;
 		}
 
 		$refTemp['Referee'] = $referee['Referee'];
@@ -406,41 +398,6 @@ class RefereesController extends AppController {
 		asort($clubarray, SORT_LOCALE_STRING);
 
 		return $clubarray;
-	}
-
-	/**
-	 * Compare two objects.
-	 *
-	 * @param a first object
-	 * @param b second object
-	 * @return comparison result
-	 *  @retval -1 a<b
-	 *  @retval 0 a==b
-	 *  @retval 1 a>b
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public static function compareTo($a, $b) {
-
-		// first criterion: name
-		if ($a['Person']['name'] < $b['Person']['name']) {
-			return -1;
-		}
-		if ($a['Person']['name'] > $b['Person']['name']) {
-			return 1;
-		}
-
-		// second criterion: first name
-		if ($a['Person']['first_name'] < $b['Person']['first_name']) {
-			return -1;
-		}
-		if ($a['Person']['first_name'] > $b['Person']['first_name']) {
-			return 1;
-		}
-
-		// equal
-		return 0;
 	}
 
 }
