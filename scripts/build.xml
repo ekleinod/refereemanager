@@ -100,6 +100,7 @@
 		<copy todir="${path:apache:phpmyadmin}${file.separator}" failonerror="true" overwrite="true">
 			<fileset dir="${path:git:refereemanager}configuration${file.separator}phpmyadmin${file.separator}">
 				<include name="config.inc.php" />
+				<include name="apache.conf" />
 			</fileset>
 		</copy>
 	</target>
