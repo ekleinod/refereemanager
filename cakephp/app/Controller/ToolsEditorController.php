@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('RefManRefereeFormat', 'Utility');
 
 /**
  * Tools editor Controller
@@ -11,8 +12,11 @@ App::uses('AppController', 'Controller');
  */
 class ToolsEditorController extends AppController {
 
+	/** Helper classes. */
+	public $helpers = array('RefereeFormat');
+
 	/** Models. */
-	public $uses = array('Season');
+	public $uses = array('Referee', 'Season');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
@@ -56,7 +60,8 @@ class ToolsEditorController extends AppController {
 			$this->set('result', true);
 			$this->set('data', $this->request->data);
 
-			$referees = array();
+			$season = $this->Season->findById($this->request->data['ToolsEditor']['season']);
+			$referees = $this->Referee->getReferees($season['Season']);
 			switch ($this->request->data['ToolsEditor']['recipient']) {
 				case 'a':
 					// $referees = all referees in season
@@ -79,9 +84,10 @@ class ToolsEditorController extends AppController {
 							$addresslist .= '; ';
 						}
 						$more = true;
-						//$addresslist .= sprintf('%s <%s>', $this->RefereeFormat->formatPerson($referee['Person'], 'name_title'), $this->RefereeFormat->formatEMail($email, 'text'));
+						$addresslist .= sprintf('%s <%s>', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname'), 'todo');//, RefManRefereeFormat::formatEMail($referee['Person'], 'text'));
 					}
 				//}
+				$this->set('temptest', $addresslist);
 			}
 
 		}

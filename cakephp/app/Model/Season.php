@@ -70,9 +70,12 @@ class Season extends AppModel {
 	 */
 	public $hasMany = array('LeagueGame', 'LeaguePlannedReferee', 'RefereeReport', 'TeamSeason', 'RefereeStatus');
 
+	// custom programming
+
 	/**
 	 * Returns season for given start year.
 	 *
+	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
 	 * @param year start year of season (null == current season)

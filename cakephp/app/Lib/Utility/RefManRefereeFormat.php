@@ -84,6 +84,9 @@ class RefManRefereeFormat {
 			case 'birthday':
 				$formatted = (empty($data['birthday'])) ? '' : $this->formatDate($data['birthday'], $datetype);
 				break;
+			case 'dayofdeath':
+				$formatted = (empty($data['dayofdeath'])) ? '' : __('+%s', $this->formatDate($data['dayofdeath'], $datetype));
+				break;
 			case 'first_name':
 				$formatted = (empty($data['first_name'])) ? '' : $data['first_name'];
 				break;
@@ -313,6 +316,18 @@ class RefManRefereeFormat {
 			}
 			if (array_key_exists('League', $relation)) {
 				$formatted .= $relation['League']['title'];
+			}
+			if (array_key_exists('SexType', $relation)) {
+				$formatted .= $relation['SexType']['title'];
+			}
+			if (array_key_exists('Saturday', $relation)) {
+				$formatted .= __('Sonnabend');
+			}
+			if (array_key_exists('Sunday', $relation)) {
+				$formatted .= __('Sonntag');
+			}
+			if (array_key_exists('Remark', $relation)) {
+				$formatted .= $relation['Remark'];
 			}
 			$hasMore = true;
 		}

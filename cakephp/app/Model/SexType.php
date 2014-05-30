@@ -74,6 +74,7 @@ class SexType extends AppModel {
 	/**
 	 * Returns sex type.
 	 *
+	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
 	 * @param sid sex type's sid

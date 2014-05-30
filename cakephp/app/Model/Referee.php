@@ -79,6 +79,81 @@ class Referee extends AppModel {
 	 */
 	public $hasMany = array('RefereeAssignment', 'RefereeRelation', 'RefereeStatus', 'TrainingLevel');
 
+	// custom programming
+
+	/**
+	 * Returns referees for a given season (or all referees if no season is given).
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @param season season, referees have to be associated with (null == current season)
+	 * @return array of referees for given season, empty if there are none
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function getReferees($season = null) {
+		$referees = $this->find('all');
+		usort($referees, array('Referee', 'compareTo'));
+
+		if ($season == null) {
+			return $referees;
+		}
+
+		$arrReturn = array();
+		foreach ($referees as $referee) {
+
+			$useReferee = false;
+
+			foreach ($referee['RefereeStatus'] as $refereestatus) {
+				$useReferee |= ($refereestatus['season_id'] == $season['id']);
+			}
+
+			if ($useReferee) {
+				$arrReturn[] = $referee;
+			}
+
+		}
+
+		return $arrReturn;
+	}
+
+	/**
+	 * Compare two objects.
+	 *
+	 * @param a first object
+	 * @param b second object
+	 * @return comparison result
+	 *  @retval -1 a<b
+	 *  @retval 0 a==b
+	 *  @retval 1 a>b
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public static function compareTo($a, $b) {
+
+		// first criterion: name
+		if ($a['Person']['name'] < $b['Person']['name']) {
+			return -1;
+		}
+		if ($a['Person']['name'] > $b['Person']['name']) {
+			return 1;
+		}
+
+		// second criterion: first name
+		if ($a['Person']['first_name'] < $b['Person']['first_name']) {
+			return -1;
+		}
+		if ($a['Person']['first_name'] > $b['Person']['first_name']) {
+			return 1;
+		}
+
+		// equal
+		return 0;
+	}
+
 }
 
 /* EOF */

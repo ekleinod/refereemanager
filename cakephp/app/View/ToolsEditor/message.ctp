@@ -36,6 +36,8 @@
 
 	<h3><?php echo __('Ergebnisse') ?></h3>
 
+	<p>'<?php echo $temptest; ?>'</p>
+
 	<?php pr($data) ?>
 
 <?php } ?>

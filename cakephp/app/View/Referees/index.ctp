@@ -153,6 +153,18 @@
 										if (array_key_exists('League', $refereerelation)) {
 											$text .= $this->Html->link($refereerelation['League']['title'], array('controller' => 'leagues', 'action' => 'view', $refereerelation['League']['id']), array('style' => $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']));
 										}
+										if (array_key_exists('SexType', $refereerelation)) {
+											$text .= h($refereerelation['SexType']['title']);
+										}
+										if (array_key_exists('Saturday', $refereerelation)) {
+											$text .= __('Sonnabend');
+										}
+										if (array_key_exists('Sunday', $refereerelation)) {
+											$text .= __('Sonntag');
+										}
+										if (array_key_exists('Remark', $refereerelation)) {
+											$text .= h($refereerelation['Remark']);
+										}
 										$hasMore = true;
 									}
 								}
@@ -240,6 +252,9 @@
 								$text = '';
 								if (!empty($referee['Person']['birthday'])) {
 									$text .= $this->RefereeFormat->formatPerson($referee['Person'], 'birthday');
+								}
+								if (!empty($referee['Person']['dayofdeath'])) {
+									$text .= __(' %s', $this->RefereeFormat->formatPerson($referee['Person'], 'dayofdeath'));
 								}
 								echo $text;
 							?></td>
