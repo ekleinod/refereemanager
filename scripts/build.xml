@@ -102,6 +102,11 @@
 				<include name="config.inc.php" />
 			</fileset>
 		</copy>
+		<copy todir="${path:apache:refereemanager}${file.separator}conf-available${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:git:refereemanager}configuration${file.separator}conf-available${file.separator}">
+				<include name="*.conf" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="apache2refman" description="Copies RefereeManager development files to git repository.">
