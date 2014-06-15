@@ -3,8 +3,16 @@
 			id="setup">
 
 	<info>
+		<credit type="author copyright maintainer">
+			<name>Ekkart Kleinod</name>
+			<email>ekleinod@edgesoft.de</email>
+			<years>2012-2014</years>
+		</credit>
+
+		<revision docversion="0.1" date="2014-06-16" status="incomplete" />
+
 		<link type="guide" xref="index"/>
-		<link type="topic" xref="setuptools"/>
+		<link type="topic" xref="tools"/>
 	</info>
 
 	<title>Setting up the working environment</title>

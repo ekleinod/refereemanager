@@ -3,13 +3,13 @@
 			id="index">
 
 	<info>
-		<credit type="author">
+		<credit type="author copyright maintainer">
 			<name>Ekkart Kleinod</name>
 			<email>ekleinod@edgesoft.de</email>
 			<years>2012-2014</years>
 		</credit>
 
-		<revision docversion="0.1" date="2014-06-10" status="incomplete" />
+		<revision docversion="0.1" date="2014-06-16" status="incomplete" />
 	</info>
 
 	<title>Refereemanager - Developer Documentation</title>
