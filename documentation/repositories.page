@@ -1,0 +1,103 @@
+<page xmlns="http://projectmallard.org/1.0/"
+			type="topic"
+			id="repositories">
+
+	<info>
+		<credit type="author copyright maintainer">
+			<name>Ekkart Kleinod</name>
+			<email>ekleinod@edgesoft.de</email>
+			<years>2012-2014</years>
+		</credit>
+
+		<revision docversion="0.1" date="2014-06-19" status="incomplete" />
+
+		<link type="guide" xref="setup" />
+		<link type="topic" xref="tools" />
+	</info>
+
+	<title>Checking out the repositories</title>
+
+	<p>
+		There are several projects (their code) needed in order to develop the <app>RefereeManager</app>.
+		You can either check out the code or download the code, if possible.
+		If you download the code or checkout the repositories is your choice.
+	</p>
+
+	<section id="structure">
+		<title>Directory structure</title>
+
+		<p>
+			During the development process, several files have to be located in directories of <app>CakePHP</app> and <app>phpMyAdmin</app> resp.
+			In order to avoid having several files mixed up, therefore making it difficult to separate <app>RefereeManager</app> files from original files, the development directories are separated from the git sources.
+			This means, that the development files have to be copied to and from the corresponding directories.
+			This process will be described in detail in <link xref="workapache#git" />.
+		</p>
+
+		<p>
+			There are several ant scripts for copying file to and from the development directories.
+			You can choose your own directory structure, but you have to chenge the script configuration file if you do so.
+			The scripts are based on the following default directory structure.
+		</p>
+
+		<tree>
+			<title>Default directory structure</title>
+			<item><file>.../</file>
+				<item><file>apache/</file>
+					<item><file>refereemanager/</file></item>
+					<item><file>phpmyadmin/</file></item>
+				</item>
+				<item><file>git/</file>
+					<item><file>refereemanager/</file></item>
+					<item><file>phpmyadmin/</file></item>
+					<item><file>cakephp/</file></item>
+					<item><file>phpexcel/</file></item>
+					<item><file>phpexcelhelper/</file></item>
+					<item><file>tcpdf/</file></item>
+				</item>
+			</item>
+		</tree>
+
+		<p>
+			The <file>apache</file> directory is filled automatically via an <app>ant</app> script.
+			All development takes place in the <file>apache</file> directory.
+			The development effort is saved to the <file>git</file> directory again with an <app>ant</app> script.
+			See <link xref="workapache#git" />.
+		</p>
+
+	</section>
+
+	<section id="refereemanager">
+		<title>RefereeManager</title>
+
+		<p>
+			<app>RefereeManager</app> is the referee manager application.
+		</p>
+
+		<terms>
+			<item>
+				<title>Repository Type</title>
+				<p><app>git</app></p>
+			</item>
+			<item>
+				<title>Repository URL</title>
+				<p><link href="https://github.com/ekleinod/refereemanager.git" /></p>
+			</item>
+			<item>
+				<title>Download URL</title>
+				<p>none</p>
+			</item>
+			<item>
+				<title>Homepage</title>
+				<p><link href="https://github.com/ekleinod/refereemanager" /></p>
+			</item>
+			<item>
+				<title>Wiki</title>
+				<p><link href="https://github.com/ekleinod/refereemanager/wiki" /></p>
+			</item>
+		</terms>
+
+	</section>
+
+</page>
+
+

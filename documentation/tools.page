@@ -9,9 +9,8 @@
 			<years>2012-2014</years>
 		</credit>
 
-		<revision docversion="0.1" date="2014-06-16" status="incomplete" />
+		<revision docversion="0.1" date="2014-06-19" status="incomplete" />
 
-		<link type="guide" xref="index" />
 		<link type="guide" xref="setup" />
 		<link type="topic" xref="repositories" />
 	</info>
@@ -42,7 +41,7 @@
 
 		<p>
 			<app>Git</app> is a tool for distributed version control.
-			You need <app>git</app> for access to the code of the following <link xref="repositories#git" />.
+			You need <app>git</app> for access to the code of the following repositories (<link xref="repositories" />).
 		</p>
 		<list>
 			<title>Git Repositories</title>
@@ -59,7 +58,7 @@
 
 		<p>
 			<app>Subversion</app> (short <app>svn</app>) is a tool for version control.
-			You need <app>svn</app> for access to the code of the following <link xref="repositories#subversion" />.
+			You need <app>svn</app> for access to the code of the following repositories (<link xref="repositories" />).
 		</p>
 		<list>
 			<title>Subversion Repositories</title>

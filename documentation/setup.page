@@ -9,13 +9,32 @@
 			<years>2012-2014</years>
 		</credit>
 
-		<revision docversion="0.1" date="2014-06-16" status="incomplete" />
+		<revision docversion="0.1" date="2014-06-19" status="incomplete" />
 
 		<link type="guide" xref="index"/>
 		<link type="topic" xref="tools"/>
+		<link type="topic" xref="repositories" />
+		<link type="topic" xref="workapache" />
+		<link type="topic" xref="trouble" />
 	</info>
 
 	<title>Setting up the working environment</title>
+
+	<p>
+		In order to setup the working environment, follow these steps:
+	</p>
+
+	<steps>
+		<title>Setup steps</title>
+		<item><p>Install the required tools: <link xref="tools" /></p></item>
+		<item><p>Checkout/download the needed code: <link xref="repositories" /></p></item>
+		<item><p>Setup the working directories and the apache server: <link xref="workapache" /></p></item>
+		<item><p>Start working</p></item>
+	</steps>
+
+	<p>
+		If you have problems with something, maybe the section <link xref="trouble" /> contains an answer.
+	</p>
 
 </page>
 

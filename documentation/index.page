@@ -9,7 +9,9 @@
 			<years>2012-2014</years>
 		</credit>
 
-		<revision docversion="0.1" date="2014-06-16" status="incomplete" />
+		<revision docversion="0.1" date="2014-06-19" status="incomplete" />
+
+		<link type="next" xref="setup" />
 	</info>
 
 	<title>Refereemanager - Developer Documentation</title>
