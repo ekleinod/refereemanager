@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- create documentation -->
+<project name="refmandocs" default="help" basedir=".">
+
+	<property name="path:html" value="html/" />
+	<property name="path:epub" value="epub/" />
+
+	<target name="help" description="Shows help text.">
+		<echo>You can use the following targets:</echo>
+
+		<!-- show all available targets -->
+		<java classname="org.apache.tools.ant.Main">
+			<arg value="-projecthelp" />
+			<arg value="-buildfile" />
+			<arg value="${ant.file}" />
+		</java>
+	</target>
+
+	<target name="all" depends="clearLog" description="Create all documentation files">
+
+		<echo message="Start."/>
+
+		<antcall target="clearLog" />
+
+		<antcall target="mallard2html" />
+		<antcall target="mallard2epub" />
+
+		<antcall target="clear" />
+
+		<echo message="Stop."/>
+
+	</target>
+
+	<target name="mallard2html" description="Create html files from mallard.">
+
+		<delete>
+			<fileset dir="${path:html}" includes="**/*.*" />
+		</delete>
+
+		<apply executable="yelp-build" parallel="true" output="build.log" append="true" resultproperty="error.result">
+			<arg line="xhtml" />
+			<arg line="-o ${path:html}" />
+
+			<fileset dir="." includes="*.page" />
+		</apply>
+
+		<antcall target="checkResult" />
+	</target>
+
+	<target name="mallard2epub" description="Create epub file from mallard.">
+
+		<delete>
+			<fileset dir="${path:epub}" includes="**/*.*" />
+		</delete>
+
+		<apply executable="yelp-build" parallel="true" output="build.log" append="true" resultproperty="error.result">
+			<arg line="epub" />
+			<arg line="-o ${path:epub}/epub.zip" />
+
+			<fileset dir="." includes="*.page" />
+		</apply>
+
+		<antcall target="checkResult" />
+	</target>
+
+	<target name="checkResult">
+		<condition property="check.error">
+			<and>
+				<isset property="error.result" />
+				<not>
+					<equals arg1="${error.result}" arg2="0" />
+				</not>
+			</and>
+		</condition>
+		<fail message="Abbruch wegen Fehler bei Programmausführung. Fehlerlog: '${file:log}'" if="check.error" />
+	</target>
+
+	<target name="clear" description="Delete temporary files">
+		<defaultexcludes remove="**/*~" />
+		<delete>
+			<fileset dir="." includes="**/*.aux, **/*.bak.vthought, **/*.bak, **/*.bbl, **/*.blg, **/*.dvi, **/*.idx, **/*.glo, **/*.ilg, **/*.ind, **/*.lof, **/*.lot, **/*.lop, **/*.nav, **/*.out, **/*.ps, **/*.snm, **/*.toc, **/*.url, **/*.*~"/>
+		</delete>
+		<defaultexcludes default="true" />
+	</target>
+
+	<target name="clearLog" description="Delete log files">
+		<delete>
+			<fileset dir="." includes="**/*.log" />
+		</delete>
+	</target>
+
+</project>
