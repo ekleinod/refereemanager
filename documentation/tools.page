@@ -12,7 +12,7 @@
 		<revision docversion="0.1" date="2014-06-19" status="incomplete" />
 
 		<link type="guide" xref="setup" />
-		<link type="topic" xref="repositories" />
+		<link type="next" xref="repositories" />
 	</info>
 
 	<title>Tools</title>

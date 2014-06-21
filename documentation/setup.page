@@ -12,10 +12,7 @@
 		<revision docversion="0.1" date="2014-06-19" status="incomplete" />
 
 		<link type="guide" xref="index"/>
-		<link type="topic" xref="tools"/>
-		<link type="topic" xref="repositories" />
-		<link type="topic" xref="workapache" />
-		<link type="topic" xref="trouble" />
+		<link type="next" xref="tools"/>
 	</info>
 
 	<title>Setting up the working environment</title>
