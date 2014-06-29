@@ -1,0 +1,25 @@
+<page xmlns="http://projectmallard.org/1.0/"
+			type="topic"
+			id="workapache">
+
+	<info>
+		<credit type="author copyright maintainer">
+			<name>Ekkart Kleinod</name>
+			<email>ekleinod@edgesoft.de</email>
+			<years>2012-2014</years>
+		</credit>
+
+		<revision docversion="0.2" date="2014-06-29" status="incomplete" />
+
+		<link type="guide" xref="setup" />
+	</info>
+
+	<title>Setup directories and apache server</title>
+
+	<section id="directories">
+		<title>Setup of working directories</title>
+
+	</section>
+
+</page>
+
