@@ -18,7 +18,9 @@
 
 	<p>
 		Creating a release of the referee manager is not difficult if you follow these steps.
-		We assume that you are in the branch <code>feature-work</code> and you want to create release <code>v0.3</code>.
+	</p>
+	<p>
+		As an example we assume that you are in the branch <code>feature-work</code> and you want to create release <code>v0.3</code>.
 		If you are developing in a different branch, modify the steps accordingly.
 	</p>
 
@@ -34,14 +36,17 @@
 		<item>
 			<p>merge your current changes to the <code>develop</code> branch</p>
 			<screen>
-				<input>git checkout develop</input>
-				<input>git merge --no-ff feature-work</input>
+				<output style="prompt">$ </output><input>git checkout develop</input>
+				<output>...</output>
+				<output style="prompt">$ </output><input>git merge --no-ff feature-work</input>
+				<output>...</output>
 			</screen>
 		</item>
 		<item>
 			<p>create release branch</p>
 			<screen>
-				<input>git checkout -b release-0.3 develop</input>
+				<output style="prompt">$ </output><input>git checkout -b release-0.3 develop</input>
+				<output>...</output>
 			</screen>
 		</item>
 		<item>
@@ -55,34 +60,42 @@
 		<item>
 			<p>merge your changes to the <code>master</code> branch</p>
 			<screen>
-				<input>git checkout master</input>
-				<input>git merge --no-ff release-0.3</input>
+				<output style="prompt">$ </output><input>git checkout master</input>
+				<output>...</output>
+				<output style="prompt">$ </output><input>git merge --no-ff release-0.3</input>
+				<output>...</output>
 			</screen>
 		</item>
 		<item>
 			<p>tag the release, give a short description as message</p>
 			<screen>
-				<input>git tag -a v0.3_2014-06-29</input>
+				<output style="prompt">$ </output><input>git tag -a v0.3_2014-06-29</input>
+				<output>...</output>
 			</screen>
 		</item>
 		<item>
 			<p>merge your released files back to the <code>develop</code> branch</p>
 			<screen>
-				<input>git checkout develop</input>
-				<input>git merge --no-ff release-0.3</input>
+				<output style="prompt">$ </output><input>git checkout develop</input>
+				<output>...</output>
+				<output style="prompt">$ </output><input>git merge --no-ff release-0.3</input>
+				<output>...</output>
 			</screen>
 		</item>
 		<item>
 			<p>merge your development files back to the working branch</p>
 			<screen>
-				<input>git checkout feature-work</input>
-				<input>git merge --no-ff development</input>
+				<output style="prompt">$ </output><input>git checkout feature-work</input>
+				<output>...</output>
+				<output style="prompt">$ </output><input>git merge --no-ff development</input>
+				<output>...</output>
 			</screen>
 		</item>
 		<item>
 			<p>delete the release branch</p>
 			<screen>
-				<input>git branch -d release-0.3</input>
+				<output style="prompt">$ </output><input>git branch -d release-0.3</input>
+				<output>...</output>
 			</screen>
 		</item>
 		<item><p>zip your release and add the archive to the sourceforge files section of the referee manager</p></item>

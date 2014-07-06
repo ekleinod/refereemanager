@@ -12,12 +12,105 @@
 		<revision docversion="0.2" date="2014-06-29" status="incomplete" />
 
 		<link type="guide" xref="setup" />
+		<link type="next" xref="workflow" />
+		<link type="guide" xref="trouble" />
 	</info>
 
-	<title>Setup directories and apache server</title>
+	<title>Setup directories, apache server, and database</title>
 
-	<section id="directories">
-		<title>Setup of working directories</title>
+	<p>
+		As stated in <link xref="repositories#structure" /> all scripts work with the default directory structure.
+		Also, in this guide we use the default directory structure.
+	</p>
+
+	<tree style="lines">
+		<title>Default directory structure</title>
+		<item><file>&lt;path&gt;/</file>
+			<item><file>apache/</file>
+				<item><file>refereemanager/</file></item>
+				<item><file>phpmyadmin/</file></item>
+			</item>
+			<item><file>git/</file>
+				<item><file>refereemanager/</file></item>
+				<item><file>cakephp/</file></item>
+				<item><file>phpexcel/</file></item>
+				<item><file>phpexcelhelper/</file></item>
+				<item><file>tcpdf/</file></item>
+				<item><file>phpmyadmin/</file></item>
+			</item>
+		</item>
+	</tree>
+
+	<p>
+		We assume, you have checked out the git and svn repositories (see <link xref="repositories" />).
+		Now follow these steps for initial setup.
+	</p>
+
+	<steps>
+		<title>Setup directories, apache server, and database</title>
+
+		<item>
+			<p>create the <file>apache</file> directories</p>
+		</item>
+		<item>
+			<p>adapt the configuration file if you chose a different directory structure</p>
+		</item>
+		<item>
+			<p>setup the apache configuration</p>
+		</item>
+		<item>
+			<p>adapt the <app>PHPMyAdmin</app> and <app>Referee Manager</app> configuration</p>
+		</item>
+		<item>
+			<p>copy all files initially to the <file>apache</file> directories</p>
+		</item>
+		<item>
+			<p>create and fill database</p>
+		</item>
+	</steps>
+
+	<section id="configuration">
+		<title>Adapt the configuration file</title>
+
+		<p>
+			If you chose different directories, adapt the configuration file accordingly.
+		</p>
+
+		<steps>
+			<title>Adaption of the configuration file</title>
+
+			<item>
+				<p>Open the configuration file in an editor (UTF-8 encoding).</p>
+				<tree style="lines">
+					<item><file>&lt;path&gt;/</file>
+						<item><file>git/</file>
+							<item><file>refereemanager/</file>
+								<item><file>scripts/</file>
+									<item><file>configuration.xml</file></item>
+								</item>
+							</item>
+						</item>
+					</item>
+				</tree>
+			</item>
+			<item>
+				<p>Edit the paths according to your choice</p>
+				<note style="important">
+					<p>
+						All paths in the configuration file are relative to the script directory, i.e. the directory containing the configuration file.
+						(Technically they are relative to the <file>build.xml</file> which resides in the same directory as the configuration file.)
+					</p>
+				</note>
+				<note style="tip">
+					<p>
+						If you want the script to remain platform independent, use <code>${file.separator}</code> as file separator instead of <file>/</file> or <file>\</file>.
+					</p>
+				</note>
+			</item>
+			<item>
+				<p>Save the configuration file.</p>
+			</item>
+		</steps>
 
 	</section>
 

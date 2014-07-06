@@ -30,18 +30,18 @@
 			During the development process, several files have to be located in directories of <app>CakePHP</app> and <app>phpMyAdmin</app> resp.
 			In order to avoid having several files mixed up, therefore making it difficult to separate <app>RefereeManager</app> files from original files, the development directories are separated from the git sources.
 			This means, that the development files have to be copied to and from the corresponding directories.
-			This process will be described in detail in <link xref="workapache#git" />.
+			This process will be described in detail in <link xref="workflow" />.
 		</p>
 
 		<p>
 			There are several ant scripts for copying file to and from the development directories.
-			You can choose your own directory structure, but you have to chenge the script configuration file if you do so.
+			You can choose your own directory structure, but you have to change the script configuration file if you do so (see <link xref="workapache#configuration" />)
 			The scripts are based on the following default directory structure.
 		</p>
 
-		<tree>
+		<tree style="lines">
 			<title>Default directory structure</title>
-			<item><file>.../</file>
+			<item><file>&lt;path&gt;/</file>
 				<item><file>apache/</file>
 					<item><file>refereemanager/</file></item>
 					<item><file>phpmyadmin/</file></item>
@@ -61,7 +61,7 @@
 			The <file>apache</file> directory is filled automatically via an <app>ant</app> script.
 			All development takes place in the <file>apache</file> directory.
 			The development effort is saved to the <file>git</file> directory again with an <app>ant</app> script.
-			See <link xref="workapache#git" />.
+			See <link xref="workflow" />.
 		</p>
 
 	</section>

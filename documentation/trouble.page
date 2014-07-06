@@ -1,0 +1,61 @@
+<page xmlns="http://projectmallard.org/1.0/"
+			type="topic"
+			id="trouble">
+
+	<info>
+		<credit type="author copyright maintainer">
+			<name>Ekkart Kleinod</name>
+			<email>ekleinod@edgesoft.de</email>
+			<years>2012-2014</years>
+		</credit>
+
+		<revision docversion="0.2" date="2014-07-06" status="incomplete" />
+
+		<link type="guide" xref="index" />
+	</info>
+
+	<title>Troubleshooting</title>
+
+	<list>
+		<item><p><link xref="#restart" /></p></item>
+		<item><p><link xref="#startup" /></p></item>
+		<item><p><link xref="#noconfig" /></p></item>
+	</list>
+
+	<section id="restart">
+		<title>How to restart <app>apache</app>.</title>
+
+		<p>
+			Restart apache with the following command:
+		</p>
+		<screen>
+			<output style="prompt">$ </output><input>sudo apachectl -k restart</input>
+			<output>...</output>
+		</screen>
+
+	</section>
+
+	<section id="startup">
+		<title><app>Apache</app> does not start automatically or is not configured properly.</title>
+
+		<p>
+			I have this problem with an encrypted home directory.
+			The decryption takes place after the <app>apache</app> start, thus <app>apache</app> cannot read the configuration files of the home directory.
+		</p>
+		<p>
+			In this case, I just <link xref="#restart">restart</link> <app>apache</app>.
+		</p>
+	</section>
+
+	<section id="noconfig">
+		<title>My configuration changes are not recognized by <app>apache</app>.</title>
+
+		<p>
+			If your configuration changes are not recognized, <link xref="#restart">restart</link> <app>apache</app>.
+			Furthermore, make sure your changes are valid and should take effect.
+		</p>
+	</section>
+
+</page>
+
+

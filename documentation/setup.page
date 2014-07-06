@@ -23,6 +23,7 @@
 
 	<steps>
 		<title>Setup steps</title>
+
 		<item><p>Install the required tools: <link xref="tools" /></p></item>
 		<item><p>Checkout/download the needed code: <link xref="repositories" /></p></item>
 		<item><p>Setup the working directories and the apache server: <link xref="workapache" /></p></item>
