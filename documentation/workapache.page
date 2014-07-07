@@ -69,6 +69,11 @@
 		</item>
 	</steps>
 
+	<section id="apachedir">
+		<title>Create the <file>apache</file> directories</title>
+
+	</section>
+
 	<section id="configuration">
 		<title>Adapt the configuration file</title>
 
