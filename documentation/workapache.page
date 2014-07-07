@@ -56,7 +56,7 @@
 			<p>adapt the configuration file if you chose a different directory structure</p>
 		</item>
 		<item>
-			<p>setup the apache configuration</p>
+			<p>setup the <app>apache</app> configuration</p>
 		</item>
 		<item>
 			<p>adapt the <app>PHPMyAdmin</app> and <app>Referee Manager</app> configuration</p>
@@ -65,12 +65,58 @@
 			<p>copy all files initially to the <file>apache</file> directories</p>
 		</item>
 		<item>
+			<p>check <app>apache</app> functionality</p>
+		</item>
+		<item>
 			<p>create and fill database</p>
 		</item>
 	</steps>
 
+	<p>
+		I will use my paths as example, adjust your commands accordingly.
+	</p>
+
 	<section id="apachedir">
-		<title>Create the <file>apache</file> directories</title>
+		<title>Create the apache directories</title>
+
+		<p>Create the two apache directories in the apache directory.</p>
+
+		<screen>
+			<output style="prompt">~/working $ </output><input>mkdir apache</input>
+			<output style="prompt">~/working/apache $ </output><input>cd apache</input>
+			<output style="prompt">~/working/apache $ </output><input>mkdir refereemanager</input>
+			<output style="prompt">~/working/apache $ </output><input>mkdir phpmyadmin</input>
+			<output style="prompt">~/working/apache $ </output><input>ls</input>
+			<output>phpmyadmin  refereemanager</output>
+		</screen>
+
+		<p>
+			Make sure the complete path to and including your apache directories is readable for <app>apache</app>.
+			Set the access rights to <code>rwxr-xr-x</code>, i.e. <code>755</code> for each directory.
+		</p>
+
+		<screen>
+			<output style="prompt">~/working/apache $ </output><input>pwd</input>
+			<output>/home/ekleinod/working/apache</output>
+			<output style="prompt">~/working/apache $ </output><input>ls -la /</input>
+			<output>...</output>
+			<output>drwxr-xr-x   3 root root  4096 Jun  5 20:42 home</output>
+			<output style="prompt">~/working/apache $ </output><input>ls -la /home/</input>
+			<output>drwx------ 21 ekleinod ekleinod 4096 Jul  7 23:56 ekleinod</output>
+			<output style="prompt">~/working/apache $ </output><input>chmod 755 /home/ekleinod/</input>
+			<output style="prompt">~/working/apache $ </output><input>ls -la /home/</input>
+			<output>drwxr-xr-x 21 ekleinod ekleinod 4096 Jul  7 23:56 ekleinod</output>
+			<output style="prompt">~/working/apache $ </output><input>ls -la /home/ekleinod/</input>
+			<output>...</output>
+			<output>drwxr-xr-x  5 ekleinod ekleinod  4096 Jul  8 00:09 working</output>
+			<output style="prompt">~/working/apache $ </output><input>ls -la /home/ekleinod/working/</input>
+			<output>drwxr-xr-x  4 ekleinod ekleinod 4096 Jul  8 00:09 apache</output>
+			<output>drwxr-xr-x  8 ekleinod ekleinod 4096 Jul  7 23:46 git</output>
+			<output style="prompt">~/working/apache $ </output><input>ls -la</input>
+			<output>drwxr-xr-x 2 ekleinod ekleinod 4096 Jul  8 00:09 phpmyadmin</output>
+			<output>drwxr-xr-x 2 ekleinod ekleinod 4096 Jul  8 00:09 refereemanager</output>
+		</screen>
+
 
 	</section>
 
@@ -78,7 +124,7 @@
 		<title>Adapt the configuration file</title>
 
 		<p>
-			If you chose different directories, adapt the configuration file accordingly.
+			If you chose different directories, you have to adapt the configuration file accordingly.
 		</p>
 
 		<steps>
@@ -116,6 +162,47 @@
 				<p>Save the configuration file.</p>
 			</item>
 		</steps>
+
+	</section>
+
+	<section id="dbconfig">
+		<title>Adapt the <app>PHPMyAdmin</app> and <app>Referee Manager</app> configuration</title>
+
+		<p>
+			In order to enable database connection for <app>PHPMyAdmin</app> and <app>Referee Manager</app>you have to edit the configuration files according to your installation.
+			The given files use the default <app>apache</app> location with user "root" without a password.
+			This configuration is only save for closed systems without internet access.
+		</p>
+
+		<note style="warning">
+			<p>
+				Do not upload your configuration file to the <app>github</app> repository.
+				All users could see your configuration.
+			</p>
+		</note>
+
+		<tree style="lines">
+			<title>Location of the configuration files</title>
+
+			<item><file>&lt;path&gt;/</file>
+				<item><file>git/</file>
+					<item><file>refereemanager/</file>
+						<item><file>cakephp/</file>
+							<item><file>app/</file>
+								<item><file>Config/</file>
+									<item><file>database.php</file></item>
+								</item>
+							</item>
+						</item>
+						<item><file>configuration/</file>
+							<item><file>phpmyadmin/</file>
+								<item><file>config.inc.php</file></item>
+							</item>
+						</item>
+					</item>
+				</item>
+			</item>
+		</tree>
 
 	</section>
 

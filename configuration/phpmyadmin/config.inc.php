@@ -26,7 +26,7 @@ $cfg['Servers'][$i]['host'] = 'localhost';
 $cfg['Servers'][$i]['connect_type'] = 'tcp';
 $cfg['Servers'][$i]['compress'] = false;
 /* Select mysql if your server does not have mysqli */
-$cfg['Servers'][$i]['extension'] = 'mysql';
+$cfg['Servers'][$i]['extension'] = 'mysqli';
 $cfg['Servers'][$i]['AllowNoPassword'] = true;
 /* User configuration */
 $cfg['Servers'][$i]['user'] = 'root';

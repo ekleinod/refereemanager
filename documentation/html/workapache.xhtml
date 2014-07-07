@@ -18,8 +18,38 @@
 			</div><ul class="tree"><li class="tree"><div>         ├ <span class="file">refereemanager/</span></div></li><li class="tree"><div>         ├ <span class="file">cakephp/</span></div></li><li class="tree"><div>         ├ <span class="file">phpexcel/</span></div></li><li class="tree"><div>         ├ <span class="file">phpexcelhelper/</span></div></li><li class="tree"><div>         ├ <span class="file">tcpdf/</span></div></li><li class="tree"><div>         └ <span class="file">phpmyadmin/</span></div></li></ul></li></ul></li></ul></div></div></div><p class="p">
 		We assume, you have checked out the git and svn repositories (see <span class="link"><a href="repositories.xhtml" title="Checking out the repositories">Checking out the repositories</a></span>).
 		Now follow these steps for initial setup.
-	</p><div class="steps"><div class="inner"><div class="title title-steps"><h2><span class="title">Setup directories, apache server, and database</span></h2></div><div class="region"><ol class="steps"><li class="steps"><p class="p">create the <span class="file">apache</span> directories</p></li><li class="steps"><p class="p">adapt the configuration file if you chose a different directory structure</p></li><li class="steps"><p class="p">setup the apache configuration</p></li><li class="steps"><p class="p">adapt the <span class="app">PHPMyAdmin</span> and <span class="app">Referee Manager</span> configuration</p></li><li class="steps"><p class="p">copy all files initially to the <span class="file">apache</span> directories</p></li><li class="steps"><p class="p">create and fill database</p></li></ol></div></div></div></div><div id="configuration" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Adapt the configuration file</span></h2></div><div class="region"><div class="contents"><p class="p">
-			If you chose different directories, adapt the configuration file accordingly.
+	</p><div class="steps"><div class="inner"><div class="title title-steps"><h2><span class="title">Setup directories, apache server, and database</span></h2></div><div class="region"><ol class="steps"><li class="steps"><p class="p">create the <span class="file">apache</span> directories</p></li><li class="steps"><p class="p">adapt the configuration file if you chose a different directory structure</p></li><li class="steps"><p class="p">setup the <span class="app">apache</span> configuration</p></li><li class="steps"><p class="p">adapt the <span class="app">PHPMyAdmin</span> and <span class="app">Referee Manager</span> configuration</p></li><li class="steps"><p class="p">copy all files initially to the <span class="file">apache</span> directories</p></li><li class="steps"><p class="p">check <span class="app">apache</span> functionality</p></li><li class="steps"><p class="p">create and fill database</p></li></ol></div></div></div><p class="p">
+		I will use my paths as example, adjust your commands accordingly.
+	</p></div><div id="apachedir" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Create the apache directories</span></h2></div><div class="region"><div class="contents"><p class="p">Create the two apache directories in the apache directory.</p><div class="screen"><pre class="contents ">			<span class="prompt output">~/working $ </span><span class="input">mkdir apache</span>
+			<span class="prompt output">~/working/apache $ </span><span class="input">cd apache</span>
+			<span class="prompt output">~/working/apache $ </span><span class="input">mkdir refereemanager</span>
+			<span class="prompt output">~/working/apache $ </span><span class="input">mkdir phpmyadmin</span>
+			<span class="prompt output">~/working/apache $ </span><span class="input">ls</span>
+			<span class="output">phpmyadmin  refereemanager</span>
+		</pre></div><p class="p">
+			Make sure the complete path to and including your apache directories is readable for <span class="app">apache</span>.
+			Set the access rights to <span class="code">rwxr-xr-x</span>, i.e. <span class="code">755</span> for each directory.
+		</p><div class="screen"><pre class="contents ">			<span class="prompt output">~/working/apache $ </span><span class="input">pwd</span>
+			<span class="output">/home/ekleinod/working/apache</span>
+			<span class="prompt output">~/working/apache $ </span><span class="input">ls -la /</span>
+			<span class="output">...</span>
+			<span class="output">drwxr-xr-x   3 root root  4096 Jun  5 20:42 home</span>
+			<span class="prompt output">~/working/apache $ </span><span class="input">ls -la /home/</span>
+			<span class="output">drwx------ 21 ekleinod ekleinod 4096 Jul  7 23:56 ekleinod</span>
+			<span class="prompt output">~/working/apache $ </span><span class="input">chmod 755 /home/ekleinod/</span>
+			<span class="prompt output">~/working/apache $ </span><span class="input">ls -la /home/</span>
+			<span class="output">drwxr-xr-x 21 ekleinod ekleinod 4096 Jul  7 23:56 ekleinod</span>
+			<span class="prompt output">~/working/apache $ </span><span class="input">ls -la /home/ekleinod/</span>
+			<span class="output">...</span>
+			<span class="output">drwxr-xr-x  5 ekleinod ekleinod  4096 Jul  8 00:09 working</span>
+			<span class="prompt output">~/working/apache $ </span><span class="input">ls -la /home/ekleinod/working/</span>
+			<span class="output">drwxr-xr-x  4 ekleinod ekleinod 4096 Jul  8 00:09 apache</span>
+			<span class="output">drwxr-xr-x  8 ekleinod ekleinod 4096 Jul  7 23:46 git</span>
+			<span class="prompt output">~/working/apache $ </span><span class="input">ls -la</span>
+			<span class="output">drwxr-xr-x 2 ekleinod ekleinod 4096 Jul  8 00:09 phpmyadmin</span>
+			<span class="output">drwxr-xr-x 2 ekleinod ekleinod 4096 Jul  8 00:09 refereemanager</span>
+		</pre></div></div></div></div></div><div id="configuration" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Adapt the configuration file</span></h2></div><div class="region"><div class="contents"><p class="p">
+			If you chose different directories, you have to adapt the configuration file accordingly.
 		</p><div class="steps"><div class="inner"><div class="title title-steps"><h3><span class="title">Adaption of the configuration file</span></h3></div><div class="region"><ol class="steps"><li class="steps"><p class="p">Open the configuration file in an editor (UTF-8 encoding).</p><div class="tree tree-lines"><div class="inner"><div class="region"><ul class="tree"><li class="tree"><div> <span class="file">&lt;path&gt;/</span>
 						
 					</div><ul class="tree"><li class="tree"><div>    └ <span class="file">git/</span>
@@ -33,4 +63,28 @@
 						(Technically they are relative to the <span class="file">build.xml</span> which resides in the same directory as the configuration file.)
 					</p></div></div></div></div><div class="note note-tip" title="Tip"><div class="inner"><div class="region"><div class="contents"><p class="p">
 						If you want the script to remain platform independent, use <span class="code">${file.separator}</span> as file separator instead of <span class="file">/</span> or <span class="file">\</span>.
-					</p></div></div></div></div></li><li class="steps"><p class="p">Save the configuration file.</p></li></ol></div></div></div></div></div></div></div><div class="links nextlinks"><a class="nextlinks-prev" href="repositories.xhtml" title="Checking out the repositories">Previous</a><a class="nextlinks-next" href="workflow.xhtml" title="Development workflow">Next</a></div><div class="sect sect-links" role="navigation"><div class="hgroup"/><div class="contents"><div class="links guidelinks"><div class="inner"><div class="title"><h2><span class="title">More Information</span></h2></div><div class="region"><ul><li class="links "><a href="setup.xhtml" title="Setting up the working environment">Setting up the working environment</a></li><li class="links "><a href="trouble.xhtml" title="Troubleshooting">Troubleshooting</a></li></ul></div></div></div></div></div></div><div class="clear"/></div><div class="footer"><div class="sect about ui-expander" role="contentinfo"><div class="yelp-data yelp-data-ui-expander" data-yelp-expanded="false"/><div class="inner"><div class="hgroup"><h2><span class="title">About</span></h2></div><div class="region"><div class="contents"><div class="copyrights"><div class="copyright">© 2012-2014 Ekkart Kleinod</div></div><div class="aboutblurb authors"><div class="title"><span class="title">Written By</span></div><ul class="credits"><li>Ekkart Kleinod</li></ul></div><div class="aboutblurb maintainers"><div class="title"><span class="title">Maintained By</span></div><ul class="credits"><li>Ekkart Kleinod</li></ul></div></div></div></div></div></div></div></body></html>
+					</p></div></div></div></div></li><li class="steps"><p class="p">Save the configuration file.</p></li></ol></div></div></div></div></div></div></div><div id="dbconfig" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Adapt the <span class="app">PHPMyAdmin</span> and <span class="app">Referee Manager</span> configuration</span></h2></div><div class="region"><div class="contents"><p class="p">
+			In order to enable database connection for <span class="app">PHPMyAdmin</span> and <span class="app">Referee Manager</span>you have to edit the configuration files according to your installation.
+			The given files use the default <span class="app">apache</span> location with user "root" without a password.
+			This configuration is only save for closed systems without internet access.
+		</p><div class="note note-warning" title="Warning"><div class="inner"><div class="region"><div class="contents"><p class="p">
+				Do not upload your configuration file to the <span class="app">github</span> repository.
+				All users could see your configuration.
+			</p></div></div></div></div><div class="tree tree-lines"><div class="inner"><div class="title title-tree"><h3><span class="title">Location of the configuration files</span></h3></div><div class="region"><ul class="tree"><li class="tree"><div> <span class="file">&lt;path&gt;/</span>
+				
+			</div><ul class="tree"><li class="tree"><div>    └ <span class="file">git/</span>
+					
+				</div><ul class="tree"><li class="tree"><div>         └ <span class="file">refereemanager/</span>
+						
+						
+					</div><ul class="tree"><li class="tree"><div>              ├ <span class="file">cakephp/</span>
+							
+						</div><ul class="tree"><li class="tree"><div>              │    └ <span class="file">app/</span>
+								
+							</div><ul class="tree"><li class="tree"><div>              │         └ <span class="file">Config/</span>
+									
+								</div><ul class="tree"><li class="tree"><div>              │              └ <span class="file">database.php</span></div></li></ul></li></ul></li></ul></li><li class="tree"><div>              └ <span class="file">configuration/</span>
+							
+						</div><ul class="tree"><li class="tree"><div>                   └ <span class="file">phpmyadmin/</span>
+								
+							</div><ul class="tree"><li class="tree"><div>                        └ <span class="file">config.inc.php</span></div></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></div></div></div></div></div></div></div><div class="links nextlinks"><a class="nextlinks-prev" href="repositories.xhtml" title="Checking out the repositories">Previous</a><a class="nextlinks-next" href="workflow.xhtml" title="Development workflow">Next</a></div><div class="sect sect-links" role="navigation"><div class="hgroup"/><div class="contents"><div class="links guidelinks"><div class="inner"><div class="title"><h2><span class="title">More Information</span></h2></div><div class="region"><ul><li class="links "><a href="setup.xhtml" title="Setting up the working environment">Setting up the working environment</a></li><li class="links "><a href="trouble.xhtml" title="Troubleshooting">Troubleshooting</a></li></ul></div></div></div></div></div></div><div class="clear"/></div><div class="footer"><div class="sect about ui-expander" role="contentinfo"><div class="yelp-data yelp-data-ui-expander" data-yelp-expanded="false"/><div class="inner"><div class="hgroup"><h2><span class="title">About</span></h2></div><div class="region"><div class="contents"><div class="copyrights"><div class="copyright">© 2012-2014 Ekkart Kleinod</div></div><div class="aboutblurb authors"><div class="title"><span class="title">Written By</span></div><ul class="credits"><li>Ekkart Kleinod</li></ul></div><div class="aboutblurb maintainers"><div class="title"><span class="title">Maintained By</span></div><ul class="credits"><li>Ekkart Kleinod</li></ul></div></div></div></div></div></div></div></body></html>

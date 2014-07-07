@@ -20,6 +20,7 @@
 		<item><p><link xref="#restart" /></p></item>
 		<item><p><link xref="#startup" /></p></item>
 		<item><p><link xref="#noconfig" /></p></item>
+		<item><p><link xref="#pathrights" /></p></item>
 	</list>
 
 	<section id="restart">
@@ -53,6 +54,15 @@
 		<p>
 			If your configuration changes are not recognized, <link xref="#restart">restart</link> <app>apache</app>.
 			Furthermore, make sure your changes are valid and should take effect.
+		</p>
+	</section>
+
+	<section id="pathrights">
+		<title><app>Apache</app> has the error "...".</title>
+
+		<p>
+			This error means that the complete path to your apache directories is not readable/executable for apache.
+			See <link xref="workapache#apachedir" /> on how to fix this.
 		</p>
 	</section>
 
