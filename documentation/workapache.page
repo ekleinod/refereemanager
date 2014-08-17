@@ -56,13 +56,13 @@
 			<p>adapt the configuration file if you chose a different directory structure</p>
 		</item>
 		<item>
-			<p>setup the <app>apache</app> configuration</p>
-		</item>
-		<item>
 			<p>adapt the <app>PHPMyAdmin</app> and <app>Referee Manager</app> configuration</p>
 		</item>
 		<item>
 			<p>copy all files initially to the <file>apache</file> directories</p>
+		</item>
+		<item>
+			<p>setup the <app>apache</app> configuration</p>
 		</item>
 		<item>
 			<p>check <app>apache</app> functionality</p>
@@ -169,7 +169,7 @@
 		<title>Adapt the <app>PHPMyAdmin</app> and <app>Referee Manager</app> configuration</title>
 
 		<p>
-			In order to enable database connection for <app>PHPMyAdmin</app> and <app>Referee Manager</app>you have to edit the configuration files according to your installation.
+			In order to enable database connection for <app>PHPMyAdmin</app> and <app>Referee Manager</app> you have to edit the configuration files according to your installation.
 			The given files use the default <app>apache</app> location with user "root" without a password.
 			This configuration is only save for closed systems without internet access.
 		</p>
@@ -203,6 +203,74 @@
 				</item>
 			</item>
 		</tree>
+
+	</section>
+
+	<section id="initfiles">
+		<title>Copy all files initially to the <file>apache</file> directories</title>
+
+		<p>
+			There is an <app>ant</app> script for copying the files in the right directory.
+			Check, if you set up the configuration file accordingly: <link xref="#configuration" />.
+		</p>
+		<p>
+			Call the <app>ant</app> script without target for a list of targets.
+		</p>
+		<screen>
+			<output style="prompt">~ $ </output><input>cd working/git/refereemanager/scripts</input>
+			<output style="prompt">~/working/git/refereemanager/scripts $ ant</output>
+		</screen>
+
+		<steps>
+			<title>Copy files to the <file>apache</file> directories</title>
+
+			<item>
+				<p>go to the <file>scripts</file> directory</p>
+				<screen>
+					<output style="prompt">~ $ </output><input>cd working/git/refereemanager/scripts</input>
+					<output style="prompt">~/working/git/refereemanager/scripts $ </output>
+				</screen>
+			</item>
+			<item>
+				<p>Copy <app>phpMyAdmin</app> files</p>
+				<screen>
+					<output style="prompt">~/working/git/refereemanager/scripts $ </output><input>ant phpmyadmin2apache</input>
+				</screen>
+				<p>The script executes the following steps:</p>
+				<list type="numbered">
+					<item><p>check if target directory exists - failure otherwise</p></item>
+					<item><p>delete all files and directories in the target directory</p></item>
+					<item><p>copy all files and directories from source directory to target directory</p></item>
+				</list>
+			</item>
+		</steps>
+
+	</section>
+
+	<section id="checkapache">
+		<title>Setup the <app>apache</app> configuration</title>
+
+		<p>
+			...
+		</p>
+
+	</section>
+
+	<section id="checkapache">
+		<title>Check <app>apache</app> functionality</title>
+
+		<p>
+			...
+		</p>
+
+	</section>
+
+	<section id="database">
+		<title>Create and fill database</title>
+
+		<p>
+			...
+		</p>
 
 	</section>
 
