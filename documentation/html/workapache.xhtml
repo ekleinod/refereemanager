@@ -18,9 +18,12 @@
 			</div><ul class="tree"><li class="tree"><div>         ├ <span class="file">refereemanager/</span></div></li><li class="tree"><div>         ├ <span class="file">cakephp/</span></div></li><li class="tree"><div>         ├ <span class="file">phpexcel/</span></div></li><li class="tree"><div>         ├ <span class="file">phpexcelhelper/</span></div></li><li class="tree"><div>         ├ <span class="file">tcpdf/</span></div></li><li class="tree"><div>         └ <span class="file">phpmyadmin/</span></div></li></ul></li></ul></li></ul></div></div></div><p class="p">
 		We assume, you have checked out the git and svn repositories (see <span class="link"><a href="repositories.xhtml" title="Checking out the repositories">Checking out the repositories</a></span>).
 		Now follow these steps for initial setup.
-	</p><div class="steps"><div class="inner"><div class="title title-steps"><h2><span class="title">Setup directories, apache server, and database</span></h2></div><div class="region"><ol class="steps"><li class="steps"><p class="p">create the <span class="file">apache</span> directories</p></li><li class="steps"><p class="p">adapt the configuration file if you chose a different directory structure</p></li><li class="steps"><p class="p">adapt the <span class="app">PHPMyAdmin</span> and <span class="app">Referee Manager</span> configuration</p></li><li class="steps"><p class="p">copy all files initially to the <span class="file">apache</span> directories</p></li><li class="steps"><p class="p">setup the <span class="app">apache</span> configuration</p></li><li class="steps"><p class="p">check <span class="app">apache</span> functionality</p></li><li class="steps"><p class="p">create and fill database</p></li></ol></div></div></div><p class="p">
+	</p><div class="steps"><div class="inner"><div class="title title-steps"><h2><span class="title">Setup directories, apache server, and database</span></h2></div><div class="region"><ol class="steps"><li class="steps"><p class="p">make sure <span class="app">apache</span> works</p></li><li class="steps"><p class="p">create and link the <span class="file">apache</span> directories</p></li><li class="steps"><p class="p">adapt the configuration file if you chose a different directory structure</p></li><li class="steps"><p class="p">adapt the <span class="app">PHPMyAdmin</span> and <span class="app">Referee Manager</span> configuration</p></li><li class="steps"><p class="p">copy all files initially to the <span class="file">apache</span> directories</p></li><li class="steps"><p class="p">setup the <span class="app">apache</span> configuration</p></li><li class="steps"><p class="p">create and fill database</p></li></ol></div></div></div><p class="p">
 		I will use my paths as example, adjust your commands accordingly.
-	</p></div><div id="apachedir" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Create the apache directories</span></h2></div><div class="region"><div class="contents"><p class="p">Create the two apache directories in the apache directory.</p><div class="screen"><pre class="contents ">			<span class="prompt output">~/working $ </span><span class="input">mkdir apache</span>
+	</p></div><div id="apache" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Make sure apache works</span></h2></div><div class="region"><div class="contents"><p class="p">Go to <span class="link"><a href="http://localhost/" title="http://localhost/">http://localhost/</a></span></p><p class="p">You should see the <span class="app">apache</span> welcome page (stating somewhere: "It works!").</p><p class="p">
+			If you do not see this page, try restarting <span class="app">apache</span> (<span class="link"><a href="trouble.xhtml#restart" title="How to restart apache.">How to restart <span class="app">apache</span>.</a></span>).
+			If that does not help, consult your <span class="app">apache</span> manual.
+		</p></div></div></div></div><div id="apachedir" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Create and link the apache directories</span></h2></div><div class="region"><div class="contents"><p class="p">Create the two apache directories in the apache directory.</p><div class="screen"><pre class="contents ">			<span class="prompt output">~/working $ </span><span class="input">mkdir apache</span>
 			<span class="prompt output">~/working/apache $ </span><span class="input">cd apache</span>
 			<span class="prompt output">~/working/apache $ </span><span class="input">mkdir refereemanager</span>
 			<span class="prompt output">~/working/apache $ </span><span class="input">mkdir phpmyadmin</span>
@@ -48,6 +51,15 @@
 			<span class="prompt output">~/working/apache $ </span><span class="input">ls -la</span>
 			<span class="output">drwxr-xr-x 2 ekleinod ekleinod 4096 Jul  8 00:09 phpmyadmin</span>
 			<span class="output">drwxr-xr-x 2 ekleinod ekleinod 4096 Jul  8 00:09 refereemanager</span>
+		</pre></div><p class="p">Link the two apache directories to the apache web directory.</p><div class="screen"><pre class="contents ">			<span class="prompt output">~ $ </span><span class="input">cd /var/www/html</span>
+			<span class="prompt output">~/var/www/html $ </span><span class="input">cd apache</span>
+			<span class="prompt output">~/var/www/html $ </span><span class="input">sudo ln -s ~/working/apache/phpmyadmin/</span>
+			<span class="prompt output">~/var/www/html $ </span><span class="input">sudo ln -s ~/working/apache/refereemanager/</span>
+			<span class="prompt output">~/var/www/html $ </span><span class="input">ls -la</span>
+			<span class="prompt output">...
+			lrwxrwxrwx 1 root root    41 Aug 20 22:46 phpmyadmin -&gt; ...
+			lrwxrwxrwx 1 root root    45 Aug 20 22:47 refereemanager -&gt; ...</span>
+			<span class="prompt output">~/var/www/html $ </span>
 		</pre></div></div></div></div></div><div id="configuration" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Adapt the configuration file</span></h2></div><div class="region"><div class="contents"><p class="p">
 			If you chose different directories, you have to adapt the configuration file accordingly.
 		</p><div class="steps"><div class="inner"><div class="title title-steps"><h3><span class="title">Adaption of the configuration file</span></h3></div><div class="region"><ol class="steps"><li class="steps"><p class="p">Open the configuration file in an editor (UTF-8 encoding).</p><div class="tree tree-lines"><div class="inner"><div class="region"><ul class="tree"><li class="tree"><div> <span class="file">&lt;path&gt;/</span>
@@ -140,9 +152,60 @@
 				</pre></div><div class="terms"><div class="inner"><div class="region"><dl class="terms"><dt class="terms">source directory</dt><dd class="terms"><p class="p"><span class="file">&lt;path&gt;/git/phpexcel</span></p></dd><dt class="terms">target directories</dt><dd class="terms"><p class="p"><span class="file">&lt;path&gt;/apache/refereemanager/app</span></p><p class="p"><span class="file">&lt;path&gt;/apache/phpmyadmin</span></p></dd></dl></div></div></div><p class="p">The script executes the following steps:</p><div class="list"><div class="inner"><div class="region"><ol class="list" style="list-style-type:numbered"><li class="list"><p class="p">check if target directory exists - failure otherwise</p></li><li class="list"><p class="p">copy all files and directories from source directory to target directory</p></li></ol></div></div></div><div class="note note-warning" title="Warning"><div class="inner"><div class="region"><div class="contents"><p class="p">
 						Your <span class="app">RefereeManager</span> files are overwritten without warning.
 					</p></div></div></div></div></li></ol></div></div></div></div></div></div></div><div id="checkapache" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Setup the <span class="app">apache</span> configuration</span></h2></div><div class="region"><div class="contents"><p class="p">
-			...
-		</p></div></div></div></div><div id="checkapache" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Check <span class="app">apache</span> functionality</span></h2></div><div class="region"><div class="contents"><p class="p">
-			...
-		</p></div></div></div></div><div id="database" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Create and fill database</span></h2></div><div class="region"><div class="contents"><p class="p">
+			Now we have to set up <span class="app">apache</span> configuration in a way that <span class="app">apache</span> finds the <span class="app">RefereeManager</span> and <span class="app">PHPMyAdmin</span> websites and shows/executes them.
+			Therefore, we link the configuration files to the apache configuration directory and enable them.
+			Additionally, we enable url rewrite abilities.
+		</p><div class="note note-tip" title="Tip"><div class="inner"><div class="region"><div class="contents"><p class="p">
+				Before linking files, check if the files exist already.
+				Delete the existing files before linkng the new ones (better: rename them, maybe you need them later).
+			</p></div></div></div></div><div class="note note-important" title="Important"><div class="inner"><div class="region"><div class="contents"><p class="p">
+				You need admin access in order to link files in the <span class="app">apache</span> configuration directory.
+			</p></div></div></div></div><div class="steps"><div class="inner"><div class="title title-steps"><h3><span class="title">Link and test configuration files</span></h3></div><div class="region"><ol class="steps"><li class="steps"><p class="p">go to the <span class="app">apache</span> configuration directory</p><div class="screen"><pre class="contents ">					<span class="prompt output">~ $ </span><span class="input">cd /etc/apache2/</span>
+					<span class="prompt output">/etc/apache2 $ </span>
+				</pre></div></li><li class="steps"><p class="p">Add <span class="app">PHPMyAdmin</span> configuration file to the available configurations</p><div class="screen"><pre class="contents ">					<span class="prompt output">/etc/apache2 $ </span><span class="input">sudo ln -s ~/working/git/refereemanager/configuration/conf-available/phpmyadmin.conf conf-available/phpmyadmin.conf</span>
+					<span class="prompt output">/etc/apache2 $ </span><span class="input">ls -la conf-available/phpmyadmin.conf</span>
+					<span class="prompt output">lrwxrwxrwx 1 root root 86 Aug 20 22:25 conf-available/phpmyadmin.conf -&gt; ...</span>
+					<span class="prompt output">/etc/apache2 $ </span>
+				</pre></div></li><li class="steps"><p class="p">Enable the <span class="app">PHPMyAdmin</span> configuration file</p><div class="screen"><pre class="contents ">					<span class="prompt output">/etc/apache2 $ </span><span class="input">cd conf-enabled</span>
+					<span class="prompt output">/etc/apache2/conf-enabled $ </span><span class="input">sudo ln -s ../conf-available/phpmyadmin.conf</span>
+					<span class="prompt output">/etc/apache2 $ </span><span class="input">cd ..</span>
+					<span class="prompt output">/etc/apache2 $ </span><span class="input">ls -la conf-enabled/phpmyadmin.conf</span>
+					<span class="prompt output">lrwxrwxrwx 1 root root 33 Aug 20 22:30 conf-enabled/phpmyadmin.conf -&gt; ../conf-available/phpmyadmin.conf</span>
+					<span class="prompt output">/etc/apache2 $ </span>
+				</pre></div><p class="p">A restart of <span class="app">apache</span> is required in order to use the configuration file.</p><div class="screen"><pre class="contents ">					<span class="prompt output">/etc/apache2 $ </span><span class="input">sudo apachectl -k restart</span>
+					<span class="prompt output">...</span>
+					<span class="prompt output">/etc/apache2 $ </span>
+				</pre></div></li><li class="steps"><p class="p">Check, if <span class="app">PHPMyAdmin</span> works</p><p class="p">Go to <span class="link"><a href="http://localhost/phpmyadmin/" title="http://localhost/phpmyadmin/">http://localhost/phpmyadmin/</a></span></p><p class="p">
+					You should see the <span class="app">PHPMyAdmin</span> start page.
+				</p><p class="p">
+					If the start page does not show, check if you executed all steps described above.
+					Some troubleshooting advise is given in <span class="link"><a href="trouble.xhtml" title="Troubleshooting">Troubleshooting</a></span>.
+				</p></li><li class="steps"><p class="p">Add <span class="app">RefereeManager</span> configuration file to the available configurations</p><div class="screen"><pre class="contents ">					<span class="prompt output">/etc/apache2 $ </span><span class="input">sudo ln -s ~/working/git/refereemanager/configuration/conf-available/refereemanager.conf conf-available/refereemanager.conf</span>
+					<span class="prompt output">/etc/apache2 $ </span><span class="input">ls -la conf-available/refereemanager.conf</span>
+					<span class="prompt output">lrwxrwxrwx 1 root root 90 Aug 20 22:56 conf-available/refereemanager.conf -&gt;  ...</span>
+					<span class="prompt output">/etc/apache2 $ </span>
+				</pre></div></li><li class="steps"><p class="p">Enable the <span class="app">RefereeManager</span> configuration file</p><div class="screen"><pre class="contents ">					<span class="prompt output">/etc/apache2 $ </span><span class="input">cd conf-enabled</span>
+					<span class="prompt output">/etc/apache2/conf-enabled $ </span><span class="input">sudo ln -s ../conf-available/refereemanager.conf</span>
+					<span class="prompt output">/etc/apache2 $ </span><span class="input">cd ..</span>
+					<span class="prompt output">/etc/apache2 $ </span><span class="input">ls -la conf-enabled/refereemanager.conf</span>
+					<span class="prompt output">lrwxrwxrwx 1 root root 37 Aug 20 22:58 conf-enabled/refereemanager.conf -&gt; ../conf-available/refereemanager.conf</span>
+					<span class="prompt output">/etc/apache2 $ </span>
+				</pre></div></li><li class="steps"><p class="p">Enable url rewrite abilities</p><div class="screen"><pre class="contents ">					<span class="prompt output">/etc/apache2 $ </span><span class="input">cd mods-enabled</span>
+					<span class="prompt output">/etc/apache2/conf-enabled $ </span><span class="input">sudo ln -s ../mods-available/rewrite.load</span>
+					<span class="prompt output">/etc/apache2 $ </span><span class="input">cd ..</span>
+					<span class="prompt output">/etc/apache2 $ </span><span class="input">ls -la mods-enabled/rewrite.load</span>
+					<span class="prompt output">lrwxrwxrwx 1 root root 30 Aug 20 23:01 mods-enabled/rewrite.load -&gt; ../mods-available/rewrite.load</span>
+					<span class="prompt output">/etc/apache2 $ </span>
+				</pre></div><p class="p">A restart of <span class="app">apache</span> is required in order to use the configuration file and enable url rewriting.</p><div class="screen"><pre class="contents ">					<span class="prompt output">/etc/apache2 $ </span><span class="input">sudo apachectl -k restart</span>
+					<span class="prompt output">...</span>
+					<span class="prompt output">/etc/apache2 $ </span>
+				</pre></div></li><li class="steps"><p class="p">Check, if <span class="app">RefereeManager</span> works</p><p class="p">Go to <span class="link"><a href="http://localhost/refereemanager/" title="http://localhost/refereemanager/">http://localhost/refereemanager/</a></span></p><p class="p">
+					You should see the <span class="app">RefereeManager</span> start page.
+					The page displays some errors: this is normal, as we did not set up the database yet.
+					The important point here is you seeing the start page and not a generic <span class="app">apache</span> error page.
+				</p><p class="p">
+					If the start page does not show, check if you executed all steps described above.
+					Some troubleshooting advise is given in <span class="link"><a href="trouble.xhtml" title="Troubleshooting">Troubleshooting</a></span>.
+				</p></li></ol></div></div></div></div></div></div></div><div id="database" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Create and fill database</span></h2></div><div class="region"><div class="contents"><p class="p">
 			...
 		</p></div></div></div></div><div class="links nextlinks"><a class="nextlinks-prev" href="repositories.xhtml" title="Checking out the repositories">Previous</a><a class="nextlinks-next" href="workflow.xhtml" title="Development workflow">Next</a></div><div class="sect sect-links" role="navigation"><div class="hgroup"/><div class="contents"><div class="links guidelinks"><div class="inner"><div class="title"><h2><span class="title">More Information</span></h2></div><div class="region"><ul><li class="links "><a href="setup.xhtml" title="Setting up the working environment">Setting up the working environment</a></li><li class="links "><a href="trouble.xhtml" title="Troubleshooting">Troubleshooting</a></li></ul></div></div></div></div></div></div><div class="clear"/></div><div class="footer"><div class="sect about ui-expander" role="contentinfo"><div class="yelp-data yelp-data-ui-expander" data-yelp-expanded="false"/><div class="inner"><div class="hgroup"><h2><span class="title">About</span></h2></div><div class="region"><div class="contents"><div class="copyrights"><div class="copyright">© 2012-2014 Ekkart Kleinod</div></div><div class="aboutblurb authors"><div class="title"><span class="title">Written By</span></div><ul class="credits"><li>Ekkart Kleinod</li></ul></div><div class="aboutblurb maintainers"><div class="title"><span class="title">Maintained By</span></div><ul class="credits"><li>Ekkart Kleinod</li></ul></div></div></div></div></div></div></div></body></html>

@@ -50,7 +50,10 @@
 		<title>Setup directories, apache server, and database</title>
 
 		<item>
-			<p>create the <file>apache</file> directories</p>
+			<p>make sure <app>apache</app> works</p>
+		</item>
+		<item>
+			<p>create and link the <file>apache</file> directories</p>
 		</item>
 		<item>
 			<p>adapt the configuration file if you chose a different directory structure</p>
@@ -65,9 +68,6 @@
 			<p>setup the <app>apache</app> configuration</p>
 		</item>
 		<item>
-			<p>check <app>apache</app> functionality</p>
-		</item>
-		<item>
 			<p>create and fill database</p>
 		</item>
 	</steps>
@@ -76,8 +76,22 @@
 		I will use my paths as example, adjust your commands accordingly.
 	</p>
 
+	<section id="apache">
+		<title>Make sure apache works</title>
+
+		<p>Go to <link href="http://localhost/" /></p>
+
+		<p>You should see the <app>apache</app> welcome page (stating somewhere: "It works!").</p>
+
+		<p>
+			If you do not see this page, try restarting <app>apache</app> (<link xref="trouble#restart" />).
+			If that does not help, consult your <app>apache</app> manual.
+		</p>
+
+	</section>
+
 	<section id="apachedir">
-		<title>Create the apache directories</title>
+		<title>Create and link the apache directories</title>
 
 		<p>Create the two apache directories in the apache directory.</p>
 
@@ -117,6 +131,19 @@
 			<output>drwxr-xr-x 2 ekleinod ekleinod 4096 Jul  8 00:09 refereemanager</output>
 		</screen>
 
+		<p>Link the two apache directories to the apache web directory.</p>
+
+		<screen>
+			<output style="prompt">~ $ </output><input>cd /var/www/html</input>
+			<output style="prompt">~/var/www/html $ </output><input>cd apache</input>
+			<output style="prompt">~/var/www/html $ </output><input>sudo ln -s ~/working/apache/phpmyadmin/</input>
+			<output style="prompt">~/var/www/html $ </output><input>sudo ln -s ~/working/apache/refereemanager/</input>
+			<output style="prompt">~/var/www/html $ </output><input>ls -la</input>
+			<output style="prompt">...
+			lrwxrwxrwx 1 root root    41 Aug 20 22:46 phpmyadmin -> ...
+			lrwxrwxrwx 1 root root    45 Aug 20 22:47 refereemanager -> ...</output>
+			<output style="prompt">~/var/www/html $ </output>
+		</screen>
 
 	</section>
 
@@ -425,17 +452,121 @@
 		<title>Setup the <app>apache</app> configuration</title>
 
 		<p>
-			...
+			Now we have to set up <app>apache</app> configuration in a way that <app>apache</app> finds the <app>RefereeManager</app> and <app>PHPMyAdmin</app> websites and shows/executes them.
+			Therefore, we link the configuration files to the apache configuration directory and enable them.
+			Additionally, we enable url rewrite abilities.
 		</p>
+		<note style="tip">
+			<p>
+				Before linking files, check if the files exist already.
+				Delete the existing files before linkng the new ones (better: rename them, maybe you need them later).
+			</p>
+		</note>
+		<note style="important">
+			<p>
+				You need admin access in order to link files in the <app>apache</app> configuration directory.
+			</p>
+		</note>
 
-	</section>
 
-	<section id="checkapache">
-		<title>Check <app>apache</app> functionality</title>
+		<steps>
+			<title>Link and test configuration files</title>
 
-		<p>
-			...
-		</p>
+			<item>
+				<p>go to the <app>apache</app> configuration directory</p>
+				<screen>
+					<output style="prompt">~ $ </output><input>cd /etc/apache2/</input>
+					<output style="prompt">/etc/apache2 $ </output>
+				</screen>
+			</item>
+			<item>
+				<p>Add <app>PHPMyAdmin</app> configuration file to the available configurations</p>
+				<screen>
+					<output style="prompt">/etc/apache2 $ </output><input>sudo ln -s ~/working/git/refereemanager/configuration/conf-available/phpmyadmin.conf conf-available/phpmyadmin.conf</input>
+					<output style="prompt">/etc/apache2 $ </output><input>ls -la conf-available/phpmyadmin.conf</input>
+					<output style="prompt">lrwxrwxrwx 1 root root 86 Aug 20 22:25 conf-available/phpmyadmin.conf -> ...</output>
+					<output style="prompt">/etc/apache2 $ </output>
+				</screen>
+			</item>
+			<item>
+				<p>Enable the <app>PHPMyAdmin</app> configuration file</p>
+				<screen>
+					<output style="prompt">/etc/apache2 $ </output><input>cd conf-enabled</input>
+					<output style="prompt">/etc/apache2/conf-enabled $ </output><input>sudo ln -s ../conf-available/phpmyadmin.conf</input>
+					<output style="prompt">/etc/apache2 $ </output><input>cd ..</input>
+					<output style="prompt">/etc/apache2 $ </output><input>ls -la conf-enabled/phpmyadmin.conf</input>
+					<output style="prompt">lrwxrwxrwx 1 root root 33 Aug 20 22:30 conf-enabled/phpmyadmin.conf -> ../conf-available/phpmyadmin.conf</output>
+					<output style="prompt">/etc/apache2 $ </output>
+				</screen>
+				<p>A restart of <app>apache</app> is required in order to use the configuration file.</p>
+				<screen>
+					<output style="prompt">/etc/apache2 $ </output><input>sudo apachectl -k restart</input>
+					<output style="prompt">...</output>
+					<output style="prompt">/etc/apache2 $ </output>
+				</screen>
+			</item>
+			<item>
+				<p>Check, if <app>PHPMyAdmin</app> works</p>
+				<p>Go to <link href="http://localhost/phpmyadmin/" /></p>
+				<p>
+					You should see the <app>PHPMyAdmin</app> start page.
+				</p>
+				<p>
+					If the start page does not show, check if you executed all steps described above.
+					Some troubleshooting advise is given in <link xref="trouble" />.
+				</p>
+			</item>
+			<item>
+				<p>Add <app>RefereeManager</app> configuration file to the available configurations</p>
+				<screen>
+					<output style="prompt">/etc/apache2 $ </output><input>sudo ln -s ~/working/git/refereemanager/configuration/conf-available/refereemanager.conf conf-available/refereemanager.conf</input>
+					<output style="prompt">/etc/apache2 $ </output><input>ls -la conf-available/refereemanager.conf</input>
+					<output style="prompt">lrwxrwxrwx 1 root root 90 Aug 20 22:56 conf-available/refereemanager.conf ->  ...</output>
+					<output style="prompt">/etc/apache2 $ </output>
+				</screen>
+			</item>
+			<item>
+				<p>Enable the <app>RefereeManager</app> configuration file</p>
+				<screen>
+					<output style="prompt">/etc/apache2 $ </output><input>cd conf-enabled</input>
+					<output style="prompt">/etc/apache2/conf-enabled $ </output><input>sudo ln -s ../conf-available/refereemanager.conf</input>
+					<output style="prompt">/etc/apache2 $ </output><input>cd ..</input>
+					<output style="prompt">/etc/apache2 $ </output><input>ls -la conf-enabled/refereemanager.conf</input>
+					<output style="prompt">lrwxrwxrwx 1 root root 37 Aug 20 22:58 conf-enabled/refereemanager.conf -> ../conf-available/refereemanager.conf</output>
+					<output style="prompt">/etc/apache2 $ </output>
+				</screen>
+			</item>
+			<item>
+				<p>Enable url rewrite abilities</p>
+				<screen>
+					<output style="prompt">/etc/apache2 $ </output><input>cd mods-enabled</input>
+					<output style="prompt">/etc/apache2/conf-enabled $ </output><input>sudo ln -s ../mods-available/rewrite.load</input>
+					<output style="prompt">/etc/apache2 $ </output><input>cd ..</input>
+					<output style="prompt">/etc/apache2 $ </output><input>ls -la mods-enabled/rewrite.load</input>
+					<output style="prompt">lrwxrwxrwx 1 root root 30 Aug 20 23:01 mods-enabled/rewrite.load -> ../mods-available/rewrite.load</output>
+					<output style="prompt">/etc/apache2 $ </output>
+				</screen>
+				<p>A restart of <app>apache</app> is required in order to use the configuration file and enable url rewriting.</p>
+				<screen>
+					<output style="prompt">/etc/apache2 $ </output><input>sudo apachectl -k restart</input>
+					<output style="prompt">...</output>
+					<output style="prompt">/etc/apache2 $ </output>
+				</screen>
+			</item>
+			<item>
+				<p>Check, if <app>RefereeManager</app> works</p>
+				<p>Go to <link href="http://localhost/refereemanager/" /></p>
+				<p>
+					You should see the <app>RefereeManager</app> start page.
+					The page displays some errors: this is normal, as we did not set up the database yet.
+					The important point here is you seeing the start page and not a generic <app>apache</app> error page.
+				</p>
+				<p>
+					If the start page does not show, check if you executed all steps described above.
+					Some troubleshooting advise is given in <link xref="trouble" />.
+				</p>
+			</item>
+		</steps>
 
 	</section>
 
