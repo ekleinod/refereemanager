@@ -574,8 +574,88 @@
 		<title>Create and fill database</title>
 
 		<p>
-			...
+			Everything is ready for creating and filling the database.
+			The database we are using is called <sys>refereemanager</sys>.
+			You create and fill the database and its tables using <app>PHPMyAdmin</app>.
 		</p>
+		<note style="important">
+			<p>
+				If the database or its tables exist, or if the tables are filled with values, you have to empty or delete the data resp. database tables first.
+				Save your existing data before deletion in case you need it later.
+			</p>
+		</note>
+
+		<steps>
+			<title>Create and fill database</title>
+
+			<item>
+				<p>Open <app>PHPMyAdmin</app>: <link href="http://localhost/phpmyadmin/" /></p>
+			</item>
+			<item>
+				<p>Create the database</p>
+				<steps>
+					<item>
+						<p><guiseq><gui>Databases</gui><gui>Create database</gui></guiseq></p>
+					</item>
+					<item>
+						<p><gui style="input">Database name</gui>: <sys>refereemanager</sys></p>
+						<p><gui style="input">Collation</gui>: <sys>utf8_general_ci</sys></p>
+					</item>
+					<item>
+						<p><gui style="button">Create</gui></p>
+					</item>
+				</steps>
+			</item>
+			<item>
+				<p>Create the database tables</p>
+				<p>You have to copy and execute the SQL code directly.</p>
+				<steps>
+					<item>
+						<p>Select database <sys>refereemanager</sys> in the left tree view</p>
+					</item>
+					<item>
+						<p><gui style="menuitem">SQL</gui></p>
+					</item>
+					<item>
+						<p>Open file <file>&lt;path&gt;/git/refereemanager/database/sql-scripts/refereemanager.sql</file> in an editor (encoding <sys>utf-8</sys>).</p>
+						<p>Copy the content of the file in the SQL query text box.</p>
+					</item>
+					<item>
+						<p><gui style="button">Go</gui></p>
+					</item>
+					<item>
+						<p>Wait until the message <output># MySQL returned an empty result set (i.e. zero rows).</output> is shown (in green).</p>
+					</item>
+				</steps>
+			</item>
+			<item>
+				<p>Fill the database tables</p>
+				<p>
+					You can use the import function of <app>PHPMyAdmin</app>, thus you don't have to copy and paste SQL code.
+					You have to import two data sets: the generic data for all installations and the data for your language.
+				</p>
+				<note style="important">
+					<p>
+						If you have existing database content (e.g. exported from an older installation), you only have to import your exported data.
+						Make sure, your data confirms to the structure of the database.
+						In that case, just import your data once and skip the filling steps described below.
+					</p>
+				</note>
+				<steps>
+					<item>
+						<p>Select database <sys>refereemanager</sys> in the left tree view</p>
+					</item>
+					<item>
+						<p><gui style="menuitem">Import</gui></p>
+						<p><gui>Filename</gui>: <file>&lt;path&gt;/git/refereemanager/database/sql-scripts/default_inserts.sql</file></p>
+						<p><gui>Character set</gui>: <sys>utf-8</sys></p>
+					</item>
+					<item>
+						<p><gui style="button">Go</gui></p>
+					</item>
+				</steps>
+			</item>
+		</steps>
 
 	</section>
 
