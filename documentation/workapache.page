@@ -235,13 +235,187 @@
 				<p>Copy <app>phpMyAdmin</app> files</p>
 				<screen>
 					<output style="prompt">~/working/git/refereemanager/scripts $ </output><input>ant phpmyadmin2apache</input>
+					<output>...</output>
+					<output>BUILD SUCCESSFUL</output>
+					<output>Total time: x seconds</output>
+					<output style="prompt">~/working/git/refereemanager/scripts $ </output>
 				</screen>
+				<terms>
+					<item>
+						<title>source directory</title>
+						<p><file>&lt;path&gt;/git/phpmyadmin</file></p>
+					</item>
+					<item>
+						<title>target directory</title>
+						<p><file>&lt;path&gt;/apache/phpmyadmin</file></p>
+					</item>
+				</terms>
 				<p>The script executes the following steps:</p>
 				<list type="numbered">
 					<item><p>check if target directory exists - failure otherwise</p></item>
 					<item><p>delete all files and directories in the target directory</p></item>
 					<item><p>copy all files and directories from source directory to target directory</p></item>
 				</list>
+				<note style="warning">
+					<p>
+						Your <app>phpMyAdmin</app> configuration file is deleted too, it is restored later.
+					</p>
+				</note>
+			</item>
+			<item>
+				<p>Copy <app>CakePHP</app> files</p>
+				<screen>
+					<output style="prompt">~/working/git/refereemanager/scripts $ </output><input>ant cakephp2apache</input>
+					<output>...</output>
+					<output>BUILD SUCCESSFUL</output>
+					<output>Total time: x seconds</output>
+					<output style="prompt">~/working/git/refereemanager/scripts $ </output>
+				</screen>
+				<terms>
+					<item>
+						<title>source directory</title>
+						<p><file>&lt;path&gt;/git/cakephp</file></p>
+					</item>
+					<item>
+						<title>target directory</title>
+						<p><file>&lt;path&gt;/apache/refereemanager</file></p>
+					</item>
+				</terms>
+				<p>The script executes the following steps:</p>
+				<list type="numbered">
+					<item><p>check if target directory exists - failure otherwise</p></item>
+					<item><p>delete all files and directories in the target directory</p></item>
+					<item><p>copy all files and directories from source directory to target directory</p></item>
+					<item><p>change access rights for <file>&lt;path&gt;/apache/refereemanager/app/tmp</file> and it's files and subdirectories to read/write/execute for user, group, and other (777), so <app>apache</app> can write there</p></item>
+					<item><p>change access rights for <file>&lt;path&gt;/apache/refereemanager/app/Console/cake</file>, <file>&lt;path&gt;/apache/refereemanager/lib/Cake/Console/cake</file> and their files and subdirectories to read/write/execute for user and group; read/write for other (775)</p></item>
+				</list>
+				<note style="warning">
+					<p>
+						Your <app>RefereeManager</app> files and configurations are deleted without warning, they are restored later.
+						Be sure you don't have unsaved changes before executing this step.
+					</p>
+				</note>
+			</item>
+			<item>
+				<p>Copy <app>PHPExcel</app> files</p>
+				<screen>
+					<output style="prompt">~/working/git/refereemanager/scripts $ </output><input>ant phpexcel2apache</input>
+					<output>...</output>
+					<output>BUILD SUCCESSFUL</output>
+					<output>Total time: x seconds</output>
+					<output style="prompt">~/working/git/refereemanager/scripts $ </output>
+				</screen>
+				<terms>
+					<item>
+						<title>source directory</title>
+						<p><file>&lt;path&gt;/git/phpexcel</file></p>
+					</item>
+					<item>
+						<title>target directory</title>
+						<p><file>&lt;path&gt;/apache/refereemanager/app/Vendor/PHPExcel</file></p>
+					</item>
+				</terms>
+				<p>The script executes the following steps:</p>
+				<list type="numbered">
+					<item><p>check if target directory exists - failure otherwise</p></item>
+					<item><p>copy all files and directories from source directory to target directory</p></item>
+				</list>
+				<note style="warning">
+					<p>
+						Your <app>PHPExcel</app> files are overwritten without warning.
+					</p>
+				</note>
+			</item>
+			<item>
+				<p>Copy <app>PHPExcelHelper</app> files</p>
+				<screen>
+					<output style="prompt">~/working/git/refereemanager/scripts $ </output><input>ant phpexcelhelper2apache</input>
+					<output>...</output>
+					<output>BUILD SUCCESSFUL</output>
+					<output>Total time: x seconds</output>
+					<output style="prompt">~/working/git/refereemanager/scripts $ </output>
+				</screen>
+				<terms>
+					<item>
+						<title>source directory</title>
+						<p><file>&lt;path&gt;/git/phpexcel</file></p>
+					</item>
+					<item>
+						<title>target directory</title>
+						<p><file>&lt;path&gt;/apache/refereemanager/app/View/Helper</file></p>
+					</item>
+				</terms>
+				<p>The script executes the following steps:</p>
+				<list type="numbered">
+					<item><p>check if target directory exists - failure otherwise</p></item>
+					<item><p>copy all files and directories from source directory to target directory</p></item>
+				</list>
+				<note style="warning">
+					<p>
+						Your <app>PHPExcelHelper</app> files are overwritten without warning.
+					</p>
+				</note>
+			</item>
+			<item>
+				<p>Copy <app>TCPDF</app> files</p>
+				<screen>
+					<output style="prompt">~/working/git/refereemanager/scripts $ </output><input>ant tcpdf2apache</input>
+					<output>...</output>
+					<output>BUILD SUCCESSFUL</output>
+					<output>Total time: x seconds</output>
+					<output style="prompt">~/working/git/refereemanager/scripts $ </output>
+				</screen>
+				<terms>
+					<item>
+						<title>source directory</title>
+						<p><file>&lt;path&gt;/git/phpexcel</file></p>
+					</item>
+					<item>
+						<title>target directory</title>
+						<p><file>&lt;path&gt;/apache/refereemanager/app/Vendor/TCPDF</file></p>
+					</item>
+				</terms>
+				<p>The script executes the following steps:</p>
+				<list type="numbered">
+					<item><p>check if target directory exists - failure otherwise</p></item>
+					<item><p>copy all files and directories from source directory to target directory</p></item>
+				</list>
+				<note style="warning">
+					<p>
+						Your <app>TCPDF</app> files are overwritten without warning.
+					</p>
+				</note>
+			</item>
+			<item>
+				<p>Copy <app>RefereeManager</app> files</p>
+				<screen>
+					<output style="prompt">~/working/git/refereemanager/scripts $ </output><input>ant refman2apache</input>
+					<output>...</output>
+					<output>BUILD SUCCESSFUL</output>
+					<output>Total time: x seconds</output>
+					<output style="prompt">~/working/git/refereemanager/scripts $ </output>
+				</screen>
+				<terms>
+					<item>
+						<title>source directory</title>
+						<p><file>&lt;path&gt;/git/phpexcel</file></p>
+					</item>
+					<item>
+						<title>target directories</title>
+						<p><file>&lt;path&gt;/apache/refereemanager/app</file></p>
+						<p><file>&lt;path&gt;/apache/phpmyadmin</file></p>
+					</item>
+				</terms>
+				<p>The script executes the following steps:</p>
+				<list type="numbered">
+					<item><p>check if target directory exists - failure otherwise</p></item>
+					<item><p>copy all files and directories from source directory to target directory</p></item>
+				</list>
+				<note style="warning">
+					<p>
+						Your <app>RefereeManager</app> files are overwritten without warning.
+					</p>
+				</note>
 			</item>
 		</steps>
 
