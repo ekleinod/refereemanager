@@ -37,6 +37,9 @@
 			<param name="path:source" value="${path:git:phpmyadmin}" />
 			<param name="path:target" value="${path:apache:phpmyadmin}" />
 		</antcall>
+		<mkdir dir="${path:apache:phpmyadmin}tmp" />
+		<echo message="Chmod for ${path:apache:phpmyadmin}tmp." />
+		<chmod perm="777" type="dir" dir="${path:apache:phpmyadmin}tmp" />
 	</target>
 
 	<target name="cakephp2apache" description="Copies CakePHP to apache directory (deletes existing files first).">
