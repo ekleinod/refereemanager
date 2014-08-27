@@ -70,6 +70,9 @@
 		<item>
 			<p>create and fill database</p>
 		</item>
+		<item>
+			<p>start development</p>
+		</item>
 	</steps>
 
 	<p>
@@ -584,6 +587,38 @@
 				Save your existing data before deletion in case you need it later.
 			</p>
 		</note>
+		<p>
+			In this step you have to execute some SQL queries in order to create and fill the database tables.
+			The SQL queries are delivered as files in the <file>&lt;path&gt;/git/refereemanager/database/sql-scripts/</file> folder.
+			You can do this in two basic ways:
+		</p>
+		<list type="numbered">
+			<item>
+				<p>Import the sql file directly</p>
+				<p>You do this by selecting the database <sys>refereemanager</sys> in the left tree view.</p>
+				<p>Now you select <gui style="menuitem">Import</gui> in the tab row in the main window.</p>
+				<p>Here, select the sql file to import, leave the <gui>Character set</gui> at <sys>utf-8</sys>.</p>
+				<p>
+					Now, start the import with <gui style="button">Go</gui>.
+					Execution may take a while.
+				</p>
+			</item>
+			<item>
+				<p>Copy the content of the file into the sql text boy.</p>
+				<p>You do this by selecting the database <sys>refereemanager</sys> in the left tree view.</p>
+				<p>Now you select <gui style="menuitem">SQL</gui> in the tab row in the main window.</p>
+				<p>Open the sql file in an editor (encoding <sys>utf-8</sys>).</p>
+				<p>Copy the content of the file in the SQL query text box.</p>
+				<p>Here, select the file to import, leave the <gui>Character set</gui> at <sys>utf-8</sys>.</p>
+				<p>
+					Now, start the sql execution with <gui style="button">Go</gui>.
+					Execution may take a while.
+				</p>
+			</item>
+		</list>
+		<p>
+			Both ways produce the same result, therefore you are free choose your way.
+		</p>
 
 		<steps>
 			<title>Create and fill database</title>
@@ -602,60 +637,47 @@
 						<p><gui style="input">Collation</gui>: <sys>utf8_general_ci</sys></p>
 					</item>
 					<item>
-						<p><gui style="button">Create</gui></p>
+						<p>Start execution with <gui style="button">Create</gui></p>
 					</item>
 				</steps>
 			</item>
 			<item>
 				<p>Create the database tables</p>
-				<p>You have to copy and execute the SQL code directly.</p>
-				<steps>
-					<item>
-						<p>Select database <sys>refereemanager</sys> in the left tree view</p>
-					</item>
-					<item>
-						<p><gui style="menuitem">SQL</gui></p>
-					</item>
-					<item>
-						<p>Open file <file>&lt;path&gt;/git/refereemanager/database/sql-scripts/refereemanager.sql</file> in an editor (encoding <sys>utf-8</sys>).</p>
-						<p>Copy the content of the file in the SQL query text box.</p>
-					</item>
-					<item>
-						<p><gui style="button">Go</gui></p>
-					</item>
-					<item>
-						<p>Wait until the message <output># MySQL returned an empty result set (i.e. zero rows).</output> is shown (in green).</p>
-					</item>
-				</steps>
+				<p>Use the sql file with one of the methods described above.</p>
+				<p><file>&lt;path&gt;/git/refereemanager/database/sql-scripts/refereemanager.sql</file></p>
 			</item>
 			<item>
 				<p>Fill the database tables</p>
-				<p>
-					You can use the import function of <app>PHPMyAdmin</app>, thus you don't have to copy and paste SQL code.
-					You have to import two data sets: the generic data for all installations and the data for your language.
-				</p>
+				<p>There are two sql files with standard values to import in your clean database:</p>
+				<p><file>&lt;path&gt;/git/refereemanager/database/sql-scripts/default_inserts.sql</file></p>
+				<p><file>&lt;path&gt;/git/refereemanager/database/sql-scripts/default_&lt;lang&gt;.sql</file>, where &lt;lang&gt; is replaced with the language you want to use, e.g. <sys>en</sys> or <sys>de</sys>.</p>
 				<note style="important">
 					<p>
-						If you have existing database content (e.g. exported from an older installation), you only have to import your exported data.
+						If you have existing database content (e.g. exported from an older installation), you only have to import your exported data, not the default inserts.
 						Make sure, your data confirms to the structure of the database.
-						In that case, just import your data once and skip the filling steps described below.
 					</p>
 				</note>
-				<steps>
-					<item>
-						<p>Select database <sys>refereemanager</sys> in the left tree view</p>
-					</item>
-					<item>
-						<p><gui style="menuitem">Import</gui></p>
-						<p><gui>Filename</gui>: <file>&lt;path&gt;/git/refereemanager/database/sql-scripts/default_inserts.sql</file></p>
-						<p><gui>Character set</gui>: <sys>utf-8</sys></p>
-					</item>
-					<item>
-						<p><gui style="button">Go</gui></p>
-					</item>
-				</steps>
+			</item>
+			<item>
+				<p>Check, if <app>RefereeManager</app> works correctly</p>
+				<p>Go to <link href="http://localhost/refereemanager/" />, you should see the <app>RefereeManager</app> start page with a login screen.</p>
+				<p>Go to <link href="http://localhost/refereemanager/referees" />, you should see the referee overview page with a message, that no referees are stored.</p>
+				<p>
+					If the <app>RefereeManager</app> does not work correctly, check if you executed all steps described above.
+					Some troubleshooting advise is given in <link xref="trouble" />.
+				</p>
 			</item>
 		</steps>
+
+	</section>
+
+	<section id="start">
+		<title>Start development</title>
+
+		<note style="important">
+			<p>Congratulations.</p>
+		</note>
+		<p>Now you are ready for development, everything is in place and set up.</p>
 
 	</section>
 
