@@ -24,7 +24,6 @@
 	<list>
 		<title>Tools</title>
 		<item><p><app>Git</app></p></item>
-		<item><p><app>Subversion</app></p></item>
 		<item><p><app>Apache</app> incl. <app>mysql</app> module</p></item>
 		<item><p><app>PHP</app></p></item>
 		<item><p><app>MySQL server</app></p></item>
@@ -41,29 +40,8 @@
 
 		<p>
 			<app>Git</app> is a tool for distributed version control.
-			You need <app>git</app> for access to the code of the following repositories (<link xref="repositories" />).
+			You need <app>git</app> for access to the used code (<link xref="repositories" />).
 		</p>
-		<list>
-			<title>Git Repositories</title>
-			<item><p><app>Referee Manager</app></p></item>
-			<item><p><app>PHPExcelHelper</app></p></item>
-			<item><p><app>CakePHP</app> (download possible></p></item>
-			<item><p><app>phpMyAdmin</app> (download possible></p></item>
-			<item><p><app>TCPDF</app> (download possible></p></item>
-		</list>
-	</section>
-
-	<section id="subversion">
-		<title>Subversion</title>
-
-		<p>
-			<app>Subversion</app> (short <app>svn</app>) is a tool for version control.
-			You need <app>svn</app> for access to the code of the following repositories (<link xref="repositories" />).
-		</p>
-		<list>
-			<title>Subversion Repositories</title>
-			<item><p><app>PHPExcel</app></p></item>
-		</list>
 	</section>
 
 	<section id="apache">

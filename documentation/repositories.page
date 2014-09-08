@@ -134,19 +134,19 @@
 		<terms>
 			<item>
 				<title>Repository Type</title>
-				<p><app>svn</app></p>
+				<p><app>git</app></p>
 			</item>
 			<item>
 				<title>Repository URL</title>
-				<p><link href="https://phpexcel.svn.codeplex.com/svn" /></p>
+				<p><link href="https://github.com/PHPOffice/PHPExcel.git" /></p>
 			</item>
 			<item>
 				<title>Download URL</title>
-				<p><link href="http://phpexcel.codeplex.com/releases/" /></p>
+				<p><link href="https://github.com/PHPOffice/PHPExcel/releases" /></p>
 			</item>
 			<item>
 				<title>Homepage</title>
-				<p><link href="http://phpexcel.codeplex.com/" /></p>
+				<p><link href="http://www.phpexcel.net/" /></p>
 			</item>
 		</terms>
 	</section>
