@@ -38,6 +38,8 @@
 
 	<p>'<?php echo $temptest; ?>'</p>
 
+	<?php pr($temptest) ?>
+
 	<?php pr($data) ?>
 
 <?php } ?>

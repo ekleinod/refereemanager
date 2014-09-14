@@ -6,7 +6,7 @@
 	Do not change this file unless you know exactly what you do.
 	If you have useful changes, let me know to include them in the master.
 
-	(c) 2013 by Ekkart Kleinod
+	(c) 2013-2014 by Ekkart Kleinod
 
 	@author Ekkart Kleinod
 -->
@@ -126,6 +126,7 @@
 			<fileset dir="${path:source}app${file.separator}Config${file.separator}">
 				<include name="core.php" />
 				<include name="database.php" />
+				<include name="email.php" />
 			</fileset>
 		</copy>
 

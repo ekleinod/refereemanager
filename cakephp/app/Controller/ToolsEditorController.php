@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
 App::uses('RefManRefereeFormat', 'Utility');
 
 /**
@@ -60,7 +61,7 @@ class ToolsEditorController extends AppController {
 			$this->set('result', true);
 			$this->set('data', $this->request->data);
 
-			$season = $this->Season->findById($this->request->data['ToolsEditor']['season']);
+/*			$season = $this->Season->findById($this->request->data['ToolsEditor']['season']);
 			$referees = $this->Referee->getReferees($season['Season']);
 			switch ($this->request->data['ToolsEditor']['recipient']) {
 				case 'a':
@@ -88,8 +89,15 @@ class ToolsEditorController extends AppController {
 					}
 				//}
 				$this->set('temptest', $addresslist);
-			}
+			}*/
 
+			// email test (set up email config correctly
+			$Email = new CakeEmail('default');
+			$Email
+					->to('') // mailadress(es)
+					->bcc('') // mailadress(es)
+					->subject('Nachricht der Schiedsrichterverwaltung');
+			$this->set('temptest', $Email->send('Die Nachricht.'));
 		}
 
 	}
