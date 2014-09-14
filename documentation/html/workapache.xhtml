@@ -18,7 +18,7 @@
 			</div><ul class="tree"><li class="tree"><div>         ├ <span class="file">refereemanager/</span></div></li><li class="tree"><div>         ├ <span class="file">cakephp/</span></div></li><li class="tree"><div>         ├ <span class="file">phpexcel/</span></div></li><li class="tree"><div>         ├ <span class="file">phpexcelhelper/</span></div></li><li class="tree"><div>         ├ <span class="file">tcpdf/</span></div></li><li class="tree"><div>         └ <span class="file">phpmyadmin/</span></div></li></ul></li></ul></li></ul></div></div></div><p class="p">
 		We assume, you have checked out the git and svn repositories (see <span class="link"><a href="repositories.xhtml" title="Checking out the repositories">Checking out the repositories</a></span>).
 		Now follow these steps for initial setup.
-	</p><div class="steps"><div class="inner"><div class="title title-steps"><h2><span class="title">Setup directories, apache server, and database</span></h2></div><div class="region"><ol class="steps"><li class="steps"><p class="p">make sure <span class="app">apache</span> works</p></li><li class="steps"><p class="p">create and link the <span class="file">apache</span> directories</p></li><li class="steps"><p class="p">adapt the configuration file if you chose a different directory structure</p></li><li class="steps"><p class="p">adapt the <span class="app">PHPMyAdmin</span> and <span class="app">Referee Manager</span> configuration</p></li><li class="steps"><p class="p">copy all files initially to the <span class="file">apache</span> directories</p></li><li class="steps"><p class="p">setup the <span class="app">apache</span> configuration</p></li><li class="steps"><p class="p">create and fill database</p></li><li class="steps"><p class="p">start development</p></li></ol></div></div></div><p class="p">
+	</p><div class="steps"><div class="inner"><div class="title title-steps"><h2><span class="title">Setup directories, apache server, and database</span></h2></div><div class="region"><ol class="steps"><li class="steps"><p class="p"><span class="link"><a href="#apache" title="Make sure apache works">Make sure apache works</a></span></p></li><li class="steps"><p class="p"><span class="link"><a href="#apachedir" title="Create and link the apache directories">Create and link the apache directories</a></span></p></li><li class="steps"><p class="p"><span class="link"><a href="#configuration" title="Adapt the script configuration file">Adapt the script configuration file</a></span></p></li><li class="steps"><p class="p"><span class="link"><a href="#dbconfig" title="Adapt the PHPMyAdmin and Referee Manager configuration">Adapt the <span class="app">PHPMyAdmin</span> and <span class="app">Referee Manager</span> configuration</a></span></p></li><li class="steps"><p class="p"><span class="link"><a href="#initfiles" title="Copy all files initially to the apache directories">Copy all files initially to the <span class="file">apache</span> directories</a></span></p></li><li class="steps"><p class="p"><span class="link"><a href="#checkapache" title="Setup the apache configuration">Setup the <span class="app">apache</span> configuration</a></span></p></li><li class="steps"><p class="p"><span class="link"><a href="#database" title="Create and fill database">Create and fill database</a></span></p></li><li class="steps"><p class="p"><span class="link"><a href="#start" title="Start development">Start development</a></span></p></li></ol></div></div></div><p class="p">
 		I will use my paths as example, adjust your commands accordingly.
 	</p></div><div id="apache" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Make sure apache works</span></h2></div><div class="region"><div class="contents"><p class="p">Go to <span class="link"><a href="http://localhost/" title="http://localhost/">http://localhost/</a></span></p><p class="p">You should see the <span class="app">apache</span> welcome page (stating somewhere: "It works!").</p><p class="p">
 			If you do not see this page, try restarting <span class="app">apache</span> (<span class="link"><a href="trouble.xhtml#restart" title="How to restart apache.">How to restart <span class="app">apache</span>.</a></span>).
@@ -60,8 +60,8 @@
 			lrwxrwxrwx 1 root root    41 Aug 20 22:46 phpmyadmin -&gt; ...
 			lrwxrwxrwx 1 root root    45 Aug 20 22:47 refereemanager -&gt; ...</span>
 			<span class="prompt output">~/var/www/html $ </span>
-		</pre></div></div></div></div></div><div id="configuration" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Adapt the configuration file</span></h2></div><div class="region"><div class="contents"><p class="p">
-			If you chose different directories, you have to adapt the configuration file accordingly.
+		</pre></div></div></div></div></div><div id="configuration" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Adapt the script configuration file</span></h2></div><div class="region"><div class="contents"><p class="p">
+			If you chose different directories, you have to adapt the configuration file in order for the <span class="app">ant</span> scripts to work.
 		</p><div class="steps"><div class="inner"><div class="title title-steps"><h3><span class="title">Adaption of the configuration file</span></h3></div><div class="region"><ol class="steps"><li class="steps"><p class="p">Open the configuration file in an editor (UTF-8 encoding).</p><div class="tree tree-lines"><div class="inner"><div class="region"><ul class="tree"><li class="tree"><div> <span class="file">&lt;path&gt;/</span>
 						
 					</div><ul class="tree"><li class="tree"><div>    └ <span class="file">git/</span>
@@ -76,13 +76,20 @@
 					</p></div></div></div></div><div class="note note-tip" title="Tip"><div class="inner"><div class="region"><div class="contents"><p class="p">
 						If you want the script to remain platform independent, use <span class="code">${file.separator}</span> as file separator instead of <span class="file">/</span> or <span class="file">\</span>.
 					</p></div></div></div></div></li><li class="steps"><p class="p">Save the configuration file.</p></li></ol></div></div></div></div></div></div></div><div id="dbconfig" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Adapt the <span class="app">PHPMyAdmin</span> and <span class="app">Referee Manager</span> configuration</span></h2></div><div class="region"><div class="contents"><p class="p">
-			In order to enable database connection for <span class="app">PHPMyAdmin</span> and <span class="app">Referee Manager</span> you have to edit the configuration files according to your installation.
-			The given files use the default <span class="app">apache</span> location with user "root" without a password.
+			In order to enable database connection, email capabiltites etc. for <span class="app">PHPMyAdmin</span> and <span class="app">Referee Manager</span> you have to edit the configuration files according to your installation.
+		</p><p class="p">
+			The database files use the default <span class="app">apache</span> location with user "root" without a password.
 			This configuration is only save for closed systems without internet access.
+			The email configuration is incomplete.
+			The core configuration is configured for debugging use.
+		</p><p class="p">
+			Change the configuration files according to your needs.
 		</p><div class="note note-warning" title="Warning"><div class="inner"><div class="region"><div class="contents"><p class="p">
 				Do not upload your configuration file to the <span class="app">github</span> repository.
 				All users could see your configuration.
-			</p></div></div></div></div><div class="tree tree-lines"><div class="inner"><div class="title title-tree"><h3><span class="title">Location of the configuration files</span></h3></div><div class="region"><ul class="tree"><li class="tree"><div> <span class="file">&lt;path&gt;/</span>
+			</p></div></div></div></div><p class="p">
+			There are four configuration files:
+		</p><div class="list"><div class="inner"><div class="region"><ol class="list" style="list-style-type:numbered"><li class="list"><p class="p"><span class="file">core.php</span> core configuration of the <span class="app">Referee Manager</span></p></li><li class="list"><p class="p"><span class="file">database.php</span> database configuration of the <span class="app">Referee Manager</span></p></li><li class="list"><p class="p"><span class="file">email.php</span> email configuration of the <span class="app">Referee Manager</span></p></li><li class="list"><p class="p"><span class="file">config.inc.php</span> database configuration of <span class="app">PHPMyAdmin</span></p></li></ol></div></div></div><div class="tree tree-lines"><div class="inner"><div class="title title-tree"><h3><span class="title">Location of the configuration files</span></h3></div><div class="region"><ul class="tree"><li class="tree"><div> <span class="file">&lt;path&gt;/</span>
 				
 			</div><ul class="tree"><li class="tree"><div>    └ <span class="file">git/</span>
 					
@@ -95,13 +102,15 @@
 								
 							</div><ul class="tree"><li class="tree"><div>              │         └ <span class="file">Config/</span>
 									
-								</div><ul class="tree"><li class="tree"><div>              │              └ <span class="file">database.php</span></div></li></ul></li></ul></li></ul></li><li class="tree"><div>              └ <span class="file">configuration/</span>
+									
+									
+								</div><ul class="tree"><li class="tree"><div>              │              ├ <span class="file">core.php</span></div></li><li class="tree"><div>              │              ├ <span class="file">database.php</span></div></li><li class="tree"><div>              │              └ <span class="file">email.php</span></div></li></ul></li></ul></li></ul></li><li class="tree"><div>              └ <span class="file">configuration/</span>
 							
 						</div><ul class="tree"><li class="tree"><div>                   └ <span class="file">phpmyadmin/</span>
 								
 							</div><ul class="tree"><li class="tree"><div>                        └ <span class="file">config.inc.php</span></div></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></div></div></div></div></div></div></div><div id="initfiles" class="sect"><div class="inner"><div class="hgroup"><h2 class="title"><span class="title">Copy all files initially to the <span class="file">apache</span> directories</span></h2></div><div class="region"><div class="contents"><p class="p">
 			There is an <span class="app">ant</span> script for copying the files in the right directory.
-			Check, if you set up the configuration file accordingly: <span class="link"><a href="#configuration" title="Adapt the configuration file">Adapt the configuration file</a></span>.
+			Check, if you set up the configuration file accordingly: <span class="link"><a href="#configuration" title="Adapt the script configuration file">Adapt the script configuration file</a></span>.
 		</p><p class="p">
 			Call the <span class="app">ant</span> script without target for a list of targets.
 		</p><div class="screen"><pre class="contents ">			<span class="prompt output">~ $ </span><span class="input">cd working/git/refereemanager/scripts</span>

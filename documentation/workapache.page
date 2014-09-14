@@ -50,28 +50,28 @@
 		<title>Setup directories, apache server, and database</title>
 
 		<item>
-			<p>make sure <app>apache</app> works</p>
+			<p><link xref="#apache" /></p>
 		</item>
 		<item>
-			<p>create and link the <file>apache</file> directories</p>
+			<p><link xref="#apachedir" /></p>
 		</item>
 		<item>
-			<p>adapt the configuration file if you chose a different directory structure</p>
+			<p><link xref="#configuration" /></p>
 		</item>
 		<item>
-			<p>adapt the <app>PHPMyAdmin</app> and <app>Referee Manager</app> configuration</p>
+			<p><link xref="#dbconfig" /></p>
 		</item>
 		<item>
-			<p>copy all files initially to the <file>apache</file> directories</p>
+			<p><link xref="#initfiles" /></p>
 		</item>
 		<item>
-			<p>setup the <app>apache</app> configuration</p>
+			<p><link xref="#checkapache" /></p>
 		</item>
 		<item>
-			<p>create and fill database</p>
+			<p><link xref="#database" /></p>
 		</item>
 		<item>
-			<p>start development</p>
+			<p><link xref="#start" /></p>
 		</item>
 	</steps>
 
@@ -151,10 +151,10 @@
 	</section>
 
 	<section id="configuration">
-		<title>Adapt the configuration file</title>
+		<title>Adapt the script configuration file</title>
 
 		<p>
-			If you chose different directories, you have to adapt the configuration file accordingly.
+			If you chose different directories, you have to adapt the configuration file in order for the <app>ant</app> scripts to work.
 		</p>
 
 		<steps>
@@ -199,9 +199,16 @@
 		<title>Adapt the <app>PHPMyAdmin</app> and <app>Referee Manager</app> configuration</title>
 
 		<p>
-			In order to enable database connection for <app>PHPMyAdmin</app> and <app>Referee Manager</app> you have to edit the configuration files according to your installation.
-			The given files use the default <app>apache</app> location with user "root" without a password.
+			In order to enable database connection, email capabiltites etc. for <app>PHPMyAdmin</app> and <app>Referee Manager</app> you have to edit the configuration files according to your installation.
+		</p>
+		<p>
+			The database files use the default <app>apache</app> location with user "root" without a password.
 			This configuration is only save for closed systems without internet access.
+			The email configuration is incomplete.
+			The core configuration is configured for debugging use.
+		</p>
+		<p>
+			Change the configuration files according to your needs.
 		</p>
 
 		<note style="warning">
@@ -210,6 +217,16 @@
 				All users could see your configuration.
 			</p>
 		</note>
+
+		<p>
+			There are four configuration files:
+		</p>
+		<list type="numbered">
+			<item><p><file>core.php</file> core configuration of the <app>Referee Manager</app></p></item>
+			<item><p><file>database.php</file> database configuration of the <app>Referee Manager</app></p></item>
+			<item><p><file>email.php</file> email configuration of the <app>Referee Manager</app></p></item>
+			<item><p><file>config.inc.php</file> database configuration of <app>PHPMyAdmin</app></p></item>
+		</list>
 
 		<tree style="lines">
 			<title>Location of the configuration files</title>
@@ -220,7 +237,9 @@
 						<item><file>cakephp/</file>
 							<item><file>app/</file>
 								<item><file>Config/</file>
+									<item><file>core.php</file></item>
 									<item><file>database.php</file></item>
+									<item><file>email.php</file></item>
 								</item>
 							</item>
 						</item>
