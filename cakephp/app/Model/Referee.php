@@ -125,9 +125,9 @@ class Referee extends AppModel {
 	 * @param a first object
 	 * @param b second object
 	 * @return comparison result
-	 *  @retval -1 a<b
+	 *  @retval <0 a<b
 	 *  @retval 0 a==b
-	 *  @retval 1 a>b
+	 *  @retval >0 a>b
 	 *
 	 * @version 0.1
 	 * @since 0.1
@@ -135,19 +135,15 @@ class Referee extends AppModel {
 	public static function compareTo($a, $b) {
 
 		// first criterion: name
-		if ($a['Person']['name'] < $b['Person']['name']) {
-			return -1;
-		}
-		if ($a['Person']['name'] > $b['Person']['name']) {
-			return 1;
+		$compResult = strcasecmp($a['Person']['name'], $b['Person']['name']);
+		if ($compResult != 0) {
+			return $compResult;
 		}
 
 		// second criterion: first name
-		if ($a['Person']['first_name'] < $b['Person']['first_name']) {
-			return -1;
-		}
-		if ($a['Person']['first_name'] > $b['Person']['first_name']) {
-			return 1;
+		$compResult = strcasecmp($a['Person']['first_name'], $b['Person']['first_name']);
+		if ($compResult != 0) {
+			return $compResult;
 		}
 
 		// equal
