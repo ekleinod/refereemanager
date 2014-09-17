@@ -62,7 +62,7 @@ START TRANSACTION;
 UPDATE `rfrmgr_status_types` SET `title`='viele', `style`='bold', `color`=NULL, `bgcolor`=NULL, `remark`='Schiedsrichter_in ist an besonders vielen Einsätzen interessiert' WHERE `sid`='many';
 UPDATE `rfrmgr_status_types` SET `title`='normal', `style`=NULL, `color`=NULL, `bgcolor`=NULL, `remark`='Einsätze ohne spezielle Wünsche' WHERE `sid`='normal';
 UPDATE `rfrmgr_status_types` SET `title`='nicht aktiv diese Saison', `style`=NULL, `color`='777777', `bgcolor`=NULL, `remark`='Schiedsrichter_in ist diese Saison nicht aktiv' WHERE `sid`='inactiveseason';
-UPDATE `rfrmgr_status_types` SET `title`='nicht aktiv, erhält SR-E-Mails', `style`=NULL, `color`='777777', `bgcolor`=NULL, `remark`='Schiedsrichter_in ist nicht aktiv, erhält aber die SR-E-Mails' WHERE `sid`='mailonly';
+UPDATE `rfrmgr_status_types` SET `title`='nicht aktiv, erhält SR-E-Mails', `style`='italic', `color`='777777', `bgcolor`=NULL, `remark`='Schiedsrichter_in ist nicht aktiv, erhält aber die SR-E-Mails' WHERE `sid`='mailonly';
 UPDATE `rfrmgr_status_types` SET `title`='anderes', `style`='italic', `color`=NULL, `bgcolor`=NULL, `remark`='Andere Aktivität' WHERE `sid`='other';
 
 COMMIT;
