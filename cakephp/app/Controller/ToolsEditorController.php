@@ -43,17 +43,42 @@ class ToolsEditorController extends AppController {
 	}
 
 	/**
+	 * Mailinglist method.
+	 *
+	 * @param season season to use (default: null == current season)
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function mailinglist($season = null) {
+		$this->set('title_for_layout', __('Mailverteiler'));
+
+		$theSeason = $this->Season->getSeason($season);
+		$this->set('season', $theSeason);
+
+		$referees = $this->Referee->getReferees($theSeason);
+		$this->set('referees', $referees);
+
+		$theSeparator = ',';
+		if (!empty($this->request->data)) {
+			$theSeparator = $this->request->data['ToolsEditor']['separator'];
+		}
+		$this->set('separator', $theSeparator);
+
+	}
+
+	/**
 	 * Message method.
 	 *
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public function message() {
+	public function message($season = null) {
 		$this->set('title_for_layout', __('Nachricht'));
 
-		$seasonarray = $this->Season->find('list');
-		asort($seasonarray, SORT_LOCALE_STRING);
-		$this->set('seasonarray', $seasonarray);
+		$theSeason = $this->Season->getSeason($season);
+
+		$this->set('season', $theSeason);
 		$this->set('result', false);
 
 		// create messages
@@ -61,7 +86,8 @@ class ToolsEditorController extends AppController {
 			$this->set('result', true);
 			$this->set('data', $this->request->data);
 
-/*			$season = $this->Season->findById($this->request->data['ToolsEditor']['season']);
+/*
+			$season = $this->Season->findById($this->request->data['ToolsEditor']['season']);
 			$referees = $this->Referee->getReferees($season['Season']);
 			switch ($this->request->data['ToolsEditor']['recipient']) {
 				case 'a':
@@ -97,7 +123,7 @@ class ToolsEditorController extends AppController {
 					->to('') // mailadress(es)
 					->bcc('') // mailadress(es)
 					->subject('Nachricht der Schiedsrichterverwaltung');
-			$this->set('temptest', $Email->send('Die Nachricht.'));
+			//$this->set('temptest', $Email->send('Die Nachricht.'));
 		}
 
 	}

@@ -31,7 +31,7 @@
 <select onchange="if ( this.value ) window.location.href=this.value">
 	<option selected="selected" value="">Go to...</option>
 	<?php
-		foreach ( $navarray as $mainnav ) {
+		foreach ($navarray as $mainnav) {
 			if (!array_key_exists('role', $mainnav) || (array_key_exists('role', $mainnav) && ($mainnav['role'] === 'editor') && $isEditor)) {
 	?>
 			<option value="<?php echo Router::url($mainnav['routing']); ?>"><?php echo $mainnav['title']; ?></option>

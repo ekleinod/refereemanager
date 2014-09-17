@@ -38,7 +38,7 @@ class RefereesController extends AppController {
 	/**
 	 * Index method.
 	 *
-	 * @param season season to export (default: null == current season)
+	 * @param season season to use (default: null == current season)
 	 *
 	 * @version 0.1
 	 * @since 0.1
@@ -53,7 +53,7 @@ class RefereesController extends AppController {
 	/**
 	 * Export method.
 	 *
-	 * @param season season to export (default: null == current season)
+	 * @param season season to use (default: null == current season)
 	 * @param type export type (default: excel)
 	 *
 	 * @version 0.1

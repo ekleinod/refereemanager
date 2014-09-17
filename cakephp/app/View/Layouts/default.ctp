@@ -87,6 +87,7 @@
 															array('title' => __('Editor-Werkzeuge'), 'routing' => array('action' => 'index', 'controller' => 'tools_editor'),
 																		'role' => 'editor',
 																		'subnav' => array(
+																											array('title' => __('Mailverteiler'), 'routing' => array('action' => 'mailinglist', 'controller' => 'tools_editor')),
 																											array('title' => __('Nachricht'), 'routing' => array('action' => 'message', 'controller' => 'tools_editor')),
 																											)
 																		),
