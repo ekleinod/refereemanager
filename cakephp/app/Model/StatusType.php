@@ -67,6 +67,7 @@ class StatusType extends AppModel {
 	const SID_MANY = 'many';
 	const SID_NORMAL = 'normal';
 	const SID_INACTIVESEASON = 'inactiveseason';
+	const SID_MAILONLY = 'mailonly';
 	const SID_OTHER = 'other';
 
 }
