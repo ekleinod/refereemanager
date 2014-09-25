@@ -51,18 +51,20 @@ class ToolsEditorController extends AppController {
 	 * @since 0.1
 	 */
 	public function mailinglist($season = null) {
+
 		$this->set('title_for_layout', __('Mailverteiler'));
 
 		$theSeason = $this->Season->getSeason($season);
-		$this->set('season', $theSeason);
 
 		$referees = $this->Referee->getReferees($theSeason);
-		$this->set('referees', $referees);
 
 		$theSeparator = ',';
 		if (!empty($this->request->data)) {
 			$theSeparator = $this->request->data['ToolsEditor']['separator'];
 		}
+
+		$this->set('referees', $referees);
+		$this->set('season', $theSeason);
 		$this->set('separator', $theSeparator);
 
 	}

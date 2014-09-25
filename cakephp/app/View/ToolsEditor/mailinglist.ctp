@@ -13,22 +13,32 @@
 				$sMailinglist = "";
 				$bMore = false;
 				foreach ($referees as $referee) {
-					if ($bMore) {
-						$sMailinglist .= $separator;
+					$email = Referee::getPrimaryEmail($referee);
+					if ($email != null) {
+
+						if ($bMore) {
+							$sMailinglist .= $separator;
+						}
+						$sMailinglist .= $this->RefereeFormat->formatEMail($email, 'text');
+
+						$bMore = true;
 					}
-					$sMailinglist .= $referee['Person']['name'];
-					$bMore = true;
 				}
 				echo $this->RefereeForm->getInputField(null, 'textarea', 'mailinglist', __('Liste (eine Zeile)'), $sMailinglist, false, __('Liste'));
 
 				$sMailinglist = "";
 				$bMore = false;
 				foreach ($referees as $referee) {
-					if ($bMore) {
-						$sMailinglist .= $separator . "\n";
+					$email = Referee::getPrimaryEmail($referee);
+					if ($email != null) {
+
+						if ($bMore) {
+							$sMailinglist .= $separator . "\n";
+						}
+						$sMailinglist .= $this->RefereeFormat->formatEMail($email, 'text');
+
+						$bMore = true;
 					}
-					$sMailinglist .= $referee['Person']['name'];
-					$bMore = true;
 				}
 				echo $this->RefereeForm->getInputField(null, 'textarea', 'mailinglist', __('Liste (mehrere Zeilen)'), $sMailinglist, false, __('Liste'));
 
@@ -43,4 +53,6 @@
 	</fieldset>
 
 <?php echo $this->Form->end(); ?>
+
+<?php pr($referees) ?>
 

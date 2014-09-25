@@ -86,7 +86,7 @@ class RefereesController extends AppController {
 
 		$theSeason = $this->Season->getSeason($season);
 
-		$referees = $this->getReferees($theSeason);
+		$referees = $this->Referee->getReferees($theSeason);
 
 		$this->set('referees', $referees);
 		$this->set('season', $theSeason);
@@ -164,32 +164,6 @@ class RefereesController extends AppController {
 	}
 
 	/**
-	 * Returns the referees.
-	 *
-	 * @param $season season
-	 * @return array of referees
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getReferees($season) {
-		$referees = $this->Referee->getReferees($season);
-
-		$arrReturn = array();
-		foreach ($referees as $referee) {
-
-			$refTemp = $this->fillReferee($referee, $season);
-
-			if ($refTemp != null) {
-				$arrReturn[] = $refTemp;
-			}
-
-		}
-
-		return $arrReturn;
-	}
-
-	/**
 	 * Returns used referee relation types of referees.
 	 *
 	 * @param $referees array of referees
@@ -225,117 +199,6 @@ class RefereesController extends AppController {
 			$allrefereerelationtypes[$refereerelationtype['RefereeRelationType']['sid']] = $refereerelationtype['RefereeRelationType'];
 		}
 		return $allrefereerelationtypes;
-	}
-
-	/**
-	 * Fills the referee with the needed data.
-	 *
-	 * @param $referee referee to use
-	 * @param $season season (null if season should be ignored
-	 * @return referee
-	 * 	@retval null if the referee is not active this season
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function fillReferee($referee, $season) {
-
-		$refTemp = array();
-
-		// referee status
-		foreach ($referee['RefereeStatus'] as $refereestatus) {
-			if ($season == null) {
-				$refTemp['RefereeStatus'][] = $refereestatus;
-			} else {
-				if ($refereestatus['season_id'] == $season['id']) {
-					$temp = $this->StatusType->findById($refereestatus['status_type_id']);
-					$refTemp['RefereeStatus'] = $temp['StatusType'];
-				}
-			}
-		}
-
-		$refTemp['Referee'] = $referee['Referee'];
-		$refTemp['Person'] = $referee['Person'];
-
-		// referee relations
-		$refTemp['RefereeRelation'] = array();
-		foreach ($referee['RefereeRelation'] as $refereeRelation) {
-			if ($refereeRelation['club_id'] > 0) {
-				$refTemp['RefereeRelation'][$this->RefereeRelationType->getRelationTypeSID($refereeRelation['referee_relation_type_id'])][] = $this->Club->findById($refereeRelation['club_id']);
-			}
-			if ($refereeRelation['league_id'] > 0) {
-				$refTemp['RefereeRelation'][$this->RefereeRelationType->getRelationTypeSID($refereeRelation['referee_relation_type_id'])][] = $this->League->findById($refereeRelation['league_id']);
-			}
-			if ($refereeRelation['sex_type_id'] > 0) {
-				$refTemp['RefereeRelation'][$this->RefereeRelationType->getRelationTypeSID($refereeRelation['referee_relation_type_id'])][] = $this->SexType->findById($refereeRelation['sex_type_id']);
-			}
-			if (!empty($refereeRelation['saturday'])) {
-				$refTemp['RefereeRelation'][$this->RefereeRelationType->getRelationTypeSID($refereeRelation['referee_relation_type_id'])][]['Saturday'] = 'saturday';
-			}
-			if (!empty($refereeRelation['sunday'])) {
-				$refTemp['RefereeRelation'][$this->RefereeRelationType->getRelationTypeSID($refereeRelation['referee_relation_type_id'])][]['Sunday'] = 'sunday';
-			}
-			if (!empty($refereeRelation['remark'])) {
-				$refTemp['RefereeRelation'][$this->RefereeRelationType->getRelationTypeSID($refereeRelation['referee_relation_type_id'])][]['Remark'] = $refereeRelation['remark'];
-			}
-		}
-
-		// picture
-		$picture = $this->Picture->findByPersonId($referee['Person']['id']);
-		if ($picture) {
-			$refTemp['Picture'] = $picture['Picture'];
-		}
-
-		// contacts
-		$contacts = $this->Contact->findAllByPersonId($referee['Person']['id']);
-		$contactkinds = array('Address', 'Email', 'Url', 'PhoneNumber');
-		foreach ($contacts as $contact) {
-			foreach ($contactkinds as $contactkind) {
-				if ($contact[$contactkind]) {
-					$refTemp['Contact'][$contactkind][$contact['ContactType']['id']][] = $contact[$contactkind][0];
-				}
-			}
-		}
-
-		// training level type
-		foreach ($referee['TrainingLevel'] as $trainingLevel) {
-			$trainingLevelType = $this->TrainingLevelType->findById($trainingLevel['training_level_type_id']);
-			$useLevel = empty($referee['TrainingLevelInfo']);
-			if (!$useLevel) {
-				$useLevel = $trainingLevelType['TrainingLevelType']['rank'] > $referee['TrainingLevelInfo']['rank'];
-			}
-			if ($useLevel) {
-				$refTemp['TrainingLevelInfo'] = $trainingLevelType['TrainingLevelType'];
-				$refTemp['TrainingLevelInfo']['training_level_id'] = $trainingLevel['id'];
-				if (!empty($trainingLevel['since'])) {
-					$refTemp['TrainingLevelInfo']['since'] = $trainingLevel['since'];
-				}
-			}
-		}
-
-		// last training update
-		if ($refTemp['TrainingLevelInfo']['sid'] == TrainingLevelType::SID_ASSUMP) {
-			$trainingupdate = $this->TrainingUpdate->findByTrainingLevelId($refTemp['TrainingLevelInfo']['training_level_id'], array(), array('TrainingUpdate.update' => 'desc'));
-			if (!empty($trainingupdate) && !empty($trainingupdate['TrainingUpdate'])) {
-				$refTemp['TrainingLevelInfo']['lastupdate'] = $trainingupdate['TrainingUpdate']['update'];
-			}
-			if (!empty($refTemp['TrainingLevelInfo']['since'])) {
-				if (empty($refTemp['TrainingLevelInfo']['lastupdate']) || (strtotime($refTemp['TrainingLevelInfo']['since']) > strtotime($refTemp['TrainingLevelInfo']['lastupdate']))) {
-					$refTemp['TrainingLevelInfo']['lastupdate'] = $refTemp['TrainingLevelInfo']['since'];
-				}
-			}
-		}
-
-		// next training update
-		if (!empty($refTemp['TrainingLevelInfo']['lastupdate'])) {
-			$refTemp['TrainingLevelInfo']['nextupdate'] = strtotime('+2 years', strtotime($refTemp['TrainingLevelInfo']['lastupdate']));
-		}
-
-		// sex type
-		$temp = $this->SexType->findById($refTemp['Person']['sex_type_id']);
-		$refTemp['SexType'] = $temp['SexType'];
-
-		return $refTemp;
 	}
 
 	/**
