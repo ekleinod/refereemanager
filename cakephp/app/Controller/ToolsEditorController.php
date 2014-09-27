@@ -54,17 +54,26 @@ class ToolsEditorController extends AppController {
 
 		$this->set('title_for_layout', __('Mailverteiler'));
 
-		$theSeason = $this->Season->getSeason($season);
+		if (!empty($this->request->data) && array_key_exists('Filter', $this->request->data)) {
+			$theSeason = $this->Season->findById($this->request->data['Filter']['season']);
+			$theSeason = $theSeason['Season'];
+		} else {
+			$theSeason = $this->Season->getSeason($season);
+		}
+
+		$seasonarray = $this->Season->find('list');
+		asort($seasonarray, SORT_LOCALE_STRING);
 
 		$referees = $this->Referee->getReferees($theSeason);
 
 		$theSeparator = ',';
-		if (!empty($this->request->data)) {
+		if (!empty($this->request->data) && array_key_exists('ToolsEditor', $this->request->data)) {
 			$theSeparator = $this->request->data['ToolsEditor']['separator'];
 		}
 
 		$this->set('referees', $referees);
 		$this->set('season', $theSeason);
+		$this->set('seasonarray', $seasonarray);
 		$this->set('separator', $theSeparator);
 
 	}

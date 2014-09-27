@@ -1,9 +1,7 @@
-<!-- view filters -->
-<div class="filter">
-	<p>Saison: <?php echo $season['title_season']; ?></p>
-</div>
+<?php echo $this->element('filter');	?>
 
 <?php echo $this->Form->create('ToolsEditor'); ?>
+	<?php echo $this->Form->hidden('Filter.season', array('value' => $season['id'])); ?>
 
 	<fieldset>
 		<legend><?php echo __('Liste der E-Mail-Adressen'); ?></legend>
@@ -53,6 +51,4 @@
 	</fieldset>
 
 <?php echo $this->Form->end(); ?>
-
-<?php pr($referees) ?>
 
