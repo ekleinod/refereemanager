@@ -412,7 +412,7 @@ a.access-admin {
 	width: 100%;
 }
 
-/* forms (see <http://24ways.org/2009/have-a-field-day-with-html5-forms/>) */
+/* forms and filter (see <http://24ways.org/2009/have-a-field-day-with-html5-forms/>) */
 form fieldset {
 	margin-bottom: 10px;
 }
@@ -434,17 +434,17 @@ form fieldset fieldset legend {
 	padding-bottom: 0;
 }
 
-form ol li {
+form ol li, .filter ol li {
 	line-height: 21px;
 	list-style: none;
 	padding: 0 7px;
 }
 
-form ol ol li {
+form ol ol li, .filter ol ol li {
 	float: left;
 }
 
-form label {
+form label, .filter label {
 	font-weight: normal;
 	float: left;
 	width: 105px;
@@ -460,7 +460,7 @@ form fieldset fieldset label:hover {
 	cursor: pointer;
 }
 
-form li.required label {
+form li.required label, .currentfilter label {
 	font-family: "DroidSansBold", sans-serif;
 }
 
