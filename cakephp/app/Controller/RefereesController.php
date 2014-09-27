@@ -84,12 +84,21 @@ class RefereesController extends AppController {
 	 */
 	private function setAndGetStandardIndexExport($season = null) {
 
-		$theSeason = $this->Season->getSeason($season);
+		if (!empty($this->request->data) && array_key_exists('Filter', $this->request->data)) {
+			$theSeason = $this->Season->findById($this->request->data['Filter']['season']);
+			$theSeason = $theSeason['Season'];
+		} else {
+			$theSeason = $this->Season->getSeason($season);
+		}
+
+		$seasonarray = $this->Season->find('list');
+		asort($seasonarray, SORT_LOCALE_STRING);
 
 		$referees = $this->Referee->getReferees($theSeason);
 
 		$this->set('referees', $referees);
 		$this->set('season', $theSeason);
+		$this->set('seasonarray', $seasonarray);
 		$this->set('statustypes', $this->getStatusTypes($referees, $theSeason));
 		$this->set('refereerelationtypes', $this->getRefereeRelationTypes($referees));
 		$this->set('allrefereerelationtypes', $this->getAllRefereeRelationTypes());
