@@ -537,7 +537,7 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_league_games` (
   `game_number` INT UNSIGNED NOT NULL,
   `season_id` INT UNSIGNED NOT NULL,
   `league_id` INT UNSIGNED NOT NULL,
-  `venue_id` INT UNSIGNED NULL COMMENT 'Only filled if team plays outside their normal location.',
+  `team_venue_id` INT UNSIGNED NULL COMMENT 'Only filled if team plays outside their normal location.',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB
