@@ -220,16 +220,36 @@ COMMENT = 'Possible types of contacts, such as private, working.';
 
 
 -- -----------------------------------------------------
+-- Table `rfrmgr_clubs`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_clubs` ;
+
+CREATE TABLE IF NOT EXISTS `rfrmgr_clubs` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `abbreviation` VARCHAR(100) NULL,
+  `remark` TEXT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'All clubs.';
+
+
+-- -----------------------------------------------------
 -- Table `rfrmgr_contacts`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rfrmgr_contacts` ;
 
 CREATE TABLE IF NOT EXISTS `rfrmgr_contacts` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `contact_type_id` INT UNSIGNED NOT NULL,
+  `title` VARCHAR(100) NULL,
   `is_primary` TINYINT(1) NULL,
   `remark` TEXT NULL,
-  `contact_type_id` INT UNSIGNED NOT NULL,
   `person_id` INT UNSIGNED NULL,
+  `club_id` INT UNSIGNED NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB
@@ -295,25 +315,6 @@ COMMENT = 'All email adresses.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_clubs`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_clubs` ;
-
-CREATE TABLE IF NOT EXISTS `rfrmgr_clubs` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
-  `abbreviation` VARCHAR(100) NULL,
-  `remark` TEXT NULL,
-  `address_id` INT NOT NULL COMMENT 'standard address of the club. To be used if no address for a team is given.',
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'All clubs.';
-
-
--- -----------------------------------------------------
 -- Table `rfrmgr_training_level_types`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rfrmgr_training_level_types` ;
@@ -344,7 +345,6 @@ DROP TABLE IF EXISTS `rfrmgr_teams` ;
 CREATE TABLE IF NOT EXISTS `rfrmgr_teams` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `club_id` INT UNSIGNED NOT NULL,
-  `address_id` INT UNSIGNED NOT NULL COMMENT 'standard address of the club. To be used if no address for a team is given.',
   `number` INT UNSIGNED NULL,
   `name` VARCHAR(100) NULL,
   `remark` TEXT NULL,
@@ -492,6 +492,41 @@ COMMENT = 'Referee\'s assignments with their role.';
 
 
 -- -----------------------------------------------------
+-- Table `rfrmgr_team_seasons`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_team_seasons` ;
+
+CREATE TABLE IF NOT EXISTS `rfrmgr_team_seasons` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `team_id` INT UNSIGNED NOT NULL,
+  `season_id` INT UNSIGNED NOT NULL,
+  `league_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Association of teams in a specified season.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_team_venues`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_team_venues` ;
+
+CREATE TABLE IF NOT EXISTS `rfrmgr_team_venues` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `team_season_id` INT UNSIGNED NOT NULL,
+  `contact_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Venues of teams in a season.';
+
+
+-- -----------------------------------------------------
 -- Table `rfrmgr_league_games`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rfrmgr_league_games` ;
@@ -502,8 +537,7 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_league_games` (
   `game_number` INT UNSIGNED NOT NULL,
   `season_id` INT UNSIGNED NOT NULL,
   `league_id` INT UNSIGNED NOT NULL,
-  `address_id` INT UNSIGNED NULL COMMENT 'Only filled if team plays outside their normal location.',
-  `filled_referee_report_url` VARCHAR(200) NULL,
+  `venue_id` INT UNSIGNED NULL COMMENT 'Only filled if team plays outside their normal location.',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB
@@ -532,24 +566,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'Types of league game teams, such as home team, off team, etc /* comment truncated */ /*.*/';
-
-
--- -----------------------------------------------------
--- Table `rfrmgr_team_seasons`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_team_seasons` ;
-
-CREATE TABLE IF NOT EXISTS `rfrmgr_team_seasons` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `team_id` INT UNSIGNED NOT NULL,
-  `season_id` INT UNSIGNED NOT NULL,
-  `league_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'Association of teams in a specified season.';
 
 
 -- -----------------------------------------------------
@@ -751,7 +767,6 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_tournaments` (
   `name` VARCHAR(10) NOT NULL,
   `start` DATETIME NOT NULL,
   `end` DATETIME NOT NULL,
-  `address_id` INT UNSIGNED NOT NULL,
   `announcement_url` VARCHAR(200) NULL,
   `information_url` VARCHAR(200) NULL,
   `club_id` INT UNSIGNED NULL,
@@ -872,6 +887,23 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'Configuration of the application.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_team_venues_copy1`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_team_venues_copy1` ;
+
+CREATE TABLE IF NOT EXISTS `rfrmgr_team_venues_copy1` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `tournament_id` INT UNSIGNED NOT NULL,
+  `contact_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Venues of teams in a season.';
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
