@@ -890,11 +890,11 @@ COMMENT = 'Configuration of the application.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_team_venues_copy1`
+-- Table `rfrmgr_tournament_venues`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_team_venues_copy1` ;
+DROP TABLE IF EXISTS `rfrmgr_tournament_venues` ;
 
-CREATE TABLE IF NOT EXISTS `rfrmgr_team_venues_copy1` (
+CREATE TABLE IF NOT EXISTS `rfrmgr_tournament_venues` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `tournament_id` INT UNSIGNED NOT NULL,
   `contact_id` INT UNSIGNED NOT NULL,
@@ -903,7 +903,7 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_team_venues_copy1` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Venues of teams in a season.';
+COMMENT = 'Venues of tournaments.';
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
