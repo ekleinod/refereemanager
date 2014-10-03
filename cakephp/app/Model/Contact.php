@@ -41,17 +41,25 @@ class Contact extends AppModel {
 				'rule' => array('uuid'),
 			),
 		),
+		'contact_type_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+			),
+			'notempty' => array(
+				'rule' => array('notempty'),
+			),
+		),
 		'is_primary' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),
 			),
 		),
-		'contact_type_id' => array(
+		'person_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 			),
 		),
-		'person_id' => array(
+		'club_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 			),
@@ -64,7 +72,7 @@ class Contact extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $belongsTo = array('ContactType', 'Person');
+	public $belongsTo = array('ContactType', 'Person', 'Club');
 
 	/**
 	 * hasMany associations
@@ -72,7 +80,7 @@ class Contact extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $hasMany = array('Address', 'Email', 'PhoneNumber', 'Url');
+	public $hasMany = array('Address', 'Email', 'PhoneNumber', 'TeamVenue', 'TournamentVenue', 'Url');
 
 }
 

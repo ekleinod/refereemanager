@@ -62,11 +62,6 @@ class Tournament extends AppModel {
 				'rule' => array('notempty'),
 			),
 		),
-		'address_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
 		'announcement_url' => array(
 			'url' => array(
 				'rule' => array('url'),
@@ -95,7 +90,7 @@ class Tournament extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $belongsTo = array('Address', 'Club', 'Person');
+	public $belongsTo = array('Club', 'Person');
 
 	/**
 	 * hasMany associations
@@ -103,7 +98,7 @@ class Tournament extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $hasMany = array('TournamentGame');
+	public $hasMany = array('TournamentGame', 'TournamentVenue');
 
 }
 

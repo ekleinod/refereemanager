@@ -3,13 +3,13 @@
 App::uses('AppModel', 'Model');
 
 /**
- * LeagueGame Model
+ * TournamentVenue Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
  * @version 0.1
  * @since 0.1
  */
-class LeagueGame extends AppModel {
+class TournamentVenue extends AppModel {
 
 	/**
 	 * Declare virtual display field in constructor to be alias-safe.
@@ -19,9 +19,9 @@ class LeagueGame extends AppModel {
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		// I can't get this one working with season, league
-		$this->virtualFields['display_league_game'] = sprintf(
-			'CONCAT(%1$s.id, "-", %1$s.game_number)',
+		// I can't get this one working with other tables
+		$this->virtualFields['display_tournament_venue'] = sprintf(
+			'CONCAT(%1$s.id, "-", %1$s.tournament_id, "-", %1$s.contact_id)',
 			$this->alias
 		);
 	}
@@ -34,7 +34,7 @@ class LeagueGame extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $name = 'LeagueGame';
+	public $name = 'TournamentVenue';
 
 	/**
 	 * Display field
@@ -42,7 +42,7 @@ class LeagueGame extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $displayField = 'display_league_game';
+	public $displayField = 'display_tournament_venue';
 
 	/**
 	 * Validation rules
@@ -56,27 +56,12 @@ class LeagueGame extends AppModel {
 				'rule' => array('uuid'),
 			),
 		),
-		'assignment_id' => array(
+		'tournament_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 			),
 		),
-		'game_number' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'season_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'league_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'team_venue_id' => array(
+		'contact_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 			),
@@ -89,15 +74,7 @@ class LeagueGame extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $belongsTo = array('Assignment', 'Season', 'League', 'TeamVenue');
-
-	/**
-	 * hasMany associations
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public $hasMany = array('LeagueGameTeam');
+	public $belongsTo = array('Contact', 'Tournament');
 
 }
 

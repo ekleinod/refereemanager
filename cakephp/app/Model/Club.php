@@ -46,20 +46,7 @@ class Club extends AppModel {
 				'rule' => array('notempty'),
 			),
 		),
-		'address_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
 	);
-
-	/**
-	 * belongsTo associations
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public $belongsTo = array('Address');
 
 	/**
 	 * hasMany associations
@@ -67,7 +54,7 @@ class Club extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $hasMany = array('RefereeRelation', 'Spokesperson', 'Team', 'Tournament');
+	public $hasMany = array('Contact', 'RefereeRelation', 'Spokesperson', 'Team', 'Tournament');
 
 }
 

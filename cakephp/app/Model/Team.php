@@ -61,11 +61,6 @@ class Team extends AppModel {
 				'rule' => array('numeric'),
 			),
 		),
-		'address_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
 		'number' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
@@ -79,7 +74,7 @@ class Team extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $belongsTo = array('Club', 'Address');
+	public $belongsTo = array('Club');
 
 	/**
 	 * hasMany associations
