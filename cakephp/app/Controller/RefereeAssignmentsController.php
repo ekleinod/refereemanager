@@ -13,10 +13,10 @@ App::uses('RefManRefereeFormat', 'Utility');
 class RefereeAssignmentsController extends AppController {
 
 	/** Helper classes. */
-	public $helpers = array('RefereeFormat');
+	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Club', 'League', 'LeagueGame', 'Referee', 'Season');
+	public $uses = array('Club', 'League', 'LeagueGame', 'Referee', 'RefereeAssignment', 'Season');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
@@ -26,7 +26,6 @@ class RefereeAssignmentsController extends AppController {
 
 		$this->Club->recursive = -1;
 		$this->League->recursive = -1;
-//		$this->LeagueGame->recursive = -1;
 		$this->Referee->recursive = -1;
 	}
 
@@ -46,6 +45,61 @@ class RefereeAssignmentsController extends AppController {
 	}
 
 	/**
+	 * View method: show the refereeassignment with the given id.
+	 *
+	 * @param $id id of refereeassignment
+	 * @return void
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function view($id = null) {
+
+		$this->RefereeAssignment->id = $id;
+		if (!$this->RefereeAssignment->exists()) {
+			throw new NotFoundException(__('Schiedsrichtereinsatz mit der ID \'%s\' existiert nicht.', $id));
+		}
+		$refereeassignment = $this->RefereeAssignment->read(null, $id);
+
+		$this->setAndGetStandardNewAddView($refereeassignment);
+		$this->set('title_for_layout', __('Detailanzeige Schiedsrichtereinsatz'));
+	}
+
+	/**
+	 * Add method: add new referee assignment.
+	 *
+	 * @return void
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function add() {
+		$this->setAndGetStandardNewAddView($refereeassignment);
+		$this->set('title_for_layout', __('Schiedsrichtereinsatz anlegen'));
+	}
+
+	/**
+	 * Edit method: edit the referee assignment with the given id.
+	 *
+	 * @param $id id of refereeassignment
+	 * @return void
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function edit($id = null) {
+
+		$this->RefereeAssignment->id = $id;
+		if (!$this->RefereeAssignment->exists()) {
+			throw new NotFoundException(__('Schiedsrichtereinsatz mit der ID \'%s\' existiert nicht.', $id));
+		}
+		$refereeassignment = $this->RefereeAssignment->read(null, $id);
+
+		$this->setAndGetStandardNewAddView($refereeassignment);
+		$this->set('title_for_layout', __('Schiedsrichtereinsatz editieren'));
+	}
+
+	/**
 	 * Set and get standard values.
 	 *
 	 * @param season season (default: null == current season)
@@ -55,12 +109,37 @@ class RefereeAssignmentsController extends AppController {
 	 */
 	private function setAndGetStandard($season = null) {
 
-		$theSeason = $this->Season->getSeason($season);
+		if (!empty($this->request->data) && array_key_exists('Filter', $this->request->data)) {
+			$theSeason = $this->Season->findById($this->request->data['Filter']['season']);
+			$theSeason = $theSeason['Season'];
+		} else {
+			$theSeason = $this->Season->getSeason($season);
+		}
+
+		$seasonarray = $this->Season->find('list');
+		asort($seasonarray, SORT_LOCALE_STRING);
 
 		$refereeassignments = $this->getRefereeAssignments($theSeason);
 
 		$this->set('refereeassignments', $refereeassignments);
 		$this->set('season', $theSeason);
+		$this->set('seasonarray', $seasonarray);
+	}
+
+	/**
+	 * Set and get standard values for new, add, view.
+	 *
+	 * @param $refereeassignment refereeassignment
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	private function setAndGetStandardNewAddView(&$refereeassignment) {
+
+		// pass information to view
+		$this->set('refereeassignment', $refereeassignment);
+
+		$this->set('id', $refereeassignment['RefereeAssignment']['id']);
 	}
 
 	/**

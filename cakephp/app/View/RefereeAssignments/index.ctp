@@ -1,10 +1,6 @@
-<?php echo $this->element('actions_header');	?>
-<!-- header actions -->
+<?php echo $this->element('filter');	?>
 
-<!-- view filters -->
-<div class="filter">
-	<p>Saison: <?php echo $season['title_season']; ?></p>
-</div>
+<?php echo $this->element('actions_header');	?>
 
 <!-- view content -->
 <?php

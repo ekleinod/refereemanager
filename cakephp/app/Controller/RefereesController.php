@@ -127,7 +127,7 @@ class RefereesController extends AppController {
 	}
 
 	/**
-	 * Edi method: edit the referee with the given id.
+	 * Edit method: edit the referee with the given id.
 	 *
 	 * @param $id id of referee
 	 * @return void
