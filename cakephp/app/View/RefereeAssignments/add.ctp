@@ -2,5 +2,3 @@
 
 <?php echo $this->element('RefereeAssignments/form', array('action' => 'add')); ?>
 
-<?php pr($refereeassignment); ?>
-

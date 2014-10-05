@@ -16,7 +16,7 @@ class RefereeAssignmentsController extends AppController {
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Club', 'League', 'LeagueGame', 'Referee', 'RefereeAssignment', 'Season');
+	public $uses = array('Assignment', 'Club', 'League', 'LeagueGame', 'Referee', 'RefereeAssignment', 'Season');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
@@ -74,8 +74,27 @@ class RefereeAssignmentsController extends AppController {
 	 * @since 0.1
 	 */
 	public function add() {
-		$this->setAndGetStandardNewAddView($refereeassignment);
+
+		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('RefereeAssignment', $this->request->data)) {
+
+			$tmpData = array();
+			$tmpData['Assignment'] = array();
+			$tmpData['Assignment']['start'] = RefManRefereeFormat::sqlFromDateTime($this->request->data['RefereeAssignment']['start']['date'], $this->request->data['RefereeAssignment']['start']['time']);
+
+			$this->Assignment->create();
+			if ($this->Assignment->save($tmpData)) {
+
+				$this->Session->setFlash(__('Der Schiedsrichtereinsatz wurde gespeichert.'));
+				$this->redirect(array('action' => 'edit', $this->Assignment->id));
+			} else {
+				$this->Session->setFlash(__('Der Schiedsrichtereinsatz konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
+			}
+
+		}
+
+		$this->setAndGetStandardNewAddView();
 		$this->set('title_for_layout', __('Schiedsrichtereinsatz anlegen'));
+
 	}
 
 	/**
@@ -109,7 +128,7 @@ class RefereeAssignmentsController extends AppController {
 	 */
 	private function setAndGetStandard($season = null) {
 
-		if (!empty($this->request->data) && array_key_exists('Filter', $this->request->data)) {
+		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('Filter', $this->request->data)) {
 			$theSeason = $this->Season->findById($this->request->data['Filter']['season']);
 			$theSeason = $theSeason['Season'];
 		} else {
@@ -134,12 +153,14 @@ class RefereeAssignmentsController extends AppController {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	private function setAndGetStandardNewAddView(&$refereeassignment) {
+	private function setAndGetStandardNewAddView(&$refereeassignment = null) {
 
-		// pass information to view
-		$this->set('refereeassignment', $refereeassignment);
-
-		$this->set('id', $refereeassignment['RefereeAssignment']['id']);
+		if ($refereeassignment === null) {
+			$this->set('refereeassignment', array());
+		} else {
+			$this->set('refereeassignment', $refereeassignment);
+			$this->set('id', $refereeassignment['RefereeAssignment']['id']);
+		}
 	}
 
 	/**

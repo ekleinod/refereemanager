@@ -2,5 +2,4 @@
 
 <?php echo $this->element('RefereeAssignments/form', array('action' => 'view')); ?>
 
-<?php pr($refereeassignment); ?>
 

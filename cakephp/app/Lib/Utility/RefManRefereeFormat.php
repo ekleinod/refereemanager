@@ -17,6 +17,28 @@ App::uses('CakeTime', 'Utility');
 class RefManRefereeFormat {
 
 	/**
+	 * Format given date/time for SQL.
+	 *
+	 * @param string $date date to format
+	 * @param string $time time to format
+	 * @return string formatted string
+	 */
+	public function sqlFromDateTime($date, $time = null) {
+
+		if (($date === null) || empty($date)) {
+			return null;
+		}
+
+		if ($time === null) {
+			$datetime = CakeTime::fromString($date);
+		} else {
+			$datetime = CakeTime::fromString(sprintf('%s %s', $date, $time));
+		}
+
+		return CakeTime::format($datetime, '%Y-%m-%d %H:%M:%S');;
+	}
+
+	/**
 	 * Format given date/time according to specified type.
 	 *
 	 * @param string $data data to format

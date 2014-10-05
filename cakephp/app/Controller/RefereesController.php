@@ -84,7 +84,7 @@ class RefereesController extends AppController {
 	 */
 	private function setAndGetStandardIndexExport($season = null) {
 
-		if (!empty($this->request->data) && array_key_exists('Filter', $this->request->data)) {
+		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('Filter', $this->request->data)) {
 			$theSeason = $this->Season->findById($this->request->data['Filter']['season']);
 			$theSeason = $theSeason['Season'];
 		} else {
