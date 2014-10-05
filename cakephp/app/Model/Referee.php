@@ -260,21 +260,23 @@ class Referee extends AppModel {
 		}
 
 		// last training update
-		if ($refTemp['TrainingLevelInfo']['sid'] == TrainingLevelType::SID_ASSUMP) {
-			$trainingupdate = $modelTrainingUpdate->findByTrainingLevelId($refTemp['TrainingLevelInfo']['training_level_id'], array(), array('TrainingUpdate.update' => 'desc'));
-			if (!empty($trainingupdate) && !empty($trainingupdate['TrainingUpdate'])) {
-				$refTemp['TrainingLevelInfo']['lastupdate'] = $trainingupdate['TrainingUpdate']['update'];
-			}
-			if (!empty($refTemp['TrainingLevelInfo']['since'])) {
-				if (empty($refTemp['TrainingLevelInfo']['lastupdate']) || (strtotime($refTemp['TrainingLevelInfo']['since']) > strtotime($refTemp['TrainingLevelInfo']['lastupdate']))) {
-					$refTemp['TrainingLevelInfo']['lastupdate'] = $refTemp['TrainingLevelInfo']['since'];
-				}
+		$trainingupdate = $modelTrainingUpdate->findByTrainingLevelId($refTemp['TrainingLevelInfo']['training_level_id'], array(), array('TrainingUpdate.update' => 'desc'));
+		if (!empty($trainingupdate) && !empty($trainingupdate['TrainingUpdate'])) {
+			$refTemp['TrainingLevelInfo']['lastupdate'] = $trainingupdate['TrainingUpdate']['update'];
+		}
+		if (!empty($refTemp['TrainingLevelInfo']['since'])) {
+			if (empty($refTemp['TrainingLevelInfo']['lastupdate']) || (strtotime($refTemp['TrainingLevelInfo']['since']) > strtotime($refTemp['TrainingLevelInfo']['lastupdate']))) {
+				$refTemp['TrainingLevelInfo']['lastupdate'] = $refTemp['TrainingLevelInfo']['since'];
 			}
 		}
 
 		// next training update
 		if (!empty($refTemp['TrainingLevelInfo']['lastupdate'])) {
-			$refTemp['TrainingLevelInfo']['nextupdate'] = strtotime('+2 years', strtotime($refTemp['TrainingLevelInfo']['lastupdate']));
+			$updateTime = 3;
+			if ($refTemp['TrainingLevelInfo']['sid'] == TrainingLevelType::SID_ASSUMP) {
+				$updateTime = 2;
+			}
+			$refTemp['TrainingLevelInfo']['nextupdate'] = strtotime(sprintf('+%d years', $updateTime), strtotime($refTemp['TrainingLevelInfo']['lastupdate']));
 		}
 
 		// sex type
