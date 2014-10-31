@@ -70,11 +70,11 @@
 																											//array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'referees')),
 																											)
 																		),
-															array('title' => __('Schiedsrichtereinsätze'), 'routing' => array('action' => 'index', 'controller' => 'referee_assignments'),
+															array('title' => __('Schiedsrichtereinsätze'), 'routing' => array('action' => 'index', 'controller' => 'assignments'),
 																		'subnav' => array(
-																											array('title' => __('Ansehen'), 'routing' => array('action' => 'index', 'controller' => 'referee_assignments')),
-																											//array('title' => __('Suchen'), 'routing' => array('action' => 'search', 'controller' => 'referee_assignments')),
-																											//array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'referee_assignments')),
+																											array('title' => __('Ansehen'), 'routing' => array('action' => 'index', 'controller' => 'assignments')),
+																											//array('title' => __('Suchen'), 'routing' => array('action' => 'search', 'controller' => 'assignments')),
+																											//array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'assignments')),
 																											)
 																		),
 															array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams'),
