@@ -7,7 +7,7 @@ App::uses('RefManRefereeFormat', 'Utility');
  * Assignments Controller
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class AssignmentsController extends AppController {
@@ -34,12 +34,12 @@ class AssignmentsController extends AppController {
 	 *
 	 * @param season season to export (default: null == current season)
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function index($season = null) {
 
-		$this->setAndGetStandard();
+		$this->setAndGetStandardIndex($season);
 
 		$this->set('title_for_layout', __('Übersicht der Schiedsrichtereinsätze'));
 	}
@@ -50,7 +50,7 @@ class AssignmentsController extends AppController {
 	 * @param $id id of assignment
 	 * @return void
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function view($id = null) {
@@ -61,7 +61,7 @@ class AssignmentsController extends AppController {
 		}
 		$assignment = $this->Assignment->read(null, $id);
 
-		$this->setAndGetStandardNewAddView($assignment);
+		$this->setAndGetStandardNewAddView(null, $assignment);
 		$this->set('title_for_layout', __('Detailanzeige Schiedsrichtereinsatz'));
 	}
 
@@ -70,7 +70,7 @@ class AssignmentsController extends AppController {
 	 *
 	 * @return void
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function add() {
@@ -84,8 +84,21 @@ class AssignmentsController extends AppController {
 			$this->Assignment->create();
 			if ($this->Assignment->save($tmpData)) {
 
-				$this->Session->setFlash(__('Der Schiedsrichtereinsatz wurde gespeichert.'));
-				$this->redirect(array('action' => 'edit', $this->Assignment->id));
+				$tmpData = array();
+				$tmpData['LeagueGame'] = $this->request->data['Assignment']['LeagueGame'];
+				$tmpData['LeagueGame']['assignment_id'] = $this->Assignment->id;
+
+				$this->LeagueGame->create();
+				if ($this->LeagueGame->save($tmpData)) {
+
+					$this->Session->setFlash(__('Der Schiedsrichtereinsatz wurde gespeichert.'));
+					$this->redirect(array('action' => 'edit', $this->Assignment->id));
+				} else {
+
+					$this->Assignment->delete($this->Assignment->id);
+
+					$this->Session->setFlash(__('Der Schiedsrichtereinsatz konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
+				}
 			} else {
 				$this->Session->setFlash(__('Der Schiedsrichtereinsatz konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
 			}
@@ -103,7 +116,7 @@ class AssignmentsController extends AppController {
 	 * @param $id id of assignment
 	 * @return void
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function edit($id = null) {
@@ -114,46 +127,41 @@ class AssignmentsController extends AppController {
 		}
 		$assignment = $this->Assignment->read(null, $id);
 
-		$this->setAndGetStandardNewAddView($assignment);
+		$this->setAndGetStandardNewAddView(null, $assignment);
 		$this->set('title_for_layout', __('Schiedsrichtereinsatz editieren'));
 	}
 
 	/**
-	 * Set and get standard values.
+	 * Set and get standard values for index.
 	 *
 	 * @param season season (default: null == current season)
 	 *
-	 * @version 0.1
-	 * @since 0.1
+	 * @version 0.3
+	 * @since 0.3
 	 */
-	private function setAndGetStandard($season = null) {
+	private function setAndGetStandardIndex($season = null) {
 
-		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('Filter', $this->request->data)) {
-			$theSeason = $this->Season->findById($this->request->data['Filter']['season']);
-			$theSeason = $theSeason['Season'];
-		} else {
-			$theSeason = $this->Season->getSeason($season);
-		}
-
-		$seasonarray = $this->Season->find('list');
-		asort($seasonarray, SORT_LOCALE_STRING);
+		$theSeason = $this->getSeason($season);
+		$this->setAndGetStandard();
 
 		$assignments = $this->getAssignments($theSeason);
-
 		$this->set('assignments', $assignments);
-		$this->set('season', $theSeason);
-		$this->set('seasonarray', $seasonarray);
+
 	}
 
 	/**
 	 * Set and get standard values for new, add, view.
 	 *
+	 * @param season season (default: null == current season)
 	 * @param $assignment assignment
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	private function setAndGetStandardNewAddView(&$assignment = null) {
+	private function setAndGetStandardNewAddView($season = null, &$assignment = null) {
+
+		$theSeason = $this->getSeason($season);
+		$this->setAndGetStandard();
 
 		if ($assignment === null) {
 			$this->set('assignment', array());
@@ -161,6 +169,47 @@ class AssignmentsController extends AppController {
 			$this->set('assignment', $assignment);
 			$this->set('id', $assignment['Assignment']['id']);
 		}
+
+		$leaguearray = $this->League->find('list');
+		asort($leaguearray, SORT_LOCALE_STRING);
+		$this->set('leaguearray', $leaguearray);
+
+	}
+
+	/**
+	 * Set and get standard values.
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	private function setAndGetStandard() {
+
+		$seasonarray = $this->Season->find('list');
+		asort($seasonarray, SORT_LOCALE_STRING);
+
+		$this->set('seasonarray', $seasonarray);
+
+	}
+
+	/**
+	 * Returns season (default, stated, or from filter).
+	 *
+	 * @param season season (default: null == current season)
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	private function getSeason($season = null) {
+
+		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('Filter', $this->request->data)) {
+			$theSeason = $this->Season->findById($this->request->data['Filter']['season']);
+			$theSeason = $theSeason['Season'];
+		} else {
+			$theSeason = $this->Season->getSeason($season);
+		}
+		$this->set('season', $theSeason);
+
+		return $theSeason;
 	}
 
 	/**
@@ -169,12 +218,12 @@ class AssignmentsController extends AppController {
 	 * @param $season season
 	 * @return array of assignments
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	private function getAssignments($season) {
-		$leaguegames = $this->LeagueGame->find('all');//todo where season clause
-		usort($leaguegames, array('AssignmentsController', 'compareTo'));
+
+		$leaguegames = $this->LeagueGame->findAllBySeasonId($season['id']);
 
 		$arrReturn = array();
 		foreach ($leaguegames as $leaguegame) {
@@ -278,41 +327,6 @@ class AssignmentsController extends AppController {
 		asort($clubarray, SORT_LOCALE_STRING);
 
 		return $clubarray;
-	}
-
-	/**
-	 * Compare two objects.
-	 *
-	 * @param a first object
-	 * @param b second object
-	 * @return comparison result
-	 *  @retval -1 a<b
-	 *  @retval 0 a==b
-	 *  @retval 1 a>b
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public static function compareTo($a, $b) {
-
-		// first criterion: name
-		if ($a['Person']['name'] < $b['Person']['name']) {
-			return -1;
-		}
-		if ($a['Person']['name'] > $b['Person']['name']) {
-			return 1;
-		}
-
-		// second criterion: first name
-		if ($a['Person']['first_name'] < $b['Person']['first_name']) {
-			return -1;
-		}
-		if ($a['Person']['first_name'] > $b['Person']['first_name']) {
-			return 1;
-		}
-
-		// equal
-		return 0;
 	}
 
 }

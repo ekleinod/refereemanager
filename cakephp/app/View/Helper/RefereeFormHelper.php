@@ -1,8 +1,4 @@
 <?php
-/**
- * RefereeForm Helper class file.
- *
- */
 
 App::uses('AppHelper', 'View/Helper');
 
@@ -10,6 +6,10 @@ App::uses('AppHelper', 'View/Helper');
  * RefereeForm Helper class for referee manager specific form operations.
  *
  * @package       View.Helper
+ *
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.3
+ * @since 0.1
  */
 class RefereeFormHelper extends AppHelper {
 
@@ -18,6 +18,9 @@ class RefereeFormHelper extends AppHelper {
 
 	/**
 	 * Returns text label and field.
+	 *
+	 * @version 0.3
+	 * @since 0.3
 	 */
 	public function getInputField($action, $type, $fieldid, $title, $value = null, $required = false, $placeholder = null, $maxlength = 100, $autofocus = false, $values = null) {
 
