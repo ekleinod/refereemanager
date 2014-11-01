@@ -21,7 +21,8 @@ class Assignment extends AppModel {
 		parent::__construct($id, $table, $ds);
 		// I can't get this one working with game number and season, so I program a simple (but possibly bad) workaround
 		$this->virtualFields['display_assignment'] = sprintf(
-			'CONCAT(%1$s.id, "-", %1$s.start)',
+			'CONCAT(%1$s.start)',
+//			'CONCAT(%1$s.id, "-", %1$s.start)',
 			$this->alias
 		);
 	}
@@ -73,12 +74,20 @@ class Assignment extends AppModel {
 	);
 
 	/**
-	 * hasMany associations
+	 * hasOne associations
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $hasMany = array('LeagueGame', 'RefereeAssignment', 'TournamentGame');
+	public $hasOne = array('LeagueGame', 'TournamentGame');
+
+	/**
+	 * hasMany associations
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	public $hasMany = array('RefereeAssignment');
 
 }
 

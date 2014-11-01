@@ -23,7 +23,7 @@ class RefManRefereeFormat {
 	 * @param string $time time to format
 	 * @return string formatted string
 	 */
-	public function sqlFromDateTime($date, $time = null) {
+	public static function sqlFromDateTime($date, $time = null) {
 
 		if (($date === null) || empty($date)) {
 			return null;
@@ -45,7 +45,7 @@ class RefManRefereeFormat {
 	 * @param string $type format type
 	 * @return string formatted string
 	 */
-	public function formatDate($data, $type) {
+	public static function formatDate($data, $type) {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -96,7 +96,7 @@ class RefManRefereeFormat {
 	 * @param string $datetype format type for dates (default 'date')
 	 * @return string formatted string
 	 */
-	public function formatPerson($data, $type, $datetype = 'date') {
+	public static function formatPerson($data, $type, $datetype = 'date') {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -150,7 +150,7 @@ class RefManRefereeFormat {
 	 * @param string $type format type
 	 * @return string formatted string
 	 */
-	public function formatEMail($data, $type) {
+	public static function formatEMail($data, $type) {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -178,7 +178,7 @@ class RefManRefereeFormat {
 	 * @param string $type format type
 	 * @return string formatted string
 	 */
-	public function formatPhone($data, $type) {
+	public static function formatPhone($data, $type) {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -213,7 +213,7 @@ class RefManRefereeFormat {
 	 * @param string $type format type
 	 * @return string formatted string
 	 */
-	public function formatURL($data, $type) {
+	public static function formatURL($data, $type) {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -241,7 +241,7 @@ class RefManRefereeFormat {
 	 * @param string $type format type
 	 * @return string formatted string
 	 */
-	public function formatAddress($data, $type) {
+	public static function formatAddress($data, $type) {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -300,7 +300,7 @@ class RefManRefereeFormat {
 	 * @param string $sep separator
 	 * @return string formatted string
 	 */
-	public function formatRelationBySID($data, $sid, $sep = '; ') {
+	public static function formatRelationBySID($data, $sid, $sep = '; ') {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -320,7 +320,7 @@ class RefManRefereeFormat {
 	 * @param string $sep separator
 	 * @return string formatted string
 	 */
-	public function formatRelation($data, $sep = '; ') {
+	public static function formatRelation($data, $sep = '; ') {
 
 		if (($data === null) || empty($data)) {
 			return '';

@@ -77,28 +77,13 @@ class AssignmentsController extends AppController {
 
 		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('Assignment', $this->request->data)) {
 
-			$tmpData = array();
-			$tmpData['Assignment'] = array();
+			$tmpData = $this->request->data;
 			$tmpData['Assignment']['start'] = RefManRefereeFormat::sqlFromDateTime($this->request->data['Assignment']['start']['date'], $this->request->data['Assignment']['start']['time']);
 
 			$this->Assignment->create();
-			if ($this->Assignment->save($tmpData)) {
-
-				$tmpData = array();
-				$tmpData['LeagueGame'] = $this->request->data['Assignment']['LeagueGame'];
-				$tmpData['LeagueGame']['assignment_id'] = $this->Assignment->id;
-
-				$this->LeagueGame->create();
-				if ($this->LeagueGame->save($tmpData)) {
-
-					$this->Session->setFlash(__('Der Schiedsrichtereinsatz wurde gespeichert.'));
-					$this->redirect(array('action' => 'edit', $this->Assignment->id));
-				} else {
-
-					$this->Assignment->delete($this->Assignment->id);
-
-					$this->Session->setFlash(__('Der Schiedsrichtereinsatz konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
-				}
+			if ($this->Assignment->saveAssociated($tmpData, array('deep' => true))) {
+				$this->Session->setFlash(__('Der Schiedsrichtereinsatz wurde gespeichert.'));
+				$this->redirect(array('action' => 'edit', $this->Assignment->id));
 			} else {
 				$this->Session->setFlash(__('Der Schiedsrichtereinsatz konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
 			}
@@ -125,6 +110,21 @@ class AssignmentsController extends AppController {
 		if (!$this->Assignment->exists()) {
 			throw new NotFoundException(__('Schiedsrichtereinsatz mit der ID \'%s\' existiert nicht.', $id));
 		}
+
+		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('Assignment', $this->request->data)) {
+
+			$tmpData = $this->request->data;
+			$tmpData['Assignment']['start'] = RefManRefereeFormat::sqlFromDateTime($this->request->data['Assignment']['start']['date'], $this->request->data['Assignment']['start']['time']);
+
+			if ($this->Assignment->saveAssociated($tmpData, array('deep' => true))) {
+				$this->Session->setFlash(__('Der geänderte Schiedsrichtereinsatz wurde gespeichert.'));
+			} else {
+				$this->Session->setFlash(__('Der geänderte Schiedsrichtereinsatz konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
+				pr($tmpData);
+			}
+
+		}
+
 		$assignment = $this->Assignment->read(null, $id);
 
 		$this->setAndGetStandardNewAddView(null, $assignment);
