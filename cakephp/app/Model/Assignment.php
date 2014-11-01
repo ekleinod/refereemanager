@@ -53,24 +53,9 @@ class Assignment extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'start' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-			'datetime' => array(
-				'rule' => array('datetime'),
-			),
-		),
-		'end' => array(
-			'datetime' => array(
-				'rule' => array('datetime'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'start' => array('notempty', 'datetime'),
+		'end' => array('datetime'),
 	);
 
 	/**

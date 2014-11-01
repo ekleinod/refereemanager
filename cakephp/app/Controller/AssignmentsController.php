@@ -106,11 +106,6 @@ class AssignmentsController extends AppController {
 	 */
 	public function edit($id = null) {
 
-		$this->Assignment->id = $id;
-		if (!$this->Assignment->exists()) {
-			throw new NotFoundException(__('Schiedsrichtereinsatz mit der ID \'%s\' existiert nicht.', $id));
-		}
-
 		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('Assignment', $this->request->data)) {
 
 			$tmpData = $this->request->data;
@@ -120,9 +115,17 @@ class AssignmentsController extends AppController {
 				$this->Session->setFlash(__('Der geänderte Schiedsrichtereinsatz wurde gespeichert.'));
 			} else {
 				$this->Session->setFlash(__('Der geänderte Schiedsrichtereinsatz konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
-				pr($tmpData);
 			}
 
+			//debug($this->Assignment->validationErrors);
+			//debug($tmpData);
+			$this->redirect(array('action' => 'edit', $this->Assignment->id));
+
+		}
+
+		$this->Assignment->id = $id;
+		if (!$this->Assignment->exists()) {
+			throw new NotFoundException(__('Schiedsrichtereinsatz mit der ID \'%s\' existiert nicht.', $id));
 		}
 
 		$assignment = $this->Assignment->read(null, $id);

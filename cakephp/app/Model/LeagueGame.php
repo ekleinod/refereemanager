@@ -51,36 +51,12 @@ class LeagueGame extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'assignment_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'game_number' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'season_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'league_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'team_venue_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'assignment_id' => array('notempty', 'numeric'),
+		'game_number' => array('notempty', 'numeric'),
+		'season_id' => array('notempty', 'numeric'),
+		'league_id' => array('notempty', 'numeric'),
+		'team_venue_id' => array('numeric'),
 	);
 
 	/**
