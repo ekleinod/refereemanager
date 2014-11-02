@@ -62,7 +62,7 @@ class Assignment extends AppModel {
 	 * hasOne associations
 	 *
 	 * @version 0.3
-	 * @since 0.1
+	 * @since 0.3
 	 */
 	public $hasOne = array('LeagueGame', 'TournamentGame');
 

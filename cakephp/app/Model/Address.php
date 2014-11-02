@@ -46,35 +46,15 @@ class Address extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'contact_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'street' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'number' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'city' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'contact_id' => array('notempty', 'numeric'),
+		'street' => array('notempty'),
+		'number' => array('notempty'),
+		'city' => array('notempty'),
 	);
 
 	/**
@@ -84,14 +64,6 @@ class Address extends AppModel {
 	 * @since 0.1
 	 */
 	public $belongsTo = array('Contact');
-
-	/**
-	 * hasMany associations
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public $hasMany = array('Club', 'LeagueGame', 'Team', 'Tournament');
 
 }
 

@@ -32,45 +32,17 @@ class ActivityLog extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'database_table_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'database_column_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'row_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'new_value' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'user_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'created' => array(
-			'datetime' => array(
-				'rule' => array('datetime'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'database_table_id' => array('notempty', 'numeric'),
+		'database_column_id' => array('notempty', 'numeric'),
+		'row_id' => array('notempty', 'numeric'),
+		'new_value' => array('notempty'),
+		'user_id' => array('notempty', 'numeric'),
+		'created' => array('datetime'),
 	);
 
 	/**
