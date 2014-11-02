@@ -22,6 +22,7 @@
 
 App::uses('Controller', 'Controller');
 App::uses('Security', 'Utility'); // use more secure salt hash
+App::uses('PhpReader', 'Configure');
 
 /**
  * Application Controller
@@ -66,6 +67,7 @@ class AppController extends Controller {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
+		Configure::config('refman', new PhpReader());
 		Configure::write('Config.language', $this->Session->read('Config.language'));
 
 		Security::setHash('sha512');
@@ -101,6 +103,7 @@ class AppController extends Controller {
 
 		Configure::write('RefMan.refreport.path', 'files/refereereports/');
 		Configure::write('RefMan.refreport.pattern', 'OSR_%s_%02d_');
+
 	}
 
 	/**
