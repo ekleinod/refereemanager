@@ -16,7 +16,7 @@ class AssignmentsController extends AppController {
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Assignment', 'Club', 'League', 'LeagueGame', 'Referee', 'RefereeAssignment', 'Season');
+	public $uses = array('Assignment', 'League', 'LeagueGame', 'Referee', 'RefereeAssignment', 'Season');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
@@ -24,7 +24,6 @@ class AssignmentsController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		$this->Club->recursive = -1;
 		$this->League->recursive = -1;
 		$this->Referee->recursive = -1;
 	}
@@ -205,110 +204,16 @@ class AssignmentsController extends AppController {
 	 */
 	private function getAssignments($season) {
 
-		$leaguegames = $this->LeagueGame->findAllBySeasonId($season['id']);
+		$this->Assignment->recursive = 2;
 
-		$arrReturn = array();
-		foreach ($leaguegames as $leaguegame) {
-			$arrReturn[] = $this->fillAssignment($leaguegame);
+		$assignments = $this->Assignment->find('all', array('conditions' => array('LeagueGame.season_id' => $season['id'])));
+
+		foreach ($assignments as &$assignment) {
+			// status (todo)
+			$assignment['status'] = 'normal'; // or changed
 		}
 
-		return $arrReturn;
-	}
-
-	/**
-	 * Fills the assignment with the needed data.
-	 *
-	 * @param $leaguegame league game to use
-	 * @param $season season (null if season should be ignored)
-	 * @return referee assignment
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function fillAssignment($leaguegame, $season = null) {
-
-		$arrReturn = array();
-
-		// id
-		$arrReturn['id'] = $leaguegame['Assignment']['id'];
-
-		// start
-		$arrReturn['start'] = $leaguegame['Assignment']['start'];
-
-		// game number
-		$arrReturn['game_number'] = $leaguegame['LeagueGame']['game_number'];
-
-		// league
-		$arrReturn['league'] = $leaguegame['League']['abbreviation'];
-
-		// remark
-		$arrReturn['remark'] = $leaguegame['Assignment']['remark'];
-
-		// status
-		$arrReturn['status'] = 'normal'; // or changed
-
-		//$arrReturn['orig'] = $leaguegame;
-		return $arrReturn;
-	}
-
-	/**
-	 * Returns the status types used by the referees.
-	 *
-	 * @param $referees referees
-	 * @param $season season
-	 * @return array of status types
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getStatusTypes($referees, $season) {
-		$statustypes = array();
-
-		foreach ($referees as $referee) {
-			if (!array_key_exists($referee['RefereeStatus']['sid'], $statustypes)) {
-				$statustypes[$referee['RefereeStatus']['sid']] = $referee['RefereeStatus'];
-			}
-			if (($referee['RefereeStatus']['sid'] == StatusType::SID_MANY) ||
-					($referee['RefereeStatus']['sid'] == StatusType::SID_INACTIVESEASON) ||
-					($referee['RefereeStatus']['sid'] == StatusType::SID_OTHER)) {
-				$statustypes[$referee['RefereeStatus']['sid']]['referees'][] = $referee['Person'];
-			}
-		}
-
-		ksort($statustypes);
-
-		return $statustypes;
-	}
-
-	/**
-	 * Returns the contact types.
-	 *
-	 * @return array of contact types
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getContactTypes() {
-		$contacttypes = array();
-		foreach ($this->ContactType->find('all') as $contacttype) {
-			$contacttypes[$contacttype['ContactType']['id']] = $contacttype['ContactType'];
-		}
-		return $contacttypes;
-	}
-
-	/**
-	 * Returns the club array for use in select fields.
-	 *
-	 * @return array of club
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getClubArray() {
-		$clubarray = $this->Club->find('list');
-		asort($clubarray, SORT_LOCALE_STRING);
-
-		return $clubarray;
+		return $assignments;
 	}
 
 }

@@ -52,10 +52,10 @@
 			?>
 					<tr>
 						<?php
-							echo(getTD($columns[$curcol++], $styles[$assignment['status']], $this->RefereeFormat->formatDate($assignment['start'], 'longdatereverse')));
-							echo(getTD($columns[$curcol++], $styles[$assignment['status']], $this->RefereeFormat->formatDate($assignment['start'], 'time')));
-							echo(getTD($columns[$curcol++], $styles[$assignment['status']], h($assignment['game_number'])));
-							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __($assignment['league'])));
+							echo(getTD($columns[$curcol++], $styles[$assignment['status']], $this->RefereeFormat->formatDate($assignment['Assignment']['start'], 'longdatereverse')));
+							echo(getTD($columns[$curcol++], $styles[$assignment['status']], $this->RefereeFormat->formatDate($assignment['Assignment']['start'], 'time')));
+							echo(getTD($columns[$curcol++], $styles[$assignment['status']], h($assignment['LeagueGame']['game_number'])));
+							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __($assignment['LeagueGame']['League']['abbreviation'])));
 
 							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
 							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
@@ -69,7 +69,7 @@
 								echo(getTD($columns[$curcol++], $styles[$assignment['status']], (empty($assignment['remark'])) ? '' : h($assignment['remark'])));
 							}
 
-							echo(getTD(__('Aktionen'), $styles[$assignment['status']], $this->element('actions_table', array('id' => $assignment['id'])), 'actions'));
+							echo(getTD(__('Aktionen'), $styles[$assignment['status']], $this->element('actions_table', array('id' => $assignment['Assignment']['id'])), 'actions'));
 						?>
 					</tr>
 			<?php
@@ -82,5 +82,5 @@
 	}
 ?>
 
-<?php pr($assignments); ?>
+<?php debug($assignments); ?>
 

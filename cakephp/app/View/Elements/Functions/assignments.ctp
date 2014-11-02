@@ -24,7 +24,7 @@ function getRefereeReport($assignment, $season) {
 
 	$fileReturn = null;
 
-	$reportstart = sprintf(Configure::read('RefMan.refreport.pattern'), $assignment['league'], $assignment['game_number']);
+	$reportstart = sprintf(Configure::read('RefMan.refreport.pattern'), $assignment['LeagueGame']['League']['abbreviation'], $assignment['LeagueGame']['game_number']);
 	foreach (getRefereeReportFiles($season) as $filename) {
 		if (substr_compare($filename, $reportstart, 0, strlen($reportstart)) == 0) {
 			$fileReturn = $filename;
