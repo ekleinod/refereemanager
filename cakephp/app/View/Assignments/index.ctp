@@ -1,4 +1,6 @@
 <?php echo $this->element('Functions/table');	?>
+<?php echo $this->element('Functions/assignments');	?>
+
 <?php echo $this->element('filter');	?>
 
 <?php echo $this->element('actions_header');	?>
@@ -58,7 +60,7 @@
 							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
 							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
 							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
-							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
+							echo(getTD($columns[$curcol++], $styles[$assignment['status']], (getRefereeReport($assignment) === null) ? '&cross;' : '&check;'));
 
 							if ($isEditor) {
 								echo(getTD($columns[$curcol++], $styles[$assignment['status']], (empty($assignment['remark'])) ? '' : h($assignment['remark'])));
