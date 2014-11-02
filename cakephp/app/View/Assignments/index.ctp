@@ -1,3 +1,4 @@
+<?php echo $this->element('Functions/table');	?>
 <?php echo $this->element('filter');	?>
 
 <?php echo $this->element('actions_header');	?>
@@ -25,6 +26,7 @@
 				$columns[] = __('Heimteam');
 				$columns[] = __('Auswärtsteam');
 				$columns[] = __('Schiedsrichter');
+				$columns[] = __('OSR-Bericht');
 
 				if ($isEditor) {
 					$columns[] = __('Anmerkung');
@@ -47,27 +49,23 @@
 					$curcol = 0;
 			?>
 					<tr>
+						<?php
+							echo(getTD($columns[$curcol++], $styles[$assignment['status']], $this->RefereeFormat->formatDate($assignment['start'], 'longdatereverse')));
+							echo(getTD($columns[$curcol++], $styles[$assignment['status']], $this->RefereeFormat->formatDate($assignment['start'], 'time')));
+							echo(getTD($columns[$curcol++], $styles[$assignment['status']], h($assignment['game_number'])));
+							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __($assignment['league'])));
 
-						<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $styles[$assignment['status']]; ?>"><?php echo $this->RefereeFormat->formatDate($assignment['start'], 'longdatereverse'); ?></td>
-						<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $styles[$assignment['status']]; ?>"><?php echo $this->RefereeFormat->formatDate($assignment['start'], 'time'); ?></td>
-						<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $styles[$assignment['status']]; ?>"><?php echo h($assignment['game_number']); ?></td>
-						<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $styles[$assignment['status']]; ?>"><?php echo __($assignment['league']); ?></td>
+							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
+							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
+							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
+							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
 
-						<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $styles[$assignment['status']]; ?>"><?php echo __('todo'); ?></td>
-						<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $styles[$assignment['status']]; ?>"><?php echo __('todo'); ?></td>
-						<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $styles[$assignment['status']]; ?>"><?php echo __('todo'); ?></td>
+							if ($isEditor) {
+								echo(getTD($columns[$curcol++], $styles[$assignment['status']], (empty($assignment['remark'])) ? '' : h($assignment['remark'])));
+							}
 
-						<?php if ($isEditor) { ?>
-							<td data-title="<?php echo $columns[$curcol++]; ?>" style="<?php echo $styles[$assignment['status']]; ?>"><?php
-								if (!empty($assignment['remark'])) {
-									echo h($assignment['remark']);
-								}
-							?></td>
-						<?php } ?>
-
-						<td class="actions" data-title="<?php echo __('Aktionen'); ?>">
-							<?php echo $this->element('actions_table', array('id' => $assignment['id']));	?>
-						</td>
+							echo(getTD(__('Aktionen'), $styles[$assignment['status']], $this->element('actions_table', array('id' => $assignment['id'])), 'actions'));
+						?>
 					</tr>
 			<?php
 				}
