@@ -201,6 +201,27 @@ class AppController extends Controller {
 		return $userrole === self::ROLE_ADMIN;
 	}
 
+	/**
+	 * Returns season (default, stated, or from filter).
+	 *
+	 * @param season season (default: null == current season)
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getSeason($season = null) {
+
+		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('Filter', $this->request->data)) {
+			$theSeason = $this->Season->findById($this->request->data['Filter']['season']);
+			$theSeason = $theSeason['Season'];
+		} else {
+			$theSeason = $this->Season->getSeason($season);
+		}
+		$this->set('season', $theSeason);
+
+		return $theSeason;
+	}
+
 }
 
 /* EOF */

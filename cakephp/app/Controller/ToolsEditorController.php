@@ -54,12 +54,7 @@ class ToolsEditorController extends AppController {
 
 		$this->set('title_for_layout', __('Mailverteiler'));
 
-		if (!empty($this->request->data) && array_key_exists('Filter', $this->request->data)) {
-			$theSeason = $this->Season->findById($this->request->data['Filter']['season']);
-			$theSeason = $theSeason['Season'];
-		} else {
-			$theSeason = $this->Season->getSeason($season);
-		}
+		$theSeason = $this->getSeason($season);
 
 		$seasonarray = $this->Season->find('list');
 		asort($seasonarray, SORT_LOCALE_STRING);
@@ -87,7 +82,7 @@ class ToolsEditorController extends AppController {
 	public function message($season = null) {
 		$this->set('title_for_layout', __('Nachricht'));
 
-		$theSeason = $this->Season->getSeason($season);
+		$theSeason = $this->getSeason($season);
 
 		$this->set('season', $theSeason);
 		$this->set('result', false);
