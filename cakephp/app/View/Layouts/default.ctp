@@ -63,29 +63,21 @@
 
 						<?php
 						$navarray = array(
-															array('title' => __('Schiedsrichter'), 'routing' => array('action' => 'index', 'controller' => 'referees'),
+															array('title' => __('Schiedsrichtereinsätze'),
+																		'routing' => array('action' => 'index', 'controller' => 'assignments')
+																		),
+															array('title' => __('Schiedsrichter'),
+																		'routing' => array('action' => 'index', 'controller' => 'referees')
+																		),
+															array('title' => __('Sonstiges'),
+																		'routing' => array('action' => 'index', 'controller' => 'teams'),
 																		'subnav' => array(
-																											array('title' => __('Ansehen'), 'routing' => array('action' => 'index', 'controller' => 'referees')),
-																											//array('title' => __('Suchen'), 'routing' => array('action' => 'search', 'controller' => 'referees')),
-																											//array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'referees')),
+																											array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
 																											)
 																		),
-															array('title' => __('Schiedsrichtereinsätze'), 'routing' => array('action' => 'index', 'controller' => 'assignments'),
-																		'subnav' => array(
-																											array('title' => __('Ansehen'), 'routing' => array('action' => 'index', 'controller' => 'assignments')),
-																											//array('title' => __('Suchen'), 'routing' => array('action' => 'search', 'controller' => 'assignments')),
-																											//array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'assignments')),
-																											)
-																		),
-															array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams'),
-																		'subnav' => array(
-																											array('title' => __('Ansehen'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
-																											//array('title' => __('Suchen'), 'routing' => array('action' => 'search', 'controller' => 'teams')),
-																											//array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'teams')),
-																											)
-																		),
-															array('title' => __('Editor-Werkzeuge'), 'routing' => array('action' => 'index', 'controller' => 'tools_editor'),
+															array('title' => __('Editor-Werkzeuge'),
 																		'role' => 'editor',
+																		'routing' => array('action' => 'index', 'controller' => 'tools_editor'),
 																		'subnav' => array(
 																											array('title' => __('Mailverteiler'), 'routing' => array('action' => 'mailinglist', 'controller' => 'tools_editor')),
 																											array('title' => __('Nachricht'), 'routing' => array('action' => 'message', 'controller' => 'tools_editor')),
