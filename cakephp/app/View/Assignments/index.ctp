@@ -60,7 +60,10 @@
 							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
 							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
 							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
-							echo(getTD($columns[$curcol++], $styles[$assignment['status']], (getRefereeReport($assignment, $season) === null) ? '&cross;' : '&check;'));
+							$tmpRefRep = getRefereeReport($assignment, $season);
+							echo(getTD($columns[$curcol++],
+												 sprintf("%s %s", $styles[$assignment['status']], ($tmpRefRep === null) ? 'color: darkred;' : 'color: darkgreen;'),
+												 ($tmpRefRep === null) ? '&cross;' : '&check;'));
 
 							if ($isEditor) {
 								echo(getTD($columns[$curcol++], $styles[$assignment['status']], (empty($assignment['remark'])) ? '' : h($assignment['remark'])));
