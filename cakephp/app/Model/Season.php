@@ -20,7 +20,7 @@ class Season extends AppModel {
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
 		$this->virtualFields['title_season'] = sprintf(
-			'CONCAT(%1$s.year_start, "/", %1$s.year_start + 1)',
+			'CONCAT(%1$s.year_start, "-", %1$s.year_start + 1)',
 			$this->alias
 		);
 	}

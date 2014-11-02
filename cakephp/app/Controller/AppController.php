@@ -99,6 +99,8 @@ class AppController extends Controller {
 		Configure::write('RefMan.template.referee_view', 'referee_view.mmd');
 		Configure::write('RefMan.template.referee_view_all', 'referee_view_all.tex');
 
+		Configure::write('RefMan.refreport.path', 'files/refereereports/');
+		Configure::write('RefMan.refreport.pattern', 'OSR_%s_%02d_');
 	}
 
 	/**
