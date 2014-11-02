@@ -1,8 +1,5 @@
 <?php
 $config = array (
-	'Config' => array (
-		'language' => NULL,
-	),
 	'RefMan' => array (
 		'defaultcontacttypeid' => 1,
 		'defaultcountrycode' => '49',
