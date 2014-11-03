@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Address Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class Address extends AppModel {
@@ -51,9 +51,8 @@ class Address extends AppModel {
 	 */
 	public $validate = array(
 		'id' => array('isUnique', 'notempty', 'numeric'),
-		'contact_id' => array('notempty', 'numeric'),
+		'contact_id' => array('isUnique', 'notempty', 'numeric'),
 		'street' => array('notempty'),
-		'number' => array('notempty'),
 		'city' => array('notempty'),
 	);
 

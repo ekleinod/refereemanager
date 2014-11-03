@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * ActivityLog Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class ActivityLog extends AppModel {

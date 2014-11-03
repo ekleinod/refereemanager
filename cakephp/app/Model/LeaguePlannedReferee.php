@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * LeaguePlannedReferee Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class LeaguePlannedReferee extends AppModel {
@@ -32,47 +32,24 @@ class LeaguePlannedReferee extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'league_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'season_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'assignment_type_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'quantity' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'league_id' => array('notempty', 'numeric'),
+		'season_id' => array('notempty', 'numeric'),
+		'referee_assignment_type_id' => array('notempty', 'numeric'),
+		'quantity' => array('notempty', 'numeric'),
 	);
 
 	/**
 	 * belongsTo associations
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $belongsTo = array('League', 'Season', 'AssignmentType');
+	public $belongsTo = array('League', 'RefereeAssignmentType', 'Season');
 
 }
 

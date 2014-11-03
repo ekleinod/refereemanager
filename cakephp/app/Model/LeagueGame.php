@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * LeagueGame Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class LeagueGame extends AppModel {
@@ -47,12 +47,12 @@ class LeagueGame extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
 		'id' => array('isUnique', 'notempty', 'numeric'),
-		'assignment_id' => array('notempty', 'numeric'),
+		'assignment_id' => array('isUnique', 'notempty', 'numeric'),
 		'game_number' => array('notempty', 'numeric'),
 		'season_id' => array('notempty', 'numeric'),
 		'league_id' => array('notempty', 'numeric'),
@@ -62,7 +62,7 @@ class LeagueGame extends AppModel {
 	/**
 	 * belongsTo associations
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $belongsTo = array('Assignment', 'Season', 'League', 'TeamVenue');
@@ -70,7 +70,7 @@ class LeagueGame extends AppModel {
 	/**
 	 * hasMany associations
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $hasMany = array('LeagueGameTeam');

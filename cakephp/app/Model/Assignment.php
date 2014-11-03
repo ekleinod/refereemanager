@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Assignment Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.33
  * @since 0.1
  */
 class Assignment extends AppModel {
@@ -14,7 +14,7 @@ class Assignment extends AppModel {
 	/**
 	 * Declare virtual display field in constructor to be alias-safe.
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
@@ -49,7 +49,7 @@ class Assignment extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(

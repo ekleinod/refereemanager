@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Person Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class Person extends AppModel {
@@ -46,31 +46,32 @@ class Person extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'sex_type_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'name' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'birthday' => array(
-			'date' => array(
-				'rule' => array('date'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'sex_type_id' => array('notempty', 'numeric'),
+		'name' => array('notempty'),
+		'birthday' => array('date'),
+		'dayofdeath' => array('date'),
 	);
+
+	/**
+	 * hasOne associations
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public $hasOne = array('User');
+
+	/**
+	 * hasMany associations
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	public $hasMany = array('Contact', 'PersonPreferences', 'Picture', 'RefereeReportRecipient', 'Referee', 'Spokesperson', 'Tournament');
 
 	/**
 	 * belongsTo associations
@@ -79,14 +80,6 @@ class Person extends AppModel {
 	 * @since 0.1
 	 */
 	public $belongsTo = array('SexType');
-
-	/**
-	 * hasMany associations
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public $hasMany = array('Contact', 'PersonPreferences', 'Picture', 'RefereeReportRecipient', 'Referee', 'Spokesperson', 'Tournament', 'User');
 
 }
 
