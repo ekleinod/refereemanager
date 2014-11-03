@@ -52,6 +52,7 @@ START TRANSACTION;
 UPDATE `rfrmgr_sex_types` SET `title`='weiblich', `remark`='Mädchen und Frauen.' WHERE `sid`='female';
 UPDATE `rfrmgr_sex_types` SET `title`='männlich', `remark`='Jungen und Männer.' WHERE `sid`='male';
 UPDATE `rfrmgr_sex_types` SET `title`='andere', `remark`='Menschen anderen Geschlechts.' WHERE `sid`='other';
+UPDATE `rfrmgr_sex_types` SET `title`='unbekannt', `remark`='Geschlecht ist unbekannt.' WHERE `sid`='unknown';
 
 COMMIT;
 

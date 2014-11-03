@@ -66,6 +66,7 @@ START TRANSACTION;
 INSERT INTO `rfrmgr_sex_types` (`sid`) VALUES ('female');
 INSERT INTO `rfrmgr_sex_types` (`sid`) VALUES ('male');
 INSERT INTO `rfrmgr_sex_types` (`sid`) VALUES ('other');
+INSERT INTO `rfrmgr_sex_types` (`sid`) VALUES ('unknown');
 
 COMMIT;
 
