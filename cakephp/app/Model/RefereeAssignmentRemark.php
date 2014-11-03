@@ -3,13 +3,13 @@
 App::uses('AppModel', 'Model');
 
 /**
- * AssignmentRemarkType Model
+ * RefereeAssignmentRemark Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
- * @since 0.1
+ * @version 0.3
+ * @since 0.3
  */
-class AssignmentRemarkType extends AppModel {
+class RefereeAssignmentRemark extends AppModel {
 
 	/**
 	 * Model name.
@@ -19,7 +19,7 @@ class AssignmentRemarkType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $name = 'AssignmentRemarkType';
+	public $name = 'RefereeAssignmentRemark';
 
 	/**
 	 * Display field
@@ -27,7 +27,7 @@ class AssignmentRemarkType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $displayField = 'title';
+	public $displayField = 'id';
 
 	/**
 	 * Validation rules
@@ -41,20 +41,25 @@ class AssignmentRemarkType extends AppModel {
 				'rule' => array('uuid'),
 			),
 		),
-		'title' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+		'referee_assignment_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+			),
+		),
+		'assignment_remark_type_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 			),
 		),
 	);
 
 	/**
-	 * hasMany associations
+	 * belongsTo associations
 	 *
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $hasMany = array('AssignmentRemark');
+	public $belongsTo = array('RefereeAssignment', 'AssignmentRemarkType');
 
 }
 
