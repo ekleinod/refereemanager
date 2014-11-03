@@ -54,7 +54,7 @@ class Spokesperson extends AppModel {
 		'id' => array('isUnique', 'notempty', 'numeric'),
 		'person_id' => array('notempty', 'numeric'),
 		'team_season_id' => array('numeric'),
-		'club_id' => array(
+		'club_id' => array('numeric'),
 	);
 
 	/**

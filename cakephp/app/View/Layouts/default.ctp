@@ -34,7 +34,7 @@
 		<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png" />
 
 		<!-- title -->
-		<title><?php echo $title_for_layout; ?></title>
+		<title><?php echo $this->fetch('title'); ?></title>
 
 	</head>
 	<body>
@@ -72,6 +72,7 @@
 															array('title' => __('Sonstiges'),
 																		'routing' => array('action' => 'index', 'controller' => 'other'),
 																		'subnav' => array(
+																											array('title' => __('Clubs'), 'routing' => array('action' => 'index', 'controller' => 'clubs')),
 																											array('title' => __('Liga-Typen'), 'routing' => array('action' => 'index', 'controller' => 'league_types')),
 																											array('title' => __('Ligen'), 'routing' => array('action' => 'index', 'controller' => 'leagues')),
 																											array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
@@ -117,7 +118,7 @@
 						<article>
 							<div id="flash"><?php echo $this->Session->flash(); ?></div>
 							<div id="content">
-								<h2><?php echo $title_for_layout; ?></h2>
+								<h2><?php echo $this->fetch('title'); ?></h2>
 								<?php echo $this->fetch('content'); ?>
 							</div>
 						</article>

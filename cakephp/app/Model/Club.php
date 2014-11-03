@@ -48,6 +48,45 @@ class Club extends AppModel {
 	 */
 	public $hasMany = array('Contact', 'RefereeRelation', 'Spokesperson', 'Team', 'Tournament');
 
+	// custom programming
+
+	/**
+	 * Returns clubs.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return array of clubs, empty if there are none
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getClubs() {
+
+		$clubs = $this->find('all');
+		usort($clubs, array('Club', 'compareTo'));
+
+		return $clubs;
+	}
+
+	/**
+	 * Compare two objects.
+	 *
+	 * @param a first object
+	 * @param b second object
+	 * @return comparison result
+	 *  @retval <0 a<b
+	 *  @retval 0 a==b
+	 *  @retval >0 a>b
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function compareTo($a, $b) {
+		// criterion: title
+		return strcasecmp($a['Clubs']['name'], $b['Clubs']['name']);
+	}
+
 }
 
 /* EOF */
