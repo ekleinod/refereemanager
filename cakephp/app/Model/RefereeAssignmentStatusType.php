@@ -3,23 +3,23 @@
 App::uses('AppModel', 'Model');
 
 /**
- * AssignmentStatusType Model
+ * RefereeAssignmentStatusType Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
-class AssignmentStatusType extends AppModel {
+class RefereeAssignmentStatusType extends AppModel {
 
 	/**
 	 * Model name.
 	 *
 	 * Good practice to include the model name.
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $name = 'AssignmentStatusType';
+	public $name = 'RefereeAssignmentStatusType';
 
 	/**
 	 * Display field
