@@ -61,6 +61,7 @@ class LeaguesController extends AppController {
 
 		$this->setAndGetStandardNewAddView($league);
 		$this->set('title_for_layout', __('Detailanzeige Liga'));
+		$this->render('/Generic/view');
 	}
 
 	/**
@@ -89,7 +90,7 @@ class LeaguesController extends AppController {
 
 		$this->setAndGetStandardNewAddView();
 		$this->set('title_for_layout', __('Liga anlegen'));
-
+		$this->render('/Generic/add');
 	}
 
 	/**
@@ -126,6 +127,7 @@ class LeaguesController extends AppController {
 
 		$this->setAndGetStandardNewAddView($league);
 		$this->set('title_for_layout', __('Liga editieren'));
+		$this->render('/Generic/edit');
 	}
 
 	/**
@@ -175,7 +177,7 @@ class LeaguesController extends AppController {
 	 * @since 0.3
 	 */
 	private function setAndGetStandard() {
-		// empty for now
+		$this->set('controller', 'Leagues');
 	}
 
 	/**

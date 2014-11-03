@@ -62,6 +62,7 @@ class AssignmentsController extends AppController {
 
 		$this->setAndGetStandardNewAddView(null, $assignment);
 		$this->set('title_for_layout', __('Detailanzeige Schiedsrichtereinsatz'));
+		$this->render('/Generic/view');
 	}
 
 	/**
@@ -91,7 +92,7 @@ class AssignmentsController extends AppController {
 
 		$this->setAndGetStandardNewAddView();
 		$this->set('title_for_layout', __('Schiedsrichtereinsatz anlegen'));
-
+		$this->render('/Generic/add');
 	}
 
 	/**
@@ -131,6 +132,7 @@ class AssignmentsController extends AppController {
 
 		$this->setAndGetStandardNewAddView(null, $assignment);
 		$this->set('title_for_layout', __('Schiedsrichtereinsatz editieren'));
+		$this->render('/Generic/edit');
 	}
 
 	/**
@@ -191,6 +193,7 @@ class AssignmentsController extends AppController {
 
 		$this->set('seasonarray', $seasonarray);
 
+		$this->set('controller', 'Assignments');
 	}
 
 	/**
