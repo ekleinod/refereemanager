@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * TournamentVenue Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class TournamentVenue extends AppModel {
@@ -47,25 +47,13 @@ class TournamentVenue extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'tournament_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'contact_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'tournament_id' => array('notempty', 'numeric'),
+		'contact_id' => array('notempty', 'numeric'),
 	);
 
 	/**

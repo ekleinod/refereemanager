@@ -38,6 +38,7 @@ class LeagueType extends AppModel {
 	public $validate = array(
 		'id' => array('isUnique', 'notempty', 'numeric'),
 		'title' => array('isUnique', 'notempty'),
+		'sex_type_id' => array('notempty', 'numeric'),
 	);
 
 	/**
@@ -47,6 +48,14 @@ class LeagueType extends AppModel {
 	 * @since 0.1
 	 */
 	public $hasMany = array('League', 'Team');
+
+	/**
+	 * belongsTo associations
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public $belongsTo = array('SexType');
 
 }
 

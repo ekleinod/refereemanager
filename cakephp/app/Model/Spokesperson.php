@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Spokesperson Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class Spokesperson extends AppModel {
@@ -47,39 +47,23 @@ class Spokesperson extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'person_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'team_season_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'person_id' => array('notempty', 'numeric'),
+		'team_season_id' => array('numeric'),
 		'club_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
 	);
 
 	/**
 	 * belongsTo associations
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $belongsTo = array('Person', 'TeamSeason', 'Club');
+	public $belongsTo = array('Club', 'Person', 'TeamSeason');
 
 }
 

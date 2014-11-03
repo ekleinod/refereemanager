@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * SexType Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class SexType extends AppModel {
@@ -32,25 +32,13 @@ class SexType extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'sid' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'title' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'sid' => array('isUnique', 'notempty'),
+		'title' => array('isUnique', 'notempty'),
 	);
 
 	/**
@@ -59,7 +47,7 @@ class SexType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $hasMany = array('Person', 'RefereeRelation');
+	public $hasMany = array('LeagueType', 'Person', 'RefereeRelation');
 
 	// custom programming
 
@@ -67,6 +55,7 @@ class SexType extends AppModel {
 	const SID_FEMALE = 'female';
 	const SID_MALE = 'male';
 	const SID_OTHER = 'other';
+	const SID_UNKNOWN = 'unknown';
 
 	/** Singleton for fast access to sex types. */
 	private $sextypes = null;

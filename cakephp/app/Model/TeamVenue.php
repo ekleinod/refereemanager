@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * TeamVenue Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class TeamVenue extends AppModel {
@@ -21,7 +21,7 @@ class TeamVenue extends AppModel {
 		parent::__construct($id, $table, $ds);
 		// I can't get this one working with other tables
 		$this->virtualFields['display_team_venue'] = sprintf(
-			'CONCAT(%1$s.id, "-", %1$s.team_season_id, "-", %1$s.contact_id)',
+			'CONCAT(%1$s.id, "-", %1$s.team_season_id, "-", %1$s.contact_id, "-", %1$s.number)',
 			$this->alias
 		);
 	}
@@ -47,25 +47,14 @@ class TeamVenue extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'team_season_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'contact_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'team_season_id' => array('notempty', 'numeric'),
+		'contact_id' => array('notempty', 'numeric'),
+		'number' => array('numeric'),
 	);
 
 	/**

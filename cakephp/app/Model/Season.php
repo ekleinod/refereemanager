@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Season Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class Season extends AppModel {
@@ -14,7 +14,7 @@ class Season extends AppModel {
 	/**
 	 * Declare virtual field in constructor to be alias-safe.
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
@@ -46,29 +46,21 @@ class Season extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'year_start' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'year_start' => array('notempty', 'numeric'),
 	);
 
 	/**
 	 * hasMany associations
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $hasMany = array('LeagueGame', 'LeaguePlannedReferee', 'RefereeReport', 'TeamSeason', 'RefereeStatus');
+	public $hasMany = array('LeagueGame', 'LeaguePlannedReferee', 'RefereeReport', 'RefereeStatus', 'TeamSeason');
 
 	// custom programming
 
