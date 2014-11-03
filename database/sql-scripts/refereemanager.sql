@@ -95,6 +95,7 @@ DROP TABLE IF EXISTS `rfrmgr_league_types` ;
 CREATE TABLE IF NOT EXISTS `rfrmgr_league_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NOT NULL,
+  `sex_type_id` INT UNSIGNED NOT NULL,
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
