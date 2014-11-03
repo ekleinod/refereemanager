@@ -455,11 +455,11 @@ COMMENT = 'Possible types of referee\'s assignments such as umpire, stan /* comm
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_assignment_status_types`
+-- Table `rfrmgr_referee_assignment_status_types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_assignment_status_types` ;
+DROP TABLE IF EXISTS `rfrmgr_referee_assignment_status_types` ;
 
-CREATE TABLE IF NOT EXISTS `rfrmgr_assignment_status_types` (
+CREATE TABLE IF NOT EXISTS `rfrmgr_referee_assignment_status_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `sid` VARCHAR(20) NOT NULL,
   `title` VARCHAR(100) NOT NULL,
@@ -483,7 +483,7 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_referee_assignments` (
   `assignment_id` INT UNSIGNED NOT NULL,
   `referee_assignment_type_id` INT UNSIGNED NOT NULL,
   `referee_id` INT UNSIGNED NOT NULL,
-  `assignment_status_type_id` INT UNSIGNED NULL,
+  `referee_assignment_status_type_id` INT UNSIGNED NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB
@@ -712,7 +712,7 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_league_planned_referees` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `league_id` INT UNSIGNED NOT NULL,
   `season_id` INT UNSIGNED NOT NULL,
-  `assignment_type_id` INT UNSIGNED NOT NULL,
+  `referee_assignment_type_id` INT UNSIGNED NOT NULL,
   `quantity` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
@@ -800,11 +800,11 @@ COMMENT = 'Assignments for tournament games.';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_assignment_remark_types`
+-- Table `rfrmgr_referee_assignment_remark_types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_assignment_remark_types` ;
+DROP TABLE IF EXISTS `rfrmgr_referee_assignment_remark_types` ;
 
-CREATE TABLE IF NOT EXISTS `rfrmgr_assignment_remark_types` (
+CREATE TABLE IF NOT EXISTS `rfrmgr_referee_assignment_remark_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NOT NULL,
   `remark` TEXT NULL,
@@ -825,7 +825,7 @@ DROP TABLE IF EXISTS `rfrmgr_referee_assignment_remark` ;
 CREATE TABLE IF NOT EXISTS `rfrmgr_referee_assignment_remark` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `referee_assignment_id` INT UNSIGNED NOT NULL,
-  `assignment_remark_type_id` INT UNSIGNED NOT NULL,
+  `referee_assignment_remark_type_id` INT UNSIGNED NOT NULL,
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
