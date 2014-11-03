@@ -60,7 +60,7 @@ class PeopleController extends AppController {
 		$person = $this->Person->read(null, $id);
 
 		$this->setAndGetStandardNewAddView($person);
-		$this->set('title_for_layout', __('Detailanzeige Person' . $person['Person']['title_person']));
+		$this->set('title_for_layout', __('Detailanzeige "%s"', $person['Person']['title_person']));
 		$this->render('/Generic/view');
 	}
 
@@ -80,7 +80,7 @@ class PeopleController extends AppController {
 
 			$this->Person->create();
 			if ($this->Person->saveAssociated($tmpData)) {
-				$this->Session->setFlash(__('Die Person wurde gespeichert.'));
+				$this->Session->setFlash(__('"%s" wurde gespeichert.', $this->Person->getDisplayField()));
 				$this->redirect(array('action' => 'edit', $this->Person->id));
 			} else {
 				$this->Session->setFlash(__('Die Person konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
@@ -109,9 +109,9 @@ class PeopleController extends AppController {
 			$tmpData = $this->request->data;
 
 			if ($this->Person->saveAssociated($tmpData)) {
-				$this->Session->setFlash(__('Die geänderte Person wurde gespeichert.'));
+				$this->Session->setFlash(__('Die Änderungen für "%s" wurden gespeichert.', $this->Person->getDisplayField()));
 			} else {
-				$this->Session->setFlash(__('Die geänderte Person konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
+				$this->Session->setFlash(__('Die Änderungen konnten nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
 			}
 
 			$this->redirect(array('action' => 'edit', $this->Person->id));
@@ -126,7 +126,7 @@ class PeopleController extends AppController {
 		$person = $this->Person->read(null, $id);
 
 		$this->setAndGetStandardNewAddView($person);
-		$this->set('title_for_layout', __('Person editieren'));
+		$this->set('title_for_layout', __('Daten von "%s" editieren', $person['Person']['title_person']));
 		$this->render('/Generic/edit');
 	}
 
