@@ -3,12 +3,12 @@
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Data for table `rfrmgr_assignment_status_types`
+-- Data for table `rfrmgr_referee_assignment_status_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-UPDATE `rfrmgr_assignment_status_types` SET `title`='no' WHERE `sid`='no';
-UPDATE `rfrmgr_assignment_status_types` SET `title`='maybe' WHERE `sid`='maybe';
-UPDATE `rfrmgr_assignment_status_types` SET `title`='yes' WHERE `sid`='yes';
+UPDATE `rfrmgr_referee_assignment_status_types` SET `title`='no' WHERE `sid`='no';
+UPDATE `rfrmgr_referee_assignment_status_types` SET `title`='maybe' WHERE `sid`='maybe';
+UPDATE `rfrmgr_referee_assignment_status_types` SET `title`='yes' WHERE `sid`='yes';
 
 COMMIT;
 
@@ -122,13 +122,13 @@ INSERT INTO `rfrmgr_league_types` (`title`, `remark`) VALUES ('seniors', 'Senior
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `rfrmgr_assignment_remark_types`
+-- Data for table `rfrmgr_referee_assignment_remark_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('answering machine', 'Spoke to the answering machine.');
-INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('call back', 'Referee wants to be called back.');
-INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('mail returned', 'Mail was returned.');
-INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('other', NULL);
+INSERT INTO `rfrmgr_referee_assignment_remark_types` (`title`, `remark`) VALUES ('answering machine', 'Spoke to the answering machine.');
+INSERT INTO `rfrmgr_referee_assignment_remark_types` (`title`, `remark`) VALUES ('call back', 'Referee wants to be called back.');
+INSERT INTO `rfrmgr_referee_assignment_remark_types` (`title`, `remark`) VALUES ('mail returned', 'Mail was returned.');
+INSERT INTO `rfrmgr_referee_assignment_remark_types` (`title`, `remark`) VALUES ('other', NULL);
 
 COMMIT;
 

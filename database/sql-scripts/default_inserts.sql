@@ -1,10 +1,10 @@
 -- -----------------------------------------------------
--- Data for table `rfrmgr_assignment_status_types`
+-- Data for table `rfrmgr_referee_assignment_status_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_assignment_status_types` (`sid`) VALUES ('no');
-INSERT INTO `rfrmgr_assignment_status_types` (`sid`) VALUES ('maybe');
-INSERT INTO `rfrmgr_assignment_status_types` (`sid`) VALUES ('yes');
+INSERT INTO `rfrmgr_referee_assignment_status_types` (`sid`) VALUES ('no');
+INSERT INTO `rfrmgr_referee_assignment_status_types` (`sid`) VALUES ('maybe');
+INSERT INTO `rfrmgr_referee_assignment_status_types` (`sid`) VALUES ('yes');
 
 COMMIT;
 

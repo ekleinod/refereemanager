@@ -3,12 +3,12 @@
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Daten für die Tabelle `rfrmgr_assignment_status_types`
+-- Daten für die Tabelle `rfrmgr_referee_assignment_status_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-UPDATE `rfrmgr_assignment_status_types` SET `title`='nein' WHERE `sid`='no';
-UPDATE `rfrmgr_assignment_status_types` SET `title`='evtl.' WHERE `sid`='maybe';
-UPDATE `rfrmgr_assignment_status_types` SET `title`='ja' WHERE `sid`='yes';
+UPDATE `rfrmgr_referee_assignment_status_types` SET `title`='nein' WHERE `sid`='no';
+UPDATE `rfrmgr_referee_assignment_status_types` SET `title`='evtl.' WHERE `sid`='maybe';
+UPDATE `rfrmgr_referee_assignment_status_types` SET `title`='ja' WHERE `sid`='yes';
 
 COMMIT;
 
@@ -122,13 +122,13 @@ INSERT INTO `rfrmgr_league_types` (`title`, `remark`) VALUES ('Senioren', 'Senio
 COMMIT;
 
 -- -----------------------------------------------------
--- Daten für die Tabelle `rfrmgr_assignment_remark_types`
+-- Daten für die Tabelle `rfrmgr_referee_assignment_remark_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('AB', 'Auf Anrufbeantworter gesprochen.');
-INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('Rückruf', 'Schiedsrichter_in möchte zurückgerufen werden.');
-INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('Mail zurück', 'Mail wurde nicht angenommen.');
-INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('anderes', NULL);
+INSERT INTO `rfrmgr_referee_assignment_remark_types` (`title`, `remark`) VALUES ('AB', 'Auf Anrufbeantworter gesprochen.');
+INSERT INTO `rfrmgr_referee_assignment_remark_types` (`title`, `remark`) VALUES ('Rückruf', 'Schiedsrichter_in möchte zurückgerufen werden.');
+INSERT INTO `rfrmgr_referee_assignment_remark_types` (`title`, `remark`) VALUES ('Mail zurück', 'Mail wurde nicht angenommen.');
+INSERT INTO `rfrmgr_referee_assignment_remark_types` (`title`, `remark`) VALUES ('anderes', NULL);
 
 COMMIT;
 
