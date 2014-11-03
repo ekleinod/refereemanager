@@ -267,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_addresses` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `contact_id` INT UNSIGNED NOT NULL,
   `street` VARCHAR(100) NOT NULL,
-  `number` VARCHAR(100) NOT NULL,
+  `number` VARCHAR(100) NULL,
   `zip_code` VARCHAR(100) NULL,
   `city` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
@@ -345,6 +345,7 @@ DROP TABLE IF EXISTS `rfrmgr_teams` ;
 CREATE TABLE IF NOT EXISTS `rfrmgr_teams` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `club_id` INT UNSIGNED NOT NULL,
+  `league_type_id` INT UNSIGNED NOT NULL,
   `number` INT UNSIGNED NULL,
   `name` VARCHAR(100) NULL,
   `remark` TEXT NULL,
@@ -817,11 +818,11 @@ COMMENT = 'Types of assignment remarks such as answering machine, call  /* comme
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_assignment_remark`
+-- Table `rfrmgr_referee_assignment_remark`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_assignment_remark` ;
+DROP TABLE IF EXISTS `rfrmgr_referee_assignment_remark` ;
 
-CREATE TABLE IF NOT EXISTS `rfrmgr_assignment_remark` (
+CREATE TABLE IF NOT EXISTS `rfrmgr_referee_assignment_remark` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `referee_assignment_id` INT UNSIGNED NOT NULL,
   `assignment_remark_type_id` INT UNSIGNED NOT NULL,
@@ -869,24 +870,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'Preferences for a person.';
-
-
--- -----------------------------------------------------
--- Table `rfrmgr_configurations`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_configurations` ;
-
-CREATE TABLE IF NOT EXISTS `rfrmgr_configurations` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `default_contact_type` INT NULL,
-  `default_country_code` VARCHAR(5) NULL,
-  `default_area_code` VARCHAR(5) NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'Configuration of the application.';
 
 
 -- -----------------------------------------------------
