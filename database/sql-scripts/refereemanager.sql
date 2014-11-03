@@ -540,6 +540,7 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_team_venues` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `team_season_id` INT UNSIGNED NOT NULL,
   `contact_id` INT UNSIGNED NOT NULL,
+  `number` INT UNSIGNED NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB
