@@ -160,7 +160,33 @@
 		</copy>
 
 		<!-- View -->
-		<copy todir="${path:target}app${file.separator}View${file.separator}Assignments${file.separator}" failonerror="false" overwrite="true">
+		<copy todir="${path:target}app${file.separator}View${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}">
+				<include name="**/*.ctp" />
+				<include name="**/*.php" />
+				<exclude name="Emails/" />
+				<exclude name="Errors/" />
+				<exclude name="Helper/AppHelper.php" />
+				<exclude name="Helper/PHPExcelHelper.php" />
+				<exclude name="Layouts/" />
+				<exclude name="Pages/" />
+				<exclude name="Scaffolds/" />
+			</fileset>
+		</copy>
+		<!--copy todir="${path:target}app${file.separator}View${file.separator}Helper${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}Helper${file.separator}">
+				<include name="*.php" />
+				<exclude name="AppHelper.php" />
+				<exclude name="PHPExcelHelper.php" />
+			</fileset>
+		</copy-->
+		<copy todir="${path:target}app${file.separator}View${file.separator}Layouts${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}Layouts${file.separator}">
+				<include name="default.ctp" />
+				<include name="pdf.ctp" />
+			</fileset>
+		</copy>
+		<!--copy todir="${path:target}app${file.separator}View${file.separator}Assignments${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Assignments${file.separator}">
 				<include name="*.ctp" />
 			</fileset>
@@ -171,21 +197,13 @@
 				<exclude name="empty" />
 			</fileset>
 		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Helper${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}Helper${file.separator}">
-				<include name="*.php" />
-				<exclude name="AppHelper.php" />
-				<exclude name="PHPExcelHelper.php" />
-			</fileset>
-		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Layouts${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}Layouts${file.separator}">
-				<include name="default.ctp" />
-				<include name="pdf.ctp" />
-			</fileset>
-		</copy>
 		<copy todir="${path:target}app${file.separator}View${file.separator}Referees${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Referees${file.separator}">
+				<include name="*.ctp" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}View${file.separator}ToolsEditor${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}ToolsEditor${file.separator}">
 				<include name="*.ctp" />
 			</fileset>
 		</copy>
@@ -193,13 +211,7 @@
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Users${file.separator}">
 				<include name="*.ctp" />
 			</fileset>
-		</copy>
-
-		<copy todir="${path:target}app${file.separator}View${file.separator}ToolsEditor${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}ToolsEditor${file.separator}">
-				<include name="*.ctp" />
-			</fileset>
-		</copy>
+		</copy-->
 
 		<!-- Vendor -->
 		<copy todir="${path:target}app${file.separator}Vendor${file.separator}" failonerror="false" overwrite="true">

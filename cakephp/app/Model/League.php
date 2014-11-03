@@ -72,6 +72,45 @@ class League extends AppModel {
 	 */
 	public $hasMany = array('LeagueGame',  'LeaguePlannedReferee', 'RefereeRelation', 'RefereeReport', 'TeamSeason');
 
+	// custom programming
+
+	/**
+	 * Returns leagues.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return array of leagues, empty if there are none
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function getLeagues() {
+
+		$leagues = $this->find('all');
+		usort($leagues, array('League', 'compareTo'));
+
+		return $leagues;
+	}
+
+	/**
+	 * Compare two objects.
+	 *
+	 * @param a first object
+	 * @param b second object
+	 * @return comparison result
+	 *  @retval <0 a<b
+	 *  @retval 0 a==b
+	 *  @retval >0 a>b
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public static function compareTo($a, $b) {
+		// criterion: title
+		return strcasecmp($a['League']['title'], $b['League']['title']);
+	}
+
 }
 
 /* EOF */

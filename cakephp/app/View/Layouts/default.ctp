@@ -70,8 +70,9 @@
 																		'routing' => array('action' => 'index', 'controller' => 'referees')
 																		),
 															array('title' => __('Sonstiges'),
-																		'routing' => array('action' => 'index', 'controller' => 'teams'),
+																		'routing' => array('action' => 'index', 'controller' => 'other'),
 																		'subnav' => array(
+																											array('title' => __('Ligen'), 'routing' => array('action' => 'index', 'controller' => 'leagues')),
 																											array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
 																											)
 																		),

@@ -1,6 +1,7 @@
-<?php if ($isEditor) { ?>
+<div class="actions">
 
-	<div class="actions">
+	<?php if ($isEditor) { ?>
+
 		<?php echo $this->Html->link(__('Neu'), array('action' => 'add'), array('class' => 'button-link access-editor')); ?>
 
 		<?php if (isset($id)) { ?>
@@ -9,9 +10,9 @@
 			<?php echo $this->Html->link(__('Löschen'), array('action' => 'delete', $id), array('class' => 'button-link access-admin')); ?>
 		<?php } ?>
 
-		<?php echo $this->Html->link(__('Übersicht'), array('action' => 'index'), array('class' => 'button-link access-editor')); ?>
+	<?php } ?>
 
-	</div>
+	<?php echo $this->Html->link(__('Übersicht'), array('action' => 'index'), array('class' => 'button-link access-editor')); ?>
 
-<?php } ?>
+</div>
 
