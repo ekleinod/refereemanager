@@ -83,8 +83,24 @@ class Club extends AppModel {
 	 * @since 0.3
 	 */
 	public static function compareTo($a, $b) {
-		// criterion: title
-		return strcasecmp($a['Clubs']['name'], $b['Clubs']['name']);
+
+		// first criterion: abbreviation or, if not existent, name
+		$critA = (empty($a['Club']['abbreviation'])) ? $a['Club']['name'] : $a['Club']['abbreviation'];
+		$critB = (empty($b['Club']['abbreviation'])) ? $b['Club']['name'] : $b['Club']['abbreviation'];
+
+		$compResult = strcasecmp($critA, $critB);
+		if ($compResult != 0) {
+			return $compResult;
+		}
+
+		// second criterion: name
+		$compResult = strcasecmp($a['Club']['name'], $b['Club']['name']);
+		if ($compResult != 0) {
+			return $compResult;
+		}
+
+		// equal
+		return 0;
 	}
 
 }
