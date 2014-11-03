@@ -82,8 +82,8 @@ class League extends AppModel {
 	 *
 	 * @return array of leagues, empty if there are none
 	 *
-	 * @version 0.1
-	 * @since 0.1
+	 * @version 0.3
+	 * @since 0.3
 	 */
 	public function getLeagues() {
 
@@ -103,8 +103,8 @@ class League extends AppModel {
 	 *  @retval 0 a==b
 	 *  @retval >0 a>b
 	 *
-	 * @version 0.1
-	 * @since 0.1
+	 * @version 0.3
+	 * @since 0.3
 	 */
 	public static function compareTo($a, $b) {
 		// criterion: title

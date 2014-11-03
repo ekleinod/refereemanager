@@ -57,6 +57,45 @@ class LeagueType extends AppModel {
 	 */
 	public $belongsTo = array('SexType');
 
+	// custom programming
+
+	/**
+	 * Returns league types.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return array of league types, empty if there are none
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getLeagueTypes() {
+
+		$leaguetypes = $this->find('all');
+		usort($leaguetypes, array('LeagueType', 'compareTo'));
+
+		return $leaguetypes;
+	}
+
+	/**
+	 * Compare two objects.
+	 *
+	 * @param a first object
+	 * @param b second object
+	 * @return comparison result
+	 *  @retval <0 a<b
+	 *  @retval 0 a==b
+	 *  @retval >0 a>b
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function compareTo($a, $b) {
+		// criterion: title
+		return strcasecmp($a['LeagueType']['title'], $b['LeagueType']['title']);
+	}
+
 }
 
 /* EOF */

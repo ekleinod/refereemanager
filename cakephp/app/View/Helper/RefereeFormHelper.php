@@ -58,7 +58,7 @@ class RefereeFormHelper extends AppHelper {
 			$inputparams['readonly'] = 'readonly';
 			if ($type === 'select') {
 				$inputparams['type'] = 'text';
-				if (!empty($values)) {
+				if (!empty($values) && (!empty($value) || ($value > 0))) {
 					$inputparams['value'] = $values[$value];
 				}
 			}
