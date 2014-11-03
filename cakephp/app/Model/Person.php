@@ -63,7 +63,7 @@ class Person extends AppModel {
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public $hasOne = array('User');
+	public $hasOne = array('Referee', 'User');
 
 	/**
 	 * hasMany associations
@@ -71,7 +71,7 @@ class Person extends AppModel {
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $hasMany = array('Contact', 'PersonPreferences', 'Picture', 'RefereeReportRecipient', 'Referee', 'Spokesperson', 'Tournament');
+	public $hasMany = array('Contact', 'PersonPreferences', 'Picture', 'RefereeReportRecipient', 'Spokesperson', 'Tournament');
 
 	/**
 	 * belongsTo associations

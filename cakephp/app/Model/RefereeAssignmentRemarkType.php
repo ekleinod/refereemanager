@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * RefereeAssignmentRemarkType Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class RefereeAssignmentRemarkType extends AppModel {
@@ -32,29 +32,21 @@ class RefereeAssignmentRemarkType extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'title' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'title' => array('isUnique', 'notempty'),
 	);
 
 	/**
 	 * hasMany associations
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $hasMany = array('AssignmentRemark');
+	public $hasMany = array('RefereeAssignment');
 
 }
 

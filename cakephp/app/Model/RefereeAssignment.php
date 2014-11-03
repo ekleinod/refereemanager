@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * RefereeAssignment Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class RefereeAssignment extends AppModel {
@@ -47,52 +47,25 @@ class RefereeAssignment extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'assignment_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'referee_assignment_type_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'referee_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'assignment_status_type_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'assignment_id' => array('notempty', 'numeric'),
+		'referee_assignment_type_id' => array('notempty', 'numeric'),
+		'referee_id' => array('notempty', 'numeric'),
+		'referee_assignment_status_type_id' => array('numeric'),
+		'referee_assignment_remark_type_id' => array('numeric'),
 	);
 
 	/**
 	 * belongsTo associations
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $belongsTo = array('Assignment', 'RefereeAssignmentType', 'Referee', 'AssignmentStatusType');
-
-	/**
-	 * hasMany associations
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public $hasMany = array('AssignmentRemark');
+	public $belongsTo = array('Assignment', 'Referee', 'RefereeAssignmentType', 'RefereeAssignmentRemarkType', 'RefereeAssignmentStatusType');
 
 }
 
