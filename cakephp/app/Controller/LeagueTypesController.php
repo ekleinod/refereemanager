@@ -3,7 +3,7 @@
 App::uses('AppController', 'Controller');
 
 /**
- * LeagueTypeTypes Controller
+ * LeagueTypes Controller
  *
  * @author ekleinod (ekleinod@edgesoft.de)
  * @version 0.3
@@ -165,7 +165,6 @@ class LeagueTypesController extends AppController {
 		}
 
 		$sextypearray = $this->SexType->find('list');
-		//asort($sextypearray, SORT_LOCALE_STRING);
 		$this->set('sextypearray', $sextypearray);
 
 	}

@@ -81,6 +81,58 @@ class Person extends AppModel {
 	 */
 	public $belongsTo = array('SexType');
 
+	// custom programming
+
+	/**
+	 * Returns people.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return array of people, empty if there are none
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getPeople() {
+
+		$people = $this->find('all');
+		usort($people, array('Person', 'compareTo'));
+
+		return $people;
+	}
+
+	/**
+	 * Compare two objects.
+	 *
+	 * @param a first object
+	 * @param b second object
+	 * @return comparison result
+	 *  @retval <0 a<b
+	 *  @retval 0 a==b
+	 *  @retval >0 a>b
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function compareTo($a, $b) {
+
+		// first criterion: name
+		$compResult = strcasecmp($a['Person']['name'], $b['Person']['name']);
+		if ($compResult != 0) {
+			return $compResult;
+		}
+
+		// second criterion: first name
+		$compResult = strcasecmp($a['Person']['first_name'], $b['Person']['first_name']);
+		if ($compResult != 0) {
+			return $compResult;
+		}
+
+		// equal
+		return 0;
+	}
+
 }
 
 /* EOF */

@@ -15,7 +15,7 @@
 
 				// name
 				$tmpValue = (array_key_exists('Club', $club)) ? $club['Club']['name'] : '';
-				echo $this->RefereeForm->getInputField($action, 'text', 'Club.name', __('Name'), $tmpValue, true, '', 100);
+				echo $this->RefereeForm->getInputField($action, 'text', 'Club.name', __('Name'), $tmpValue, true, '', 100, true);
 
 				// abbreviation
 				$tmpValue = (array_key_exists('Club', $club)) ? $club['Club']['abbreviation'] : '';

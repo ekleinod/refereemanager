@@ -19,7 +19,7 @@
 
 				// SexType type
 				$tmpValue = (array_key_exists('LeagueType', $leaguetype)) ? $leaguetype['LeagueType']['sex_type_id'] : '';
-				echo $this->RefereeForm->getInputField($action, 'select', 'LeagueType.sex_type_id', __('Liga-Typ'), $tmpValue, true, '', 0, false, $sextypearray);
+				echo $this->RefereeForm->getInputField($action, 'select', 'LeagueType.sex_type_id', __('Geschlecht'), $tmpValue, true, '', 0, false, $sextypearray);
 
 				// remark
 				$tmpValue = (array_key_exists('LeagueType', $leaguetype)) ? $leaguetype['LeagueType']['remark'] : '';
