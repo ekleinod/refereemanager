@@ -4,48 +4,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 
 -- -----------------------------------------------------
--- Table `rfrmgr_user_roles`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_user_roles` ;
-
-CREATE TABLE IF NOT EXISTS `rfrmgr_user_roles` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `sid` VARCHAR(20) NOT NULL,
-  `title` VARCHAR(100) NOT NULL,
-  `remark` TEXT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'Roles of users, such as admin, editor.';
-
-
--- -----------------------------------------------------
--- Table `rfrmgr_users`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rfrmgr_users` ;
-
-CREATE TABLE IF NOT EXISTS `rfrmgr_users` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(100) NOT NULL,
-  `password` VARCHAR(128) NOT NULL,
-  `salt` VARCHAR(128) NOT NULL,
-  `user_role_id` INT NOT NULL,
-  `person_id` INT NULL,
-  `created` DATETIME NOT NULL,
-  `modified` DATETIME NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci
-COMMENT = 'User table for access rights.';
-
-
--- -----------------------------------------------------
 -- Table `rfrmgr_sex_types`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rfrmgr_sex_types` ;
@@ -79,8 +37,7 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_people` (
   `dayofdeath` DATE NULL,
   `remark` TEXT NULL,
   `internal_remark` TEXT NULL,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  PRIMARY KEY (`id`))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -356,6 +313,48 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'All teams.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_user_roles`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_user_roles` ;
+
+CREATE TABLE IF NOT EXISTS `rfrmgr_user_roles` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `sid` VARCHAR(20) NOT NULL,
+  `title` VARCHAR(100) NOT NULL,
+  `remark` TEXT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Roles of users, such as admin, editor.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_users`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_users` ;
+
+CREATE TABLE IF NOT EXISTS `rfrmgr_users` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(128) NOT NULL,
+  `salt` VARCHAR(128) NOT NULL,
+  `user_role_id` INT NOT NULL,
+  `person_id` INT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'User table for access rights.';
 
 
 -- -----------------------------------------------------
