@@ -26,8 +26,8 @@ class PeopleController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		if (!$this->viewVars['isEditor']) {
-			throw new ForbiddenException(__('Nur für Editoren!'));
+		if (!$this->viewVars['isReferee']) {
+			throw new ForbiddenException(__('Nur für Schiedsrichter!'));
 		}
 
 		$this->SexType->recursive = -1;
