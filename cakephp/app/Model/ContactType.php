@@ -49,6 +49,44 @@ class ContactType extends AppModel {
 	 */
 	public $hasMany = array('Contact');
 
+	// custom programming
+
+	/**
+	 * Returns contact types.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return array of people, empty if there are none
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getContactTypes() {
+
+		$contacttypes = $this->find('all');
+		usort($contacttypes, array('ContactType', 'compareTo'));
+
+		return $contacttypes;
+	}
+
+	/**
+	 * Compare two objects.
+	 *
+	 * @param a first object
+	 * @param b second object
+	 * @return comparison result
+	 *  @retval <0 a<b
+	 *  @retval 0 a==b
+	 *  @retval >0 a>b
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function compareTo($a, $b) {
+		return strcasecmp($a['ContactType']['title'], $b['ContactType']['title']);
+	}
+
 }
 
 /* EOF */

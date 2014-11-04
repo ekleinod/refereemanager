@@ -133,17 +133,38 @@ class Person extends AppModel {
 		return 0;
 	}
 
-	/** All email addresses. */
-	public static function getEmails($person) {
+	/** All contacts. */
+	public static function getContacts($person, $contactkind) {
 		$arrReturn = array();
 
-		if (array_key_exists('Contact', $person) && array_key_exists('Email', $person['Contact'])) {
+		$model = ClassRegistry::init($contactkind);
+		$model->recursive = -1;
+		$modelTypes = ClassRegistry::init('ContactTypes');
+		$modelTypes->recursive = -1;
+
+		foreach ($person['Contact'] as $contact) {
+			$tmpData = $model->findByContactId($contact['id']);
+			if (!empty($tmpData)) {
+
+				$tmpData['info'] = array();
+				$tmpData['info']['is_primary'] = $contact['is_primary'];
+				$tmpData['info']['title'] = $contact['title'];
+				$tmpData['info']['remark'] = $contact['remark'];
+
+				$type = $modelTypes->findById($contact['contact_type_id']);
+				$tmpData['ContactType'] = $type['ContactTypes'];
+
+				$arrReturn[] = $tmpData;
+			}
+		}
+
+/*		if (array_key_exists('Contact', $person) && array_key_exists('Email', $person['Contact'])) {
 			foreach ($person['Contact']['Email'] as $contacttype => $emailkind) {
 				foreach ($emailkind as $email) {
 					$arrReturn[] = $email;
 				}
 			}
-		}
+		}*/
 
 		return $arrReturn;
 	}
