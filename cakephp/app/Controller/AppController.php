@@ -35,18 +35,6 @@ App::uses('PhpReader', 'Configure');
  */
 class AppController extends Controller {
 
-	/** Role: referee. */
-	const ROLE_REFEREE = 'referee';
-
-	/** Role: statistician. */
-	const ROLE_STATISTICIAN = 'statistician';
-
-	/** Role: editor. */
-	const ROLE_EDITOR = 'editor';
-
-	/** Role: admin. */
-	const ROLE_ADMIN = 'administrator';
-
 	/**
 	 * Extend components array by Auth component for simple authentication.
 	 *
@@ -122,7 +110,7 @@ class AppController extends Controller {
 		}
 
 		// check
-		return $userrole === self::ROLE_REFEREE;
+		return $userrole === UserRole::ROLE_REFEREE;
 	}
 
 	/**
@@ -149,7 +137,7 @@ class AppController extends Controller {
 		}
 
 		// check
-		return $userrole === self::ROLE_STATISTICIAN;
+		return $userrole === UserRole::ROLE_STATISTICIAN;
 	}
 
 	/**
@@ -173,7 +161,7 @@ class AppController extends Controller {
 		}
 
 		// check
-		return $userrole === self::ROLE_EDITOR;
+		return $userrole === UserRole::ROLE_EDITOR;
 	}
 
 	/**
@@ -190,7 +178,7 @@ class AppController extends Controller {
 		}
 
 		// check
-		return $userrole === self::ROLE_ADMIN;
+		return $userrole === UserRole::ROLE_ADMIN;
 	}
 
 	/**

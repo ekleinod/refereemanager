@@ -50,6 +50,14 @@ class UserRole extends AppModel {
 	 */
 	public $hasMany = array('User');
 
+	// custom programming
+
+	/* User roles. */
+	const ROLE_REFEREE = 'referee';
+	const ROLE_STATISTICIAN = 'statistician';
+	const ROLE_EDITOR = 'editor';
+	const ROLE_ADMIN = 'administrator';
+
 }
 
 /* EOF */
