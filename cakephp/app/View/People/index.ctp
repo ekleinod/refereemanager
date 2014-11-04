@@ -66,6 +66,7 @@
 							$tmpValue = ($person['Person']['first_name'] === null) ? '' : $this->RefereeFormat->formatPerson($person['Person'], 'first_name');
 							echo(getTD($columns[$curcol++], '', $tmpValue));
 
+							debug(Person::getEmails($person));
 
 							echo(getTD($columns[$curcol++], '', h($person['SexType']['title'])));
 							echo(getTD($columns[$curcol++], '', h($person['Person']['remark'])));

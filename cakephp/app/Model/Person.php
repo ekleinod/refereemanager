@@ -133,6 +133,21 @@ class Person extends AppModel {
 		return 0;
 	}
 
+	/** All email addresses. */
+	public static function getEmails($person) {
+		$arrReturn = array();
+
+		if (array_key_exists('Contact', $person) && array_key_exists('Email', $person['Contact'])) {
+			foreach ($person['Contact']['Email'] as $contacttype => $emailkind) {
+				foreach ($emailkind as $email) {
+					$arrReturn[] = $email;
+				}
+			}
+		}
+
+		return $arrReturn;
+	}
+
 }
 
 /* EOF */
