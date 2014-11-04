@@ -43,8 +43,8 @@ class AppController extends Controller {
 	public $components = array(
 		'Session',
 		'Auth' => array(
-			'loginRedirect' => array('controller' => 'referees', 'action' => 'index'),
-			'logoutRedirect' => array('controller' => 'referees', 'action' => 'index'),
+			'loginRedirect' => array('controller' => 'assignments', 'action' => 'index'),
+			'logoutRedirect' => array('controller' => 'assignments', 'action' => 'index'),
 			'authenticate' => array('SaltForm') // use own authentication class
 		)
 	);

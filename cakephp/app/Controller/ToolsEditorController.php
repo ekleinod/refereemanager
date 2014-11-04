@@ -26,7 +26,8 @@ class ToolsEditorController extends AppController {
 		parent::beforeFilter();
 
 		if (!$this->viewVars['isEditor']) {
-			throw new ForbiddenException(__('Nur für Editoren!'));
+			$this->Session->setFlash(__('Der Zugriff ist nur für Editoren erlaubt. Bitte loggen Sie sich ein.'));
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
 		}
 
 		$this->Season->recursive = -1;

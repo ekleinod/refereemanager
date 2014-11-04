@@ -27,7 +27,8 @@ class PeopleController extends AppController {
 		parent::beforeFilter();
 
 		if (!$this->viewVars['isReferee']) {
-			throw new ForbiddenException(__('Nur für Schiedsrichter!'));
+			$this->Session->setFlash(__('Der Zugriff ist nur für Schiedsrichter erlaubt. Bitte loggen Sie sich ein.'));
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
 		}
 
 		$this->SexType->recursive = -1;
