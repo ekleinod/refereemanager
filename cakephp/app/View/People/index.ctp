@@ -12,12 +12,30 @@
 <?php
 	} else {
 ?>
+	<p><?php echo __('Es sind %d Personen gespeichert.', count($people)); ?></p>
 	<table>
 		<?php
 			$columns = array();
-				$columns[] = __('Titel');
-				$columns[] = __('Geschlecht');
-				$columns[] = __('Anmerkung');
+				if ($isReferee) {
+					$columns[] = __('Bild');
+				}
+
+				$columns[] = __('Name');
+				$columns[] = __('Vorname');
+
+				if ($isReferee) {
+					$columns[] = __('E-Mail');
+					$columns[] = __('Telefon');
+				}
+
+				if ($isEditor) {
+					$columns[] = __('Adresse');
+					$columns[] = __('Geschlecht');
+					$columns[] = __('Geburtstag');
+					$columns[] = __('Todestag');
+					$columns[] = __('Anmerkung');
+					$columns[] = __('Interne Anmerkung');
+				}
 
 				$columns[] = __('Aktionen');
 			$table = array('thead', 'tfoot');
@@ -37,7 +55,18 @@
 			?>
 					<tr>
 						<?php
-							echo(getTD($columns[$curcol++], '', h($person['Person']['title'])));
+
+							$tmpValue = ($person['Picture']['url'] === null) ? '' :
+									$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von %s', $this->RefereeFormat->formatPerson($person['Person'], 'fullname')), 'title' => h($this->RefereeFormat->formatPerson($person['Person'], 'fullname')))), $person['Picture']['url'], array('escape' => false));
+							echo(getTD($columns[$curcol++], '', $tmpValue));
+
+							$tmpValue = ($person['Person']['name'] === null) ? '' : $this->RefereeFormat->formatPerson($person['Person'], 'name_title');
+							echo(getTD($columns[$curcol++], '', $tmpValue));
+
+							$tmpValue = ($person['Person']['first_name'] === null) ? '' : $this->RefereeFormat->formatPerson($person['Person'], 'first_name');
+							echo(getTD($columns[$curcol++], '', $tmpValue));
+
+
 							echo(getTD($columns[$curcol++], '', h($person['SexType']['title'])));
 							echo(getTD($columns[$curcol++], '', h($person['Person']['remark'])));
 
