@@ -13,7 +13,7 @@
 								<?php
 									foreach ($mainnav['subnav'] as $subnav) {
 										if (!array_key_exists('role', $subnav) ||
-												(array_key_exists('role', $subnav) && ($subnav['role'] === 'editor') && $isEditor)) {
+												(array_key_exists('role', $subnav) && ($subnav['role'] === 'referee') && $isReferee)) {
 								?>
 											<li><?php echo $this->Html->link($subnav['title'], $subnav['routing']); ?></li>
 								<?php
@@ -44,7 +44,7 @@
 						if (array_key_exists('subnav', $mainnav)) {
 							foreach ($mainnav['subnav'] as $subnav) {
 								if (!array_key_exists('role', $subnav) ||
-										(array_key_exists('role', $subnav) && ($subnav['role'] === 'editor') && $isEditor)) {
+										(array_key_exists('role', $subnav) && ($subnav['role'] === 'referee') && $isReferee)) {
 					?>
 									<option value="<?php echo Router::url($subnav['routing']); ?>">- <?php echo $subnav['title']; ?></option>
 					<?php
