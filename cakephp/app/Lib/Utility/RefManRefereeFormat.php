@@ -27,16 +27,16 @@ class RefManRefereeFormat {
 	 * @param string $time time to format
 	 * @return string formatted string
 	 *
-	 * @version 0.2
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function sqlFromDateTime($date, $time = null) {
 
-		if (($date === null) || empty($date)) {
+		if (empty($date)) {
 			return null;
 		}
 
-		if ($time === null) {
+		if (empty($time)) {
 			$datetime = CakeTime::fromString($date);
 		} else {
 			$datetime = CakeTime::fromString(sprintf('%s %s', $date, $time));
@@ -52,12 +52,12 @@ class RefManRefereeFormat {
 	 * @param string $type format type
 	 * @return string formatted string
 	 *
-	 * @version 0.2
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function formatDate($data, $type) {
 
-		if (($data === null) || empty($data)) {
+		if (empty($data)) {
 			return '';
 		}
 
@@ -90,9 +90,6 @@ class RefManRefereeFormat {
 			case 'year':
 				$formatted = CakeTime::format($data, '%Y');
 				break;
-			default:
-				$formatted = $data;
-				break;
 		}
 
 		return $formatted;
@@ -103,36 +100,23 @@ class RefManRefereeFormat {
 	 *
 	 * @param string $data data to format
 	 * @param string $type format type
-	 * @param string $datetype format type for dates (default 'date')
 	 * @return string formatted string
 	 *
-	 * @version 0.2
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public function formatPerson($data, $type, $datetype = 'date') {
+	public function formatPerson($data, $type) {
 
-		if (($data === null) || empty($data)) {
+		if (empty($data)) {
 			return '';
 		}
 
 		switch ($type) {
-			case 'birthday':
-				$formatted = (empty($data['birthday'])) ? '' : $this->formatDate($data['birthday'], $datetype);
-				break;
-			case 'dayofdeath':
-				$formatted = (empty($data['dayofdeath'])) ? '' : __('+%s', $this->formatDate($data['dayofdeath'], $datetype));
-				break;
-			case 'first_name':
-				$formatted = (empty($data['first_name'])) ? '' : $data['first_name'];
-				break;
 			case 'fullname':
 				$formatted = __('%s%s%s',
 												((empty($data['title'])) ? '' : __('%s ', $data['title'])),
 												((empty($data['first_name'])) ? '' : __('%s ', $data['first_name'])),
 												$data['name']);
-				break;
-			case 'name':
-				$formatted = $data['name'];
 				break;
 			case 'name_title':
 				$formatted = __('%s%s',
@@ -145,31 +129,22 @@ class RefManRefereeFormat {
 												((empty($data['title'])) ? '' : __(', %s', $data['title'])),
 												((empty($data['first_name'])) ? '' : __(', %s', $data['first_name'])));
 				break;
-			case 'title':
-				$formatted = (empty($data['title'])) ? '' : $data['title'];
-				break;
-			default:
-				$formatted = $data;
-				break;
 		}
 
 		return $formatted;
 	}
 
 	/**
-	 * Format given contacts.
+	 * Format multiline data.
 	 *
 	 * @param string $data data to format
-	 * @param string $type format type
-	 * @param string $type contact kind
 	 * @param string $type export type
-	 * @return string formatted string
+	 * @return formatted string
 	 *
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public function formatContacts($data, $type, $kind, $export = 'html') {
-
+	public function formatMultiline($data, $export = 'html') {
 		if (empty($data)) {
 			return '';
 		}
@@ -189,18 +164,49 @@ class RefManRefereeFormat {
 				}
 				$bMore = true;
 
-				if (count($data) > 1) {
-					$sReturn .= sprintf('(%s) ', $entry['ContactType']['abbreviation']);
-				}
-
-				$sReturn .= $this->formatContact($entry, $type, $kind, $export);
+				$sReturn .= $entry;
 			}
 
 		} else {
-			$sReturn = $this->formatContact($data, $type, $kind, $export, 1);
+			$sReturn .= $data;
 		}
 
 		return $sReturn;
+	}
+
+	/**
+	 * Format given contacts.
+	 *
+	 * @param string $data data to format
+	 * @param string $type format type
+	 * @param string $type contact kind
+	 * @param string $type export type
+	 * @return formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function formatContacts($data, $type, $kind, $export = 'html') {
+
+		if (empty($data)) {
+			return '';
+		}
+
+		$sTextArray = array();
+
+		if (is_array($data)) {
+
+			foreach ($data as $entry) {
+				$sTextArray[] = (count($data) > 1) ?
+						sprintf('(%s) %s', $entry['ContactType']['abbreviation'], $this->formatContact($entry, $type, $kind, $export)) :
+						$this->formatContact($entry, $type, $kind, $export);
+			}
+
+		} else {
+			$sTextArray[] = $this->formatContact($data, $type, $kind, $export, 1);
+		}
+
+		return $this->formatMultiline($sTextArray, $export);
 	}
 
 	/**
@@ -410,12 +416,12 @@ class RefManRefereeFormat {
 	 * @param string $sep separator
 	 * @return string formatted string
 	 *
-	 * @version 0.2
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function formatRelationBySID($data, $sid, $sep = '; ') {
 
-		if (($data === null) || empty($data)) {
+		if (empty($data)) {
 			return '';
 		}
 
@@ -433,12 +439,12 @@ class RefManRefereeFormat {
 	 * @param string $sep separator
 	 * @return string formatted string
 	 *
-	 * @version 0.2
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function formatRelation($data, $sep = '; ') {
 
-		if (($data === null) || empty($data)) {
+		if (empty($data)) {
 			return '';
 		}
 

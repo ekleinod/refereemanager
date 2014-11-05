@@ -38,8 +38,7 @@
 
 				if ($isEditor) {
 					$columns[] = __('Geschlecht');
-					$columns[] = __('Geburtstag');
-					$columns[] = __('Todestag');
+					$columns[] = __('Geburtstag<br />Todestag');
 					$columns[] = __('Anmerkung');
 					$columns[] = __('Interne Anmerkung');
 				}
@@ -65,28 +64,37 @@
 
 							$tmpValue = (empty($person['Picture']['url'])) ? '' :
 									$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von %s', $this->RefereeFormat->formatPerson($person['Person'], 'fullname')), 'title' => h($this->RefereeFormat->formatPerson($person['Person'], 'fullname')))), $person['Picture']['url'], array('escape' => false));
-							echo(getTD($columns[$curcol++], '', $tmpValue));
+							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
 
 							$tmpValue = (empty($person['Person']['name'])) ? '' : $this->RefereeFormat->formatPerson($person['Person'], 'name_title');
-							echo(getTD($columns[$curcol++], '', $tmpValue));
+							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
 
-							$tmpValue = (empty($person['Person']['first_name'])) ? '' : $this->RefereeFormat->formatPerson($person['Person'], 'first_name');
-							echo(getTD($columns[$curcol++], '', $tmpValue));
+							$tmpValue = (empty($person['Person']['first_name'])) ? '' : $person['Person']['first_name'];
+							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
 
 							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'Email'), 'text', 'Email', 'html');
-							echo(getTD($columns[$curcol++], '', $tmpValue));
+							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
 
 							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'PhoneNumber'), 'national', 'PhoneNumber', 'html');
-							echo(getTD($columns[$curcol++], '', $tmpValue));
+							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
 
 							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'Address'), 'fulladdress', 'Address', 'html');
-							echo(getTD($columns[$curcol++], '', $tmpValue));
+							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
 
 							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'Url'), 'text', 'Url', 'html');
-							echo(getTD($columns[$curcol++], '', $tmpValue));
+							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
 
 							$tmpValue = h($person['SexType']['title']);
-							echo(getTD($columns[$curcol++], '', $tmpValue));
+							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
+
+							$tmpValue = array();
+							if (!empty($person['Person']['birthday'])) {
+								$tmpValue[] = $this->RefereeFormat->formatDate($person['Person']['birthday'], 'date');
+							}
+							if (!empty($person['Person']['dayofdeath'])) {
+								$tmpValue[] = sprintf('&dagger;&nbsp;%s', $this->RefereeFormat->formatDate($person['Person']['dayofdeath'], 'date'));
+							}
+							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
 
 							echo(getTD($columns[$curcol++], '', h($person['Person']['remark'])));
 
