@@ -172,11 +172,16 @@ class RefManRefereeFormat {
 					}
 				}
 				$bMore = true;
+
+				if (count($data) > 1) {
+					$sReturn .= sprintf('(%s) ', $entry['ContactType']['abbreviation']);
+				}
+
 				$sReturn .= $this->formatContact($entry, $type, $kind, $export);
 			}
 
 		} else {
-			$sReturn = $this->formatContact($data, $type, $kind, $export);
+			$sReturn = $this->formatContact($data, $type, $kind, $export, 1);
 		}
 
 		return $sReturn;
@@ -191,7 +196,7 @@ class RefManRefereeFormat {
 	 * @param string $type export type
 	 * @return string formatted string
 	 */
-	private function formatContact($data, $type, $kind, $export = 'html') {
+	private function formatContact($data, $type, $kind, $export) {
 			switch ($kind) {
 				case 'Address':
 					return $this->formatAddress($data, $type, $export);
@@ -211,9 +216,10 @@ class RefManRefereeFormat {
 	 *
 	 * @param string $data data to format
 	 * @param string $type format type
+	 * @param string $type export type
 	 * @return string formatted string
 	 */
-	private function formatAddress($data, $type, $export = 'html') {
+	private function formatAddress($data, $type, $export) {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -269,23 +275,28 @@ class RefManRefereeFormat {
 	 *
 	 * @param string $data data to format
 	 * @param string $type format type
+	 * @param string $type export type
 	 * @return string formatted string
 	 */
-	private function formatEmail($data, $type, $export = 'html') {
+	private function formatEmail($data, $type, $export) {
+
+		$sReturn = '';
 
 		switch ($export) {
 
 			case 'html':
 				switch ($type) {
 					case 'link':
-						return sprintf('<a href="mailto:%1$s">%1$s</a>', $data['Email']['email']);
+						$sReturn .= sprintf('<a href="mailto:%1$s">%1$s</a>', $data['Email']['email']);
+						break;
 					case 'text':
-						return $data['Email']['email'];
+						$sReturn .= $data['Email']['email'];
+						break;
 				}
 
 		}
 
-		return '';
+		return $sReturn;
 	}
 
 	/**
@@ -293,9 +304,10 @@ class RefManRefereeFormat {
 	 *
 	 * @param string $data data to format
 	 * @param string $type format type
+	 * @param string $type export type
 	 * @return string formatted string
 	 */
-	private function formatPhoneNumber($data, $type, $export = 'html') {
+	private function formatPhoneNumber($data, $type, $export) {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -328,9 +340,10 @@ class RefManRefereeFormat {
 	 *
 	 * @param string $data data to format
 	 * @param string $type format type
+	 * @param string $type export type
 	 * @return string formatted string
 	 */
-	private function formatUrl($data, $type, $export = 'html') {
+	private function formatUrl($data, $type, $export) {
 
 		if (($data === null) || empty($data)) {
 			return '';

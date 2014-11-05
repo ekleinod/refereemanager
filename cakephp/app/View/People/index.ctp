@@ -69,6 +69,9 @@
 							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'Email'), 'link', 'Email', 'html');
 							echo(getTD($columns[$curcol++], '', $tmpValue));
 
+							//$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'PhoneNumber'), 'link', 'PhoneNumber', 'html');
+							//echo(getTD($columns[$curcol++], '', $tmpValue));
+
 							echo(getTD($columns[$curcol++], '', h($person['SexType']['title'])));
 							echo(getTD($columns[$curcol++], '', h($person['Person']['remark'])));
 
