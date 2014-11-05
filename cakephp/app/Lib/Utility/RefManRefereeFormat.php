@@ -13,6 +13,10 @@ App::uses('CakeTime', 'Utility');
  * Methods for formatting all referee manager components nicely.
  *
  * @package       Lib.Utility
+ *
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.3
+ * @since 0.1
  */
 class RefManRefereeFormat {
 
@@ -22,6 +26,9 @@ class RefManRefereeFormat {
 	 * @param string $date date to format
 	 * @param string $time time to format
 	 * @return string formatted string
+	 *
+	 * @version 0.2
+	 * @since 0.1
 	 */
 	public function sqlFromDateTime($date, $time = null) {
 
@@ -44,6 +51,9 @@ class RefManRefereeFormat {
 	 * @param string $data data to format
 	 * @param string $type format type
 	 * @return string formatted string
+	 *
+	 * @version 0.2
+	 * @since 0.1
 	 */
 	public function formatDate($data, $type) {
 
@@ -95,6 +105,9 @@ class RefManRefereeFormat {
 	 * @param string $type format type
 	 * @param string $datetype format type for dates (default 'date')
 	 * @return string formatted string
+	 *
+	 * @version 0.2
+	 * @since 0.1
 	 */
 	public function formatPerson($data, $type, $datetype = 'date') {
 
@@ -151,10 +164,13 @@ class RefManRefereeFormat {
 	 * @param string $type contact kind
 	 * @param string $type export type
 	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.3
 	 */
 	public function formatContacts($data, $type, $kind, $export = 'html') {
 
-		if (($data === null) || empty($data)) {
+		if (empty($data)) {
 			return '';
 		}
 
@@ -195,6 +211,9 @@ class RefManRefereeFormat {
 	 * @param string $type contact kind
 	 * @param string $type export type
 	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.3
 	 */
 	private function formatContact($data, $type, $kind, $export) {
 			switch ($kind) {
@@ -218,56 +237,58 @@ class RefManRefereeFormat {
 	 * @param string $type format type
 	 * @param string $type export type
 	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.1
 	 */
 	private function formatAddress($data, $type, $export) {
 
-		if (($data === null) || empty($data)) {
-			return '';
+		$sReturn = '';
+
+		switch ($export) {
+
+			case 'html':
+				switch ($type) {
+					case 'fulladdress':
+						if (!empty($data['Address']['street'])) {
+							$sReturn .= __('%s', $data['Address']['street']);
+						}
+						if (!empty($sReturn) && !empty($data['Address']['number'])) {
+							$sReturn .= __(' %s', $data['Address']['number']);
+						}
+						if (!empty($sReturn) && (!empty($data['Address']['zip_code']) || !empty($data['Address']['city']))) {
+							$sReturn .= __(',');
+						}
+						if (!empty($data['Address']['zip_code'])) {
+							$sReturn .= __(' %s', $data['Address']['zip_code']);
+						}
+						if (!empty($data['Address']['city'])) {
+							$sReturn .= __(' %s', $data['Address']['city']);
+						}
+						break;
+					case 'streetnumber':
+						if (!empty($data['Address']['street'])) {
+							$sReturn .= __('%s', $data['Address']['street']);
+						}
+						if (!empty($sReturn) && !empty($data['Address']['number'])) {
+							$sReturn .= __(' %s', $data['Address']['number']);
+						}
+						break;
+					case 'zipcity':
+						if (!empty($data['Address']['zip_code'])) {
+							$sReturn .= __('%s', $data['Address']['zip_code']);
+						}
+						if (!empty($data['Address']['city'])) {
+							$sReturn .= __(' %s', $data['Address']['city']);
+						}
+						break;
+					default:
+						$sReturn = $data;
+						break;
+				}
 		}
 
-		switch ($type) {
-			case 'fulladdress':
-				$formatted = '';
-				if ($data['street'] != '') {
-					$formatted .= __('%s', $data['street']);
-				}
-				if (($formatted != '') && ($data['number'] != '')) {
-					$formatted .= __(' %s', $data['number']);
-				}
-				if (($formatted != '') && (($data['zip_code'] != '') || ($data['city'] != ''))) {
-					$formatted .= __(',');
-				}
-				if ($data['zip_code'] != '') {
-					$formatted .= __(' %s', $data['zip_code']);
-				}
-				if ($data['city'] != '') {
-					$formatted .= __(' %s', $data['city']);
-				}
-				break;
-			case 'streetnumber':
-				$formatted = '';
-				if ($data['street'] != '') {
-					$formatted .= __('%s', $data['street']);
-				}
-				if (($formatted != '') && ($data['number'] != '')) {
-					$formatted .= __(' %s', $data['number']);
-				}
-				break;
-			case 'zipcity':
-				$formatted = '';
-				if ($data['zip_code'] != '') {
-					$formatted .= __('%s', $data['zip_code']);
-				}
-				if ($data['city'] != '') {
-					$formatted .= __(' %s', $data['city']);
-				}
-				break;
-			default:
-				$formatted = $data;
-				break;
-		}
-
-		return $formatted;
+		return $sReturn;
 	}
 
 	/**
@@ -277,6 +298,9 @@ class RefManRefereeFormat {
 	 * @param string $type format type
 	 * @param string $type export type
 	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.1
 	 */
 	private function formatEmail($data, $type, $export) {
 
@@ -307,6 +331,9 @@ class RefManRefereeFormat {
 	 * @param string $type format type
 	 * @param string $type export type
 	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.1
 	 */
 	private function formatPhoneNumber($data, $type, $export) {
 
@@ -350,26 +377,29 @@ class RefManRefereeFormat {
 	 * @param string $type format type
 	 * @param string $type export type
 	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.1
 	 */
 	private function formatUrl($data, $type, $export) {
 
-		if (($data === null) || empty($data)) {
-			return '';
+		$sReturn = '';
+
+		switch ($export) {
+
+			case 'html':
+				switch ($type) {
+					case 'link':
+						$sReturn .= sprintf('<a href="http://%1$s">%1$s</a>', $data['Url']['url']);
+						break;
+					case 'text':
+						$sReturn .= $data['Url']['url'];
+						break;
+				}
+
 		}
 
-		switch ($type) {
-			case 'link':
-				$formatted = sprintf('<a href="%1$s">%1$s</a>', $data['url']);
-				break;
-			case 'text':
-				$formatted = $data['url'];
-				break;
-			default:
-				$formatted = $data;
-				break;
-		}
-
-		return $formatted;
+		return $sReturn;
 	}
 
 	/**
@@ -379,6 +409,9 @@ class RefManRefereeFormat {
 	 * @param string $sid sid of relation
 	 * @param string $sep separator
 	 * @return string formatted string
+	 *
+	 * @version 0.2
+	 * @since 0.1
 	 */
 	public function formatRelationBySID($data, $sid, $sep = '; ') {
 
@@ -399,6 +432,9 @@ class RefManRefereeFormat {
 	 * @param string $data data to format
 	 * @param string $sep separator
 	 * @return string formatted string
+	 *
+	 * @version 0.2
+	 * @since 0.1
 	 */
 	public function formatRelation($data, $sep = '; ') {
 

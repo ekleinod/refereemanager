@@ -30,6 +30,13 @@
 
 				if ($isEditor) {
 					$columns[] = __('Adresse');
+				}
+
+				if ($isReferee) {
+					$columns[] = __('URL');
+				}
+
+				if ($isEditor) {
 					$columns[] = __('Geschlecht');
 					$columns[] = __('Geburtstag');
 					$columns[] = __('Todestag');
@@ -56,14 +63,14 @@
 					<tr>
 						<?php
 
-							$tmpValue = ($person['Picture']['url'] === null) ? '' :
+							$tmpValue = (empty($person['Picture']['url'])) ? '' :
 									$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von %s', $this->RefereeFormat->formatPerson($person['Person'], 'fullname')), 'title' => h($this->RefereeFormat->formatPerson($person['Person'], 'fullname')))), $person['Picture']['url'], array('escape' => false));
 							echo(getTD($columns[$curcol++], '', $tmpValue));
 
-							$tmpValue = ($person['Person']['name'] === null) ? '' : $this->RefereeFormat->formatPerson($person['Person'], 'name_title');
+							$tmpValue = (empty($person['Person']['name'])) ? '' : $this->RefereeFormat->formatPerson($person['Person'], 'name_title');
 							echo(getTD($columns[$curcol++], '', $tmpValue));
 
-							$tmpValue = ($person['Person']['first_name'] === null) ? '' : $this->RefereeFormat->formatPerson($person['Person'], 'first_name');
+							$tmpValue = (empty($person['Person']['first_name'])) ? '' : $this->RefereeFormat->formatPerson($person['Person'], 'first_name');
 							echo(getTD($columns[$curcol++], '', $tmpValue));
 
 							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'Email'), 'link', 'Email', 'html');
@@ -72,7 +79,15 @@
 							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'PhoneNumber'), 'national', 'PhoneNumber', 'html');
 							echo(getTD($columns[$curcol++], '', $tmpValue));
 
-							echo(getTD($columns[$curcol++], '', h($person['SexType']['title'])));
+							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'Address'), 'fulladdress', 'Address', 'html');
+							echo(getTD($columns[$curcol++], '', $tmpValue));
+
+							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'Url'), 'link', 'Url', 'html');
+							echo(getTD($columns[$curcol++], '', $tmpValue));
+
+							$tmpValue = h($person['SexType']['title']);
+							echo(getTD($columns[$curcol++], '', $tmpValue));
+
 							echo(getTD($columns[$curcol++], '', h($person['Person']['remark'])));
 
 							echo(getTD(__('Aktionen'), '', $this->element('actions_table', array('id' => $person['Person']['id'])), 'actions'));
