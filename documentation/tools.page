@@ -9,7 +9,7 @@
 			<years>2012-2014</years>
 		</credit>
 
-		<revision docversion="0.1" date="2014-06-19" status="incomplete" />
+		<revision docversion="0.1" date="2014-11-05" status="incomplete" />
 
 		<link type="guide" xref="setup" />
 		<link type="next" xref="repositories" />
@@ -23,12 +23,13 @@
 
 	<list>
 		<title>Tools</title>
-		<item><p><app>Git</app></p></item>
-		<item><p><app>Apache</app> incl. <app>mysql</app> module</p></item>
-		<item><p><app>PHP</app></p></item>
-		<item><p><app>MySQL server</app></p></item>
-		<item><p><app>Ant</app></p></item>
-		<item><p><app>Java</app></p></item>
+		<item><p><link xref="#git" /></p></item>
+		<item><p><link xref="#apache" /> incl. <app>mysql</app> module</p></item>
+		<item><p><link xref="#php" /></p></item>
+		<item><p><link xref="#mysql" /></p></item>
+		<item><p><link xref="#ant" /></p></item>
+		<item><p><link xref="#java" /></p></item>
+		<item><p><link xref="#yelp" /></p></item>
 	</list>
 
 	<p>
@@ -93,6 +94,14 @@
 		<p>
 			<app>Java</app> is an object oriented, platform independent programming language.
 			You need <app>java</app> for execution of <link xref="#ant" /> scripts.
+		</p>
+	</section>
+
+	<section id="yelp">
+		<title>Yelp-Tools</title>
+
+		<p>
+			<app>Yelp-Tools</app> are tools for formatting the help files, i.e. the documentation.
 		</p>
 	</section>
 
