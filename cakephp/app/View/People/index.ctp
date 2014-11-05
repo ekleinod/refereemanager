@@ -96,7 +96,11 @@
 							}
 							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
 
-							echo(getTD($columns[$curcol++], '', h($person['Person']['remark'])));
+							$tmpValue = (empty($person['Person']['remark'])) ? '' : $person['Person']['remark'];
+							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
+
+							$tmpValue = (empty($person['Person']['internal_remark'])) ? '' : $person['Person']['internal_remark'];
+							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
 
 							echo(getTD(__('Aktionen'), '', $this->element('actions_table', array('id' => $person['Person']['id'])), 'actions'));
 						?>
