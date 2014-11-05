@@ -23,7 +23,7 @@ class RefManRefereeFormat {
 	 * @param string $time time to format
 	 * @return string formatted string
 	 */
-	public static function sqlFromDateTime($date, $time = null) {
+	public function sqlFromDateTime($date, $time = null) {
 
 		if (($date === null) || empty($date)) {
 			return null;
@@ -45,7 +45,7 @@ class RefManRefereeFormat {
 	 * @param string $type format type
 	 * @return string formatted string
 	 */
-	public static function formatDate($data, $type) {
+	public function formatDate($data, $type) {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -96,7 +96,7 @@ class RefManRefereeFormat {
 	 * @param string $datetype format type for dates (default 'date')
 	 * @return string formatted string
 	 */
-	public static function formatPerson($data, $type, $datetype = 'date') {
+	public function formatPerson($data, $type, $datetype = 'date') {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -144,94 +144,66 @@ class RefManRefereeFormat {
 	}
 
 	/**
-	 * Format given email according to specified type.
+	 * Format given contacts.
 	 *
 	 * @param string $data data to format
 	 * @param string $type format type
+	 * @param string $type contact kind
+	 * @param string $type export type
 	 * @return string formatted string
 	 */
-	public static function formatEMail($data, $type) {
+	public function formatContacts($data, $type, $kind, $export = 'html') {
 
 		if (($data === null) || empty($data)) {
 			return '';
 		}
 
-		switch ($type) {
-			case 'link':
-				$formatted = sprintf('<a href="mailto:%1$s">%1$s</a>', $data['email']);
-				break;
-			case 'text':
-				$formatted = $data['email'];
-				break;
-			default:
-				$formatted = $data;
-				break;
-		}
+		$sReturn = '';
 
-		return $formatted;
-	}
+		if (is_array($data)) {
 
-	/**
-	 * Format given phone number according to specified type.
-	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @return string formatted string
-	 */
-	public static function formatPhone($data, $type) {
-
-		if (($data === null) || empty($data)) {
-			return '';
-		}
-
-		switch ($type) {
-			case 'international':
-				$formatted = __('+%s %s ', ($data['country_code'] === '') ? Configure::read('RefMan.defaultcountrycode') : $data['country_code'], ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
-				$formatted .= $data['number'];
-				break;
-			case 'normal':
-				$formatted = '';
-				if (($data['country_code'] != '') && ($data['country_code'] != Configure::read('RefMan.defaultcountrycode'))) {
-					$formatted .= __('+%s %s ', $data['country_code'], ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
-				} else {
-					$formatted .= __('0%s ', ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
+			$bMore = false;
+			foreach ($data as $entry) {
+				if ($bMore) {
+					switch ($export) {
+						case 'html':
+							$sReturn .= '<br />';
+							break;
+					}
 				}
-				$formatted .= $data['number'];
-				break;
-			default:
-				$formatted = $data;
-				break;
+				$bMore = true;
+				$sReturn .= $this->formatContact($entry, $type, $kind, $export);
+			}
+
+		} else {
+			$sReturn = $this->formatContact($data, $type, $kind, $export);
 		}
 
-		return $formatted;
+		return $sReturn;
 	}
 
 	/**
-	 * Format given url according to specified type.
+	 * Format given contact.
 	 *
 	 * @param string $data data to format
 	 * @param string $type format type
+	 * @param string $type contact kind
+	 * @param string $type export type
 	 * @return string formatted string
 	 */
-	public static function formatURL($data, $type) {
+	private function formatContact($data, $type, $kind, $export = 'html') {
+			switch ($kind) {
+				case 'Address':
+					return $this->formatAddress($data, $type, $export);
+				case 'Email':
+					return $this->formatEmail($data, $type, $export);
+				case 'PhoneNumber':
+					return $this->formatPhoneNumber($data, $type, $export);
+				case 'Url':
+					return $this->formatUrl($data, $type, $export);
+			}
 
-		if (($data === null) || empty($data)) {
-			return '';
-		}
-
-		switch ($type) {
-			case 'link':
-				$formatted = sprintf('<a href="%1$s">%1$s</a>', $data['url']);
-				break;
-			case 'text':
-				$formatted = $data['url'];
-				break;
-			default:
-				$formatted = $data;
-				break;
-		}
-
-		return $formatted;
+			return null;
 	}
 
 	/**
@@ -241,7 +213,7 @@ class RefManRefereeFormat {
 	 * @param string $type format type
 	 * @return string formatted string
 	 */
-	public static function formatAddress($data, $type) {
+	private function formatAddress($data, $type, $export = 'html') {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -293,6 +265,93 @@ class RefManRefereeFormat {
 	}
 
 	/**
+	 * Format given email according to specified type.
+	 *
+	 * @param string $data data to format
+	 * @param string $type format type
+	 * @return string formatted string
+	 */
+	private function formatEmail($data, $type, $export = 'html') {
+
+		switch ($export) {
+
+			case 'html':
+				switch ($type) {
+					case 'link':
+						return sprintf('<a href="mailto:%1$s">%1$s</a>', $data['Email']['email']);
+					case 'text':
+						return $data['Email']['email'];
+				}
+
+		}
+
+		return '';
+	}
+
+	/**
+	 * Format given phone number according to specified type.
+	 *
+	 * @param string $data data to format
+	 * @param string $type format type
+	 * @return string formatted string
+	 */
+	private function formatPhoneNumber($data, $type, $export = 'html') {
+
+		if (($data === null) || empty($data)) {
+			return '';
+		}
+
+		switch ($type) {
+			case 'international':
+				$formatted = __('+%s %s ', ($data['country_code'] === '') ? Configure::read('RefMan.defaultcountrycode') : $data['country_code'], ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
+				$formatted .= $data['number'];
+				break;
+			case 'normal':
+				$formatted = '';
+				if (($data['country_code'] != '') && ($data['country_code'] != Configure::read('RefMan.defaultcountrycode'))) {
+					$formatted .= __('+%s %s ', $data['country_code'], ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
+				} else {
+					$formatted .= __('0%s ', ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
+				}
+				$formatted .= $data['number'];
+				break;
+			default:
+				$formatted = $data;
+				break;
+		}
+
+		return $formatted;
+	}
+
+	/**
+	 * Format given url according to specified type.
+	 *
+	 * @param string $data data to format
+	 * @param string $type format type
+	 * @return string formatted string
+	 */
+	private function formatUrl($data, $type, $export = 'html') {
+
+		if (($data === null) || empty($data)) {
+			return '';
+		}
+
+		switch ($type) {
+			case 'link':
+				$formatted = sprintf('<a href="%1$s">%1$s</a>', $data['url']);
+				break;
+			case 'text':
+				$formatted = $data['url'];
+				break;
+			default:
+				$formatted = $data;
+				break;
+		}
+
+		return $formatted;
+	}
+
+	/**
 	 * Format relation with sid using separator character.
 	 *
 	 * @param string $data data to format
@@ -300,7 +359,7 @@ class RefManRefereeFormat {
 	 * @param string $sep separator
 	 * @return string formatted string
 	 */
-	public static function formatRelationBySID($data, $sid, $sep = '; ') {
+	public function formatRelationBySID($data, $sid, $sep = '; ') {
 
 		if (($data === null) || empty($data)) {
 			return '';
@@ -320,7 +379,7 @@ class RefManRefereeFormat {
 	 * @param string $sep separator
 	 * @return string formatted string
 	 */
-	public static function formatRelation($data, $sep = '; ') {
+	public function formatRelation($data, $sep = '; ') {
 
 		if (($data === null) || empty($data)) {
 			return '';
