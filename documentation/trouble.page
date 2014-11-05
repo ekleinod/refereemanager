@@ -30,7 +30,7 @@
 			Restart apache with the following command:
 		</p>
 		<screen>
-			<output style="prompt">$ </output><input>sudo apachectl -k restart</input>
+			<output style="prompt">$ </output><input>sudo apachectl restart</input>
 			<output>...</output>
 		</screen>
 

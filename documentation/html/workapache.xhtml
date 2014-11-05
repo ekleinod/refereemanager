@@ -52,7 +52,6 @@
 			<span class="output">drwxr-xr-x 2 ekleinod ekleinod 4096 Jul  8 00:09 phpmyadmin</span>
 			<span class="output">drwxr-xr-x 2 ekleinod ekleinod 4096 Jul  8 00:09 refereemanager</span>
 		</pre></div><p class="p">Link the two apache directories to the apache web directory.</p><div class="screen"><pre class="contents ">			<span class="prompt output">~ $ </span><span class="input">cd /var/www/html</span>
-			<span class="prompt output">~/var/www/html $ </span><span class="input">cd apache</span>
 			<span class="prompt output">~/var/www/html $ </span><span class="input">sudo ln -s ~/working/apache/phpmyadmin/</span>
 			<span class="prompt output">~/var/www/html $ </span><span class="input">sudo ln -s ~/working/apache/refereemanager/</span>
 			<span class="prompt output">~/var/www/html $ </span><span class="input">ls -la</span>
@@ -181,7 +180,7 @@
 					<span class="prompt output">/etc/apache2 $ </span><span class="input">ls -la conf-enabled/phpmyadmin.conf</span>
 					<span class="prompt output">lrwxrwxrwx 1 root root 33 Aug 20 22:30 conf-enabled/phpmyadmin.conf -&gt; ../conf-available/phpmyadmin.conf</span>
 					<span class="prompt output">/etc/apache2 $ </span>
-				</pre></div><p class="p">A restart of <span class="app">apache</span> is required in order to use the configuration file.</p><div class="screen"><pre class="contents ">					<span class="prompt output">/etc/apache2 $ </span><span class="input">sudo apachectl -k restart</span>
+				</pre></div><p class="p">A restart of <span class="app">apache</span> is required in order to use the configuration file.</p><div class="screen"><pre class="contents ">					<span class="prompt output">/etc/apache2 $ </span><span class="input">sudo apachectl restart</span>
 					<span class="prompt output">...</span>
 					<span class="prompt output">/etc/apache2 $ </span>
 				</pre></div></li><li class="steps"><p class="p">Check, if <span class="app">PHPMyAdmin</span> works</p><p class="p">Go to <span class="link"><a href="http://localhost/phpmyadmin/" title="http://localhost/phpmyadmin/">http://localhost/phpmyadmin/</a></span></p><p class="p">
@@ -205,7 +204,7 @@
 					<span class="prompt output">/etc/apache2 $ </span><span class="input">ls -la mods-enabled/rewrite.load</span>
 					<span class="prompt output">lrwxrwxrwx 1 root root 30 Aug 20 23:01 mods-enabled/rewrite.load -&gt; ../mods-available/rewrite.load</span>
 					<span class="prompt output">/etc/apache2 $ </span>
-				</pre></div><p class="p">A restart of <span class="app">apache</span> is required in order to use the configuration file and enable url rewriting.</p><div class="screen"><pre class="contents ">					<span class="prompt output">/etc/apache2 $ </span><span class="input">sudo apachectl -k restart</span>
+				</pre></div><p class="p">A restart of <span class="app">apache</span> is required in order to use the configuration file and enable url rewriting.</p><div class="screen"><pre class="contents ">					<span class="prompt output">/etc/apache2 $ </span><span class="input">sudo apachectl restart</span>
 					<span class="prompt output">...</span>
 					<span class="prompt output">/etc/apache2 $ </span>
 				</pre></div></li><li class="steps"><p class="p">Check, if <span class="app">RefereeManager</span> works</p><p class="p">Go to <span class="link"><a href="http://localhost/refereemanager/" title="http://localhost/refereemanager/">http://localhost/refereemanager/</a></span></p><p class="p">

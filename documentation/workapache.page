@@ -138,7 +138,6 @@
 
 		<screen>
 			<output style="prompt">~ $ </output><input>cd /var/www/html</input>
-			<output style="prompt">~/var/www/html $ </output><input>cd apache</input>
 			<output style="prompt">~/var/www/html $ </output><input>sudo ln -s ~/working/apache/phpmyadmin/</input>
 			<output style="prompt">~/var/www/html $ </output><input>sudo ln -s ~/working/apache/refereemanager/</input>
 			<output style="prompt">~/var/www/html $ </output><input>ls -la</input>
@@ -522,7 +521,7 @@
 				</screen>
 				<p>A restart of <app>apache</app> is required in order to use the configuration file.</p>
 				<screen>
-					<output style="prompt">/etc/apache2 $ </output><input>sudo apachectl -k restart</input>
+					<output style="prompt">/etc/apache2 $ </output><input>sudo apachectl restart</input>
 					<output style="prompt">...</output>
 					<output style="prompt">/etc/apache2 $ </output>
 				</screen>
@@ -570,7 +569,7 @@
 				</screen>
 				<p>A restart of <app>apache</app> is required in order to use the configuration file and enable url rewriting.</p>
 				<screen>
-					<output style="prompt">/etc/apache2 $ </output><input>sudo apachectl -k restart</input>
+					<output style="prompt">/etc/apache2 $ </output><input>sudo apachectl restart</input>
 					<output style="prompt">...</output>
 					<output style="prompt">/etc/apache2 $ </output>
 				</screen>
