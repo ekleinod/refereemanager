@@ -293,6 +293,7 @@ class RefManRefereeFormat {
 						$sReturn .= $data['Email']['email'];
 						break;
 				}
+				break;
 
 		}
 
@@ -309,30 +310,37 @@ class RefManRefereeFormat {
 	 */
 	private function formatPhoneNumber($data, $type, $export) {
 
-		if (($data === null) || empty($data)) {
-			return '';
-		}
+		$sReturn = '';
 
-		switch ($type) {
-			case 'international':
-				$formatted = __('+%s %s ', ($data['country_code'] === '') ? Configure::read('RefMan.defaultcountrycode') : $data['country_code'], ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
-				$formatted .= $data['number'];
-				break;
-			case 'normal':
-				$formatted = '';
-				if (($data['country_code'] != '') && ($data['country_code'] != Configure::read('RefMan.defaultcountrycode'))) {
-					$formatted .= __('+%s %s ', $data['country_code'], ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
-				} else {
-					$formatted .= __('0%s ', ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
+		switch ($export) {
+
+			case 'html':
+				switch ($type) {
+					case 'international':
+						$sReturn .= __('+%s %s %s',
+													($data['PhoneNumber']['country_code'] === '') ? Configure::read('RefMan.defaultcountrycode') : $data['PhoneNumber']['country_code'],
+													($data['PhoneNumber']['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['PhoneNumber']['area_code'],
+													$data['PhoneNumber']['number']);
+						break;
+					case 'national':
+						if (($data['PhoneNumber']['country_code'] != '') && ($data['PhoneNumber']['country_code'] != Configure::read('RefMan.defaultcountrycode'))) {
+							$sReturn .= __('+%s %s %s',
+														 $data['PhoneNumber']['country_code'],
+														 ($data['PhoneNumber']['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['PhoneNumber']['area_code'],
+														 $data['PhoneNumber']['number']);
+						} else {
+							$sReturn .= __('0%s %s',
+														($data['PhoneNumber']['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['PhoneNumber']['area_code'],
+														$data['PhoneNumber']['number']);
+						}
+						break;
 				}
-				$formatted .= $data['number'];
 				break;
-			default:
-				$formatted = $data;
-				break;
+
 		}
 
-		return $formatted;
+		return $sReturn;
+
 	}
 
 	/**
