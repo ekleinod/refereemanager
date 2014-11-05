@@ -73,7 +73,7 @@
 							$tmpValue = (empty($person['Person']['first_name'])) ? '' : $this->RefereeFormat->formatPerson($person['Person'], 'first_name');
 							echo(getTD($columns[$curcol++], '', $tmpValue));
 
-							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'Email'), 'link', 'Email', 'html');
+							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'Email'), 'text', 'Email', 'html');
 							echo(getTD($columns[$curcol++], '', $tmpValue));
 
 							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'PhoneNumber'), 'national', 'PhoneNumber', 'html');
@@ -82,7 +82,7 @@
 							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'Address'), 'fulladdress', 'Address', 'html');
 							echo(getTD($columns[$curcol++], '', $tmpValue));
 
-							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'Url'), 'link', 'Url', 'html');
+							$tmpValue = $this->RefereeFormat->formatContacts(Person::getContacts($person, 'Url'), 'text', 'Url', 'html');
 							echo(getTD($columns[$curcol++], '', $tmpValue));
 
 							$tmpValue = h($person['SexType']['title']);
