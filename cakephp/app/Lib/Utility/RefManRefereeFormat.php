@@ -197,9 +197,7 @@ class RefManRefereeFormat {
 		if (is_array($data)) {
 
 			foreach ($data as $entry) {
-				$sTextArray[] = (count($data) > 1) ?
-						sprintf('(%s) %s', $entry['ContactType']['abbreviation'], $this->formatContact($entry, $type, $kind, $export)) :
-						$this->formatContact($entry, $type, $kind, $export);
+				$sTextArray[] = $this->formatContact($entry, $type, $kind, $export, count($data));
 			}
 
 		} else {
@@ -212,28 +210,48 @@ class RefManRefereeFormat {
 	/**
 	 * Format given contact.
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @param string $type contact kind
-	 * @param string $type export type
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $type contact kind
+	 * @param $type export type
+	 * @param $count number of contacts
 	 * @return string formatted string
 	 *
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	private function formatContact($data, $type, $kind, $export) {
-			switch ($kind) {
-				case 'Address':
-					return $this->formatAddress($data, $type, $export);
-				case 'Email':
-					return $this->formatEmail($data, $type, $export);
-				case 'PhoneNumber':
-					return $this->formatPhoneNumber($data, $type, $export);
-				case 'Url':
-					return $this->formatUrl($data, $type, $export);
+	private function formatContact($data, $type, $kind, $export, $count) {
+
+			$sReturn = '';
+
+			if ($count > 1) {
+				$sReturn .= sprintf('(%s) ', $data['ContactType']['abbreviation']);
 			}
 
-			return null;
+			switch ($kind) {
+				case 'Address':
+					$sReturn .= $this->formatAddress($data, $type, $export);
+					break;
+				case 'Email':
+					$sReturn .= $this->formatEmail($data, $type, $export);
+					break;
+				case 'PhoneNumber':
+					$sReturn .= $this->formatPhoneNumber($data, $type, $export);
+					break;
+				case 'Url':
+					$sReturn .= $this->formatUrl($data, $type, $export);
+					break;
+			}
+
+			if (!empty($data['info']['remark'])) {
+				switch ($export) {
+					case 'html':
+						$sReturn .= sprintf(' <span style="font-size: smaller; font-style: italic;">(%s)</span>', $data['info']['remark']);
+						break;
+				}
+			}
+
+			return $sReturn;
 	}
 
 	/**
