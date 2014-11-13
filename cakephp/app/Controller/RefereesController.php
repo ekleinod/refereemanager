@@ -7,7 +7,7 @@ App::uses('RefManRefereeFormat', 'Utility');
  * Referees Controller
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class RefereesController extends AppController {
@@ -16,7 +16,7 @@ class RefereesController extends AppController {
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Referee', 'Club', 'Contact', 'ContactType', 'League', 'Picture', 'RefereeRelationType', 'Season', 'SexType', 'StatusType', 'TrainingLevelType', 'TrainingUpdate');
+	public $uses = array('Referee', 'Season');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
@@ -24,21 +24,12 @@ class RefereesController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		$this->Club->recursive = -1;
-		$this->ContactType->recursive = -1;
-		$this->League->recursive = -1;
-		$this->Picture->recursive = -1;
-		$this->RefereeRelationType->recursive = -1;
-		$this->SexType->recursive = -1;
-		$this->StatusType->recursive = -1;
-		$this->TrainingLevelType->recursive = -1;
-		$this->TrainingUpdate->recursive = -1;
 	}
 
 	/**
 	 * Index method.
 	 *
-	 * @param season season to use (default: null == current season)
+	 * @param season season (default: null == current season)
 	 *
 	 * @version 0.1
 	 * @since 0.1
@@ -48,7 +39,52 @@ class RefereesController extends AppController {
 		$this->setAndGetStandardIndexExport($season);
 
 		$this->set('title_for_layout', __('Übersicht der Schiedsrichter_innen'));
+		$this->set('isRefView', true);
 	}
+
+	/**
+	 * Set and get standard values for index and export.
+	 *
+	 * @param season season (default: null == current season)
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	private function setAndGetStandardIndexExport($season = null) {
+
+		$theSeason = $this->getSeason($season);
+		$this->setAndGetStandard();
+
+		$referees = $this->Referee->getReferees($theSeason);
+		$this->set('people', $referees);
+	}
+
+	/**
+	 * Set and get standard values.
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	private function setAndGetStandard() {
+
+		$seasonarray = $this->Season->find('list');
+		asort($seasonarray, SORT_LOCALE_STRING);
+
+		$this->set('seasonarray', $seasonarray);
+
+		$this->set('controller', 'Referees');
+	}
+
+
+
+
+
+
+
+
+
+
+
 
 	/**
 	 * Export method.
@@ -72,32 +108,6 @@ class RefereesController extends AppController {
 			$this->render();
 		}
 
-	}
-
-	/**
-	 * Set and get standard values for index and export.
-	 *
-	 * @param season season (default: null == current season)
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function setAndGetStandardIndexExport($season = null) {
-
-		$theSeason = $this->getSeason($season);
-
-		$seasonarray = $this->Season->find('list');
-		asort($seasonarray, SORT_LOCALE_STRING);
-
-		$referees = $this->Referee->getReferees($theSeason);
-
-		$this->set('referees', $referees);
-		$this->set('season', $theSeason);
-		$this->set('seasonarray', $seasonarray);
-		$this->set('statustypes', $this->getStatusTypes($referees, $theSeason));
-		$this->set('refereerelationtypes', $this->getRefereeRelationTypes($referees));
-		$this->set('allrefereerelationtypes', $this->getAllRefereeRelationTypes());
-		$this->set('contacttypes', $this->getContactTypes());
 	}
 
 	/**
@@ -267,16 +277,6 @@ class RefereesController extends AppController {
 		asort($clubarray, SORT_LOCALE_STRING);
 
 		return $clubarray;
-	}
-
-	/**
-	 * Set and get standard values.
-	 *
-	 * @version 0.3
-	 * @since 0.3
-	 */
-	private function setAndGetStandard() {
-		$this->set('controller', 'Referees');
 	}
 
 }

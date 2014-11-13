@@ -12,7 +12,7 @@ App::uses('AppController', 'Controller');
 class PeopleController extends AppController {
 
 	/** Helper classes. */
-	public $helpers = array('RefereeForm');
+	public $helpers = array('RefereeFormat', 'RefereeForm');
 
 	/** Models. */
 	public $uses = array('Person', 'SexType');
@@ -146,7 +146,7 @@ class PeopleController extends AppController {
 
 		$this->setAndGetStandard();
 
-		$people = $this->getPeople();
+		$people = $this->Person->getPeople();
 		$this->set('people', $people);
 
 	}
@@ -183,19 +183,6 @@ class PeopleController extends AppController {
 	 */
 	private function setAndGetStandard() {
 		$this->set('controller', 'People');
-	}
-
-	/**
-	 * Returns the People.
-	 *
-	 * @return array of People
-	 *
-	 * @version 0.3
-	 * @since 0.3
-	 */
-	private function getPeople() {
-		$people = $this->Person->getPeople();
-		return $people;
 	}
 
 }

@@ -13,7 +13,7 @@ App::uses('RefManRefereeFormat', 'Utility');
 class AssignmentsController extends AppController {
 
 	/** Helper classes. */
-	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
+	public $helpers = array('RefereeFormat', 'RefereeForm');
 
 	/** Models. */
 	public $uses = array('Assignment', 'League', 'LeagueGame', 'Referee', 'RefereeAssignment', 'Season');
@@ -31,7 +31,7 @@ class AssignmentsController extends AppController {
 	/**
 	 * Index method.
 	 *
-	 * @param season season to export (default: null == current season)
+	 * @param season season (default: null == current season)
 	 *
 	 * @version 0.3
 	 * @since 0.1

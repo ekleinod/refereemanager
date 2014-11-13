@@ -4,15 +4,20 @@
 
 <?php echo $this->element('actions_header');	?>
 
+<?php
+	$isRefView = isset($isRefView) && $isRefView;
+?>
 <!-- view content -->
+<p><?php
+	echo __('Es %s %s %s gespeichert.',
+					(count($people) == 1) ? 'ist' : 'sind',
+					(empty($people)) ? 'keine' : count($people),
+					(count($people) == 1) ? (($isRefView) ? 'Schiedsrichter_in' : 'Person') : (($isRefView) ? 'Schiedsrichter_innen' : 'Personen')
+					);
+?></p>
 <?php
-	if (empty($people)) {
+	if (!empty($people)) {
 ?>
-	<p><?php echo __('Es sind keine Personen gespeichert.'); ?></p>
-<?php
-	} else {
-?>
-	<p><?php echo __('Es sind %d Personen gespeichert.', count($people)); ?></p>
 	<table>
 		<?php
 			$columns = array();
