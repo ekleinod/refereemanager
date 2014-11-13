@@ -45,6 +45,7 @@ class PeopleController extends AppController {
 		$this->setAndGetStandardIndex();
 
 		$this->set('title_for_layout', __('Übersicht der Personen'));
+		$this->render('/Referees/index');
 	}
 
 	/**
