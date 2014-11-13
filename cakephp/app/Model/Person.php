@@ -133,7 +133,16 @@ class Person extends AppModel {
 		return 0;
 	}
 
-	/** All contacts. */
+	/**
+	 * Returns all contacts.
+	 *
+	 * @param person person
+	 * @param contactkind contact kind
+	 * @return array of contacts (empty if there are none)
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
 	public static function getContacts($person, $contactkind) {
 		$arrReturn = array();
 
@@ -159,6 +168,42 @@ class Person extends AppModel {
 		}
 
 		return $arrReturn;
+	}
+
+	/**
+	 * Returns primary contact.
+	 *
+	 * @param person person
+	 * @param contactkind contact kind
+	 * @return primary contact (null if there is none)
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function getPrimaryContact($person, $contactkind) {
+
+		$arrContacts = Person::getContacts($person, $contactkind);
+
+		// no contact of that kind
+		if (count($arrContacts) == 0) {
+			return null;
+		}
+
+		// just one - simple
+		if (count($arrContacts) == 1) {
+			return $arrContacts[0];
+		}
+
+		// several - search for primary
+		foreach ($arrContacts as $contact) {
+			if ($contact['info']['is_primary']) {
+				return $contact;
+			}
+		}
+
+		// primary not given - take first
+		return $arrContacts[0];
+
 	}
 
 }
