@@ -194,14 +194,8 @@ class RefManRefereeFormat {
 
 		$sTextArray = array();
 
-		if (is_array($data)) {
-
-			foreach ($data as $entry) {
-				$sTextArray[] = $this->formatContact($entry, $type, $kind, $export, count($data));
-			}
-
-		} else {
-			$sTextArray[] = $this->formatContact($data, $type, $kind, $export, 1);
+		foreach ($data as $entry) {
+			$sTextArray[] = $this->formatContact($entry, $type, $kind, $export, count($data));
 		}
 
 		return $this->formatMultiline($sTextArray, $export);
@@ -221,7 +215,6 @@ class RefManRefereeFormat {
 	 * @since 0.3
 	 */
 	private function formatContact($data, $type, $kind, $export, $count) {
-
 			$sReturn = '';
 
 			if ($count > 1) {
@@ -341,6 +334,10 @@ class RefManRefereeFormat {
 						$sReturn .= $data['Email']['email'];
 						break;
 				}
+				break;
+
+			case 'text':
+				$sReturn .= $data['Email']['email'];
 				break;
 
 		}

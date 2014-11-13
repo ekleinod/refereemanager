@@ -8,7 +8,7 @@ App::uses('RefManRefereeFormat', 'Utility');
  * Tools editor Controller
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class ToolsEditorController extends AppController {
@@ -29,8 +29,6 @@ class ToolsEditorController extends AppController {
 			$this->Session->setFlash(__('Der Zugriff ist nur für Editoren erlaubt. Bitte loggen Sie sich ein.'));
 			$this->redirect(array('controller' => 'users', 'action' => 'login'));
 		}
-
-		$this->Season->recursive = -1;
 	}
 
 	/**
@@ -53,7 +51,10 @@ class ToolsEditorController extends AppController {
 	 */
 	public function mailinglist($season = null) {
 
+		$this->setAndGetStandard($season);
+
 		$this->set('title_for_layout', __('Mailverteiler'));
+
 
 		$theSeason = $this->getSeason($season);
 
@@ -72,6 +73,29 @@ class ToolsEditorController extends AppController {
 		$this->set('seasonarray', $seasonarray);
 		$this->set('separator', $theSeparator);
 
+	}
+
+	/**
+	 * Set and get standard values.
+	 *
+	 * @param season season (default: null == current season)
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	private function setAndGetStandard($season = null) {
+
+		$theSeason = $this->getSeason($season);
+
+		$seasonarray = $this->Season->find('list');
+		asort($seasonarray, SORT_LOCALE_STRING);
+
+		$this->set('seasonarray', $seasonarray);
+
+		$this->set('controller', 'ToolsEditor');
+
+		$referees = $this->Referee->getReferees($theSeason);
+		$this->set('referees', $referees);
 	}
 
 	/**

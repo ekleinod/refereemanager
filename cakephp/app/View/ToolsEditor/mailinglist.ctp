@@ -11,13 +11,13 @@
 				$sMailinglist = "";
 				$bMore = false;
 				foreach ($referees as $referee) {
-					$email = Referee::getPrimaryEmail($referee);
+					$email = Person::getPrimaryContact($referee, 'Email');
 					if ($email != null) {
 
 						if ($bMore) {
 							$sMailinglist .= $separator;
 						}
-						$sMailinglist .= $this->RefereeFormat->formatEMail($email, 'text');
+						$sMailinglist .= $this->RefereeFormat->formatContacts(array($email), 'text', 'Email', 'text');
 
 						$bMore = true;
 					}
@@ -27,13 +27,13 @@
 				$sMailinglist = "";
 				$bMore = false;
 				foreach ($referees as $referee) {
-					$email = Referee::getPrimaryEmail($referee);
+					$email = Person::getPrimaryContact($referee, 'Email');
 					if ($email != null) {
 
 						if ($bMore) {
 							$sMailinglist .= $separator . "\n";
 						}
-						$sMailinglist .= $this->RefereeFormat->formatEMail($email, 'text');
+						$sMailinglist .= $this->RefereeFormat->formatContacts(array($email), 'text', 'Email', 'text');
 
 						$bMore = true;
 					}
@@ -51,4 +51,6 @@
 	</fieldset>
 
 <?php echo $this->Form->end(); ?>
+
+<?php debug($referees); ?>
 
