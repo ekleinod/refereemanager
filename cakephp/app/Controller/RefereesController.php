@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('RefManPeople', 'Utility');
 App::uses('RefManRefereeFormat', 'Utility');
 
 /**
@@ -16,7 +17,7 @@ class RefereesController extends AppController {
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Referee', 'Season');
+	public $uses = array('Person', 'Referee', 'Season', 'StatusType');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
@@ -24,6 +25,7 @@ class RefereesController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
+		$this->StatusType->recursive = -1;
 	}
 
 	/**
@@ -57,6 +59,8 @@ class RefereesController extends AppController {
 
 		$referees = $this->Referee->getReferees($theSeason);
 		$this->set('people', $referees);
+
+		$this->set('statustypes', $this->getUsedStatusTypes($referees, $theSeason));
 	}
 
 	/**
@@ -73,6 +77,48 @@ class RefereesController extends AppController {
 		$this->set('seasonarray', $seasonarray);
 
 		$this->set('controller', 'Referees');
+	}
+
+	/**
+	 * Returns the status types used by the referees.
+	 *
+	 * @param $referees referees
+	 * @param $season season
+	 * @return array of status types
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	private function getUsedStatusTypes($referees, $season) {
+		$statustypes = array();
+		$idsid = array();
+
+		foreach ($this->StatusType->find('all') as $statustype) {
+			$statustypes[$statustype['StatusType']['sid']] = $statustype;
+			$idsid[$statustype['StatusType']['id']] = $statustype['StatusType']['sid'];
+		}
+		ksort($statustypes);
+
+		foreach ($referees as $referee) {
+
+			$theStatus = RefManPeople::getRefereeStatus($referee, $season);
+
+			if ($theStatus !== null) {
+				if ($idsid[$theStatus['status_type_id']] != StatusType::SID_NORMAL) {
+					$statustypes[$idsid[$theStatus['status_type_id']]]['referees'][] = $referee['Person'];
+				}
+			}
+
+		}
+
+		$arrReturn = array();
+		foreach ($statustypes as $key => $statustype) {
+			if (array_key_exists('referees', $statustype)) {
+				$arrReturn[$key] = $statustype;
+			}
+		}
+
+		return $arrReturn;
 	}
 
 
@@ -215,37 +261,6 @@ class RefereesController extends AppController {
 			$allrefereerelationtypes[$refereerelationtype['RefereeRelationType']['sid']] = $refereerelationtype['RefereeRelationType'];
 		}
 		return $allrefereerelationtypes;
-	}
-
-	/**
-	 * Returns the status types used by the referees.
-	 *
-	 * @param $referees referees
-	 * @param $season season
-	 * @return array of status types
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getStatusTypes($referees, $season) {
-		$statustypes = array();
-
-		foreach ($referees as $referee) {
-			if ($referee['RefereeStatus']) {
-				if (!array_key_exists($referee['RefereeStatus']['sid'], $statustypes)) {
-					$statustypes[$referee['RefereeStatus']['sid']] = $referee['RefereeStatus'];
-				}
-				if (($referee['RefereeStatus']['sid'] == StatusType::SID_MANY) ||
-						($referee['RefereeStatus']['sid'] == StatusType::SID_INACTIVESEASON) ||
-						($referee['RefereeStatus']['sid'] == StatusType::SID_OTHER)) {
-					$statustypes[$referee['RefereeStatus']['sid']]['referees'][] = $referee['Person'];
-				}
-			}
-		}
-
-		ksort($statustypes);
-
-		return $statustypes;
 	}
 
 	/**

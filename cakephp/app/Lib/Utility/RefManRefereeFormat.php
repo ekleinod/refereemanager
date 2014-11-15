@@ -1,9 +1,4 @@
 <?php
-/**
- * RefManRefereeFormat Utility
- *
- * Methods for formatting all referee manager components nicely.
- */
 
 App::uses('CakeTime', 'Utility');
 

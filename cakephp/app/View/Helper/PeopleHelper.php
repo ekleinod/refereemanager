@@ -1,19 +1,19 @@
 <?php
 
 App::uses('AppHelper', 'View/Helper');
-App::uses('RefManRefereeFormat', 'Utility');
+App::uses('RefManPeople', 'Utility');
 
 /**
- * RefereeFormat Helper class for referee manager specific formatting.
+ * People Helper class for getting data of people.
  *
  * @package       View.Helper
  */
-class RefereeFormatHelper extends AppHelper {
+class PeopleHelper extends AppHelper {
 
 	/**
-	 * RefManRefereeFormat instance
+	 * RefManPeople instance
 	 *
-	 * @var RefManRefereeFormat
+	 * @var RefManPeople
 	 */
 	protected $_engine = null;
 
@@ -30,7 +30,7 @@ class RefereeFormatHelper extends AppHelper {
 	 * @throws CakeException When the engine class could not be found.
 	 */
 	public function __construct(View $View, $settings = array()) {
-		$settings = Hash::merge(array('engine' => 'RefManRefereeFormat'), $settings);
+		$settings = Hash::merge(array('engine' => 'RefManPeople'), $settings);
 		parent::__construct($View, $settings);
 		list($plugin, $engineClass) = pluginSplit($settings['engine'], true);
 		App::uses($engineClass, $plugin . 'Utility');
@@ -42,7 +42,7 @@ class RefereeFormatHelper extends AppHelper {
 	}
 
 	/**
-	 * Call methods from RefManRefereeFormat utility class
+	 * Call methods from RefManPeople utility class
 	 */
 	public function __call($method, $params) {
 		return call_user_func_array(array($this->_engine, $method), $params);
