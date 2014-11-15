@@ -220,11 +220,11 @@
 			<p><strong><?php echo ($outstatustype['StatusType']['remark']) ? h($outstatustype['StatusType']['remark']) : h($outstatustype['StatusType']['title']); ?></strong></p>
 			<p>
 				<?php
-					$arrOut = array();
+					$arrNames = array();
 					foreach ($outstatustype['referees'] as $referee) {
-						$arrOut[] = $this->RefereeFormat->formatPerson($referee, 'fullname');
+						$arrNames[] = $this->RefereeFormat->formatPerson($referee, 'fullname');
 					}
-					echo $this->RefereeFormat->formatMultiline($arrOut, ', ');
+					echo $this->RefereeFormat->formatMultiline($arrNames, ', ');
 				?>
 			</p>
 	<?php

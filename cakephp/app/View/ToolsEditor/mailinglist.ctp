@@ -8,37 +8,16 @@
 		<p>Bitte die Liste einfach herauskopieren.</p>
 		<ol>
 			<?php
-				$sMailinglist = "";
-				$bMore = false;
+				$arrMails = array();
 				foreach ($referees as $referee) {
-					$email = Person::getPrimaryContact($referee, 'Email');
+					$email = $this->People->getPrimaryContact($referee, 'Email');
 					if ($email != null) {
-
-						if ($bMore) {
-							$sMailinglist .= $separator;
-						}
-						$sMailinglist .= $this->RefereeFormat->formatContacts(array($email), 'text', 'Email', 'text');
-
-						$bMore = true;
+						$arrMails[] = $this->RefereeFormat->formatContacts(array($email), 'text', 'Email', 'text');
 					}
 				}
-				echo $this->RefereeForm->getInputField(null, 'textarea', 'mailinglist', __('Liste (eine Zeile)'), $sMailinglist, false, __('Liste'));
 
-				$sMailinglist = "";
-				$bMore = false;
-				foreach ($referees as $referee) {
-					$email = Person::getPrimaryContact($referee, 'Email');
-					if ($email != null) {
-
-						if ($bMore) {
-							$sMailinglist .= $separator . "\n";
-						}
-						$sMailinglist .= $this->RefereeFormat->formatContacts(array($email), 'text', 'Email', 'text');
-
-						$bMore = true;
-					}
-				}
-				echo $this->RefereeForm->getInputField(null, 'textarea', 'mailinglist', __('Liste (mehrere Zeilen)'), $sMailinglist, false, __('Liste'));
+				echo $this->RefereeForm->getInputField(null, 'textarea', 'mailinglist', __('Liste (eine Zeile)'), $this->RefereeFormat->formatMultiline($arrMails, $separator), false, __('Liste'));
+				echo $this->RefereeForm->getInputField(null, 'textarea', 'mailinglist', __('Liste (mehrere Zeilen)'), $this->RefereeFormat->formatMultiline($arrMails, $separator . "\n"), false, __('Liste'));
 
 				echo $this->RefereeForm->getInputField(null, 'text', 'separator', __('Trennzeichen'), $separator, false, __(','));
 			?>
