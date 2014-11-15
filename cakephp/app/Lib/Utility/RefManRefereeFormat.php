@@ -132,14 +132,14 @@ class RefManRefereeFormat {
 	/**
 	 * Format multiline data.
 	 *
-	 * @param string $data data to format
-	 * @param string $type export type
+	 * @param $data data to format
+	 * @param $separator separator character
 	 * @return formatted string
 	 *
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public function formatMultiline($data, $export = 'html') {
+	public function formatMultiline($data, $separator = '<br />') {
 		if (empty($data)) {
 			return '';
 		}
@@ -151,11 +151,7 @@ class RefManRefereeFormat {
 			$bMore = false;
 			foreach ($data as $entry) {
 				if ($bMore) {
-					switch ($export) {
-						case 'html':
-							$sReturn .= '<br />';
-							break;
-					}
+					$sReturn .= $separator;
 				}
 				$bMore = true;
 
@@ -193,7 +189,14 @@ class RefManRefereeFormat {
 			$sTextArray[] = $this->formatContact($entry, $type, $kind, $export, count($data));
 		}
 
-		return $this->formatMultiline($sTextArray, $export);
+		$sSeparator = '';
+		switch ($export) {
+			case 'html':
+				$sSeparator = '<br />';
+				break;
+		}
+
+		return $this->formatMultiline($sTextArray, $sSeparator);
 	}
 
 	/**

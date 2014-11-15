@@ -136,6 +136,13 @@
 			<?php
 				foreach ($people as $person) {
 					$curcol = 0;
+					$tmpFormat = '';
+					if ($isRefView) {
+						$tmpStatus = $this->People->getRefereeStatus($person, $season);
+						if (($tmpStatus !== null) && (array_key_exists($tmpStatus['status_type_id'], $statustypes))) {
+							$tmpFormat = $statustypes[$tmpStatus['status_type_id']]['outputstyle'];
+						}
+					}
 			?>
 					<tr>
 						<?php
@@ -143,36 +150,42 @@
 							if ($isReferee) {
 								$tmpValue = (empty($person['Picture']['url'])) ? '' :
 										$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von %s', $this->RefereeFormat->formatPerson($person['Person'], 'fullname')), 'title' => h($this->RefereeFormat->formatPerson($person['Person'], 'fullname')))), $person['Picture']['url'], array('escape' => false));
-								echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
+								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 							}
 
 							$tmpValue = (empty($person['Person']['name'])) ? '' : $this->RefereeFormat->formatPerson($person['Person'], 'name_title');
-							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
+							echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 
 							$tmpValue = (empty($person['Person']['first_name'])) ? '' : $person['Person']['first_name'];
-							echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
+							echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
+
+							foreach ($refereerelationtypes as $sid => $refereerelationtype) {
+								if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
+								}
+							}
+
 
 							if ($isReferee) {
 								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'Email'), 'text', 'Email', 'html');
-								echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
+								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 
 								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'PhoneNumber'), 'national', 'PhoneNumber', 'html');
-								echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
+								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 							}
 
 							if ($isEditor) {
 								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'Address'), 'fulladdress', 'Address', 'html');
-								echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
+								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 							}
 
 							if ($isReferee) {
 								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'Url'), 'text', 'Url', 'html');
-								echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
+								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 							}
 
 							if ($isEditor) {
 								$tmpValue = h($person['SexType']['title']);
-								echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
+								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 
 								$tmpValue = array();
 								if (!empty($person['Person']['birthday'])) {
@@ -181,13 +194,13 @@
 								if (!empty($person['Person']['dayofdeath'])) {
 									$tmpValue[] = sprintf('&dagger;&nbsp;%s', $this->RefereeFormat->formatDate($person['Person']['dayofdeath'], 'date'));
 								}
-								echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
+								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 
 								$tmpValue = (empty($person['Person']['remark'])) ? '' : $person['Person']['remark'];
-								echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
+								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 
 								$tmpValue = (empty($person['Person']['internal_remark'])) ? '' : $person['Person']['internal_remark'];
-								echo(getTD($columns[$curcol++], '', $this->RefereeFormat->formatMultiline($tmpValue)));
+								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 							}
 
 							echo(getTD(__('Aktionen'), '', $this->element('actions_table', array('id' => $person['Person']['id'])), 'actions'));
@@ -198,6 +211,26 @@
 			?>
 		</tbody>
 	</table>
+
+	<?php if ($isRefView) { ?>
+		<h3><?php echo __('Zusatzinformationen'); ?></h3>
+		<?php
+			foreach ($statustypes as $outstatustype) {
+		?>
+			<p><strong><?php echo ($outstatustype['StatusType']['remark']) ? h($outstatustype['StatusType']['remark']) : h($outstatustype['StatusType']['title']); ?></strong></p>
+			<p>
+				<?php
+					$arrOut = array();
+					foreach ($outstatustype['referees'] as $referee) {
+						$arrOut[] = $this->RefereeFormat->formatPerson($referee, 'fullname');
+					}
+					echo $this->RefereeFormat->formatMultiline($arrOut, ', ');
+				?>
+			</p>
+	<?php
+			}
+		}
+	?>
 
 <?php
 	}

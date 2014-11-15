@@ -17,7 +17,7 @@ class RefereesController extends AppController {
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Person', 'Referee', 'Season', 'StatusType');
+	public $uses = array('Person', 'Referee', 'RefereeRelationType', 'Season', 'StatusType');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
@@ -26,6 +26,7 @@ class RefereesController extends AppController {
 		parent::beforeFilter();
 
 		$this->StatusType->recursive = -1;
+		$this->RefereeRelationType->recursive = -1;
 	}
 
 	/**
@@ -61,6 +62,7 @@ class RefereesController extends AppController {
 		$this->set('people', $referees);
 
 		$this->set('statustypes', $this->getUsedStatusTypes($referees, $theSeason));
+		$this->set('refereerelationtypes', $this->getUsedRefereeRelationTypes($referees));
 	}
 
 	/**
@@ -90,35 +92,63 @@ class RefereesController extends AppController {
 	 * @since 0.1
 	 */
 	private function getUsedStatusTypes($referees, $season) {
-		$statustypes = array();
-		$idsid = array();
+		$arrTemp = array();
+		$badIDs = array();
 
 		foreach ($this->StatusType->find('all') as $statustype) {
-			$statustypes[$statustype['StatusType']['sid']] = $statustype;
-			$idsid[$statustype['StatusType']['id']] = $statustype['StatusType']['sid'];
+			$arrTemp[$statustype['StatusType']['id']] = $statustype;
+			if ($statustype['StatusType']['sid'] === StatusType::SID_NORMAL) {
+				$badIDs[] = $statustype['StatusType']['id'];
+			}
 		}
-		ksort($statustypes);
 
 		foreach ($referees as $referee) {
 
 			$theStatus = RefManPeople::getRefereeStatus($referee, $season);
 
-			if ($theStatus !== null) {
-				if ($idsid[$theStatus['status_type_id']] != StatusType::SID_NORMAL) {
-					$statustypes[$idsid[$theStatus['status_type_id']]]['referees'][] = $referee['Person'];
-				}
+			if (($theStatus !== null) && !in_array($theStatus['status_type_id'], $badIDs)) {
+				$arrTemp[$theStatus['status_type_id']]['referees'][] = $referee['Person'];
 			}
 
 		}
 
-		$arrReturn = array();
-		foreach ($statustypes as $key => $statustype) {
+		usort($arrTemp, array('StatusType', 'compareTo'));
+
+		$statustypes = array();
+		foreach ($arrTemp as $statustype) {
 			if (array_key_exists('referees', $statustype)) {
-				$arrReturn[$key] = $statustype;
+				$statustypes[$statustype['StatusType']['id']] = $statustype;
 			}
 		}
 
-		return $arrReturn;
+		return $statustypes;
+	}
+
+	/**
+	 * Returns used referee relation types of referees.
+	 *
+	 * @param $referees array of referees
+	 * @return used referee relation types
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	private function getUsedRefereeRelationTypes($referees) {
+
+		$arrTemp = array();
+		foreach ($referees as $referee) {
+			foreach ($referee['RefereeRelation'] as $relation) {
+				$arrTemp[$relation['referee_relation_type_id']] = true;
+			}
+		}
+
+		$refereerelationtypes = array();
+		foreach ($arrTemp as $id => $dummy) {
+			$tpeTemp = $this->RefereeRelationType->findById($id);
+			$refereerelationtypes[$tpeTemp['RefereeRelationType']['sid']] = $tpeTemp['RefereeRelationType'];
+		}
+
+		return $refereerelationtypes;
 	}
 
 
@@ -223,28 +253,6 @@ class RefereesController extends AppController {
 		$this->set('clubarray', $this->getClubArray());
 
 		$this->set('id', $referee['Referee']['id']);
-	}
-
-	/**
-	 * Returns used referee relation types of referees.
-	 *
-	 * @param $referees array of referees
-	 * @return used referee relation types
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getRefereeRelationTypes($referees) {
-		$refereerelationtypes = array();
-		foreach ($referees as $referee) {
-			foreach ($referee['RefereeRelation'] as $sid => $relations) {
-				if (!array_key_exists($sid, $refereerelationtypes)) {
-					$refereerelationtypes[$sid] = $this->RefereeRelationType->getRelationTypeBySID($sid);
-				}
-			}
-		}
-
-		return $refereerelationtypes;
 	}
 
 	/**

@@ -58,6 +58,25 @@ class StatusType extends AppModel {
 	const SID_MAILONLY = 'mailonly';
 	const SID_OTHER = 'other';
 
+	/**
+	 * Compare two objects.
+	 *
+	 * @param a first object
+	 * @param b second object
+	 * @return comparison result
+	 *  @retval <0 a<b
+	 *  @retval 0 a==b
+	 *  @retval >0 a>b
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function compareTo($a, $b) {
+
+		// only criterion: sid
+		return strcasecmp($a['StatusType']['sid'], $b['StatusType']['sid']);
+	}
+
 }
 
 /* EOF */
