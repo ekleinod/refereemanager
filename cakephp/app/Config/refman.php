@@ -9,6 +9,8 @@ $config = array (
 			'path' => 'files/templates/',
 			'referee_view' => 'referee_view.mmd',
 			'referee_view_all' => 'referee_view_all.tex',
+			'email' => 'email.mmd',
+			'letter' => 'letter.mmd',
 		),
 
 		'refreport' => array (

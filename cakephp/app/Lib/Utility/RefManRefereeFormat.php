@@ -37,7 +37,7 @@ class RefManRefereeFormat {
 			$datetime = CakeTime::fromString(sprintf('%s %s', $date, $time));
 		}
 
-		return CakeTime::format($datetime, '%Y-%m-%d %H:%M:%S');;
+		return CakeTime::format($datetime, '%Y-%m-%d %H:%M:%S');
 	}
 
 	/**
