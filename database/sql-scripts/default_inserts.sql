@@ -86,10 +86,10 @@ COMMIT;
 -- Data for table `rfrmgr_training_level_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `title`) VALUES ('assump', 1, 'assump');
-INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `title`) VALUES ('natump', 2, 'natump');
-INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `title`) VALUES ('natref', 3, 'natref');
-INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `title`) VALUES ('intump', 4, 'intump');
+INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `update_interval`) VALUES ('assump', 1, 2);
+INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `update_interval`) VALUES ('natump', 2, 3);
+INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `update_interval`) VALUES ('natref', 3, 3);
+INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `update_interval`) VALUES ('intump', 4, 3);
 
 COMMIT;
 

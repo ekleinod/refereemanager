@@ -283,6 +283,7 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_training_level_types` (
   `rank` INT UNSIGNED NOT NULL,
   `title` VARCHAR(100) NOT NULL,
   `abbreviation` VARCHAR(20) NOT NULL,
+  `update_interval` INT UNSIGNED NOT NULL,
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),

@@ -41,6 +41,7 @@ class TrainingLevelType extends AppModel {
 		'rank' => array('isUnique', 'notempty', 'numeric'),
 		'title' => array('isUnique', 'notempty'),
 		'abbreviation' => array('isUnique', 'notempty'),
+		'update_interval' => array('notempty', 'numeric'),
 	);
 
 	/**
