@@ -198,7 +198,15 @@
 									$tmpValue[] = sprintf('&dagger;&nbsp;%s', $this->RefereeFormat->formatDate($person['Person']['dayofdeath'], 'date'));
 								}
 								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
+							}
 
+							if ($isRefView) {
+								$theTrainingLevel = $this->People->getTrainingLevel($person);
+								$tmpValue = $theTrainingLevel['TrainingLevelType']['abbreviation'];
+								echo(getTD($columns[$curcol++], $tmpFormat, $tmpValue));
+							}
+
+							if ($isEditor) {
 								$tmpValue = (empty($person['Person']['remark'])) ? '' : $person['Person']['remark'];
 								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 

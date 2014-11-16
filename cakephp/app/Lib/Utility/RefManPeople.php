@@ -86,7 +86,7 @@ class RefManPeople {
 	}
 
 	/**
-	 * Returns all referee relations for the referee with the given sid.
+	 * Returns all referee relations with the given sid for the referee.
 	 *
 	 * @param referee referee
 	 * @param sid sid
@@ -98,16 +98,40 @@ class RefManPeople {
 	public function getRelations($person, $sid) {
 		$arrReturn = array();
 
-		$modelRelation = ClassRegistry::init('RefereeRelation');
+		$model = ClassRegistry::init('RefereeRelation');
 
 		foreach ($person['RefereeRelation'] as $relation) {
-			$theRel = $modelRelation->findById($relation['id']);
+			$theRel = $model->findById($relation['id']);
 			if ($theRel['RefereeRelationType']['sid'] == $sid) {
 				$arrReturn[] = $theRel;
 			}
 		}
 
 		return $arrReturn;
+	}
+
+	/**
+	 * Returns highest training level for the referee.
+	 *
+	 * @param referee referee
+	 * @return training level (null if there are none)
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getTrainingLevel($person) {
+		$levReturn = null;
+
+		$model = ClassRegistry::init('TrainingLevel');
+
+		foreach ($person['TrainingLevel'] as $level) {
+			$theLevel = $model->findById($level['id']);
+			if (($levReturn === null) || ($levReturn['TrainingLevelType']['rank'] < $theLevel['TrainingLevelType']['rank'])) {
+				$levReturn = $theLevel;
+			}
+		}
+
+		return $levReturn;
 	}
 
 	/**
