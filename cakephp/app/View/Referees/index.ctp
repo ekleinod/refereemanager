@@ -159,28 +159,31 @@
 							$tmpValue = (empty($person['Person']['first_name'])) ? '' : $person['Person']['first_name'];
 							echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 
-							foreach ($refereerelationtypes as $sid => $refereerelationtype) {
-								if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
+							if ($isRefView) {
+								foreach ($refereerelationtypes as $sid => $refereerelationtype) {
+									if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
+										$tmpValue = $this->RefereeFormat->formatRelations($this->People->getRelations($person, $sid), 'text', 'html');
+										echo(getTD($columns[$curcol++], $tmpFormat, $tmpValue));
+									}
 								}
 							}
 
-
 							if ($isReferee) {
 								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'Email'), 'text', 'Email', 'html');
-								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
+								echo(getTD($columns[$curcol++], $tmpFormat, $tmpValue));
 
 								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'PhoneNumber'), 'national', 'PhoneNumber', 'html');
-								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
+								echo(getTD($columns[$curcol++], $tmpFormat, $tmpValue));
 							}
 
 							if ($isEditor) {
 								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'Address'), 'fulladdress', 'Address', 'html');
-								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
+								echo(getTD($columns[$curcol++], $tmpFormat, $tmpValue));
 							}
 
 							if ($isReferee) {
 								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'Url'), 'text', 'Url', 'html');
-								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
+								echo(getTD($columns[$curcol++], $tmpFormat, $tmpValue));
 							}
 
 							if ($isEditor) {

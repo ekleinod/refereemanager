@@ -18,8 +18,8 @@ class RefManRefereeFormat {
 	/**
 	 * Format given date/time for SQL.
 	 *
-	 * @param string $date date to format
-	 * @param string $time time to format
+	 * @param $date date to format
+	 * @param $time time to format
 	 * @return string formatted string
 	 *
 	 * @version 0.3
@@ -43,8 +43,8 @@ class RefManRefereeFormat {
 	/**
 	 * Format given date/time according to specified type.
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
+	 * @param $data data to format
+	 * @param $type format type
 	 * @return string formatted string
 	 *
 	 * @version 0.3
@@ -93,8 +93,8 @@ class RefManRefereeFormat {
 	/**
 	 * Format given person according to specified type.
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
+	 * @param $data data to format
+	 * @param $type format type
 	 * @return string formatted string
 	 *
 	 * @version 0.3
@@ -168,10 +168,10 @@ class RefManRefereeFormat {
 	/**
 	 * Format given contacts.
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @param string $type contact kind
-	 * @param string $type export type
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $type contact kind
+	 * @param $export export type
 	 * @return formatted string
 	 *
 	 * @version 0.3
@@ -205,7 +205,7 @@ class RefManRefereeFormat {
 	 * @param $data data to format
 	 * @param $type format type
 	 * @param $type contact kind
-	 * @param $type export type
+	 * @param $export export type
 	 * @param $count number of contacts
 	 * @return string formatted string
 	 *
@@ -248,9 +248,9 @@ class RefManRefereeFormat {
 	/**
 	 * Format given address according to specified type.
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @param string $type export type
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $export export type
 	 * @return string formatted string
 	 *
 	 * @version 0.3
@@ -309,9 +309,9 @@ class RefManRefereeFormat {
 	/**
 	 * Format given email according to specified type.
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @param string $type export type
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $export export type
 	 * @return string formatted string
 	 *
 	 * @version 0.3
@@ -346,9 +346,9 @@ class RefManRefereeFormat {
 	/**
 	 * Format given phone number according to specified type.
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @param string $type export type
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $export export type
 	 * @return string formatted string
 	 *
 	 * @version 0.3
@@ -392,9 +392,9 @@ class RefManRefereeFormat {
 	/**
 	 * Format given url according to specified type.
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @param string $type export type
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $export export type
 	 * @return string formatted string
 	 *
 	 * @version 0.3
@@ -422,74 +422,70 @@ class RefManRefereeFormat {
 	}
 
 	/**
-	 * Format relation with sid using separator character.
+	 * Format given relations.
 	 *
-	 * @param string $data data to format
-	 * @param string $sid sid of relation
-	 * @param string $sep separator
-	 * @return string formatted string
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $export export type
+	 * @return formatted string
 	 *
 	 * @version 0.3
-	 * @since 0.1
+	 * @since 0.3
 	 */
-	public function formatRelationBySID($data, $sid, $sep = '; ') {
+	public function formatRelations($data, $type, $export = 'html') {
 
 		if (empty($data)) {
 			return '';
 		}
 
-		if (!array_key_exists($sid, $data)) {
-			return '';
+		$sTextArray = array();
+
+		foreach ($data as $entry) {
+			$sTextArray[] = $this->formatRelation($entry, $type, $export);
 		}
 
-		return $this->formatRelation($data[$sid], $sep);
+		return $this->formatMultiline($sTextArray, '; ');
 	}
 
 	/**
 	 * Format relation using separator character.
 	 *
-	 * @param string $data data to format
-	 * @param string $sep separator
-	 * @return string formatted string
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $export export type
+	 * @return formatted string
 	 *
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	public function formatRelation($data, $sep = '; ') {
+	public function formatRelation($data, $type, $export = 'html') {
 
 		if (empty($data)) {
 			return '';
 		}
 
-		$formatted = '';
+		$sTextArray = array();
 
-		$hasMore = false;
-		foreach ($data as $relation) {
-			if ($hasMore) {
-				$formatted .= $sep;
-			}
-			if (array_key_exists('Club', $relation)) {
-				$formatted .= $relation['Club']['name'];
-			}
-			if (array_key_exists('League', $relation)) {
-				$formatted .= $relation['League']['title'];
-			}
-			if (array_key_exists('SexType', $relation)) {
-				$formatted .= $relation['SexType']['title'];
-			}
-			if (array_key_exists('Saturday', $relation)) {
-				$formatted .= __('Sonnabend');
-			}
-			if (array_key_exists('Sunday', $relation)) {
-				$formatted .= __('Sonntag');
-			}
-			if (array_key_exists('Remark', $relation)) {
-				$formatted .= $relation['Remark'];
-			}
-			$hasMore = true;
+		if (!empty($data['RefereeRelation']['club_id'])) {
+			$sTextArray[] = $data['Club']['name'];
+		}
+		if (!empty($data['RefereeRelation']['league_id'])) {
+			$sTextArray[] = $data['League']['title'];
+		}
+		if (!empty($data['RefereeRelation']['sex_type_id'])) {
+			$sTextArray[] = $data['SexType']['title'];
+		}
+		if (!empty($data['RefereeRelation']['saturday']) && $data['RefereeRelation']['saturday']) {
+			$sTextArray[] = __('Sonnabend');
+		}
+		if (!empty($data['RefereeRelation']['sunday']) && $data['RefereeRelation']['sunday']) {
+			$sTextArray[] = __('Sonntag');
+		}
+		if (!empty($data['RefereeRelation']['remark'])) {
+			$sTextArray[] = $data['RefereeRelation']['remark'];
 		}
 
-		return $formatted;
+		return $this->formatMultiline($sTextArray, '; ');
 	}
 
 }

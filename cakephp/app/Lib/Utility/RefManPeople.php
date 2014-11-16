@@ -86,6 +86,31 @@ class RefManPeople {
 	}
 
 	/**
+	 * Returns all referee relations for the referee with the given sid.
+	 *
+	 * @param referee referee
+	 * @param sid sid
+	 * @return array of referee relations (empty if there are none)
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getRelations($person, $sid) {
+		$arrReturn = array();
+
+		$modelRelation = ClassRegistry::init('RefereeRelation');
+
+		foreach ($person['RefereeRelation'] as $relation) {
+			$theRel = $modelRelation->findById($relation['id']);
+			if ($theRel['RefereeRelationType']['sid'] == $sid) {
+				$arrReturn[] = $theRel;
+			}
+		}
+
+		return $arrReturn;
+	}
+
+	/**
 	 * Returns the referee status of the referee in the given season.
 	 *
 	 * @param referee referee
