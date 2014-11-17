@@ -27,7 +27,7 @@ class RefManPeople {
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public function getContacts($person, $contactkind) {
+	public static function getContacts($person, $contactkind) {
 		$arrReturn = array();
 
 		$model = ClassRegistry::init($contactkind);
@@ -64,9 +64,9 @@ class RefManPeople {
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public function getPrimaryContact($person, $contactkind) {
+	public static function getPrimaryContact($person, $contactkind) {
 
-		$arrContacts = $this->getContacts($person, $contactkind);
+		$arrContacts = RefManPeople::getContacts($person, $contactkind);
 
 		// no contact of that kind
 		if (count($arrContacts) == 0) {

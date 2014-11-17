@@ -100,7 +100,7 @@ class RefManRefereeFormat {
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	public function formatPerson($data, $type) {
+	public static function formatPerson($data, $type) {
 
 		if (empty($data)) {
 			return '';
