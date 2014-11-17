@@ -149,11 +149,11 @@
 
 							if ($isReferee) {
 								$tmpValue = (empty($person['Picture']['url'])) ? '' :
-										$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von %s', $this->RefereeFormat->formatPerson($person['Person'], 'fullname')), 'title' => h($this->RefereeFormat->formatPerson($person['Person'], 'fullname')))), $person['Picture']['url'], array('escape' => false));
+										$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von %s', $this->RefereeFormat->formatPerson($person, 'fullname')), 'title' => h($this->RefereeFormat->formatPerson($person, 'fullname')))), $person['Picture']['url'], array('escape' => false));
 								echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 							}
 
-							$tmpValue = (empty($person['Person']['name'])) ? '' : $this->RefereeFormat->formatPerson($person['Person'], 'name_title');
+							$tmpValue = (empty($person['Person']['name'])) ? '' : $this->RefereeFormat->formatPerson($person, 'name_title');
 							echo(getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
 
 							$tmpValue = (empty($person['Person']['first_name'])) ? '' : $person['Person']['first_name'];

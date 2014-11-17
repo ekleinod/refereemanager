@@ -109,20 +109,20 @@ class RefManRefereeFormat {
 		switch ($type) {
 			case 'fullname':
 				$formatted = __('%s%s%s',
-												((empty($data['title'])) ? '' : __('%s ', $data['title'])),
-												((empty($data['first_name'])) ? '' : __('%s ', $data['first_name'])),
-												$data['name']);
+												((empty($data['Person']['title'])) ? '' : __('%s ', $data['Person']['title'])),
+												((empty($data['Person']['first_name'])) ? '' : __('%s ', $data['Person']['first_name'])),
+												$data['Person']['name']);
 				break;
 			case 'name_title':
 				$formatted = __('%s%s',
-												$data['name'],
-												((empty($data['title'])) ? '' : __(', %s', $data['title'])));
+												$data['Person']['name'],
+												((empty($data['Person']['title'])) ? '' : __(', %s', $data['Person']['title'])));
 				break;
 			case 'tablename':
 				$formatted = __('%s%s%s',
-												$data['name'],
-												((empty($data['title'])) ? '' : __(', %s', $data['title'])),
-												((empty($data['first_name'])) ? '' : __(', %s', $data['first_name'])));
+												$data['Person']['name'],
+												((empty($data['Person']['title'])) ? '' : __(', %s', $data['Person']['title'])),
+												((empty($data['Person']['first_name'])) ? '' : __(', %s', $data['Person']['first_name'])));
 				break;
 		}
 
@@ -139,7 +139,7 @@ class RefManRefereeFormat {
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public function formatMultiline($data, $separator = '<br />') {
+	public static function formatMultiline($data, $separator = '<br />') {
 		if (empty($data)) {
 			return '';
 		}
@@ -256,13 +256,14 @@ class RefManRefereeFormat {
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	private function formatAddress($data, $type, $export) {
+	public static function formatAddress($data, $type, $export) {
 
 		$sReturn = '';
 
 		switch ($export) {
 
 			case 'html':
+			case 'text':
 				switch ($type) {
 					case 'fulladdress':
 						if (!empty($data['Address']['street'])) {
@@ -296,9 +297,6 @@ class RefManRefereeFormat {
 						if (!empty($data['Address']['city'])) {
 							$sReturn .= __(' %s', $data['Address']['city']);
 						}
-						break;
-					default:
-						$sReturn = $data;
 						break;
 				}
 		}

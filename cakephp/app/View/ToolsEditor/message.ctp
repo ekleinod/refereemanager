@@ -1,6 +1,6 @@
 <?php if (isset($messageresult)) { ?>
 
-	<p><?php echo $this->RefereeFormat->formatMultiline($messageresult); ?></p>
+	<p><?php echo $this->RefereeFormat->formatMultiline($messageresult, '</p><p>'); ?></p>
 
 <?php } else { ?>
 

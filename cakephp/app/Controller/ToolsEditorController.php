@@ -107,28 +107,41 @@ class ToolsEditorController extends AppController {
 			$tplLetter = RefManTemplate::replace($tplLetter, 'subject', $this->request->data['ToolsEditor']['subject']);
 			$tplLetter = RefManTemplate::replace($tplLetter, 'date', RefManRefereeFormat::formatDate(time(), 'medium'));
 
+			$arrEmails = array();
+			$arrLetter = array();
+
 			// fill templates with person values
 			foreach ($this->viewVars['referees'] as $referee) {
 
-				if ($sendEmail && !empty(RefManPeople::getPrimaryContact($referee, 'Email'))) {
+				$contactEmail = RefManPeople::getPrimaryContact($referee, 'Email');
+				if ($sendEmail && !empty($contactEmail)) {
 
 					$txtEmail = RefManTemplate::replaceRefereeData($tplEmail, $referee);
-					// send email
-					//$messageresult[] = '<pre>' . $txtEmail . '</pre>';
 
+					// send email
+
+					// output for user
+					$arrEmails[] = sprintf('%s &lt;%s&gt;', RefManRefereeFormat::formatPerson($referee, 'fullname'), $contactEmail['Email']['email']);
 				}
 
-				if ($sendLetter &&
-						(empty(RefManPeople::getPrimaryContact($referee, 'Email')) || ($referee['Referee']['docs_per_letter'] == true))) {
+				$contactAddress = RefManPeople::getPrimaryContact($referee, 'Address');
+				if ($sendLetter && !empty($contactAddress) &&
+						(empty($contactEmail) || ($referee['Referee']['docs_per_letter'] === true))) {
 
 					$txtLetter = RefManTemplate::replaceRefereeData($tplLetter, $referee);
+					$txtLetter = RefManTemplate::replace($txtLetter, 'streetnumber', RefManRefereeFormat::formatAddress($contactAddress, 'streetnumber', 'text'));
+					$txtLetter = RefManTemplate::replace($txtLetter, 'zipcity', RefManRefereeFormat::formatAddress($contactAddress, 'zipcity', 'text'));
+
 					// store letter
-					$messageresult[] = '<pre>' . $txtLetter . '</pre>';
-					break;
+
+					// output for user
+					$arrLetter[] = sprintf('%s', RefManRefereeFormat::formatPerson($referee, 'fullname'));
 				}
 
 			}
 
+			$messageresult[] = __('Emails (%d) an: %s.', count($arrEmails), RefManRefereeFormat::formatMultiline($arrEmails, ', '));
+			$messageresult[] = __('Briefe (%d) an: %s.', count($arrLetter), RefManRefereeFormat::formatMultiline($arrLetter, ', '));
 
 /*
 			// email test (set up email config correctly
