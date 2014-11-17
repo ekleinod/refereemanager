@@ -25,7 +25,7 @@
 			<legend><?php echo __('Nachricht (mit Platzhaltern)'); ?></legend>
 			<ol>
 				<?php
-					echo $this->RefereeForm->getInputField(null, 'textarea', 'message', __('Text'), null, true, __('Nachricht'), false);
+					echo $this->RefereeForm->getInputField(null, 'textarea', 'body', __('Text'), null, true, __('Nachricht'), false);
 					echo $this->RefereeForm->getInputField(null, 'text', 'subject', __('Betreff'), null, true, __('Betreff'));
 					echo $this->RefereeForm->getInputField(null, 'text', 'opening', __('Anrede'), 'Hallo **generated first_name**,', true, __('Hallo **generated first_name**,'));
 					echo $this->RefereeForm->getInputField(null, 'text', 'closing', __('Schlussformel'), 'Mit sportlichen Grüßen,', true, __('Mit sportlichen Grüßen,'));

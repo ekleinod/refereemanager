@@ -50,7 +50,7 @@ class RefManRefereeFormat {
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	public function formatDate($data, $type) {
+	public static function formatDate($data, $type) {
 
 		if (empty($data)) {
 			return '';

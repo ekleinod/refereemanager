@@ -87,11 +87,29 @@ class ToolsEditorController extends AppController {
 			$sendLetter = ($this->request->data['ToolsEditor']['recipient'] === 'a') || ($this->request->data['ToolsEditor']['recipient'] === 's');
 
 			// read templates
-			$tplEmail = RefManTemplate::getTemplate('email');
-			$tplLetter = RefManTemplate::getTemplate('letter');
+			$txtEmail = RefManTemplate::getTemplate('email');
+			$txtLetter = RefManTemplate::getTemplate('letter');
 
-			$messageresult[] = '<pre>' . $tplEmail . '</pre>';
-			$messageresult[] = '<pre>' . $tplLetter . '</pre>';
+			// fill templates with form values
+			$txtEmail = RefManTemplate::replace($txtEmail, 'body', $this->request->data['ToolsEditor']['body']);
+			$txtLetter = RefManTemplate::replace($txtLetter, 'body', $this->request->data['ToolsEditor']['body']);
+
+			$txtEmail = RefManTemplate::replace($txtEmail, 'opening', $this->request->data['ToolsEditor']['opening']);
+			$txtLetter = RefManTemplate::replace($txtLetter, 'opening', $this->request->data['ToolsEditor']['opening']);
+
+			$txtEmail = RefManTemplate::replace($txtEmail, 'closing', $this->request->data['ToolsEditor']['closing']);
+			$txtLetter = RefManTemplate::replace($txtLetter, 'closing', $this->request->data['ToolsEditor']['closing']);
+
+			$txtEmail = RefManTemplate::replace($txtEmail, 'signature', $this->request->data['ToolsEditor']['signature']);
+			$txtLetter = RefManTemplate::replace($txtLetter, 'signature', $this->request->data['ToolsEditor']['signature']);
+
+			$txtLetter = RefManTemplate::replace($txtLetter, 'subject', $this->request->data['ToolsEditor']['subject']);
+			$txtLetter = RefManTemplate::replace($txtLetter, 'date', RefManRefereeFormat::formatDate(time(), 'medium'));
+
+			// fill templates with person values
+
+			$messageresult[] = '<pre>' . $txtEmail . '</pre>';
+			$messageresult[] = '<pre>' . $txtLetter . '</pre>';
 
 /*
 			// email test (set up email config correctly
