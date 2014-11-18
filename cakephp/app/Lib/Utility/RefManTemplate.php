@@ -132,14 +132,15 @@ class RefManTemplate {
 	/**
 	 * Adds file to zip archive.
 	 *
+	 * @param $directory directory
 	 * @param $filename filename
 	 * @param $content content
 	 *
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public static function addToZip($filename, $content) {
-		RefManTemplate::$zip->addFromString(sprintf('%s.mmd', $filename), $content);
+	public static function addToZip($directory, $filename, $content) {
+		RefManTemplate::$zip->addFromString(sprintf('%s/%s.mmd', $directory, $filename), $content);
 		RefManTemplate::$merge = str_replace('#includepdf#',
 																				 sprintf("\t\\includepdf{generated/%s.pdf}\n#includepdf#", $filename),
 																				 RefManTemplate::$merge);
