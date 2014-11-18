@@ -93,11 +93,7 @@ class ToolsEditorController extends AppController {
 
 			// start zip archive for letters
 			if ($sendLetter) {
-				$zip = new ZipArchive();
-				$zipfile = sprintf('%s%s.zip', TMP, Configure::read('RefMan.template.letterout'));
-				if ($zip->open($zipfile, ZipArchive::OVERWRITE) !== TRUE) {
-					throw new CakeException(__('Zip-Archiv "%s" konnte nicht angelegt werden.', $zipfile));
-				}
+				RefManTemplate::openZip(Configure::read('RefMan.template.letterout'));
 			}
 
 			// fill templates with form values
@@ -149,10 +145,10 @@ class ToolsEditorController extends AppController {
 					$txtLetter = RefManTemplate::replace($txtLetter, 'zipcity', RefManRefereeFormat::formatAddress($contactAddress, 'zipcity', 'text'));
 
 					// store letter
-					$zip->addFromString(sprintf('%s_%s.mmd',
-																			RefManTemplate::fileName($referee['Person']['name']),
-																			RefManTemplate::fileName($referee['Person']['first_name'])),
-															$txtLetter);
+					RefManTemplate::addToZip(sprintf('%s_%s',
+																					 RefManTemplate::fileName($referee['Person']['name']),
+																					 RefManTemplate::fileName($referee['Person']['first_name'])),
+																	 $txtLetter);
 
 					// output for user
 					$arrLetter[] = sprintf('%s', RefManRefereeFormat::formatPerson($referee, 'fullname'));
@@ -164,13 +160,15 @@ class ToolsEditorController extends AppController {
 
 			// save zip archive for letters
 			if ($sendLetter) {
-				$zip->close();
+				$zipfile = RefManTemplate::closeZip();
 			}
 
 			if (empty($arrEmails)) {
 				$messageresult[] = __('Keine Emails.');
 			} else {
-				$messageresult[] = __('Emails (%d) an: %s.', count($arrEmails), RefManRefereeFormat::formatMultiline($arrEmails, ', '));
+				$messageresult[] = __('Emails (%d) an: %s.',
+															count($arrEmails),
+															RefManRefereeFormat::formatMultiline($arrEmails, ', '));
 			}
 			if (empty($arrLetter)) {
 				$messageresult[] = __('Keine Briefe.');

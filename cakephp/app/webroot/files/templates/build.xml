@@ -4,7 +4,7 @@
 
 <project name="mmd2pdf" default="help" basedir=".">
 
-	<property name="file:all" value="referee_view_all" />
+	<property name="file:merge" value="merge" />
 
 	<property name="path:mmd" value="mmd" />
 	<property name="path:generated" value="generated" />
@@ -27,6 +27,7 @@
 		<antcall target="clear" />
 
 		<antcall target="createtexfiles" />
+		<antcall target="createpdffiles" />
 		<antcall target="createpdffiles" />
 		<antcall target="createpdffiles" />
 		<antcall target="mergepdffiles" />
@@ -55,7 +56,7 @@
 		<echo message="createpdffiles"/>
 
 		<!-- force is set, because we need at several LaTeX runs to be executed -->
-		<apply executable="pdflatex" parallel="false" output="${file:all}.single.log" force="true">
+		<apply executable="pdflatex" parallel="false" output="${file:merge}.single.log" force="true">
 			<arg value="-interaction=nonstopmode" />
 			<arg value="-output-directory=${path:generated}" />
 			<srcfile />
@@ -65,8 +66,8 @@
 	</target>
 
 	<target name="mergepdffiles" description="Create merged pdf file from pdf files.">
-		<exec executable="pdflatex" output="${file:all}.log">
-			<arg line="-interaction=nonstopmode ${file:all}.tex" />
+		<exec executable="pdflatex" output="${file:merge}.log">
+			<arg line="-interaction=nonstopmode ${file:merge}.tex" />
 		</exec>
 	</target>
 

@@ -7,8 +7,10 @@ $config = array (
 
 		'template' => array (
 			'path' => 'files/templates/',
-			'referee_view' => 'referee_view.mmd',
-			'referee_view_all' => 'referee_view_all.tex',
+			'merge' => 'merge.tex',
+			'build' => 'build.xml',
+			'refereeview' => 'referee_view.mmd',
+			'refereeviewout' => 'referee_views',
 			'email' => 'email.mmd',
 			'letter' => 'letter.mmd',
 			'letterout' => 'letters',
