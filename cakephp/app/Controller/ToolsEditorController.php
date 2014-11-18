@@ -166,7 +166,7 @@ class ToolsEditorController extends AppController {
 						$txtLetter = RefManTemplate::replace($txtLetter, 'zipcity', RefManRefereeFormat::formatAddress($contactAddress, 'zipcity', 'text'));
 
 						// store letter
-						RefManTemplate::addToZip(sprintf('%s_%s',
+						RefManTemplate::addToZip(sprintf('mmd/%s_%s',
 																						 RefManTemplate::fileName($referee['Person']['name']),
 																						 RefManTemplate::fileName($referee['Person']['first_name'])),
 																		 $txtLetter);
