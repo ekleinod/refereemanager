@@ -82,6 +82,8 @@ class AppController extends Controller {
 		$this->set('isEditor', $this->isEditor($theUserRoleSID));
 		$this->set('isAdmin', $this->isAdmin($theUserRoleSID));
 
+		// initialize log
+		CakeLog::config('default', array('engine' => 'File'));
 	}
 
 	/**

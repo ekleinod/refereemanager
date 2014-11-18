@@ -31,8 +31,6 @@ class ToolsEditorController extends AppController {
 			$this->Session->setFlash(__('Der Zugriff ist nur für Editoren erlaubt. Bitte loggen Sie sich ein.'));
 			$this->redirect(array('controller' => 'users', 'action' => 'login'));
 		}
-
-		CakeLog::config('default', array('engine' => 'File'));
 	}
 
 	/**
@@ -149,10 +147,14 @@ class ToolsEditorController extends AppController {
 							$Email->attachments($attachment);
 						}
 						$Email->send($txtEmail);
-						CakeLog::write('email', __('Mail sent to %s <%s>', RefManRefereeFormat::formatPerson($referee, 'fullname'), $contactEmail['Email']['email']));
 
 						// output for user
-						$arrEmails[] = sprintf('%s &lt;%s&gt;', RefManRefereeFormat::formatPerson($referee, 'fullname'), $contactEmail['Email']['email']);
+						CakeLog::write('email', __('Mail sent to %s <%s>.',
+																			 RefManRefereeFormat::formatPerson($referee, 'fullname'),
+																			 $contactEmail['Email']['email']));
+						$arrEmails[] = sprintf('%s &lt;%s&gt;',
+																	 RefManRefereeFormat::formatPerson($referee, 'fullname'),
+																	 $contactEmail['Email']['email']);
 					}
 
 					$contactAddress = RefManPeople::getPrimaryContact($referee, 'Address');
@@ -170,6 +172,7 @@ class ToolsEditorController extends AppController {
 																		 $txtLetter);
 
 						// output for user
+						CakeLog::write('letter', __('Letter generated for %s.', RefManRefereeFormat::formatPerson($referee, 'fullname')));
 						$arrLetter[] = sprintf('%s', RefManRefereeFormat::formatPerson($referee, 'fullname'));
 					}
 
@@ -181,6 +184,9 @@ class ToolsEditorController extends AppController {
 			if ($sendLetter) {
 				$zipfile = RefManTemplate::closeZip();
 			}
+
+			$messageresult[] = __('Emaillogs in "%slogs/email.log".', TMP);
+			$messageresult[] = __('Brieflogs in "%slogs/letter.log".', TMP);
 
 			if (empty($arrEmails)) {
 				$messageresult[] = __('Keine Emails.');
