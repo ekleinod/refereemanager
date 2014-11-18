@@ -127,6 +127,7 @@
 				<include name="core.php" />
 				<include name="database.php" />
 				<include name="email.php" />
+				<include name="email.php.default" />
 				<include name="refman.php" />
 			</fileset>
 		</copy>
