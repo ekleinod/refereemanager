@@ -91,6 +91,15 @@ class ToolsEditorController extends AppController {
 			$tplEmail = RefManTemplate::getTemplate('email');
 			$tplLetter = RefManTemplate::getTemplate('letter');
 
+			// start zip archive for letters
+			if ($sendLetter) {
+				$zip = new ZipArchive();
+				$zipfile = sprintf('%s%s.zip', TMP, Configure::read('RefMan.template.letterout'));
+				if ($zip->open($zipfile, ZipArchive::OVERWRITE) !== TRUE) {
+					throw new CakeException(__('Zip-Archiv "%s" konnte nicht angelegt werden.', $zipfile));
+				}
+			}
+
 			// fill templates with form values
 			$tplEmail = RefManTemplate::replace($tplEmail, 'body', $this->request->data['ToolsEditor']['body']);
 			$tplLetter = RefManTemplate::replace($tplLetter, 'body', $this->request->data['ToolsEditor']['body']);
@@ -113,12 +122,19 @@ class ToolsEditorController extends AppController {
 			// fill templates with person values
 			foreach ($this->viewVars['referees'] as $referee) {
 
+	if ($referee['Person']['first_name'] === 'Ekkart') {
+
 				$contactEmail = RefManPeople::getPrimaryContact($referee, 'Email');
 				if ($sendEmail && !empty($contactEmail)) {
 
 					$txtEmail = RefManTemplate::replaceRefereeData($tplEmail, $referee);
 
-					// send email
+					// send email (set up email config correctly)
+					//$Email = new CakeEmail('default');
+					//$Email
+					//		->to($contactEmail['Email']['email'])
+					//		->subject($this->request->data['ToolsEditor']['subject']);
+					//$Email->send($txtEmail);
 
 					// output for user
 					$arrEmails[] = sprintf('%s &lt;%s&gt;', RefManRefereeFormat::formatPerson($referee, 'fullname'), $contactEmail['Email']['email']);
@@ -133,24 +149,37 @@ class ToolsEditorController extends AppController {
 					$txtLetter = RefManTemplate::replace($txtLetter, 'zipcity', RefManRefereeFormat::formatAddress($contactAddress, 'zipcity', 'text'));
 
 					// store letter
+					$zip->addFromString(sprintf('%s_%s.mmd',
+																			RefManTemplate::fileName($referee['Person']['name']),
+																			RefManTemplate::fileName($referee['Person']['first_name'])),
+															$txtLetter);
 
 					// output for user
 					$arrLetter[] = sprintf('%s', RefManRefereeFormat::formatPerson($referee, 'fullname'));
 				}
 
+	}
+
 			}
 
-			$messageresult[] = __('Emails (%d) an: %s.', count($arrEmails), RefManRefereeFormat::formatMultiline($arrEmails, ', '));
-			$messageresult[] = __('Briefe (%d) an: %s.', count($arrLetter), RefManRefereeFormat::formatMultiline($arrLetter, ', '));
+			// save zip archive for letters
+			if ($sendLetter) {
+				$zip->close();
+			}
 
-/*
-			// email test (set up email config correctly
-			/*$Email = new CakeEmail('default');
-			$Email
-					->to('') // mailadress(es)
-					->bcc('') // mailadress(es)
-					->subject('Nachricht der Schiedsrichterverwaltung');*/
-			//$Email->send('Die Nachricht.');
+			if (empty($arrEmails)) {
+				$messageresult[] = __('Keine Emails.');
+			} else {
+				$messageresult[] = __('Emails (%d) an: %s.', count($arrEmails), RefManRefereeFormat::formatMultiline($arrEmails, ', '));
+			}
+			if (empty($arrLetter)) {
+				$messageresult[] = __('Keine Briefe.');
+			} else {
+				$messageresult[] = __('Briefe (%d), abgelegt in "%s" an: %s.',
+															count($arrLetter),
+															$zipfile,
+															RefManRefereeFormat::formatMultiline($arrLetter, ', '));
+			}
 
 			$this->set('messageresult', $messageresult);
 		}

@@ -78,6 +78,31 @@ class RefManTemplate {
 		return $txtReturn;
 	}
 
+	/**
+	 * Replaces special characters in filenames.
+	 *
+	 * @param $filename filename
+	 * @return cleaned filename
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function fileName($filename) {
+		$txtReturn = $filename;
+
+		$txtReturn = str_replace('ä', 'ae', $txtReturn);
+		$txtReturn = str_replace('Ä', 'Ae', $txtReturn);
+		$txtReturn = str_replace('ö', 'oe', $txtReturn);
+		$txtReturn = str_replace('Ö', 'Oe', $txtReturn);
+		$txtReturn = str_replace('ü', 'ue', $txtReturn);
+		$txtReturn = str_replace('Ü', 'Ue', $txtReturn);
+		$txtReturn = str_replace('ß', 'ss', $txtReturn);
+		$txtReturn = str_replace('.', '_', $txtReturn);
+		$txtReturn = str_replace('-', '_', $txtReturn);
+
+		return $txtReturn;
+	}
+
 }
 
 /* EOF */

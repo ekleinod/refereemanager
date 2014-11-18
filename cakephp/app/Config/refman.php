@@ -11,6 +11,7 @@ $config = array (
 			'referee_view_all' => 'referee_view_all.tex',
 			'email' => 'email.mmd',
 			'letter' => 'letter.mmd',
+			'letterout' => 'letters',
 		),
 
 		'refreport' => array (
