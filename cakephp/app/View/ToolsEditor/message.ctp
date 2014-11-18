@@ -16,7 +16,8 @@
 					echo $this->RefereeForm->getInputField(null, 'select', 'recipient', __('Empfänger'), null, true, null, 0, false,
 																								 array('a' => __('Alle SR'),
 																											 'm' => __('SR mit E-Mail-Adresse'),
-																											 's' => __('SR mit Post-Adresse')));
+																											 's' => __('SR mit Post-Adresse'),
+																											 'i' => __('Mich (Test)')));
 				?>
 			</ol>
 		</fieldset>
@@ -30,7 +31,7 @@
 					echo $this->RefereeForm->getInputField(null, 'text', 'opening', __('Anrede'), 'Hallo **generated first_name**,', true, __('Hallo **generated first_name**,'));
 					echo $this->RefereeForm->getInputField(null, 'text', 'closing', __('Schlussformel'), 'Mit sportlichen Grüßen,', true, __('Mit sportlichen Grüßen,'));
 					echo $this->RefereeForm->getInputField(null, 'text', 'signature', __('Unterschrift'), 'Ekkart.', true, __('Ekkart.'));
-					echo $this->RefereeForm->getInputField(null, 'text', 'encl', __('Dateianhang'), null, false, __('Dateianhang'));
+					echo $this->RefereeForm->getInputField(null, 'text', 'attachment', __('Dateianhang'), null, false, __('Dateianhang'));
 				?>
 			</ol>
 		</fieldset>
