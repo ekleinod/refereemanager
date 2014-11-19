@@ -107,7 +107,7 @@ class RefereesController extends AppController {
 			$theStatus = RefManPeople::getRefereeStatus($referee, $season);
 
 			if (($theStatus !== null) && !in_array($theStatus['status_type_id'], $badIDs)) {
-				$arrTemp[$theStatus['status_type_id']]['referees'][] = $referee['Person'];
+				$arrTemp[$theStatus['status_type_id']]['referees'][] = $referee;
 			}
 
 		}
