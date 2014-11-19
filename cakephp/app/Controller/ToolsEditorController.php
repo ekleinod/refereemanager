@@ -92,6 +92,8 @@ class ToolsEditorController extends AppController {
 					($this->request->data['ToolsEditor']['recipient'] === 's') ||
 					$toMeOnly;
 
+			$sendSingleEmails = $this->request->data['ToolsEditor']['mailkind'] === 's';
+
 			// if attachment: does it exist?
 			if ($sendEmail && !empty($this->request->data['ToolsEditor']['attachment'])) {
 				$attachment = sprintf('%s%s', TMP, $this->request->data['ToolsEditor']['attachment']);
@@ -146,12 +148,12 @@ class ToolsEditorController extends AppController {
 						if (isset($attachment)) {
 							$Email->attachments($attachment);
 						}
-						$Email->send($txtEmail);
+						/*$Email->send($txtEmail);
 
 						// output for user
 						CakeLog::write('email', __('Mail sent to %s <%s>.',
 																			 RefManRefereeFormat::formatPerson($referee, 'fullname'),
-																			 $contactEmail['Email']['email']));
+																			 $contactEmail['Email']['email']));*/
 						$arrEmails[] = sprintf('%s &lt;%s&gt;',
 																	 RefManRefereeFormat::formatPerson($referee, 'fullname'),
 																	 $contactEmail['Email']['email']);

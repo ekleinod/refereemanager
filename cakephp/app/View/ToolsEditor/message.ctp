@@ -18,6 +18,9 @@
 																											 'm' => __('SR mit E-Mail-Adresse'),
 																											 's' => __('SR mit Post-Adresse'),
 																											 'i' => __('Mich (Test)')));
+					echo $this->RefereeForm->getInputField(null, 'radio', 'mailkind', __('Mailversand'), 's', true, null, 0, false,
+																								 array('s' => __('Einzelne E-Mail pro Schiri'),
+																											 'b' => __('Schiris als BCC')));
 				?>
 			</ol>
 		</fieldset>
