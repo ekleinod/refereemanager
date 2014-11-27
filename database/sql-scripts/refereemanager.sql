@@ -90,6 +90,7 @@ DROP TABLE IF EXISTS `rfrmgr_seasons` ;
 CREATE TABLE IF NOT EXISTS `rfrmgr_seasons` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `year_start` YEAR NOT NULL,
+  `editor_only` TINYINT(1) NULL,
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
@@ -205,9 +206,10 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_contacts` (
   `contact_type_id` INT UNSIGNED NOT NULL,
   `title` VARCHAR(100) NULL,
   `is_primary` TINYINT(1) NULL,
-  `remark` TEXT NULL,
+  `editor_only` TINYINT(1) NULL,
   `person_id` INT UNSIGNED NULL,
   `club_id` INT UNSIGNED NULL,
+  `remark` TEXT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB
