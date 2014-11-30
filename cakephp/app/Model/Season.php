@@ -116,6 +116,25 @@ class Season extends AppModel {
 	}
 
 	/**
+	 * Returns season lists.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return season list, empty if there are none
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getSeasonList() {
+
+		$seasons = $this->find('list');
+		arsort($seasons, SORT_LOCALE_STRING);
+
+		return $seasons;
+	}
+
+	/**
 	 * Compare two objects.
 	 *
 	 * @param a first object

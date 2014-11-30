@@ -188,10 +188,7 @@ class AssignmentsController extends AppController {
 	 */
 	private function setAndGetStandard() {
 
-		$seasonarray = $this->Season->find('list');
-		asort($seasonarray, SORT_LOCALE_STRING);
-
-		$this->set('seasonarray', $seasonarray);
+		$this->set('seasonarray', $this->Season->getSeasonList());
 
 		$this->set('controller', 'Assignments');
 	}
