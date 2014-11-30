@@ -205,6 +205,29 @@ class AppController extends Controller {
 		return $theSeason;
 	}
 
+	/**
+	 * Clean empty data fields, i.e. replace them with "null".
+	 *
+	 * @param data input data
+	 * @return cleaned data
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function cleanEmpty($data) {
+		$arrReturn = array();
+
+		foreach ($data as $key => $value) {
+			if (is_array($value)) {
+				$arrReturn[$key] = $this->cleanEmpty($value);
+			} else {
+				$arrReturn[$key] = (empty($value)) ? null : $value;
+			}
+		}
+
+		return $arrReturn;
+	}
+
 }
 
 /* EOF */

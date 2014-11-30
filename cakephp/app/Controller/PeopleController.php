@@ -83,9 +83,7 @@ class PeopleController extends AppController {
 
 		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('Person', $this->request->data)) {
 
-			$tmpData = $this->request->data;
-			$tmpData['Person']['birthday'] = RefManRefereeFormat::sqlFromDateTime($this->request->data['Person']['birthday']['date']);
-			$tmpData['Person']['dayofdeath'] = RefManRefereeFormat::sqlFromDateTime($this->request->data['Person']['dayofdeath']['date']);
+			$tmpData = $this->cleanRequest($this->request->data);
 
 			$this->Person->create();
 			if ($this->Person->saveAssociated($tmpData)) {
@@ -118,7 +116,7 @@ class PeopleController extends AppController {
 
 		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('Person', $this->request->data)) {
 
-			$tmpData = $this->request->data;
+			$tmpData = $this->cleanRequest($this->request->data);
 
 			if ($this->Person->saveAssociated($tmpData)) {
 				$this->Session->setFlash(__('Die Änderungen für "%s" wurden gespeichert.', $this->Person->getDisplayField()));
@@ -141,6 +139,26 @@ class PeopleController extends AppController {
 		$this->setAndGetStandardNewAddView($person);
 		$this->set('title_for_layout', __('Daten von "%s" editieren', $person['Person']['title_person']));
 		$this->render('/Generic/edit');
+	}
+
+	/**
+	 * Clean request data.
+	 *
+	 * @param $request request data
+	 * @return cleaned request data
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function cleanRequest($request) {
+
+		$dataReturn = $request;
+		$dataReturn['Person']['birthday'] = RefManRefereeFormat::sqlFromDateTime($request['Person']['birthday']['date']);
+		$dataReturn['Person']['dayofdeath'] = RefManRefereeFormat::sqlFromDateTime($request['Person']['dayofdeath']['date']);
+
+		$dataReturn = $this->cleanEmpty($dataReturn);
+
+		return $dataReturn;
 	}
 
 	/**

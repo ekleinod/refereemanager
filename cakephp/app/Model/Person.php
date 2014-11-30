@@ -20,7 +20,7 @@ class Person extends AppModel {
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
 		$this->virtualFields['title_person'] = sprintf(
-			'IF ((%1$s.first_name IS NULL OR %1$s.first_name = \'\'), %1$s.name, CONCAT(%1$s.name, ", ", %1$s.first_name))',
+			'IF (%1$s.first_name IS NULL OR %1$s.first_name = \'\', %1$s.name, CONCAT(%1$s.name, ", ", %1$s.first_name))',
 			$this->alias
 		);
 	}
@@ -57,7 +57,7 @@ class Person extends AppModel {
 												'rule' => 'date',
 												'allowEmpty' => true,
 												),
-		'dayofdeath' => array('date'
+		'dayofdeath' => array(
 													'rule' => 'date',
 													'allowEmpty' => true,
 													),
