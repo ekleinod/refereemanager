@@ -79,6 +79,9 @@ class UsersController extends AppController {
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('Der Nutzer konnte nicht gespeichert werden, versuchen Sie es erneut.'));
+
+				debug($this->User->validationErrors);
+				debug($tmpData);
 			}
 		}
 		$userRoles = $this->User->UserRole->find('list');
@@ -106,6 +109,9 @@ class UsersController extends AppController {
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('Die Änderungen des Nutzers konnten nicht gespeichert werden, versuchen Sie es erneut.'));
+
+				debug($this->User->validationErrors);
+				debug($tmpData);
 			}
 		} else {
 			$this->request->data = $this->User->read(null, $id);

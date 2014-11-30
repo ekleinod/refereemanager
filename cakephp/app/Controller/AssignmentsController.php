@@ -86,6 +86,9 @@ class AssignmentsController extends AppController {
 				$this->redirect(array('action' => 'edit', $this->Assignment->id));
 			} else {
 				$this->Session->setFlash(__('Der Schiedsrichtereinsatz konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
+
+				debug($this->Assignment->validationErrors);
+				debug($tmpData);
 			}
 
 		}
@@ -115,10 +118,11 @@ class AssignmentsController extends AppController {
 				$this->Session->setFlash(__('Der geänderte Schiedsrichtereinsatz wurde gespeichert.'));
 			} else {
 				$this->Session->setFlash(__('Der geänderte Schiedsrichtereinsatz konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
+
+				debug($this->Assignment->validationErrors);
+				debug($tmpData);
 			}
 
-			//debug($this->Assignment->validationErrors);
-			//debug($tmpData);
 			$this->redirect(array('action' => 'edit', $this->Assignment->id));
 
 		}

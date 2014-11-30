@@ -84,6 +84,9 @@ class SeasonsController extends AppController {
 				$this->redirect(array('action' => 'edit', $this->Season->id));
 			} else {
 				$this->Session->setFlash(__('Die Saison konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
+
+				debug($this->Season->validationErrors);
+				debug($tmpData);
 			}
 
 		}
@@ -112,9 +115,10 @@ class SeasonsController extends AppController {
 				$this->Session->setFlash(__('Die geänderte Saison wurde gespeichert.'));
 			} else {
 				$this->Session->setFlash(__('Die geänderte Saison konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
-			}
 
-			$this->redirect(array('action' => 'edit', $this->Season->id));
+				debug($this->Season->validationErrors);
+				debug($tmpData);
+			}
 
 		}
 

@@ -84,6 +84,9 @@ class ClubsController extends AppController {
 				$this->redirect(array('action' => 'edit', $this->Club->id));
 			} else {
 				$this->Session->setFlash(__('Der Club konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
+
+				debug($this->Club->validationErrors);
+				debug($tmpData);
 			}
 
 		}
@@ -113,6 +116,9 @@ class ClubsController extends AppController {
 				$this->Session->setFlash(__('Der geänderte Club wurde gespeichert.'));
 			} else {
 				$this->Session->setFlash(__('Der geänderte Club konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
+
+				debug($this->Club->validationErrors);
+				debug($tmpData);
 			}
 
 			$this->redirect(array('action' => 'edit', $this->Club->id));

@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('RefManRefereeFormat', 'Utility');
 
 /**
  * People Controller
@@ -83,6 +84,8 @@ class PeopleController extends AppController {
 		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('Person', $this->request->data)) {
 
 			$tmpData = $this->request->data;
+			$tmpData['Person']['birthday'] = RefManRefereeFormat::sqlFromDateTime($this->request->data['Person']['birthday']['date']);
+			$tmpData['Person']['dayofdeath'] = RefManRefereeFormat::sqlFromDateTime($this->request->data['Person']['dayofdeath']['date']);
 
 			$this->Person->create();
 			if ($this->Person->saveAssociated($tmpData)) {
@@ -90,6 +93,9 @@ class PeopleController extends AppController {
 				$this->redirect(array('action' => 'edit', $this->Person->id));
 			} else {
 				$this->Session->setFlash(__('Die Person konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
+
+				debug($this->Person->validationErrors);
+				debug($tmpData);
 			}
 
 		}
@@ -118,9 +124,10 @@ class PeopleController extends AppController {
 				$this->Session->setFlash(__('Die Änderungen für "%s" wurden gespeichert.', $this->Person->getDisplayField()));
 			} else {
 				$this->Session->setFlash(__('Die Änderungen konnten nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
-			}
 
-			$this->redirect(array('action' => 'edit', $this->Person->id));
+				debug($this->Person->validationErrors);
+				debug($tmpData);
+			}
 
 		}
 

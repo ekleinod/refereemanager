@@ -84,6 +84,9 @@ class LeaguesController extends AppController {
 				$this->redirect(array('action' => 'edit', $this->League->id));
 			} else {
 				$this->Session->setFlash(__('Die Liga konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
+
+				debug($this->League->validationErrors);
+				debug($tmpData);
 			}
 
 		}
@@ -112,9 +115,10 @@ class LeaguesController extends AppController {
 				$this->Session->setFlash(__('Die geänderte Liga wurde gespeichert.'));
 			} else {
 				$this->Session->setFlash(__('Die geänderte Liga konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
-			}
 
-			$this->redirect(array('action' => 'edit', $this->League->id));
+				debug($this->League->validationErrors);
+				debug($tmpData);
+			}
 
 		}
 

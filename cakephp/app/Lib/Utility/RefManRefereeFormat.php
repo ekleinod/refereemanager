@@ -25,19 +25,21 @@ class RefManRefereeFormat {
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	public function sqlFromDateTime($date, $time = null) {
+	public static function sqlFromDateTime($date, $time = null) {
 
 		if (empty($date)) {
 			return null;
 		}
 
+		$sReturn = null;
+
 		if (empty($time)) {
-			$datetime = CakeTime::fromString($date);
+			$sReturn = CakeTime::format(CakeTime::fromString($date), '%Y-%m-%d');
 		} else {
-			$datetime = CakeTime::fromString(sprintf('%s %s', $date, $time));
+			$sReturn = CakeTime::format(CakeTime::fromString(sprintf('%s %s', $date, $time)), '%Y-%m-%d %H:%M:%S');
 		}
 
-		return CakeTime::format($datetime, '%Y-%m-%d %H:%M:%S');
+		return $sReturn;
 	}
 
 	/**

@@ -19,11 +19,11 @@
 
 				// title
 				$tmpValue = (array_key_exists('Person', $person)) ? $person['Person']['title'] : '';
-				echo $this->RefereeForm->getInputField($action, 'text', 'Person.title', __('Titel'), $tmpValue, true, '', 50);
+				echo $this->RefereeForm->getInputField($action, 'text', 'Person.title', __('Titel'), $tmpValue, false, '', 50);
 
 				// first_name
 				$tmpValue = (array_key_exists('Person', $person)) ? $person['Person']['first_name'] : '';
-				echo $this->RefereeForm->getInputField($action, 'text', 'Person.first_name', __('Vorname'), $tmpValue, true, '', 100, true);
+				echo $this->RefereeForm->getInputField($action, 'text', 'Person.first_name', __('Vorname'), $tmpValue, false, '', 100, true);
 
 				// SexType type
 				$tmpValue = (array_key_exists('Person', $person)) ? $person['Person']['sex_type_id'] : '';
@@ -31,11 +31,11 @@
 
 				// birthday
 				$tmpValue = (array_key_exists('Person', $person)) ? $person['Person']['birthday'] : '';
-				echo $this->RefereeForm->getInputField($action, 'text', 'Person.birthday.date', __('Geburtstag'), $this->RefereeFormat->formatDate($tmpValue, 'date'), true, __('tt.mm.yyyy'), 10);
+				echo $this->RefereeForm->getInputField($action, 'text', 'Person.birthday.date', __('Geburtstag'), $this->RefereeFormat->formatDate($tmpValue, 'date'), false, __('tt.mm.yyyy'), 10);
 
 				// day of death
 				$tmpValue = (array_key_exists('Person', $person)) ? $person['Person']['dayofdeath'] : '';
-				echo $this->RefereeForm->getInputField($action, 'text', 'Person.dayofdeath.date', __('Todestag'), $this->RefereeFormat->formatDate($tmpValue, 'date'), true, __('tt.mm.yyyy'), 10);
+				echo $this->RefereeForm->getInputField($action, 'text', 'Person.dayofdeath.date', __('Todestag'), $this->RefereeFormat->formatDate($tmpValue, 'date'), false, __('tt.mm.yyyy'), 10);
 
 			?>
 		</ol>
@@ -46,17 +46,13 @@
 		<ol>
 			<?php
 
-				// picture url
-				$tmpValue = (array_key_exists('Picture', $person)) ? $person['Picture']['url'] : '';
-				echo $this->RefereeForm->getInputField($action, 'text', 'Picture.url', __('Bild'), $tmpValue, false, __('http://...'), 200);
-
 				// remark
 				$tmpValue = (array_key_exists('Person', $person)) ? $person['Person']['remark'] : '';
-				echo $this->RefereeForm->getInputField($action, 'textarea', 'Person.remark', __('Anmerkung'), $tmpValue, false);
+				echo $this->RefereeForm->getInputField($action, 'textarea', 'Person.remark', __('Anmerkung'), $tmpValue, false, '', 500);
 
 				// internal remark
 				$tmpValue = (array_key_exists('Person', $person)) ? $person['Person']['internal_remark'] : '';
-				echo $this->RefereeForm->getInputField($action, 'textarea', 'Person.internal_remark', __('Interne Anmerkung'), $tmpValue, false);
+				echo $this->RefereeForm->getInputField($action, 'textarea', 'Person.internal_remark', __('Interne Anmerkung'), $tmpValue, false, '', 500);
 
 			?>
 		</ol>
