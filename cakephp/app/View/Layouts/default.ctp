@@ -76,6 +76,7 @@
 																											array('title' => __('Liga-Typen'), 'routing' => array('action' => 'index', 'controller' => 'league_types')),
 																											array('title' => __('Ligen'), 'routing' => array('action' => 'index', 'controller' => 'leagues')),
 																											array('title' => __('Personen'), 'role' => 'referee', 'routing' => array('action' => 'index', 'controller' => 'people')),
+																											array('title' => __('Saisons'), 'routing' => array('action' => 'index', 'controller' => 'seasons')),
 																											array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
 																											)
 																		),

@@ -38,7 +38,11 @@ class RefereeFormHelper extends AppHelper {
 		$inputparams['label'] = $title;
 
 		if (!empty($value)) {
-			$inputparams['value'] = $value;
+			if ($type === 'checkbox') {
+				$inputparams['checked'] = 'checked';
+			} else {
+				$inputparams['value'] = $value;
+			}
 		}
 
 		if (!empty($maxlength)) {

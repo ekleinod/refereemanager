@@ -39,6 +39,7 @@ class Contact extends AppModel {
 		'id' => array('isUnique', 'notempty', 'numeric'),
 		'contact_type_id' => array('notempty', 'numeric'),
 		'is_primary' => array('boolean'),
+		'editor_only' => array('boolean'),
 		'person_id' => array('numeric'),
 		'club_id' => array('numeric'),
 	);

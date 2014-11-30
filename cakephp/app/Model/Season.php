@@ -52,6 +52,7 @@ class Season extends AppModel {
 	public $validate = array(
 		'id' => array('isUnique', 'notempty', 'numeric'),
 		'year_start' => array('notempty', 'numeric'),
+		'editor_only' => array('boolean'),
 	);
 
 	/**
@@ -93,6 +94,43 @@ class Season extends AppModel {
 		}
 
 		return $ssnReturn['Season'];
+	}
+
+	/**
+	 * Returns seasons.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return array of seasons, empty if there are none
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getSeasons() {
+
+		$seasons = $this->find('all');
+		usort($seasons, array('Season', 'compareTo'));
+
+		return $seasons;
+	}
+
+	/**
+	 * Compare two objects.
+	 *
+	 * @param a first object
+	 * @param b second object
+	 * @return comparison result
+	 *  @retval <0 a<b
+	 *  @retval 0 a==b
+	 *  @retval >0 a>b
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function compareTo($a, $b) {
+		// criterion: start year
+		return -1 * strcasecmp($a['Season']['year_start'], $b['Season']['year_start']);
 	}
 
 }
