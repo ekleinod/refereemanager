@@ -13,7 +13,7 @@
 			<legend><?php echo __('Einstellungen'); ?></legend>
 			<ol>
 				<?php
-					echo $this->RefereeForm->getInputField(null, 'select', 'recipient', __('Empfänger'), null, true, null, 0, false,
+					echo $this->RefereeForm->getInputField(null, 'select', 'recipient', __('Empfänger'), 'i', true, null, 0, false,
 																								 array('a' => __('Alle SR'),
 																											 'm' => __('SR mit E-Mail-Adresse'),
 																											 's' => __('SR mit Post-Adresse'),

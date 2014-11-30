@@ -184,7 +184,7 @@ class SeasonsController extends AppController {
 	 * @since 0.3
 	 */
 	private function getSeasons() {
-		$seasons = $this->Season->getSeasons();
+		$seasons = $this->Season->getSeasons($this->viewVars['isEditor']);
 		return $seasons;
 	}
 

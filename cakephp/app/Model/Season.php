@@ -102,14 +102,24 @@ class Season extends AppModel {
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
+	 * @param isEditor is user editor?
 	 * @return array of seasons, empty if there are none
 	 *
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public function getSeasons() {
+	public function getSeasons($isEditor) {
 
-		$seasons = $this->find('all');
+		$seasons = array();
+
+		foreach ($this->find('all') as $season) {
+			if (empty($season['Season']['editor_only']) ||
+					!$season['Season']['editor_only'] ||
+					$isEditor) {
+				$seasons[] = $season;
+			}
+		}
+
 		usort($seasons, array('Season', 'compareTo'));
 
 		return $seasons;
@@ -121,14 +131,20 @@ class Season extends AppModel {
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
+	 * @param isEditor is user editor?
 	 * @return season list, empty if there are none
 	 *
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public function getSeasonList() {
+	public function getSeasonList($isEditor) {
 
-		$seasons = $this->find('list');
+		$seasons = array();
+
+		foreach ($this->getSeasons($isEditor) as $season) {
+			$seasons[$season['Season']['id']] = $season['Season']['title_season'];
+		}
+
 		arsort($seasons, SORT_LOCALE_STRING);
 
 		return $seasons;

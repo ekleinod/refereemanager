@@ -73,7 +73,7 @@ class RefereesController extends AppController {
 	 */
 	private function setAndGetStandard() {
 
-		$this->set('seasonarray', $this->Season->getSeasonList());
+		$this->set('seasonarray', $this->Season->getSeasonList($this->viewVars['isEditor']));
 
 		$this->set('controller', 'Referees');
 	}
