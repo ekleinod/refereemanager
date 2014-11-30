@@ -90,6 +90,7 @@ DROP TABLE IF EXISTS `rfrmgr_seasons` ;
 CREATE TABLE IF NOT EXISTS `rfrmgr_seasons` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `year_start` YEAR NOT NULL,
+  `title` VARCHAR(100) NULL,
   `editor_only` TINYINT(1) NULL,
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
