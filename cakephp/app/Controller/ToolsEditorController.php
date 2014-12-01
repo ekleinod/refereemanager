@@ -72,15 +72,26 @@ class ToolsEditorController extends AppController {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public function message($season = null) {
-
-		$this->getSeason($season);
-		$this->setAndGetStandard($this->viewVars['season']);
+	public function message() {
 
 		$this->set('title_for_layout', __('Nachricht'));
 
+		$this->getSeason(null);
+		$this->setAndGetStandard($this->viewVars['season']);
+
 		// create messages
 		if (!empty($this->request->data)) {
+
+			debug($this->request->data);
+
+			debug($this->viewVars['season']);
+
+			debug($this->request->data['ToolsEditor']['season']);
+
+			$this->getSeason($this->request->data['ToolsEditor']['season']);
+			$this->setAndGetStandard($this->viewVars['season']);
+
+			debug($this->viewVars['season']);
 
 			$messageresult = array();
 
@@ -148,12 +159,16 @@ class ToolsEditorController extends AppController {
 						if (isset($attachment)) {
 							$Email->attachments($attachment);
 						}
-						/*$Email->send($txtEmail);
+
+						if (empty($this->request->data['ToolsEditor']['test_only'])) {
+							/*$Email->send($txtEmail);
+
+							CakeLog::write('email', __('Mail sent to %s <%s>.',
+																				 RefManRefereeFormat::formatPerson($referee, 'fullname'),
+																				 $contactEmail['Email']['email']));*/
+						}
 
 						// output for user
-						CakeLog::write('email', __('Mail sent to %s <%s>.',
-																			 RefManRefereeFormat::formatPerson($referee, 'fullname'),
-																			 $contactEmail['Email']['email']));*/
 						$arrEmails[] = sprintf('%s &lt;%s&gt;',
 																	 RefManRefereeFormat::formatPerson($referee, 'fullname'),
 																	 $contactEmail['Email']['email']);
@@ -194,6 +209,9 @@ class ToolsEditorController extends AppController {
 			if (empty($arrEmails)) {
 				$messageresult[] = __('Keine Emails.');
 			} else {
+				if (!empty($this->request->data['ToolsEditor']['test_only'])) {
+					$messageresult[] = __('Testmodus: keine Emails versendet.');
+				}
 				$messageresult[] = __('Emails (%d) an: %s.',
 															count($arrEmails),
 															RefManRefereeFormat::formatMultiline($arrEmails, ', '));
@@ -223,13 +241,12 @@ class ToolsEditorController extends AppController {
 	private function setAndGetStandard($season = null) {
 
 		$theSeason = $this->getSeason($season);
-
 		$this->set('seasonarray', $this->Season->getSeasonList($this->viewVars['isEditor']));
-
-		$this->set('controller', 'ToolsEditor');
 
 		$referees = $this->Referee->getReferees($theSeason);
 		$this->set('referees', $referees);
+
+		$this->set('controller', 'ToolsEditor');
 	}
 
 }

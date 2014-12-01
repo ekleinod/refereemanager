@@ -4,15 +4,14 @@
 
 <?php } else { ?>
 
-	<?php echo $this->element('filter');	?>
-
 	<?php echo $this->Form->create('ToolsEditor'); ?>
-		<?php echo $this->Form->hidden('Filter.season', array('value' => $season['id'])); ?>
 
 		<fieldset>
 			<legend><?php echo __('Einstellungen'); ?></legend>
 			<ol>
 				<?php
+					echo $this->RefereeForm->getInputField(null, 'select', 'season', __('Saison'), $season['id'], false, null, 0, true, $seasonarray);
+
 					echo $this->RefereeForm->getInputField(null, 'select', 'recipient', __('Empfänger'), 'i', true, null, 0, false,
 																								 array('a' => __('Alle SR'),
 																											 'm' => __('SR mit E-Mail-Adresse'),
@@ -21,6 +20,7 @@
 					echo $this->RefereeForm->getInputField(null, 'radio', 'mailkind', __('Mailversand'), 's', true, null, 0, false,
 																								 array('s' => __('Einzelne E-Mail pro Schiri'),
 																											 'b' => __('Schiris als BCC')));
+					echo $this->RefereeForm->getInputField(null, 'checkbox', 'test_only', __('Nur testen, nicht senden?'), null, false);
 				?>
 			</ol>
 		</fieldset>
