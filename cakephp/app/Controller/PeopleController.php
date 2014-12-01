@@ -87,7 +87,7 @@ class PeopleController extends AppController {
 
 			$this->Person->create();
 			if ($this->Person->saveAssociated($tmpData)) {
-				$this->Session->setFlash(__('"%s" wurde gespeichert.', $this->Person->getDisplayField()));
+				$this->Session->setFlash(__('Die Person wurde gespeichert.'));
 				$this->redirect(array('action' => 'edit', $this->Person->id));
 			} else {
 				$this->Session->setFlash(__('Die Person konnte nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
@@ -119,7 +119,7 @@ class PeopleController extends AppController {
 			$tmpData = $this->cleanRequest($this->request->data);
 
 			if ($this->Person->saveAssociated($tmpData)) {
-				$this->Session->setFlash(__('Die Änderungen für "%s" wurden gespeichert.', $this->Person->getDisplayField()));
+				$this->Session->setFlash(__('Die Änderungen wurden gespeichert.'));
 			} else {
 				$this->Session->setFlash(__('Die Änderungen konnten nicht gespeichert werden.') . ' ' . __('Bitte versuchen Sie es noch einmal.'));
 
