@@ -69,7 +69,7 @@ class ToolsEditorController extends AppController {
 	/**
 	 * Message method.
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function message() {
@@ -82,16 +82,7 @@ class ToolsEditorController extends AppController {
 		// create messages
 		if (!empty($this->request->data)) {
 
-			debug($this->request->data);
-
-			debug($this->viewVars['season']);
-
-			debug($this->request->data['ToolsEditor']['season']);
-
-			$this->getSeason($this->request->data['ToolsEditor']['season']);
-			$this->setAndGetStandard($this->viewVars['season']);
-
-			debug($this->viewVars['season']);
+			$this->set('messagedata', $this->request->data);
 
 			$messageresult = array();
 
@@ -106,45 +97,62 @@ class ToolsEditorController extends AppController {
 			$sendSingleEmails = $this->request->data['ToolsEditor']['mailkind'] === 's';
 
 			// if attachment: does it exist?
+			$attachmentOK = true;
 			if ($sendEmail && !empty($this->request->data['ToolsEditor']['attachment'])) {
 				$attachment = sprintf('%s%s', TMP, $this->request->data['ToolsEditor']['attachment']);
 				if (!file_exists($attachment)) {
-					throw new CakeException(__('Dateianhang "%s" existiert nicht.', $attachment));
+					$this->Session->setFlash(__('Dateianhang "%s" existiert nicht. Keine Nachrichten wurden versendet.', $attachment));
+					$attachmentOK = false;
 				}
 			}
 
-			// read templates
-			$tplEmail = RefManTemplate::getTemplate('email');
-			$tplLetter = RefManTemplate::getTemplate('letter');
+			if ($attachmentOK) {
 
-			// start zip archive for letters
-			if ($sendLetter) {
-				RefManTemplate::openZip(Configure::read('RefMan.template.letterout'));
-			}
+				// read templates
+				$tplEmail = RefManTemplate::getTemplate('email');
+				$tplLetter = RefManTemplate::getTemplate('letter');
 
-			// fill templates with form values
-			$tplEmail = RefManTemplate::replace($tplEmail, 'body', $this->request->data['ToolsEditor']['body']);
-			$tplLetter = RefManTemplate::replace($tplLetter, 'body', $this->request->data['ToolsEditor']['body']);
+				// start zip archive for letters
+				if ($sendLetter) {
+					RefManTemplate::openZip(Configure::read('RefMan.template.letterout'));
+				}
 
-			$tplEmail = RefManTemplate::replace($tplEmail, 'opening', $this->request->data['ToolsEditor']['opening']);
-			$tplLetter = RefManTemplate::replace($tplLetter, 'opening', $this->request->data['ToolsEditor']['opening']);
+				// fill templates with form values
+				$tplEmail = RefManTemplate::replace($tplEmail, 'body', $this->request->data['ToolsEditor']['body']);
+				$tplLetter = RefManTemplate::replace($tplLetter, 'body', $this->request->data['ToolsEditor']['body']);
 
-			$tplEmail = RefManTemplate::replace($tplEmail, 'closing', $this->request->data['ToolsEditor']['closing']);
-			$tplLetter = RefManTemplate::replace($tplLetter, 'closing', $this->request->data['ToolsEditor']['closing']);
+				$tplEmail = RefManTemplate::replace($tplEmail, 'opening', $this->request->data['ToolsEditor']['opening']);
+				$tplLetter = RefManTemplate::replace($tplLetter, 'opening', $this->request->data['ToolsEditor']['opening']);
 
-			$tplEmail = RefManTemplate::replace($tplEmail, 'signature', $this->request->data['ToolsEditor']['signature']);
-			$tplLetter = RefManTemplate::replace($tplLetter, 'signature', $this->request->data['ToolsEditor']['signature']);
+				$tplEmail = RefManTemplate::replace($tplEmail, 'closing', $this->request->data['ToolsEditor']['closing']);
+				$tplLetter = RefManTemplate::replace($tplLetter, 'closing', $this->request->data['ToolsEditor']['closing']);
 
-			$tplLetter = RefManTemplate::replace($tplLetter, 'subject', $this->request->data['ToolsEditor']['subject']);
-			$tplLetter = RefManTemplate::replace($tplLetter, 'date', RefManRefereeFormat::formatDate(time(), 'medium'));
+				$tplEmail = RefManTemplate::replace($tplEmail, 'signature', $this->request->data['ToolsEditor']['signature']);
+				$tplLetter = RefManTemplate::replace($tplLetter, 'signature', $this->request->data['ToolsEditor']['signature']);
 
-			$arrEmails = array();
-			$arrLetter = array();
+				$tplLetter = RefManTemplate::replace($tplLetter, 'subject', $this->request->data['ToolsEditor']['subject']);
+				$tplLetter = RefManTemplate::replace($tplLetter, 'date', RefManRefereeFormat::formatDate(time(), 'medium'));
 
-			// fill templates with person values
-			foreach ($this->viewVars['referees'] as $referee) {
+				$arrEmails = array();
+				$arrLetter = array();
 
-				if (!$toMeOnly || ($this->viewVars['userpersonid'] == $referee['Person']['id'])) {
+				// referees to send messages to
+				$hasMe = false;
+				if (!$toMeOnly) {
+					foreach ($this->viewVars['referees'] as $ref) {
+						$arrReferees[] = $ref;
+						if ($this->viewVars['userpersonid'] == $ref['Person']['id']) {
+							$hasMe = true;
+						}
+					}
+				}
+
+				if (!$hasMe) {
+					$arrReferees[] = $this->Referee->getRefereeByPersonId($this->viewVars['userpersonid']);
+				}
+
+				// fill templates with person values
+				foreach ($arrReferees as $referee) {
 
 					$contactEmail = RefManPeople::getPrimaryContact($referee, 'Email');
 					if ($sendEmail && !empty($contactEmail)) {
@@ -161,11 +169,11 @@ class ToolsEditorController extends AppController {
 						}
 
 						if (empty($this->request->data['ToolsEditor']['test_only'])) {
-							/*$Email->send($txtEmail);
+							$Email->send($txtEmail);
 
 							CakeLog::write('email', __('Mail sent to %s <%s>.',
 																				 RefManRefereeFormat::formatPerson($referee, 'fullname'),
-																				 $contactEmail['Email']['email']));*/
+																				 $contactEmail['Email']['email']));
 						}
 
 						// output for user
@@ -196,36 +204,37 @@ class ToolsEditorController extends AppController {
 
 				}
 
-			}
-
-			// save zip archive for letters
-			if ($sendLetter) {
-				$zipfile = RefManTemplate::closeZip();
-			}
-
-			$messageresult[] = __('Emaillogs in "%slogs/email.log".', TMP);
-			$messageresult[] = __('Brieflogs in "%slogs/letter.log".', TMP);
-
-			if (empty($arrEmails)) {
-				$messageresult[] = __('Keine Emails.');
-			} else {
-				if (!empty($this->request->data['ToolsEditor']['test_only'])) {
-					$messageresult[] = __('Testmodus: keine Emails versendet.');
+				// save zip archive for letters
+				if ($sendLetter) {
+					$zipfile = RefManTemplate::closeZip();
 				}
-				$messageresult[] = __('Emails (%d) an: %s.',
-															count($arrEmails),
-															RefManRefereeFormat::formatMultiline($arrEmails, ', '));
-			}
-			if (empty($arrLetter)) {
-				$messageresult[] = __('Keine Briefe.');
-			} else {
-				$messageresult[] = __('Briefe (%d), abgelegt in "%s" an: %s.',
-															count($arrLetter),
-															$zipfile,
-															RefManRefereeFormat::formatMultiline($arrLetter, ', '));
+
+				$messageresult[] = __('Emaillogs in "%slogs/email.log".', TMP);
+				$messageresult[] = __('Brieflogs in "%slogs/letter.log".', TMP);
+
+				if (empty($arrEmails)) {
+					$messageresult[] = __('Keine Emails.');
+				} else {
+					if (!empty($this->request->data['ToolsEditor']['test_only'])) {
+						$messageresult[] = __('Testmodus: keine Emails versendet.');
+					}
+					$messageresult[] = __('Emails (%d) an: %s.',
+																count($arrEmails),
+																RefManRefereeFormat::formatMultiline($arrEmails, ', '));
+				}
+				if (empty($arrLetter)) {
+					$messageresult[] = __('Keine Briefe.');
+				} else {
+					$messageresult[] = __('Briefe (%d), abgelegt in "%s" an: %s.',
+																count($arrLetter),
+																$zipfile,
+																RefManRefereeFormat::formatMultiline($arrLetter, ', '));
+				}
+
+				$this->set('messageresult', $messageresult);
+
 			}
 
-			$this->set('messageresult', $messageresult);
 		}
 
 	}

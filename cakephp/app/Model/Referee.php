@@ -110,6 +110,31 @@ class Referee extends AppModel {
 	}
 
 	/**
+	 * Returns referee for a given person id.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @param personid person id
+	 * @return referee for given person, null if there is none
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getRefereeByPersonId($personid) {
+
+		$referee = $this->findByPersonId($personid);
+
+		if (empty($referee)) {
+			return null;
+		}
+
+		$this->fillReferee($referee);
+
+		return $referee;
+	}
+
+	/**
 	 * Fills referee with missing data.
 	 *
 	 * Method should be static,
