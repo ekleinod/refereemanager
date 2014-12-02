@@ -194,12 +194,14 @@ class AppController extends Controller {
 	 */
 	public function getSeason($season = null) {
 
+		$year = $season;
+
 		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('Filter', $this->request->data)) {
 			$theSeason = $this->Season->findById($this->request->data['Filter']['season']);
-			$theSeason = $theSeason['Season'];
-		} else {
-			$theSeason = $this->Season->getSeason($season);
+			$year = $theSeason['Season']['year_start'];
 		}
+
+		$theSeason = $this->Season->getSeason($year, $this->viewVars['isEditor']);
 		$this->set('season', $theSeason);
 
 		return $theSeason;
