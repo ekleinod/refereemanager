@@ -60,6 +60,12 @@ class RefManRefereeFormat {
 
 		// @todo set locale correctly, still very mysterious
 		$arrlocale = explode('-', Configure::read('Config.language'));
+		if (count($arrlocale) < 1) {
+			$arrlocale[] = "en";
+		}
+		if (count($arrlocale) < 2) {
+			$arrlocale[] = strtoupper($arrlocale[0]);
+		}
 		setlocale(LC_TIME, sprintf('%s_%s.utf8', $arrlocale[0], strtoupper($arrlocale[1])));
 
 		switch ($type) {
