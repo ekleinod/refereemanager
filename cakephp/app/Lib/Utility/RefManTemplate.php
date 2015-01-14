@@ -81,8 +81,12 @@ class RefManTemplate {
 	public static function replacePersonData($text, $person) {
 		$txtReturn = $text;
 
-		$txtReturn = RefManTemplate::replace($txtReturn, 'fullname', RefManRefereeFormat::formatPerson($person, 'fullname'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'first_name', $person['Person']['first_name']);
+		$txtReturn = RefManTemplate::replace($txtReturn, 'fullname',
+																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'fullname'));
+		$txtReturn = RefManTemplate::replace($txtReturn, 'first_name',
+																				 (empty($person['Person']['name'])) ? '' : $person['Person']['first_name']);
+		$txtReturn = RefManTemplate::replace($txtReturn, 'name_title',
+																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'name_title'));
 
 		return $txtReturn;
 	}

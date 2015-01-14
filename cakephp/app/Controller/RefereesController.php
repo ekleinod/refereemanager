@@ -3,6 +3,7 @@
 App::uses('AppController', 'Controller');
 App::uses('RefManPeople', 'Utility');
 App::uses('RefManRefereeFormat', 'Utility');
+App::uses('RefManTemplate', 'Utility');
 
 /**
  * Referees Controller
