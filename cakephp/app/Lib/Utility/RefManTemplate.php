@@ -19,6 +19,9 @@ class RefManTemplate {
 	/** Merge file. */
 	private static $merge = null;
 
+	/** Referee relations. */
+	private static $refereerelationtypes = null;
+
 	/**
 	 * Returns template text.
 	 *
@@ -55,15 +58,31 @@ class RefManTemplate {
 	 *
 	 * @param $text text
 	 * @param $referee referee
+	 * @param $type format type
+	 * @param $export export type
 	 * @return replaced text
 	 *
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public static function replaceRefereeData($text, $referee) {
+	public static function replaceRefereeData($text, $referee, $type = 'text', $export = 'html') {
 		$txtReturn = $text;
 
-		$txtReturn = RefManTemplate::replacePersonData($txtReturn, $referee);
+		$txtReturn = RefManTemplate::replacePersonData($txtReturn, $referee, $type, $export);
+
+		// referee relaions
+		if (empty(RefManTemplate::$refereerelationtypes)) {
+			$model = ClassRegistry::init('RefereeRelationType');
+			$model->recursive = -1;
+			RefManTemplate::$refereerelationtypes = $model->find('all');
+		}
+
+		foreach (RefManTemplate::$refereerelationtypes as $relationtype) {
+			$sid = $relationtype['RefereeRelationType']['sid'];
+			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('referee_relation_%s', $sid),
+																					 RefManRefereeFormat::formatRelations(RefManPeople::getRelations($referee, $sid), $type, $export));
+		}
+
 
 		return $txtReturn;
 	}
@@ -73,12 +92,14 @@ class RefManTemplate {
 	 *
 	 * @param $text text
 	 * @param $person person
+	 * @param $type format type
+	 * @param $export export type
 	 * @return replaced text
 	 *
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public static function replacePersonData($text, $person) {
+	public static function replacePersonData($text, $person, $type = 'text', $export = 'html') {
 		$txtReturn = $text;
 
 		$txtReturn = RefManTemplate::replace($txtReturn, 'fullname',

@@ -95,7 +95,7 @@ class RefManPeople {
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public function getRelations($person, $sid) {
+	public static function getRelations($person, $sid) {
 		$arrReturn = array();
 
 		$model = ClassRegistry::init('RefereeRelation');

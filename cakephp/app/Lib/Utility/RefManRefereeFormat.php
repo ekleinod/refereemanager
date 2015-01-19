@@ -194,7 +194,7 @@ class RefManRefereeFormat {
 		$sTextArray = array();
 
 		foreach ($data as $entry) {
-			$sTextArray[] = $this->formatContact($entry, $type, $kind, $export, count($data));
+			$sTextArray[] = RefManRefereeFormat::formatContact($entry, $type, $kind, $export, count($data));
 		}
 
 		$sSeparator = '';
@@ -204,7 +204,7 @@ class RefManRefereeFormat {
 				break;
 		}
 
-		return $this->formatMultiline($sTextArray, $sSeparator);
+		return RefManRefereeFormat::formatMultiline($sTextArray, $sSeparator);
 	}
 
 	/**
@@ -229,16 +229,16 @@ class RefManRefereeFormat {
 
 			switch ($kind) {
 				case 'Address':
-					$sReturn .= $this->formatAddress($data, $type, $export);
+					$sReturn .= RefManRefereeFormat::formatAddress($data, $type, $export);
 					break;
 				case 'Email':
-					$sReturn .= $this->formatEmail($data, $type, $export);
+					$sReturn .= RefManRefereeFormat::formatEmail($data, $type, $export);
 					break;
 				case 'PhoneNumber':
-					$sReturn .= $this->formatPhoneNumber($data, $type, $export);
+					$sReturn .= RefManRefereeFormat::formatPhoneNumber($data, $type, $export);
 					break;
 				case 'Url':
-					$sReturn .= $this->formatUrl($data, $type, $export);
+					$sReturn .= RefManRefereeFormat::formatUrl($data, $type, $export);
 					break;
 			}
 
@@ -438,7 +438,7 @@ class RefManRefereeFormat {
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public function formatRelations($data, $type, $export = 'html') {
+	public static function formatRelations($data, $type, $export = 'html') {
 
 		if (empty($data)) {
 			return '';
@@ -447,10 +447,10 @@ class RefManRefereeFormat {
 		$sTextArray = array();
 
 		foreach ($data as $entry) {
-			$sTextArray[] = $this->formatRelation($entry, $type, $export);
+			$sTextArray[] = RefManRefereeFormat::formatRelation($entry, $type, $export);
 		}
 
-		return $this->formatMultiline($sTextArray, '; ');
+		return RefManRefereeFormat::formatMultiline($sTextArray, '; ');
 	}
 
 	/**
@@ -464,7 +464,7 @@ class RefManRefereeFormat {
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	public function formatRelation($data, $type, $export = 'html') {
+	public static function formatRelation($data, $type, $export = 'html') {
 
 		if (empty($data)) {
 			return '';
@@ -491,7 +491,7 @@ class RefManRefereeFormat {
 			$sTextArray[] = $data['RefereeRelation']['remark'];
 		}
 
-		return $this->formatMultiline($sTextArray, '; ');
+		return RefManRefereeFormat::formatMultiline($sTextArray, '; ');
 	}
 
 }

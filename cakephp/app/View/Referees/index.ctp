@@ -149,21 +149,18 @@
 						<?php
 
 							if ($isReferee) {
-								$tmpValue = (empty($person['Picture']['url'])) ? '' :
-										$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von **generated fullname**.'), 'title' => '**generated fullname**')), $person['Picture']['url'], array('escape' => false));
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, $tmpValue);
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, (empty($person['Picture']['url'])) ? '' :
+																	$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von **generated fullname**.'), 'title' => '**generated fullname**')), $person['Picture']['url'], array('escape' => false)));
 							}
 
-							$tmpValue = '**generated name_title**';
-							$refLine .= getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue));
+							$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated name_title**');
 
-							$tmpValue = '**generated first_name**';
-							$refLine .= getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue));
+							$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated first_name**');
 
 							if ($isRefView) {
 								foreach ($refereerelationtypes as $sid => $refereerelationtype) {
 									if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-										$tmpValue = $this->RefereeFormat->formatRelations($this->People->getRelations($person, $sid), 'text', 'html');
+										$tmpValue = sprintf('**generated referee_relation_%s**', $sid);
 										$refLine .= getTD($columns[$curcol++], $tmpFormat, $tmpValue);
 									}
 								}
@@ -219,7 +216,7 @@
 							$refLine .= getTD(__('Aktionen'), '', $this->element('actions_table', array('id' => $person['Person']['id'])), 'actions'));
 							*/
 
-							echo $this->Template->replaceRefereeData($refLine, $person);
+							echo $this->Template->replaceRefereeData($refLine, $person, 'text', 'html');
 						?>
 					</tr>
 			<?php
