@@ -160,41 +160,39 @@
 							if ($isRefView) {
 								foreach ($refereerelationtypes as $sid => $refereerelationtype) {
 									if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-										$tmpValue = sprintf('**generated referee_relation_%s**', $sid);
-										$refLine .= getTD($columns[$curcol++], $tmpFormat, $tmpValue);
+										$refLine .= getTD($columns[$curcol++], $tmpFormat, sprintf('**generated referee_relation_%s**', $sid));
 									}
 								}
 							}
 
-						/*
 							if ($isReferee) {
 								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'Email'), 'text', 'Email', 'html');
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, $tmpValue);
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated emails**');
 
 								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'PhoneNumber'), 'national', 'PhoneNumber', 'html');
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, $tmpValue);
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated phone_numbers**');
 							}
 
 							if ($isEditor) {
 								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'Address'), 'fulladdress', 'Address', 'html');
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, $tmpValue);
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated addresses**');
 							}
 
 							if ($isReferee) {
 								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'Url'), 'text', 'Url', 'html');
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, $tmpValue);
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated urls**');
 							}
 
 							if ($isEditor) {
 								$tmpValue = h($person['SexType']['title']);
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue)));
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated sextype**');
 
 								$tmpValue = array();
 								if (!empty($person['Person']['birthday'])) {
-									$tmpValue[] = $this->RefereeFormat->formatDate($person['Person']['birthday'], 'date');
+									$tmpValue[] = '**generated birthday**';
 								}
 								if (!empty($person['Person']['dayofdeath'])) {
-									$tmpValue[] = sprintf('&dagger;&nbsp;%s', $this->RefereeFormat->formatDate($person['Person']['dayofdeath'], 'date'));
+									$tmpValue[] = '&dagger;&nbsp;**generated dayofdeath**';
 								}
 								$refLine .= getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue));
 							}
@@ -202,17 +200,25 @@
 							if ($isRefView) {
 								$theTrainingLevel = $this->People->getTrainingLevel($person);
 								$tmpValue = $theTrainingLevel['TrainingLevelType']['abbreviation'];
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, $tmpValue);
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated traininglevel**');
+							}
+
+							if ($isEditor) {
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated lasttraining**');
+
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated lasttrainingupdate**');
+
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated nexttrainingupdate**');
 							}
 
 							if ($isEditor) {
 								$tmpValue = (empty($person['Person']['remark'])) ? '' : $person['Person']['remark'];
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue));
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated remark**');
 
 								$tmpValue = (empty($person['Person']['internal_remark'])) ? '' : $person['Person']['internal_remark'];
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue));
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated internal_remark**');
 							}
-*/
+
 							$refLine .= getTD(__('Aktionen'), '', $this->element('actions_table', array('id' => $person['Person']['id'])), 'actions');
 
 							echo $this->Template->replaceRefereeData($refLine, $person, 'text', 'html');
