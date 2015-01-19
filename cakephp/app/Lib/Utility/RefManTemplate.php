@@ -70,13 +70,12 @@ class RefManTemplate {
 
 		$txtReturn = RefManTemplate::replacePersonData($txtReturn, $referee, $type, $export);
 
-		// referee relaions
+		// referee relation types
 		if (empty(RefManTemplate::$refereerelationtypes)) {
 			$model = ClassRegistry::init('RefereeRelationType');
 			$model->recursive = -1;
 			RefManTemplate::$refereerelationtypes = $model->find('all');
 		}
-
 		foreach (RefManTemplate::$refereerelationtypes as $relationtype) {
 			$sid = $relationtype['RefereeRelationType']['sid'];
 			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('referee_relation_%s', $sid),
