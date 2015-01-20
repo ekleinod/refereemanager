@@ -82,6 +82,12 @@ class RefManTemplate {
 																					 RefManRefereeFormat::formatRelations(RefManPeople::getRelations($referee, $sid), $type, $export));
 		}
 
+		// training
+		$traininglevel = RefManPeople::getTrainingLevel($referee);
+		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel',
+																				 (empty($traininglevel) || empty($traininglevel['TrainingLevelType']['abbreviation'])) ? '' : $traininglevel['TrainingLevelType']['abbreviation']);
+		$txtReturn = RefManTemplate::replace($txtReturn, 'lasttraining',
+																				 (empty($traininglevel) || empty($traininglevel['lasttraining'])) ? '' : $traininglevel['lasttraining']);
 
 		return $txtReturn;
 	}

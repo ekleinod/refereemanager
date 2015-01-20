@@ -193,8 +193,6 @@
 							}
 
 							if ($isRefView) {
-								$theTrainingLevel = $this->People->getTrainingLevel($person);
-								$tmpValue = $theTrainingLevel['TrainingLevelType']['abbreviation'];
 								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated traininglevel**');
 							}
 

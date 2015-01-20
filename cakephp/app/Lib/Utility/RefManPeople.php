@@ -119,16 +119,24 @@ class RefManPeople {
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public function getTrainingLevel($person) {
+	public static function getTrainingLevel($person) {
 		$levReturn = null;
 
 		$model = ClassRegistry::init('TrainingLevel');
 
+		// training level
 		foreach ($person['TrainingLevel'] as $level) {
 			$theLevel = $model->findById($level['id']);
 			if (($levReturn === null) || ($levReturn['TrainingLevelType']['rank'] < $theLevel['TrainingLevelType']['rank'])) {
 				$levReturn = $theLevel;
 			}
+		}
+
+		// last training
+		if (!empty($levReturn)) {
+
+			$levReturn['lasttraining'] = CakeTime::format(CakeTime::fromString("17.1.2015"), '%Y-%m-%d');
+
 		}
 
 		return $levReturn;
