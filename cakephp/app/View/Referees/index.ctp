@@ -180,7 +180,6 @@
 							}
 
 							if ($isEditor) {
-								$tmpValue = h($person['SexType']['title']);
 								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated sextype**');
 
 								$tmpValue = array();
