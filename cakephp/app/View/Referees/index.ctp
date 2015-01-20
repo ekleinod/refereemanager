@@ -168,7 +168,6 @@
 							if ($isReferee) {
 								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated emails**');
 
-								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'PhoneNumber'), 'national', 'PhoneNumber', 'html');
 								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated phone_numbers**');
 							}
 

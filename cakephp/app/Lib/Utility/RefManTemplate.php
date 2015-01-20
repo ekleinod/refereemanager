@@ -114,7 +114,10 @@ class RefManTemplate {
 																				 (empty($person['Person']['dayofdeath'])) ? '' : RefManRefereeFormat::formatDate($person['Person']['dayofdeath'], 'date'));
 
 		// contacts
-		$txtReturn = RefManTemplate::replace($txtReturn, 'emails', RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Email'), $type, 'Email', $export));
+		$txtReturn = RefManTemplate::replace($txtReturn, 'emails',
+																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Email'), $type, 'Email', $export));
+		$txtReturn = RefManTemplate::replace($txtReturn, 'phone_numbers',
+																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'PhoneNumber'), 'national', 'PhoneNumber', $export));
 
 		return $txtReturn;
 	}
