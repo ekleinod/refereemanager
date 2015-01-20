@@ -116,8 +116,12 @@ class RefManTemplate {
 		// contacts
 		$txtReturn = RefManTemplate::replace($txtReturn, 'emails',
 																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Email'), $type, 'Email', $export));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'phone_numbers',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'phone_numbers_national',
 																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'PhoneNumber'), 'national', 'PhoneNumber', $export));
+		$txtReturn = RefManTemplate::replace($txtReturn, 'addresses_fulladdress',
+																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Address'), 'fulladdress', 'Address', $export));
+		$txtReturn = RefManTemplate::replace($txtReturn, 'urls',
+																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Url'), $type, 'Url', $export));
 
 		return $txtReturn;
 	}

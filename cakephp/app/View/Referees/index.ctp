@@ -168,16 +168,14 @@
 							if ($isReferee) {
 								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated emails**');
 
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated phone_numbers**');
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated phone_numbers_national**');
 							}
 
 							if ($isEditor) {
-								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'Address'), 'fulladdress', 'Address', 'html');
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated addresses**');
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated addresses_fulladdress**');
 							}
 
 							if ($isReferee) {
-								$tmpValue = $this->RefereeFormat->formatContacts($this->People->getContacts($person, 'Url'), 'text', 'Url', 'html');
 								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated urls**');
 							}
 
