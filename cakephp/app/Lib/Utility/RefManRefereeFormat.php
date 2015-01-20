@@ -185,7 +185,7 @@ class RefManRefereeFormat {
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public function formatContacts($data, $type, $kind, $export = 'html') {
+	public static function formatContacts($data, $type, $kind, $export = 'html') {
 
 		if (empty($data)) {
 			return '';
@@ -220,7 +220,7 @@ class RefManRefereeFormat {
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	private function formatContact($data, $type, $kind, $export, $count) {
+	private static function formatContact($data, $type, $kind, $export, $count) {
 			$sReturn = '';
 
 			if ($count > 1) {
@@ -323,7 +323,7 @@ class RefManRefereeFormat {
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	private function formatEmail($data, $type, $export) {
+	private static function formatEmail($data, $type, $export) {
 
 		$sReturn = '';
 
@@ -360,7 +360,7 @@ class RefManRefereeFormat {
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	private function formatPhoneNumber($data, $type, $export) {
+	private static function formatPhoneNumber($data, $type, $export) {
 
 		$sReturn = '';
 
@@ -406,7 +406,7 @@ class RefManRefereeFormat {
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	private function formatUrl($data, $type, $export) {
+	private static function formatUrl($data, $type, $export) {
 
 		$sReturn = '';
 

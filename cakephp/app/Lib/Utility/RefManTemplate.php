@@ -65,7 +65,7 @@ class RefManTemplate {
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public static function replaceRefereeData($text, $referee, $type = 'text', $export = 'html') {
+	public static function replaceRefereeData($text, $referee, $type, $export) {
 		$txtReturn = $text;
 
 		$txtReturn = RefManTemplate::replacePersonData($txtReturn, $referee, $type, $export);
@@ -98,7 +98,7 @@ class RefManTemplate {
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public static function replacePersonData($text, $person, $type = 'text', $export = 'html') {
+	public static function replacePersonData($text, $person, $type, $export) {
 		$txtReturn = $text;
 
 		$txtReturn = RefManTemplate::replace($txtReturn, 'fullname',
@@ -112,6 +112,9 @@ class RefManTemplate {
 																				 (empty($person['Person']['birthday'])) ? '' : RefManRefereeFormat::formatDate($person['Person']['birthday'], 'date'));
 		$txtReturn = RefManTemplate::replace($txtReturn, 'dayofdeath',
 																				 (empty($person['Person']['dayofdeath'])) ? '' : RefManRefereeFormat::formatDate($person['Person']['dayofdeath'], 'date'));
+
+		// contacts
+		$txtReturn = RefManTemplate::replace($txtReturn, 'emails', RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Email'), $type, 'Email', $export));
 
 		return $txtReturn;
 	}
