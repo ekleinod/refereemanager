@@ -84,10 +84,15 @@ class RefManTemplate {
 
 		// training
 		$traininglevel = RefManPeople::getTrainingLevel($referee);
+		//echo pr($traininglevel);
 		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel',
 																				 (empty($traininglevel) || empty($traininglevel['TrainingLevelType']['abbreviation'])) ? '' : $traininglevel['TrainingLevelType']['abbreviation']);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'lasttraining',
-																				 (empty($traininglevel) || empty($traininglevel['lasttraining'])) ? '' : $traininglevel['lasttraining']);
+		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevelsince',
+																				 (empty($traininglevel) || empty($traininglevel['TrainingLevel']['since'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['TrainingLevel']['since'], 'date'));
+		$txtReturn = RefManTemplate::replace($txtReturn, 'lasttrainingupdate',
+																				 (empty($traininglevel) || empty($traininglevel['lasttrainingupdate'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['lasttrainingupdate'], 'date'));
+		$txtReturn = RefManTemplate::replace($txtReturn, 'nexttrainingupdate',
+																				 (empty($traininglevel) || empty($traininglevel['nexttrainingupdate'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['nexttrainingupdate'], 'year'));
 
 		return $txtReturn;
 	}

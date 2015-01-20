@@ -197,7 +197,7 @@
 							}
 
 							if ($isEditor) {
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated lasttraining**');
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated traininglevelsince**');
 
 								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated lasttrainingupdate**');
 

@@ -127,15 +127,24 @@ class RefManPeople {
 		// training level
 		foreach ($person['TrainingLevel'] as $level) {
 			$theLevel = $model->findById($level['id']);
-			if (($levReturn === null) || ($levReturn['TrainingLevelType']['rank'] < $theLevel['TrainingLevelType']['rank'])) {
+			if (empty($levReturn) || ($levReturn['TrainingLevelType']['rank'] < $theLevel['TrainingLevelType']['rank'])) {
 				$levReturn = $theLevel;
 			}
 		}
 
 		// last training
-		if (!empty($levReturn)) {
+		if (!empty($levReturn) && !empty($levReturn['TrainingUpdate'])) {
 
-			$levReturn['lasttraining'] = CakeTime::format(CakeTime::fromString("17.1.2015"), '%Y-%m-%d');
+			foreach ($levReturn['TrainingUpdate'] as $trainingupdate) {
+				if (empty($levReturn['lasttrainingupdate']) || ($levReturn['lasttrainingupdate'] < $trainingupdate['update'])) {
+					$levReturn['lasttrainingupdate'] = $trainingupdate['update'];
+				}
+			}
+
+			// next training
+			if (!empty($levReturn['lasttrainingupdate'])) {
+				$levReturn['nexttrainingupdate'] = strtotime('+2 years', CakeTime::fromString($levReturn['lasttrainingupdate']));
+			}
 
 		}
 
