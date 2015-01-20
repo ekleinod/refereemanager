@@ -115,7 +115,7 @@ class RefManTemplate {
 		$txtReturn = RefManTemplate::replace($txtReturn, 'fullname',
 																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'fullname'));
 		$txtReturn = RefManTemplate::replace($txtReturn, 'first_name',
-																				 (empty($person['Person']['name'])) ? '' : $person['Person']['first_name']);
+																				 (empty($person['Person']['first_name'])) ? '' : $person['Person']['first_name']);
 		$txtReturn = RefManTemplate::replace($txtReturn, 'name_title',
 																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'name_title'));
 
@@ -138,6 +138,10 @@ class RefManTemplate {
 		// other
 		$txtReturn = RefManTemplate::replace($txtReturn, 'sextype',
 																				 (empty($person['SexType']['title'])) ? '' : $person['SexType']['title']);
+		$txtReturn = RefManTemplate::replace($txtReturn, 'remark',
+																				 (empty($person['Person']['remark'])) ? '' : $person['Person']['remark']);
+		$txtReturn = RefManTemplate::replace($txtReturn, 'internal_remark',
+																				 (empty($person['Person']['internal_remark'])) ? '' : $person['Person']['internal_remark']);
 
 		return $txtReturn;
 	}
