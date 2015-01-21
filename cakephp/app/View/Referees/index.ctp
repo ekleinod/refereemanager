@@ -1,4 +1,4 @@
-<?php echo $this->element('Functions/table');	?>
+<?php $this->element('Functions/table');	?>
 
 <?php echo $this->element('filter');	?>
 
@@ -19,38 +19,17 @@
 ?>
 
 	<?php if ($isRefView) { ?>
+
+		<?php
+			$this->element('Referees/statustypes');
+			fillStatusTypes($statustypes);
+		?>
+
 		<p><?php echo __('Legende:'); ?></p>
 		<ul class="legend">
+
 			<?php
-				// compute different output styles
-				foreach ($statustypes as &$statustype) {
-
-					$statustype['outputstyle'] = '';
-
-					if ($statustype['StatusType']['style']) {
-						switch ($statustype['StatusType']['style']) {
-							case 'normal':
-							case 'italic':
-							case 'oblique':
-								$statustype['outputstyle'] .= sprintf('font-style: %s; ', $statustype['StatusType']['style']);
-								break;
-							case 'normal':
-							case 'bold':
-							case 'bolder':
-							case 'lighter':
-								$statustype['outputstyle'] .= sprintf('font-weight: %s; ', $statustype['StatusType']['style']);
-								break;
-						}
-					}
-
-					if ($statustype['StatusType']['color']) {
-						$statustype['outputstyle'] .= sprintf('color: #%s; ', $statustype['StatusType']['color']);
-					}
-
-					if ($statustype['StatusType']['bgcolor']) {
-						$statustype['outputstyle'] .= sprintf('background-color: #%s; ', $statustype['StatusType']['bgcolor']);
-					}
-
+				foreach ($statustypes as $statustype) {
 			?>
 					<li style="<?php echo $statustype['outputstyle']; ?>"><?php echo ($statustype['StatusType']['remark']) ? h($statustype['StatusType']['remark']) : h($statustype['StatusType']['title']); ?></li>
 			<?php
