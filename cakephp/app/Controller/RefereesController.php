@@ -43,7 +43,6 @@ class RefereesController extends AppController {
 		$this->setAndGetStandardIndexExport($season);
 
 		$this->set('title_for_layout', __('Übersicht der Schiedsrichter_innen'));
-		$this->set('isRefView', true);
 	}
 
 	/**
@@ -64,6 +63,8 @@ class RefereesController extends AppController {
 
 		$this->set('statustypes', $this->getUsedStatusTypes($referees, $theSeason));
 		$this->set('refereerelationtypes', $this->getUsedRefereeRelationTypes($referees));
+
+		$this->set('isRefView', true);
 	}
 
 	/**

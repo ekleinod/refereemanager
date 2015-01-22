@@ -56,4 +56,3 @@ if ($isEditor) {
 $columns[] = __('Aktionen');
 
 ?>
-

@@ -1,72 +1,11 @@
 <?php
 
+	$isRefView = isset($isRefView) && $isRefView;
+
 	if (($type === 'excel') || ($type === 'referee_view_zip') || ($type === 'pdf')) {
 
-		// compute different styles
-		foreach ($statustypes as &$statustypeedit) {
-			$statustypeedit['outputstyle'] = array();
-			$statustypeedit['htmlstyle'] = '';
-
-			if ($statustypeedit['style']) {
-				switch ($statustypeedit['style']) {
-					case 'normal':
-					case 'italic':
-					case 'oblique':
-						$statustypeedit['outputstyle']['font-style'] = $statustypeedit['style'];
-						$statustypeedit['htmlstyle'] .= sprintf('font-style: %s; ', $statustypeedit['style']);
-						break;
-					case 'normal':
-					case 'bold':
-					case 'bolder':
-					case 'lighter':
-						$statustypeedit['outputstyle']['font-weight'] = $statustypeedit['style'];
-						$statustypeedit['htmlstyle'] .= sprintf('font-weight: %s; ', $statustypeedit['style']);
-						break;
-				}
-			}
-
-			if ($statustypeedit['color']) {
-				$statustypeedit['outputstyle']['color'] = $statustypeedit['color'];
-				$statustypeedit['htmlstyle'] .= sprintf('color: #%s; ', $statustypeedit['color']);
-			}
-
-			if ($statustypeedit['bgcolor']) {
-				$statustypeedit['outputstyle']['bg-color'] = $statustypeedit['bgcolor'];
-				$statustypeedit['htmlstyle'] .= sprintf('background-color: #%s; ', $statustypeedit['bgcolor']);
-			}
-		}
-
-		// header
-		$header = array();
-			$header[] = array('text' => __('Name'), 'width' => '15');
-			$header[] = array('text' => __('Vorname'));
-
-			foreach ($allrefereerelationtypes as $sid => $refereerelationtype) {
-				if (array_key_exists($sid, $refereerelationtypes) && (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor)) {
-					$header[] = array('text' => __($refereerelationtype['title']));
-				}
-			}
-
-			if ($isReferee) {
-				$header[] = array('text' => __('E-Mail'));
-				$header[] = array('text' => __('Telefon'));
-			}
-
-			if ($isEditor) {
-				$header[] = array('text' => __('Adresse'));
-				$header[] = array('text' => __('Geschlecht'));
-				$header[] = array('text' => __('Geburtstag'));
-			}
-
-			$header[] = array('text' => __('Ausbildung'));
-
-			if ($isEditor) {
-				$header[] = array('text' => __('Letzte Ausbildung'));
-				$header[] = array('text' => __('Letzte Fortbildung'));
-				$header[] = array('text' => __('Nächste Fortbildung'));
-				$header[] = array('text' => __('Anmerkung'));
-				$header[] = array('text' => __('Interne Anmerkung'));
-			}
+		include_once('statustypes.php');
+		include_once('columns.php');
 
 		if ($type === 'excel') {
 			// start table
@@ -136,7 +75,7 @@
 
 		}
 
-		if (empty($referees)) {
+		if (empty($people)) {
 			if ($type === 'excel') {
 				$this->PHPExcel->addTableTexts(__('Es sind keine Schiedsrichter_innen gespeichert.'));
 			}
@@ -162,11 +101,11 @@
 
 				$sid1 = RefereeRelationType::SID_MEMBER;
 				$sid2 = RefereeRelationType::SID_REFFOR;
-				if (array_key_exists($sid1, $refereerelationtypes) || array_key_exists($sid2, $refereerelationtypes)) {
+				if (array_key_exists($sid1, $personrelationtypes) || array_key_exists($sid2, $personrelationtypes)) {
 					$relout = '';
-					if (array_key_exists($sid1, $refereerelationtypes)) {
+					if (array_key_exists($sid1, $personrelationtypes)) {
 						$relout = __($allrefereerelationtypes[$sid1]['title']);
-						if (array_key_exists($sid2, $refereerelationtypes)) {
+						if (array_key_exists($sid2, $personrelationtypes)) {
 							$relout .= sprintf('<br /><em>%s</em>', __($allrefereerelationtypes[$sid2]['title']));
 						}
 					} else {
@@ -185,11 +124,11 @@
 				if ($isEditor) {
 					$sid1 = RefereeRelationType::SID_PREFER;
 					$sid2 = RefereeRelationType::SID_NOASSIGNMENT;
-					if (array_key_exists($sid1, $refereerelationtypes) || array_key_exists($sid2, $refereerelationtypes)) {
+					if (array_key_exists($sid1, $personrelationtypes) || array_key_exists($sid2, $personrelationtypes)) {
 						$relout = '';
-						if (array_key_exists($sid1, $refereerelationtypes)) {
+						if (array_key_exists($sid1, $personrelationtypes)) {
 							$relout = __($allrefereerelationtypes[$sid1]['title']);
-							if (array_key_exists($sid2, $refereerelationtypes)) {
+							if (array_key_exists($sid2, $personrelationtypes)) {
 								$relout .= '<br />' . __($allrefereerelationtypes[$sid2]['title']);
 							}
 						} else {
@@ -228,7 +167,7 @@
 			}
 
 			// datarows
-			foreach ($referees as $referee) {
+			foreach ($people as $person) {
 
 				$datarow = array();
 
@@ -242,37 +181,37 @@
 				}
 
 				if ($type === 'excel') {
-					$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'name_title'));
-					$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'first_name'));
+					$datarow[] = array('text' => $this->RefereeFormat->formatPerson($person['Person'], 'name_title'));
+					$datarow[] = array('text' => $this->RefereeFormat->formatPerson($person['Person'], 'first_name'));
 				}
 				if ($type === 'pdf') {
-					$datarow[] = array('text' => $this->RefereeFormat->formatPerson($referee['Person'], 'tablename'));
+					$datarow[] = array('text' => $this->RefereeFormat->formatPerson($person['Person'], 'tablename'));
 				}
 				if ($type === 'referee_view_zip') {
 					$repltoken = 'fullname';
-					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatPerson($referee['Person'], 'fullname'), $filledTemplate);
+					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatPerson($person['Person'], 'fullname'), $filledTemplate);
 					$repltoken = 'title';
-					$refview_text = $this->RefereeFormat->formatPerson($referee['Person'], 'title');
+					$refview_text = $this->RefereeFormat->formatPerson($person['Person'], 'title');
 					$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					$repltoken = 'first_name';
-					$refview_text = $this->RefereeFormat->formatPerson($referee['Person'], 'first_name');
+					$refview_text = $this->RefereeFormat->formatPerson($person['Person'], 'first_name');
 					$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					$repltoken = 'name';
-					$refview_text = $this->RefereeFormat->formatPerson($referee['Person'], 'name');
+					$refview_text = $this->RefereeFormat->formatPerson($person['Person'], 'name');
 					$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 				}
 
 				// relations
 				if (($type === 'excel') || ($type === 'referee_view_zip')) {
-					foreach ($allrefereerelationtypes as $sid => $refereerelationtype) {
+					foreach ($allrefereerelationtypes as $sid => $personrelationtype) {
 						if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
 
-							$excel_text = $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid);
+							$excel_text = $this->RefereeFormat->formatRelationBySID($person['RefereeRelation'], $sid);
 
-							if (($type === 'excel') && array_key_exists($sid, $refereerelationtypes)) {
+							if (($type === 'excel') && array_key_exists($sid, $personrelationtypes)) {
 								$datarow[] = array('text' => $excel_text);
 							}
 							if ($type === 'referee_view_zip') {
@@ -286,16 +225,16 @@
 				if ($type === 'pdf') {
 					$sid1 = RefereeRelationType::SID_MEMBER;
 					$sid2 = RefereeRelationType::SID_REFFOR;
-					if (array_key_exists($sid1, $refereerelationtypes) || array_key_exists($sid2, $refereerelationtypes)) {
+					if (array_key_exists($sid1, $personrelationtypes) || array_key_exists($sid2, $personrelationtypes)) {
 						$pdf_text = '';
-						if (array_key_exists($sid1, $referee['RefereeRelation']) || array_key_exists($sid2, $referee['RefereeRelation'])) {
-							if (array_key_exists($sid1, $referee['RefereeRelation'])) {
-								$pdf_text = $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid1);
-								if (array_key_exists($sid2, $referee['RefereeRelation'])) {
-									$pdf_text .= sprintf('<br /><em>%s</em>', $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid2));
+						if (array_key_exists($sid1, $person['RefereeRelation']) || array_key_exists($sid2, $person['RefereeRelation'])) {
+							if (array_key_exists($sid1, $person['RefereeRelation'])) {
+								$pdf_text = $this->RefereeFormat->formatRelationBySID($person['RefereeRelation'], $sid1);
+								if (array_key_exists($sid2, $person['RefereeRelation'])) {
+									$pdf_text .= sprintf('<br /><em>%s</em>', $this->RefereeFormat->formatRelationBySID($person['RefereeRelation'], $sid2));
 								}
 							} else {
-								$pdf_text = $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid2);
+								$pdf_text = $this->RefereeFormat->formatRelationBySID($person['RefereeRelation'], $sid2);
 							}
 						}
 						$datarow[] = array('text' => $pdf_text);
@@ -303,16 +242,16 @@
 					if ($isEditor) {
 						$sid1 = RefereeRelationType::SID_PREFER;
 						$sid2 = RefereeRelationType::SID_NOASSIGNMENT;
-						if (array_key_exists($sid1, $refereerelationtypes) || array_key_exists($sid2, $refereerelationtypes)) {
+						if (array_key_exists($sid1, $personrelationtypes) || array_key_exists($sid2, $personrelationtypes)) {
 							$pdf_text = '';
-							if (array_key_exists($sid1, $referee['RefereeRelation']) || array_key_exists($sid2, $referee['RefereeRelation'])) {
-								if (array_key_exists($sid1, $referee['RefereeRelation'])) {
-									$pdf_text = $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid1);
-									if (array_key_exists($sid2, $referee['RefereeRelation'])) {
-										$pdf_text .= sprintf('<br /><em>%s</em>', $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid2));
+							if (array_key_exists($sid1, $person['RefereeRelation']) || array_key_exists($sid2, $person['RefereeRelation'])) {
+								if (array_key_exists($sid1, $person['RefereeRelation'])) {
+									$pdf_text = $this->RefereeFormat->formatRelationBySID($person['RefereeRelation'], $sid1);
+									if (array_key_exists($sid2, $person['RefereeRelation'])) {
+										$pdf_text .= sprintf('<br /><em>%s</em>', $this->RefereeFormat->formatRelationBySID($person['RefereeRelation'], $sid2));
 									}
 								} else {
-									$pdf_text = $this->RefereeFormat->formatRelationBySID($referee['RefereeRelation'], $sid2);
+									$pdf_text = $this->RefereeFormat->formatRelationBySID($person['RefereeRelation'], $sid2);
 								}
 							}
 							$datarow[] = array('text' => $pdf_text);
@@ -327,10 +266,10 @@
 					$excel_text = '';
 					$refview_text = '';
 					$pdf_text = '';
-					if (array_key_exists('Contact', $referee) && array_key_exists('Email', $referee['Contact'])) {
+					if (array_key_exists('Contact', $person) && array_key_exists('Email', $person['Contact'])) {
 						$hasMore = false;
-						$printType = (count($referee['Contact']['Email']) > 1);
-						foreach ($referee['Contact']['Email'] as $contacttype => $emailkind) {
+						$printType = (count($person['Contact']['Email']) > 1);
+						foreach ($person['Contact']['Email'] as $contacttype => $emailkind) {
 							$printType |= (count($emailkind) > 1);
 							foreach ($emailkind as $email) {
 								if ($hasMore) {
@@ -366,10 +305,10 @@
 					$excel_text = '';
 					$refview_text = '';
 					$pdf_text = '';
-					if (array_key_exists('Contact', $referee) && array_key_exists('PhoneNumber', $referee['Contact'])) {
+					if (array_key_exists('Contact', $person) && array_key_exists('PhoneNumber', $person['Contact'])) {
 						$hasMore = false;
-						$printType = (count($referee['Contact']['PhoneNumber']) > 1);
-						foreach ($referee['Contact']['PhoneNumber'] as $contacttype => $phonekind) {
+						$printType = (count($person['Contact']['PhoneNumber']) > 1);
+						foreach ($person['Contact']['PhoneNumber'] as $contacttype => $phonekind) {
 							$printType |= (count($phonekind) > 1);
 							foreach ($phonekind as $phone) {
 								if ($hasMore) {
@@ -411,10 +350,10 @@
 					// address
 					$excel_text = '';
 					$pdf_text = '';
-					if (array_key_exists('Contact', $referee) && array_key_exists('Address', $referee['Contact'])) {
+					if (array_key_exists('Contact', $person) && array_key_exists('Address', $person['Contact'])) {
 						$hasMore = false;
-						$printType = (count($referee['Contact']['Address']) > 1);
-						foreach ($referee['Contact']['Address'] as $contacttype => $addresskind) {
+						$printType = (count($person['Contact']['Address']) > 1);
+						foreach ($person['Contact']['Address'] as $contacttype => $addresskind) {
 							$printType |= (count($addresskind) > 1);
 							foreach ($addresskind as $address) {
 								if ($hasMore) {
@@ -450,28 +389,28 @@
 
 					// sex
 					if ($type === 'excel') {
-						$datarow[] = array('text' => __($referee['SexType']['title']));
+						$datarow[] = array('text' => __($person['SexType']['title']));
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'sex_type';
-						$refview_text = __($referee['SexType']['title']);
+						$refview_text = __($person['SexType']['title']);
 						$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 					}
 
 					// birthday/day of death
 					$excel_text = '';
-					if (!empty($referee['Person']['birthday'])) {
-						$excel_text .= $this->RefereeFormat->formatPerson($referee['Person'], 'birthday');
+					if (!empty($person['Person']['birthday'])) {
+						$excel_text .= $this->RefereeFormat->formatPerson($person['Person'], 'birthday');
 					}
-					if (!empty($referee['Person']['dayofdeath'])) {
-						$excel_text .= __(' %s', $this->RefereeFormat->formatPerson($referee['Person'], 'dayofdeath'));
+					if (!empty($person['Person']['dayofdeath'])) {
+						$excel_text .= __(' %s', $this->RefereeFormat->formatPerson($person['Person'], 'dayofdeath'));
 					}
 					if ($type === 'excel') {
 						$datarow[] = array('text' => $excel_text);
 					}
 					if ($type === 'pdf') {
-						$pdf_text = __($referee['SexType']['title']);
+						$pdf_text = __($person['SexType']['title']);
 						if (!empty($excel_text)) {
 							$pdf_text .= sprintf('<br />%s', $excel_text);
 						}
@@ -487,9 +426,9 @@
 				// training level
 				$excel_text = '';
 				$refview_text = '';
-				if (!empty($referee['TrainingLevelInfo'])) {
-					$excel_text .= __($referee['TrainingLevelInfo']['abbreviation']);
-					$refview_text .= __($referee['TrainingLevelInfo']['title']);
+				if (!empty($person['TrainingLevelInfo'])) {
+					$excel_text .= __($person['TrainingLevelInfo']['abbreviation']);
+					$refview_text .= __($person['TrainingLevelInfo']['title']);
 				}
 				if ($type === 'excel') {
 					$datarow[] = array('text' => $excel_text);
@@ -510,8 +449,8 @@
 					// since
 					$excel_text = '';
 					$pdf_text = '';
-					if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['since'])) {
-						$excel_text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['since'], 'date');
+					if (!empty($person['TrainingLevelInfo']) && !empty($person['TrainingLevelInfo']['since'])) {
+						$excel_text .= $this->RefereeFormat->formatDate($person['TrainingLevelInfo']['since'], 'date');
 					}
 					if ($type === 'excel') {
 						$datarow[] = array('text' => $excel_text);
@@ -527,8 +466,8 @@
 
 					// last update
 					$excel_text = '';
-					if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['lastupdate'])) {
-						$excel_text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['lastupdate'], 'date');
+					if (!empty($person['TrainingLevelInfo']) && !empty($person['TrainingLevelInfo']['lastupdate'])) {
+						$excel_text .= $this->RefereeFormat->formatDate($person['TrainingLevelInfo']['lastupdate'], 'date');
 					}
 					if ($type === 'excel') {
 						$datarow[] = array('text' => $excel_text);
@@ -550,8 +489,8 @@
 
 					// next update
 					$excel_text = '';
-					if (!empty($referee['TrainingLevelInfo']) && !empty($referee['TrainingLevelInfo']['nextupdate'])) {
-						$excel_text .= $this->RefereeFormat->formatDate($referee['TrainingLevelInfo']['nextupdate'], 'year');
+					if (!empty($person['TrainingLevelInfo']) && !empty($person['TrainingLevelInfo']['nextupdate'])) {
+						$excel_text .= $this->RefereeFormat->formatDate($person['TrainingLevelInfo']['nextupdate'], 'year');
 					}
 					if ($type === 'excel') {
 						$datarow[] = array('text' => $excel_text);
@@ -574,30 +513,30 @@
 
 					// remark
 					if ($type === 'excel') {
-						$datarow[] = array('text' => (empty($referee['Person']['remark'])) ? '' : __($referee['Person']['remark']));
+						$datarow[] = array('text' => (empty($person['Person']['remark'])) ? '' : __($person['Person']['remark']));
 					}
 					if ($type === 'referee_view_zip') {
 						$repltoken = 'remark';
-						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), (empty($referee['Person']['remark'])) ? $refview_empty : __($referee['Person']['remark']), $filledTemplate);
+						$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), (empty($person['Person']['remark'])) ? $refview_empty : __($person['Person']['remark']), $filledTemplate);
 					}
 
 					// internal remark
 					if ($type === 'excel') {
-						$datarow[] = array('text' => (empty($referee['Person']['internal_remark'])) ? '' : __($referee['Person']['internal_remark']));
+						$datarow[] = array('text' => (empty($person['Person']['internal_remark'])) ? '' : __($person['Person']['internal_remark']));
 					}
 
 					// remarks
 					if ($type === 'pdf') {
-						if (!empty($referee['Person']['remark']) || !empty($referee['Person']['internal_remark'])) {
-							$pdf_data[] = array('data' => $datarow, 'style' => $statustypes[$referee['RefereeStatus']['sid']]['htmlstyle']);
+						if (!empty($person['Person']['remark']) || !empty($person['Person']['internal_remark'])) {
+							$pdf_data[] = array('data' => $datarow, 'style' => $statustypes[$person['RefereeStatus']['sid']]['htmlstyle']);
 							$datarow = array();
 
-							$pdf_text = $referee['Person']['remark'];
-							if (!empty($referee['Person']['internal_remark'])) {
+							$pdf_text = $person['Person']['remark'];
+							if (!empty($person['Person']['internal_remark'])) {
 								if (empty($pdf_text)) {
-									$pdf_text = sprintf('intern: %s', $referee['Person']['internal_remark']);
+									$pdf_text = sprintf('intern: %s', $person['Person']['internal_remark']);
 								} else {
-									$pdf_text .= sprintf('<br />intern: %s', $referee['Person']['internal_remark']);
+									$pdf_text .= sprintf('<br />intern: %s', $person['Person']['internal_remark']);
 								}
 							}
 							$datarow[] = array('text' => '');
@@ -609,22 +548,22 @@
 
 				// finish row
 				if ($type === 'excel') {
-					$this->PHPExcel->addTableRow($datarow, $statustypes[$referee['RefereeStatus']['sid']]['outputstyle']);
+					$this->PHPExcel->addTableRow($datarow, $statustypes[$person['RefereeStatus']['sid']]['outputstyle']);
 				}
 				if ($type === 'pdf') {
-					$pdf_data[] = array('data' => $datarow, 'style' => $statustypes[$referee['RefereeStatus']['sid']]['htmlstyle']);
+					$pdf_data[] = array('data' => $datarow, 'style' => $statustypes[$person['RefereeStatus']['sid']]['htmlstyle']);
 				}
 
 				if ($type === 'referee_view_zip') {
 					$repltoken = 'status_type';
-					$refview_text = ($statustypes[$referee['RefereeStatus']['sid']]['remark']) ?
-							$statustypes[$referee['RefereeStatus']['sid']]['remark'] :
-							$statustypes[$referee['RefereeStatus']['sid']]['title'];
+					$refview_text = ($statustypes[$person['RefereeStatus']['sid']]['remark']) ?
+							$statustypes[$person['RefereeStatus']['sid']]['remark'] :
+							$statustypes[$person['RefereeStatus']['sid']]['title'];
 					$refview_text = (empty($refview_text)) ? $refview_empty : $refview_text;
 					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $refview_text, $filledTemplate);
 
-					$zip->addFromString(sprintf('mmd/%s.mmd', sprintf($fletoken, $referee['Referee']['id'])), $filledTemplate);
-					$latexallrefs = str_replace(sprintf($tpltoken, 'includepdf'), sprintf('%s%s', sprintf($latexreftoken, $referee['Referee']['id']), sprintf($tpltoken, 'includepdf')), $latexallrefs);
+					$zip->addFromString(sprintf('mmd/%s.mmd', sprintf($fletoken, $person['Referee']['id'])), $filledTemplate);
+					$latexallrefs = str_replace(sprintf($tpltoken, 'includepdf'), sprintf('%s%s', sprintf($latexreftoken, $person['Referee']['id']), sprintf($tpltoken, 'includepdf')), $latexallrefs);
 				}
 
 			}
@@ -652,11 +591,11 @@
 
 						$hasMore = false;
 						$excel_text = '';
-						foreach ($statustype['referees'] as $referee) {
+						foreach ($statustype['referees'] as $person) {
 							if ($hasMore) {
 								$excel_text .= ', ';
 							}
-							$excel_text .= __($this->RefereeFormat->formatPerson($referee, 'fullname'));
+							$excel_text .= __($this->RefereeFormat->formatPerson($person, 'fullname'));
 							$hasMore = true;
 						}
 						$this->PHPExcel->addTableTexts($excel_text);
