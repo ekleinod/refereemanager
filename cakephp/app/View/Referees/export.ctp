@@ -101,11 +101,11 @@
 
 				$sid1 = RefereeRelationType::SID_MEMBER;
 				$sid2 = RefereeRelationType::SID_REFFOR;
-				if (array_key_exists($sid1, $personrelationtypes) || array_key_exists($sid2, $personrelationtypes)) {
+				if (array_key_exists($sid1, $refereerelationtypes) || array_key_exists($sid2, $refereerelationtypes)) {
 					$relout = '';
-					if (array_key_exists($sid1, $personrelationtypes)) {
+					if (array_key_exists($sid1, $refereerelationtypes)) {
 						$relout = __($allrefereerelationtypes[$sid1]['title']);
-						if (array_key_exists($sid2, $personrelationtypes)) {
+						if (array_key_exists($sid2, $refereerelationtypes)) {
 							$relout .= sprintf('<br /><em>%s</em>', __($allrefereerelationtypes[$sid2]['title']));
 						}
 					} else {
@@ -124,11 +124,11 @@
 				if ($isEditor) {
 					$sid1 = RefereeRelationType::SID_PREFER;
 					$sid2 = RefereeRelationType::SID_NOASSIGNMENT;
-					if (array_key_exists($sid1, $personrelationtypes) || array_key_exists($sid2, $personrelationtypes)) {
+					if (array_key_exists($sid1, $refereerelationtypes) || array_key_exists($sid2, $refereerelationtypes)) {
 						$relout = '';
-						if (array_key_exists($sid1, $personrelationtypes)) {
+						if (array_key_exists($sid1, $refereerelationtypes)) {
 							$relout = __($allrefereerelationtypes[$sid1]['title']);
-							if (array_key_exists($sid2, $personrelationtypes)) {
+							if (array_key_exists($sid2, $refereerelationtypes)) {
 								$relout .= '<br />' . __($allrefereerelationtypes[$sid2]['title']);
 							}
 						} else {
@@ -211,7 +211,7 @@
 
 							$excel_text = $this->RefereeFormat->formatRelationBySID($person['RefereeRelation'], $sid);
 
-							if (($type === 'excel') && array_key_exists($sid, $personrelationtypes)) {
+							if (($type === 'excel') && array_key_exists($sid, $refereerelationtypes)) {
 								$datarow[] = array('text' => $excel_text);
 							}
 							if ($type === 'referee_view_zip') {
@@ -225,7 +225,7 @@
 				if ($type === 'pdf') {
 					$sid1 = RefereeRelationType::SID_MEMBER;
 					$sid2 = RefereeRelationType::SID_REFFOR;
-					if (array_key_exists($sid1, $personrelationtypes) || array_key_exists($sid2, $personrelationtypes)) {
+					if (array_key_exists($sid1, $refereerelationtypes) || array_key_exists($sid2, $refereerelationtypes)) {
 						$pdf_text = '';
 						if (array_key_exists($sid1, $person['RefereeRelation']) || array_key_exists($sid2, $person['RefereeRelation'])) {
 							if (array_key_exists($sid1, $person['RefereeRelation'])) {
@@ -242,7 +242,7 @@
 					if ($isEditor) {
 						$sid1 = RefereeRelationType::SID_PREFER;
 						$sid2 = RefereeRelationType::SID_NOASSIGNMENT;
-						if (array_key_exists($sid1, $personrelationtypes) || array_key_exists($sid2, $personrelationtypes)) {
+						if (array_key_exists($sid1, $refereerelationtypes) || array_key_exists($sid2, $refereerelationtypes)) {
 							$pdf_text = '';
 							if (array_key_exists($sid1, $person['RefereeRelation']) || array_key_exists($sid2, $person['RefereeRelation'])) {
 								if (array_key_exists($sid1, $person['RefereeRelation'])) {
