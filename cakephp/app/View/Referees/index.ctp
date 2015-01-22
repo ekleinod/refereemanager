@@ -20,10 +20,7 @@
 
 	<?php if ($isRefView) { ?>
 
-		<?php
-			$this->element('Referees/statustypes');
-			fillStatusTypes($statustypes);
-		?>
+		<?php include_once('statustypes.php'); ?>
 
 		<p><?php echo __('Legende:'); ?></p>
 		<ul class="legend">
@@ -50,57 +47,9 @@
 
 
 	<table>
+		<?php include_once('columns.php'); ?>
+
 		<?php
-			$columns = array();
-				if ($isReferee) {
-					$columns[] = __('Bild');
-				}
-
-				$columns[] = __('Name');
-				$columns[] = __('Vorname');
-
-				if ($isRefView) {
-					foreach ($refereerelationtypes as $sid => $refereerelationtype) {
-						if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-							$columns[] = __($refereerelationtype['title']);
-						}
-					}
-				}
-
-				if ($isReferee) {
-					$columns[] = __('E-Mail');
-					$columns[] = __('Telefon');
-				}
-
-				if ($isEditor) {
-					$columns[] = __('Adresse');
-				}
-
-				if ($isReferee) {
-					$columns[] = __('URL');
-				}
-
-				if ($isEditor) {
-					$columns[] = __('Geschlecht');
-					$columns[] = __('Geburtstag<br />Todestag');
-				}
-
-				if ($isRefView) {
-					$columns[] = __('Ausbildung');
-				}
-
-				if ($isRefView && $isEditor) {
-					$columns[] = __('Letzte Ausbildung');
-					$columns[] = __('Letzte Fortbildung');
-					$columns[] = __('Nächste Fortbildung');
-				}
-
-				if ($isEditor) {
-					$columns[] = __('Anmerkung');
-					$columns[] = __('Interne Anmerkung');
-				}
-
-				$columns[] = __('Aktionen');
 			$table = array('thead', 'tfoot');
 
 			foreach ($table as $tabletag) {
@@ -161,14 +110,9 @@
 							if ($isEditor) {
 								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated sextype**');
 
-								$tmpValue = array();
-								if (!empty($person['Person']['birthday'])) {
-									$tmpValue[] = '**generated birthday**';
-								}
-								if (!empty($person['Person']['dayofdeath'])) {
-									$tmpValue[] = '&dagger;&nbsp;**generated dayofdeath**';
-								}
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, $this->RefereeFormat->formatMultiline($tmpValue));
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated birthday**');
+
+								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated dayofdeath**');
 							}
 
 							if ($isRefView) {

@@ -123,7 +123,7 @@ class RefManTemplate {
 		$txtReturn = RefManTemplate::replace($txtReturn, 'birthday',
 																				 (empty($person['Person']['birthday'])) ? '' : RefManRefereeFormat::formatDate($person['Person']['birthday'], 'date'));
 		$txtReturn = RefManTemplate::replace($txtReturn, 'dayofdeath',
-																				 (empty($person['Person']['dayofdeath'])) ? '' : RefManRefereeFormat::formatDate($person['Person']['dayofdeath'], 'date'));
+																				 (empty($person['Person']['dayofdeath'])) ? '' : sprintf('†&nbsp;%s', RefManRefereeFormat::formatDate($person['Person']['dayofdeath'], 'date')));
 
 		// contacts
 		$txtReturn = RefManTemplate::replace($txtReturn, 'emails',
