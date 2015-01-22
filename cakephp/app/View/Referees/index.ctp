@@ -28,7 +28,7 @@
 			<?php
 				foreach ($statustypes as $statustype) {
 			?>
-					<li style="<?php echo $statustype['outputstyle']; ?>"><?php echo ($statustype['StatusType']['remark']) ? h($statustype['StatusType']['remark']) : h($statustype['StatusType']['title']); ?></li>
+					<li style="<?php echo $statustype['outputstyle']['index']; ?>"><?php echo ($statustype['StatusType']['remark']) ? h($statustype['StatusType']['remark']) : h($statustype['StatusType']['title']); ?></li>
 			<?php
 				}
 			?>
@@ -69,7 +69,7 @@
 					if ($isRefView) {
 						$tmpStatus = $this->People->getRefereeStatus($person, $season);
 						if (($tmpStatus !== null) && (array_key_exists($tmpStatus['status_type_id'], $statustypes))) {
-							$tmpFormat = $statustypes[$tmpStatus['status_type_id']]['outputstyle'];
+							$tmpFormat = $statustypes[$tmpStatus['status_type_id']]['outputstyle']['index'];
 						}
 					}
 			?>
