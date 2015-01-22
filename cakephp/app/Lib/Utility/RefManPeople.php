@@ -133,17 +133,24 @@ class RefManPeople {
 		}
 
 		// last training
-		if (!empty($levReturn) && !empty($levReturn['TrainingUpdate'])) {
+		if (!empty($levReturn)) {
 
-			foreach ($levReturn['TrainingUpdate'] as $trainingupdate) {
-				if (empty($levReturn['lasttrainingupdate']) || ($levReturn['lasttrainingupdate'] < $trainingupdate['update'])) {
-					$levReturn['lasttrainingupdate'] = $trainingupdate['update'];
+			if (!empty($levReturn['TrainingUpdate'])) {
+
+				foreach ($levReturn['TrainingUpdate'] as $trainingupdate) {
+					if (empty($levReturn['lasttrainingupdate']) || ($levReturn['lasttrainingupdate'] < $trainingupdate['update'])) {
+						$levReturn['lasttrainingupdate'] = $trainingupdate['update'];
+					}
 				}
+
 			}
 
 			// next training
 			if (!empty($levReturn['lasttrainingupdate'])) {
 				$levReturn['nexttrainingupdate'] = strtotime('+2 years', CakeTime::fromString($levReturn['lasttrainingupdate']));
+			}
+			if (empty($levReturn['nexttrainingupdate']) && !empty($levReturn['TrainingLevel']['since'])) {
+				$levReturn['nexttrainingupdate'] = strtotime('+2 years', CakeTime::fromString($levReturn['TrainingLevel']['since']));
 			}
 
 		}
