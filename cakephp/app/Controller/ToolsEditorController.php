@@ -206,7 +206,7 @@ class ToolsEditorController extends AppController {
 					if ($sendLetter && !empty($contactAddress) &&
 							(empty($contactEmail) || ($referee['Referee']['docs_per_letter'] === true))) {
 
-						$txtLetter = RefManTemplate::replaceRefereeData($tplLetter, $referee);
+						$txtLetter = RefManTemplate::replaceRefereeData($tplLetter, $referee, 'text', 'html');
 						$txtLetter = RefManTemplate::replace($txtLetter, 'streetnumber', RefManRefereeFormat::formatAddress($contactAddress, 'streetnumber', 'text'));
 						$txtLetter = RefManTemplate::replace($txtLetter, 'zipcity', RefManRefereeFormat::formatAddress($contactAddress, 'zipcity', 'text'));
 
