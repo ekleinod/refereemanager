@@ -157,7 +157,7 @@ class ToolsEditorController extends AppController {
 					$contactEmail = RefManPeople::getPrimaryContact($referee, 'Email');
 					if ($sendEmail && !empty($contactEmail)) {
 
-						$txtEmail = RefManTemplate::replaceRefereeData($tplEmail, $referee);
+						$txtEmail = RefManTemplate::replaceRefereeData($tplEmail, $referee, 'text', 'html');
 
 						// send email (set up email config correctly)
 						$Email = new CakeEmail('default');
@@ -168,18 +168,38 @@ class ToolsEditorController extends AppController {
 							$Email->attachments($attachment);
 						}
 
+						$sendsuccess = true;
+						// if not testing...
 						if (empty($this->request->data['ToolsEditor']['test_only'])) {
-							$Email->send($txtEmail);
+							try {
 
-							CakeLog::write('email', __('Mail sent to %s <%s>.',
-																				 RefManRefereeFormat::formatPerson($referee, 'fullname'),
-																				 $contactEmail['Email']['email']));
+								$Email->send($txtEmail);
+
+							} catch (Exception $e) {
+								CakeLog::write('email', __('Error sending mail to %s <%s>: %s.',
+																					 RefManRefereeFormat::formatPerson($referee, 'fullname'),
+																					 $contactEmail['Email']['email'],
+																					 $e->getMessage()));
+								$messageresult[] = __('Fehler (%s &lt;%s&gt;): %s',
+																			RefManRefereeFormat::formatPerson($referee, 'fullname'),
+																			$contactEmail['Email']['email'],
+																			$e->getMessage());
+								$sendsuccess = false;
+							}
+
 						}
 
-						// output for user
-						$arrEmails[] = sprintf('%s &lt;%s&gt;',
-																	 RefManRefereeFormat::formatPerson($referee, 'fullname'),
-																	 $contactEmail['Email']['email']);
+						if ($sendsuccess) {
+								CakeLog::write('email', __('Mail sent to %s <%s>.',
+																					 RefManRefereeFormat::formatPerson($referee, 'fullname'),
+																					 $contactEmail['Email']['email']));
+
+								// output for user
+								$arrEmails[] = sprintf('%s &lt;%s&gt;',
+																			 RefManRefereeFormat::formatPerson($referee, 'fullname'),
+																			 $contactEmail['Email']['email']);
+						}
+
 					}
 
 					$contactAddress = RefManPeople::getPrimaryContact($referee, 'Address');
