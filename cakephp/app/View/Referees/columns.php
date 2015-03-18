@@ -5,54 +5,54 @@
 $columns = array();
 
 if ($isReferee) {
-	$columns[] = __('Bild');
+	$columns[] = array('title' => __('Bild'));
 }
 
-$columns[] = __('Name');
-$columns[] = __('Vorname');
+$columns[] = array('title' => __('Name'));
+$columns[] = array('title' => __('Vorname'));
 
 if ($isRefView) {
 	foreach ($refereerelationtypes as $sid => $refereerelationtype) {
 		if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-			$columns[] = __($refereerelationtype['title']);
+			$columns[] = array('title' => __($refereerelationtype['title']));
 		}
 	}
 }
 
 if ($isReferee) {
-	$columns[] = __('E-Mail');
-	$columns[] = __('Telefon');
+	$columns[] = array('title' => __('E-Mail'));
+	$columns[] = array('title' => __('Telefon'));
 }
 
 if ($isEditor) {
-	$columns[] = __('Adresse');
+	$columns[] = array('title' => __('Adresse'));
 }
 
 if ($isReferee) {
-	$columns[] = __('URL');
+	$columns[] = array('title' => __('URL'));
 }
 
 if ($isEditor) {
-	$columns[] = __('Geschlecht');
-	$columns[] = __('Geburtstag');
-	$columns[] = __('Todestag');
+	$columns[] = array('title' => __('Geschlecht'));
+	$columns[] = array('title' => __('Geburtstag'));
+	$columns[] = array('title' => __('Todestag'));
 }
 
 if ($isRefView) {
-	$columns[] = __('Ausbildung');
+	$columns[] = array('title' => __('Ausbildung'));
 }
 
 if ($isRefView && $isEditor) {
-	$columns[] = __('Letzte Ausbildung');
-	$columns[] = __('Letzte Fortbildung');
-	$columns[] = __('Nächste Fortbildung');
+	$columns[] = array('title' => __('Letzte Ausbildung'));
+	$columns[] = array('title' => __('Letzte Fortbildung'));
+	$columns[] = array('title' => __('Nächste Fortbildung'));
 }
 
 if ($isEditor) {
-	$columns[] = __('Anmerkung');
-	$columns[] = __('Interne Anmerkung');
+	$columns[] = array('title' => __('Anmerkung'));
+	$columns[] = array('title' => __('Interne Anmerkung'));
 }
 
-$columns[] = __('Aktionen');
+$columns[] = array('title' => __('Aktionen'));
 
 ?>

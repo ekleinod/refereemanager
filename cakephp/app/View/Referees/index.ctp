@@ -55,7 +55,7 @@
 			foreach ($table as $tabletag) {
 				echo sprintf('<%s><tr>', $tabletag);
 				foreach ($columns as $column) {
-					echo sprintf('<th>%s</th>', $column);
+					echo sprintf('<th>%s</th>', $column['title']);
 				}
 				echo sprintf('</tr></%s>', $tabletag);
 			}
@@ -77,62 +77,62 @@
 						<?php
 
 							if ($isReferee) {
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, (empty($person['Picture']['url'])) ? '' :
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, (empty($person['Picture']['url'])) ? '' :
 																	$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von **generated fullname**.'), 'title' => '**generated fullname**')), $person['Picture']['url'], array('escape' => false)));
 							}
 
-							$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated name_title**');
+							$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated name_title**');
 
-							$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated first_name**');
+							$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated first_name**');
 
 							if ($isRefView) {
 								foreach ($refereerelationtypes as $sid => $refereerelationtype) {
 									if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-										$refLine .= getTD($columns[$curcol++], $tmpFormat, sprintf('**generated referee_relation_%s**', $sid));
+										$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, sprintf('**generated referee_relation_%s**', $sid));
 									}
 								}
 							}
 
 							if ($isReferee) {
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated emails**');
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated emails**');
 
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated phone_numbers_national**');
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated phone_numbers_national**');
 							}
 
 							if ($isEditor) {
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated addresses_fulladdress**');
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated addresses_fulladdress**');
 							}
 
 							if ($isReferee) {
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated urls**');
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated urls**');
 							}
 
 							if ($isEditor) {
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated sextype**');
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated sextype**');
 
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated birthday**');
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated birthday**');
 
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated dayofdeath**');
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated dayofdeath**');
 							}
 
 							if ($isRefView) {
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated traininglevel**');
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated traininglevel**');
 							}
 
 							if ($isEditor) {
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated traininglevelsince**');
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated traininglevelsince**');
 
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated lasttrainingupdate**');
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated lasttrainingupdate**');
 
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated nexttrainingupdate**');
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated nexttrainingupdate**');
 							}
 
 							if ($isEditor) {
 								$tmpValue = (empty($person['Person']['remark'])) ? '' : $person['Person']['remark'];
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated remark**');
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated remark**');
 
 								$tmpValue = (empty($person['Person']['internal_remark'])) ? '' : $person['Person']['internal_remark'];
-								$refLine .= getTD($columns[$curcol++], $tmpFormat, '**generated internal_remark**');
+								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated internal_remark**');
 							}
 
 							$refLine .= getTD(__('Aktionen'), '', $this->element('actions_table', array('id' => $person['Person']['id'])), 'actions');
