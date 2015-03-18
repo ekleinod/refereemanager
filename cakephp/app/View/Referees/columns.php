@@ -2,13 +2,23 @@
 
 // column definitions.
 
+$isExport = isset($type);
+
 $columns = array();
 
-if ($isReferee) {
+if (!$isExport && $isReferee) {
 	$columns[] = array('title' => __('Bild'));
 }
 
-$columns[] = array('title' => __('Name'));
+$width = 120;
+if ($isReferee) {
+	$width = 110;
+}
+if ($isEditor) {
+	$width = 100;
+}
+$columns[] = array('title' => __('Name'), 'pdfwidth' => $width);
+
 $columns[] = array('title' => __('Vorname'));
 
 if ($isRefView) {
@@ -53,6 +63,8 @@ if ($isEditor) {
 	$columns[] = array('title' => __('Interne Anmerkung'));
 }
 
-$columns[] = array('title' => __('Aktionen'));
+if (!$isExport) {
+	$columns[] = array('title' => __('Aktionen'));
+}
 
 ?>

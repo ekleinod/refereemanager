@@ -90,15 +90,14 @@
 			if ($type === 'pdf') {
 				$pdf_header = array();
 
-				$width = 120;
-				if ($isReferee) {
-					$width = 110;
+				foreach ($columns as $column) {
+					if (array_key_exists('pdfwidth', $column)) {
+						$pdf_header[] = array('text' => $column['title'], 'width' => $column['pdfwidth']);
+					} else {
+						$pdf_header[] = array('text' => $column['title'], 'width' => 100);
+					}
 				}
-				if ($isEditor) {
-					$width = 100;
-				}
-				$pdf_header[] = array('text' => __('Name'), 'width' => $width);
-
+/*
 				$sid1 = RefereeRelationType::SID_MEMBER;
 				$sid2 = RefereeRelationType::SID_REFFOR;
 				if (array_key_exists($sid1, $refereerelationtypes) || array_key_exists($sid2, $refereerelationtypes)) {
@@ -161,13 +160,14 @@
 				if ($isEditor) {
 					$width = 85;
 					$pdf_header[] = array('text' => __('Letzte Ausbildung<br /><em>Letzte Fortbildung</em><br />Nächste Fortbildung'), 'width' => $width);
-				}
+				}*/
 
 				$pdf_data = array();
 			}
 
 			// datarows
-			foreach ($people as $person) {
+			if (false) {
+			//foreach ($people as $person) {
 
 				$datarow = array();
 
@@ -606,13 +606,13 @@
 			if ($type === 'pdf') {
 				$tcpdf->writeHTML($tcpdf->getTable($pdf_header, $pdf_data), true, false, true, false, '');
 				$tcpdf->WriteHTML(sprintf('<p style="font-size: %spt; font-weight: bold;">%s</p>', PDF_FONT_SIZE_MAIN, __('Legende')), true, false, true, false, '');
-				foreach ($statustypes as $stleg) {
+/*				foreach ($statustypes as $stleg) {
 					$tcpdf->WriteHTML(sprintf('<p style="font-size: %spt; %s">%s</p>',
 																		PDF_FONT_SIZE_DATA,
 																		$stleg['htmlstyle'],
 																		($stleg['remark']) ? h($stleg['remark']) : h($stleg['title'])),
 														true, false, true, false, '');
-				}
+				}*/
 			}
 
 		}
