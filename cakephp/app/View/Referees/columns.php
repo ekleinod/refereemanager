@@ -3,28 +3,51 @@
 // column definitions.
 
 $isExport = isset($type);
+$isPDFExport = $isExport && ($type === 'pdf');
+
+if (!isset($type)) {
+	$type = 'none';
+}
 
 $columns = array();
 
+// image
+$params = array();
 if (!$isExport && $isReferee) {
 	$columns[] = array('title' => __('Bild'));
 }
 
-$width = 120;
+// name (combined for pdf output)
+$params = array();
+$params['width'] = 120;
 if ($isReferee) {
-	$width = 110;
+	$params['width'] = 110;
 }
 if ($isEditor) {
-	$width = 100;
+	$params['width'] = 100;
 }
-$columns[] = array('title' => __('Name'), 'pdfwidth' => $width);
+$columns[] = array('title' => __('Name'), $type => $params);
 
-$columns[] = array('title' => __('Vorname'));
+// first name
+if (!$isPDFExport) {
+	$columns[] = array('title' => __('Vorname'));
+}
 
+// relations
 if ($isRefView) {
+	$params = array();
+	$params['width'] = 200;
+	if ($isReferee) {
+		$params['width'] = 170;
+	}
+	if ($isEditor) {
+		$params['width'] = 100;
+	}
+	$reltypes1 = '';
+	$reltypes2 = '';
 	foreach ($refereerelationtypes as $sid => $refereerelationtype) {
 		if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-			$columns[] = array('title' => __($refereerelationtype['title']));
+			$columns[] = array('title' => __($refereerelationtype['title']), $type => $params);
 		}
 	}
 }
@@ -49,7 +72,9 @@ if ($isEditor) {
 }
 
 if ($isRefView) {
-	$columns[] = array('title' => __('Ausbildung'));
+	$params = array();
+	$params['width'] = 50;
+	$columns[] = array('title' => __('Ausbildung'), $type => $params);
 }
 
 if ($isRefView && $isEditor) {

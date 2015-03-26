@@ -91,11 +91,7 @@
 				$pdf_header = array();
 
 				foreach ($columns as $column) {
-					if (array_key_exists('pdfwidth', $column)) {
-						$pdf_header[] = array('text' => $column['title'], 'width' => $column['pdfwidth']);
-					} else {
-						$pdf_header[] = array('text' => $column['title'], 'width' => 100);
-					}
+					$pdf_header[] = array('text' => $column['title'], 'width' => $column[$type]['width']);
 				}
 /*
 				$sid1 = RefereeRelationType::SID_MEMBER;
