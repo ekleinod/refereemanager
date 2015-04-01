@@ -63,7 +63,7 @@
 		<tbody>
 			<?php
 				foreach ($people as $person) {
-					$curcol = 0;
+					$tmpDataID = '';
 					$tmpFormat = '';
 					$refLine = '';
 					if ($isRefView) {
@@ -77,65 +77,83 @@
 						<?php
 
 							if ($isReferee) {
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, (empty($person['Picture']['url'])) ? '' :
-																	$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von **generated fullname**.'), 'title' => '**generated fullname**')), $person['Picture']['url'], array('escape' => false)));
+								$tmpDataID = 'picture';
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, (empty($person['Picture']['url'])) ? '' :
+																	$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von **generated fullname**.'), 'title' => $this->Template->getReplaceToken('fullname'))), $person['Picture']['url'], array('escape' => false)));
 							}
 
-							$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated name_title**');
+							$tmpDataID = 'name_title';
+							$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 
-							$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated first_name**');
+							$tmpDataID = 'first_name';
+							$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 
 							if ($isRefView) {
 								foreach ($refereerelationtypes as $sid => $refereerelationtype) {
 									if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-										$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, sprintf('**generated referee_relation_%s**', $sid));
+										$tmpDataID = $sid;
+										$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken(sprintf('referee_relation_%s', $tmpDataID)));
 									}
 								}
 							}
 
 							if ($isReferee) {
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated emails**');
+								$tmpDataID = 'emails';
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated phone_numbers_national**');
+								$tmpDataID = 'phone_numbers_national';
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
 							if ($isEditor) {
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated addresses_fulladdress**');
+								$tmpDataID = 'addresses_fulladdress';
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
 							if ($isReferee) {
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated urls**');
+								$tmpDataID = 'urls';
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
 							if ($isEditor) {
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated sextype**');
+								$tmpDataID = 'sextype';
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated birthday**');
+								$tmpDataID = 'birthday';
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated dayofdeath**');
+								$tmpDataID = 'dayofdeath';
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
 							if ($isRefView) {
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated traininglevel**');
+								$tmpDataID = 'traininglevel';
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
 							if ($isEditor) {
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated traininglevelsince**');
+								$tmpDataID = 'traininglevelsince';
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated lasttrainingupdate**');
+								$tmpDataID = 'lasttrainingupdate';
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated nexttrainingupdate**');
+								$tmpDataID = 'nexttrainingupdate';
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
 							if ($isEditor) {
-								$tmpValue = (empty($person['Person']['remark'])) ? '' : $person['Person']['remark'];
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated remark**');
+								$tmpDataID = 'remark';
+								$tmpValue = (empty($person['Person'][$tmpDataID])) ? '' : $person['Person'][$tmpDataID];
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 
-								$tmpValue = (empty($person['Person']['internal_remark'])) ? '' : $person['Person']['internal_remark'];
-								$refLine .= getTD($columns[$curcol++]['title'], $tmpFormat, '**generated internal_remark**');
+								$tmpDataID = 'internal_remark';
+								$tmpValue = (empty($person['Person'][$tmpDataID])) ? '' : $person['Person'][$tmpDataID];
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
-							$refLine .= getTD(__('Aktionen'), '', $this->element('actions_table', array('id' => $person['Person']['id'])), 'actions');
+							$tmpDataID = 'actions';
+							$refLine .= getTD($columns[$tmpDataID]['title'], '', $this->element('actions_table', array('id' => $person['Person']['id'])), $tmpDataID);
 
 							echo $this->Template->replaceRefereeData($refLine, $person, 'text', 'html');
 						?>

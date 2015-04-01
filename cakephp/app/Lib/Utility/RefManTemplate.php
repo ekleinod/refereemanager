@@ -39,6 +39,19 @@ class RefManTemplate {
 	}
 
 	/**
+	 * Returns replace token.
+	 *
+	 * @param $id id
+	 * @return replace token with id
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function getReplaceToken($id) {
+		return sprintf('**generated %s**', $id);
+	}
+
+	/**
 	 * Replaces token in text with value.
 	 *
 	 * @param $text text
@@ -50,7 +63,7 @@ class RefManTemplate {
 	 * @since 0.3
 	 */
 	public static function replace($text, $token, $value) {
-		return str_replace(sprintf('**generated %s**', $token), $value, $text);
+		return str_replace(RefManTemplate::getReplaceToken($token), $value, $text);
 	}
 
 	/**
