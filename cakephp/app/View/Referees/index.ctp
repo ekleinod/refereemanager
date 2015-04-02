@@ -76,14 +76,16 @@
 					<tr>
 						<?php
 
-							if ($isReferee) {
-								$tmpDataID = 'picture';
+							$tmpDataID = 'picture';
+							if (array_key_exists($tmpDataID, $columns)) {
 								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, (empty($person['Picture']['url'])) ? '' :
 																	$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von **generated fullname**.'), 'title' => $this->Template->getReplaceToken('fullname'))), $person['Picture']['url'], array('escape' => false)));
 							}
 
 							$tmpDataID = 'name_title';
-							$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
+							if (array_key_exists($tmpDataID, $columns)) {
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
+							}
 
 							$tmpDataID = 'first_name';
 							$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));

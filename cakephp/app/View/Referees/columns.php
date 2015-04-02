@@ -3,6 +3,7 @@
 // column definitions.
 
 $isExport = isset($type);
+$isIndex = !$isExport;
 $isPDFExport = $isExport && ($type === 'pdf');
 
 if (!isset($type)) {
@@ -12,20 +13,28 @@ if (!isset($type)) {
 $columns = array();
 
 // image
-$params = array();
-$columns['picture'] = array('title' => __('Bild'));
+if ($isIndex &&
+		$isReferee) {
+	$params = array();
+	$columns['picture'] = array('title' => __('Bild'));
+}
 
 // name (combined for pdf output)
-$params = array();
-$params['width'] = 120;
-if ($isReferee) {
-	$params['width'] = 110;
+if ($isIndex) {
+	$columns['name_title'] = array('title' => __('Name'));
 }
-if ($isEditor) {
-	$params['width'] = 100;
+
+if ($isExport) {
+	$params = array();
+	$params['width'] = 120;
+	if ($isReferee) {
+		$params['width'] = 110;
+	}
+	if ($isEditor) {
+		$params['width'] = 100;
+	}
+	$columns['fullname'] = array('title' => __('Name'), $type => $params);
 }
-$columns['name_title'] = array('title' => __('Name'), $type => $params);
-$columns['fullname'] = array('title' => __('Name'), $type => $params);
 
 // first name
 $columns['first_name'] = array('title' => __('Vorname'));
