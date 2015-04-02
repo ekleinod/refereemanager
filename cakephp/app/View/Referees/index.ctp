@@ -91,8 +91,8 @@
 							if ($isRefView) {
 								foreach ($refereerelationtypes as $sid => $refereerelationtype) {
 									if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-										$tmpDataID = $sid;
-										$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken(sprintf('referee_relation_%s', $tmpDataID)));
+										$tmpDataID = sprintf('referee_relation_%s', $sid);
+										$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 									}
 								}
 							}

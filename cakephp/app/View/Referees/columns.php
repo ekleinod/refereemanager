@@ -43,8 +43,7 @@ $reltypes1 = '';
 $reltypes2 = '';
 foreach ($refereerelationtypes as $sid => $refereerelationtype) {
 	if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-		$tmpSID = $sid; //sprintf('referee_relation_%s', $sid);
-		$columns[$tmpSID] = array('title' => __($refereerelationtype['title']), $type => $params);
+		$columns[sprintf('referee_relation_%s', $sid)] = array('title' => __($refereerelationtype['title']), $type => $params);
 	}
 }
 
