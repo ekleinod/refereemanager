@@ -88,74 +88,92 @@
 							}
 
 							$tmpDataID = 'first_name';
-							$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
+							if (array_key_exists($tmpDataID, $columns)) {
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
+							}
 
 							if ($isRefView) {
 								foreach ($refereerelationtypes as $sid => $refereerelationtype) {
 									if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
 										$tmpDataID = sprintf('referee_relation_%s', $sid);
-										$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
+										if (array_key_exists($tmpDataID, $columns)) {
+											$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
+										}
 									}
 								}
 							}
 
-							if ($isReferee) {
-								$tmpDataID = 'emails';
-								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
-
-								$tmpDataID = 'phone_numbers_national';
+							$tmpDataID = 'emails';
+							if (array_key_exists($tmpDataID, $columns)) {
 								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
-							if ($isEditor) {
-								$tmpDataID = 'addresses_fulladdress';
+							$tmpDataID = 'phone_numbers_national';
+							if (array_key_exists($tmpDataID, $columns)) {
 								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
-							if ($isReferee) {
-								$tmpDataID = 'urls';
+							$tmpDataID = 'addresses_fulladdress';
+							if (array_key_exists($tmpDataID, $columns)) {
 								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
-							if ($isEditor) {
-								$tmpDataID = 'sextype';
-								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
-
-								$tmpDataID = 'birthday';
-								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
-
-								$tmpDataID = 'dayofdeath';
+							$tmpDataID = 'urls';
+							if (array_key_exists($tmpDataID, $columns)) {
 								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
-							if ($isRefView) {
-								$tmpDataID = 'traininglevel';
+							$tmpDataID = 'sextype';
+							if (array_key_exists($tmpDataID, $columns)) {
 								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
-							if ($isEditor) {
-								$tmpDataID = 'traininglevelsince';
-								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
-
-								$tmpDataID = 'lasttrainingupdate';
-								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
-
-								$tmpDataID = 'nexttrainingupdate';
+							$tmpDataID = 'birthday';
+							if (array_key_exists($tmpDataID, $columns)) {
 								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
-							if ($isEditor) {
-								$tmpDataID = 'remark';
+							$tmpDataID = 'dayofdeath';
+							if (array_key_exists($tmpDataID, $columns)) {
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
+							}
+
+							$tmpDataID = 'traininglevel';
+							if (array_key_exists($tmpDataID, $columns)) {
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
+							}
+
+							$tmpDataID = 'traininglevelsince';
+							if (array_key_exists($tmpDataID, $columns)) {
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
+							}
+
+							$tmpDataID = 'lasttrainingupdate';
+							if (array_key_exists($tmpDataID, $columns)) {
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
+							}
+
+							$tmpDataID = 'nexttrainingupdate';
+							if (array_key_exists($tmpDataID, $columns)) {
+								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
+							}
+
+							$tmpDataID = 'remark';
+							if (array_key_exists($tmpDataID, $columns)) {
 								$tmpValue = (empty($person['Person'][$tmpDataID])) ? '' : $person['Person'][$tmpDataID];
 								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
+							}
 
-								$tmpDataID = 'internal_remark';
+							$tmpDataID = 'internal_remark';
+							if (array_key_exists($tmpDataID, $columns)) {
 								$tmpValue = (empty($person['Person'][$tmpDataID])) ? '' : $person['Person'][$tmpDataID];
 								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
 							$tmpDataID = 'actions';
-							$refLine .= getTD($columns[$tmpDataID]['title'], '', $this->element('actions_table', array('id' => $person['Person']['id'])), $tmpDataID);
+							if (array_key_exists($tmpDataID, $columns)) {
+								$refLine .= getTD($columns[$tmpDataID]['title'], '', $this->element('actions_table', array('id' => $person['Person']['id'])), $tmpDataID);
+							}
 
 							echo $this->Template->replaceRefereeData($refLine, $person, 'text', 'html');
 						?>
