@@ -18,18 +18,20 @@ $columns = array();
 // image
 if ($isIndex &&
 		$isReferee) {
-	$params = array();
-	$columns['picture'] = array('title' => __('Bild'));
+	$columns[] = array('title' => __('Bild'),
+										 'content' => $this->Template->getReplaceToken('name_title'));
 }
 
 // name
 if ($isIndex || $isExcelExport) {
-	$columns['name_title'] = array('title' => __('Name'));
+	$columns[] = array('title' => __('Name'),
+										 'content' => $this->Template->getReplaceToken('name_title'));
 }
 
 // first name
 if ($isIndex || $isExcelExport) {
-	$columns['first_name'] = array('title' => __('Vorname'));
+	$columns[] = array('title' => __('Vorname'),
+										 'content' => $this->Template->getReplaceToken('first_name'));
 }
 
 // full name
@@ -46,7 +48,16 @@ if ($isPDFExport) {
 }
 
 // relations
-if ($isRefView) {
+if ($isIndex && $isRefView) {
+	foreach ($refereerelationtypes as $sid => $refereerelationtype) {
+		if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
+			$columns[sprintf('referee_relation_%s', $sid)] = array('title' => __($refereerelationtype['title']));
+		}
+	}
+}
+
+// combined relations
+if ($isPDFExport && $isRefView) {
 	$params = array();
 	$params['width'] = 200;
 	if ($isReferee) {
@@ -55,11 +66,21 @@ if ($isRefView) {
 	if ($isEditor) {
 		$params['width'] = 100;
 	}
-	$reltypes1 = '';
-	$reltypes2 = '';
-	foreach ($refereerelationtypes as $sid => $refereerelationtype) {
-		if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-			$columns[sprintf('referee_relation_%s', $sid)] = array('title' => __($refereerelationtype['title']), $type => $params);
+
+	$columns[sprintf('referee_relation_%s referee_relation_%s', RefereeRelationType::SID_MEMBER, RefereeRelationType::SID_REFFOR)] =
+			array('title' => sprintf('%s<br /><em>%s</em>', __($refereerelationtypes[RefereeRelationType::SID_MEMBER]['title']), __($refereerelationtypes[RefereeRelationType::SID_REFFOR]['title'])), $type => $params);
+
+	if ($isEditor) {
+		$columns[sprintf('referee_relation_%s referee_relation_%s', RefereeRelationType::SID_PREFER, RefereeRelationType::SID_NOASSIGNMENT)] =
+				array('title' => sprintf('%s<br /><em>%s</em>', __($refereerelationtypes[RefereeRelationType::SID_PREFER]['title']), __($refereerelationtypes[RefereeRelationType::SID_NOASSIGNMENT]['title'])), $type => $params);
+
+		foreach ($refereerelationtypes as $sid => $refereerelationtype) {
+			if (($sid != RefereeRelationType::SID_MEMBER) &&
+					($sid == RefereeRelationType::SID_REFFOR) &&
+					($sid == RefereeRelationType::SID_PREFER) &&
+					($sid == RefereeRelationType::SID_NOASSIGNMENT)) {
+				$columns[sprintf('referee_relation_%s', $sid)] = array('title' => __($refereerelationtype['title']));
+			}
 		}
 	}
 }
@@ -131,9 +152,5 @@ if ($isEditor) {
 	$columns['internal_remark'] = array('title' => __('Interne Anmerkung'));
 }
 
-// actions
-if ($isIndex) {
-	$columns['actions'] = array('title' => __('Aktionen'));
-}
 
 ?>

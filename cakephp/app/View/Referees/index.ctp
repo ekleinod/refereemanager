@@ -57,6 +57,7 @@
 				foreach ($columns as $column) {
 					echo sprintf('<th>%s</th>', $column['title']);
 				}
+				echo sprintf('<th>%s</th>', __('Aktionen'));
 				echo sprintf('</tr></%s>', $tabletag);
 			}
 		?>
@@ -76,15 +77,14 @@
 					<tr>
 						<?php
 
+							foreach ($columns as $column) {
+								$refLine .= getTD($column['title'], $tmpFormat, $column['content']);
+							}
+/*
 							$tmpDataID = 'picture';
 							if (array_key_exists($tmpDataID, $columns)) {
 								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, (empty($person['Picture']['url'])) ? '' :
 																	$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von **generated fullname**.'), 'title' => $this->Template->getReplaceToken('fullname'))), $person['Picture']['url'], array('escape' => false)));
-							}
-
-							$tmpDataID = 'name_title';
-							if (array_key_exists($tmpDataID, $columns)) {
-								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
 
 							$tmpDataID = 'first_name';
@@ -94,11 +94,9 @@
 
 							if ($isRefView) {
 								foreach ($refereerelationtypes as $sid => $refereerelationtype) {
-									if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-										$tmpDataID = sprintf('referee_relation_%s', $sid);
-										if (array_key_exists($tmpDataID, $columns)) {
-											$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
-										}
+									$tmpDataID = sprintf('referee_relation_%s', $sid);
+									if (array_key_exists($tmpDataID, $columns)) {
+										$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 									}
 								}
 							}
@@ -169,11 +167,9 @@
 								$tmpValue = (empty($person['Person'][$tmpDataID])) ? '' : $person['Person'][$tmpDataID];
 								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, $this->Template->getReplaceToken($tmpDataID));
 							}
+*/
 
-							$tmpDataID = 'actions';
-							if (array_key_exists($tmpDataID, $columns)) {
-								$refLine .= getTD($columns[$tmpDataID]['title'], '', $this->element('actions_table', array('id' => $person['Person']['id'])), $tmpDataID);
-							}
+							$refLine .= getTD(__('Aktionen'), '', $this->element('actions_table', array('id' => $person['Person']['id'])), $tmpDataID);
 
 							echo $this->Template->replaceRefereeData($refLine, $person, 'text', 'html');
 						?>
