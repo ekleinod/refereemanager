@@ -107,6 +107,12 @@ class RefManTemplate {
 		$txtReturn = RefManTemplate::replace($txtReturn, 'nexttrainingupdate',
 																				 (empty($traininglevel) || empty($traininglevel['nexttrainingupdate'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['nexttrainingupdate'], 'year'));
 
+		// status
+		foreach ($referee['RefereeStatus'] as $refereestatus) {
+			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('refereestatus_%s_remark', $refereestatus['season_id']),
+																					 (empty($refereestatus['remark'])) ? '' : $refereestatus['remark']);
+		}
+
 		return $txtReturn;
 	}
 

@@ -146,12 +146,16 @@ class Referee extends AppModel {
 	 * @since 0.1
 	 */
 	public function fillReferee(&$referee) {
+
+		// save values from person data except person and referee
 		$person = $this->Person->findById($referee['Referee']['person_id']);
 		foreach ($person as $key => $value) {
-			if ((strcmp($key, 'Person') != 0) && (strcmp($key, 'Referee') != 0)) {
+			if ((strcmp($key, 'Person') != 0) &&
+					(strcmp($key, 'Referee') != 0)) {
 				$referee[$key] = $value;
 			}
 		}
+
 	}
 
 }

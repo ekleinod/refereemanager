@@ -171,7 +171,7 @@ if ($isEditor) {
 // remark
 if ($isEditor) {
 	$columns[] = array('title' => __('Anmerkung'),
-										 'content' => $this->Template->getReplaceToken('remark'));
+										 'content' => sprintf('%s %s', $this->Template->getReplaceToken('remark'), $this->Template->getReplaceToken(sprintf('refereestatus_%s_remark', $season['id']))));
 }
 
 // internal_remark
