@@ -35,7 +35,7 @@ if ($isIndex &&
 											 'content' => $this->Template->getReplaceToken('first_name'));
 	}
 
-	// full name
+	// table name
 	if ($isPDFExport) {
 		$params = array();
 		$params['width'] = 120;
@@ -46,7 +46,7 @@ if ($isIndex &&
 			$params['width'] = 100;
 		}
 		$columns[] = array('title' => __('Name'),
-											 'content' => $this->Template->getReplaceToken('fullname'),
+											 'content' => $this->Template->getReplaceToken('tablename'),
 											 $type => $params);
 	}
 
@@ -149,20 +149,30 @@ if ($isIndex && $isReferee) {
 										 'content' => $this->Template->getReplaceToken('urls'));
 }
 
-// sex type
-if ($isEditor) {
-	$params = array();
-	$params['width'] = 60;
-	$columns[] = array('title' => __('Geschlecht'),
-										 'content' => $this->Template->getReplaceToken('sextype'),
-										 $type => $params);
-}
+// sex and birthday
+	// sex type
+	if ($isIndex && $isEditor) {
+		$columns[] = array('title' => __('Geschlecht'),
+											 'content' => $this->Template->getReplaceToken('sextype'),
+											 $type => $params);
+	}
 
-// birthday
-if ($isIndex && $isEditor) {
-	$columns[] = array('title' => __('Geburtstag'),
-										 'content' => $this->Template->getReplaceToken('birthday'));
-}
+	// birthday
+	if ($isIndex && $isEditor) {
+		$columns[] = array('title' => __('Geburtstag'),
+											 'content' => $this->Template->getReplaceToken('birthday'));
+	}
+
+	// sex and birthday
+	if ($isIndex && $isEditor) {
+		$params = array();
+		$params['width'] = 60;
+		$columns[] = array('title' => sprintf('%s<br />%s', __('Geschlecht'), __('Geburtstag')),
+											 'content' => sprintf('%s<br />%s',
+																						$this->Template->getReplaceToken('sextype'),
+																						$this->Template->getReplaceToken('birthday')),
+											 $type => $params);
+	}
 
 // dayofdeath
 if ($isIndex && $isEditor) {
@@ -215,7 +225,7 @@ if ($isIndex && $isEditor) {
 		$params = array();
 		$params['width'] = 85;
 		$columns[] = array('title' => __('Anmerkung'),
-											 'content' => sprintf('%s %s %s',
+											 'content' => sprintf('%s %s intern: %s',
 																						$this->Template->getReplaceToken('remark'),
 																						$this->Template->getReplaceToken(sprintf('refereestatus_%s_remark', $season['id'])),
 																						$this->Template->getReplaceToken('internal_remark')),

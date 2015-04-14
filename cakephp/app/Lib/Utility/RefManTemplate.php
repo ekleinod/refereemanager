@@ -137,6 +137,8 @@ class RefManTemplate {
 																				 (empty($person['Person']['first_name'])) ? '' : $person['Person']['first_name']);
 		$txtReturn = RefManTemplate::replace($txtReturn, 'name_title',
 																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'name_title'));
+		$txtReturn = RefManTemplate::replace($txtReturn, 'tablename',
+																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'tablename'));
 
 		// dates
 		$txtReturn = RefManTemplate::replace($txtReturn, 'birthday',
