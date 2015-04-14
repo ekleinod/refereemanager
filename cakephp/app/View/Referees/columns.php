@@ -19,7 +19,15 @@ $columns = array();
 if ($isIndex &&
 		$isReferee) {
 	$columns[] = array('title' => __('Bild'),
-										 'content' => __('Bild von %s', $this->Template->getReplaceToken('fullname')));
+										 'content' => sprintf('%s%s',
+																					$this->Template->getEmptyToken('picture_url', ''),
+																					$this->Template->getNotEmptyToken('picture_url',
+																																						$this->Html->link($this->Html->image($this->Template->getReplaceToken('picture_url'),
+																																																								 array('width' => '50',
+																																																											 'alt' => __('Bild von %s.', $this->Template->getReplaceToken('fullname')),
+																																																											 'title' => $this->Template->getReplaceToken('fullname'))),
+																																															$this->Template->getReplaceToken('picture_url'),
+																																															array('escape' => false)))));
 }
 
 // name

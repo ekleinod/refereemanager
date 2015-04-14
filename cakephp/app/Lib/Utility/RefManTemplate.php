@@ -39,6 +39,19 @@ class RefManTemplate {
 	}
 
 	/**
+	 * Returns general token.
+	 *
+	 * @param $text text
+	 * @return token with text
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function getToken($text) {
+		return sprintf('**%s**', $text);
+	}
+
+	/**
 	 * Returns replace token.
 	 *
 	 * @param $id id
@@ -48,7 +61,50 @@ class RefManTemplate {
 	 * @since 0.3
 	 */
 	public static function getReplaceToken($id) {
-		return sprintf('**generated %s**', $id);
+		return RefManTemplate::getToken(sprintf('generated %s', $id));
+	}
+
+	/**
+	 * Returns if token.
+	 *
+	 * @param $condition condition
+	 * @param $id id
+	 * @param $text text
+	 * @return if token
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function getIfToken($condition, $id, $text) {
+		return sprintf('%s%s%s', RefManTemplate::getToken(sprintf('if%s %s', $condition, $id)), $text, RefManTemplate::getToken(sprintf('end%s %s', $condition, $id)));
+	}
+
+	/**
+	 * Returns empty token.
+	 *
+	 * @param $id id
+	 * @param $text empty text
+	 * @return empty token
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function getEmptyToken($id, $text) {
+		return RefManTemplate::getIfToken('empty', $id, $text);
+	}
+
+	/**
+	 * Returns empty token.
+	 *
+	 * @param $id id
+	 * @param $text not empty text
+	 * @return not empty token
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function getNotEmptyToken($id, $text) {
+		return RefManTemplate::getIfToken('notempty', $id, $text);
 	}
 
 	/**
@@ -63,7 +119,31 @@ class RefManTemplate {
 	 * @since 0.3
 	 */
 	public static function replace($text, $token, $value) {
-		return str_replace(RefManTemplate::getReplaceToken($token), $value, $text);
+
+		$txtReturn = $text;
+
+		// resolve conditions
+		$conditions = array();
+		$conditions['empty'] = sprintf('/%s/', str_replace('(.\*)', '(.*)', str_replace('*', '\*', RefManTemplate::getIfToken('empty', $token, '(.*)'))));
+		$conditions['notempty'] = sprintf('/%s/', str_replace('(.\*)', '(.*)', str_replace('*', '\*', RefManTemplate::getIfToken('notempty', $token, '(.*)'))));
+
+		$replacements = array();
+		if (empty($value)) {
+			$replacements['empty'] = '$1';
+			$replacements['notempty'] = '';
+		} else {
+			$replacements['empty'] = '';
+			$replacements['notempty'] = '$1';
+		}
+
+		ksort($conditions);
+		ksort($replacements);
+		$txtReturn = preg_replace($conditions, $replacements, $txtReturn);
+
+		// replace token with value
+		$txtReturn = str_replace(RefManTemplate::getReplaceToken($token), $value, $txtReturn);
+
+		return $txtReturn;
 	}
 
 	/**
@@ -159,6 +239,8 @@ class RefManTemplate {
 		// other
 		$txtReturn = RefManTemplate::replace($txtReturn, 'sextype',
 																				 (empty($person['SexType']['title'])) ? '' : $person['SexType']['title']);
+		$txtReturn = RefManTemplate::replace($txtReturn, 'picture_url',
+																				 (empty($person['Picture']['url'])) ? '' : $person['Picture']['url']);
 		$txtReturn = RefManTemplate::replace($txtReturn, 'remark',
 																				 (empty($person['Person']['remark'])) ? '' : $person['Person']['remark']);
 		$txtReturn = RefManTemplate::replace($txtReturn, 'internal_remark',

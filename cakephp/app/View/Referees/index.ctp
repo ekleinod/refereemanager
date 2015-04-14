@@ -80,14 +80,6 @@
 							foreach ($columns as $column) {
 								$refLine .= getTD($column['title'], $tmpFormat, $column['content']);
 							}
-/*
-							$tmpDataID = 'picture';
-							if (array_key_exists($tmpDataID, $columns)) {
-								$refLine .= getTD($columns[$tmpDataID]['title'], $tmpFormat, (empty($person['Picture']['url'])) ? '' :
-																	$this->Html->link($this->Html->image($person['Picture']['url'], array('width' => '50', 'alt' => __('Bild von **generated fullname**.'), 'title' => $this->Template->getReplaceToken('fullname'))), $person['Picture']['url'], array('escape' => false)));
-							}
-
-*/
 
 							$refLine .= getTD(__('Aktionen'), '', $this->element('actions_table', array('id' => $person['Person']['id'])), $tmpDataID);
 
