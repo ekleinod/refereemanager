@@ -446,15 +446,15 @@
 
 */
 			if ($type === 'pdf') {
-				$tcpdf->writeHTML($tcpdf->getTable($pdf_header, $pdf_data), true, false, true, false, '');
-				$tcpdf->writeHTML(sprintf('<p style="font-size: %spt; font-weight: bold;">%s</p>', PDF_FONT_SIZE_MAIN, __('Legende')), true, false, true, false, '');
-/*				foreach ($statustypes as $stleg) {
+				$tcpdf->WriteHTML($tcpdf->getTable($pdf_header, $pdf_data), true, false, true, false, '');
+				$tcpdf->WriteHTML(sprintf('<p style="font-size: %spt; font-weight: bold;">%s</p>', PDF_FONT_SIZE_MAIN, __('Legende')), true, false, true, false, '');
+				foreach ($statustypes as $statustype) {
 					$tcpdf->WriteHTML(sprintf('<p style="font-size: %spt; %s">%s</p>',
 																		PDF_FONT_SIZE_DATA,
-																		$stleg['htmlstyle'],
-																		($stleg['remark']) ? h($stleg['remark']) : h($stleg['title'])),
+																		$statustype['outputstyle']['html'],
+																		($statustype['StatusType']['remark']) ? h($statustype['StatusType']['remark']) : h($statustype['StatusType']['title'])),
 														true, false, true, false, '');
-				}*/
+				}
 			}
 
 		}

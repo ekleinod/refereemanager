@@ -164,7 +164,7 @@ if ($isIndex && $isReferee) {
 	}
 
 	// sex and birthday
-	if ($isIndex && $isEditor) {
+	if ($isPDFExport && $isEditor) {
 		$params = array();
 		$params['width'] = 60;
 		$columns[] = array('title' => sprintf('%s<br />%s', __('Geschlecht'), __('Geburtstag')),
