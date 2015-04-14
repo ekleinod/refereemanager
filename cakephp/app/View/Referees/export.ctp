@@ -94,62 +94,6 @@
 					$pdf_header[] = array('text' => $column['title'], 'width' => $column[$type]['width']);
 				}
 /*
-				$sid1 = RefereeRelationType::SID_MEMBER;
-				$sid2 = RefereeRelationType::SID_REFFOR;
-				if (array_key_exists($sid1, $refereerelationtypes) || array_key_exists($sid2, $refereerelationtypes)) {
-					$relout = '';
-					if (array_key_exists($sid1, $refereerelationtypes)) {
-						$relout = __($allrefereerelationtypes[$sid1]['title']);
-						if (array_key_exists($sid2, $refereerelationtypes)) {
-							$relout .= sprintf('<br /><em>%s</em>', __($allrefereerelationtypes[$sid2]['title']));
-						}
-					} else {
-						$relout = __($allrefereerelationtypes[$sid2]['title']);
-					}
-
-					$width = 200;
-					if ($isReferee) {
-						$width = 170;
-					}
-					if ($isEditor) {
-						$width = 110;
-					}
-					$pdf_header[] = array('text' => $relout, 'width' => $width);
-				}
-				if ($isEditor) {
-					$sid1 = RefereeRelationType::SID_PREFER;
-					$sid2 = RefereeRelationType::SID_NOASSIGNMENT;
-					if (array_key_exists($sid1, $refereerelationtypes) || array_key_exists($sid2, $refereerelationtypes)) {
-						$relout = '';
-						if (array_key_exists($sid1, $refereerelationtypes)) {
-							$relout = __($allrefereerelationtypes[$sid1]['title']);
-							if (array_key_exists($sid2, $refereerelationtypes)) {
-								$relout .= '<br />' . __($allrefereerelationtypes[$sid2]['title']);
-							}
-						} else {
-							$relout = __($allrefereerelationtypes[$sid2]['title']);
-						}
-
-						$width = 110;
-						$pdf_header[] = array('text' => $relout, 'width' => $width);
-					}
-				}
-
-				if ($isReferee) {
-					$width = 180;
-					if ($isEditor) {
-						$width = 150;
-					}
-					$pdf_header[] = array('text' => __('Kontakt'), 'width' => $width);
-				}
-
-				if ($isEditor) {
-					$width = 90;
-					$pdf_header[] = array('text' => __('Adresse'), 'width' => $width);
-					$width = 60;
-					$pdf_header[] = array('text' => __('Geschlecht<br />Geburtstag'), 'width' => $width);
-				}
-
 				$width = 50;
 				$pdf_header[] = array('text' => __('Ausbildung'), 'width' => $width);
 
@@ -601,7 +545,7 @@
 
 			if ($type === 'pdf') {
 				$tcpdf->writeHTML($tcpdf->getTable($pdf_header, $pdf_data), true, false, true, false, '');
-				$tcpdf->WriteHTML(sprintf('<p style="font-size: %spt; font-weight: bold;">%s</p>', PDF_FONT_SIZE_MAIN, __('Legende')), true, false, true, false, '');
+				$tcpdf->writeHTML(sprintf('<p style="font-size: %spt; font-weight: bold;">%s</p>', PDF_FONT_SIZE_MAIN, __('Legende')), true, false, true, false, '');
 /*				foreach ($statustypes as $stleg) {
 					$tcpdf->WriteHTML(sprintf('<p style="font-size: %spt; %s">%s</p>',
 																		PDF_FONT_SIZE_DATA,
