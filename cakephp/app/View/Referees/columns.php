@@ -84,9 +84,9 @@ if ($isIndex &&
 		$columns[] = array('title' => sprintf('%s<br /><em>%s</em>',
 																					__($refereerelationtypes[RefereeRelationType::SID_MEMBER]['title']),
 																					__($refereerelationtypes[RefereeRelationType::SID_REFFOR]['title'])),
-											 'content' => sprintf('%s<br /><em>%s</em>',
+											 'content' => sprintf('%s%s',
 																						$this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_MEMBER)),
-																						$this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_REFFOR))),
+																						$this->Template->getNotEmptyToken(sprintf('referee_relation_%s', RefereeRelationType::SID_REFFOR), sprintf('<br /><em>%s</em>', $this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_REFFOR))))),
 											 $type => $params);
 
 		// prefer and noassignment
@@ -94,9 +94,9 @@ if ($isIndex &&
 			$columns[] = array('title' => sprintf('%s<br /><em>%s</em>',
 																						__($refereerelationtypes[RefereeRelationType::SID_PREFER]['title']),
 																						__($refereerelationtypes[RefereeRelationType::SID_NOASSIGNMENT]['title'])),
-												 'content' => sprintf('%s<br /><em>%s</em>',
+												 'content' => sprintf('%s%s',
 																							$this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_PREFER)),
-																							$this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_NOASSIGNMENT))),
+																							$this->Template->getNotEmptyToken(sprintf('referee_relation_%s', RefereeRelationType::SID_NOASSIGNMENT), sprintf('<br /><em>%s</em>', $this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_NOASSIGNMENT))))),
 												 $type => $params);
 
 			// other (should not be reached)
@@ -135,9 +135,10 @@ if ($isIndex &&
 
 		// email and phone
 		$columns[] = array('title' => __('Kontakt'),
-											 'content' => sprintf('%s<br />%s',
+											 'content' => sprintf('%s%s',
 																						$this->Template->getReplaceToken('emails'),
-																						$this->Template->getReplaceToken('phone_numbers_national')),
+																						$this->Template->getNotEmptyToken('phone_numbers_national',
+																																							sprintf('<br />%s', $this->Template->getReplaceToken('phone_numbers_national')))),
 											 $type => $params);
 	}
 
@@ -176,9 +177,10 @@ if ($isIndex && $isReferee) {
 		$params = array();
 		$params['width'] = 60;
 		$columns[] = array('title' => sprintf('%s<br />%s', __('Geschlecht'), __('Geburtstag')),
-											 'content' => sprintf('%s<br />%s',
+											 'content' => sprintf('%s%s',
 																						$this->Template->getReplaceToken('sextype'),
-																						$this->Template->getReplaceToken('birthday')),
+																						$this->Template->getNotEmptyToken('birthday',
+																																							sprintf('<br />%s', $this->Template->getReplaceToken('birthday')))),
 											 $type => $params);
 	}
 
@@ -233,10 +235,13 @@ if ($isIndex && $isEditor) {
 		$params = array();
 		$params['width'] = 85;
 		$columns[] = array('title' => __('Anmerkung'),
-											 'content' => sprintf('%s %s intern: %s',
-																						$this->Template->getReplaceToken('remark'),
-																						$this->Template->getReplaceToken(sprintf('refereestatus_%s_remark', $season['id'])),
-																						$this->Template->getReplaceToken('internal_remark')),
+											 'content' => sprintf('%s%s%s',
+																						$this->Template->getNotEmptyToken('remark',
+																																							sprintf('%s ', $this->Template->getReplaceToken('remark'))),
+																						$this->Template->getNotEmptyToken(sprintf('refereestatus_%s_remark', $season['id']),
+																																							sprintf('%s ', $this->Template->getReplaceToken(sprintf('refereestatus_%s_remark', $season['id'])))),
+																						$this->Template->getNotEmptyToken('internal_remark',
+																																							sprintf('intern: %s', $this->Template->getReplaceToken('internal_remark')))),
 											 $type => $params);
 
 }
