@@ -1,76 +1,55 @@
 <?php
 
 // column definitions.
-
-$isExport = isset($type);
-$isIndex = !$isExport;
-$isExcelExport = $isExport && ($type === 'excel');
-$isPDFExport = $isExport && ($type === 'pdf');
-$isZipExport = $isExport && ($type === 'referee_view_zip');
-
-
-if (!isset($type)) {
-	$type = 'none';
-}
-
 $columns = array();
 
 // image
-if ($isIndex &&
-		$isReferee) {
-	$columns[] = array('title' => __('Bild'),
-										 'content' => sprintf('%s%s',
-																					$this->Template->getEmptyToken('picture_url', ''),
-																					$this->Template->getNotEmptyToken('picture_url',
-																																						$this->Html->link($this->Html->image($this->Template->getReplaceToken('picture_url'),
-																																																								 array('width' => '50',
-																																																											 'alt' => __('Bild von %s.', $this->Template->getReplaceToken('fullname')),
-																																																											 'title' => $this->Template->getReplaceToken('fullname'))),
-																																															$this->Template->getReplaceToken('picture_url'),
-																																															array('escape' => false)))));
+if ($isReferee) {
+	$columns['index'][] = array('title' => __('Bild'),
+														 'content' => sprintf('%s%s',
+																									$this->Template->getEmptyToken('picture_url', ''),
+																									$this->Template->getNotEmptyToken('picture_url',
+																																										 $this->Html->link($this->Html->image($this->Template->getReplaceToken('picture_url'),
+																																																													 array('width' => '50',
+																																																																	 'alt' => __('Bild von %s.', $this->Template->getReplaceToken('fullname')),
+																																																																	 'title' => $this->Template->getReplaceToken('fullname'))),
+																																																				$this->Template->getReplaceToken('picture_url'),
+																																																				array('escape' => false)))));
 }
 
 // name
 	// name
-	if ($isIndex || $isExcelExport) {
-		$columns[] = array('title' => __('Name'),
-											 'content' => $this->Template->getReplaceToken('name_title'));
-	}
+	$columns['index'][] = array('title' => __('Name'),
+														 'content' => $this->Template->getReplaceToken('name_title'));
 
 	// first name
-	if ($isIndex || $isExcelExport) {
-		$columns[] = array('title' => __('Vorname'),
-											 'content' => $this->Template->getReplaceToken('first_name'));
-	}
+	$columns['index'][] = array('title' => __('Vorname'),
+														 'content' => $this->Template->getReplaceToken('first_name'));
 
 	// table name
-	if ($isPDFExport) {
-		$params = array();
-		$params['width'] = 120;
-		if ($isReferee) {
-			$params['width'] = 110;
-		}
-		if ($isEditor) {
-			$params['width'] = 100;
-		}
-		$columns[] = array('title' => __('Name'),
-											 'content' => $this->Template->getReplaceToken('tablename'),
-											 $type => $params);
+	$params = array();
+	$params['width'] = 120;
+	if ($isReferee) {
+		$params['width'] = 110;
 	}
+	if ($isEditor) {
+		$params['width'] = 100;
+	}
+	$columns['pdf'][] = array('title' => __('Name'),
+														'content' => $this->Template->getReplaceToken('tablename'),
+														'pdf' => $params);
 
 // relations
 	// relations
-	if ($isIndex && $isRefView) {
+	if ($isRefView) {
 		foreach ($refereerelationtypes as $sid => $refereerelationtype) {
 			if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-				$columns[] = array('title' => __($refereerelationtype['title']),
-													 'content' => $this->Template->getReplaceToken(sprintf('referee_relation_%s', $sid)));
+				$columns['index'][] = array('title' => __($refereerelationtype['title']),
+																	 'content' => $this->Template->getReplaceToken(sprintf('referee_relation_%s', $sid)));
 			}
 		}
-	}
 
-	// combined relations
-	if ($isPDFExport && $isRefView) {
+		// combined relations
 		$params = array();
 		$params['width'] = 200;
 		if ($isReferee) {
@@ -81,23 +60,23 @@ if ($isIndex &&
 		}
 
 		// member and reffor
-		$columns[] = array('title' => sprintf('%s<br /><em>%s</em>',
-																					__($refereerelationtypes[RefereeRelationType::SID_MEMBER]['title']),
-																					__($refereerelationtypes[RefereeRelationType::SID_REFFOR]['title'])),
-											 'content' => sprintf('%s%s',
-																						$this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_MEMBER)),
-																						$this->Template->getNotEmptyToken(sprintf('referee_relation_%s', RefereeRelationType::SID_REFFOR), sprintf('<br /><em>%s</em>', $this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_REFFOR))))),
-											 $type => $params);
+		$columns['pdf'][] = array('title' => sprintf('%s<br /><em>%s</em>',
+																								 __($refereerelationtypes[RefereeRelationType::SID_MEMBER]['title']),
+																								 __($refereerelationtypes[RefereeRelationType::SID_REFFOR]['title'])),
+															'content' => sprintf('%s%s',
+																									 $this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_MEMBER)),
+																									 $this->Template->getNotEmptyToken(sprintf('referee_relation_%s', RefereeRelationType::SID_REFFOR), sprintf('<br /><em>%s</em>', $this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_REFFOR))))),
+															'pdf' => $params);
 
 		// prefer and noassignment
 		if ($isEditor) {
-			$columns[] = array('title' => sprintf('%s<br /><em>%s</em>',
-																						__($refereerelationtypes[RefereeRelationType::SID_PREFER]['title']),
-																						__($refereerelationtypes[RefereeRelationType::SID_NOASSIGNMENT]['title'])),
-												 'content' => sprintf('%s%s',
-																							$this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_PREFER)),
-																							$this->Template->getNotEmptyToken(sprintf('referee_relation_%s', RefereeRelationType::SID_NOASSIGNMENT), sprintf('<br /><em>%s</em>', $this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_NOASSIGNMENT))))),
-												 $type => $params);
+			$columns['pdf'][] = array('title' => sprintf('%s<br /><em>%s</em>',
+																									 __($refereerelationtypes[RefereeRelationType::SID_PREFER]['title']),
+																									 __($refereerelationtypes[RefereeRelationType::SID_NOASSIGNMENT]['title'])),
+																'content' => sprintf('%s%s',
+																										 $this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_PREFER)),
+																										 $this->Template->getNotEmptyToken(sprintf('referee_relation_%s', RefereeRelationType::SID_NOASSIGNMENT), sprintf('<br /><em>%s</em>', $this->Template->getReplaceToken(sprintf('referee_relation_%s', RefereeRelationType::SID_NOASSIGNMENT))))),
+																'pdf' => $params);
 
 			// other (should not be reached)
 			foreach ($refereerelationtypes as $sid => $refereerelationtype) {
@@ -105,8 +84,9 @@ if ($isIndex &&
 						($sid != RefereeRelationType::SID_REFFOR) &&
 						($sid != RefereeRelationType::SID_PREFER) &&
 						($sid != RefereeRelationType::SID_NOASSIGNMENT)) {
-					$columns[] = array('title' => __($refereerelationtype['title']),
-														 'content' => $this->Template->getReplaceToken(sprintf('referee_relation_%s', $sid)));
+					$columns['pdf'][] = array('title' => __($refereerelationtype['title']),
+																		'content' => $this->Template->getReplaceToken(sprintf('referee_relation_%s', $sid)),
+																		'pdf' => $params);
 				}
 			}
 		}
@@ -114,19 +94,19 @@ if ($isIndex &&
 
 // contact
 	// email
-	if ($isIndex && $isReferee) {
-		$columns[] = array('title' => __('E-Mail'),
-											 'content' => $this->Template->getReplaceToken('emails'));
+	if ($isReferee) {
+		$columns['index'][] = array('title' => __('E-Mail'),
+															 'content' => $this->Template->getReplaceToken('emails'));
 	}
 
 	// phone
-	if ($isIndex && $isReferee) {
-		$columns[] = array('title' => __('Telefon'),
-											 'content' => $this->Template->getReplaceToken('phone_numbers_national'));
+	if ($isReferee) {
+		$columns['index'][] = array('title' => __('Telefon'),
+															 'content' => $this->Template->getReplaceToken('phone_numbers_national'));
 	}
 
 	// combined contact
-	if ($isPDFExport && $isReferee) {
+	if ($isReferee) {
 		$params = array();
 		$params['width'] = 180;
 		if ($isEditor) {
@@ -134,12 +114,12 @@ if ($isIndex &&
 		}
 
 		// email and phone
-		$columns[] = array('title' => __('Kontakt'),
-											 'content' => sprintf('%s%s',
-																						$this->Template->getReplaceToken('emails'),
-																						$this->Template->getNotEmptyToken('phone_numbers_national',
-																																							sprintf('<br />%s', $this->Template->getReplaceToken('phone_numbers_national')))),
-											 $type => $params);
+		$columns['pdf'][] = array('title' => __('Kontakt'),
+															'content' => sprintf('%s%s',
+																									 $this->Template->getReplaceToken('emails'),
+																									 $this->Template->getNotEmptyToken('phone_numbers_national',
+																																										 sprintf('<br />%s', $this->Template->getReplaceToken('phone_numbers_national')))),
+															'pdf' => $params);
 	}
 
 
@@ -147,102 +127,103 @@ if ($isIndex &&
 if ($isEditor) {
 	$params = array();
 	$params['width'] = 90;
-	$columns[] = array('title' => __('Adresse'),
-										 'content' => $this->Template->getReplaceToken('addresses_fulladdress'),
-										 $type => $params);
+	$columns['index'][] =
+			$columns['pdf'][] = array('title' => __('Adresse'),
+																'content' => $this->Template->getReplaceToken('addresses_fulladdress'),
+																'pdf' => $params);
 }
 
 // url
-if ($isIndex && $isReferee) {
-	$columns[] = array('title' => __('URL'),
-										 'content' => $this->Template->getReplaceToken('urls'));
+if ($isReferee) {
+	$columns['index'][] = array('title' => __('URL'),
+														 'content' => $this->Template->getReplaceToken('urls'));
 }
 
 // sex and birthday
 	// sex type
-	if ($isIndex && $isEditor) {
-		$columns[] = array('title' => __('Geschlecht'),
-											 'content' => $this->Template->getReplaceToken('sextype'),
-											 $type => $params);
+	if ($isEditor) {
+		$columns['index'][] = array('title' => __('Geschlecht'),
+															 'content' => $this->Template->getReplaceToken('sextype'));
 	}
 
 	// birthday
-	if ($isIndex && $isEditor) {
-		$columns[] = array('title' => __('Geburtstag'),
-											 'content' => $this->Template->getReplaceToken('birthday'));
+	if ($isEditor) {
+		$columns['index'][] = array('title' => __('Geburtstag'),
+															 'content' => $this->Template->getReplaceToken('birthday'));
 	}
 
 	// sex and birthday
-	if ($isPDFExport && $isEditor) {
+	if ($isEditor) {
 		$params = array();
 		$params['width'] = 60;
-		$columns[] = array('title' => sprintf('%s<br />%s', __('Geschlecht'), __('Geburtstag')),
-											 'content' => sprintf('%s%s',
-																						$this->Template->getReplaceToken('sextype'),
-																						$this->Template->getNotEmptyToken('birthday',
-																																							sprintf('<br />%s', $this->Template->getReplaceToken('birthday')))),
-											 $type => $params);
+		$columns['pdf'][] = array('title' => sprintf('%s<br />%s', __('Geschlecht'), __('Geburtstag')),
+															'content' => sprintf('%s%s',
+																									 $this->Template->getReplaceToken('sextype'),
+																									 $this->Template->getNotEmptyToken('birthday',
+																																										 sprintf('<br />%s', $this->Template->getReplaceToken('birthday')))),
+															'pdf' => $params);
 	}
 
 // dayofdeath
-if ($isIndex && $isEditor) {
-	$columns[] = array('title' => __('Todestag'),
-										 'content' => $this->Template->getReplaceToken('dayofdeath'));
+if ($isEditor) {
+	$columns['index'][] = array('title' => __('Todestag'),
+														 'content' => $this->Template->getReplaceToken('dayofdeath'));
 }
 
 // training level
 if ($isRefView) {
 	$params = array();
 	$params['width'] = 50;
-	$columns[] = array('title' => __('Ausbildung'),
-										 'content' => $this->Template->getReplaceToken('traininglevel'),
-										 $type => $params);
+	$columns['index'][] =
+			$columns['pdf'][] = array('title' => __('Ausbildung'),
+																'content' => $this->Template->getReplaceToken('traininglevel'),
+																'pdf' => $params);
 }
 
 // traininglevelsince
-if ($isIndex && $isEditor) {
-	$columns[] = array('title' => __('Letzte Ausbildung'),
-										 'content' => $this->Template->getReplaceToken('traininglevelsince'));
+if ($isEditor) {
+	$columns['index'][] = array('title' => __('Letzte Ausbildung'),
+														 'content' => $this->Template->getReplaceToken('traininglevelsince'));
 }
 
 // lasttrainingupdate
-if ($isIndex && $isEditor) {
-	$columns[] = array('title' => __('Letzte Fortbildung'),
-										 'content' => $this->Template->getReplaceToken('lasttrainingupdate'));
+if ($isEditor) {
+	$columns['index'][] = array('title' => __('Letzte Fortbildung'),
+														 'content' => $this->Template->getReplaceToken('lasttrainingupdate'));
 }
 
 // nexttrainingupdate
-if ($isIndex && $isEditor) {
-	$columns[] = array('title' => __('Nächste Fortbildung'),
-										 'content' => $this->Template->getReplaceToken('nexttrainingupdate'));
+if ($isEditor) {
+	$columns['index'][] = array('title' => __('Nächste Fortbildung'),
+														 'content' => $this->Template->getReplaceToken('nexttrainingupdate'));
 }
 
 // remarks
 	// remark
-	if ($isIndex && $isEditor) {
-		$columns[] = array('title' => __('Anmerkung'),
-											 'content' => sprintf('%s %s', $this->Template->getReplaceToken('remark'), $this->Template->getReplaceToken(sprintf('refereestatus_%s_remark', $season['id']))));
+	if ($isEditor) {
+		$columns['index'][] = array('title' => __('Anmerkung'),
+															 'content' => sprintf('%s %s', $this->Template->getReplaceToken('remark'), $this->Template->getReplaceToken(sprintf('refereestatus_%s_remark', $season['id']))));
 	}
 
 	// internal_remark
-	if ($isIndex && $isEditor) {
-		$columns[] = array('title' => __('Interne Anmerkung'),
-											 'content' => $this->Template->getReplaceToken('internal_remark'));
+	if ($isEditor) {
+		$columns['index'][] = array('title' => __('Interne Anmerkung'),
+															 'content' => $this->Template->getReplaceToken('internal_remark'));
 	}
 
 	// combined remark
-	if ($isPDFExport && $isEditor) {
+	if ($isEditor) {
 		$params = array();
 		$params['width'] = 85;
-		$columns[] = array('title' => __('Anmerkung'),
-											 'content' => sprintf('%s%s%s',
-																						$this->Template->getNotEmptyToken('remark',
+		$columns['pdf'][] = array('title' => __('Anmerkung'),
+															'content' => sprintf('%s%s%s',
+																									 $this->Template->getNotEmptyToken('remark',
 																																							sprintf('%s ', $this->Template->getReplaceToken('remark'))),
-																						$this->Template->getNotEmptyToken(sprintf('refereestatus_%s_remark', $season['id']),
+																									 $this->Template->getNotEmptyToken(sprintf('refereestatus_%s_remark', $season['id']),
 																																							sprintf('%s ', $this->Template->getReplaceToken(sprintf('refereestatus_%s_remark', $season['id'])))),
-																						$this->Template->getNotEmptyToken('internal_remark',
+																									 $this->Template->getNotEmptyToken('internal_remark',
 																																							sprintf('intern: %s', $this->Template->getReplaceToken('internal_remark')))),
-											 $type => $params);
+															'pdf' => $params);
 
 }
 

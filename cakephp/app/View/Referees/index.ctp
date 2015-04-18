@@ -54,7 +54,7 @@
 
 			foreach ($table as $tabletag) {
 				echo sprintf('<%s><tr>', $tabletag);
-				foreach ($columns as $column) {
+				foreach ($columns['index'] as $column) {
 					echo sprintf('<th>%s</th>', $column['title']);
 				}
 				echo sprintf('<th>%s</th>', __('Aktionen'));
@@ -77,7 +77,7 @@
 					<tr>
 						<?php
 
-							foreach ($columns as $column) {
+							foreach ($columns['index'] as $column) {
 								$refLine .= getTD($column['title'], $tmpFormat, $column['content']);
 							}
 

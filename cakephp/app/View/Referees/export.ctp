@@ -90,7 +90,7 @@
 			if ($type === 'pdf') {
 				$pdf_header = array();
 
-				foreach ($columns as $column) {
+				foreach ($columns['pdf'] as $column) {
 					$pdf_header[] = array('text' => $column['title'], 'width' => $column[$type]['width']);
 				}
 
@@ -127,7 +127,7 @@
 				}
 */
 				if ($type === 'pdf') {
-					foreach ($columns as $column) {
+					foreach ($columns['pdf'] as $column) {
 						$datarow[] = array('text' => $this->Template->replaceRefereeData($column['content'], $person, 'text', 'html'));
 					}
 				}
