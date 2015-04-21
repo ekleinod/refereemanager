@@ -12,19 +12,19 @@
 			$this->PHPExcel->createWorksheet(null, 11, PHPExcel_Style_Alignment::VERTICAL_TOP, PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
 			// meta information
-			$this->PHPExcel->addTableRow(array('text' => array(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))), array('font-weight' => 'normal', 'font-size' => 14));
+			$this->PHPExcel->addTableRow(array('text' => array(__('Verbandsschiedsrichter_innen BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))), array('font-weight' => 'normal', 'font-size' => 14));
 			$this->PHPExcel->addTableRow(array());
 
 			$this->PHPExcel->getXLS()->getProperties()
 					->setCreator(__('RefereeManager'))
 					->setLastModifiedBy(__('RefereeManager'))
-					->setTitle(__('Verbandsschiedsrichter des BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))
-					->setSubject(__('Verbandsschiedsrichter des BTTV'))
-					->setDescription(__('Übersicht der Verbandsschiedsrichter, exportiert aus dem RefereeManager'))
-					->setKeywords(__('Verbandsschiedsrichter BTTV %s', $season['title_season']))
+					->setTitle(__('Verbandsschiedsrichter_innen des BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))
+					->setSubject(__('Verbandsschiedsrichter_innen des BTTV'))
+					->setDescription(__('Übersicht der Verbandsschiedsrichter_innen, exportiert aus dem RefereeManager'))
+					->setKeywords(__('Verbandsschiedsrichter_innen BTTV %s', $season['title_season']))
 					->setCategory(__('Schiedsrichterliste'));
 
-			$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
+			//$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
 		}
 
 		$nbrtoken = '`%s`';
@@ -75,7 +75,7 @@
 
 		}
 
-		if (empty($people)) {
+		if (!empty($people)) {
 			if ($type === 'excel') {
 				$this->PHPExcel->addTableTexts(__('Es sind keine Schiedsrichter_innen gespeichert.'));
 			}
@@ -459,11 +459,11 @@
 
 		}
 
-/*
 		if ($type === 'excel') {
 			$this->PHPExcel->output('VSR.xlsx');
 		}
 
+/*
 		if ($type === 'referee_view_zip') {
 			$latexallrefs = str_replace(sprintf($tpltoken, 'includepdf'), '', $latexallrefs);
 			$zip->addFromString(Configure::read('RefMan.template.referee_view_all'), $latexallrefs);
