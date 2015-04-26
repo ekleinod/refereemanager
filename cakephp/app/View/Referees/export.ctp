@@ -24,7 +24,39 @@
 					->setKeywords(__('Verbandsschiedsrichter_innen BTTV %s', $season['title_season']))
 					->setCategory(__('Schiedsrichterliste'));
 
-			//$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
+			// header
+			foreach ($columns[$type] as $column) {
+				$header[] = array('text' => $column['title'], 'width' => $column[$type]['width']);
+			}
+					/*
+		$header = array();
+			$header[] = array('text' => __('Name'), 'width' => '15');
+			$header[] = array('text' => __('Vorname'));
+			foreach ($allrefereerelationtypes as $sid => $refereerelationtype) {
+				if (array_key_exists($sid, $refereerelationtypes) && (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor)) {
+					$header[] = array('text' => __($refereerelationtype['title']));
+				}
+			}
+			if ($isReferee) {
+				$header[] = array('text' => __('E-Mail'));
+				$header[] = array('text' => __('Telefon'));
+			}
+			if ($isEditor) {
+				$header[] = array('text' => __('Adresse'));
+				$header[] = array('text' => __('Geschlecht'));
+				$header[] = array('text' => __('Geburtstag'));
+			}
+			$header[] = array('text' => __('Ausbildung'));
+			if ($isEditor) {
+				$header[] = array('text' => __('Letzte Ausbildung'));
+				$header[] = array('text' => __('Letzte Fortbildung'));
+				$header[] = array('text' => __('Nächste Fortbildung'));
+				$header[] = array('text' => __('Anmerkung'));
+				$header[] = array('text' => __('Interne Anmerkung'));
+			}*/
+
+
+			$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
 		}
 
 		$nbrtoken = '`%s`';
@@ -88,10 +120,10 @@
 		} else {
 
 			if ($type === 'pdf') {
-				$pdf_header = array();
+				$header = array();
 
-				foreach ($columns['pdf'] as $column) {
-					$pdf_header[] = array('text' => $column['title'], 'width' => $column[$type]['width']);
+				foreach ($columns[$type] as $column) {
+					$header[] = array('text' => $column['title'], 'width' => $column[$type]['width']);
 				}
 
 				$pdf_data = array();
@@ -127,7 +159,7 @@
 				}
 */
 				if ($type === 'pdf') {
-					foreach ($columns['pdf'] as $column) {
+					foreach ($columns[$type] as $column) {
 						$datarow[] = array('text' => $this->Template->replaceRefereeData($column['content'], $person, 'text', 'html'));
 					}
 				}
@@ -446,7 +478,7 @@
 
 */
 			if ($type === 'pdf') {
-				$tcpdf->WriteHTML($tcpdf->getTable($pdf_header, $pdf_data), true, false, true, false, '');
+				$tcpdf->WriteHTML($tcpdf->getTable($header, $pdf_data), true, false, true, false, '');
 				$tcpdf->WriteHTML(sprintf('<p style="font-size: %spt; font-weight: bold;">%s</p>', PDF_FONT_SIZE_MAIN, __('Legende')), true, false, true, false, '');
 				foreach ($statustypes as $statustype) {
 					$tcpdf->WriteHTML(sprintf('<p style="font-size: %spt; %s">%s</p>',
