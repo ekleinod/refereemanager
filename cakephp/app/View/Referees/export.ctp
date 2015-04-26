@@ -28,33 +28,6 @@
 			foreach ($columns[$type] as $column) {
 				$header[] = array('text' => $column['title'], 'width' => $column[$type]['width']);
 			}
-					/*
-		$header = array();
-			$header[] = array('text' => __('Name'), 'width' => '15');
-			$header[] = array('text' => __('Vorname'));
-			foreach ($allrefereerelationtypes as $sid => $refereerelationtype) {
-				if (array_key_exists($sid, $refereerelationtypes) && (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor)) {
-					$header[] = array('text' => __($refereerelationtype['title']));
-				}
-			}
-			if ($isReferee) {
-				$header[] = array('text' => __('E-Mail'));
-				$header[] = array('text' => __('Telefon'));
-			}
-			if ($isEditor) {
-				$header[] = array('text' => __('Adresse'));
-				$header[] = array('text' => __('Geschlecht'));
-				$header[] = array('text' => __('Geburtstag'));
-			}
-			$header[] = array('text' => __('Ausbildung'));
-			if ($isEditor) {
-				$header[] = array('text' => __('Letzte Ausbildung'));
-				$header[] = array('text' => __('Letzte Fortbildung'));
-				$header[] = array('text' => __('Nächste Fortbildung'));
-				$header[] = array('text' => __('Anmerkung'));
-				$header[] = array('text' => __('Interne Anmerkung'));
-			}*/
-
 
 			$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
 		}
