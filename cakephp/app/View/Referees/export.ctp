@@ -28,8 +28,6 @@
 			foreach ($columns[$type] as $column) {
 				$header[] = array('text' => $column['title'], 'width' => $column[$type]['width']);
 			}
-
-			$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
 		}
 
 		$nbrtoken = '`%s`';
@@ -91,6 +89,10 @@
 				$tcpdf->Write(0, __('Es sind keine Schiedsrichter_innen gespeichert.'));
 			}
 		} else {
+
+			if ($type === 'excel') {
+				$this->PHPExcel->addTableHeader($header, array('font-weight' => 'bold', 'font-size' => 10, 'width' => 'auto'), true);
+			}
 
 			if ($type === 'pdf') {
 				$header = array();

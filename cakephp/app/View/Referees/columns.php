@@ -253,7 +253,7 @@ if ($isEditor) {
 				$coldef[$key] = array();
 			}
 			if (!array_key_exists('width', $coldef[$key])) {
-				$coldef[$key]['width'] = '';
+				$coldef[$key]['width'] = ($key === 'excel') ? 'auto' : '';
 			}
 		}
 	}
