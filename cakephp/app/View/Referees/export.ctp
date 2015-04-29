@@ -78,7 +78,7 @@
 
 		}
 
-		if (!empty($people)) {
+		if (empty($people)) {
 			if ($type === 'excel') {
 				$this->PHPExcel->addTableTexts(__('Es sind keine Schiedsrichter_innen gespeichert.'));
 			}
@@ -133,6 +133,12 @@
 					$datarow[] = array('text' => $this->RefereeFormat->formatPerson($person['Person'], 'first_name'));
 				}
 */
+				if ($type === 'excel') {
+					foreach ($columns[$type] as $column) {
+						$datarow[] = array('text' => $this->Template->replaceRefereeData($column['content'], $person, 'text', 'html'));
+					}
+				}
+
 				if ($type === 'pdf') {
 					foreach ($columns[$type] as $column) {
 						$datarow[] = array('text' => $this->Template->replaceRefereeData($column['content'], $person, 'text', 'html'));
@@ -390,11 +396,12 @@
 
 				}
 
+*/
 				// finish row
 				if ($type === 'excel') {
-					$this->PHPExcel->addTableRow($datarow, $statustypes[$person['RefereeStatus']['sid']]['outputstyle']);
+					$this->PHPExcel->addTableRow($datarow, (($tmpStatusStyles === null) ? array() : $tmpStatusStyles['excel']));
 				}
-*/
+
 				if ($type === 'pdf') {
 					$pdf_data[] = array('data' => $datarow, 'style' => (($tmpStatusStyles === null) ? '' : $tmpStatusStyles['html']));
 				}
