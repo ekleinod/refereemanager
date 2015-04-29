@@ -423,42 +423,30 @@
 			}
 
 			// finish
-/*
 			if ($type === 'excel') {
 				// legend
 				$this->PHPExcel->addTableRow(array());
 				$this->PHPExcel->addTableRow(array('text' => array(__('Legende:'))), array('font-weight' => 'bold', 'font-size' => 10));
-				foreach ($statustypes as $statustype) {
-					if (($statustype['sid'] == StatusType::SID_MANY) ||
-							($statustype['sid'] == StatusType::SID_INACTIVESEASON) ||
-							($statustype['sid'] == StatusType::SID_OTHER)) {
-						$this->PHPExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), $statustype['outputstyle']);
-					}
+				foreach ($statustypes as $thestatustype) {
+					$this->PHPExcel->addTableRow(
+																			 array(array('text' => ($thestatustype['StatusType']['remark']) ? $thestatustype['StatusType']['remark'] : $thestatustype['StatusType']['title'])),
+																			 $thestatustype['outputstyle']['excel']);
 				}
 
 				$this->PHPExcel->addTableRow(array());
 				$this->PHPExcel->addTableRow(array('text' => array(__('Zusatzinformationen'))), array('font-weight' => 'bold', 'font-size' => 10));
-				foreach ($statustypes as $statustype) {
-					if (($statustype['sid'] == StatusType::SID_MANY) ||
-							($statustype['sid'] == StatusType::SID_INACTIVESEASON) ||
-							($statustype['sid'] == StatusType::SID_OTHER)) {
-						$this->PHPExcel->addTableRow(array(array('text' => ($statustype['remark']) ? $statustype['remark'] : $statustype['title'])), array('font-weight' => 'bold', 'font-size' => 10));
-
-						$hasMore = false;
-						$excel_text = '';
-						foreach ($statustype['referees'] as $person) {
-							if ($hasMore) {
-								$excel_text .= ', ';
-							}
-							$excel_text .= __($this->RefereeFormat->formatPerson($person, 'fullname'));
-							$hasMore = true;
-						}
-						$this->PHPExcel->addTableTexts($excel_text);
+				foreach ($statustypes as $outstatustype) {
+					$this->PHPExcel->addTableRow(
+																			 array(array('text' => ($outstatustype['StatusType']['remark']) ? $outstatustype['StatusType']['remark'] : $outstatustype['StatusType']['title'])),
+																			 array('font-weight' => 'bold', 'font-size' => 10));
+					$arrNames = array();
+					foreach ($outstatustype['referees'] as $referee) {
+						$arrNames[] = $this->RefereeFormat->formatPerson($referee, 'fullname');
 					}
+					$this->PHPExcel->addTableTexts($this->RefereeFormat->formatMultiline($arrNames, ', '));
 				}
 			}
 
-*/
 			if ($type === 'pdf') {
 				$tcpdf->WriteHTML($tcpdf->getTable($header, $pdf_data), true, false, true, false, '');
 				$tcpdf->WriteHTML(sprintf('<p style="font-size: %spt; font-weight: bold;">%s</p>', PDF_FONT_SIZE_MAIN, __('Legende')), true, false, true, false, '');
