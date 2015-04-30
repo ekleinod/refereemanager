@@ -135,7 +135,7 @@
 */
 				if ($type === 'excel') {
 					foreach ($columns[$type] as $column) {
-						$datarow[] = array('text' => $this->Template->replaceRefereeData($column['content'], $person, 'text', 'html'));
+						$datarow[] = array('text' => $this->Template->replaceRefereeData($column['content'], $person, 'text', 'text'));
 					}
 				}
 

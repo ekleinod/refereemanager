@@ -202,6 +202,9 @@ class RefManRefereeFormat {
 			case 'html':
 				$sSeparator = '<br />';
 				break;
+			case 'text':
+				$sSeparator = '\n';
+				break;
 		}
 
 		return RefManRefereeFormat::formatMultiline($sTextArray, $sSeparator);
@@ -367,6 +370,7 @@ class RefManRefereeFormat {
 		switch ($export) {
 
 			case 'html':
+			case 'text':
 				switch ($type) {
 					case 'international':
 						$sReturn .= __('+%s %s %s',
@@ -421,6 +425,11 @@ class RefManRefereeFormat {
 						$sReturn .= $data['Url']['url'];
 						break;
 				}
+				break;
+
+			case 'text':
+				$sReturn .= $data['Url']['url'];
+				break;
 
 		}
 
