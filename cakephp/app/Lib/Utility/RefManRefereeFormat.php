@@ -202,8 +202,8 @@ class RefManRefereeFormat {
 			case 'html':
 				$sSeparator = '<br />';
 				break;
-			case 'text':
-				$sSeparator = '\n';
+			case 'excel':
+				$sSeparator = "\n";
 				break;
 		}
 
@@ -250,6 +250,9 @@ class RefManRefereeFormat {
 					case 'html':
 						$sReturn .= sprintf(' <span style="font-size: smaller; font-style: italic;">(%s)</span>', $data['info']['remark']);
 						break;
+					case 'excel':
+						$sReturn .= sprintf(' (%s)', $data['info']['remark']);
+						break;
 				}
 			}
 
@@ -274,7 +277,7 @@ class RefManRefereeFormat {
 		switch ($export) {
 
 			case 'html':
-			case 'text':
+			case 'excel':
 				switch ($type) {
 					case 'fulladdress':
 						if (!empty($data['Address']['street'])) {
@@ -343,7 +346,7 @@ class RefManRefereeFormat {
 				}
 				break;
 
-			case 'text':
+			case 'excel':
 				$sReturn .= $data['Email']['email'];
 				break;
 
@@ -370,7 +373,7 @@ class RefManRefereeFormat {
 		switch ($export) {
 
 			case 'html':
-			case 'text':
+			case 'excel':
 				switch ($type) {
 					case 'international':
 						$sReturn .= __('+%s %s %s',
@@ -427,7 +430,7 @@ class RefManRefereeFormat {
 				}
 				break;
 
-			case 'text':
+			case 'excel':
 				$sReturn .= $data['Url']['url'];
 				break;
 
