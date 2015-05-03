@@ -163,6 +163,9 @@ class RefManTemplate {
 
 		$txtReturn = RefManTemplate::replacePersonData($txtReturn, $referee, $type, $export);
 
+		// id
+		$txtReturn = RefManTemplate::replace($txtReturn, 'referee_id', $referee['Referee']['id']);
+
 		// referee relation types
 		if (empty(RefManTemplate::$refereerelationtypes)) {
 			$model = ClassRegistry::init('RefereeRelationType');
@@ -177,7 +180,6 @@ class RefManTemplate {
 
 		// training
 		$traininglevel = RefManPeople::getTrainingLevel($referee);
-		//echo pr($traininglevel);
 		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel',
 																				 (empty($traininglevel) || empty($traininglevel['TrainingLevelType']['abbreviation'])) ? '' : $traininglevel['TrainingLevelType']['abbreviation']);
 		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevelsince',
@@ -211,6 +213,10 @@ class RefManTemplate {
 	public static function replacePersonData($text, $person, $type, $export) {
 		$txtReturn = $text;
 
+		// id
+		$txtReturn = RefManTemplate::replace($txtReturn, 'person_id', $person['Person']['id']);
+
+		// names
 		$txtReturn = RefManTemplate::replace($txtReturn, 'fullname',
 																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'fullname'));
 		$txtReturn = RefManTemplate::replace($txtReturn, 'first_name',

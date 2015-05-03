@@ -3,16 +3,24 @@
 // column definitions.
 $columns = array();
 
+// ids
+if ($isEditor) {
+	$columns['index'][] = array('title' => __('P-ID'),
+															'content' => $this->Template->getReplaceToken('person_id'));
+	$columns['index'][] = array('title' => __('R-ID'),
+															'content' => $this->Template->getReplaceToken('referee_id'));
+}
+
 // image
 if ($isReferee) {
 	$columns['index'][] = array('title' => __('Bild'),
-														 'content' => sprintf('%s%s',
-																									$this->Template->getEmptyToken('picture_url', ''),
-																									$this->Template->getNotEmptyToken('picture_url',
-																																										 $this->Html->link($this->Html->image($this->Template->getReplaceToken('picture_url'),
-																																																													 array('width' => '50',
-																																																																	 'alt' => __('Bild von %s.', $this->Template->getReplaceToken('fullname')),
-																																																																	 'title' => $this->Template->getReplaceToken('fullname'))),
+															'content' => sprintf('%s%s',
+																									 $this->Template->getEmptyToken('picture_url', ''),
+																									 $this->Template->getNotEmptyToken('picture_url',
+																																											$this->Html->link($this->Html->image($this->Template->getReplaceToken('picture_url'),
+																																																														array('width' => '50',
+																																																																		'alt' => __('Bild von %s.', $this->Template->getReplaceToken('fullname')),
+																																																																		'title' => $this->Template->getReplaceToken('fullname'))),
 																																																				$this->Template->getReplaceToken('picture_url'),
 																																																				array('escape' => false)))));
 }
