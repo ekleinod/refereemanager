@@ -485,7 +485,7 @@ class RefManRefereeFormat {
 		$sTextArray = array();
 
 		if (!empty($data['RefereeRelation']['club_id'])) {
-			$sTextArray[] = $data['Club']['name'];
+			$sTextArray[] = empty($data['Club']['abbreviation']) ? $data['Club']['name'] : $data['Club']['abbreviation'];
 		}
 		if (!empty($data['RefereeRelation']['league_id'])) {
 			$sTextArray[] = $data['League']['title'];
