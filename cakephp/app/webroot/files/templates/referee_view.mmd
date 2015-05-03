@@ -3,23 +3,26 @@ Base Header Level:	3
 latex input:				kleinod-mmd-scrlttr2
 MyOptions:					author=schiri, font=droid, layout=infospaltefett
 latex input:				kleinod-mmd-style
-Title:							#fullname#
-Date:							#date#
-MyAnA:							#fullname#
-MyAnB:							#streetnumber#
-MyAnC:							#zipcity#
-MyBetreff:					Übersicht der gespeicherten Daten Saison #season#
-MyAnrede:					Hallo #first_name#,
+Title:							Übersicht der gespeicherten Daten Saison **generated season**
+MyBetreff:					Übersicht der gespeicherten Daten Saison **generated season**
+Date:								**generated date**
+MyAnA:							**generated fullname**
+MyAnB:							**generated streetnumber**
+MyAnC:							**generated zipcity**
+MyAnrede:						Hallo **generated first_name**
 MyGruss:						Mit sportlichen Grüßen,
-MyUnterschrift:		Ekkart.
+MyUnterschrift:			Ekkart.
+MyPS:
 latex input:				kleinod-mmd-begin-lttr
-latex footer:			kleinod-mmd-end-lttr
+latex footer:				kleinod-mmd-end-lttr
 
-dies ist der jährliche Auszug der über Dich beim Verbandsschiedsrichterausschuss für die Saison #season# gespeicherten Daten.
+
+dies ist der jährliche Auszug der über Dich beim Verbandsschiedsrichterausschuss für die Saison **generated season** gespeicherten Daten.
 Du erhältst den Auszug aus zwei Gründen:
 
-1. damit Du weißt, welche Daten gespeichert sind, wofür sie verwendet werden und wer die Daten sieht
-2. damit Du kontrollieren kannst, ob die Daten korrekt sind und eventuelle Änderungen mitteilen kannst
+1. Damit Du weißt, welche Daten gespeichert sind, wofür sie verwendet werden und wer die Daten sieht.
+2. Damit Du kontrollieren kannst, ob die Daten korrekt sind und eventuelle Änderungen mitteilen kannst.
+3. Damit Du der Verwendung bestimmter Daten widersprechen kannst, falls Du das möchtest.
 
 # Öffentliche Informationen
 
@@ -27,27 +30,29 @@ Diese Informationen sind für jedermann sichtbar.
 Nutzungsbeispiel: Einsatzplan.
 
 <!--
-\begin{longtable}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
-	 -->Titel<!-- & -->#title#<!-- \\
-	 -->Vorname<!-- & -->#first_name#<!-- \\
-	 -->Name<!-- & -->#name#<!-- \\
-	 -->Ausbildung<!-- & -->#training_level# (#training_level_abbr#)<!-- \\
-	 -->Einsatzhäufigkeit<!-- & -->#status_type#<!-- \\
-\end{longtable}
+\begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
+	\toprule
+	-->Name<!-- & -->**generated tablename**<!-- \\
+	-->Ausbildung<!-- & -->**generated traininglevel** (**generated traininglevel_abbreviation**)<!-- \\
+	-->Einsatzhäufigkeit<!-- & -->**generated status_type**<!-- \\
+	\bottomrule
+\end{longtabu}
 -->
 
 # Informationen für andere Schiedsrichter
 
-Diese Informationen sind nur für andere Schiedsrichter nach Login sichtbar.
+Diese Informationen sind nur für andere Schiedsrichter nach Login und den DTTB sichtbar.
 Nutzungsbeispiel: Kontakttabelle der Schiedsrichter.
 
 <!--
-\begin{longtable}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
-	 -->E-Mail<!-- & -->#email#<!-- \\
-	 -->Telefon<!-- & -->#phone#<!-- \\
-	 -->Mitglied bei<!-- & -->#member#<!-- \\
-	 -->Schiedst für<!-- & -->#reffor#<!-- \\
-\end{longtable}
+\begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
+	\toprule
+	-->E-Mail<!-- & -->**generated emails**<!-- \\
+	-->Telefon<!-- & -->**generated phone_numbers_national**<!-- \\
+	-->Mitglied bei<!-- & -->**generated referee_relation_member**<!-- \\
+	-->Schiedst für<!-- & -->**generated referee_relation_reffor**<!-- \\
+	\bottomrule
+\end{longtabu}
 -->
 
 # Informationen für VSRA
@@ -56,18 +61,21 @@ Diese Informationen sind nur für den Verbandsschiedsrichterausschuss sichtbar.
 Nutzungsbeispiel: Verwaltung der Einsätze.
 
 <!--
-\begin{longtable}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
-	 -->Adresse<!-- & -->#streetnumber#<!-- \newline -->#zipcity#<!-- \\
-	 -->Geburtstag<!-- & -->#birthday#<!-- \\
-	 -->Geschlecht<!-- & -->#sex_type#<!-- \\
-	 -->Bevorzugt schiedsen<!-- & -->#prefer#<!-- \\
-	 -->Nicht schiedsen<!-- & -->#noassignment#<!-- \\
-	 -->Wochentag<!-- & -->#weekday#<!-- \\
-	 -->Letzte Ausbildung<!-- & -->#since#<!-- \\
-	 -->Letzte Fortbildung<!-- & -->#last_update#<!-- \\
-	 -->Nächste Fortbildung<!-- & -->#next_update#<!-- \\
-	 -->Anmerkung<!-- & -->#remark#<!-- \\
-\end{longtable}
+\begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
+	\toprule
+	-->Adresse<!-- & -->**generated addresses_fulladdress**<!-- \\
+	-->URL<!-- & -->**generated urls**<!-- \\
+	-->Geburtstag<!-- & -->**generated birthday**<!-- \\
+	-->Geschlecht<!-- & -->**generated sextype**<!-- \\
+	-->Bevorzugt schiedsen<!-- & -->**generated referee_relation_prefer**<!-- \\
+	-->Nicht schiedsen<!-- & -->**generated referee_relation_noassignment**<!-- \\
+	-->Wochentag<!-- & -->**generated weekday**<!-- \\
+	-->**generated traininglevel_abbreviation** seit<!-- & -->**generated traininglevelsince**<!-- \\
+	-->Letzte Fortbildung<!-- & -->**generated lasttrainingupdate**<!-- \\
+	-->Nächste Fortbildung<!-- & -->**generated nexttrainingupdate**<!-- \\
+	-->Anmerkung<!-- & -->**generated remark** **generated refereestatus_**generated season_id**_remark**<!-- \\
+	\bottomrule
+\end{longtabu}
 -->
 
 Bitte prüfe die Informationen auf Korrektheit und Unvollständigkeit und gib mir Bescheid, wenn Änderungen nötig sind.
