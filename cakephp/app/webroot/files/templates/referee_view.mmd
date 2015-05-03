@@ -47,7 +47,7 @@ Nutzungsbeispiel: Kontakttabelle der Schiedsrichter.
 <!--
 \begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
 	\toprule
-	-->E-Mail<!-- & -->**generated emails**<!-- \\
+	-->E-Mail<!-- & -->**generated emails****ifnotempty emails_editor_only** (nur für VSRA sichtbar, nicht für andere Schiedsrichter)**endnotempty emails_editor_only**<!-- \\
 	-->Telefon<!-- & -->**generated phone_numbers_national**<!-- \\
 	-->Mitglied bei<!-- & -->**generated referee_relation_member**<!-- \\
 	-->Schiedst für<!-- & -->**generated referee_relation_reffor**<!-- \\
@@ -63,6 +63,7 @@ Nutzungsbeispiel: Verwaltung der Einsätze.
 <!--
 \begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
 	\toprule
+	-->Alle Infos per Brief<!-- & -->**generated docs_per_letter****ifnotempty emails** *Bitte prüfen, ob die Zusendung per E-Mail nicht doch ausreicht.* **endnotempty emails**<!-- \\
 	-->Adresse<!-- & -->**generated addresses_fulladdress**<!-- \\
 	-->URL<!-- & -->**generated urls**<!-- \\
 	-->Geburtstag<!-- & -->**generated birthday**<!-- \\
