@@ -503,7 +503,7 @@ class RefManRefereeFormat {
 			$sTextArray[] = $data['RefereeRelation']['remark'];
 		}
 
-		return RefManRefereeFormat::formatMultiline($sTextArray, '; ');
+		return RefManRefereeFormat::formatMultiline($sTextArray, ' - ');
 	}
 
 }
