@@ -1,7 +1,7 @@
 <?php echo $this->element('filter');	?>
 
 <?php echo $this->Form->create('ToolsEditor'); ?>
-	<?php echo $this->Form->hidden('Filter.season', array('value' => $season['id'])); ?>
+	<?php echo $this->Form->hidden('Filter.season', array('value' => $season['Season']['id'])); ?>
 
 	<fieldset>
 		<legend><?php echo __('Liste der E-Mail-Adressen'); ?></legend>
@@ -9,6 +9,7 @@
 		<ol>
 			<?php
 				$arrMails = array();
+				$email = '';
 				foreach ($referees as $referee) {
 					$email = $this->People->getPrimaryContact($referee, 'Email');
 					if ($email != null) {

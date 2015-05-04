@@ -12,16 +12,16 @@
 			$this->PHPExcel->createWorksheet(null, 11, PHPExcel_Style_Alignment::VERTICAL_TOP, PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
 			// meta information
-			$this->PHPExcel->addTableRow(array('text' => array(__('Verbandsschiedsrichter_innen BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))), array('font-weight' => 'normal', 'font-size' => 14));
+			$this->PHPExcel->addTableRow(array('text' => array(__('Verbandsschiedsrichter_innen BTTV Saison %s, Stand: %s', $season['Season']['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))), array('font-weight' => 'normal', 'font-size' => 14));
 			$this->PHPExcel->addTableRow(array());
 
 			$this->PHPExcel->getXLS()->getProperties()
 					->setCreator(__('RefereeManager'))
 					->setLastModifiedBy(__('RefereeManager'))
-					->setTitle(__('Verbandsschiedsrichter_innen des BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))
+					->setTitle(__('Verbandsschiedsrichter_innen des BTTV Saison %s, Stand: %s', $season['Season']['title_season'], $this->RefereeFormat->formatDate(time(), 'date')))
 					->setSubject(__('Verbandsschiedsrichter_innen des BTTV'))
 					->setDescription(__('Übersicht der Verbandsschiedsrichter_innen, exportiert aus dem RefereeManager'))
-					->setKeywords(__('Verbandsschiedsrichter_innen BTTV %s', $season['title_season']))
+					->setKeywords(__('Verbandsschiedsrichter_innen BTTV %s', $season['Season']['title_season']))
 					->setCategory(__('Schiedsrichterliste'));
 
 			// header
@@ -37,12 +37,12 @@
 			$tcpdf = new RefManTCPDF($orientation, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 			$tcpdf->SetAutoPageBreak(false);
 
-			$tcpdf->setTitle(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')));
+			$tcpdf->setTitle(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['Season']['title_season'], $this->RefereeFormat->formatDate(time(), 'date')));
 			$tcpdf->setSubject(__('Verbandsschiedsrichter des BTTV'));
 			$tcpdf->setCreator(PDF_CREATOR);
 			$tcpdf->setAuthor(PDF_AUTHOR);
-			$tcpdf->setKeywords(__('Verbandsschiedsrichter BTTV %s', $season['title_season']));
-			$tcpdf->rmSetHeader(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['title_season'], $this->RefereeFormat->formatDate(time(), 'date')),
+			$tcpdf->setKeywords(__('Verbandsschiedsrichter BTTV %s', $season['Season']['title_season']));
+			$tcpdf->rmSetHeader(__('Verbandsschiedsrichter BTTV Saison %s, Stand: %s', $season['Season']['title_season'], $this->RefereeFormat->formatDate(time(), 'date')),
 													__('Seite %s von %s'));
 
 			$tcpdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_DATA));
@@ -59,29 +59,9 @@
 
 		}
 
-		$nbrtoken = '`%s`';
 		if ($type === 'referee_view_zip') {
 			$tplRefView = RefManTemplate::getTemplate('refereeview');
-
 			RefManTemplate::openZip(Configure::read('RefMan.template.refereeviewout'));
-
-
-/*
-
-
-			$refview_empty = '---';
-
-			$latexallrefs = file_get_contents(sprintf('%s%s%s', WWW_ROOT, Configure::read('RefMan.template.path'), Configure::read('RefMan.template.referee_view_all')));
-			$fletoken = 'referee%d';
-			$latexreftoken = sprintf("\t\\includepdf{generated/%s.pdf}\n", $fletoken);
-
-			$zip = new ZipArchive();
-			$zipfile = sprintf('%s%s.zip', TMP, Configure::read('RefMan.template.referee_view'));
-			if ($zip->open($zipfile, ZipArchive::OVERWRITE) === TRUE) {
-				$zip->addFile(sprintf('%s%s%s.build.xml', WWW_ROOT, Configure::read('RefMan.template.path'), Configure::read('RefMan.template.referee_view')), 'build.xml');
-			} else {
-				echo __('Zip-Archiv "%s" konnte nicht angelegt werden.', $zipfile);
-			}*/
 		}
 
 		if (empty($people)) {
@@ -138,11 +118,16 @@
 				}
 
 				if ($type === 'referee_view_zip') {
-					$contactAddress = RefManPeople::getPrimaryContact($person, 'Address');
+
+					$txtRefView = RefManTemplate::replaceSeasonData($tplRefView, $season, 'text', 'html');
 
 					$txtRefView = RefManTemplate::replaceRefereeData($tplRefView, $person, 'text', 'html');
-					$txtRefView = RefManTemplate::replace($txtRefView, 'streetnumber', RefManRefereeFormat::formatAddress($contactAddress, 'streetnumber', 'text'));
-					$txtRefView = RefManTemplate::replace($txtRefView, 'zipcity', RefManRefereeFormat::formatAddress($contactAddress, 'zipcity', 'text'));
+					$contactAddress = RefManPeople::getPrimaryContact($person, 'Address');
+					//$txtRefView = RefManTemplate::replace($txtRefView, 'streetnumber', RefManRefereeFormat::formatAddress($contactAddress, 'streetnumber', 'text'));
+					//$txtRefView = RefManTemplate::replace($txtRefView, 'zipcity', RefManRefereeFormat::formatAddress($contactAddress, 'zipcity', 'text'));
+
+					debug($txtRefView);
+					break;
 
 					RefManTemplate::addToZip('mmd',
 																	 sprintf('%s_%s',
@@ -202,8 +187,8 @@
 
 			if ($type === 'referee_view_zip') {
 				$zipfile = RefManTemplate::closeZip();
-				$this->response->file($zipfile);
-				echo $this->response;
+/*				$this->response->file($zipfile);
+				echo $this->response;*/
 			}
 
 		}

@@ -101,7 +101,7 @@ class Season extends AppModel {
 			return null;
 		}
 
-		return $ssnReturn['Season'];
+		return $ssnReturn;
 	}
 
 	/**

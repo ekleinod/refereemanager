@@ -228,7 +228,7 @@ if ($isEditor) {
 	if ($isEditor) {
 		$columns['index'][] =
 				$columns['excel'][] = array('title' => __('Anmerkung'),
-																		'content' => sprintf('%s %s', $this->Template->getReplaceToken('remark'), $this->Template->getReplaceToken(sprintf('refereestatus_%s_remark', $season['id']))));
+																		'content' => sprintf('%s %s', $this->Template->getReplaceToken('remark'), $this->Template->getReplaceToken(sprintf('refereestatus_%s_remark', $season['Season']['id']))));
 	}
 
 	// internal_remark
@@ -246,8 +246,8 @@ if ($isEditor) {
 															'content' => sprintf('%s%s%s',
 																									 $this->Template->getNotEmptyToken('remark',
 																																							sprintf('%s ', $this->Template->getReplaceToken('remark'))),
-																									 $this->Template->getNotEmptyToken(sprintf('refereestatus_%s_remark', $season['id']),
-																																							sprintf('%s ', $this->Template->getReplaceToken(sprintf('refereestatus_%s_remark', $season['id'])))),
+																									 $this->Template->getNotEmptyToken(sprintf('refereestatus_%s_remark', $season['Season']['id']),
+																																							sprintf('%s ', $this->Template->getReplaceToken(sprintf('refereestatus_%s_remark', $season['Season']['id'])))),
 																									 $this->Template->getNotEmptyToken('internal_remark',
 																																							sprintf('intern: %s', $this->Template->getReplaceToken('internal_remark')))),
 															'pdf' => $params);

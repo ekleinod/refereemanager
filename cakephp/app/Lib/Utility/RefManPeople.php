@@ -170,7 +170,7 @@ class RefManPeople {
 	 */
 	public static function getRefereeStatus($referee, $season) {
 		foreach ($referee['RefereeStatus'] as $refereeStatus) {
-			if ($refereeStatus['season_id'] == $season['id']) {
+			if ($refereeStatus['season_id'] == $season['Season']['id']) {
 				return $refereeStatus;
 			}
 		}

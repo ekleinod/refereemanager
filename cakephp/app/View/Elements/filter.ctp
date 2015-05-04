@@ -5,7 +5,7 @@
 	<div class="filter">
 		<ol class="currentfilter">
 			<?php if (isset($season)) { ?>
-				<li><label><?php echo __('Saison'); ?></label><?php echo $season['title_season']; ?></li>
+				<li><label><?php echo __('Saison'); ?></label><?php echo $season['Season']['title_season']; ?></li>
 			<?php } ?>
 		</ol>
 		<?php echo $this->Form->create('Filter'); ?>
@@ -14,7 +14,7 @@
 				<ol>
 					<?php
 						if (isset($season)) {
-							echo $this->RefereeForm->getInputField(null, 'select', 'season', __('Saison'), $season['id'], false, null, 0, true, $seasonarray);
+							echo $this->RefereeForm->getInputField(null, 'select', 'season', __('Saison'), $season['Season']['id'], false, null, 0, true, $seasonarray);
 						}
 					?>
 				</ol>

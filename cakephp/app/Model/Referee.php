@@ -96,7 +96,7 @@ class Referee extends AppModel {
 
 			$useReferee = false;
 			foreach ($referee['RefereeStatus'] as $refereestatus) {
-				$useReferee |= ($refereestatus['season_id'] == $season['id']);
+				$useReferee |= ($refereestatus['season_id'] == $season['Season']['id']);
 			}
 
 			if ($useReferee) {

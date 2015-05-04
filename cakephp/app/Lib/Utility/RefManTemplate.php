@@ -256,6 +256,28 @@ class RefManTemplate {
 	}
 
 	/**
+	 * Replaces all season tokens in text.
+	 *
+	 * @param $text text
+	 * @param $season season
+	 * @param $type format type
+	 * @param $export export type
+	 * @return replaced text
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function replaceSeasonData($text, $season, $type, $export) {
+		$txtReturn = $text;
+
+		// all simple replacements
+		debug($season);
+		//$txtReturn = RefManTemplate::replace($txtReturn, 'referee_id', $referee['Referee']['id']);
+
+		return $txtReturn;
+	}
+
+	/**
 	 * Replaces special characters in filenames.
 	 *
 	 * @param $filename filename

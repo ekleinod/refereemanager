@@ -35,12 +35,12 @@
 		</ul>
 
 		<p>
-			<?php echo $this->Html->link('Export als Excel-Datei', array('action' => 'export', $season['year_start'], 'excel')); ?>
+			<?php echo $this->Html->link('Export als Excel-Datei', array('action' => 'export', $season['Season']['year_start'], 'excel')); ?>
 			|
-			<?php echo $this->Html->link('Export als PDF', array('action' => 'export', $season['year_start'], 'pdf')); ?>
+			<?php echo $this->Html->link('Export als PDF', array('action' => 'export', $season['Season']['year_start'], 'pdf')); ?>
 			<?php if ($isEditor) { ?>
 				|
-				<?php echo $this->Html->link('Datenübersicht (zip)', array('action' => 'export', $season['year_start'], 'referee_view_zip')); ?>
+				<?php echo $this->Html->link('Datenübersicht (zip)', array('action' => 'export', $season['Season']['year_start'], 'referee_view_zip')); ?>
 			<?php } ?>
 		</p>
 	<?php } ?>

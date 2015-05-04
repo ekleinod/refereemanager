@@ -6,7 +6,7 @@ function getRefereeReportFiles($season) {
 
 	if ($refereeReportFiles === null) {
 		$refereeReportFiles = array();
-		$tmpFiles = scandir(sprintf('%s%s%s', WWW_ROOT, Configure::read('RefMan.refreport.path'), $season['title_season']));
+		$tmpFiles = scandir(sprintf('%s%s%s', WWW_ROOT, Configure::read('RefMan.refreport.path'), $season['Season']['title_season']));
 		if ($tmpFiles !== FALSE) {
 			foreach ($tmpFiles as $filename) {
 				if ((strcmp($filename, ".") != 0) && (strcmp($filename, "..") != 0)) {

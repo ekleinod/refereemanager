@@ -210,7 +210,7 @@ class AssignmentsController extends AppController {
 
 		$this->Assignment->recursive = 2;
 
-		$assignments = $this->Assignment->find('all', array('conditions' => array('LeagueGame.season_id' => $season['id'])));
+		$assignments = $this->Assignment->find('all', array('conditions' => array('LeagueGame.season_id' => $season['Season']['id'])));
 
 		foreach ($assignments as &$assignment) {
 			// status (todo)

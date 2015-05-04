@@ -12,7 +12,7 @@
 		<legend><?php echo __('Einstellungen'); ?></legend>
 		<ol>
 			<?php
-				echo $this->RefereeForm->getInputField(null, 'select', 'Filter.season', __('Saison'), $season['id'], false, null, 0, true, $seasonarray);
+				echo $this->RefereeForm->getInputField(null, 'select', 'Filter.season', __('Saison'), $season['Season']['id'], false, null, 0, true, $seasonarray);
 
 				$tmpValue = empty($messagedata) ? 'i' : $messagedata['ToolsEditor']['recipient'];
 				echo $this->RefereeForm->getInputField(null, 'select', 'recipient', __('Empfänger'), $tmpValue, true, null, 0, false,

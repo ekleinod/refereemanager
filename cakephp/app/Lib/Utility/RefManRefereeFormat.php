@@ -347,6 +347,7 @@ class RefManRefereeFormat {
 				break;
 
 			case 'excel':
+			case 'text':
 				$sReturn .= $data['Email']['email'];
 				break;
 

@@ -53,8 +53,7 @@ class ToolsEditorController extends AppController {
 	 */
 	public function mailinglist($season = null) {
 
-		$this->getSeason($season);
-		$this->setAndGetStandard($this->viewVars['season']);
+		$this->setAndGetStandard($season);
 
 		$theSeparator = ',';
 		if (!empty($this->request->data) && array_key_exists('ToolsEditor', $this->request->data)) {
@@ -76,8 +75,7 @@ class ToolsEditorController extends AppController {
 
 		$this->set('title_for_layout', __('Nachricht'));
 
-		$this->getSeason(null);
-		$this->setAndGetStandard($this->viewVars['season']);
+		$this->setAndGetStandard(null);
 
 		// create messages
 		if (!empty($this->request->data)) {
