@@ -119,9 +119,11 @@
 
 				if ($type === 'referee_view_zip') {
 
-					$txtRefView = RefManTemplate::replaceSeasonData($tplRefView, $season, 'text', 'html');
+					$txtRefView = $tplRefView;
 
-					$txtRefView = RefManTemplate::replaceRefereeData($tplRefView, $person, 'text', 'html');
+					$txtRefView = RefManTemplate::replaceSeasonData($txtRefView, $season, 'text', 'html');
+
+					$txtRefView = RefManTemplate::replaceRefereeData($txtRefView, $person, 'text', 'html');
 					$contactAddress = RefManPeople::getPrimaryContact($person, 'Address');
 					//$txtRefView = RefManTemplate::replace($txtRefView, 'streetnumber', RefManRefereeFormat::formatAddress($contactAddress, 'streetnumber', 'text'));
 					//$txtRefView = RefManTemplate::replace($txtRefView, 'zipcity', RefManRefereeFormat::formatAddress($contactAddress, 'zipcity', 'text'));

@@ -271,8 +271,11 @@ class RefManTemplate {
 		$txtReturn = $text;
 
 		// all simple replacements
-		debug($season);
-		//$txtReturn = RefManTemplate::replace($txtReturn, 'referee_id', $referee['Referee']['id']);
+		foreach ($season as $seasonkey => $seasonentry) {
+			foreach ($seasonentry as $entrykey => $entryvalue) {
+				$txtReturn = RefManTemplate::replace($txtReturn, sprintf('%s_%s', strtolower($seasonkey), strtolower($entrykey)), $entryvalue);
+			}
+		}
 
 		return $txtReturn;
 	}
