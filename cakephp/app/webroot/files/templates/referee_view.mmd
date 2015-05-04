@@ -3,13 +3,13 @@ Base Header Level:	3
 latex input:				kleinod-mmd-scrlttr2
 MyOptions:					author=schiri, font=droid, layout=infospaltefett
 latex input:				kleinod-mmd-style
-Title:							Übersicht der gespeicherten Daten Saison **generated season_title_season**
-MyBetreff:					Übersicht der gespeicherten Daten Saison **generated season_title_season**
-Date:								**generated date**
-MyAnA:							**generated fullname**
-MyAnB:							**generated streetnumber**
-MyAnC:							**generated zipcity**
-MyAnrede:						Hallo **generated first_name**
+Title:							Übersicht der gespeicherten Daten Saison **generated season:title_season**
+MyBetreff:					Übersicht der gespeicherten Daten Saison **generated season:title_season**
+Date:								**generated date:medium**
+MyAnA:							**generated person:fullname**
+MyAnB:							**generated person:primary:streetnumber**
+MyAnC:							**generated person:primary:zipcity**
+MyAnrede:						Hallo **generated person:first_name**,
 MyGruss:						Mit sportlichen Grüßen,
 MyUnterschrift:			Ekkart.
 MyPS:
@@ -17,7 +17,7 @@ latex input:				kleinod-mmd-begin-lttr
 latex footer:				kleinod-mmd-end-lttr
 
 
-dies ist der jährliche Auszug der über Dich beim Verbandsschiedsrichterausschuss für die Saison **generated season_title_season** gespeicherten Daten.
+dies ist der jährliche Auszug der über Dich beim Verbandsschiedsrichterausschuss für die Saison **generated season:title_season** gespeicherten Daten.
 Du erhältst den Auszug aus zwei Gründen:
 
 1. Damit Du weißt, welche Daten gespeichert sind, wofür sie verwendet werden und wer die Daten sieht.
@@ -32,9 +32,9 @@ Nutzungsbeispiel: Einsatzplan.
 <!--
 \begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
 	\toprule
-	-->Name<!-- & -->**generated tablename**<!-- \\
-	-->Ausbildung<!-- & -->**generated traininglevel** (**generated traininglevel_abbreviation**)<!-- \\
-	-->Einsatzhäufigkeit<!-- & -->**generated status_type**<!-- \\
+	-->Name<!-- & -->**generated person:tablename**<!-- \\
+	-->Ausbildung<!-- & -->**generated traininglevel:title** (**generated traininglevel:abbreviation**)<!-- \\
+	-->Einsatzhäufigkeit<!-- & -->**generated referee:status_type**<!-- \\
 	\bottomrule
 \end{longtabu}
 -->
@@ -47,10 +47,10 @@ Nutzungsbeispiel: Kontakttabelle der Schiedsrichter.
 <!--
 \begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
 	\toprule
-	-->E-Mail<!-- & -->**generated emails****ifnotempty emails_editor_only** (nur für VSRA sichtbar, nicht für andere Schiedsrichter)**endnotempty emails_editor_only**<!-- \\
-	-->Telefon<!-- & -->**generated phone_numbers_national**<!-- \\
-	-->Mitglied bei<!-- & -->**generated referee_relation_member**<!-- \\
-	-->Schiedst für<!-- & -->**generated referee_relation_reffor**<!-- \\
+	-->E-Mail<!-- & -->**generated person:emails****ifnotempty person:emails:editor_only** (nur für VSRA sichtbar, nicht für andere Schiedsrichter)**endnotempty person:emails:editor_only**<!-- \\
+	-->Telefon<!-- & -->**generated person:phone_numbers_national**<!-- \\
+	-->Mitglied bei<!-- & -->**generated referee:referee_relation_member**<!-- \\
+	-->**ifnotempty referee:referee_relation_reffor**Schiedst**endnotempty referee:referee_relation_reffor** für<!-- & -->**generated referee:referee_relation_reffor**<!-- \\
 	\bottomrule
 \end{longtabu}
 -->
@@ -74,7 +74,7 @@ Nutzungsbeispiel: Verwaltung der Einsätze.
 	-->**generated traininglevel_abbreviation** seit<!-- & -->**generated traininglevelsince**<!-- \\
 	-->Letzte Fortbildung<!-- & -->**generated lasttrainingupdate**<!-- \\
 	-->Nächste Fortbildung<!-- & -->**generated nexttrainingupdate**<!-- \\
-	-->Anmerkung<!-- & -->**generated remark** **generated refereestatus_**generated season_year_start**_remark**<!-- \\
+	-->Anmerkung<!-- & -->**generated remark** **generated refereestatus_**generated season:year_start**_remark**<!-- \\
 	\bottomrule
 \end{longtabu}
 -->

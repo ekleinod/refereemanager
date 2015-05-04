@@ -6,9 +6,9 @@ $columns = array();
 // ids
 if ($isEditor) {
 	$columns['index'][] = array('title' => __('P-ID'),
-															'content' => $this->Template->getReplaceToken('person_id'));
+															'content' => $this->Template->getReplaceToken('person:id'));
 	$columns['index'][] = array('title' => __('R-ID'),
-															'content' => $this->Template->getReplaceToken('referee_id'));
+															'content' => $this->Template->getReplaceToken('referee:id'));
 }
 
 // image

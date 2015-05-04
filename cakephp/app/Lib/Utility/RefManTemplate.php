@@ -163,9 +163,6 @@ class RefManTemplate {
 
 		$txtReturn = RefManTemplate::replacePersonData($txtReturn, $referee, $type, $export);
 
-		// id
-		$txtReturn = RefManTemplate::replace($txtReturn, 'referee_id', $referee['Referee']['id']);
-
 		// referee relation types
 		if (empty(RefManTemplate::$refereerelationtypes)) {
 			$model = ClassRegistry::init('RefereeRelationType');
@@ -174,26 +171,31 @@ class RefManTemplate {
 		}
 		foreach (RefManTemplate::$refereerelationtypes as $relationtype) {
 			$sid = $relationtype['RefereeRelationType']['sid'];
-			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('referee_relation_%s', $sid),
+			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('referee:referee_relation_%s', $sid),
 																					 RefManRefereeFormat::formatRelations(RefManPeople::getRelations($referee, $sid), $type, $export));
 		}
 
 		// training
 		$traininglevel = RefManPeople::getTrainingLevel($referee);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:title',
+																				 (empty($traininglevel) || empty($traininglevel['TrainingLevelType']['title'])) ? '' : $traininglevel['TrainingLevelType']['title']);
+		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:abbreviation',
 																				 (empty($traininglevel) || empty($traininglevel['TrainingLevelType']['abbreviation'])) ? '' : $traininglevel['TrainingLevelType']['abbreviation']);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevelsince',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:since',
 																				 (empty($traininglevel) || empty($traininglevel['TrainingLevel']['since'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['TrainingLevel']['since'], 'date'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'lasttrainingupdate',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:lasttrainingupdate',
 																				 (empty($traininglevel) || empty($traininglevel['lasttrainingupdate'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['lasttrainingupdate'], 'date'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'nexttrainingupdate',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:nexttrainingupdate',
 																				 (empty($traininglevel) || empty($traininglevel['nexttrainingupdate'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['nexttrainingupdate'], 'year'));
 
 		// status
 		foreach ($referee['RefereeStatus'] as $refereestatus) {
-			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('refereestatus_%s_remark', $refereestatus['season_id']),
+			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('referee:refereestatus_%s_remark', $refereestatus['season_id']),
 																					 (empty($refereestatus['remark'])) ? '' : $refereestatus['remark']);
 		}
+
+		// catch all
+		$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $referee);
 
 		return $txtReturn;
 	}
@@ -213,44 +215,39 @@ class RefManTemplate {
 	public static function replacePersonData($text, $person, $type, $export) {
 		$txtReturn = $text;
 
-		// id
-		$txtReturn = RefManTemplate::replace($txtReturn, 'person_id', $person['Person']['id']);
-
 		// names
-		$txtReturn = RefManTemplate::replace($txtReturn, 'fullname',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'person:fullname',
 																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'fullname'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'first_name',
-																				 (empty($person['Person']['first_name'])) ? '' : $person['Person']['first_name']);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'name_title',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'person:name_title',
 																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'name_title'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'tablename',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'person:tablename',
 																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'tablename'));
 
 		// dates
-		$txtReturn = RefManTemplate::replace($txtReturn, 'birthday',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'person:birthday',
 																				 (empty($person['Person']['birthday'])) ? '' : RefManRefereeFormat::formatDate($person['Person']['birthday'], 'date'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'dayofdeath',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'person:dayofdeath',
 																				 (empty($person['Person']['dayofdeath'])) ? '' : sprintf('†&nbsp;%s', RefManRefereeFormat::formatDate($person['Person']['dayofdeath'], 'date')));
 
 		// contacts
-		$txtReturn = RefManTemplate::replace($txtReturn, 'emails',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'person:emails',
 																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Email'), $type, 'Email', $export));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'phone_numbers_national',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'person:phone_numbers_national',
 																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'PhoneNumber'), 'national', 'PhoneNumber', $export));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'addresses_fulladdress',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'person:addresses_fulladdress',
 																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Address'), 'fulladdress', 'Address', $export));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'urls',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'person:urls',
 																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Url'), $type, 'Url', $export));
 
-		// other
-		$txtReturn = RefManTemplate::replace($txtReturn, 'sextype',
-																				 (empty($person['SexType']['title'])) ? '' : $person['SexType']['title']);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'picture_url',
-																				 (empty($person['Picture']['url'])) ? '' : $person['Picture']['url']);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'remark',
-																				 (empty($person['Person']['remark'])) ? '' : $person['Person']['remark']);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'internal_remark',
-																				 (empty($person['Person']['internal_remark'])) ? '' : $person['Person']['internal_remark']);
+		// primary contact
+		$primaryAddress = RefManPeople::getPrimaryContact($person, 'Address');
+		$txtReturn = RefManTemplate::replace($txtReturn, 'person:primary:streetnumber',
+																					RefManRefereeFormat::formatAddress($primaryAddress, 'streetnumber', $type));
+		$txtReturn = RefManTemplate::replace($txtReturn, 'person:primary:zipcity',
+																					RefManRefereeFormat::formatAddress($primaryAddress, 'zipcity', $type));
+
+		// catch all
+		$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $person);
 
 		return $txtReturn;
 	}
@@ -270,10 +267,57 @@ class RefManTemplate {
 	public static function replaceSeasonData($text, $season, $type, $export) {
 		$txtReturn = $text;
 
-		// all simple replacements
-		foreach ($season as $seasonkey => $seasonentry) {
-			foreach ($seasonentry as $entrykey => $entryvalue) {
-				$txtReturn = RefManTemplate::replace($txtReturn, sprintf('%s_%s', strtolower($seasonkey), strtolower($entrykey)), $entryvalue);
+		// catch all
+		$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $season);
+
+		return $txtReturn;
+	}
+
+	/**
+	 * Replaces all date/time tokens in text.
+	 *
+	 * @param $text text
+	 * @param $time timestamp (current, if null)
+	 * @return replaced text
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function replaceDateTimeData($text, $time = null) {
+		$txtReturn = $text;
+
+		if (empty($time)) {
+			$time = time();
+		}
+
+		$type = 'date';
+		$txtReturn = RefManTemplate::replace($txtReturn, sprintf('date:%s', $type), RefManRefereeFormat::formatDate($time, $type));
+		$type = 'medium';
+		$txtReturn = RefManTemplate::replace($txtReturn, sprintf('date:%s', $type), RefManRefereeFormat::formatDate($time, $type));
+
+		return $txtReturn;
+	}
+
+	/**
+	 * Replaces all simple object tokens in text.
+	 *
+	 * @param $text text
+	 * @param $object object
+	 * @return replaced text
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function replaceSimpleObjectData($text, $object) {
+		$txtReturn = $text;
+
+		foreach ($object as $objectkey => $objectentry) {
+			foreach ($objectentry as $entrykey => $entryvalue) {
+				if (!is_array($entryvalue)) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%s', strtolower($objectkey), strtolower($entrykey)),
+																							 empty($entryvalue) ? '' : $entryvalue);
+				}
 			}
 		}
 

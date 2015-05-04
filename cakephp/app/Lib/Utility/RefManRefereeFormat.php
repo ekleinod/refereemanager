@@ -278,6 +278,7 @@ class RefManRefereeFormat {
 
 			case 'html':
 			case 'excel':
+			case 'text':
 				switch ($type) {
 					case 'fulladdress':
 						if (!empty($data['Address']['street'])) {
