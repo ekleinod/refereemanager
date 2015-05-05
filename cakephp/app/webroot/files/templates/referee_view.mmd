@@ -7,8 +7,8 @@ Title:							Übersicht der gespeicherten Daten Saison **generated season:title_
 MyBetreff:					Übersicht der gespeicherten Daten Saison **generated season:title_season**
 Date:								**generated date:medium**
 MyAnA:							**generated person:fullname**
-MyAnB:							**generated person:primary:streetnumber**
-MyAnC:							**generated person:primary:zipcity**
+MyAnB:							**generated contacts:primary:streetnumber**
+MyAnC:							**generated contacts:primary:zipcity**
 MyAnrede:						Hallo **generated person:first_name**,
 MyGruss:						Mit sportlichen Grüßen,
 MyUnterschrift:			Ekkart.
@@ -47,8 +47,8 @@ Nutzungsbeispiel: Kontakttabelle der Schiedsrichter.
 <!--
 \begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
 	\toprule
-	-->E-Mail<!-- & -->**generated person:emails****ifnotempty person:emails:editor_only** (nur für VSRA sichtbar, nicht für andere Schiedsrichter)**endnotempty person:emails:editor_only**<!-- \\
-	-->Telefon<!-- & -->**generated person:phone_numbers_national**<!-- \\
+	-->E-Mail<!-- & -->**generated contacts:emails****ifnotempty contacts:emails:editor_only** (nur für VSRA sichtbar, nicht für andere Schiedsrichter)**endnotempty contacts:emails:editor_only**<!-- \\
+	-->Telefon<!-- & -->**generated contacts:phone_numbers_national**<!-- \\
 	-->Mitglied bei<!-- & -->**generated referee:referee_relation_member**<!-- \\
 	-->**ifnotempty referee:referee_relation_reffor**Schiedst**endnotempty referee:referee_relation_reffor** für<!-- & -->**generated referee:referee_relation_reffor**<!-- \\
 	\bottomrule

@@ -244,20 +244,21 @@ class RefManTemplate {
 																				 (empty($person['Person']['dayofdeath'])) ? '' : sprintf('†&nbsp;%s', RefManRefereeFormat::formatDate($person['Person']['dayofdeath'], 'date')));
 
 		// contacts
-		$txtReturn = RefManTemplate::replace($txtReturn, 'person:emails',
-																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Email'), $type, 'Email', $export));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'person:phone_numbers_national',
+		$tmpContacts = RefManPeople::getContacts($person, 'Email');
+		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:emails',
+																				 RefManRefereeFormat::formatContacts($tmpContacts, $type, 'Email', $export));
+		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:phone_numbers_national',
 																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'PhoneNumber'), 'national', 'PhoneNumber', $export));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'person:addresses_fulladdress',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:addresses_fulladdress',
 																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Address'), 'fulladdress', 'Address', $export));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'person:urls',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:urls',
 																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Url'), $type, 'Url', $export));
 
 		// primary contact
 		$primaryAddress = RefManPeople::getPrimaryContact($person, 'Address');
-		$txtReturn = RefManTemplate::replace($txtReturn, 'person:primary:streetnumber',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:primary:streetnumber',
 																					RefManRefereeFormat::formatAddress($primaryAddress, 'streetnumber', $type));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'person:primary:zipcity',
+		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:primary:zipcity',
 																					RefManRefereeFormat::formatAddress($primaryAddress, 'zipcity', $type));
 
 		// catch all
