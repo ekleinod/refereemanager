@@ -19,8 +19,11 @@ class RefManTemplate {
 	/** Merge file. */
 	private static $merge = null;
 
-	/** Referee relations. */
+	/** Referee relation types. */
 	private static $refereerelationtypes = null;
+
+	/** Referee status types. */
+	private static $statustypes = null;
 
 	/**
 	 * Returns template text.
@@ -189,8 +192,19 @@ class RefManTemplate {
 																				 (empty($traininglevel) || empty($traininglevel['nexttrainingupdate'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['nexttrainingupdate'], 'year'));
 
 		// status
+		if (empty(RefManTemplate::$statustypes)) {
+			$model = ClassRegistry::init('StatusType');
+			$model->recursive = -1;
+			$tmp = $model->find('all');
+			RefManTemplate::$statustypes = array();
+			foreach ($tmp as $statustype) {
+				RefManTemplate::$statustypes[$statustype['StatusType']['id']] = $statustype;
+			}
+		}
 		foreach ($referee['RefereeStatus'] as $refereestatus) {
-			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('referee:refereestatus_%s_remark', $refereestatus['season_id']),
+			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('refereestatus:%s:title', $refereestatus['season_id']),
+																					 RefManTemplate::$statustypes[$refereestatus['status_type_id']]['StatusType']['title']);
+			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('refereestatus:%s:remark', $refereestatus['season_id']),
 																					 (empty($refereestatus['remark'])) ? '' : $refereestatus['remark']);
 		}
 
