@@ -93,6 +93,11 @@
 			// datarows
 			foreach ($people as $person) {
 
+				if ($person['Person']['name'] !== 'Schöneis') {
+//				if ($person['Person']['name'] !== 'Kleinod') {
+					continue;
+				}
+
 				$tmpStatusStyles = null;
 				if ($isRefView) {
 					$tmpStatus = $this->People->getRefereeStatus($person, $season);
@@ -122,11 +127,12 @@
 					$txtRefView = $tplRefView;
 
 					$txtRefView = RefManTemplate::replaceDateTimeData($txtRefView);
-					$txtRefView = RefManTemplate::replaceSeasonData($txtRefView, $season, 'text', 'html');
+					$txtRefView = RefManTemplate::replaceSeasonData($txtRefView, $season, 'text', 'text');
 
-					$txtRefView = RefManTemplate::replaceRefereeData($txtRefView, $person, 'text', 'html');
+					$txtRefView = RefManTemplate::replaceRefereeData($txtRefView, $person, 'text', 'text');
 
 					debug($txtRefView);
+					debug($person);
 					break;
 
 					RefManTemplate::addToZip('mmd',

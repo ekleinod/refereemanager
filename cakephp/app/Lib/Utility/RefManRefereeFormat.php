@@ -205,6 +205,9 @@ class RefManRefereeFormat {
 			case 'excel':
 				$sSeparator = "\n";
 				break;
+			case 'text':
+				$sSeparator = ', ';
+				break;
 		}
 
 		return RefManRefereeFormat::formatMultiline($sTextArray, $sSeparator);
@@ -245,13 +248,24 @@ class RefManRefereeFormat {
 					break;
 			}
 
-			if (!empty($data['info']['remark'])) {
+			if (!empty($data['info']['editor_only']) || !empty($data['info']['remark'])) {
+
+				$txtout = array();
+				if (!empty($data['info']['editor_only'])) {
+					$txtout[] = __('privat');
+				}
+				if (!empty($data['info']['remark'])) {
+					$txtout[] = $data['info']['remark'];
+				}
+				$txtout = RefManRefereeFormat::formatMultiline($txtout, ', ');
+
 				switch ($export) {
 					case 'html':
-						$sReturn .= sprintf(' <span style="font-size: smaller; font-style: italic;">(%s)</span>', $data['info']['remark']);
+						$sReturn .= sprintf(' <span style="font-size: smaller; font-style: italic;">(%s)</span>', $txtout);
 						break;
 					case 'excel':
-						$sReturn .= sprintf(' (%s)', $data['info']['remark']);
+					case 'text':
+						$sReturn .= sprintf(' (%s)', $txtout);
 						break;
 				}
 			}

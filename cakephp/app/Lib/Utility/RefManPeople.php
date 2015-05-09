@@ -40,8 +40,9 @@ class RefManPeople {
 			if (!empty($tmpData)) {
 
 				$tmpData['info'] = array();
-				$tmpData['info']['is_primary'] = $contact['is_primary'];
 				$tmpData['info']['title'] = $contact['title'];
+				$tmpData['info']['is_primary'] = $contact['is_primary'];
+				$tmpData['info']['editor_only'] = $contact['editor_only'];
 				$tmpData['info']['remark'] = $contact['remark'];
 
 				$type = $modelTypes->findById($contact['contact_type_id']);

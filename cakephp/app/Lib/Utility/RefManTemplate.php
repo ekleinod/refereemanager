@@ -247,6 +247,12 @@ class RefManTemplate {
 		$tmpContacts = RefManPeople::getContacts($person, 'Email');
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:emails',
 																				 RefManRefereeFormat::formatContacts($tmpContacts, $type, 'Email', $export));
+		$isPrivate = false;
+		foreach ($tmpContacts as $tmpContact) {
+			$isPrivate |= $tmpContact['info']['editor_only'];
+		}
+		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:emails:editor_only', $isPrivate);
+
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:phone_numbers_national',
 																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'PhoneNumber'), 'national', 'PhoneNumber', $export));
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:addresses_fulladdress',
