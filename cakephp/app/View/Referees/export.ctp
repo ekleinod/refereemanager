@@ -93,13 +93,6 @@
 			// datarows
 			foreach ($people as $person) {
 
-				if ($person['Person']['name'] !== 'Balzer') {
-//				if ($person['Person']['name'] !== 'Schwartz') {
-//				if ($person['Person']['name'] !== 'Schöneis') {
-//				if ($person['Person']['name'] !== 'Kleinod') {
-					continue;
-				}
-
 				$tmpStatusStyles = null;
 				if ($isRefView) {
 					$tmpStatus = $this->People->getRefereeStatus($person, $season);
@@ -133,26 +126,12 @@
 
 					$txtRefView = RefManTemplate::replaceRefereeData($txtRefView, $person, 'text', 'text');
 
-					debug($txtRefView);
-					debug($person);
-					break;
-
 					RefManTemplate::addToZip('mmd',
 																	 sprintf('%s_%s',
 																					 RefManTemplate::fileName($person['Person']['name']),
 																					 RefManTemplate::fileName($person['Person']['first_name'])),
 																	 $txtRefView);
 				}
-/*
-				// prepare
-				if ($type === 'referee_view_zip') {
-					$filledTemplate = $template;
-					$repltoken = 'date';
-					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $this->RefereeFormat->formatDate(time(), 'medium'), $filledTemplate);
-					$repltoken = 'season';
-					$filledTemplate = str_replace(sprintf($tpltoken, $repltoken), $season['title_season'], $filledTemplate);
-				}
-*/
 
 			}
 
@@ -195,8 +174,8 @@
 
 			if ($type === 'referee_view_zip') {
 				$zipfile = RefManTemplate::closeZip();
-/*				$this->response->file($zipfile);
-				echo $this->response;*/
+				$this->response->file($zipfile);
+				echo $this->response;
 			}
 
 		}
