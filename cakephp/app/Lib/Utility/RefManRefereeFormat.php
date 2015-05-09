@@ -390,6 +390,7 @@ class RefManRefereeFormat {
 
 			case 'html':
 			case 'excel':
+			case 'text':
 				switch ($type) {
 					case 'international':
 						$sReturn .= __('+%s %s %s',
@@ -447,6 +448,7 @@ class RefManRefereeFormat {
 				break;
 
 			case 'excel':
+			case 'text':
 				$sReturn .= $data['Url']['url'];
 				break;
 

@@ -253,10 +253,24 @@ class RefManTemplate {
 		}
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:emails:editor_only', $isPrivate);
 
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:phone_numbers_national',
-																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'PhoneNumber'), 'national', 'PhoneNumber', $export));
+		$tmpContacts = RefManPeople::getContacts($person, 'PhoneNumber');
+		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:phonenumbers_national',
+																				 RefManRefereeFormat::formatContacts($tmpContacts, 'national', 'PhoneNumber', $export));
+		$isPrivate = false;
+		foreach ($tmpContacts as $tmpContact) {
+			$isPrivate |= $tmpContact['info']['editor_only'];
+		}
+		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:phonenumbers:editor_only', $isPrivate);
+
+		$tmpContacts = RefManPeople::getContacts($person, 'Address');
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:addresses_fulladdress',
-																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Address'), 'fulladdress', 'Address', $export));
+																				 RefManRefereeFormat::formatContacts($tmpContacts, 'fulladdress', 'Address', $export));
+		$isPrivate = false;
+		foreach ($tmpContacts as $tmpContact) {
+			$isPrivate |= $tmpContact['info']['editor_only'];
+		}
+		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:addresses:editor_only', $isPrivate);
+
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:urls',
 																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Url'), $type, 'Url', $export));
 
