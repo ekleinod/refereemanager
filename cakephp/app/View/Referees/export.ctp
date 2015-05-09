@@ -93,8 +93,8 @@
 			// datarows
 			foreach ($people as $person) {
 
-//				if ($person['Person']['name'] !== 'Balzer') {
-				if ($person['Person']['name'] !== 'Schwartz') {
+				if ($person['Person']['name'] !== 'Balzer') {
+//				if ($person['Person']['name'] !== 'Schwartz') {
 //				if ($person['Person']['name'] !== 'Schöneis') {
 //				if ($person['Person']['name'] !== 'Kleinod') {
 					continue;

@@ -63,18 +63,17 @@ Nutzungsbeispiel: Verwaltung der Einsätze.
 <!--
 \begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
 	\toprule
-	-->Alle Infos per Brief<!-- & -->**generated docs_per_letter****ifnotempty emails** *Bitte prüfen, ob die Zusendung per E-Mail nicht doch ausreicht.* **endnotempty emails**<!-- \\
-	-->Adresse<!-- & -->**generated addresses_fulladdress**<!-- \\
-	-->URL<!-- & -->**generated urls**<!-- \\
-	-->Geburtstag<!-- & -->**generated birthday**<!-- \\
-	-->Geschlecht<!-- & -->**generated sextype**<!-- \\
-	-->Bevorzugt schiedsen<!-- & -->**generated referee_relation_prefer**<!-- \\
-	-->Nicht schiedsen<!-- & -->**generated referee_relation_noassignment**<!-- \\
-	-->Wochentag<!-- & -->**generated weekday**<!-- \\
-	-->**generated traininglevel_abbreviation** seit<!-- & -->**generated traininglevelsince**<!-- \\
-	-->Letzte Fortbildung<!-- & -->**generated lasttrainingupdate**<!-- \\
-	-->Nächste Fortbildung<!-- & -->**generated nexttrainingupdate**<!-- \\
-	-->Anmerkung<!-- & -->**generated remark** **generated refereestatus:**generated season:id**:remark**<!-- \\
+	**ifnotempty referee:docs_per_letter**-->Alle Infos per Brief<!-- & -->ja**ifnotempty contacts:emails** *Bitte prüfen, ob die Zusendung per E-Mail nicht doch ausreicht.* **endnotempty contacts:emails**<!-- \\**endnotempty referee:docs_per_letter**
+	-->Adresse<!-- & -->**ifempty contacts:addresses_fulladdress**---**endempty contacts:addresses_fulladdress****generated contacts:addresses_fulladdress**<!-- \\
+	-->URL<!-- & -->**ifempty contacts:urls**---**endempty contacts:urls****generated contacts:urls**<!-- \\
+	-->Geburtstag<!-- & -->**ifempty person:birthday**---**endempty person:birthday****generated person:birthday**<!-- \\
+	-->Geschlecht<!-- & -->**generated sextype:title**<!-- \\
+	-->Bevorzugt schiedsen<!-- & -->**ifempty referee:referee_relation_prefer**---**endempty referee:referee_relation_prefer****generated referee:referee_relation_prefer**<!-- \\
+	-->Nicht schiedsen<!-- & -->**ifempty referee:referee_relation_noassignment**---**endempty referee:referee_relation_noassignment****generated referee:referee_relation_noassignment**<!-- \\
+	-->**generated traininglevel:abbreviation** seit<!-- & -->**ifempty traininglevel:since**---**endempty traininglevel:since****generated traininglevel:since**<!-- \\
+	-->Letzte Fortbildung<!-- & -->**ifempty traininglevel:lasttrainingupdate**---**endempty traininglevel:lasttrainingupdate****generated traininglevel:lasttrainingupdate**<!-- \\
+	-->Nächste Fortbildung<!-- & -->**ifempty traininglevel:nexttrainingupdate**---**endempty traininglevel:nexttrainingupdate****generated traininglevel:nexttrainingupdate**<!-- \\
+	-->Anmerkung<!-- & -->**generated person:remark** **generated refereestatus:**generated season:id**:remark**<!-- \\
 	\bottomrule
 \end{longtabu}
 -->
