@@ -371,6 +371,7 @@ class RefManTemplate {
 	public static function fileName($filename) {
 		$txtReturn = $filename;
 
+		// convenience
 		$txtReturn = str_replace('ä', 'ae', $txtReturn);
 		$txtReturn = str_replace('Ä', 'Ae', $txtReturn);
 		$txtReturn = str_replace('é', 'e', $txtReturn);
@@ -380,9 +381,9 @@ class RefManTemplate {
 		$txtReturn = str_replace('ü', 'ue', $txtReturn);
 		$txtReturn = str_replace('Ü', 'Ue', $txtReturn);
 		$txtReturn = str_replace('ß', 'ss', $txtReturn);
-		$txtReturn = str_replace('.', '_', $txtReturn);
-		$txtReturn = str_replace('-', '_', $txtReturn);
-		$txtReturn = str_replace(' ', '_', $txtReturn);
+
+		// catch all
+		$txtReturn = preg_replace('/[^a-z0-9]/i', '_', $txtReturn);
 
 		return $txtReturn;
 	}
