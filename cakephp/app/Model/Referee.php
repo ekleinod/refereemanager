@@ -81,12 +81,13 @@ class Referee extends AppModel {
 	 * maybe later when I understand how to find things in a static method
 	 *
 	 * @param season season, referees have to be associated with
+	 * @param isEditor is editor?
 	 * @return array of referees for given season, empty if there are none
 	 *
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	public function getReferees($season) {
+	public function getReferees($season, $isEditor) {
 
 		$referees = $this->find('all');
 		usort($referees, array('Person', 'compareTo'));
@@ -101,6 +102,18 @@ class Referee extends AppModel {
 
 			if ($useReferee) {
 				$this->fillReferee($referee);
+
+				// remove hidden contacts
+				if (!empty($referee['Contact'])) {
+					$tmpContacts = array();
+					foreach ($referee['Contact'] as $contact) {
+						if (empty($contact['editor_only']) || $isEditor) {
+							$tmpContacts[] = $contact;
+						}
+					}
+					$referee['Contact'] = $tmpContacts;
+				}
+
 				$arrReturn[] = $referee;
 			}
 

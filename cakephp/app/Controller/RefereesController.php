@@ -58,7 +58,7 @@ class RefereesController extends AppController {
 		$theSeason = $this->getSeason($season);
 		$this->setAndGetStandard();
 
-		$referees = $this->Referee->getReferees($theSeason);
+		$referees = $this->Referee->getReferees($theSeason, $this->viewVars['isEditor']);
 		$this->set('people', $referees);
 
 		$this->set('statustypes', $this->getUsedStatusTypes($referees, $theSeason));
