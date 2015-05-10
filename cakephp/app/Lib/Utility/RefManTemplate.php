@@ -373,6 +373,8 @@ class RefManTemplate {
 
 		$txtReturn = str_replace('ä', 'ae', $txtReturn);
 		$txtReturn = str_replace('Ä', 'Ae', $txtReturn);
+		$txtReturn = str_replace('é', 'e', $txtReturn);
+		$txtReturn = str_replace('è', 'e', $txtReturn);
 		$txtReturn = str_replace('ö', 'oe', $txtReturn);
 		$txtReturn = str_replace('Ö', 'Oe', $txtReturn);
 		$txtReturn = str_replace('ü', 'ue', $txtReturn);
@@ -380,6 +382,7 @@ class RefManTemplate {
 		$txtReturn = str_replace('ß', 'ss', $txtReturn);
 		$txtReturn = str_replace('.', '_', $txtReturn);
 		$txtReturn = str_replace('-', '_', $txtReturn);
+		$txtReturn = str_replace(' ', '_', $txtReturn);
 
 		return $txtReturn;
 	}
