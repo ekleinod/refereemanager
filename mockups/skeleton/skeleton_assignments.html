@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"><!--<![endif]--><head>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+		<link rel="stylesheet" type="text/css" href="css/skeleton.css" />
+		<link rel="stylesheet" type="text/css" href="css/layout.css" />
+
+		<!-- favicons by hand, maybe later using cakephp methods -->
+		<link rel="shortcut icon" href="favicon.ico" />
+		<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png" />
+
+		<!-- title -->
+		<title>Übersicht der Schiedsrichtereinsätze</title>
+
+	</head>
+	<body>
+
+		<div class="page">
+
+			<div class="band header">
+
+				<header class="container main">
+
+					<div class="sixteen columns">
+
+						<h1><a href="http://localhost/refereemanager/">Schiedsrichterverwaltung</a></h1>
+
+					</div><!-- end sixteen -->
+
+				</header><!-- end container -->
+
+			</div><!-- end band header -->
+
+			<div class="band navigation">
+
+				<nav class="container primary">
+
+					<div class="sixteen columns">
+
+						<!-- main navigation for big devices -->
+<ul>
+					<li><a href="http://localhost/refereemanager/assignments">Schiedsrichtereinsätze</a>									</li>
+					<li><a href="http://localhost/refereemanager/referees">Schiedsrichter</a>									</li>
+					<li><a href="http://localhost/refereemanager/other">Sonstiges</a>												<ul>
+																			<li><a href="http://localhost/refereemanager/clubs">Clubs</a></li>
+																			<li><a href="http://localhost/refereemanager/league_types">Liga-Typen</a></li>
+																			<li><a href="http://localhost/refereemanager/leagues">Ligen</a></li>
+																			<li><a href="http://localhost/refereemanager/people">Personen</a></li>
+																			<li><a href="http://localhost/refereemanager/seasons">Saisons</a></li>
+																			<li><a href="http://localhost/refereemanager/teams">Teams</a></li>
+															</ul>
+									</li>
+					<li><a href="http://localhost/refereemanager/tools_editor">Editor-Werkzeuge</a>												<ul>
+																			<li><a href="http://localhost/refereemanager/tools_editor/mailinglist">Mailverteiler</a></li>
+																			<li><a href="http://localhost/refereemanager/tools_editor/message">Nachricht</a></li>
+															</ul>
+									</li>
+	</ul>
+
+<!-- main navigation for small devices -->
+<select onchange="if (this.value) window.location.href=this.value">
+	<option selected="selected" value="">Go to...</option>
+					<option value="/refereemanager/assignments">Schiedsrichtereinsätze</option>
+										<option value="/refereemanager/referees">Schiedsrichter</option>
+										<option value="/refereemanager/other">Sonstiges</option>
+														<option value="/refereemanager/clubs">- Clubs</option>
+														<option value="/refereemanager/league_types">- Liga-Typen</option>
+														<option value="/refereemanager/leagues">- Ligen</option>
+														<option value="/refereemanager/people">- Personen</option>
+														<option value="/refereemanager/seasons">- Saisons</option>
+														<option value="/refereemanager/teams">- Teams</option>
+										<option value="/refereemanager/tools_editor">Editor-Werkzeuge</option>
+														<option value="/refereemanager/tools_editor/mailinglist">- Mailverteiler</option>
+														<option value="/refereemanager/tools_editor/message">- Nachricht</option>
+						</select>
+
+
+					</div><!-- end sixteen -->
+
+				</nav><!-- end container primary -->
+
+			</div><!-- end band navigation -->
+
+							<div class="band username">
+					<div class="container">
+						<div class="sixteen columns">
+							<p>
+								Eingeloggt als: "ekedit"
+								(<a href="http://localhost/refereemanager/users/logout" class="">Logout</a>)
+							</p>
+						</div><!-- end sixteen -->
+					</div><!-- end container -->
+				</div><!-- end band content -->
+
+			<div class="band content">
+
+				<div class="container">
+
+					<div class="sixteen columns">
+
+						<article>
+							<div id="flash"></div>
+							<div id="content">
+								<h2>Übersicht der Schiedsrichtereinsätze</h2>
+
+
+
+<!-- main navigation for big devices -->
+	<div class="filter">
+		<ol class="currentfilter">
+							<li><label>Saison</label>2014-2015</li>
+					</ol>
+		<form action="/refereemanager/assignments" id="FilterIndexForm" method="post" accept-charset="utf-8"><div style="display:none;"><input name="_method" value="POST" type="hidden"></div>			<fieldset>
+				<legend>Filter</legend>
+				<ol>
+					<li class="input select"><label for="FilterSeason">Saison</label><select name="data[Filter][season]" title="Saison" autofocus="autofocus" id="FilterSeason">
+<option value="3">VSR-Lehrgang</option>
+<option value="4">2015-2016</option>
+<option value="2" selected="selected">2014-2015</option>
+<option value="1">2013-2014</option>
+</select></li>				</ol>
+				<button type="submit">Filtern</button>			</fieldset>
+		</form>	</div>
+
+
+<div class="actions">
+
+
+		<a href="http://localhost/refereemanager/assignments/add" class="button-link access-editor">Neu</a>
+
+
+	<a href="http://localhost/refereemanager/assignments" class="button-link access-editor">Übersicht</a>
+</div>
+
+
+<!-- view content -->
+	<table>
+		<thead><tr><th>Datum</th><th>Uhrzeit</th><th>Spiel</th><th>Liga</th><th>Heimteam</th><th>Auswärtsteam</th><th>Schiedsrichter</th><th>OSR-Bericht</th><th>Anmerkung</th><th>Aktionen</th></tr></thead><tfoot><tr><th>Datum</th><th>Uhrzeit</th><th>Spiel</th><th>Liga</th><th>Heimteam</th><th>Auswärtsteam</th><th>Schiedsrichter</th><th>OSR-Bericht</th><th>Anmerkung</th><th>Aktionen</th></tr></tfoot>		<tbody>
+								<tr>
+						<td data-title="Datum" style="">06.09.2014 (Sat)</td><td data-title="Uhrzeit" style="">13:00</td><td data-title="Spiel" style="">1</td><td data-title="Liga" style="">RLND</td><td data-title="Heimteam" style="">todo</td><td data-title="Auswärtsteam" style="">todo</td><td data-title="Schiedsrichter" style="">todo</td><td data-title="OSR-Bericht" style=" color: darkgreen;">✓</td><td data-title="Anmerkung" style=""></td><td class="actions" data-title="Aktionen" style=""><a href="http://localhost/refereemanager/assignments/view/1" class="button-link access-anonymous">Ansehen</a>	<a href="http://localhost/refereemanager/assignments/edit/1" class="button-link access-editor">Editieren</a>
+</td>					</tr>
+								<tr>
+						<td data-title="Datum" style="">06.09.2014 (Sat)</td><td data-title="Uhrzeit" style="">18:00</td><td data-title="Spiel" style="">2</td><td data-title="Liga" style="">RLNH</td><td data-title="Heimteam" style="">todo</td><td data-title="Auswärtsteam" style="">todo</td><td data-title="Schiedsrichter" style="">todo</td><td data-title="OSR-Bericht" style=" color: darkgreen;">✓</td><td data-title="Anmerkung" style=""></td><td class="actions" data-title="Aktionen" style=""><a href="http://localhost/refereemanager/assignments/view/2" class="button-link access-anonymous">Ansehen</a>	<a href="http://localhost/refereemanager/assignments/edit/2" class="button-link access-editor">Editieren</a>
+</td>					</tr>
+								<tr>
+						<td data-title="Datum" style="">10.05.2015 (Sun)</td><td data-title="Uhrzeit" style="">14:00</td><td data-title="Spiel" style="">90</td><td data-title="Liga" style="">1BLD</td><td data-title="Heimteam" style="">todo</td><td data-title="Auswärtsteam" style="">todo</td><td data-title="Schiedsrichter" style="">todo</td><td data-title="OSR-Bericht" style=" color: darkred;">✗</td><td data-title="Anmerkung" style=""></td><td class="actions" data-title="Aktionen" style=""><a href="http://localhost/refereemanager/assignments/view/3" class="button-link access-anonymous">Ansehen</a>	<a href="http://localhost/refereemanager/assignments/edit/3" class="button-link access-editor">Editieren</a>
+</td>					</tr>
+					</tbody>
+	</table>
+
+
+							</div>
+						</article>
+
+					</div><!-- end sixteen -->
+
+				</div><!-- end container -->
+
+			</div><!-- end band content -->
+
+			<div class="band footer">
+
+				<footer class="container">
+
+					<div class="four columns">
+
+						<ul>
+							<li><a href="http://schiri.bettv.de/">Schiedsrichter-Homepage</a></li>
+						</ul>
+
+					</div><!-- end four -->
+
+					<div class="four columns">
+
+						<ul>
+							<li><a href="http://localhost/refereemanager/users/login" class="">Login</a></li>
+							<li><a href="http://localhost/refereemanager/users/logout" class="">Logout</a></li>
+						</ul>
+
+					</div><!-- end four -->
+
+				</footer><!-- end container -->
+
+			</div><!-- end band footer -->
+
+		</div><!-- end page -->
+
+
+
+
+
+</body></html>
