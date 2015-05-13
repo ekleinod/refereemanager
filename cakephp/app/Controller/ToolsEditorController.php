@@ -270,7 +270,7 @@ class ToolsEditorController extends AppController {
 		$theSeason = $this->getSeason($season);
 		$this->set('seasonarray', $this->Season->getSeasonList($this->viewVars['isEditor']));
 
-		$referees = $this->Referee->getReferees($theSeason);
+		$referees = $this->Referee->getReferees($theSeason, $this->viewVars['isEditor']);
 		$this->set('referees', $referees);
 
 		$this->set('controller', 'ToolsEditor');
