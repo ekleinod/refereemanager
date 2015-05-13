@@ -18,7 +18,7 @@ class RefereesController extends AppController {
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Person', 'Referee', 'RefereeRelationType', 'Season', 'StatusType');
+	public $uses = array('Person', 'Referee', 'RefereeRelationType', 'Season', 'SexType', 'StatusType');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
@@ -35,7 +35,7 @@ class RefereesController extends AppController {
 	 *
 	 * @param season season (default: null == current season)
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function index($season = null) {
@@ -43,6 +43,78 @@ class RefereesController extends AppController {
 		$this->setAndGetStandardIndexExport($season);
 
 		$this->set('title_for_layout', __('Übersicht der Schiedsrichter_innen'));
+	}
+
+	/**
+	 * Export method.
+	 *
+	 * @param season season to use (default: null == current season)
+	 * @param type export type (default: excel)
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	public function export($season = null, $type = 'excel') {
+
+		$this->setAndGetStandardIndexExport($season);
+
+		$this->set('type', $type);
+
+		$this->set('title_for_layout', __('Export der Schiedsrichter_innen'));
+
+		if ($type === 'pdf') {
+			$this->layout = 'pdf';
+			$this->render();
+		}
+
+	}
+
+	/**
+	 * View method: show the referee with the given id.
+	 *
+	 * @param $id id of referee
+	 * @return void
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	public function view($id = null) {
+
+		$this->Referee->id = $id;
+		if (!$this->Referee->exists()) {
+			throw new NotFoundException(__('Schiedsrichter_in mit der ID \'%s\' existiert nicht.', $id));
+		}
+		$referee = $this->Referee->read(null, $id);
+
+		$this->setAndGetStandardNewAddView($referee);
+		$this->set('title_for_layout', __('Detailanzeige Schiedsrichter%s %s', ($referee['Person']['sex_type_sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
+		$this->render('/Generic/view');
+	}
+
+
+
+	/**
+	 * Set and get standard values for new, add, view.
+	 *
+	 * @param $referee referee
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	private function setAndGetStandardNewAddView(&$referee) {
+
+		$sextypes = $this->SexType->getSexTypes();
+		$referee['Person']['sex_type_sid'] = $sextypes[$referee['Person']['sex_type_id']]['SexType']['sid'];
+
+		// pass information to view
+		$this->set('referee', $referee);
+		$this->set('sextypes', $sextypes);
+		$this->set('sextypearray', $this->SexType->getSexTypeList());
+		$this->set('contacttypes', $this->getContactTypes());
+		$this->set('refereerelationtypes', $this->getRefereeRelationTypes());
+		$this->set('clubarray', $this->getClubArray());
+
+		$this->set('id', $referee['Referee']['id']);
 	}
 
 	/**
@@ -162,52 +234,6 @@ class RefereesController extends AppController {
 
 
 	/**
-	 * Export method.
-	 *
-	 * @param season season to use (default: null == current season)
-	 * @param type export type (default: excel)
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public function export($season = null, $type = 'excel') {
-
-		$this->setAndGetStandardIndexExport($season);
-
-		$this->set('type', $type);
-
-		$this->set('title_for_layout', __('Export der Schiedsrichter_innen'));
-
-		if ($type === 'pdf') {
-			$this->layout = 'pdf';
-			$this->render();
-		}
-
-	}
-
-	/**
-	 * View method: show the referee with the given id.
-	 *
-	 * @param $id id of referee
-	 * @return void
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public function view($id = null) {
-
-		$this->Referee->id = $id;
-		if (!$this->Referee->exists()) {
-			throw new NotFoundException(__('Schiedsrichter_in mit der ID \'%s\' existiert nicht.', $id));
-		}
-		$referee = $this->Referee->read(null, $id);
-
-		$this->setAndGetStandardNewAddView($referee);
-		$this->set('title_for_layout', __('Detailanzeige Schiedsrichter%s %s', ($referee['Person']['sex_type_sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
-		$this->render('/Generic/view');
-	}
-
-	/**
 	 * Edit method: edit the referee with the given id.
 	 *
 	 * @param $id id of referee
@@ -228,30 +254,6 @@ class RefereesController extends AppController {
 
 		$this->set('title_for_layout', __('Schiedsrichter%s %s editieren', ($referee['Person']['sex_type_sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
 		$this->render('/Generic/edit');
-	}
-
-	/**
-	 * Set and get standard values for new, add, view.
-	 *
-	 * @param $referee referee
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function setAndGetStandardNewAddView(&$referee) {
-
-		$sextypes = $this->getSexTypes();
-		$referee['Person']['sex_type_sid'] = $sextypes[$referee['Person']['sex_type_id']]['sid'];
-
-		// pass information to view
-		$this->set('referee', $referee);
-		$this->set('sextypes', $sextypes);
-		$this->set('sextypearray', $this->getSexTypeArray());
-		$this->set('contacttypes', $this->getContactTypes());
-		$this->set('refereerelationtypes', $this->getRefereeRelationTypes());
-		$this->set('clubarray', $this->getClubArray());
-
-		$this->set('id', $referee['Referee']['id']);
 	}
 
 	/**

@@ -61,6 +61,29 @@ class SexType extends AppModel {
 	private $sextypes = null;
 
 	/**
+	 * Returns sex types.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return array of sex types
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getSexTypes() {
+		if ($this->sextypes == null) {
+			$this->recursive = -1;
+			$this->sextypes = array();
+			foreach ($this->find('all') as $sextype) {
+				$this->sextypes[$sextype['SexType']['id']] = $sextype;
+			}
+		}
+
+		return $this->sextypes;
+	}
+
+	/**
 	 * Returns sex type.
 	 *
 	 * Method should be static,
@@ -69,19 +92,41 @@ class SexType extends AppModel {
 	 * @param sid sex type's sid
 	 * @return sex type
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function getSexType($sid) {
-		if ($this->sextypes == null) {
-			$this->recursive = -1;
-			$this->sextypes = array();
-			foreach ($this->find('all') as $sextype) {
-				$this->sextypes[$sextype['SexType']['sid']] = $sextype['SexType'];
+		foreach ($this->getSexTypes() as $sextype) {
+			if ($sextype['SexType']['sid'] === $sid) {
+				return $sextype;
 			}
 		}
 
-		return $this->sextypes[$sid];
+		return null;
+	}
+
+	/**
+	 * Returns sex type list.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return list of sex types
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getSexTypeList() {
+
+		$sextypes = array();
+
+		foreach ($this->getSexTypes() as $sextype) {
+			$sextypes[$sextype['SexType']['id']] = $sextype['SexType']['title'];
+		}
+
+		arsort($sextypes, SORT_LOCALE_STRING);
+
+		return $sextypes;
 	}
 
 }
