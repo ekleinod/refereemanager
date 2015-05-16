@@ -57,6 +57,33 @@ class RefereeRelationType extends AppModel {
 	const SID_PREFER = 'prefer';
 	const SID_NOASSIGNMENT = 'noassignment';
 
+	/** Singleton for fast access. */
+	private $refereerelationtypes = null;
+
+	/**
+	 * Returns referee relation types.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return array of referee relation types, empty if there are none
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getRefereeRelationTypes() {
+		if ($this->refereerelationtypes == null) {
+			$this->recursive = -1;
+			$this->refereerelationtypes = array();
+			foreach ($this->find('all') as $refereerelationtype) {
+				$this->refereerelationtypes[$refereerelationtype['RefereeRelationType']['id']] = $refereerelationtype;
+			}
+//			usort($this->refereerelationtypes, array('RefereeRelationType', 'compareTo'));
+		}
+
+		return $this->refereerelationtypes;
+	}
+
 }
 
 /* EOF */

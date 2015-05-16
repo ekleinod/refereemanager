@@ -51,23 +51,31 @@ class ContactType extends AppModel {
 
 	// custom programming
 
+	/** Singleton for fast access. */
+	private $contacttypes = null;
+
 	/**
 	 * Returns contact types.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return array of people, empty if there are none
+	 * @return array of contact types, empty if there are none
 	 *
 	 * @version 0.3
 	 * @since 0.3
 	 */
 	public function getContactTypes() {
+		if ($this->contacttypes == null) {
+			$this->recursive = -1;
+			$this->contacttypes = array();
+			foreach ($this->find('all') as $contacttype) {
+				$this->contacttypes[$contacttype['ContactType']['id']] = $contacttype;
+			}
+			usort($this->contacttypes, array('ContactType', 'compareTo'));
+		}
 
-		$contacttypes = $this->find('all');
-		usort($contacttypes, array('ContactType', 'compareTo'));
-
-		return $contacttypes;
+		return $this->contacttypes;
 	}
 
 	/**

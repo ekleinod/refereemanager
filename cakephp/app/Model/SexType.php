@@ -57,7 +57,7 @@ class SexType extends AppModel {
 	const SID_OTHER = 'other';
 	const SID_UNKNOWN = 'unknown';
 
-	/** Singleton for fast access to sex types. */
+	/** Singleton for fast access. */
 	private $sextypes = null;
 
 	/**

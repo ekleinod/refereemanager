@@ -18,7 +18,7 @@ class RefereesController extends AppController {
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Person', 'Referee', 'RefereeRelationType', 'Season', 'SexType', 'StatusType');
+	public $uses = array('Club', 'ContactType', 'Person', 'Referee', 'RefereeRelationType', 'Season', 'SexType', 'StatusType');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
@@ -110,9 +110,9 @@ class RefereesController extends AppController {
 		$this->set('referee', $referee);
 		$this->set('sextypes', $sextypes);
 		$this->set('sextypearray', $this->SexType->getSexTypeList());
-		$this->set('contacttypes', $this->getContactTypes());
-		$this->set('refereerelationtypes', $this->getRefereeRelationTypes());
-		$this->set('clubarray', $this->getClubArray());
+		$this->set('contacttypes', $this->ContactType->getContactTypes());
+		$this->set('refereerelationtypes', $this->RefereeRelationType->getRefereeRelationTypes());
+		$this->set('clubarray', $this->Club->getClubList());
 
 		$this->set('id', $referee['Referee']['id']);
 	}
@@ -254,53 +254,6 @@ class RefereesController extends AppController {
 
 		$this->set('title_for_layout', __('Schiedsrichter%s %s editieren', ($referee['Person']['sex_type_sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
 		$this->render('/Generic/edit');
-	}
-
-	/**
-	 * Returns all referee relation types.
-	 *
-	 * @return all referee relation types
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getAllRefereeRelationTypes() {
-		$allrefereerelationtypes = array();
-		foreach ($this->RefereeRelationType->find('all') as $refereerelationtype) {
-			$allrefereerelationtypes[$refereerelationtype['RefereeRelationType']['sid']] = $refereerelationtype['RefereeRelationType'];
-		}
-		return $allrefereerelationtypes;
-	}
-
-	/**
-	 * Returns the contact types.
-	 *
-	 * @return array of contact types
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getContactTypes() {
-		$contacttypes = array();
-		foreach ($this->ContactType->find('all') as $contacttype) {
-			$contacttypes[$contacttype['ContactType']['id']] = $contacttype['ContactType'];
-		}
-		return $contacttypes;
-	}
-
-	/**
-	 * Returns the club array for use in select fields.
-	 *
-	 * @return array of club
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	private function getClubArray() {
-		$clubarray = $this->Club->find('list');
-		asort($clubarray, SORT_LOCALE_STRING);
-
-		return $clubarray;
 	}
 
 }

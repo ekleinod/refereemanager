@@ -50,21 +50,53 @@ class Club extends AppModel {
 
 	// custom programming
 
+	/** Singleton for fast access. */
+	private $clubs = null;
+
 	/**
 	 * Returns clubs.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return array of clubs, empty if there are none
+	 * @return array of clubs
 	 *
 	 * @version 0.3
 	 * @since 0.3
 	 */
 	public function getClubs() {
+		if ($this->clubs == null) {
+			$this->recursive = -1;
+			$this->clubs = array();
+			foreach ($this->find('all') as $club) {
+				$this->clubs[$club['Club']['id']] = $club;
+			}
+			usort($this->clubs, array('Club', 'compareTo'));
+		}
 
-		$clubs = $this->find('all');
-		usort($clubs, array('Club', 'compareTo'));
+		return $this->clubs;
+	}
+
+	/**
+	 * Returns club list.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return list of clubs
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getClubList() {
+
+		$clubs = array();
+
+		foreach ($this->getClubs() as $club) {
+			$clubs[$club['Club']['id']] = $club['Club']['title'];
+		}
+
+		arsort($clubs, SORT_LOCALE_STRING);
 
 		return $clubs;
 	}
