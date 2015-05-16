@@ -12,6 +12,20 @@ App::uses('AppModel', 'Model');
 class Club extends AppModel {
 
 	/**
+	 * Declare virtual display field in constructor to be alias-safe.
+	 *
+	 * @version 0.1
+	 * @since 0.1
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['display_club'] = sprintf(
+			'IF(%1$s.abbreviation IS NULL OR %1$s.abbreviation = "", %1$s.name, %1$s.abbreviation)',
+			$this->alias
+		);
+	}
+
+	/**
 	 * Model name.
 	 *
 	 * Good practice to include the model name.
@@ -27,7 +41,7 @@ class Club extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $displayField = 'name';
+	public $displayField = 'display_club';
 
 	/**
 	 * Validation rules
@@ -50,8 +64,9 @@ class Club extends AppModel {
 
 	// custom programming
 
-	/** Singleton for fast access. */
+	/** Singletons for fast access. */
 	private $clubs = null;
+	private $clublist = null;
 
 	/**
 	 * Returns clubs.
@@ -89,16 +104,18 @@ class Club extends AppModel {
 	 * @since 0.3
 	 */
 	public function getClubList() {
+		if ($this->clublist == null) {
 
-		$clubs = array();
+			$this->clublist = array();
 
-		foreach ($this->getClubs() as $club) {
-			$clubs[$club['Club']['id']] = $club['Club']['title'];
+			foreach ($this->getClubs() as $club) {
+				$this->clublist[$club['Club']['id']] = $club['Club']['display_club'];
+			}
+
+			asort($this->clublist, SORT_LOCALE_STRING);
 		}
 
-		arsort($clubs, SORT_LOCALE_STRING);
-
-		return $clubs;
+		return $this->clublist;
 	}
 
 	/**
@@ -115,24 +132,7 @@ class Club extends AppModel {
 	 * @since 0.3
 	 */
 	public static function compareTo($a, $b) {
-
-		// first criterion: abbreviation or, if not existent, name
-		$critA = (empty($a['Club']['abbreviation'])) ? $a['Club']['name'] : $a['Club']['abbreviation'];
-		$critB = (empty($b['Club']['abbreviation'])) ? $b['Club']['name'] : $b['Club']['abbreviation'];
-
-		$compResult = strcasecmp($critA, $critB);
-		if ($compResult != 0) {
-			return $compResult;
-		}
-
-		// second criterion: name
-		$compResult = strcasecmp($a['Club']['name'], $b['Club']['name']);
-		if ($compResult != 0) {
-			return $compResult;
-		}
-
-		// equal
-		return 0;
+		return strcasecmp($a['Club']['display_club'], $b['Club']['display_club']);
 	}
 
 }
