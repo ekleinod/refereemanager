@@ -12,6 +12,20 @@ App::uses('AppModel', 'Model');
 class SexType extends AppModel {
 
 	/**
+	 * Declare virtual display field in constructor to be alias-safe.
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['display_sextype'] = sprintf(
+			'%1$s.title',
+			$this->alias
+		);
+	}
+
+	/**
 	 * Model name.
 	 *
 	 * Good practice to include the model name.
@@ -22,12 +36,12 @@ class SexType extends AppModel {
 	public $name = 'SexType';
 
 	/**
-	 * Display field
+	 * Display field.
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $displayField = 'title';
+	public $displayField = 'display_sextype';
 
 	/**
 	 * Validation rules
@@ -57,8 +71,9 @@ class SexType extends AppModel {
 	const SID_OTHER = 'other';
 	const SID_UNKNOWN = 'unknown';
 
-	/** Singleton for fast access. */
+	/** Singletons for fast access. */
 	private $sextypes = null;
+	private $sextypelist = null;
 
 	/**
 	 * Returns sex types.
@@ -117,16 +132,18 @@ class SexType extends AppModel {
 	 * @since 0.3
 	 */
 	public function getSexTypeList() {
+		if ($this->sextypelist == null) {
 
-		$sextypes = array();
+			$this->sextypelist = array();
 
-		foreach ($this->getSexTypes() as $sextype) {
-			$sextypes[$sextype['SexType']['id']] = $sextype['SexType']['title'];
+			foreach ($this->getSexTypes() as $sextype) {
+				$this->sextypelist[$sextype['SexType']['id']] = $sextype['SexType']['display_sextype'];
+			}
+
+			asort($this->sextypelist, SORT_LOCALE_STRING);
 		}
 
-		arsort($sextypes, SORT_LOCALE_STRING);
-
-		return $sextypes;
+		return $this->sextypelist;
 	}
 
 }

@@ -14,8 +14,8 @@ class Club extends AppModel {
 	/**
 	 * Declare virtual display field in constructor to be alias-safe.
 	 *
-	 * @version 0.1
-	 * @since 0.1
+	 * @version 0.3
+	 * @since 0.3
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
@@ -36,9 +36,9 @@ class Club extends AppModel {
 	public $name = 'Club';
 
 	/**
-	 * Display field
+	 * Display field.
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $displayField = 'display_club';
