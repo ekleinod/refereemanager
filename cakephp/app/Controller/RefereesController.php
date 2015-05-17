@@ -87,7 +87,7 @@ class RefereesController extends AppController {
 		$referee = $this->Referee->read(null, $id);
 
 		$this->setAndGetStandardNewAddView($referee);
-		$this->set('title_for_layout', __('Detailanzeige Schiedsrichter%s %s', ($referee['Person']['sex_type_sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
+		$this->set('title_for_layout', __('Detailanzeige Schiedsrichter%s %s', ($referee['Person']['sex_type_sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee, 'fullname')));
 		$this->render('/Generic/view');
 	}
 
@@ -102,6 +102,8 @@ class RefereesController extends AppController {
 	 * @since 0.1
 	 */
 	private function setAndGetStandardNewAddView(&$referee) {
+
+		$this->setAndGetStandard();
 
 		$sextypes = $this->SexType->getSexTypes();
 		$referee['Person']['sex_type_sid'] = $sextypes[$referee['Person']['sex_type_id']]['SexType']['sid'];
