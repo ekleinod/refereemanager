@@ -115,7 +115,7 @@ class RefereesController extends AppController {
 		$this->set('sextypes', $sextypes);
 		$this->set('sextypearray', $this->SexType->getSexTypeList());
 		$this->set('contacttypes', $this->ContactType->getContactTypes());
-		$this->set('refereerelationtypes', $this->RefereeRelationType->getRefereeRelationTypes());
+		$this->set('refereerelationtypes', $this->RefereeRelationType->getRefereeRelationTypesSID());
 		$this->set('clubarray', $this->Club->getClubList());
 
 		$this->set('id', $referee['Referee']['id']);

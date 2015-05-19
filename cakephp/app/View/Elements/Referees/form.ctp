@@ -86,7 +86,21 @@
 		<legend><?php echo __('Vereine und Wünsche'); ?></legend>
 		<ol>
 			<?php
-				foreach ($refereerelationtypes as $refereerelationtype) {
+				foreach ($refereerelationtypes as $sid => $refereerelationtype) {
+					if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
+						$tmpA = array('RefereeRelation', 'id', $refereerelationtype['RefereeRelationType']['title']);
+
+						$count = 0;
+						foreach ($referee['RefereeRelation'] as $refereerelation) {
+							$tmpV = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
+							echo $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+																										 $tmpA[2], $tmpV, true,
+																										 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2]);
+						}
+					}
+				}
+
+				/*foreach ($refereerelationtypes as $refereerelationtype) {
 					foreach ($referee['RefereeRelation'] as $refereerelation) {
 
 						if ($refereerelation['referee_relation_type_id'] == $refereerelationtype['id']) {
@@ -100,7 +114,7 @@
 						}
 
 					}
-				}
+				}*/
 
 			?>
 		</ol>
