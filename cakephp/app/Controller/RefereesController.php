@@ -105,6 +105,8 @@ class RefereesController extends AppController {
 
 		$this->setAndGetStandard();
 
+		$this->Referee->fillReferee($referee, $this->viewVars['isEditor']);
+
 		$sextypes = $this->SexType->getSexTypes();
 		$referee['Person']['sex_type_sid'] = $sextypes[$referee['Person']['sex_type_id']]['SexType']['sid'];
 

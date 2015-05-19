@@ -101,19 +101,7 @@ class Referee extends AppModel {
 			}
 
 			if ($useReferee) {
-				$this->fillReferee($referee);
-
-				// remove hidden contacts
-				if (!empty($referee['Contact'])) {
-					$tmpContacts = array();
-					foreach ($referee['Contact'] as $contact) {
-						if (empty($contact['editor_only']) || $isEditor) {
-							$tmpContacts[] = $contact;
-						}
-					}
-					$referee['Contact'] = $tmpContacts;
-				}
-
+				$this->fillReferee($referee, $isEditor);
 				$arrReturn[] = $referee;
 			}
 
@@ -154,11 +142,12 @@ class Referee extends AppModel {
 	 * maybe later when I understand how to find things in a static method
 	 *
 	 * @param referee referee
+	 * @param isEditor is editor?
 	 *
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	public function fillReferee(&$referee) {
+	public function fillReferee(&$referee, $isEditor) {
 
 		// save values from person data except person and referee
 		$person = $this->Person->findById($referee['Referee']['person_id']);
@@ -167,6 +156,17 @@ class Referee extends AppModel {
 					(strcmp($key, 'Referee') != 0)) {
 				$referee[$key] = $value;
 			}
+		}
+
+		// remove hidden contacts
+		if (!empty($referee['Contact'])) {
+			$tmpContacts = array();
+			foreach ($referee['Contact'] as $contact) {
+				if (empty($contact['editor_only']) || $isEditor) {
+					$tmpContacts[] = $contact;
+				}
+			}
+			$referee['Contact'] = $tmpContacts;
 		}
 
 	}

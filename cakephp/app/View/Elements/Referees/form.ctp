@@ -50,7 +50,7 @@
 																							 $tmpA[2], $tmpV, false,
 																							 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2]);
 
-				$tmpA = array('Person', 'internal_remark', __('Anmerkung'));
+				$tmpA = array('Person', 'internal_remark', __('Interne Anmerkung'));
 				$tmpV = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
 				echo $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
 																							 $tmpA[2], $tmpV, false,
