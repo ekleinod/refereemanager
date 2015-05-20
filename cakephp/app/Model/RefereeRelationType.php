@@ -60,6 +60,7 @@ class RefereeRelationType extends AppModel {
 	/** Singleton for fast access. */
 	private $refereerelationtypes = null;
 	private $refereerelationtypessid = null;
+	private $refereerelationtypelist = null;
 
 	/**
 	 * Returns referee relation types.
@@ -103,6 +104,32 @@ class RefereeRelationType extends AppModel {
 		}
 
 		return $this->refereerelationtypessid;
+	}
+
+	/**
+	 * Returns referee relation type list.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return list of referee relation types
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getRefereeRelationTypeList() {
+		if ($this->refereerelationtypelist == null) {
+
+			$this->refereerelationtypelist = array();
+
+			foreach ($this->getRefereeRelationTypes() as $refereerelationtype) {
+				$this->refereerelationtypelist[$refereerelationtype['RefereeRelationType']['id']] = $refereerelationtype['RefereeRelationType']['title'];
+			}
+
+			asort($this->refereerelationtypelist, SORT_LOCALE_STRING);
+		}
+
+		return $this->refereerelationtypelist;
 	}
 
 }

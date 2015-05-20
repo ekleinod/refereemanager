@@ -91,11 +91,11 @@
 						$tmpA = array('RefereeRelation', 'id', $refereerelationtype['RefereeRelationType']['title']);
 
 						$count = 0;
-						foreach ($referee['RefereeRelation'] as $refereerelation) {
-							$tmpV = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-							echo $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																										 $tmpA[2], $tmpV, true,
-																										 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2]);
+						foreach ($referee['RefereeRelation'] as $refrel) {
+							$tmpV = $refrel['referee_relation_type_id'];
+							echo $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s.%d', $tmpA[0], $tmpA[1], $count),
+																										 $tmpA[2], $tmpV, true, '', 0, false, $refereerelationtypearray);
+							$count++;
 						}
 					}
 				}
