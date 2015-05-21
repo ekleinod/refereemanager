@@ -89,14 +89,30 @@
 				foreach ($refereerelationtypes as $sid => $refereerelationtype) {
 					if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
 						$tmpA = array('RefereeRelation', 'id', $refereerelationtype['RefereeRelationType']['title']);
+						$tmpARem = array('RefereeRelation', 'remark', __('.'));
 
 						$count = 0;
 						foreach ($referee['RefereeRelation'] as $refrel) {
 							if ($refrel['referee_relation_type_id'] == $refereerelationtype['RefereeRelationType']['id']) {
-								$tmpV = $refrel['club_id'];
-								$tmpAr = $clubarray;
-								echo $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s.%d', $tmpA[0], $tmpA[1], $count),
-																											 $tmpA[2], $tmpV, true, '', 0, false, $tmpAr);
+
+								$tmpV = 0;
+								$tmpAr = null;
+
+								if (!empty($refrel['club_id'])) {
+									$tmpV = $refrel['club_id'];
+									$tmpAr = $clubarray;
+								}
+
+								if (!empty($tmpV)) {
+									echo $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s.%d', $tmpA[0], $tmpA[1], $count),
+																												 $tmpA[2], $tmpV, true, '', 0, false, $tmpAr);
+
+									$tmpVRem = (empty($referee[$tmpARem[0]]) || empty($referee[$tmpARem[0]][$tmpARem[1]])) ? '' : $referee[$tmpARem[0]][$tmpARem[1]];
+									echo $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s.%d', $tmpARem[0], $tmpARem[1], $count),
+																												 $tmpARem[2], $tmpVRem, false,
+																												 (count($tmpARem) > 3) ? $tmpARem[3] : $tmpARem[2]);
+								}
+
 								$count++;
 							}
 						}
