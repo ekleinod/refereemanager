@@ -92,10 +92,20 @@
 
 						$count = 0;
 						foreach ($referee['RefereeRelation'] as $refrel) {
-							$tmpV = $refrel['referee_relation_type_id'];
+							if ($refrel['referee_relation_type_id'] == $refereerelationtype['RefereeRelationType']['id']) {
+								$tmpV = $refrel['club_id'];
+								$tmpAr = $clubarray;
+								echo $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s.%d', $tmpA[0], $tmpA[1], $count),
+																											 $tmpA[2], $tmpV, true, '', 0, false, $tmpAr);
+								$count++;
+							}
+						}
+
+						if ($count == 0) {
+							$tmpV = 0;
+							$tmpAr = $clubarray;
 							echo $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s.%d', $tmpA[0], $tmpA[1], $count),
-																										 $tmpA[2], $tmpV, true, '', 0, false, $refereerelationtypearray);
-							$count++;
+																										 $tmpA[2], $tmpV, true, '', 0, false, $tmpAr);
 						}
 					}
 				}
