@@ -29,7 +29,7 @@
 
 	<body>
 
-		<!-- Fixed navbar -->
+		<!-- navidation -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
@@ -70,59 +70,85 @@
 			</div>
 		</nav>
 
+		<!-- content containter -->
 		<div class="container">
 
+			<!-- page header -->
 			<div class="page-header">
 				<h1>Übersicht der Schiedsrichtereinsätze</h1>
 			</div>
 
+			<!-- active filter -->
 			<div class="row">
-				<div class="col-md-12">
-					<ol class="currentfilter">
-						<li><label>Saison</label>2014-2015</li>
-					</ol>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<form action="/refereemanager/referees/" id="FilterIndexForm" method="post" accept-charset="utf-8">
+				<div class="col-sm-12">
+					<form class="form-horizontal" role="form">
 						<fieldset>
-							<legend>Filter</legend>
-							<ol>
-								<li class="input select">
-									<label for="FilterSeason">Saison</label>
-									<select name="data[Filter][season]" title="Saison" autofocus="autofocus" id="FilterSeason">
-										<option value="2" selected="selected">2014-2015</option>
-										<option value="1">2013-2014</option>
-									</select>
-								</li>
-							</ol>
-							<button type="submit">Filtern</button>
+							<legend>Aktive Filter</legend>
+							<div class="form-group">
+								<label for="FilterSeason" class="col-sm-2 control-label">Saison</label>
+								<div class="col-sm-10">
+									<p class="form-control-static">2014-2015</p>
+								</div>
+							</div>
 						</fieldset>
 					</form>
 				</div>
 			</div>
 
+			<!-- filter form -->
 			<div class="row">
-				<div class="col-md-12">
-					<p><a href="/refereemanager/referees" class="button-link access-editor">Übersicht</a></p>
+				<div class="col-sm-12">
+					<form class="form-horizontal" role="form" action="/refereemanager/referees/" id="FilterIndexForm" method="post" accept-charset="utf-8">
+						<fieldset>
+							<legend>Filter</legend>
+							<div class="form-group">
+								<label for="FilterSeason" class="col-sm-2 control-label">Saison</label>
+								<div class="col-sm-10">
+									<select class="form-control" name="data[Filter][season]" title="Saison" autofocus="autofocus" id="FilterSeason">
+										<option value="2" selected="selected">2014-2015</option>
+										<option value="1">2013-2014</option>
+									</select>
+								</div>
+							</div>
+						</fieldset>
+						<div class="form-group">
+							<div class="col-sm-12">
+								<button type="submit" class="btn btn-sm btn-default">Filtern</button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 
+			<!-- actions -->
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-sm-12">
+					<div class="btn-group btn-group-sm">
+						<a class="btn btn-success" role="button" href="/refereemanager/referees">Übersicht</a>
+						<a class="btn btn-warning" role="button" href="/refereemanager/referees">Neu</a>
+						<a class="btn btn-warning" role="button" href="/refereemanager/referees">Ändern</a>
+						<a class="btn btn-danger" role="button" href="/refereemanager/referees">Löschen</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- content -->
+			<div class="row">
+				<div class="col-sm-12">
 
 				</div>
 			</div>
 		</div>
 
+
+		<!-- footer -->
 		<footer class="footer">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-8">
+					<div class="col-sm-8">
 						<p class="text-muted"><a href="http://schiri.bettv.de/">Schiedsrichter-Homepage</a></p>
 					</div>
-					<div class="col-md-4">
+					<div class="col-sm-4">
 						<p class="text-muted"><a href="http://schiri.bettv.de/">Login</a>/<a href="http://schiri.bettv.de/">Logout</a></p>
 					</div>
 				</div>
