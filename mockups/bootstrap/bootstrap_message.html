@@ -20,7 +20,7 @@
 
 		<!-- own content -->
 
-		<meta name="description" content="Übersicht der Schiedsrichtereinsätze" />
+		<meta name="description" content="Nachricht versenden" />
 		<meta name="author" content="Ekkart Kleinod" />
 		<title>Übersicht der Schiedsrichtereinsätze</title>
 
@@ -43,7 +43,7 @@
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Schiedsrichtereinsätze</a></li>
+						<li><a href="#">Schiedsrichtereinsätze</a></li>
 						<li><a href="#">Schiedsrichter</a></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sonstiges <span class="caret"></span></a>
@@ -62,7 +62,7 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Editor-Werkzeuge <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="#">Mailverteiler</a></li>
-								<li><a href="#">Nachricht versenden</a></li>
+								<li class="active"><a href="#">Nachricht versenden</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -75,19 +75,19 @@
 
 			<!-- page header -->
 			<div class="page-header">
-				<h1>Übersicht der Schiedsrichtereinsätze</h1>
+				<h1>Nachricht versenden</h1>
 			</div>
 
-			<!-- filter form -->
+			<!-- message form -->
 			<div class="row">
 				<div class="col-sm-12">
 					<form class="form-horizontal" role="form" action="/refereemanager/referees/" id="FilterIndexForm" method="post" accept-charset="utf-8">
 						<fieldset>
-							<legend>Filter</legend>
+							<legend>Einstellungen</legend>
 							<div class="form-group">
 								<label for="FilterSeason" class="col-sm-2 control-label">Saison</label>
 								<div class="col-sm-10">
-									<select class="form-control" name="data[Filter][season]" title="Saison" autofocus="autofocus" id="FilterSeason">
+									<select class="form-control" name="data[Filter][season]" title="Saison" autofocus="autofocus" required="required" id="FilterSeason">
 										<option value="3">VSR-Lehrgang</option>
 										<option value="4">2015-2016</option>
 										<option value="2" selected="selected">2014-2015</option>
@@ -95,34 +95,38 @@
 									</select>
 								</div>
 							</div>
+							<div class="form-group">
+								<label for="ToolsEditorRecipient" class="col-sm-2 control-label">Empfänger</label>
+								<div class="col-sm-10">
+									<select class="form-control" name="data[ToolsEditor][recipient]" title="Empfänger" required="required" id="ToolsEditorRecipient">
+										<option value="a">Alle SR</option>
+										<option value="m">SR mit E-Mail-Adresse</option>
+										<option value="s">SR mit Post-Adresse</option>
+										<option value="i" selected="selected">Mich (Test)</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="ToolsEditorMailkind" class="col-sm-2 control-label">Mailart</label>
+								<div class="col-sm-10">
+									<select class="form-control" name="data[ToolsEditor][mailkind]" title="Mailart" required="required" id="ToolsEditorMailkind">
+										<option value="a">Alle SR</option>
+										<option value="m">SR mit E-Mail-Adresse</option>
+										<option value="s">SR mit Post-Adresse</option>
+										<option value="i" selected="selected">Mich (Test)</option>
+									</select>
+								</div>
+							</div>
 						</fieldset>
 						<div class="form-group">
 							<div class="col-sm-12">
-								<button type="submit" class="btn btn-sm btn-default">Filtern</button>
+								<button type="submit" class="btn btn-sm btn-default">Nachricht senden</button>
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
 
-			<!-- actions -->
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="btn-group btn-group-sm">
-						<a class="btn btn-success" role="button" href="/refereemanager/referees">Übersicht</a>
-						<a class="btn btn-warning" role="button" href="/refereemanager/referees">Neu</a>
-						<a class="btn btn-warning" role="button" href="/refereemanager/referees">Ändern</a>
-						<a class="btn btn-danger" role="button" href="/refereemanager/referees">Löschen</a>
-					</div>
-				</div>
-			</div>
-
-			<!-- content -->
-			<div class="row">
-				<div class="col-sm-12">
-
-				</div>
-			</div>
 		</div>
 
 
