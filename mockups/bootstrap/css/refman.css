@@ -37,3 +37,15 @@ body > .container {
 code {
 	font-size: 80%;
 }
+
+/* Forms */
+.form-group.required .control-label:after {
+	font-family: "Glyphicons Halflings";
+	font-size: xx-small;
+	content: "\2a";
+	color: red;
+	position: absolute;
+	margin-left: 2ex;
+	top: 7px;
+}
+
