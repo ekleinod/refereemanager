@@ -24,129 +24,240 @@
 		<meta name="author" content="Ekkart Kleinod" />
 		<title>Übersicht der Schiedsrichtereinsätze</title>
 
-		<link rel="icon" href="refman.ico">
-	</head>
+		<link rel="icon" href="refman.ico"></head>
 
-	<body>
+		<body>
 
 		<!-- navigation -->
-		<nav class="navbar navbar-default navbar-fixed-top">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#">Schiedsrichterverwaltung</a>
+			<nav class="navbar navbar-default navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">Schiedsrichterverwaltung</a>
+					</div>
+					<div id="navbar" class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li class="active">
+								<a href="bootstrap_assignments.html">Schiedsrichtereinsätze</a>
+							</li>
+							<li>
+								<a href="#">Schiedsrichter</a>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sonstiges <span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#">Clubs</a>
+									</li>
+									<li>
+										<a href="#">Liga-Typen</a>
+									</li>
+									<li>
+										<a href="#">Ligen</a>
+									</li>
+									<li class="divider"></li>
+									<li class="dropdown-header">Unterteilung</li>
+									<li>
+										<a href="#">Personen</a>
+									</li>
+									<li>
+										<a href="#">Saisons</a>
+									</li>
+									<li>
+										<a href="#">Teams</a>
+									</li>
+								</ul>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Editor-Werkzeuge <span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#">Mailverteiler</a>
+									</li>
+									<li>
+										<a href="bootstrap_message.html">Nachricht versenden</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div><!--/.nav-collapse -->
 				</div>
-				<div id="navbar" class="collapse navbar-collapse">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="bootstrap_assignments.html">Schiedsrichtereinsätze</a></li>
-						<li><a href="#">Schiedsrichter</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sonstiges <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Clubs</a></li>
-								<li><a href="#">Liga-Typen</a></li>
-								<li><a href="#">Ligen</a></li>
-								<li class="divider"></li>
-								<li class="dropdown-header">Unterteilung</li>
-								<li><a href="#">Personen</a></li>
-								<li><a href="#">Saisons</a></li>
-								<li><a href="#">Teams</a></li>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Editor-Werkzeuge <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Mailverteiler</a></li>
-								<li><a href="bootstrap_message.html">Nachricht versenden</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div><!--/.nav-collapse -->
-			</div>
-		</nav>
+			</nav>
 
 		<!-- content containter -->
-		<div class="container">
+			<div class="container">
 
 			<!-- page header -->
-			<div class="page-header">
-				<h1>Übersicht der Schiedsrichtereinsätze</h1>
-			</div>
+				<div class="page-header">
+					<h1>Übersicht der Schiedsrichtereinsätze</h1>
+				</div>
 
 			<!-- filter form -->
-			<div class="row">
-				<div class="col-sm-12">
-					<form class="form-horizontal" role="form" action="bootstrap_assignments.html" id="FilterIndexForm" method="post" accept-charset="utf-8">
-						<fieldset>
-							<legend>Filter</legend>
+				<div class="row">
+					<div class="col-sm-12">
+						<form class="form-horizontal" role="form" action="bootstrap_assignments.html" id="FilterIndexForm" method="post" accept-charset="utf-8">
+							<fieldset>
+								<legend>Filter</legend>
+								<div class="form-group">
+									<label for="FilterSeason" class="col-sm-2 control-label">Saison</label>
+									<div class="col-sm-10">
+										<select class="form-control" name="data[Filter][season]" title="Saison" autofocus="autofocus" id="FilterSeason">
+											<option value="3">VSR-Lehrgang</option>
+											<option value="4">2015-2016</option>
+											<option value="2" selected="">2014-2015</option>
+											<option value="1">2013-2014</option>
+										</select>
+									</div>
+								</div>
+							</fieldset>
 							<div class="form-group">
-								<label for="FilterSeason" class="col-sm-2 control-label">Saison</label>
-								<div class="col-sm-10">
-									<select class="form-control" name="data[Filter][season]" title="Saison" autofocus="autofocus" id="FilterSeason">
-										<option value="3">VSR-Lehrgang</option>
-										<option value="4">2015-2016</option>
-										<option value="2" selected>2014-2015</option>
-										<option value="1">2013-2014</option>
-									</select>
+								<div class="col-sm-12">
+									<button type="submit" class="btn btn-sm btn-default">Filtern</button>
 								</div>
 							</div>
-						</fieldset>
-						<div class="form-group">
-							<div class="col-sm-12">
-								<button type="submit" class="btn btn-sm btn-default">Filtern</button>
-							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 				</div>
-			</div>
 
 			<!-- actions -->
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="btn-group btn-group-sm">
-						<a class="btn btn-success" role="button" href="#">Übersicht</a>
-						<a class="btn btn-warning" role="button" href="#">Neu</a>
-						<a class="btn btn-warning" role="button" href="#">Ändern</a>
-						<a class="btn btn-danger" role="button" href="#">Löschen</a>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="btn-group btn-group-sm">
+							<a class="btn btn-success" role="button" href="#">Übersicht</a>
+							<a class="btn btn-warning" role="button" href="#">Neu</a>
+							<a class="btn btn-warning" role="button" href="#">Ändern</a>
+							<a class="btn btn-danger" role="button" href="#">Löschen</a>
+						</div>
+					</div>
+				</div>
+
+			<!-- content -->
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table table-striped table-bordered table-condensed table-responsive">
+							<caption>Schiedsrichtereinsätze 2014-2015</caption>
+							<thead>
+								<tr>
+									<th>Datum</th>
+									<th>Uhrzeit</th>
+									<th>Spiel</th>
+									<th>Liga</th>
+									<th>Heimteam</th>
+									<th>Auswärtsteam</th>
+									<th>Schiedsrichter</th>
+									<th>OSR-Bericht</th>
+									<th>Anmerkung</th>
+									<th>Aktionen</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>Datum</th>
+									<th>Uhrzeit</th>
+									<th>Spiel</th>
+									<th>Liga</th>
+									<th>Heimteam</th>
+									<th>Auswärtsteam</th>
+									<th>Schiedsrichter</th>
+									<th>OSR-Bericht</th>
+									<th>Anmerkung</th>
+									<th>Aktionen</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								<tr>
+									<td>06.09.2014 (Sat)</td>
+									<td>13:00</td>
+									<td>1</td>
+									<td>RLND</td>
+									<td>todo</td>
+									<td>todo</td>
+									<td>todo</td>
+									<td class="success">✓</td>
+									<td></td>
+									<td>
+										<div class="btn-group btn-group-xs">
+											<a class="btn btn-success" role="button" href="#">Ansehen</a>
+											<a class="btn btn-warning" role="button" href="#">Ändern</a>
+											<a class="btn btn-danger" role="button" href="#">Löschen</a>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>06.09.2014 (Sat)</td>
+									<td>18:00</td>
+									<td>2</td>
+									<td>RLNH</td>
+									<td>todo</td>
+									<td>todo</td>
+									<td>todo</td>
+									<td class="success">✓</td>
+									<td></td>
+									<td>
+										<div class="btn-group btn-group-xs">
+											<a class="btn btn-success" role="button" href="#">Ansehen</a>
+											<a class="btn btn-warning" role="button" href="#">Ändern</a>
+											<a class="btn btn-danger" role="button" href="#">Löschen</a>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>10.05.2015 (Sun)</td>
+									<td>14:00</td>
+									<td>90</td>
+									<td>1BLD</td>
+									<td>todo</td>
+									<td>todo</td>
+									<td>todo</td>
+									<td class="danger">✗</td>
+									<td></td>
+									<td>
+										<div class="btn-group btn-group-xs">
+											<a class="btn btn-success" role="button" href="#">Ansehen</a>
+											<a class="btn btn-warning" role="button" href="#">Ändern</a>
+											<a class="btn btn-danger" role="button" href="#">Löschen</a>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
-
-			<!-- content -->
-			<div class="row">
-				<div class="col-sm-12">
-
-				</div>
-			</div>
-		</div>
 
 
 		<!-- footer -->
-		<footer class="footer">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-8">
-						<p class="text-muted"><a href="http://schiri.bettv.de/">Schiedsrichter-Homepage</a></p>
-					</div>
-					<div class="col-sm-4">
-						<p class="text-muted"><a href="http://schiri.bettv.de/">Login</a>/<a href="http://schiri.bettv.de/">Logout</a></p>
+			<footer class="footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-8">
+							<p class="text-muted">
+								<a href="http://schiri.bettv.de/">Schiedsrichter-Homepage</a>
+							</p>
+						</div>
+						<div class="col-sm-4">
+							<p class="text-muted">
+								<a href="http://schiri.bettv.de/">Login</a>/<a href="http://schiri.bettv.de/">Logout</a>
+							</p>
+						</div>
 					</div>
 				</div>
-			</div>
-		</footer>
+			</footer>
 
 
 		<!-- Bootstrap core JavaScript and JQuery -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-	</body>
-</html>
+		</body>
+	</html>
 
 <!-- EOF -->
 
