@@ -18,12 +18,14 @@
 
 			// meta tags
 			$this->Html->meta(array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, maximum-scale=1'), null, array('inline' => false));
+			$this->Html->meta(array('name' => 'description', 'content' => $this->fetch('title')), null, array('inline' => false));
+			$this->Html->meta(array('name' => 'author', 'content' => 'Ekkart Kleinod'), null, array('inline' => false));
 			echo $this->fetch('meta');
 
 			// css files
-			$this->Html->css('base', null, array('inline' => false));
-			$this->Html->css('skeleton', null, array('inline' => false));
-			$this->Html->css('layout', null, array('inline' => false));
+			$this->Html->css('bootstrap.min', null, array('inline' => false));
+			$this->Html->css('bootstrap-theme.min', null, array('inline' => false));
+			$this->Html->css('refman', null, array('inline' => false));
 			echo $this->fetch('css');
 		?>
 
@@ -38,6 +40,99 @@
 
 	</head>
 	<body>
+
+		<!-- navigation -->
+			<nav class="navbar navbar-default navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">Schiedsrichterverwaltung</a>
+					</div>
+					<div id="navbar" class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+							<?php
+							$navarray = array(
+																array('title' => __('Schiedsrichtereinsätze'),
+																			'routing' => array('action' => 'index', 'controller' => 'assignments')
+																			),
+																array('title' => __('Schiedsrichter'),
+																			'routing' => array('action' => 'index', 'controller' => 'referees')
+																			),
+																array('title' => __('Sonstiges'),
+																			'routing' => array('action' => 'index', 'controller' => 'other'),
+																			'subnav' => array(
+																												array('title' => __('Clubs'), 'routing' => array('action' => 'index', 'controller' => 'clubs')),
+																												array('title' => __('Liga-Typen'), 'routing' => array('action' => 'index', 'controller' => 'league_types')),
+																												array('title' => __('Ligen'), 'routing' => array('action' => 'index', 'controller' => 'leagues')),
+																												array('title' => __('Personen'), 'role' => 'referee', 'routing' => array('action' => 'index', 'controller' => 'people')),
+																												array('title' => __('Saisons'), 'routing' => array('action' => 'index', 'controller' => 'seasons')),
+																												array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
+																												)
+																			),
+																array('title' => __('Editor-Werkzeuge'),
+																			'role' => 'editor',
+																			'routing' => array('action' => 'index', 'controller' => 'tools_editor'),
+																			'subnav' => array(
+																												array('title' => __('Mailverteiler'), 'routing' => array('action' => 'mailinglist', 'controller' => 'tools_editor')),
+																												array('title' => __('Nachricht'), 'routing' => array('action' => 'message', 'controller' => 'tools_editor')),
+																												)
+																			),
+																);
+								echo $this->element('navigation', array('navarray' => $navarray));
+							?>
+							<li class="active">
+								<a href="bootstrap_assignments.html">Schiedsrichtereinsätze</a>
+							</li>
+							<li>
+								<a href="#">Schiedsrichter</a>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sonstiges <span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#">Clubs</a>
+									</li>
+									<li>
+										<a href="#">Liga-Typen</a>
+									</li>
+									<li>
+										<a href="#">Ligen</a>
+									</li>
+									<li class="divider"></li>
+									<li class="dropdown-header">Unterteilung</li>
+									<li>
+										<a href="#">Personen</a>
+									</li>
+									<li>
+										<a href="#">Saisons</a>
+									</li>
+									<li>
+										<a href="#">Teams</a>
+									</li>
+								</ul>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Editor-Werkzeuge <span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#">Mailverteiler</a>
+									</li>
+									<li>
+										<a href="bootstrap_message.html">Nachricht versenden</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</nav>
 
 		<div class="page">
 
@@ -54,49 +149,6 @@
 				</header><!-- end container -->
 
 			</div><!-- end band header -->
-
-			<div class="band navigation">
-
-				<nav class="container primary">
-
-					<div class="sixteen columns">
-
-						<?php
-						$navarray = array(
-															array('title' => __('Schiedsrichtereinsätze'),
-																		'routing' => array('action' => 'index', 'controller' => 'assignments')
-																		),
-															array('title' => __('Schiedsrichter'),
-																		'routing' => array('action' => 'index', 'controller' => 'referees')
-																		),
-															array('title' => __('Sonstiges'),
-																		'routing' => array('action' => 'index', 'controller' => 'other'),
-																		'subnav' => array(
-																											array('title' => __('Clubs'), 'routing' => array('action' => 'index', 'controller' => 'clubs')),
-																											array('title' => __('Liga-Typen'), 'routing' => array('action' => 'index', 'controller' => 'league_types')),
-																											array('title' => __('Ligen'), 'routing' => array('action' => 'index', 'controller' => 'leagues')),
-																											array('title' => __('Personen'), 'role' => 'referee', 'routing' => array('action' => 'index', 'controller' => 'people')),
-																											array('title' => __('Saisons'), 'routing' => array('action' => 'index', 'controller' => 'seasons')),
-																											array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
-																											)
-																		),
-															array('title' => __('Editor-Werkzeuge'),
-																		'role' => 'editor',
-																		'routing' => array('action' => 'index', 'controller' => 'tools_editor'),
-																		'subnav' => array(
-																											array('title' => __('Mailverteiler'), 'routing' => array('action' => 'mailinglist', 'controller' => 'tools_editor')),
-																											array('title' => __('Nachricht'), 'routing' => array('action' => 'message', 'controller' => 'tools_editor')),
-																											)
-																		),
-															);
-							echo $this->element('navigation', array('navarray' => $navarray));
-						?>
-
-					</div><!-- end sixteen -->
-
-				</nav><!-- end container primary -->
-
-			</div><!-- end band navigation -->
 
 			<?php if (isset($username)) { ?>
 				<div class="band username">
@@ -174,6 +226,8 @@
 
 		<?php
 			// load scripts at end of page in order to improve page load speed
+			$this->Html->script('jquery.min', array('inline' => false));
+			$this->Html->script('bootstrap.min', array('inline' => false));
 			echo $this->fetch('script');
 		?>
 
