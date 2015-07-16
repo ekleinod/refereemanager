@@ -238,6 +238,11 @@
 				<exclude name="cake.generic.css" />
 			</fileset>
 		</copy>
+		<copy todir="${path:target}app${file.separator}webroot${file.separator}js${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}webroot${file.separator}js${file.separator}">
+				<include name="*.js" />
+			</fileset>
+		</copy>
 		<copy todir="${path:target}app${file.separator}webroot${file.separator}fonts${file.separator}" failonerror="true" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}webroot${file.separator}fonts${file.separator}">
 				<include name="**/*" />
