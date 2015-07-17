@@ -22,8 +22,12 @@
 													<li class="divider"></li>
 											<?php
 												} else {
+													$active = '';
+													if (($this->params['controller'] === $subnav['routing']['controller']) && ($this->params['action'] === $subnav['routing']['action'])) {
+														$active = 'active';
+													}
 											?>
-													<li><?php echo $this->Html->link($subnav['title'], $subnav['routing']); ?></li>
+													<li class="<?php echo $active; ?>"><?php echo $this->Html->link($subnav['title'], $subnav['routing']); ?></li>
 											<?php
 												}
 											?>
@@ -35,9 +39,12 @@
 						</li>
 				<?php
 					} else {
-						// <li class="active">
+						$active = '';
+						if (($this->params['controller'] === $mainnav['routing']['controller']) && ($this->params['action'] === $mainnav['routing']['action'])) {
+							$active = 'active';
+						}
 				?>
-					<li><?php echo $this->Html->link($mainnav['title'], $mainnav['routing']); ?></li>
+					<li class="<?php echo $active; ?>"><?php echo $this->Html->link($mainnav['title'], $mainnav['routing']); ?></li>
 				<?php
 					}
 				?>

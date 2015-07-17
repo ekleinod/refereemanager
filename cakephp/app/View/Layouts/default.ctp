@@ -59,7 +59,7 @@
 															array('title' => __('Schiedsrichtereinsätze'),
 																		'routing' => array('action' => 'index', 'controller' => 'assignments')
 																		),
-															array('title' => __('Schiedsrichter'),
+															array('title' => __('Schiedsrichter_innen'),
 																		'routing' => array('action' => 'index', 'controller' => 'referees')
 																		),
 															array('title' => __('Sonstiges'),
