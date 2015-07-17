@@ -54,82 +54,37 @@
 						<a class="navbar-brand" href="#">Schiedsrichterverwaltung</a>
 					</div>
 					<div id="navbar" class="collapse navbar-collapse">
-						<ul class="nav navbar-nav">
-							<?php
-							$navarray = array(
-																array('title' => __('Schiedsrichtereinsätze'),
-																			'routing' => array('action' => 'index', 'controller' => 'assignments')
-																			),
-																array('title' => __('Schiedsrichter'),
-																			'routing' => array('action' => 'index', 'controller' => 'referees')
-																			),
-																array('title' => __('Sonstiges'),
-																			'routing' => array('action' => 'index', 'controller' => 'other'),
-																			'subnav' => array(
-																												array('title' => __('Clubs'), 'routing' => array('action' => 'index', 'controller' => 'clubs')),
-																												array('title' => __('Liga-Typen'), 'routing' => array('action' => 'index', 'controller' => 'league_types')),
-																												array('title' => __('Ligen'), 'routing' => array('action' => 'index', 'controller' => 'leagues')),
-																												array('title' => __('Personen'), 'role' => 'referee', 'routing' => array('action' => 'index', 'controller' => 'people')),
-																												array('title' => __('Saisons'), 'routing' => array('action' => 'index', 'controller' => 'seasons')),
-																												array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
-																												)
-																			),
-																array('title' => __('Editor-Werkzeuge'),
-																			'role' => 'editor',
-																			'routing' => array('action' => 'index', 'controller' => 'tools_editor'),
-																			'subnav' => array(
-																												array('title' => __('Mailverteiler'), 'routing' => array('action' => 'mailinglist', 'controller' => 'tools_editor')),
-																												array('title' => __('Nachricht'), 'routing' => array('action' => 'message', 'controller' => 'tools_editor')),
-																												)
-																			),
-																);
-								echo $this->element('navigation', array('navarray' => $navarray));
-							?>
-							<li class="active">
-								<a href="bootstrap_assignments.html">Schiedsrichtereinsätze</a>
-							</li>
-							<li>
-								<a href="#">Schiedsrichter</a>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sonstiges <span class="caret"></span>
-								</a>
-								<ul class="dropdown-menu" role="menu">
-									<li>
-										<a href="#">Clubs</a>
-									</li>
-									<li>
-										<a href="#">Liga-Typen</a>
-									</li>
-									<li>
-										<a href="#">Ligen</a>
-									</li>
-									<li class="divider"></li>
-									<li class="dropdown-header">Unterteilung</li>
-									<li>
-										<a href="#">Personen</a>
-									</li>
-									<li>
-										<a href="#">Saisons</a>
-									</li>
-									<li>
-										<a href="#">Teams</a>
-									</li>
-								</ul>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Editor-Werkzeuge <span class="caret"></span>
-								</a>
-								<ul class="dropdown-menu" role="menu">
-									<li>
-										<a href="#">Mailverteiler</a>
-									</li>
-									<li>
-										<a href="bootstrap_message.html">Nachricht versenden</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
+						<?php
+						$navarray = array(
+															array('title' => __('Schiedsrichtereinsätze'),
+																		'routing' => array('action' => 'index', 'controller' => 'assignments')
+																		),
+															array('title' => __('Schiedsrichter'),
+																		'routing' => array('action' => 'index', 'controller' => 'referees')
+																		),
+															array('title' => __('Sonstiges'),
+																		'routing' => array('action' => 'index', 'controller' => 'other'),
+																		'subnav' => array(
+																											array('title' => __('Clubs'), 'routing' => array('action' => 'index', 'controller' => 'clubs')),
+																											array('title' => __('Liga-Typen'), 'routing' => array('action' => 'index', 'controller' => 'league_types')),
+																											array('title' => __('Ligen'), 'routing' => array('action' => 'index', 'controller' => 'leagues')),
+																											array('divider' => 'divider'),
+																											array('title' => __('Personen'), 'role' => 'referee', 'routing' => array('action' => 'index', 'controller' => 'people')),
+																											array('title' => __('Saisons'), 'routing' => array('action' => 'index', 'controller' => 'seasons')),
+																											array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
+																											)
+																		),
+															array('title' => __('Editor-Werkzeuge'),
+																		'role' => 'editor',
+																		'routing' => array('action' => 'index', 'controller' => 'tools_editor'),
+																		'subnav' => array(
+																											array('title' => __('Mailverteiler'), 'routing' => array('action' => 'mailinglist', 'controller' => 'tools_editor')),
+																											array('title' => __('Nachricht'), 'routing' => array('action' => 'message', 'controller' => 'tools_editor')),
+																											)
+																		),
+															);
+							echo $this->element('navigation', array('navarray' => $navarray));
+						?>
 					</div><!--/.nav-collapse -->
 				</div>
 			</nav>
