@@ -9,8 +9,7 @@
 					if (array_key_exists('subnav', $mainnav)) {
 				?>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">xxx <span class="caret"></span>
-							</a>
+							<?php echo $this->Html->link(sprintf('%s <span class="caret"></span>', $mainnav['title']), $mainnav['routing'], array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown', 'role' => 'button', 'aria-expanded' => 'false', 'escape' => false)); ?>
 							<ul class="dropdown-menu" role="menu">
 								<?php
 									foreach ($mainnav['subnav'] as $subnav) {

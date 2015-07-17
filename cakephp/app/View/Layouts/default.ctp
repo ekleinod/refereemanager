@@ -51,7 +51,7 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="#">Schiedsrichterverwaltung</a>
+						<?php echo $this->Html->link(__('Schiedsrichterverwaltung'), array('controller' => 'pages', 'action' => 'display', 'home'), array('class' => 'navbar-brand')); ?>
 					</div>
 					<div id="navbar" class="collapse navbar-collapse">
 						<?php
