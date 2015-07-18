@@ -85,25 +85,35 @@
 															);
 							echo $this->element('navigation', array('navarray' => $navarray));
 						?>
-					</div><!--/.nav-collapse -->
+					</div> <!--/.nav-collapse -->
 				</div>
-			</nav>
+			</nav> <!-- /navigation -->
+
+		<!-- content container -->
+			<div class="container">
+
+			<!-- page header -->
+				<div class="page-header">
+					<h1><?php echo $this->fetch('title'); ?></h1>
+				</div> <!-- /page header -->
+
+			<!-- alert -->
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="alert alert-danger alert-dismissable">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<?php echo $this->Flash->render(); ?>
+						</div>
+					</div>
+				</div>
+
+			</div> <!-- /content container -->
+
+
+
 
 		<div class="page">
 
-			<div class="band header">
-
-				<header class="container main">
-
-					<div class="sixteen columns">
-
-						<h1><?php echo $this->Html->link(__('Schiedsrichterverwaltung'), array('controller' => 'pages', 'action' => 'display', 'home')); ?></h1>
-
-					</div><!-- end sixteen -->
-
-				</header><!-- end container -->
-
-			</div><!-- end band header -->
 
 			<?php if (isset($username)) { ?>
 				<div class="band username">
