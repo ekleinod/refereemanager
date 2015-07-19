@@ -1,50 +1,56 @@
 <!-- main navigation for big devices -->
-<ul>
+<ul class="nav navbar-nav">
 	<?php
 		foreach ($navarray as $mainnav) {
-			if (!array_key_exists('role', $mainnav) || (array_key_exists('role', $mainnav) && ($mainnav['role'] === 'editor') && $isEditor)) {
+			if (!array_key_exists('role', $mainnav) ||
+					(array_key_exists('role', $mainnav) && ($mainnav['role'] === 'editor') && $isEditor)) {
 	?>
-			<li><?php echo $this->Html->link($mainnav['title'], $mainnav['routing']); ?>
 				<?php
-					if ( $mainnav['subnav'] ) {
+					if (array_key_exists('subnav', $mainnav)) {
 				?>
-					<ul>
-						<?php
-							foreach ( $mainnav['subnav'] as $subnav ) {
-						?>
-							<li><?php echo $this->Html->link($subnav['title'], $subnav['routing']); ?></li>
-						<?php
-							}
-						?>
-					</ul>
+						<li class="dropdown">
+							<?php echo $this->Html->link(sprintf('%s <span class="caret"></span>', $mainnav['title']), $mainnav['routing'], array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown', 'role' => 'button', 'aria-expanded' => 'false', 'escape' => false)); ?>
+							<ul class="dropdown-menu" role="menu">
+								<?php
+									foreach ($mainnav['subnav'] as $subnav) {
+										if (!array_key_exists('role', $subnav) ||
+												(array_key_exists('role', $subnav) && ($subnav['role'] === 'referee') && $isReferee)) {
+								?>
+											<?php
+												if (array_key_exists('divider', $subnav)) {
+											?>
+													<li class="divider"></li>
+											<?php
+												} else {
+													$active = '';
+													if (($this->params['controller'] === $subnav['routing']['controller']) && ($this->params['action'] === $subnav['routing']['action'])) {
+														$active = 'active';
+													}
+											?>
+													<li class="<?php echo $active; ?>"><?php echo $this->Html->link($subnav['title'], $subnav['routing']); ?></li>
+											<?php
+												}
+											?>
+								<?php
+										}
+									}
+								?>
+							</ul>
+						</li>
+				<?php
+					} else {
+						$active = '';
+						if (($this->params['controller'] === $mainnav['routing']['controller']) && ($this->params['action'] === $mainnav['routing']['action'])) {
+							$active = 'active';
+						}
+				?>
+					<li class="<?php echo $active; ?>"><?php echo $this->Html->link($mainnav['title'], $mainnav['routing']); ?></li>
 				<?php
 					}
 				?>
-			</li>
 	<?php
 			}
 		}
 	?>
 </ul>
-
-<!-- main navigation for small devices -->
-<select onchange="if ( this.value ) window.location.href=this.value">
-	<option selected="selected" value="">Go to...</option>
-	<?php
-		foreach ( $navarray as $mainnav ) {
-			if (!array_key_exists('role', $mainnav) || (array_key_exists('role', $mainnav) && ($mainnav['role'] === 'editor') && $isEditor)) {
-	?>
-			<option value="<?php echo Router::url($mainnav['routing']); ?>"><?php echo $mainnav['title']; ?></option>
-				<?php
-					foreach ( $mainnav['subnav'] as $subnav ) {
-				?>
-					<option value="<?php echo Router::url($subnav['routing']); ?>">- <?php echo $subnav['title']; ?></option>
-				<?php
-					}
-				?>
-	<?php
-			}
-		}
-	?>
-</select>
 

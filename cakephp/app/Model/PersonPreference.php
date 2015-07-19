@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * PersonPreference Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class PersonPreference extends AppModel {
@@ -48,25 +48,13 @@ class PersonPreference extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'person_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'assignment_notification_interval' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'person_id' => array('notempty', 'numeric'),
+		'assignment_notification_interval' => array('numeric'),
 	);
 
 	/**

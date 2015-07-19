@@ -6,7 +6,7 @@
 	Do not change this file unless you know exactly what you do.
 	If you have useful changes, let me know to include them in the master.
 
-	(c) 2013 by Ekkart Kleinod
+	(c) 2013-2014 by Ekkart Kleinod
 
 	@author Ekkart Kleinod
 -->
@@ -37,6 +37,9 @@
 			<param name="path:source" value="${path:git:phpmyadmin}" />
 			<param name="path:target" value="${path:apache:phpmyadmin}" />
 		</antcall>
+		<mkdir dir="${path:apache:phpmyadmin}tmp" />
+		<echo message="Chmod for ${path:apache:phpmyadmin}tmp." />
+		<chmod perm="777" type="dir" dir="${path:apache:phpmyadmin}tmp" />
 	</target>
 
 	<target name="cakephp2apache" description="Copies CakePHP to apache directory (deletes existing files first).">
@@ -123,6 +126,9 @@
 			<fileset dir="${path:source}app${file.separator}Config${file.separator}">
 				<include name="core.php" />
 				<include name="database.php" />
+				<include name="email.php" />
+				<include name="email.php.default" />
+				<include name="refman.php" />
 			</fileset>
 		</copy>
 
@@ -155,28 +161,41 @@
 		</copy>
 
 		<!-- View -->
-		<copy todir="${path:target}app${file.separator}View${file.separator}Elements${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}Elements${file.separator}">
-				<include name="**/*" />
-				<exclude name="empty" />
+		<copy todir="${path:target}app${file.separator}View${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}">
+				<include name="**/*.ctp" />
+				<include name="**/*.php" />
+				<exclude name="Emails/" />
+				<exclude name="Errors/" />
+				<exclude name="Helper/AppHelper.php" />
+				<exclude name="Helper/PHPExcelHelper.php" />
+				<exclude name="Layouts/" />
+				<exclude name="Pages/" />
+				<exclude name="Scaffolds/" />
 			</fileset>
 		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Helper${file.separator}" failonerror="false" overwrite="true">
+		<!--copy todir="${path:target}app${file.separator}View${file.separator}Helper${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Helper${file.separator}">
 				<include name="*.php" />
 				<exclude name="AppHelper.php" />
 				<exclude name="PHPExcelHelper.php" />
 			</fileset>
-		</copy>
+		</copy-->
 		<copy todir="${path:target}app${file.separator}View${file.separator}Layouts${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}Layouts${file.separator}">
 				<include name="default.ctp" />
 				<include name="pdf.ctp" />
 			</fileset>
 		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}RefereeAssignments${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}RefereeAssignments${file.separator}">
+		<!--copy todir="${path:target}app${file.separator}View${file.separator}Assignments${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}Assignments${file.separator}">
 				<include name="*.ctp" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}View${file.separator}Elements${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}Elements${file.separator}">
+				<include name="**/*" />
+				<exclude name="empty" />
 			</fileset>
 		</copy>
 		<copy todir="${path:target}app${file.separator}View${file.separator}Referees${file.separator}" failonerror="false" overwrite="true">
@@ -184,17 +203,16 @@
 				<include name="*.ctp" />
 			</fileset>
 		</copy>
-		<copy todir="${path:target}app${file.separator}View${file.separator}Users${file.separator}" failonerror="false" overwrite="true">
-			<fileset dir="${path:source}app${file.separator}View${file.separator}Users${file.separator}">
-				<include name="*.ctp" />
-			</fileset>
-		</copy>
-
 		<copy todir="${path:target}app${file.separator}View${file.separator}ToolsEditor${file.separator}" failonerror="false" overwrite="true">
 			<fileset dir="${path:source}app${file.separator}View${file.separator}ToolsEditor${file.separator}">
 				<include name="*.ctp" />
 			</fileset>
 		</copy>
+		<copy todir="${path:target}app${file.separator}View${file.separator}Users${file.separator}" failonerror="false" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}View${file.separator}Users${file.separator}">
+				<include name="*.ctp" />
+			</fileset>
+		</copy-->
 
 		<!-- Vendor -->
 		<copy todir="${path:target}app${file.separator}Vendor${file.separator}" failonerror="false" overwrite="true">
@@ -218,6 +236,11 @@
 			<fileset dir="${path:source}app${file.separator}webroot${file.separator}css${file.separator}">
 				<include name="*.css" />
 				<exclude name="cake.generic.css" />
+			</fileset>
+		</copy>
+		<copy todir="${path:target}app${file.separator}webroot${file.separator}js${file.separator}" failonerror="true" overwrite="true">
+			<fileset dir="${path:source}app${file.separator}webroot${file.separator}js${file.separator}">
+				<include name="*.js" />
 			</fileset>
 		</copy>
 		<copy todir="${path:target}app${file.separator}webroot${file.separator}fonts${file.separator}" failonerror="true" overwrite="true">

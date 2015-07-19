@@ -1,0 +1,55 @@
+<page xmlns="http://projectmallard.org/1.0/"
+			type="guide"
+			id="index">
+
+	<info>
+		<credit type="author copyright maintainer">
+			<name>Ekkart Kleinod</name>
+			<email>ekleinod@edgesoft.de</email>
+			<years>2012-2014</years>
+		</credit>
+
+		<revision docversion="0.1" date="2014-06-19" status="incomplete" />
+
+		<link type="next" xref="setup" />
+	</info>
+
+	<title>Refereemanager - Developer Documentation</title>
+
+	<section id="preface">
+		<title>Preface</title>
+
+		<p>
+			This documentation focuses on the development aspect of the RefereeManager.
+			Thus, there is no description for setting up the RefereeManager in a production environment.
+			This is part of the user documentation.
+		</p>
+
+		<p>
+			Therefore, be aware, that your passwords etc. are not secured during development, if you don't secure them yourselves.
+			The same goes for other security aspects.
+		</p>
+
+		<p>
+			I develop the RefereeManager in a virtual machine with no access from the internet, or on a laptop with no reading access from the internet.
+			I urge you to do so yourselves, unless you know what you are doing.
+		</p>
+	</section>
+
+	<section id="language">
+		<title>Used Language</title>
+
+		<p>
+			The developer's documentation is in English, because I think more people understand English than German and thus more people can use the RefereeManager.
+			As I am a German native speaker, you can ask German questions every time.
+		</p>
+
+		<p>
+			Die Dokumentation ist auf Englisch, damit mehr Leute die Schiedsrichterverwaltung nutzen können.
+			Da ich Deutsch als Muttersprache spreche, können Sie natürlich jederzeit auch deutsche Fragen stellen.
+		</p>
+	</section>
+
+</page>
+
+

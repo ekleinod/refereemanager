@@ -16,7 +16,11 @@ class SaltFormAuthenticate extends FormAuthenticate {
 	 * @param password password to hash
 	 * @return user
 	 */
-	protected function _findUser($username, $password) {
+	protected function _findUser($username, $password = null) {
+
+		if ($password === null) {
+			return false;
+		}
 
 		$userModel = $this->settings['userModel'];
 		list($plugin, $model) = pluginSplit($userModel);

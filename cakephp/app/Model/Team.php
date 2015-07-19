@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Team Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class Team extends AppModel {
@@ -47,39 +47,23 @@ class Team extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'club_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'address_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'number' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'club_id' => array('notempty', 'numeric'),
+		'league_type_id' => array('notempty', 'numeric'),
+		'number' => array('numeric'),
 	);
 
 	/**
 	 * belongsTo associations
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $belongsTo = array('Club', 'Address');
+	public $belongsTo = array('Club', 'LeagueType');
 
 	/**
 	 * hasMany associations

@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * DatabaseTable Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class DatabaseTable extends AppModel {
@@ -32,20 +32,12 @@ class DatabaseTable extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'table_name' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'table_name' => array('isUnique', 'notempty'),
 	);
 
 	/**

@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * UserRole Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class UserRole extends AppModel {
@@ -32,28 +32,15 @@ class UserRole extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'sid' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'title' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'sid' => array('isUnique', 'notempty'),
+		'title' => array('isUnique', 'notempty'),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	/**
 	 * hasMany associations
@@ -62,6 +49,14 @@ class UserRole extends AppModel {
 	 * @since 0.1
 	 */
 	public $hasMany = array('User');
+
+	// custom programming
+
+	/* User roles. */
+	const ROLE_REFEREE = 'referee';
+	const ROLE_STATISTICIAN = 'statistician';
+	const ROLE_EDITOR = 'editor';
+	const ROLE_ADMIN = 'administrator';
 
 }
 

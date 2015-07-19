@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Tournament Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class Tournament extends AppModel {
@@ -32,61 +32,18 @@ class Tournament extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'name' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'start' => array(
-			'datetime' => array(
-				'rule' => array('datetime'),
-			),
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'end' => array(
-			'datetime' => array(
-				'rule' => array('datetime'),
-			),
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'address_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'announcement_url' => array(
-			'url' => array(
-				'rule' => array('url'),
-			),
-		),
-		'information_url' => array(
-			'url' => array(
-				'rule' => array('url'),
-			),
-		),
-		'club_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'person_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'name' => array('notempty'),
+		'start' => array('datetime', 'notempty'),
+		'end' => array('datetime', 'notempty'),
+		'announcement_url' => array('url'),
+		'information_url' => array('url'),
+		'club_id' => array('numeric'),
+		'person_id' => array('numeric'),
 	);
 
 	/**
@@ -95,7 +52,7 @@ class Tournament extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $belongsTo = array('Address', 'Club', 'Person');
+	public $belongsTo = array('Club', 'Person');
 
 	/**
 	 * hasMany associations
@@ -103,7 +60,7 @@ class Tournament extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $hasMany = array('TournamentGame');
+	public $hasMany = array('TournamentGame', 'TournamentVenue');
 
 }
 

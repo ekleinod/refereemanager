@@ -1,0 +1,240 @@
+<page xmlns="http://projectmallard.org/1.0/"
+			type="topic"
+			id="repositories">
+
+	<info>
+		<credit type="author copyright maintainer">
+			<name>Ekkart Kleinod</name>
+			<email>ekleinod@edgesoft.de</email>
+			<years>2012-2014</years>
+		</credit>
+
+		<revision docversion="0.1" date="2014-06-19" status="incomplete" />
+
+		<link type="guide" xref="setup" />
+		<link type="next" xref="workapache" />
+	</info>
+
+	<title>Checking out the repositories</title>
+
+	<p>
+		There are several projects (their code) needed in order to develop the <app>RefereeManager</app>.
+		You can either check out the code or download the code, if possible.
+		If you download the code or checkout the repositories is your choice.
+	</p>
+
+	<section id="structure">
+		<title>Directory structure</title>
+
+		<p>
+			During the development process, several files have to be located in directories of <app>CakePHP</app> and <app>phpMyAdmin</app> resp.
+			In order to avoid having several files mixed up, therefore making it difficult to separate <app>RefereeManager</app> files from original files, the development directories are separated from the git sources.
+			This means, that the development files have to be copied to and from the corresponding directories.
+			This process will be described in detail in <link xref="workflow" />.
+		</p>
+
+		<p>
+			There are several ant scripts for copying file to and from the development directories.
+			You can choose your own directory structure, but you have to change the script configuration file if you do so (see <link xref="workapache#configuration" />)
+			The scripts are based on the following default directory structure.
+		</p>
+
+		<tree style="lines">
+			<title>Default directory structure</title>
+			<item><file>&lt;path&gt;/</file>
+				<item><file>apache/</file>
+					<item><file>refereemanager/</file></item>
+					<item><file>phpmyadmin/</file></item>
+				</item>
+				<item><file>git/</file>
+					<item><file>refereemanager/</file></item>
+					<item><file>cakephp/</file></item>
+					<item><file>phpexcel/</file></item>
+					<item><file>phpexcelhelper/</file></item>
+					<item><file>tcpdf/</file></item>
+					<item><file>phpmyadmin/</file></item>
+				</item>
+			</item>
+		</tree>
+
+		<p>
+			The <file>apache</file> directory is filled automatically via an <app>ant</app> script.
+			All development takes place in the <file>apache</file> directory.
+			The development effort is saved to the <file>git</file> directory again with an <app>ant</app> script.
+			See <link xref="workflow" />.
+		</p>
+
+	</section>
+
+	<section id="refereemanager">
+		<title>RefereeManager</title>
+
+		<p>
+			<app>RefereeManager</app> is the referee manager application.
+		</p>
+
+		<terms>
+			<item>
+				<title>Repository Type</title>
+				<p><app>git</app></p>
+			</item>
+			<item>
+				<title>Repository URL</title>
+				<p><link href="https://github.com/ekleinod/refereemanager.git" /></p>
+			</item>
+			<item>
+				<title>Download URL</title>
+				<p><link href="https://github.com/ekleinod/refereemanager/releases" /></p>
+			</item>
+			<item>
+				<title>Homepage</title>
+				<p><link href="https://github.com/ekleinod/refereemanager" /></p>
+			</item>
+			<item>
+				<title>Wiki</title>
+				<p><link href="https://github.com/ekleinod/refereemanager/wiki" /></p>
+			</item>
+		</terms>
+	</section>
+
+	<section id="cakephp">
+		<title>CakePHP</title>
+
+		<p>
+			<app>CakePHP</app> is the framework the <app>RefereeManager</app> is based on.
+		</p>
+
+		<terms>
+			<item>
+				<title>Repository Type</title>
+				<p><app>git</app></p>
+			</item>
+			<item>
+				<title>Repository URL</title>
+				<p><link href="https://github.com/cakephp/cakephp.git" /></p>
+			</item>
+			<item>
+				<title>Download URL</title>
+				<p><link href="https://github.com/cakephp/cakephp/tags" /></p>
+			</item>
+			<item>
+				<title>Homepage</title>
+				<p><link href="http://cakephp.org/" /></p>
+			</item>
+		</terms>
+	</section>
+
+	<section id="phpexcel">
+		<title>PHPExcel</title>
+
+		<p>
+			<app>PHPExcel</app> provides means for creating excel documents in <app>PHP</app>.
+		</p>
+
+		<terms>
+			<item>
+				<title>Repository Type</title>
+				<p><app>git</app></p>
+			</item>
+			<item>
+				<title>Repository URL</title>
+				<p><link href="https://github.com/PHPOffice/PHPExcel.git" /></p>
+			</item>
+			<item>
+				<title>Download URL</title>
+				<p><link href="https://github.com/PHPOffice/PHPExcel/releases" /></p>
+			</item>
+			<item>
+				<title>Homepage</title>
+				<p><link href="http://www.phpexcel.net/" /></p>
+			</item>
+		</terms>
+	</section>
+
+	<section id="phpexcelhelper">
+		<title>PHPExcelHelper</title>
+
+		<p>
+			<app>PHPExcelHelper</app> is a wrapper for using <app>PHPExcel</app> with <app>CakePHP</app>.
+		</p>
+
+		<terms>
+			<item>
+				<title>Repository Type</title>
+				<p><app>git</app></p>
+			</item>
+			<item>
+				<title>Repository URL</title>
+				<p><link href="https://github.com/ekleinod/PHPExcelHelper.git" /></p>
+			</item>
+			<item>
+				<title>Download URL</title>
+				<p><link href="https://github.com/ekleinod/PHPExcelHelper/releases" /></p>
+			</item>
+			<item>
+				<title>Homepage</title>
+				<p><link href="https://github.com/ekleinod/PHPExcelHelper" /></p>
+			</item>
+		</terms>
+	</section>
+
+	<section id="tcpdf">
+		<title>TCPDF</title>
+
+		<p>
+			<app>TCPDF</app> provides means for creating pdf documents in <app>PHP</app>.
+		</p>
+
+		<terms>
+			<item>
+				<title>Repository Type</title>
+				<p><app>git</app></p>
+			</item>
+			<item>
+				<title>Repository URL</title>
+				<p><link href="http://git.code.sf.net/p/tcpdf/code" /></p>
+			</item>
+			<item>
+				<title>Download URL</title>
+				<p><link href="http://sourceforge.net/projects/tcpdf/files/" /></p>
+			</item>
+			<item>
+				<title>Homepage</title>
+				<p><link href="http://www.tcpdf.org/" /></p>
+			</item>
+		</terms>
+	</section>
+
+	<section id="phpmyadmin">
+		<title>PHPMyAdmin</title>
+
+		<p>
+			<app>PHPMyAdmin</app> is a useful tool for <app>MySQL</app> database management.
+			Due to the size of the repository, I prefer using a download.
+		</p>
+		<p>
+			<app>PHPMyAdmin</app> is not explicitely needed for development of the <app>RefereeManager</app>, it is just a useful database tool.
+		</p>
+
+		<terms>
+			<item>
+				<title>Repository Type</title>
+				<p><app>git</app></p>
+			</item>
+			<item>
+				<title>Repository URL</title>
+				<p><link href="https://github.com/phpmyadmin/phpmyadmin.git" /></p>
+			</item>
+			<item>
+				<title>Download URL</title>
+				<p><link href="http://www.phpmyadmin.net/home_page/downloads.php" /></p>
+			</item>
+			<item>
+				<title>Homepage</title>
+				<p><link href="http://www.phpmyadmin.net/" /></p>
+			</item>
+		</terms>
+	</section>
+
+</page>
+

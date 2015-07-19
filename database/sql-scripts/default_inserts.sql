@@ -1,10 +1,10 @@
 -- -----------------------------------------------------
--- Data for table `rfrmgr_assignment_status_types`
+-- Data for table `rfrmgr_referee_assignment_status_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_assignment_status_types` (`sid`) VALUES ('no');
-INSERT INTO `rfrmgr_assignment_status_types` (`sid`) VALUES ('maybe');
-INSERT INTO `rfrmgr_assignment_status_types` (`sid`) VALUES ('yes');
+INSERT INTO `rfrmgr_referee_assignment_status_types` (`sid`) VALUES ('no');
+INSERT INTO `rfrmgr_referee_assignment_status_types` (`sid`) VALUES ('maybe');
+INSERT INTO `rfrmgr_referee_assignment_status_types` (`sid`) VALUES ('yes');
 
 COMMIT;
 
@@ -66,6 +66,7 @@ START TRANSACTION;
 INSERT INTO `rfrmgr_sex_types` (`sid`) VALUES ('female');
 INSERT INTO `rfrmgr_sex_types` (`sid`) VALUES ('male');
 INSERT INTO `rfrmgr_sex_types` (`sid`) VALUES ('other');
+INSERT INTO `rfrmgr_sex_types` (`sid`) VALUES ('unknown');
 
 COMMIT;
 
@@ -76,6 +77,7 @@ START TRANSACTION;
 INSERT INTO `rfrmgr_status_types` (`sid`, `title`) VALUES ('many', 'many');
 INSERT INTO `rfrmgr_status_types` (`sid`, `title`) VALUES ('normal', 'normal');
 INSERT INTO `rfrmgr_status_types` (`sid`, `title`) VALUES ('inactiveseason', 'inactiveseason');
+INSERT INTO `rfrmgr_status_types` (`sid`, `title`) VALUES ('mailonly', 'mailonly');
 INSERT INTO `rfrmgr_status_types` (`sid`, `title`) VALUES ('other', 'other');
 
 COMMIT;
@@ -84,10 +86,10 @@ COMMIT;
 -- Data for table `rfrmgr_training_level_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `title`) VALUES ('assump', 1, 'assump');
-INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `title`) VALUES ('natump', 2, 'natump');
-INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `title`) VALUES ('natref', 3, 'natref');
-INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `title`) VALUES ('intump', 4, 'intump');
+INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `update_interval`) VALUES ('assump', 1, 2);
+INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `update_interval`) VALUES ('natump', 2, 3);
+INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `update_interval`) VALUES ('natref', 3, 3);
+INSERT INTO `rfrmgr_training_level_types` (`sid`, `rank`, `update_interval`) VALUES ('intump', 4, 3);
 
 COMMIT;
 

@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * TrainingLevelType Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class TrainingLevelType extends AppModel {
@@ -32,38 +32,16 @@ class TrainingLevelType extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'sid' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'title' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'rank' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'abbreviation' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'sid' => array('isUnique', 'notempty'),
+		'rank' => array('isUnique', 'notempty', 'numeric'),
+		'title' => array('isUnique', 'notempty'),
+		'abbreviation' => array('isUnique', 'notempty'),
+		'update_interval' => array('notempty', 'numeric'),
 	);
 
 	/**

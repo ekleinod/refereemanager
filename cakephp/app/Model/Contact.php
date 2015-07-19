@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Contact Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class Contact extends AppModel {
@@ -32,43 +32,33 @@ class Contact extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'contact_type_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'person_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'contact_type_id' => array('notempty', 'numeric'),
+		'is_primary' => array('boolean'),
+		'editor_only' => array('boolean'),
+		'person_id' => array('numeric'),
+		'club_id' => array('numeric'),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	/**
+	 * hasOne associations
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public $hasOne = array('Address', 'Email', 'PhoneNumber', 'Url');
+
+	/**
+	 * hasMany associations
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	public $hasMany = array('TeamVenue', 'TournamentVenue');
 
 	/**
 	 * belongsTo associations
@@ -76,15 +66,7 @@ class Contact extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $belongsTo = array('ContactType', 'Person');
-
-	/**
-	 * hasMany associations
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public $hasMany = array('Address', 'Email', 'PhoneNumber', 'Url');
+	public $belongsTo = array('ContactType', 'Person', 'Club');
 
 }
 
