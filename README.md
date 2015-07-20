@@ -41,6 +41,13 @@ Several features are working, see version list below.
 Therefore, the referee manager is *not* safe for using in the "real" internet.
 Use it in a closed envorinment (local server etc.) only.
 
+### v0.3
+
+*Released:* 2015-07-20
+
+- many functions working for referees and messages
+- last version before switching to CakePHP 3.*
+
 ### v0.2
 
 *Released:* 2014-05-04
