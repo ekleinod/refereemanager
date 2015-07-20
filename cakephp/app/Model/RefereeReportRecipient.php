@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * RefereeReportRecipient Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class RefereeReportRecipient extends AppModel {
@@ -47,25 +47,13 @@ class RefereeReportRecipient extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'referee_report_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'person_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'referee_report_id' => array('notempty', 'numeric'),
+		'person_id' => array('notempty', 'numeric'),
 	);
 
 	/**

@@ -1,7 +1,30 @@
-Title:							RefereeManager Developer Documentation
-Author:							Ekkart Kleinod
-Date:								2004-05-04
+Quotes Language:		english
 Base Header Level:	3
+latex input:				basis-mmd-scrartcl
+MyOptions:					font=droid
+latex input:				basis-mmd-style
+Title:							RefereeManager
+Date:
+Author:							Ekkart Kleinod
+MySubtitle:					Developer Documentation
+MyVersion:
+MyStrasse:
+MyPLZ:
+MyOrt:
+MyTelefon:
+MyHandy:
+MyEmail:						ekleinod@edgesoft.de
+MyHomepage:
+MyAdresszusatz:
+MyTitelzusatz:
+MyLogo:
+MySponsorLogo:
+latex input:				basis-mmd-begin-doc
+
+<!-- \maketitle -->
+
+<!-- \tableofcontents -->
+<!-- \cleardoublepage -->
 
 # Preface
 
@@ -21,18 +44,20 @@ The developer's documentation is in English, because I think more people underst
 As I am a German native speaker, you can ask German questions every time.
 
 Die Dokumentation ist auf Englisch, damit mehr Leute die Schiedsrichterverwaltung nutzen können.
-Da ich Deutsch als Mutterspreche spreche, können Sie natürlich jederzeit auch deutsche Fragen stellen.
+Da ich Deutsch als Muttersprache spreche, können Sie natürlich jederzeit auch deutsche Fragen stellen.
+
+<!-- \cleardoublepage -->
 
 # Structure and git repositories
 
-There are five sources or downloads used for development:
+There are six sources or downloads used for development:
 
-- CakePHP ([Homepage][url:cake], [Git][url:cake:git])
-- phpMyAdmin ([Homepage][url:pma], [Git][url:pma:git], [Downloads][url:pma:down])
-- RefereeManager ([Homepage][url:refman], [Git][url:refman:git])
-- PHPExcel ([Homepage][url:phpexcel], [SVN][url:phpexcel:svn])
-- PHPExcelHelper ([Homepage][url:phpexcelhelper], [Git][url:phpexcelhelper:git])
-- TCPDF ([Homepage][url:cpdf], [Git][url:tcpdf:git])
+1. CakePHP ([Homepage][url:cake], [Git][url:cake:git])
+2. phpMyAdmin ([Homepage][url:pma], [Git][url:pma:git], [Downloads][url:pma:down])
+3. RefereeManager ([Homepage][url:refman], [Git][url:refman:git])
+4. PHPExcel ([Homepage][url:phpexcel], [SVN][url:phpexcel:svn])
+5. PHPExcelHelper ([Homepage][url:phpexcelhelper], [Git][url:phpexcelhelper:git])
+6. TCPDF ([Homepage][url:tcpdf], [Git][url:tcpdf:git])
 
 RefereeManager should be read/write if you want to develop, the other are read-only.
 
@@ -46,41 +71,50 @@ If you do not want to use the git sources, feel free to download available snaps
 
 We refer to the needed directories as follows:
 
-<...>/apache/refereemanager/
-: development directory
-: contains the actual website in development
-: no git allowed here
+	<...>/apache/refereemanager/
+- development directory
+- contains the actual website in development
+- no git allowed here
 
-<...>/apache/phpmyadmin/
-: phpMyAdmin directory containing a copy of the phpMyAdmin files and the configuration file
-: no git allowed here
+<!-- -->
+	<...>/apache/phpmyadmin/
+- phpMyAdmin directory containing a copy of the phpMyAdmin files and the configuration file
+- no git allowed here
 
-<...>/git/refereemanager/
-: RefereeManager git repository
-: development and configuration files reside here
-: development of CakePHP files does not take place here, files are copied here
+<!-- -->
+	<...>/git/refereemanager/
+- RefereeManager git repository
+- development and configuration files reside here
+- development of CakePHP files does not take place here, files are copied here
 
-<...>/git/phpmyadmin/
-: phpMyAdmin git repository
-: no development files here
+<!-- -->
+	<...>/git/phpmyadmin/
+- phpMyAdmin git repository
+- no development files here
 
-<...>/git/cakephp/
-: CakePHP git repository
-: no development files here
+<!-- -->
+	<...>/git/cakephp/
+- CakePHP git repository
+- no development files here
 
-<...>/git/phpexcel/
-: PHPExcel svn repository
-: no development files here
+<!-- -->
+	<...>/git/phpexcel/
+- PHPExcel svn repository
+- no development files here
 
-<...>/git/phpexcelhelper/
-: PHPExcelHelper git repository
-: no development files here
+<!-- -->
+	<...>/git/phpexcelhelper/
+- PHPExcelHelper git repository
+- no development files here
 
-<...>/git/tcpdf/
-: TCPDF git repository
-: no development files here
+<!-- -->
+	<...>/git/tcpdf/
+- TCPDF git repository
+- no development files here
 
 
+
+<!-- \cleardoublepage -->
 
 # Required software
 
@@ -231,6 +265,8 @@ Make sure you install the database with the default settings and without databas
 If you choose otherwise, note the values in order to put them in the configuration files.
 
 
+<!-- \cleardoublepage -->
+
 # Setup your working environment
 
 Now, it is time to set up your working environment.
@@ -284,7 +320,7 @@ Clone the code of *PHPExcelHelper*, alternatively download and unzip a version.
 
 Clone the code of *TCPDF*, alternatively download and unzip a version.
 
-	$ git clone http://git.code.sf.net/p/tcpdf/code <...>/git/phpexcelhelper/
+	$ git clone http://git.code.sf.net/p/tcpdf/code <...>/git/tcpdf/
 
 ## Create and link your apache target directories
 
@@ -317,14 +353,14 @@ Default structure is:
 
 	../
 		apache/
-			refereemanager/
 			phpmyadmin/
+			refereemanager/
 		git/
-			refereemanager/
 			cakephp/
-			phpmyadmin/
 			phpexcel/
 			phpexcelhelper/
+			phpmyadmin/
+			refereemanager/
 
 If your directory structure is the same, you do not have to change the configuration file.
 
@@ -512,7 +548,7 @@ If not, check:
 - the link of `phpmyadmin` in the apache www root (see [Create and link your apache target directories][])
 - your phpMyAdmin configuration (see [phpMyAdmin configuration][])
 
-Create a database called `refereemanager`.
+Create a database called `refereemanager`, use `utf8_general_ci` collation.
 If you choose another name, alter your CakePHP configuration file accordingly (see [CakePHP database configuration][]).
 
 Create the database tables using the code of:
@@ -532,6 +568,17 @@ Fill the database with your data if you have some.
 Everything is ready for development.
 
 
+<!-- \cleardoublepage -->
+
+# Ideas
+
+- apache.conf and config.inc.php in own folder
+- link apache.conf in phpmyadmin to /etc/apache2/conf-available/phpmyadmin.conf
+- link conf in avaliable to conf-enabled
+- link mods-available/rewrite.load to mods-enabled
+- ensure directory permissions through complete path
+
+<!-- \cleardoublepage -->
 
 # Versions
 
@@ -560,7 +607,7 @@ Everything is ready for development.
 [url:phpexcel]: http://phpexcel.codeplex.com/ "PHPExcel Homepage"
 [url:phpexcel:svn]: https://phpexcel.svn.codeplex.com/svn "PhpExcel SVN Access"
 [url:phpexcelhelper]: https://github.com/ekleinod/PHPExcelHelper "PHPExcelHelper Github Page"
-[url:phpexcelhelper:git]: git://github.com/ekleinod/PHPExcelHelper.git "PHPExcelHelper Git Access"
+[url:phpexcelhelper:git]: https://github.com/ekleinod/PHPExcelHelper.git "PHPExcelHelper Git Access"
 [url:refman]: https://github.com/ekleinod/refereemanager "RefereeManager Github Home"
 [url:refman:wiki]: https://github.com/ekleinod/refereemanager/wiki "RefereeManager Github Wiki"
 [url:refman:git]: https://github.com/ekleinod/refereemanager.git "RefereeManager Github Git Access"

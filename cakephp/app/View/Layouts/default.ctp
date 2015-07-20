@@ -18,12 +18,14 @@
 
 			// meta tags
 			$this->Html->meta(array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, maximum-scale=1'), null, array('inline' => false));
+			$this->Html->meta(array('name' => 'description', 'content' => $this->fetch('title')), null, array('inline' => false));
+			$this->Html->meta(array('name' => 'author', 'content' => 'Ekkart Kleinod'), null, array('inline' => false));
 			echo $this->fetch('meta');
 
 			// css files
-			$this->Html->css('base', null, array('inline' => false));
-			$this->Html->css('skeleton', null, array('inline' => false));
-			$this->Html->css('layout', null, array('inline' => false));
+			$this->Html->css('bootstrap.min', null, array('inline' => false));
+			$this->Html->css('bootstrap-theme.min', null, array('inline' => false));
+			$this->Html->css('refman', null, array('inline' => false));
 			echo $this->fetch('css');
 		?>
 
@@ -34,71 +36,84 @@
 		<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png" />
 
 		<!-- title -->
-		<title><?php echo $title_for_layout; ?></title>
+		<title><?php echo $this->fetch('title'); ?></title>
 
 	</head>
 	<body>
 
-		<div class="page">
-
-			<div class="band header">
-
-				<header class="container main">
-
-					<div class="sixteen columns">
-
-						<h1><?php echo $this->Html->link(__('Schiedsrichterverwaltung'), array('controller' => 'pages', 'action' => 'display', 'home')); ?></h1>
-
-					</div><!-- end sixteen -->
-
-				</header><!-- end container -->
-
-			</div><!-- end band header -->
-
-			<div class="band navigation">
-
-				<nav class="container primary">
-
-					<div class="sixteen columns">
-
+		<!-- navigation -->
+			<nav class="navbar navbar-default navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<?php echo $this->Html->link(__('Schiedsrichterverwaltung'), array('controller' => 'pages', 'action' => 'display', 'home'), array('class' => 'navbar-brand')); ?>
+					</div>
+					<div id="navbar" class="collapse navbar-collapse">
 						<?php
 						$navarray = array(
-															array('title' => __('Schiedsrichter'), 'routing' => array('action' => 'index', 'controller' => 'referees'),
+															array('title' => __('Schiedsrichtereinsätze'),
+																		'routing' => array('action' => 'index', 'controller' => 'assignments')
+																		),
+															array('title' => __('Schiedsrichter_innen'),
+																		'routing' => array('action' => 'index', 'controller' => 'referees')
+																		),
+															array('title' => __('Sonstiges'),
+																		'routing' => array('action' => 'index', 'controller' => 'other'),
 																		'subnav' => array(
-																											array('title' => __('Ansehen'), 'routing' => array('action' => 'index', 'controller' => 'referees')),
-																											//array('title' => __('Suchen'), 'routing' => array('action' => 'search', 'controller' => 'referees')),
-																											//array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'referees')),
+																											array('title' => __('Clubs'), 'routing' => array('action' => 'index', 'controller' => 'clubs')),
+																											array('title' => __('Liga-Typen'), 'routing' => array('action' => 'index', 'controller' => 'league_types')),
+																											array('title' => __('Ligen'), 'routing' => array('action' => 'index', 'controller' => 'leagues')),
+																											array('divider' => 'divider'),
+																											array('title' => __('Personen'), 'role' => 'referee', 'routing' => array('action' => 'index', 'controller' => 'people')),
+																											array('title' => __('Saisons'), 'routing' => array('action' => 'index', 'controller' => 'seasons')),
+																											array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
 																											)
 																		),
-															array('title' => __('Schiedsrichtereinsätze'), 'routing' => array('action' => 'index', 'controller' => 'referee_assignments'),
-																		'subnav' => array(
-																											array('title' => __('Ansehen'), 'routing' => array('action' => 'index', 'controller' => 'referee_assignments')),
-																											//array('title' => __('Suchen'), 'routing' => array('action' => 'search', 'controller' => 'referee_assignments')),
-																											//array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'referee_assignments')),
-																											)
-																		),
-															array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams'),
-																		'subnav' => array(
-																											array('title' => __('Ansehen'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
-																											//array('title' => __('Suchen'), 'routing' => array('action' => 'search', 'controller' => 'teams')),
-																											//array('title' => __('Hinzufügen'), 'routing' => array('action' => 'add', 'controller' => 'teams')),
-																											)
-																		),
-															array('title' => __('Editor-Werkzeuge'), 'routing' => array('action' => 'index', 'controller' => 'tools_editor'),
+															array('title' => __('Editor-Werkzeuge'),
 																		'role' => 'editor',
+																		'routing' => array('action' => 'index', 'controller' => 'tools_editor'),
 																		'subnav' => array(
+																											array('title' => __('Mailverteiler'), 'routing' => array('action' => 'mailinglist', 'controller' => 'tools_editor')),
 																											array('title' => __('Nachricht'), 'routing' => array('action' => 'message', 'controller' => 'tools_editor')),
 																											)
 																		),
 															);
 							echo $this->element('navigation', array('navarray' => $navarray));
 						?>
+					</div> <!--/.nav-collapse -->
+				</div>
+			</nav> <!-- /navigation -->
 
-					</div><!-- end sixteen -->
+		<!-- content container -->
+			<div class="container">
 
-				</nav><!-- end container primary -->
+			<!-- page header -->
+				<div class="page-header">
+					<h1><?php echo $this->fetch('title'); ?></h1>
+				</div> <!-- /page header -->
 
-			</div><!-- end band navigation -->
+			<!-- alert -->
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="alert alert-danger alert-dismissable">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<?php echo $this->Flash->render(); ?>
+						</div>
+					</div>
+				</div>
+
+			</div> <!-- /content container -->
+
+
+
+
+		<div class="page">
+
 
 			<?php if (isset($username)) { ?>
 				<div class="band username">
@@ -122,7 +137,7 @@
 						<article>
 							<div id="flash"><?php echo $this->Session->flash(); ?></div>
 							<div id="content">
-								<h2><?php echo $title_for_layout; ?></h2>
+								<h2><?php echo $this->fetch('title'); ?></h2>
 								<?php echo $this->fetch('content'); ?>
 							</div>
 						</article>
@@ -176,6 +191,8 @@
 
 		<?php
 			// load scripts at end of page in order to improve page load speed
+			$this->Html->script('jquery.min', array('inline' => false));
+			$this->Html->script('bootstrap.min', array('inline' => false));
 			echo $this->fetch('script');
 		?>
 

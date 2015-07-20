@@ -22,6 +22,7 @@
 
 App::uses('Controller', 'Controller');
 App::uses('Security', 'Utility'); // use more secure salt hash
+App::uses('PhpReader', 'Configure');
 
 /**
  * Application Controller
@@ -34,18 +35,6 @@ App::uses('Security', 'Utility'); // use more secure salt hash
  */
 class AppController extends Controller {
 
-	/** Role: referee. */
-	const ROLE_REFEREE = 'referee';
-
-	/** Role: statistician. */
-	const ROLE_STATISTICIAN = 'statistician';
-
-	/** Role: editor. */
-	const ROLE_EDITOR = 'editor';
-
-	/** Role: admin. */
-	const ROLE_ADMIN = 'administrator';
-
 	/**
 	 * Extend components array by Auth component for simple authentication.
 	 *
@@ -54,8 +43,8 @@ class AppController extends Controller {
 	public $components = array(
 		'Session',
 		'Auth' => array(
-			'loginRedirect' => array('controller' => 'referees', 'action' => 'index'),
-			'logoutRedirect' => array('controller' => 'referees', 'action' => 'index'),
+			'loginRedirect' => array('controller' => 'assignments', 'action' => 'index'),
+			'logoutRedirect' => array('controller' => 'assignments', 'action' => 'index'),
 			'authenticate' => array('SaltForm') // use own authentication class
 		)
 	);
@@ -65,6 +54,9 @@ class AppController extends Controller {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
+
+		// load config from file 'refman.php'
+		Configure::load('refman');
 
 		Configure::write('Config.language', $this->Session->read('Config.language'));
 
@@ -82,6 +74,7 @@ class AppController extends Controller {
 
 			// set user name
 			$this->set('username', $user['username']);
+			$this->set('userpersonid', $theUser['Person']['id']);
 		}
 
 		$this->set('isReferee', $this->isReferee($theUserRoleSID));
@@ -89,16 +82,8 @@ class AppController extends Controller {
 		$this->set('isEditor', $this->isEditor($theUserRoleSID));
 		$this->set('isAdmin', $this->isAdmin($theUserRoleSID));
 
-		// configuration: tbd.: load from database or file
-		Configure::write('RefMan',
-										 array('defaultcontacttypeid' => 1,
-													 'defaultcountrycode' => '49',
-													 'defaultareacode' => '30'));
-
-		Configure::write('RefMan.template.path', 'files/templates/');
-		Configure::write('RefMan.template.referee_view', 'referee_view.mmd');
-		Configure::write('RefMan.template.referee_view_all', 'referee_view_all.tex');
-
+		// initialize log
+		CakeLog::config('default', array('engine' => 'File'));
 	}
 
 	/**
@@ -128,7 +113,7 @@ class AppController extends Controller {
 		}
 
 		// check
-		return $userrole === self::ROLE_REFEREE;
+		return $userrole === UserRole::ROLE_REFEREE;
 	}
 
 	/**
@@ -155,7 +140,7 @@ class AppController extends Controller {
 		}
 
 		// check
-		return $userrole === self::ROLE_STATISTICIAN;
+		return $userrole === UserRole::ROLE_STATISTICIAN;
 	}
 
 	/**
@@ -179,7 +164,7 @@ class AppController extends Controller {
 		}
 
 		// check
-		return $userrole === self::ROLE_EDITOR;
+		return $userrole === UserRole::ROLE_EDITOR;
 	}
 
 	/**
@@ -196,7 +181,53 @@ class AppController extends Controller {
 		}
 
 		// check
-		return $userrole === self::ROLE_ADMIN;
+		return $userrole === UserRole::ROLE_ADMIN;
+	}
+
+	/**
+	 * Returns season (default, stated, or from filter).
+	 *
+	 * @param season season (default: null == current season)
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getSeason($season = null) {
+
+		$year = $season;
+
+		if ($this->request->is('post') && !empty($this->request->data) && array_key_exists('Filter', $this->request->data)) {
+			$theSeason = $this->Season->findById($this->request->data['Filter']['season']);
+			$year = $theSeason['Season']['year_start'];
+		}
+
+		$theSeason = $this->Season->getSeason($year, $this->viewVars['isEditor']);
+		$this->set('season', $theSeason);
+
+		return $theSeason;
+	}
+
+	/**
+	 * Clean empty data fields, i.e. replace them with "null".
+	 *
+	 * @param data input data
+	 * @return cleaned data
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function cleanEmpty($data) {
+		$arrReturn = array();
+
+		foreach ($data as $key => $value) {
+			if (is_array($value)) {
+				$arrReturn[$key] = $this->cleanEmpty($value);
+			} else {
+				$arrReturn[$key] = (empty($value)) ? null : $value;
+			}
+		}
+
+		return $arrReturn;
 	}
 
 }

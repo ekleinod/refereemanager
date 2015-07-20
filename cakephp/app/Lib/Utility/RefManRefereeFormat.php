@@ -1,9 +1,4 @@
 <?php
-/**
- * RefManRefereeFormat Utility
- *
- * Methods for formatting all referee manager components nicely.
- */
 
 App::uses('CakeTime', 'Utility');
 
@@ -13,24 +8,64 @@ App::uses('CakeTime', 'Utility');
  * Methods for formatting all referee manager components nicely.
  *
  * @package       Lib.Utility
+ *
+ * @author ekleinod (ekleinod@edgesoft.de)
+ * @version 0.3
+ * @since 0.1
  */
 class RefManRefereeFormat {
 
 	/**
+	 * Format given date/time for SQL.
+	 *
+	 * @param $date date to format
+	 * @param $time time to format
+	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	public static function sqlFromDateTime($date, $time = null) {
+
+		if (empty($date)) {
+			return null;
+		}
+
+		$sReturn = null;
+
+		if (empty($time)) {
+			$sReturn = CakeTime::format(CakeTime::fromString($date), '%Y-%m-%d');
+		} else {
+			$sReturn = CakeTime::format(CakeTime::fromString(sprintf('%s %s', $date, $time)), '%Y-%m-%d %H:%M:%S');
+		}
+
+		return $sReturn;
+	}
+
+	/**
 	 * Format given date/time according to specified type.
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
+	 * @param $data data to format
+	 * @param $type format type
 	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.1
 	 */
-	public function formatDate($data, $type) {
+	public static function formatDate($data, $type) {
 
-		if (($data === null) || empty($data)) {
+		if (empty($data)) {
 			return '';
 		}
 
 		// @todo set locale correctly, still very mysterious
 		$arrlocale = explode('-', Configure::read('Config.language'));
+		if (count($arrlocale) < 1) {
+			$arrlocale[] = "en";
+		}
+		if (count($arrlocale) < 2) {
+			$arrlocale[] = strtoupper($arrlocale[0]);
+		}
 		setlocale(LC_TIME, sprintf('%s_%s.utf8', $arrlocale[0], strtoupper($arrlocale[1])));
 
 		switch ($type) {
@@ -58,9 +93,6 @@ class RefManRefereeFormat {
 			case 'year':
 				$formatted = CakeTime::format($data, '%Y');
 				break;
-			default:
-				$formatted = $data;
-				break;
 		}
 
 		return $formatted;
@@ -69,49 +101,36 @@ class RefManRefereeFormat {
 	/**
 	 * Format given person according to specified type.
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @param string $datetype format type for dates (default 'date')
+	 * @param $data data to format
+	 * @param $type format type
 	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.1
 	 */
-	public function formatPerson($data, $type, $datetype = 'date') {
+	public static function formatPerson($data, $type) {
 
-		if (($data === null) || empty($data)) {
+		if (empty($data)) {
 			return '';
 		}
 
 		switch ($type) {
-			case 'birthday':
-				$formatted = (empty($data['birthday'])) ? '' : $this->formatDate($data['birthday'], $datetype);
-				break;
-			case 'first_name':
-				$formatted = (empty($data['first_name'])) ? '' : $data['first_name'];
-				break;
 			case 'fullname':
 				$formatted = __('%s%s%s',
-												((empty($data['title'])) ? '' : __('%s ', $data['title'])),
-												((empty($data['first_name'])) ? '' : __('%s ', $data['first_name'])),
-												$data['name']);
-				break;
-			case 'name':
-				$formatted = $data['name'];
+												((empty($data['Person']['title'])) ? '' : __('%s ', $data['Person']['title'])),
+												((empty($data['Person']['first_name'])) ? '' : __('%s ', $data['Person']['first_name'])),
+												$data['Person']['name']);
 				break;
 			case 'name_title':
 				$formatted = __('%s%s',
-												$data['name'],
-												((empty($data['title'])) ? '' : __(', %s', $data['title'])));
+												$data['Person']['name'],
+												((empty($data['Person']['title'])) ? '' : __(', %s', $data['Person']['title'])));
 				break;
 			case 'tablename':
 				$formatted = __('%s%s%s',
-												$data['name'],
-												((empty($data['title'])) ? '' : __(', %s', $data['title'])),
-												((empty($data['first_name'])) ? '' : __(', %s', $data['first_name'])));
-				break;
-			case 'title':
-				$formatted = (empty($data['title'])) ? '' : $data['title'];
-				break;
-			default:
-				$formatted = $data;
+												$data['Person']['name'],
+												((empty($data['Person']['title'])) ? '' : __(', %s', $data['Person']['title'])),
+												((empty($data['Person']['first_name'])) ? '' : __(', %s', $data['Person']['first_name'])));
 				break;
 		}
 
@@ -119,205 +138,390 @@ class RefManRefereeFormat {
 	}
 
 	/**
-	 * Format given email according to specified type.
+	 * Format multiline data.
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @return string formatted string
+	 * @param $data data to format
+	 * @param $separator separator character
+	 * @return formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.3
 	 */
-	public function formatEMail($data, $type) {
-
-		if (($data === null) || empty($data)) {
+	public static function formatMultiline($data, $separator = '<br />') {
+		if (empty($data)) {
 			return '';
 		}
 
-		switch ($type) {
-			case 'link':
-				$formatted = sprintf('<a href="mailto:%1$s">%1$s</a>', $data['email']);
-				break;
-			case 'text':
-				$formatted = $data['email'];
-				break;
-			default:
-				$formatted = $data;
-				break;
-		}
+		$sReturn = '';
 
-		return $formatted;
-	}
+		if (is_array($data)) {
 
-	/**
-	 * Format given phone number according to specified type.
-	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @return string formatted string
-	 */
-	public function formatPhone($data, $type) {
-
-		if (($data === null) || empty($data)) {
-			return '';
-		}
-
-		switch ($type) {
-			case 'international':
-				$formatted = __('+%s %s ', ($data['country_code'] === '') ? Configure::read('RefMan.defaultcountrycode') : $data['country_code'], ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
-				$formatted .= $data['number'];
-				break;
-			case 'normal':
-				$formatted = '';
-				if (($data['country_code'] != '') && ($data['country_code'] != Configure::read('RefMan.defaultcountrycode'))) {
-					$formatted .= __('+%s %s ', $data['country_code'], ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
-				} else {
-					$formatted .= __('0%s ', ($data['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['area_code']);
+			$bMore = false;
+			foreach ($data as $entry) {
+				if ($bMore) {
+					$sReturn .= $separator;
 				}
-				$formatted .= $data['number'];
-				break;
-			default:
-				$formatted = $data;
-				break;
+				$bMore = true;
+
+				$sReturn .= $entry;
+			}
+
+		} else {
+			$sReturn .= $data;
 		}
 
-		return $formatted;
+		return $sReturn;
 	}
 
 	/**
-	 * Format given url according to specified type.
+	 * Format given contacts.
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
-	 * @return string formatted string
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $type contact kind
+	 * @param $export export type
+	 * @return formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.3
 	 */
-	public function formatURL($data, $type) {
+	public static function formatContacts($data, $type, $kind, $export = 'html') {
 
-		if (($data === null) || empty($data)) {
+		if (empty($data)) {
 			return '';
 		}
 
-		switch ($type) {
-			case 'link':
-				$formatted = sprintf('<a href="%1$s">%1$s</a>', $data['url']);
+		$sTextArray = array();
+
+		foreach ($data as $entry) {
+			$sTextArray[] = RefManRefereeFormat::formatContact($entry, $type, $kind, $export, count($data));
+		}
+
+		$sSeparator = '';
+		switch ($export) {
+			case 'html':
+				$sSeparator = '<br />';
+				break;
+			case 'excel':
+				$sSeparator = "\n";
 				break;
 			case 'text':
-				$formatted = $data['url'];
-				break;
-			default:
-				$formatted = $data;
+				$sSeparator = ', ';
 				break;
 		}
 
-		return $formatted;
+		return RefManRefereeFormat::formatMultiline($sTextArray, $sSeparator);
+	}
+
+	/**
+	 * Format given contact.
+	 *
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $type contact kind
+	 * @param $export export type
+	 * @param $count number of contacts
+	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	private static function formatContact($data, $type, $kind, $export, $count) {
+			$sReturn = '';
+
+			if ($count > 1) {
+				$sReturn .= sprintf('(%s) ', $data['ContactType']['abbreviation']);
+			}
+
+			switch ($kind) {
+				case 'Address':
+					$sReturn .= RefManRefereeFormat::formatAddress($data, $type, $export);
+					break;
+				case 'Email':
+					$sReturn .= RefManRefereeFormat::formatEmail($data, $type, $export);
+					break;
+				case 'PhoneNumber':
+					$sReturn .= RefManRefereeFormat::formatPhoneNumber($data, $type, $export);
+					break;
+				case 'Url':
+					$sReturn .= RefManRefereeFormat::formatUrl($data, $type, $export);
+					break;
+			}
+
+			if (!empty($data['info']['editor_only']) || !empty($data['info']['remark'])) {
+
+				$txtout = array();
+				if (!empty($data['info']['editor_only'])) {
+					$txtout[] = __('privat');
+				}
+				if (!empty($data['info']['remark'])) {
+					$txtout[] = $data['info']['remark'];
+				}
+				$txtout = RefManRefereeFormat::formatMultiline($txtout, ', ');
+
+				switch ($export) {
+					case 'html':
+						$sReturn .= sprintf(' <span style="font-size: smaller; font-style: italic;">(%s)</span>', $txtout);
+						break;
+					case 'excel':
+					case 'text':
+						$sReturn .= sprintf(' (%s)', $txtout);
+						break;
+				}
+			}
+
+			return $sReturn;
 	}
 
 	/**
 	 * Format given address according to specified type.
 	 *
-	 * @param string $data data to format
-	 * @param string $type format type
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $export export type
 	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.1
 	 */
-	public function formatAddress($data, $type) {
+	public static function formatAddress($data, $type, $export) {
 
-		if (($data === null) || empty($data)) {
-			return '';
+		$sReturn = '';
+
+		switch ($export) {
+
+			case 'html':
+			case 'excel':
+			case 'text':
+				switch ($type) {
+					case 'fulladdress':
+						if (!empty($data['Address']['street'])) {
+							$sReturn .= __('%s', $data['Address']['street']);
+						}
+						if (!empty($sReturn) && !empty($data['Address']['number'])) {
+							$sReturn .= __(' %s', $data['Address']['number']);
+						}
+						if (!empty($sReturn) && (!empty($data['Address']['zip_code']) || !empty($data['Address']['city']))) {
+							$sReturn .= __(',');
+						}
+						if (!empty($data['Address']['zip_code'])) {
+							$sReturn .= __(' %s', $data['Address']['zip_code']);
+						}
+						if (!empty($data['Address']['city'])) {
+							$sReturn .= __(' %s', $data['Address']['city']);
+						}
+						break;
+					case 'streetnumber':
+						if (!empty($data['Address']['street'])) {
+							$sReturn .= __('%s', $data['Address']['street']);
+						}
+						if (!empty($sReturn) && !empty($data['Address']['number'])) {
+							$sReturn .= __(' %s', $data['Address']['number']);
+						}
+						break;
+					case 'zipcity':
+						if (!empty($data['Address']['zip_code'])) {
+							$sReturn .= __('%s', $data['Address']['zip_code']);
+						}
+						if (!empty($data['Address']['city'])) {
+							$sReturn .= __(' %s', $data['Address']['city']);
+						}
+						break;
+				}
 		}
 
-		switch ($type) {
-			case 'fulladdress':
-				$formatted = '';
-				if ($data['street'] != '') {
-					$formatted .= __('%s', $data['street']);
-				}
-				if (($formatted != '') && ($data['number'] != '')) {
-					$formatted .= __(' %s', $data['number']);
-				}
-				if (($formatted != '') && (($data['zip_code'] != '') || ($data['city'] != ''))) {
-					$formatted .= __(',');
-				}
-				if ($data['zip_code'] != '') {
-					$formatted .= __(' %s', $data['zip_code']);
-				}
-				if ($data['city'] != '') {
-					$formatted .= __(' %s', $data['city']);
-				}
-				break;
-			case 'streetnumber':
-				$formatted = '';
-				if ($data['street'] != '') {
-					$formatted .= __('%s', $data['street']);
-				}
-				if (($formatted != '') && ($data['number'] != '')) {
-					$formatted .= __(' %s', $data['number']);
-				}
-				break;
-			case 'zipcity':
-				$formatted = '';
-				if ($data['zip_code'] != '') {
-					$formatted .= __('%s', $data['zip_code']);
-				}
-				if ($data['city'] != '') {
-					$formatted .= __(' %s', $data['city']);
-				}
-				break;
-			default:
-				$formatted = $data;
-				break;
-		}
-
-		return $formatted;
+		return $sReturn;
 	}
 
 	/**
-	 * Format relation with sid using separator character.
+	 * Format given email according to specified type.
 	 *
-	 * @param string $data data to format
-	 * @param string $sid sid of relation
-	 * @param string $sep separator
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $export export type
 	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.1
 	 */
-	public function formatRelationBySID($data, $sid, $sep = '; ') {
+	private static function formatEmail($data, $type, $export) {
 
-		if (($data === null) || empty($data)) {
+		$sReturn = '';
+
+		switch ($export) {
+
+			case 'html':
+				switch ($type) {
+					case 'link':
+						$sReturn .= sprintf('<a href="mailto:%1$s">%1$s</a>', $data['Email']['email']);
+						break;
+					case 'text':
+						$sReturn .= $data['Email']['email'];
+						break;
+				}
+				break;
+
+			case 'excel':
+			case 'text':
+				$sReturn .= $data['Email']['email'];
+				break;
+
+		}
+
+		return $sReturn;
+	}
+
+	/**
+	 * Format given phone number according to specified type.
+	 *
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $export export type
+	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	private static function formatPhoneNumber($data, $type, $export) {
+
+		$sReturn = '';
+
+		switch ($export) {
+
+			case 'html':
+			case 'excel':
+			case 'text':
+				switch ($type) {
+					case 'international':
+						$sReturn .= __('+%s %s %s',
+													($data['PhoneNumber']['country_code'] === '') ? Configure::read('RefMan.defaultcountrycode') : $data['PhoneNumber']['country_code'],
+													($data['PhoneNumber']['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['PhoneNumber']['area_code'],
+													$data['PhoneNumber']['number']);
+						break;
+					case 'national':
+						if (($data['PhoneNumber']['country_code'] != '') && ($data['PhoneNumber']['country_code'] != Configure::read('RefMan.defaultcountrycode'))) {
+							$sReturn .= __('+%s %s %s',
+														 $data['PhoneNumber']['country_code'],
+														 ($data['PhoneNumber']['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['PhoneNumber']['area_code'],
+														 $data['PhoneNumber']['number']);
+						} else {
+							$sReturn .= __('0%s %s',
+														($data['PhoneNumber']['area_code'] === '') ? Configure::read('RefMan.defaultareacode') : $data['PhoneNumber']['area_code'],
+														$data['PhoneNumber']['number']);
+						}
+						break;
+				}
+				break;
+
+		}
+
+		return $sReturn;
+
+	}
+
+	/**
+	 * Format given url according to specified type.
+	 *
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $export export type
+	 * @return string formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.1
+	 */
+	private static function formatUrl($data, $type, $export) {
+
+		$sReturn = '';
+
+		switch ($export) {
+
+			case 'html':
+				switch ($type) {
+					case 'link':
+						$sReturn .= sprintf('<a href="http://%1$s">%1$s</a>', $data['Url']['url']);
+						break;
+					case 'text':
+						$sReturn .= $data['Url']['url'];
+						break;
+				}
+				break;
+
+			case 'excel':
+			case 'text':
+				$sReturn .= $data['Url']['url'];
+				break;
+
+		}
+
+		return $sReturn;
+	}
+
+	/**
+	 * Format given relations.
+	 *
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $export export type
+	 * @return formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function formatRelations($data, $type, $export = 'html') {
+
+		if (empty($data)) {
 			return '';
 		}
 
-		if (!array_key_exists($sid, $data)) {
-			return '';
+		$sTextArray = array();
+
+		foreach ($data as $entry) {
+			$sTextArray[] = RefManRefereeFormat::formatRelation($entry, $type, $export);
 		}
 
-		return $this->formatRelation($data[$sid], $sep);
+		return RefManRefereeFormat::formatMultiline($sTextArray, '; ');
 	}
 
 	/**
 	 * Format relation using separator character.
 	 *
-	 * @param string $data data to format
-	 * @param string $sep separator
-	 * @return string formatted string
+	 * @param $data data to format
+	 * @param $type format type
+	 * @param $export export type
+	 * @return formatted string
+	 *
+	 * @version 0.3
+	 * @since 0.1
 	 */
-	public function formatRelation($data, $sep = '; ') {
+	public static function formatRelation($data, $type, $export = 'html') {
 
-		if (($data === null) || empty($data)) {
+		if (empty($data)) {
 			return '';
 		}
 
-		$formatted = '';
+		$sTextArray = array();
 
-		$hasMore = false;
-		foreach ($data as $relation) {
-			if ($hasMore) {
-				$formatted .= $sep;
-			}
-			if (array_key_exists('Club', $relation)) {
-				$formatted .= $relation['Club']['name'];
-			}
-			if (array_key_exists('League', $relation)) {
-				$formatted .= $relation['League']['title'];
-			}
-			$hasMore = true;
+		if (!empty($data['RefereeRelation']['club_id'])) {
+			$sTextArray[] = empty($data['Club']['abbreviation']) ? $data['Club']['name'] : $data['Club']['abbreviation'];
+		}
+		if (!empty($data['RefereeRelation']['league_id'])) {
+			$sTextArray[] = $data['League']['title'];
+		}
+		if (!empty($data['RefereeRelation']['sex_type_id'])) {
+			$sTextArray[] = $data['SexType']['title'];
+		}
+		if (!empty($data['RefereeRelation']['saturday']) && $data['RefereeRelation']['saturday']) {
+			$sTextArray[] = __('Sonnabend');
+		}
+		if (!empty($data['RefereeRelation']['sunday']) && $data['RefereeRelation']['sunday']) {
+			$sTextArray[] = __('Sonntag');
+		}
+		if (!empty($data['RefereeRelation']['remark'])) {
+			$sTextArray[] = $data['RefereeRelation']['remark'];
 		}
 
-		return $formatted;
+		return RefManRefereeFormat::formatMultiline($sTextArray, ' - ');
 	}
 
 }

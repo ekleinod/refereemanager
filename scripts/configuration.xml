@@ -3,7 +3,7 @@
 <!--
 	Configure your directories here.
 
-	Even if this is hard to read: use ${file.separator} if you want your script to be platform independent.
+	Even if this is hard to read: use ${file.separator} as file separator instead of "/" or "\" if you want your script to be platform independent.
 
 	(c) 2013-2014 by Ekkart Kleinod
 

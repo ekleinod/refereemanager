@@ -3,12 +3,12 @@
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Daten für die Tabelle `rfrmgr_assignment_status_types`
+-- Daten für die Tabelle `rfrmgr_referee_assignment_status_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-UPDATE `rfrmgr_assignment_status_types` SET `title`='nein' WHERE `sid`='no';
-UPDATE `rfrmgr_assignment_status_types` SET `title`='evtl.' WHERE `sid`='maybe';
-UPDATE `rfrmgr_assignment_status_types` SET `title`='ja' WHERE `sid`='yes';
+UPDATE `rfrmgr_referee_assignment_status_types` SET `title`='nein' WHERE `sid`='no';
+UPDATE `rfrmgr_referee_assignment_status_types` SET `title`='evtl.' WHERE `sid`='maybe';
+UPDATE `rfrmgr_referee_assignment_status_types` SET `title`='ja' WHERE `sid`='yes';
 
 COMMIT;
 
@@ -52,6 +52,7 @@ START TRANSACTION;
 UPDATE `rfrmgr_sex_types` SET `title`='weiblich', `remark`='Mädchen und Frauen.' WHERE `sid`='female';
 UPDATE `rfrmgr_sex_types` SET `title`='männlich', `remark`='Jungen und Männer.' WHERE `sid`='male';
 UPDATE `rfrmgr_sex_types` SET `title`='andere', `remark`='Menschen anderen Geschlechts.' WHERE `sid`='other';
+UPDATE `rfrmgr_sex_types` SET `title`='unbekannt', `remark`='Geschlecht ist unbekannt.' WHERE `sid`='unknown';
 
 COMMIT;
 
@@ -62,6 +63,7 @@ START TRANSACTION;
 UPDATE `rfrmgr_status_types` SET `title`='viele', `style`='bold', `color`=NULL, `bgcolor`=NULL, `remark`='Schiedsrichter_in ist an besonders vielen Einsätzen interessiert' WHERE `sid`='many';
 UPDATE `rfrmgr_status_types` SET `title`='normal', `style`=NULL, `color`=NULL, `bgcolor`=NULL, `remark`='Einsätze ohne spezielle Wünsche' WHERE `sid`='normal';
 UPDATE `rfrmgr_status_types` SET `title`='nicht aktiv diese Saison', `style`=NULL, `color`='777777', `bgcolor`=NULL, `remark`='Schiedsrichter_in ist diese Saison nicht aktiv' WHERE `sid`='inactiveseason';
+UPDATE `rfrmgr_status_types` SET `title`='nicht aktiv, erhält SR-E-Mails', `style`='italic', `color`='777777', `bgcolor`=NULL, `remark`='Schiedsrichter_in ist nicht aktiv, erhält aber die SR-E-Mails' WHERE `sid`='mailonly';
 UPDATE `rfrmgr_status_types` SET `title`='anderes', `style`='italic', `color`=NULL, `bgcolor`=NULL, `remark`='Andere Aktivität' WHERE `sid`='other';
 
 COMMIT;
@@ -121,13 +123,13 @@ INSERT INTO `rfrmgr_league_types` (`title`, `remark`) VALUES ('Senioren', 'Senio
 COMMIT;
 
 -- -----------------------------------------------------
--- Daten für die Tabelle `rfrmgr_assignment_remark_types`
+-- Daten für die Tabelle `rfrmgr_referee_assignment_remark_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('AB', 'Auf Anrufbeantworter gesprochen.');
-INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('Rückruf', 'Schiedsrichter_in möchte zurückgerufen werden.');
-INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('Mail zurück', 'Mail wurde nicht angenommen.');
-INSERT INTO `rfrmgr_assignment_remark_types` (`title`, `remark`) VALUES ('anderes', NULL);
+INSERT INTO `rfrmgr_referee_assignment_remark_types` (`title`, `remark`) VALUES ('AB', 'Auf Anrufbeantworter gesprochen.');
+INSERT INTO `rfrmgr_referee_assignment_remark_types` (`title`, `remark`) VALUES ('Rückruf', 'Schiedsrichter_in möchte zurückgerufen werden.');
+INSERT INTO `rfrmgr_referee_assignment_remark_types` (`title`, `remark`) VALUES ('Mail zurück', 'Mail wurde nicht angenommen.');
+INSERT INTO `rfrmgr_referee_assignment_remark_types` (`title`, `remark`) VALUES ('anderes', NULL);
 
 COMMIT;
 

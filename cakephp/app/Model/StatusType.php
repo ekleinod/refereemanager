@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * StatusType Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class StatusType extends AppModel {
@@ -32,25 +32,13 @@ class StatusType extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'sid' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'title' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'sid' => array('isUnique', 'notempty'),
+		'title' => array('isUnique', 'notempty'),
 	);
 
 	/**
@@ -59,7 +47,7 @@ class StatusType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $hasMany = array('Referee');
+	public $hasMany = array('RefereeStatus');
 
 	// custom programming
 
@@ -67,7 +55,27 @@ class StatusType extends AppModel {
 	const SID_MANY = 'many';
 	const SID_NORMAL = 'normal';
 	const SID_INACTIVESEASON = 'inactiveseason';
+	const SID_MAILONLY = 'mailonly';
 	const SID_OTHER = 'other';
+
+	/**
+	 * Compare two objects.
+	 *
+	 * @param a first object
+	 * @param b second object
+	 * @return comparison result
+	 *  @retval <0 a<b
+	 *  @retval 0 a==b
+	 *  @retval >0 a>b
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function compareTo($a, $b) {
+
+		// only criterion: sid
+		return strcasecmp($a['StatusType']['sid'], $b['StatusType']['sid']);
+	}
 
 }
 

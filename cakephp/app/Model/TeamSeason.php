@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * TeamSeason Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class TeamSeason extends AppModel {
@@ -47,30 +47,14 @@ class TeamSeason extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'team_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'season_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'league_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'team_id' => array('notempty', 'numeric'),
+		'season_id' => array('notempty', 'numeric'),
+		'league_id' => array('notempty', 'numeric'),
 	);
 
 	/**
@@ -84,10 +68,10 @@ class TeamSeason extends AppModel {
 	/**
 	 * hasMany associations
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $hasMany = array('LeagueGameTeam', 'Spokesperson');
+	public $hasMany = array('LeagueGameTeam', 'Spokesperson', 'TeamVenue');
 
 }
 

@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Assignment Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.33
  * @since 0.1
  */
 class Assignment extends AppModel {
@@ -14,14 +14,15 @@ class Assignment extends AppModel {
 	/**
 	 * Declare virtual display field in constructor to be alias-safe.
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
 		// I can't get this one working with game number and season, so I program a simple (but possibly bad) workaround
 		$this->virtualFields['display_assignment'] = sprintf(
-			'CONCAT(%1$s.id, "-", %1$s.start)',
+			'CONCAT(%1$s.start)',
+//			'CONCAT(%1$s.id, "-", %1$s.start)',
 			$this->alias
 		);
 	}
@@ -48,37 +49,30 @@ class Assignment extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'start' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-			'datetime' => array(
-				'rule' => array('datetime'),
-			),
-		),
-		'end' => array(
-			'datetime' => array(
-				'rule' => array('datetime'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'start' => array('notempty', 'datetime'),
+		'end' => array('datetime'),
 	);
+
+	/**
+	 * hasOne associations
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public $hasOne = array('LeagueGame', 'TournamentGame');
 
 	/**
 	 * hasMany associations
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $hasMany = array('LeagueGame', 'RefereeAssignment', 'TournamentGame');
+	public $hasMany = array('RefereeAssignment');
 
 }
 

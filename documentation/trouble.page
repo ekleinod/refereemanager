@@ -1,0 +1,93 @@
+<page xmlns="http://projectmallard.org/1.0/"
+			type="topic"
+			id="trouble">
+
+	<info>
+		<credit type="author copyright maintainer">
+			<name>Ekkart Kleinod</name>
+			<email>ekleinod@edgesoft.de</email>
+			<years>2012-2015</years>
+		</credit>
+
+		<revision docversion="0.2" date="2015-05-03" status="incomplete" />
+
+		<link type="guide" xref="index" />
+	</info>
+
+	<title>Troubleshooting</title>
+
+	<list>
+		<item><p><link xref="#restart" /></p></item>
+		<item><p><link xref="#maxexec" /></p></item>
+		<item><p><link xref="#startup" /></p></item>
+		<item><p><link xref="#noconfig" /></p></item>
+		<item><p><link xref="#pathrights" /></p></item>
+	</list>
+
+	<section id="restart">
+		<title>How to restart <app>apache</app>.</title>
+
+		<p>
+			Restart apache with the following command:
+		</p>
+		<screen>
+			<output style="prompt">$ </output><input>sudo apachectl restart</input>
+			<output>...</output>
+		</screen>
+
+	</section>
+
+	<section id="maxexec">
+		<title>Script stops with error "Maximum execution time of 30 seconds exceeded".</title>
+
+		<p>
+			The code is not optimized yet, therefore some operations (e.g. excel export) take a very, very long time.
+			You can either: optimize the code, or increase the maximum execution time.
+		</p>
+		<p>
+			In order to increase the maximum execution time, edit <file>/etc/php5/apache2/php.ini</file>.
+			Look for the line:
+		</p>
+		<code>max_execution_time = 30</code>
+		<p>
+			Replace the time with your new value, e.g. 60 (seconds).
+		</p>
+		<code>max_execution_time = 60</code>
+		<p>
+			Don't forget to <link xref="#restart">restart</link> <app>apache</app>.
+		</p>
+	</section>
+
+	<section id="startup">
+		<title><app>Apache</app> does not start automatically or is not configured properly.</title>
+
+		<p>
+			I have this problem with an encrypted home directory.
+			The decryption takes place after the <app>apache</app> start, thus <app>apache</app> cannot read the configuration files of the home directory.
+		</p>
+		<p>
+			In this case, I just <link xref="#restart">restart</link> <app>apache</app>.
+		</p>
+	</section>
+
+	<section id="noconfig">
+		<title>My configuration changes are not recognized by <app>apache</app>.</title>
+
+		<p>
+			If your configuration changes are not recognized, <link xref="#restart">restart</link> <app>apache</app>.
+			Furthermore, make sure your changes are valid and should take effect.
+		</p>
+	</section>
+
+	<section id="pathrights">
+		<title><app>Apache</app> has the error "...".</title>
+
+		<p>
+			This error means that the complete path to your apache directories is not readable/executable for apache.
+			See <link xref="workapache#apachedir" /> on how to fix this.
+		</p>
+	</section>
+
+</page>
+
+

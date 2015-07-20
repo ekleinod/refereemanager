@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * RefereeRelation Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class RefereeRelation extends AppModel {
@@ -32,79 +32,27 @@ class RefereeRelation extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'referee_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'referee_relation_type_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'league_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'club_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'sex_type_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'referee_id' => array('notempty', 'numeric'),
+		'referee_relation_type_id' => array('notempty', 'numeric'),
+		'club_id' => array('numeric'),
+		'league_id' => array('numeric'),
+		'sex_type_id' => array('numeric'),
+		'saturday' => array('boolean'),
+		'sunday' => array('boolean'),
 	);
 
 	/**
 	 * belongsTo associations
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $belongsTo = array('Referee', 'RefereeRelationType', 'Club', 'League', 'SexType');
+	public $belongsTo = array('Club', 'League', 'Referee', 'RefereeRelationType', 'SexType');
 
 }
 

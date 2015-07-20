@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * League Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class League extends AppModel {
@@ -46,30 +46,14 @@ class League extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'title' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'abbreviation' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'league_type_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'title' => array('isUnique', 'notempty'),
+		'abbreviation' => array('isUnique', 'notempty'),
+		'league_type_id' => array('notempty', 'numeric'),
 	);
 
 	/**
@@ -87,6 +71,45 @@ class League extends AppModel {
 	 * @since 0.1
 	 */
 	public $hasMany = array('LeagueGame',  'LeaguePlannedReferee', 'RefereeRelation', 'RefereeReport', 'TeamSeason');
+
+	// custom programming
+
+	/**
+	 * Returns leagues.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return array of leagues, empty if there are none
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public function getLeagues() {
+
+		$leagues = $this->find('all');
+		usort($leagues, array('League', 'compareTo'));
+
+		return $leagues;
+	}
+
+	/**
+	 * Compare two objects.
+	 *
+	 * @param a first object
+	 * @param b second object
+	 * @return comparison result
+	 *  @retval <0 a<b
+	 *  @retval 0 a==b
+	 *  @retval >0 a>b
+	 *
+	 * @version 0.3
+	 * @since 0.3
+	 */
+	public static function compareTo($a, $b) {
+		// criterion: title
+		return strcasecmp($a['League']['title'], $b['League']['title']);
+	}
 
 }
 

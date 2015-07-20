@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * PhoneNumber Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class PhoneNumber extends AppModel {
@@ -46,35 +46,15 @@ class PhoneNumber extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'contact_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'country_code' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'area_code' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'number' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'contact_id' => array('isUnique', 'notempty', 'numeric'),
+		'country_code' => array('notempty', 'numeric'),
+		'area_code' => array('notempty', 'numeric'),
+		'number' => array('notempty', 'numeric'),
 	);
 
 	/**

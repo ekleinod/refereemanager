@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * RefereeRelationType Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class RefereeRelationType extends AppModel {
@@ -32,25 +32,13 @@ class RefereeRelationType extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'sid' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
-		'title' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'sid' => array('isUnique', 'notempty'),
+		'title' => array('isUnique', 'notempty'),
 	);
 
 	/**
@@ -69,62 +57,79 @@ class RefereeRelationType extends AppModel {
 	const SID_PREFER = 'prefer';
 	const SID_NOASSIGNMENT = 'noassignment';
 
-	/** Singleton for fast access to relation types. */
-	private $relationtypes = null;
+	/** Singleton for fast access. */
+	private $refereerelationtypes = null;
+	private $refereerelationtypessid = null;
+	private $refereerelationtypelist = null;
 
 	/**
-	 * Returns relation type.
+	 * Returns referee relation types.
 	 *
+	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @param sid relation type's sid
-	 * @return relation type
+	 * @return array of referee relation types, empty if there are none
 	 *
-	 * @version 0.1
-	 * @since 0.1
+	 * @version 0.3
+	 * @since 0.3
 	 */
-	public function getRelationTypeBySID($sid) {
-		if ($this->relationtypes == null) {
+	public function getRefereeRelationTypes() {
+		if ($this->refereerelationtypes == null) {
 			$this->recursive = -1;
-			$this->relationtypes = array();
-			foreach ($this->find('all') as $relationtype) {
-				$this->relationtypes[$relationtype['RefereeRelationType']['sid']] = $relationtype['RefereeRelationType'];
+			$this->refereerelationtypes = array();
+			foreach ($this->find('all') as $refereerelationtype) {
+				$this->refereerelationtypes[$refereerelationtype['RefereeRelationType']['id']] = $refereerelationtype;
 			}
 		}
 
-		return $this->relationtypes[$sid];
+		return $this->refereerelationtypes;
 	}
 
 	/**
-	 * Returns relation type's id.
+	 * Returns referee relation types with sid as index.
 	 *
+	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @param sid relation type's sid
-	 * @return relation type's id
+	 * @return array of referee relation types, empty if there are none
 	 *
-	 * @version 0.1
-	 * @since 0.1
+	 * @version 0.3
+	 * @since 0.3
 	 */
-	public function getRelationTypeID($sid) {
-		$relationtype = $this->getRelationTypeBySID($sid);
-		return $relationtype['id'];
+	public function getRefereeRelationTypesSID() {
+		if ($this->refereerelationtypessid == null) {
+			foreach ($this->getRefereeRelationTypes() as $refreltype) {
+				$this->refereerelationtypessid[$refreltype['RefereeRelationType']['sid']] = $refreltype;
+			}
+		}
+
+		return $this->refereerelationtypessid;
 	}
 
 	/**
-	 * Returns relation type's sid.
+	 * Returns referee relation type list.
 	 *
+	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @param id relation type's id
-	 * @return relation type's sid
+	 * @return list of referee relation types
 	 *
-	 * @version 0.1
-	 * @since 0.1
+	 * @version 0.3
+	 * @since 0.3
 	 */
-	public function getRelationTypeSID($id) {
-		$relationtype = $this->findById($id);
-		return $relationtype['RefereeRelationType']['sid'];
+	public function getRefereeRelationTypeList() {
+		if ($this->refereerelationtypelist == null) {
+
+			$this->refereerelationtypelist = array();
+
+			foreach ($this->getRefereeRelationTypes() as $refereerelationtype) {
+				$this->refereerelationtypelist[$refereerelationtype['RefereeRelationType']['id']] = $refereerelationtype['RefereeRelationType']['title'];
+			}
+
+			asort($this->refereerelationtypelist, SORT_LOCALE_STRING);
+		}
+
+		return $this->refereerelationtypelist;
 	}
 
 }

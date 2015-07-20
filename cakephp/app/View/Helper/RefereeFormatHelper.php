@@ -1,8 +1,4 @@
 <?php
-/**
- * RefereeFormat Helper class file.
- *
- */
 
 App::uses('AppHelper', 'View/Helper');
 App::uses('RefManRefereeFormat', 'Utility');

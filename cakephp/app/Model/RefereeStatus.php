@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * RefereeStatus Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class RefereeStatus extends AppModel {
@@ -32,39 +32,23 @@ class RefereeStatus extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'referee_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'status_type_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'season_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'referee_id' => array('notempty', 'numeric'),
+		'status_type_id' => array('notempty', 'numeric'),
+		'season_id' => array('notempty', 'numeric'),
 	);
 
 	/**
 	 * belongsTo associations
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $belongsTo = array('Referee', 'StatusType', 'Season');
+	public $belongsTo = array('Referee', 'Season', 'StatusType');
 
 }
 

@@ -1,0 +1,263 @@
+
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"><!--<![endif]-->
+	<head>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+		<link rel="stylesheet" type="text/css" href="css/skeleton.css" />
+		<link rel="stylesheet" type="text/css" href="css/layout.css" />
+
+		<!-- favicons by hand, maybe later using cakephp methods -->
+		<link rel="shortcut icon" href="favicon.ico" />
+		<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png" />
+
+		<!-- title -->
+		<title>Nachricht</title>
+
+
+
+
+		<div class="page">
+
+			<div class="band header">
+
+				<header class="container main">
+
+					<div class="sixteen columns">
+
+						<h1>
+							<a href="http://localhost/refereemanager/">Schiedsrichterverwaltung</a>
+						</h1>
+
+					</div><!-- end sixteen -->
+
+				</header><!-- end container -->
+
+			</div><!-- end band header -->
+
+			<div class="band navigation">
+
+				<nav class="container primary">
+
+					<div class="sixteen columns">
+
+						<!-- main navigation for big devices -->
+						<ul>
+							<li>
+								<a href="http://localhost/refereemanager/assignments">Schiedsrichtereinsätze</a>
+							</li>
+							<li>
+								<a href="http://localhost/refereemanager/referees">Schiedsrichter</a>
+							</li>
+							<li>
+								<a href="http://localhost/refereemanager/other">Sonstiges</a>
+								<ul>
+									<li>
+										<a href="http://localhost/refereemanager/clubs">Clubs</a>
+									</li>
+									<li>
+										<a href="http://localhost/refereemanager/league_types">Liga-Typen</a>
+									</li>
+									<li>
+										<a href="http://localhost/refereemanager/leagues">Ligen</a>
+									</li>
+									<li>
+										<a href="http://localhost/refereemanager/people">Personen</a>
+									</li>
+									<li>
+										<a href="http://localhost/refereemanager/seasons">Saisons</a>
+									</li>
+									<li>
+										<a href="http://localhost/refereemanager/teams">Teams</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a href="http://localhost/refereemanager/tools_editor">Editor-Werkzeuge</a>
+								<ul>
+									<li>
+										<a href="http://localhost/refereemanager/tools_editor/mailinglist">Mailverteiler</a>
+									</li>
+									<li>
+										<a href="http://localhost/refereemanager/tools_editor/message">Nachricht</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+
+<!-- main navigation for small devices -->
+						<select onchange="if (this.value) window.location.href=this.value">
+							<option selected="selected" value="">Go to...</option>
+							<option value="/refereemanager/assignments">Schiedsrichtereinsätze</option>
+							<option value="/refereemanager/referees">Schiedsrichter</option>
+							<option value="/refereemanager/other">Sonstiges</option>
+							<option value="/refereemanager/clubs">- Clubs</option>
+							<option value="/refereemanager/league_types">- Liga-Typen</option>
+							<option value="/refereemanager/leagues">- Ligen</option>
+							<option value="/refereemanager/people">- Personen</option>
+							<option value="/refereemanager/seasons">- Saisons</option>
+							<option value="/refereemanager/teams">- Teams</option>
+							<option value="/refereemanager/tools_editor">Editor-Werkzeuge</option>
+							<option value="/refereemanager/tools_editor/mailinglist">- Mailverteiler</option>
+							<option value="/refereemanager/tools_editor/message">- Nachricht</option>
+						</select>
+
+
+					</div><!-- end sixteen -->
+
+				</nav><!-- end container primary -->
+
+			</div><!-- end band navigation -->
+
+			<div class="band username">
+				<div class="container">
+					<div class="sixteen columns">
+						<p>
+								Eingeloggt als: "ekedit"
+								(<a href="http://localhost/refereemanager/users/logout" class="">Logout</a>)
+							</p>
+					</div><!-- end sixteen -->
+				</div><!-- end container -->
+			</div><!-- end band content -->
+
+			<div class="band content">
+
+				<div class="container">
+
+					<div class="sixteen columns">
+
+						<article>
+							<div id="flash">
+								<div id="flashMessage" class="message">Dateianhang "/home/ekleinod/working/apache/refereemanager/app/tmp/s" existiert nicht. Keine Nachrichten wurden versendet.</div>
+							</div>
+							<div id="content">
+								<h2>Nachricht</h2>
+
+								<form action="/refereemanager/tools_editor/message" id="ToolsEditorMessageForm" method="post" accept-charset="utf-8">
+									<div style="display:none;">
+										<input name="_method" value="POST" type="hidden"></div>
+										<fieldset>
+											<legend>Einstellungen</legend>
+											<ol>
+												<li class="input select">
+													<label for="FilterSeason">Saison</label>
+													<select name="data[Filter][season]" title="Saison" autofocus="autofocus" id="FilterSeason">
+														<option value="3">VSR-Lehrgang</option>
+														<option value="4">2015-2016</option>
+														<option value="2" selected="selected">2014-2015</option>
+														<option value="1">2013-2014</option>
+													</select>
+												</li>
+												<li class="input required select">
+													<label for="ToolsEditorRecipient">Empfänger</label>
+													<select name="data[ToolsEditor][recipient]" title="Empfänger" required="required" id="ToolsEditorRecipient">
+														<option value="a">Alle SR</option>
+														<option value="m">SR mit E-Mail-Adresse</option>
+														<option value="s">SR mit Post-Adresse</option>
+														<option value="i" selected="selected">Mich (Test)</option>
+													</select>
+												</li>
+												<li class="input required radio">
+													<fieldset>
+														<legend>Mailkind</legend>
+														<input name="data[ToolsEditor][mailkind]" id="ToolsEditorMailkindS" title="Mailversand" value="s" required="required" checked="checked" type="radio">
+															<label for="ToolsEditorMailkindS">Einzelne E-Mail pro Schiri</label>
+															<input name="data[ToolsEditor][mailkind]" id="ToolsEditorMailkindB" title="Mailversand" value="b" required="required" type="radio">
+																<label for="ToolsEditorMailkindB">Schiris als BCC</label>
+															</fieldset>
+														</li>
+														<li class="input checkbox">
+															<input name="data[ToolsEditor][test_only]" id="ToolsEditorTestOnly_" value="0" type="hidden">
+																<input name="data[ToolsEditor][test_only]" title="Testen?" maxlength="100" value="1" id="ToolsEditorTestOnly" type="checkbox">
+																	<label for="ToolsEditorTestOnly">Testen?</label>
+																</li>
+															</ol>
+														</fieldset>
+
+														<fieldset>
+															<legend>Nachricht (mit Platzhaltern)</legend>
+															<ol>
+																<li class="input required textarea">
+																	<label for="ToolsEditorBody">Text</label>
+																	<textarea name="data[ToolsEditor][body]" title="Text" required="required" placeholder="Nachricht" cols="30" rows="6" id="ToolsEditorBody">sdsdf</textarea>
+																</li>
+																<li class="input required text">
+																	<label for="ToolsEditorSubject">Betreff</label>
+																	<input name="data[ToolsEditor][subject]" title="Betreff" value="sdf" maxlength="100" required="required" placeholder="Betreff" id="ToolsEditorSubject" type="text"></li>
+																	<li class="input required text">
+																		<label for="ToolsEditorOpening">Anrede</label>
+																		<input name="data[ToolsEditor][opening]" title="Anrede" value="Hallo **generated first_name**," maxlength="100" required="required" placeholder="Anrede" id="ToolsEditorOpening" type="text"></li>
+																		<li class="input required text">
+																			<label for="ToolsEditorClosing">Schlussformel</label>
+																			<input name="data[ToolsEditor][closing]" title="Schlussformel" value="Mit sportlichen Grüßen," maxlength="100" required="required" placeholder="Schlussformel" id="ToolsEditorClosing" type="text"></li>
+																			<li class="input required text">
+																				<label for="ToolsEditorSignature">Unterschrift</label>
+																				<input name="data[ToolsEditor][signature]" title="Unterschrift" value="Ekkart." maxlength="100" required="required" placeholder="Unterschrift" id="ToolsEditorSignature" type="text"></li>
+																				<li class="input text">
+																					<label for="ToolsEditorAttachment">Dateianhang</label>
+																					<input name="data[ToolsEditor][attachment]" title="Dateianhang" value="s" maxlength="100" placeholder="Dateianhang" id="ToolsEditorAttachment" type="text"></li>
+																				</ol>
+																			</fieldset>
+
+																			<fieldset>
+																				<button type="submit">Erzeugen</button>
+																				<button type="reset">Zurücksetzen</button>
+																			</fieldset>
+
+																		</form>
+																	</div>
+																</article>
+
+															</div><!-- end sixteen -->
+
+														</div><!-- end container -->
+
+													</div><!-- end band content -->
+
+													<div class="band footer">
+
+														<footer class="container">
+
+															<div class="four columns">
+
+																<ul>
+																	<li>
+																		<a href="http://schiri.bettv.de/">Schiedsrichter-Homepage</a>
+																	</li>
+																</ul>
+
+															</div><!-- end four -->
+
+															<div class="four columns">
+
+																<ul>
+																	<li>
+																		<a href="http://localhost/refereemanager/users/login" class="">Login</a>
+																	</li>
+																	<li>
+																		<a href="http://localhost/refereemanager/users/logout" class="">Logout</a>
+																	</li>
+																</ul>
+
+															</div><!-- end four -->
+
+														</footer><!-- end container -->
+
+													</div><!-- end band footer -->
+
+												</div><!-- end page -->
+
+
+
+
+
+											</body>
+										</html>

@@ -1,0 +1,27 @@
+<page xmlns="http://projectmallard.org/1.0/"
+			type="topic"
+			id="todo">
+
+	<info>
+		<credit type="author copyright maintainer">
+			<name>Ekkart Kleinod</name>
+			<email>ekleinod@edgesoft.de</email>
+			<years>2012-2015</years>
+		</credit>
+
+		<revision docversion="0.2" date="2015-05-03" status="incomplete" />
+
+		<link type="guide" xref="index" />
+	</info>
+
+	<title>ToDo</title>
+
+	<list>
+		<item><p>Statistics.</p></item>
+		<item><p>Send Mail (optional) with message log after sending messages.</p></item>
+		<item><p>Select message recipients by training level.</p></item>
+	</list>
+
+</page>
+
+

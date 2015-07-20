@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Email Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.1
+ * @version 0.3
  * @since 0.1
  */
 class Email extends AppModel {
@@ -32,25 +32,13 @@ class Email extends AppModel {
 	/**
 	 * Validation rules
 	 *
-	 * @version 0.1
+	 * @version 0.3
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array(
-			'uuid' => array(
-				'rule' => array('uuid'),
-			),
-		),
-		'contact_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-			),
-		),
-		'email' => array(
-			'email' => array(
-				'rule' => array('email'),
-			),
-		),
+		'id' => array('isUnique', 'notempty', 'numeric'),
+		'contact_id' => array('isUnique', 'notempty', 'numeric'),
+		'email' => array('email', 'notempty'),
 	);
 
 	/**
