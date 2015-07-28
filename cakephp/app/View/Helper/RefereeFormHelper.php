@@ -22,24 +22,55 @@ class RefereeFormHelper extends AppHelper {
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public function getInputField($action, $type, $fieldid, $title, $value = null, $required = false, $placeholder = null, $maxlength = 100, $autofocus = false, $values = null) {
-
-		$cssclass = 'input';
+	public function getInputField(
+																$action,
+																$type,
+																$fieldid,
+																$title,
+																$value = null,
+																$active = null,
+																$placeholder = null,
+																$required = false,
+																$autofocus = false,
+																$maxlength = 100,
+																$values = null
+																) {
 
 		$inputparams = array();
+
+		// bounding div
+		$inputparams['div'] = [
+														'class' => sprintf('form-group %s', (($action !== 'view') && $required) ? 'required' : ''),
+													];
+
+		// the label
+		$inputparams['label'] = [
+															'class' => 'col-sm-2 control-label',
+															'text' => $title,
+														];
+
+		// bounding div for input element
+		$inputparams['between'] = '<div class="col-sm-10">';
+
+		// active text and end of div
+		$inputparams['after'] = sprintf('%s</div>',
+																		empty($active) ? '' : sprintf('<span class="help-block">aktiv: %s</span>', $active)
+																		);
+
+		$inputparams['class'] = 'form-control';
+
+		$inputparams['title'] = $title;
+
 		$inputparams['type'] = $type;
 		// fix the not very pretty date input of cakephp
 		if (($type === 'date') || ($type === 'datetime') || ($type === 'time')) {
 			$inputparams['type'] = 'text';
-			$inputparams['class'] = $type;
+			$inputparams['class'] .= ' ' . $type;
 		}
-
-		$inputparams['title'] = $title;
-		$inputparams['label'] = $title;
 
 		if (!empty($value)) {
 			if ($type === 'checkbox') {
-				$inputparams['checked'] = 'checked';
+				$inputparams['checked'] = '';
 			} else {
 				$inputparams['value'] = $value;
 			}
@@ -49,7 +80,7 @@ class RefereeFormHelper extends AppHelper {
 			$inputparams['maxlength'] = $maxlength;
 		}
 		if ($autofocus) {
-			$inputparams['autofocus'] = 'autofocus';
+			$inputparams['autofocus'] = '';
 		}
 
 		if (!empty($values)) {
@@ -70,21 +101,13 @@ class RefereeFormHelper extends AppHelper {
 		} else {
 
 			if ($required) {
-				$inputparams['required'] = 'required';
-				$cssclass .= ' required';
+				$inputparams['required'] = '';
 			}
 			if (!empty($placeholder)) {
 				$inputparams['placeholder'] = $placeholder;
 			}
 
 		}
-
-		$cssclass .= ' ' . $inputparams['type'];
-
-		// styling
-		$inputparams['div'] = false;
-		$inputparams['before'] = $this->Html->tag('li', null, array('class' => $cssclass));
-		$inputparams['after'] = '</li>';
 
 		return $this->Form->input($fieldid, $inputparams);
 
