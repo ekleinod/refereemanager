@@ -28,7 +28,7 @@ class RefereeFormHelper extends AppHelper {
 																$fieldid,
 																$title,
 																$value = null,
-																$active = null,
+																$help = null,
 																$placeholder = null,
 																$required = false,
 																$autofocus = false,
@@ -39,22 +39,22 @@ class RefereeFormHelper extends AppHelper {
 		$inputparams = array();
 
 		// bounding div
-		$inputparams['div'] = [
-														'class' => sprintf('form-group %s', (($action !== 'view') && $required) ? 'required' : ''),
-													];
+		$inputparams['div'] = array(
+																'class' => sprintf('form-group %s', (($action !== 'view') && $required) ? 'required' : ''),
+																);
 
 		// the label
-		$inputparams['label'] = [
-															'class' => 'col-sm-2 control-label',
-															'text' => $title,
-														];
+		$inputparams['label'] = array(
+																	'class' => 'col-sm-2 control-label',
+																	'text' => $title,
+																	);
 
 		// bounding div for input element
 		$inputparams['between'] = '<div class="col-sm-10">';
 
-		// active text and end of div
+		// help text and end of div
 		$inputparams['after'] = sprintf('%s</div>',
-																		empty($active) ? '' : sprintf('<span class="help-block">aktiv: %s</span>', $active)
+																		empty($help) ? '' : sprintf('<span class="help-block">%s</span>', $help)
 																		);
 
 		$inputparams['class'] = 'form-control';
@@ -80,7 +80,7 @@ class RefereeFormHelper extends AppHelper {
 			$inputparams['maxlength'] = $maxlength;
 		}
 		if ($autofocus) {
-			$inputparams['autofocus'] = '';
+			$inputparams['autofocus'] = 'autofocus';
 		}
 
 		if (!empty($values)) {

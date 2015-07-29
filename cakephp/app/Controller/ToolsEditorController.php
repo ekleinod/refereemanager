@@ -94,12 +94,21 @@ class ToolsEditorController extends AppController {
 
 			$sendSingleEmails = $this->request->data['ToolsEditor']['mailkind'] === 's';
 
-			// if attachment: does it exist?
+			// if attachment: do all of them exist?
 			$attachmentOK = true;
 			if ($sendEmail && !empty($this->request->data['ToolsEditor']['attachment'])) {
-				$attachment = sprintf('%s%s', TMP, $this->request->data['ToolsEditor']['attachment']);
-				if (!file_exists($attachment)) {
-					$this->Session->setFlash(__('Dateianhang "%s" existiert nicht. Keine Nachrichten wurden versendet.', $attachment));
+				$attachment = array();
+				foreach (explode(';', $this->request->data['ToolsEditor']['attachment']) as $attfile) {
+					$attachment[] = sprintf('%s%s', TMP, $attfile);
+				}
+				$attachfails = array();
+				foreach ($attachment as $attfile) {
+					if (!file_exists($attfile)) {
+						$attachfails[] = $attfile;
+					}
+				}
+				if (!empty($attachfails)) {
+					$this->Session->setFlash(__('Dateianhang "%s" existiert nicht. Keine Nachrichten wurden versendet.', implode('; ', $attachfails)));
 					$attachmentOK = false;
 				}
 			}

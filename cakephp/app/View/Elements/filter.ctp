@@ -11,7 +11,7 @@
 							<?php
 								if (isset($season)) {
 									echo $this->RefereeForm->getInputField(null, 'select', 'season',
-																												 __('Saison'), $season['Season']['id'], $season['Season']['title_season'], null,
+																												 __('Saison'), $season['Season']['id'], sprintf('aktiv: %s', $season['Season']['title_season']), null,
 																												 false, true, 0,
 																												 $seasonarray);
 								}
