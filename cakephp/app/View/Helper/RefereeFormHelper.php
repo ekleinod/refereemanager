@@ -70,7 +70,7 @@ class RefereeFormHelper extends AppHelper {
 
 		if (!empty($value)) {
 			if ($type === 'checkbox') {
-				$inputparams['checked'] = '';
+				$inputparams['checked'] = 'checked';
 			} else {
 				$inputparams['value'] = $value;
 			}

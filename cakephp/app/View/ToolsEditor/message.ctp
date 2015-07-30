@@ -13,7 +13,7 @@
 		<?php echo $this->Form->create('ToolsEditor', array('class' => 'form-horizontal')); ?>
 
 			<fieldset>
-				<legend><?php echo __('Nachricht'); ?></legend>
+				<legend><?php echo __('Nachricht versenden'); ?></legend>
 				<p>
 					<span class="help-block"><?php echo __('Der Einsatz von Platzhaltern ist möglich.'); ?></span>
 				</p>
@@ -85,7 +85,7 @@
 
 			<div class="form-group">
 				<div class="col-sm-12">
-					<?php echo $this->Form->button(__('Nachricht senden'), array('type' => 'submit', 'class' => 'btn btn-sm btn-default')); ?>
+					<?php echo $this->Form->button(__('Nachricht versenden'), array('type' => 'submit', 'class' => 'btn btn-sm btn-default')); ?>
 				</div>
 			</div>
 

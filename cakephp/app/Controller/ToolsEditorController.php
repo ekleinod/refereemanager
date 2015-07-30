@@ -73,7 +73,7 @@ class ToolsEditorController extends AppController {
 	 */
 	public function message() {
 
-		$this->set('title_for_layout', __('Nachricht'));
+		$this->set('title_for_layout', __('Nachricht versenden'));
 
 		$this->setAndGetStandard(null);
 
