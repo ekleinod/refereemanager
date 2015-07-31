@@ -46,19 +46,22 @@ class RefereeFormHelper extends AppHelper {
 		// input field parameters
 		$inputparams = array();
 
-		// no label, no div
+		// no label, no div, no legend
 		$inputparams['label'] = false;
 		$inputparams['div'] = false;
+		$inputparams['legend'] = false;
 
+		// set simple parameters
 		$inputparams['class'] = 'form-control';
 
 		$inputparams['title'] = $title;
 
-		$inputparams['type'] = $type;
-		// fix the not very pretty date input of cakephp
-		if (($type === 'date') || ($type === 'datetime') || ($type === 'time')) {
-			$inputparams['type'] = 'text';
-			$inputparams['class'] .= ' ' . $type;
+		if (!empty($maxlength)) {
+			$inputparams['maxlength'] = $maxlength;
+		}
+
+		if ($autofocus) {
+			$inputparams['autofocus'] = 'autofocus';
 		}
 
 		if (!empty($value)) {
@@ -69,15 +72,16 @@ class RefereeFormHelper extends AppHelper {
 			}
 		}
 
-		if (!empty($maxlength)) {
-			$inputparams['maxlength'] = $maxlength;
-		}
-		if ($autofocus) {
-			$inputparams['autofocus'] = 'autofocus';
-		}
-
 		if (!empty($values)) {
 			$inputparams['options'] = $values;
+		}
+
+		// type
+		$inputparams['type'] = $type;
+		// fix the not very pretty date input of cakephp
+		if (($type === 'date') || ($type === 'datetime') || ($type === 'time')) {
+			$inputparams['type'] = 'text';
+			$inputparams['class'] .= ' ' . $type;
 		}
 
 		// depending on action
@@ -94,12 +98,20 @@ class RefereeFormHelper extends AppHelper {
 		} else {
 
 			if ($required) {
-				$inputparams['required'] = '';
+				$inputparams['required'] = 'required';
 			}
 			if (!empty($placeholder)) {
 				$inputparams['placeholder'] = $placeholder;
 			}
 
+		}
+
+		// radio input: wrap with label, empty class
+		if ($type === 'radio') {
+			$inputparams['before'] = "\n<label>\n";
+			$inputparams['after'] = "\n</label>\n";
+			$inputparams['separator'] = "\n</label>\n</div>\n<div class=\"col-sm-offset-2 col-sm-10 radio\">\n<label>\n";
+			$inputparams['class'] = false;
 		}
 
 		// create and wrap input field
