@@ -36,6 +36,16 @@ class RefereeFormHelper extends AppHelper {
 																$values = null
 																) {
 
+		$sReturn = '';
+
+		// label
+		$sReturn .= $this->Form->label(
+																	sprintf('%s.%s', implode('.', $this->entity()), $fieldid),
+																	$title,
+																	array('class' => 'col-sm-2 control-label')
+																	);
+		$sReturn .= "\n";
+
 		$inputparams = array();
 
 		// bounding div
@@ -43,11 +53,8 @@ class RefereeFormHelper extends AppHelper {
 																'class' => sprintf('form-group %s', (($action !== 'view') && $required) ? 'required' : ''),
 																);
 
-		// the label
-		$inputparams['label'] = array(
-																	'class' => 'col-sm-2 control-label',
-																	'text' => $title,
-																	);
+		// no label
+		$inputparams['label'] = false;
 
 		// bounding div for input element
 		$inputparams['between'] = '<div class="col-sm-10">';
@@ -109,7 +116,9 @@ class RefereeFormHelper extends AppHelper {
 
 		}
 
-		return $this->Form->input($fieldid, $inputparams);
+		$sReturn .= $this->Form->input($fieldid, $inputparams);
+
+		return $sReturn;
 
 	}
 
