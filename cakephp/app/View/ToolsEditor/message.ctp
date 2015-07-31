@@ -78,7 +78,7 @@
 
 						$tmpValue = empty($messagedata) ? false : $messagedata['ToolsEditor']['test_only'];
 						echo $this->RefereeForm->getInputField(null, 'checkbox', 'test_only',
-																									 __('Testen?'));
+																									 __('Sendemodus'), $tmpValue, 'Die Nachricht wird erzeugt und verarbeitet aber es wird keine E-Mail gesendet und kein PDF erzeugt.', 'nur Test');
 					?>
 				</ol>
 			</fieldset>

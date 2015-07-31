@@ -114,8 +114,19 @@ class RefereeFormHelper extends AppHelper {
 			$inputparams['class'] = false;
 		}
 
-		// create and wrap input field
+		// checkbox input: no hidden field
+		if ($type === 'checkbox') {
+			$inputparams['hiddenField'] = false;
+			$inputparams['class'] = false;
+		}
+
+		// create and wrap input field, empty class
 		$sField = $this->Form->input($fieldid, $inputparams);
+
+		if ($type === 'checkbox') {
+			$sField = sprintf("\n<label>\n%s %s\n</label>\n", $sField, $placeholder);
+		}
+
 		if (!empty($help)) {
 			$sField .= sprintf('<span class="help-block">%s</span>', $help);
 		}
