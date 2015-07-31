@@ -36,33 +36,19 @@ class RefereeFormHelper extends AppHelper {
 																$values = null
 																) {
 
-		$sReturn = '';
-
 		// label
-		$sReturn .= $this->Form->label(
+		$sLabel = $this->Form->label(
 																	sprintf('%s.%s', implode('.', $this->entity()), $fieldid),
 																	$title,
 																	array('class' => 'col-sm-2 control-label')
 																	);
-		$sReturn .= "\n";
 
+		// input field parameters
 		$inputparams = array();
 
-		// bounding div
-		$inputparams['div'] = array(
-																'class' => sprintf('form-group %s', (($action !== 'view') && $required) ? 'required' : ''),
-																);
-
-		// no label
+		// no label, no div
 		$inputparams['label'] = false;
-
-		// bounding div for input element
-		$inputparams['between'] = '<div class="col-sm-10">';
-
-		// help text and end of div
-		$inputparams['after'] = sprintf('%s</div>',
-																		empty($help) ? '' : sprintf('<span class="help-block">%s</span>', $help)
-																		);
+		$inputparams['div'] = false;
 
 		$inputparams['class'] = 'form-control';
 
@@ -116,9 +102,17 @@ class RefereeFormHelper extends AppHelper {
 
 		}
 
-		$sReturn .= $this->Form->input($fieldid, $inputparams);
+		// create and wrap input field
+		$sField = $this->Form->input($fieldid, $inputparams);
+		if (!empty($help)) {
+			$sField .= sprintf('<span class="help-block">%s</span>', $help);
+		}
+		$sInput = $this->Html->div(sprintf('col-sm-10 %s', $inputparams['type']), $sField);
 
-		return $sReturn;
+		return $this->Html->div(
+														sprintf('form-group%s', (($action !== 'view') && $required) ? ' required' : ''),
+														sprintf("%s\n%s", $sLabel, $sInput)
+														);
 
 	}
 
