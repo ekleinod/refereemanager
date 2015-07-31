@@ -122,7 +122,7 @@ class Referee extends AppModel {
 	 * @version 0.3
 	 * @since 0.3
 	 */
-	public function getRefereeByPersonId($personid) {
+	public function getRefereeByPersonId($personid, $isEditor) {
 
 		$referee = $this->findByPersonId($personid);
 
@@ -130,7 +130,7 @@ class Referee extends AppModel {
 			return null;
 		}
 
-		$this->fillReferee($referee);
+		$this->fillReferee($referee, $isEditor);
 
 		return $referee;
 	}

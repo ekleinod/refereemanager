@@ -1,13 +1,3 @@
-<?php if (isset($messageresult)) { ?>
-
-	<div class="container">
-		<div class="jumbotron">
-			<p><?php echo $this->RefereeFormat->formatMultiline($messageresult, '</p><p>'); ?></p>
-		</div>
-	</div>
-
-<?php } ?>
-
 <div class="row">
 	<div class="col-sm-12">
 		<?php echo $this->Form->create('ToolsEditor', array('class' => 'form-horizontal')); ?>
@@ -46,7 +36,7 @@
 
 					$tmpValue = empty($messagedata) ? null : $messagedata['ToolsEditor']['attachment'];
 					echo $this->RefereeForm->getInputField(null, 'text', 'attachment',
-																								 __('Dateianhänge'), $tmpValue, 'Mehrere Dateien semikolonsepariert angeben.', __('Dateianhänge'));
+																								 __('Dateianhänge'), $tmpValue, sprintf('Verzeichnis: "%s". Mehrere Dateien semikolonsepariert angeben.', TMP), __('Dateianhänge'));
 				?>
 			</fieldset>
 
@@ -67,7 +57,7 @@
 																									 array('a' => __('Alle SR'),
 																												 'm' => __('SR mit E-Mail-Adresse'),
 																												 's' => __('SR mit Post-Adresse'),
-																												 'i' => __('Mich (Test)')));
+																												 'i' => __('Nur ich')));
 
 						$tmpValue = empty($messagedata) ? 's' : $messagedata['ToolsEditor']['mailkind'];
 						echo $this->RefereeForm->getInputField(null, 'radio', 'mailkind',

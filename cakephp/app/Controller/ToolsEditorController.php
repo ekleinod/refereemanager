@@ -99,7 +99,7 @@ class ToolsEditorController extends AppController {
 			if ($sendEmail && !empty($this->request->data['ToolsEditor']['attachment'])) {
 				$attachment = array();
 				foreach (explode(';', $this->request->data['ToolsEditor']['attachment']) as $attfile) {
-					$attachment[] = sprintf('%s%s', TMP, $attfile);
+					$attachment[] = sprintf('%s%s', TMP, trim($attfile));
 				}
 				$attachfails = array();
 				foreach ($attachment as $attfile) {
@@ -108,7 +108,11 @@ class ToolsEditorController extends AppController {
 					}
 				}
 				if (!empty($attachfails)) {
-					$this->Session->setFlash(__('Dateianhang "%s" existiert nicht. Keine Nachrichten wurden versendet.', implode('; ', $attachfails)));
+					$this->Session->setFlash(
+																	 __('Dateianhang "%s" existiert nicht. Keine Nachrichten wurden versendet.', implode('; ', $attachfails)),
+																	 'flash',
+																	 array('class' => 'danger')
+																	 );
 					$attachmentOK = false;
 				}
 			}
@@ -155,7 +159,7 @@ class ToolsEditorController extends AppController {
 				}
 
 				if (!$hasMe) {
-					$arrReferees[] = $this->Referee->getRefereeByPersonId($this->viewVars['userpersonid']);
+					$arrReferees[] = $this->Referee->getRefereeByPersonId($this->viewVars['userpersonid'], $this->viewVars['isEditor']);
 				}
 
 				// fill templates with person values
@@ -258,7 +262,14 @@ class ToolsEditorController extends AppController {
 																RefManRefereeFormat::formatMultiline($arrLetter, ', '));
 				}
 
-				$this->set('messageresult', $messageresult);
+				$this->Session->setFlash(
+																 RefManRefereeFormat::formatMultiline($messageresult, '</p><p>'),
+																 'flash',
+																 array(
+																			 'class' => 'success',
+																			 'nohtml' => true,
+																			 )
+																 );
 
 			}
 

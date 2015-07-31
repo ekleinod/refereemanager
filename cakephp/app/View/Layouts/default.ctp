@@ -101,18 +101,11 @@
 
 				<!-- alert -->
 					<?php
-						$temp = $this->Session->flash();
+						$temp = $this->Flash->render('flash');
 						if (!empty($temp)) {
+							echo $temp;
+						}
 					?>
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="alert alert-danger alert-dismissable">
-										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-										<?php echo $temp; ?>
-									</div>
-								</div>
-							</div>
-					<?php } ?>
 				<!-- /alert -->
 
 				<!-- content -->
