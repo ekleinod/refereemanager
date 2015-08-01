@@ -119,7 +119,7 @@ class Referee extends AppModel {
 	 * @param personid person id
 	 * @return referee for given person, null if there is none
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.3
 	 */
 	public function getRefereeByPersonId($personid, $isEditor) {

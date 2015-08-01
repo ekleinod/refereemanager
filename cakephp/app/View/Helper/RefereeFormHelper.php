@@ -19,7 +19,7 @@ class RefereeFormHelper extends AppHelper {
 	/**
 	 * Returns text label and field.
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.3
 	 */
 	public function getInputField(

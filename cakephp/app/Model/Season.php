@@ -75,7 +75,7 @@ class Season extends AppModel {
 	 * @param isEditor is user editor?
 	 * @return season for given start year, null if not present
 	 *
-	 * @version 0.1
+	 * @version 0.4
 	 * @since 0.1
 	 */
 	public function getSeason($year, $isEditor) {

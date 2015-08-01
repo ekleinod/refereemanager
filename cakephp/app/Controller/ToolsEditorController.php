@@ -68,7 +68,7 @@ class ToolsEditorController extends AppController {
 	/**
 	 * Message method.
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.1
 	 */
 	public function message() {
