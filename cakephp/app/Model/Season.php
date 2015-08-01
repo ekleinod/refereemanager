@@ -80,19 +80,21 @@ class Season extends AppModel {
 	 */
 	public function getSeason($year, $isEditor) {
 
-		$theYear = ($year == null) ? sprintf('%d', ((idate('m') < 8) ? (idate('Y') - 1) : idate('Y'))) : $year;
+		$newSeason = 7;
+
+		$theYear = ($year == null) ? sprintf('%d', ((idate('m') < $newSeason) ? (idate('Y') - 1) : idate('Y'))) : $year;
 
 		$this->recursive = -1;
 		$ssnReturn = $this->findByYearStart($theYear);
 
 		if (($ssnReturn == null) && ($year != null)) {
-			$theYear = sprintf('%d', ((idate('m') < 8) ? (idate('Y') - 1) : idate('Y')));
+			$theYear = sprintf('%d', ((idate('m') < $newSeason) ? (idate('Y') - 1) : idate('Y')));
 			$this->recursive = -1;
 			$ssnReturn = $this->findByYearStart($theYear);
 		}
 
 		if (($ssnReturn != null) && $ssnReturn['Season']['editor_only'] && !$isEditor) {
-			$theYear = sprintf('%d', ((idate('m') < 8) ? (idate('Y') - 1) : idate('Y')));
+			$theYear = sprintf('%d', ((idate('m') < $newSeason) ? (idate('Y') - 1) : idate('Y')));
 			$this->recursive = -1;
 			$ssnReturn = $this->findByYearStart($theYear);
 		}
