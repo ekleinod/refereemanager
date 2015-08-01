@@ -96,8 +96,8 @@ class ToolsEditorController extends AppController {
 
 			// if attachment: do all of them exist?
 			$attachmentOK = true;
+			$attachment = array();
 			if ($sendEmail && !empty($this->request->data['ToolsEditor']['attachment'])) {
-				$attachment = array();
 				foreach (explode(';', $this->request->data['ToolsEditor']['attachment']) as $attfile) {
 					$attachment[] = sprintf('%s%s', TMP, trim($attfile));
 				}
@@ -175,7 +175,7 @@ class ToolsEditorController extends AppController {
 						$Email
 								->to($contactEmail['Email']['email'])
 								->subject($this->request->data['ToolsEditor']['subject']);
-						if (isset($attachment)) {
+						if (!empty($attachment)) {
 							$Email->attachments($attachment);
 						}
 
