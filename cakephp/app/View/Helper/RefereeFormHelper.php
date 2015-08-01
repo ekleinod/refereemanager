@@ -116,7 +116,6 @@ class RefereeFormHelper extends AppHelper {
 
 		// checkbox input: no hidden field
 		if ($type === 'checkbox') {
-			$inputparams['hiddenField'] = false;
 			$inputparams['class'] = false;
 		}
 
