@@ -32,7 +32,7 @@ class RefereeFormHelper extends AppHelper {
 																$placeholder = null,
 																$required = false,
 																$autofocus = false,
-																$maxlength = 100,
+																$maxlength = 0,
 																$values = null
 																) {
 
@@ -56,7 +56,7 @@ class RefereeFormHelper extends AppHelper {
 
 		$inputparams['title'] = $title;
 
-		if (!empty($maxlength)) {
+		if ($maxlength > 0) {
 			$inputparams['maxlength'] = $maxlength;
 		}
 
