@@ -43,33 +43,27 @@
 						<?php
 							foreach ($assignments as $assignment) {
 								$cells = array();
-						?>
-								<tr>
-									<?php
-										$cells[] = $this->RefereeFormat->formatDate($assignment['Assignment']['start'], 'longdatereverse');
-										$cells[] = $this->RefereeFormat->formatDate($assignment['Assignment']['start'], 'time');
-										$cells[] = h($assignment['LeagueGame']['game_number']);
-										$cells[] = __($assignment['LeagueGame']['League']['abbreviation']);
+									$cells[] = $this->RefereeFormat->formatDate($assignment['Assignment']['start'], 'longdatereverse');
+									$cells[] = $this->RefereeFormat->formatDate($assignment['Assignment']['start'], 'time');
+									$cells[] = h($assignment['LeagueGame']['game_number']);
+									$cells[] = __($assignment['LeagueGame']['League']['abbreviation']);
 
-										$cells[] = __('todo');
-										$cells[] = __('todo');
-										$cells[] = __('todo');
+									$cells[] = __('todo');
+									$cells[] = __('todo');
+									$cells[] = __('todo');
 
-										$tmpRefRep = getRefereeReport($assignment, $season);
-										$cells[] = ($tmpRefRep === null) ?
-																array('&cross;', array('class' => 'danger')) :
-																array('&check;', array('class' => 'success'));
+									$tmpRefRep = getRefereeReport($assignment, $season);
+									$cells[] = ($tmpRefRep === null) ?
+															array('&cross;', array('class' => 'danger')) :
+															array('&check;', array('class' => 'success'));
 
-										if ($isEditor) {
-											$cells[] = (empty($assignment['remark'])) ? '' : h($assignment['remark']);
-										}
+									if ($isEditor) {
+										$cells[] = (empty($assignment['remark'])) ? '' : h($assignment['remark']);
+									}
 
-										$cells[] = $this->element('actions_table', array('id' => $assignment['Assignment']['id']));
+									$cells[] = $this->element('actions_table', array('id' => $assignment['Assignment']['id']));
 
-										echo $this->Html->tableCells($cells);
-									?>
-								</tr>
-						<?php
+								echo $this->Html->tableCells($cells);
 							}
 						?>
 					</tbody>
