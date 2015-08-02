@@ -6,81 +6,81 @@
 <?php echo $this->element('actions_header');	?>
 
 <!-- view content -->
-<?php
-	if (empty($assignments)) {
-?>
-	<p><?php echo __('Es sind keine Schiedsrichtereinsätze gespeichert.'); ?></p>
-<?php
-	} else {
+<div class="row">
+	<div class="col-sm-12">
 
-		$styles = array();
-		$styles['normal'] = '';
-		$styles['changed'] = sprintf('background-color: #%s; ', 'FFFFDD');
-
-?>
-	<table>
 		<?php
-			$columns = array();
-				$columns[] = __('Datum');
-				$columns[] = __('Uhrzeit');
-				$columns[] = __('Spiel');
-				$columns[] = __('Liga');
-				$columns[] = __('Heimteam');
-				$columns[] = __('Auswärtsteam');
-				$columns[] = __('Schiedsrichter');
-				$columns[] = __('OSR-Bericht');
-
-				if ($isEditor) {
-					$columns[] = __('Anmerkung');
-				}
-
-				$columns[] = __('Aktionen');
-			$table = array('thead', 'tfoot');
-
-			foreach ($table as $tabletag) {
-				echo sprintf('<%s><tr>', $tabletag);
-				foreach ($columns as $column) {
-					echo sprintf('<th>%s</th>', $column);
-				}
-				echo sprintf('</tr></%s>', $tabletag);
-			}
+			if (empty($assignments)) {
 		?>
-		<tbody>
-			<?php
-				foreach ($assignments as $assignment) {
-					$curcol = 0;
-			?>
-					<tr>
-						<?php
-							echo(getTD($columns[$curcol++], $styles[$assignment['status']], $this->RefereeFormat->formatDate($assignment['Assignment']['start'], 'longdatereverse')));
-							echo(getTD($columns[$curcol++], $styles[$assignment['status']], $this->RefereeFormat->formatDate($assignment['Assignment']['start'], 'time')));
-							echo(getTD($columns[$curcol++], $styles[$assignment['status']], h($assignment['LeagueGame']['game_number'])));
-							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __($assignment['LeagueGame']['League']['abbreviation'])));
-
-							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
-							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
-							echo(getTD($columns[$curcol++], $styles[$assignment['status']], __('todo')));
-							$tmpRefRep = getRefereeReport($assignment, $season);
-							echo(getTD($columns[$curcol++],
-												 sprintf("%s %s", $styles[$assignment['status']], ($tmpRefRep === null) ? 'color: darkred;' : 'color: darkgreen;'),
-												 ($tmpRefRep === null) ? '&cross;' : '&check;'));
+				<p><?php echo __('Es sind keine Schiedsrichtereinsätze gespeichert.'); ?></p>
+		<?php
+			} else {
+		?>
+				<table class="table table-striped table-bordered table-condensed table-responsive">
+					<caption>Schiedsrichtereinsätze <?php echo $season['Season']['title_season']; ?></caption>
+					<?php
+						$cells = array();
+							$cells[] = __('Datum');
+							$cells[] = __('Uhrzeit');
+							$cells[] = __('Spiel');
+							$cells[] = __('Liga');
+							$cells[] = __('Heimteam');
+							$cells[] = __('Auswärtsteam');
+							$cells[] = __('Schiedsrichter');
+							$cells[] = __('OSR-Bericht');
 
 							if ($isEditor) {
-								echo(getTD($columns[$curcol++], $styles[$assignment['status']], (empty($assignment['remark'])) ? '' : h($assignment['remark'])));
+								$cells[] = __('Anmerkung');
 							}
 
-							echo(getTD(__('Aktionen'), $styles[$assignment['status']], $this->element('actions_table', array('id' => $assignment['Assignment']['id'])), 'actions'));
+							$cells[] = __('Aktionen');
+
+						echo $this->Html->tag('thead', $this->Html->tableHeaders($cells));
+						echo $this->Html->tag('tfoot', $this->Html->tableHeaders($cells));
+
+					?>
+					<tbody>
+						<?php
+							foreach ($assignments as $assignment) {
+								$cells = array();
 						?>
-					</tr>
-			<?php
-				}
-			?>
-		</tbody>
-	</table>
+								<tr>
+									<?php
+										$cells[] = $this->RefereeFormat->formatDate($assignment['Assignment']['start'], 'longdatereverse');
+										$cells[] = $this->RefereeFormat->formatDate($assignment['Assignment']['start'], 'time');
+										$cells[] = h($assignment['LeagueGame']['game_number']);
+										$cells[] = __($assignment['LeagueGame']['League']['abbreviation']);
 
-<?php
-	}
-?>
+										$cells[] = __('todo');
+										$cells[] = __('todo');
+										$cells[] = __('todo');
 
-<?php debug($assignments); ?>
+										$tmpRefRep = getRefereeReport($assignment, $season);
+										$cells[] = ($tmpRefRep === null) ?
+																array('&cross;', array('class' => 'danger')) :
+																array('&check;', array('class' => 'success'));
+
+										if ($isEditor) {
+											$cells[] = (empty($assignment['remark'])) ? '' : h($assignment['remark']);
+										}
+
+										$cells[] = $this->element('actions_table', array('id' => $assignment['Assignment']['id']));
+
+										echo $this->Html->tableCells($cells);
+									?>
+								</tr>
+						<?php
+							}
+						?>
+					</tbody>
+				</table>
+
+		<?php
+			}
+		?>
+
+		<?php debug($assignments); ?>
+
+	</div>
+</div>
 
