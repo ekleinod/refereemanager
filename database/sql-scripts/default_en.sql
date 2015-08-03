@@ -60,11 +60,11 @@ COMMIT;
 -- Data for table `rfrmgr_status_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-UPDATE `rfrmgr_status_types` SET `title`='many assignments', `style`='bold', `color`=NULL, `bgcolor`=NULL, `remark`='The referee is interested in many assigments' WHERE `sid`='many';
-UPDATE `rfrmgr_status_types` SET `title`='normal', `style`=NULL, `color`=NULL, `bgcolor`=NULL, `remark`='No special activity' WHERE `sid`='normal';
-UPDATE `rfrmgr_status_types` SET `title`='not active this season', `style`=NULL, `color`='777777', `bgcolor`=NULL, `remark`='The referee is not active in this season' WHERE `sid`='inactiveseason';
-UPDATE `rfrmgr_status_types` SET `title`='not active, receives emails only', `style`='italic', `color`='777777', `bgcolor`=NULL, `remark`='The referee is not active but receives referees emails.' WHERE `sid`='mailonly';
-UPDATE `rfrmgr_status_types` SET `title`='other', `style`='italic', `color`=NULL, `bgcolor`=NULL, `remark`='Other activity' WHERE `sid`='other';
+UPDATE `rfrmgr_status_types` SET `title`='many assignments', `remark`='The referee is interested in many assigments' WHERE `sid`='many';
+UPDATE `rfrmgr_status_types` SET `title`='normal', `remark`='No special activity' WHERE `sid`='normal';
+UPDATE `rfrmgr_status_types` SET `title`='not active this season', `remark`='The referee is not active in this season' WHERE `sid`='inactiveseason';
+UPDATE `rfrmgr_status_types` SET `title`='not active, receives emails only', `remark`='The referee is not active but receives referees emails.' WHERE `sid`='mailonly';
+UPDATE `rfrmgr_status_types` SET `title`='other', `remark`='Other activity' WHERE `sid`='other';
 
 COMMIT;
 
