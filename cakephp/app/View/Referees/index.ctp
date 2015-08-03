@@ -23,8 +23,6 @@
 
 			<?php if ($isRefView) { ?>
 
-				<?php include_once('statustypes.php'); ?>
-
 				<p><?php echo __('Legende:'); ?></p>
 				<?php
 
