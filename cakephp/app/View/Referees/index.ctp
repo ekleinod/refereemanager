@@ -53,47 +53,47 @@
 			<?php } ?>
 
 
-			<table>
-				<?php include_once('columns.php'); ?>
+			<table class="table table-striped table-bordered table-condensed table-responsive">
+				<caption><?php echo $title_for_layout; ?> <?php echo $season['Season']['title_season']; ?></caption>
 
 				<?php
-					$table = array('thead', 'tfoot');
+					include_once('columns.php');
 
-					foreach ($table as $tabletag) {
-						echo sprintf('<%s><tr>', $tabletag);
+					$cells = array();
 						foreach ($columns['index'] as $column) {
-							echo sprintf('<th>%s</th>', $column['title']);
+							$cells[] = $column['title'];
 						}
-						echo sprintf('<th>%s</th>', __('Aktionen'));
-						echo sprintf('</tr></%s>', $tabletag);
-					}
+						$cells[] = __('Aktionen');
+
+					echo $this->Html->tag('thead', $this->Html->tableHeaders($cells));
+					echo $this->Html->tag('tfoot', $this->Html->tableHeaders($cells));
+
 				?>
+
 				<tbody>
 					<?php
 						foreach ($people as $person) {
-							$tmpDataID = '';
+
+							$cells = array();
+								foreach ($columns['index'] as $column) {
+									$cells[] = $column['content'];
+								}
+								$cells[] = $this->element('actions_table', array('id' => $person['Person']['id']));
+
 							$tmpFormat = '';
-							$refLine = '';
 							if ($isRefView) {
 								$tmpStatus = $this->People->getRefereeStatus($person, $season);
 								if (($tmpStatus !== null) && (array_key_exists($tmpStatus['status_type_id'], $statustypes))) {
-									$tmpFormat = $statustypes[$tmpStatus['status_type_id']]['outputstyle']['html'];
+//									$tmpFormat = $statustypes[$tmpStatus['status_type_id']]['outputstyle']['html'];
 								}
 							}
-					?>
-							<tr>
-								<?php
 
-									foreach ($columns['index'] as $column) {
-										$refLine .= getTD($column['title'], $tmpFormat, $column['content']);
-									}
-
-									$refLine .= getTD(__('Aktionen'), '', $this->element('actions_table', array('id' => $person['Person']['id'])), $tmpDataID);
-
-									echo $this->Template->replaceRefereeData($refLine, $person, 'text', 'html');
-								?>
-							</tr>
-					<?php
+							echo $this->Template->replaceRefereeData(
+																											 $this->Html->tableCells($cells),
+																											 $person,
+																											 'text',
+																											 'html'
+																											 );
 						}
 					?>
 				</tbody>
