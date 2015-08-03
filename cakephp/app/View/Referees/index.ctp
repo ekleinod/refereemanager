@@ -32,7 +32,10 @@
 					foreach ($statustypes as $statustype) {
 						$ulout[] = $this->Html->tag('span',
 																				($statustype['StatusType']['remark']) ? h($statustype['StatusType']['remark']) : h($statustype['StatusType']['title']),
-																				array('class' => $statustype['StatusType']['sid'])
+																				array(
+																							'class' => $statustype['StatusType']['sid'],
+																							'style' => $this->Html->style(Configure::read(sprintf('RefMan.statustypes.%s', $statustype['StatusType']['sid'])))
+																							)
 																				);
 					}
 					echo $this->Html->nestedList($ulout, array('class' => 'legend'));

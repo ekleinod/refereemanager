@@ -16,6 +16,14 @@ $config = array (
 			'pattern' => 'OSR_%s_%02d_',
 		),
 
+		'statustypes' => array (
+			'many' => array('font-weight' => 'bold'),
+			'normal' => array(),
+			'inactiveseason' => array('color' => '#777777'),
+			'mailonly' => array('font-style' => 'italic', 'color' => '#777777'),
+			'other' => array('font-style' => 'italic'),
+		),
+
 		'template' => array (
 			'path' => 'files/templates/',
 			'merge' => 'merge.tex',
