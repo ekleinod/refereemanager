@@ -74,19 +74,20 @@
 					<?php
 						foreach ($people as $person) {
 
-							$cells = array();
-								foreach ($columns['index'] as $column) {
-									$cells[] = $column['content'];
-								}
-								$cells[] = $this->element('actions_table', array('id' => $person['Person']['id']));
-
 							$tmpFormat = '';
 							if ($isRefView) {
 								$tmpStatus = $this->People->getRefereeStatus($person, $season);
 								if (($tmpStatus !== null) && (array_key_exists($tmpStatus['status_type_id'], $statustypes))) {
-//									$tmpFormat = $statustypes[$tmpStatus['status_type_id']]['outputstyle']['html'];
+									$tmpFormat = $this->Html->style(Configure::read(sprintf('RefMan.statustypes.%s', $statustypes[$tmpStatus['status_type_id']]['StatusType']['sid'])));
 								}
 							}
+
+							$cells = array();
+								foreach ($columns['index'] as $column) {
+									$cells[] = $column['content'];
+								}
+								$cells[] = array($this->element('actions_table', array('id' => $person['Person']['id'])),
+																 (empty($tmpFormat)) ? null : array('style' => $tmpFormat));
 
 							echo $this->Template->replaceRefereeData(
 																											 $this->Html->tableCells($cells),
