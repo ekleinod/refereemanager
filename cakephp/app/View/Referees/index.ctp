@@ -39,8 +39,6 @@
 					echo $this->Html->nestedList($ulout, array('class' => 'legend'));
 				?>
 
-							<!--li style=" echo $statustype['outputstyle']['html']; "-->
-
 				<p>
 					<?php echo $this->Html->link('Export als Excel-Datei', array('action' => 'export', $season['Season']['year_start'], 'excel')); ?>
 					|

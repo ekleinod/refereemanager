@@ -4,7 +4,6 @@
 
 	if (($type === 'excel') || ($type === 'referee_view_zip') || ($type === 'pdf')) {
 
-		include_once('statustypes.php');
 		include_once('columns.php');
 
 		if ($type === 'excel') {
@@ -97,7 +96,7 @@
 				if ($isRefView) {
 					$tmpStatus = $this->People->getRefereeStatus($person, $season);
 					if (($tmpStatus !== null) && (array_key_exists($tmpStatus['status_type_id'], $statustypes))) {
-						$tmpStatusStyles = $statustypes[$tmpStatus['status_type_id']]['outputstyle'];
+						$tmpFormat = $this->Html->style(Configure::read(sprintf('RefMan.statustypes.%s', $statustypes[$tmpStatus['status_type_id']]['StatusType']['sid'])));
 					}
 				}
 
