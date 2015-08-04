@@ -101,20 +101,29 @@
 			</table>
 
 			<?php if ($isRefView) { ?>
-				<h3><?php echo __('Zusatzinformationen'); ?></h3>
+
+				<h2><?php echo __('Zusatzinformationen'); ?></h2>
+
 				<?php
 					foreach ($statustypes as $outstatustype) {
 				?>
-					<p><strong><?php echo ($outstatustype['StatusType']['remark']) ? h($outstatustype['StatusType']['remark']) : h($outstatustype['StatusType']['title']); ?></strong></p>
-					<p>
-						<?php
-							$arrNames = array();
-							foreach ($outstatustype['referees'] as $referee) {
-								$arrNames[] = $this->RefereeFormat->formatPerson($referee, 'fullname');
-							}
-							echo $this->RefereeFormat->formatMultiline($arrNames, ', ');
-						?>
-					</p>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<?php
+								echo ($outstatustype['StatusType']['remark']) ? h($outstatustype['StatusType']['remark']) : h($outstatustype['StatusType']['title']);
+							?>
+						</div>
+						<div class="panel-body">
+							<?php
+								$arrNames = array();
+								foreach ($outstatustype['referees'] as $referee) {
+									$arrNames[] = $this->RefereeFormat->formatPerson($referee, 'fullname');
+								}
+								echo $this->RefereeFormat->formatMultiline($arrNames, ', ');
+							?>
+						</div>
+					</div>
+
 			<?php
 					}
 				}
@@ -124,7 +133,9 @@
 			}
 		?>
 
-		<?php debug($people); ?>
+		<?php
+			//debug($people);
+		?>
 
 	</div>
 </div>
