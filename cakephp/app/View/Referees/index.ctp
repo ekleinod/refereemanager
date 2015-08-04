@@ -84,16 +84,13 @@
 
 							$cells = array();
 								foreach ($columns['index'] as $column) {
-									$cells[] = $column['content'];
-//									$cells[] = array($column['content'],
-//																	 (empty($tmpFormat)) ? null : array('style' => $tmpFormat));
+									$cells[] = array($column['content'],
+																	 (empty($tmpFormat)) ? null : array('style' => $tmpFormat));
 								}
-								$cells[] = array($this->element('actions_table', array('id' => $person['Person']['id'])),
-																 (empty($tmpFormat)) ? null : array('style' => $tmpFormat));
+								$cells[] = $this->element('actions_table', array('id' => $person['Person']['id']));
 
-							debug($cells);
 							echo $this->Template->replaceRefereeData(
-																											 $this->Html->tableCells($cells),
+																											 $this->Html->tableCells(array($cells)),
 																											 $person,
 																											 'text',
 																											 'html'
