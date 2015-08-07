@@ -1,5 +1,6 @@
 <?php
 App::import('Vendor','TCPDF/tcpdf');
+//App::uses('HtmlHelper', 'View/Helper');
 
 /**
 * RefManTCPDF: TCPDF header and footer definition.
@@ -41,6 +42,7 @@ class RefManTCPDF extends TCPDF {
 	public function getTable($header, $data) {
 
 		// start table
+		//debug($this->Html->style(array('border' => '1px solid #5E7796')));
 		$table = '<table style="border: 1px solid #5E7796;">';
 
 		// table head
