@@ -92,7 +92,7 @@
 			// datarows
 			foreach ($people as $person) {
 
-				$tmpStatusStyles = null;
+				$tmpFormat = '';
 				if ($isRefView) {
 					$tmpStatus = $this->People->getRefereeStatus($person, $season);
 					if (($tmpStatus !== null) && (array_key_exists($tmpStatus['status_type_id'], $statustypes))) {
@@ -113,7 +113,7 @@
 					foreach ($columns[$type] as $column) {
 						$datarow[] = array('text' => $this->Template->replaceRefereeData($column['content'], $person, 'text', 'html'));
 					}
-					$pdf_data[] = array('data' => $datarow, 'style' => (($tmpStatusStyles === null) ? '' : $tmpStatusStyles['html']));
+					$pdf_data[] = array('data' => $datarow, 'style' => $tmpFormat);
 				}
 
 				if ($type === 'referee_view_zip') {
@@ -166,7 +166,7 @@
 				foreach ($statustypes as $statustype) {
 					$tcpdf->WriteHTML(sprintf('<p style="font-size: %spt; %s">%s</p>',
 																		PDF_FONT_SIZE_DATA,
-																		$statustype['outputstyle']['html'],
+																		$this->Html->style(Configure::read(sprintf('RefMan.statustypes.%s', $statustype['StatusType']['sid']))),
 																		($statustype['StatusType']['remark']) ? h($statustype['StatusType']['remark']) : h($statustype['StatusType']['title'])),
 														true, false, true, false, '');
 				}
