@@ -1,4 +1,3 @@
-<?php echo $this->element('Functions/table');	?>
 <?php echo $this->element('Functions/assignments');	?>
 
 <?php echo $this->element('filter');	?>

@@ -92,11 +92,11 @@
 			// datarows
 			foreach ($people as $person) {
 
-				$tmpFormat = '';
+				$tmpFormat = array();
 				if ($isRefView) {
 					$tmpStatus = $this->People->getRefereeStatus($person, $season);
 					if (($tmpStatus !== null) && (array_key_exists($tmpStatus['status_type_id'], $statustypes))) {
-						$tmpFormat = $this->Html->style(Configure::read(sprintf('RefMan.statustypes.%s', $statustypes[$tmpStatus['status_type_id']]['StatusType']['sid'])));
+						$tmpFormat = Configure::read(sprintf('RefMan.statustypes.%s', $statustypes[$tmpStatus['status_type_id']]['StatusType']['sid']));
 					}
 				}
 
@@ -106,14 +106,14 @@
 					foreach ($columns[$type] as $column) {
 						$datarow[] = array('text' => $this->Template->replaceRefereeData($column['content'], $person, 'text', 'excel'));
 					}
-					$this->PHPExcel->addTableRow($datarow, (($tmpStatusStyles === null) ? array() : $tmpStatusStyles['excel']));
+					$this->PHPExcel->addTableRow($datarow, $tmpFormat);
 				}
 
 				if ($type === 'pdf') {
 					foreach ($columns[$type] as $column) {
 						$datarow[] = array('text' => $this->Template->replaceRefereeData($column['content'], $person, 'text', 'html'));
 					}
-					$pdf_data[] = array('data' => $datarow, 'style' => $tmpFormat);
+					$pdf_data[] = array('data' => $datarow, 'style' => $this->Html->style($tmpFormat));
 				}
 
 				if ($type === 'referee_view_zip') {
@@ -143,7 +143,7 @@
 				foreach ($statustypes as $thestatustype) {
 					$this->PHPExcel->addTableRow(
 																			 array(array('text' => ($thestatustype['StatusType']['remark']) ? $thestatustype['StatusType']['remark'] : $thestatustype['StatusType']['title'])),
-																			 $thestatustype['outputstyle']['excel']);
+																			 Configure::read(sprintf('RefMan.statustypes.%s', $thestatustype['StatusType']['sid'])));
 				}
 
 				$this->PHPExcel->addTableRow(array());

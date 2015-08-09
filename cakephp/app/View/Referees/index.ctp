@@ -1,5 +1,3 @@
-<?php $this->element('Functions/table');	?>
-
 <?php echo $this->element('filter');	?>
 
 <?php echo $this->element('actions_header');	?>
