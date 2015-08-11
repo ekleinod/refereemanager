@@ -1,24 +1,19 @@
 Quotes Language:		german
 Base Header Level:	3
-latex input:				kleinod-mmd-scrlttr2
-MyOptions:					author=schiri, font=droid, layout=infospaltefett
+latex input:				kleinod-mmd-scrartcl
+MyOptions:					author=schiri, font=droid, notitlepage
 latex input:				kleinod-mmd-style
-Title:							Übersicht der gespeicherten Daten Saison **generated season:title_season**
-MyBetreff:					Übersicht der gespeicherten Daten Saison **generated season:title_season**
+Title:							Übersicht der gespeicherten Daten 
+MySubtitle:					Saison **generated season:title_season**
 Date:								**generated date:medium**
-MyAnA:							**generated person:fullname**
-MyAnB:							**generated contacts:primary:streetnumber**
-MyAnC:							**generated contacts:primary:zipcity**
-MyAnrede:						Hallo **generated person:first_name**,
-MyGruss:						Mit sportlichen Grüßen,
-MyUnterschrift:			Ekkart.
-MyPS:
-latex input:				kleinod-mmd-begin-lttr
-latex footer:				kleinod-mmd-end-lttr
+latex input:				kleinod-mmd-begin-doc
 
+<!-- \maketitle -->
+
+Hallo **generated person:first_name**,
 
 dies ist der jährliche Auszug der über Dich beim Verbandsschiedsrichterausschuss für die Saison **generated season:title_season** gespeicherten Daten.
-Du erhältst den Auszug aus zwei Gründen:
+Du erhältst den Auszug aus drei Gründen:
 
 1. Damit Du weißt, welche Daten gespeichert sind, wofür sie verwendet werden und wer die Daten sieht.
 2. Damit Du kontrollieren kannst, ob die Daten korrekt sind und eventuelle Änderungen mitteilen kannst.
@@ -27,6 +22,7 @@ Du erhältst den Auszug aus zwei Gründen:
 # Öffentliche Informationen
 
 Diese Informationen sind für jedermann sichtbar.
+
 Nutzungsbeispiel: Einsatzplan.
 
 <!--
@@ -42,6 +38,7 @@ Nutzungsbeispiel: Einsatzplan.
 # Informationen für andere Schiedsrichter
 
 Diese Informationen sind nur für andere Schiedsrichter nach Login und den DTTB sichtbar.
+
 Nutzungsbeispiel: Kontakttabelle der Schiedsrichter.
 
 <!--
@@ -58,6 +55,7 @@ Nutzungsbeispiel: Kontakttabelle der Schiedsrichter.
 # Informationen für VSRA
 
 Diese Informationen sind nur für den Verbandsschiedsrichterausschuss sichtbar.
+
 Nutzungsbeispiel: Verwaltung der Einsätze.
 
 <!--
@@ -77,6 +75,3 @@ Nutzungsbeispiel: Verwaltung der Einsätze.
 	\bottomrule
 \end{longtabu}
 -->
-
-Bitte prüfe die Informationen auf Korrektheit und Unvollständigkeit und gib mir Bescheid, wenn Änderungen nötig sind.
-
