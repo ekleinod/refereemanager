@@ -1,9 +1,13 @@
 <?php
-$config = array (
-	'RefMan' => array (
-		'defaultcontacttypeid' => 1,
-		'defaultcountrycode' => '49',
-		'defaultareacode' => '30',
+$config = array(
+	'RefMan' => array(
+		'contacts' => array(
+			'defaultcontacttypeid' => 1,
+			'phone' => array(
+				'countrycode' => '49',
+				'areacode' => '30',
+			),
+		),
 
 		'message' => array (
 			'opening' => 'Hallo **generated first_name**,',
@@ -16,7 +20,7 @@ $config = array (
 			'pattern' => 'OSR_%s_%02d_',
 		),
 
-		'statustypes' => array (
+		'statustypes' => array(
 			'many' => array('font-weight' => 'bold'),
 			'normal' => array(),
 			'inactiveseason' => array('color' => '#777777'),
@@ -24,15 +28,27 @@ $config = array (
 			'other' => array('font-style' => 'italic'),
 		),
 
-		'template' => array (
-			'path' => 'files/templates/',
-			'merge' => 'merge.tex',
+		'template' => array(
+			'assignments' => array(
+				'file_all' => '%s_BeTTV_Einsatzplan.pdf',
+				'file_person' => '%s_Einsatzplan_%s_%s_%03d.pdf',
+				'path' => 'assignments/',
+			),
+			'attachments' => array(
+				'path' => 'attachments/',
+			),
 			'build' => 'build.xml',
-			'refereeview' => 'referee_view.mmd',
-			'refereeviewout' => 'referee_views',
 			'email' => 'email.mmd',
 			'letter' => 'letter.mmd',
 			'letterout' => 'letters',
+			'merge' => 'merge.tex',
+			'person_data' => array(
+				'file' => '%s_%s_%03d',
+				'path' => 'person-data/',
+			),
+			'path' => 'files/templates/',
+			'refereeview' => 'referee_view.mmd',
+			'refereeviewout' => 'referee_views',
 		),
 	),
 );

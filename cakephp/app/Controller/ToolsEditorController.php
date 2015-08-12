@@ -99,7 +99,7 @@ class ToolsEditorController extends AppController {
 			$attachment = array();
 			if ($sendEmail && !empty($this->request->data['ToolsEditor']['attachment'])) {
 				foreach (explode(';', $this->request->data['ToolsEditor']['attachment']) as $attfile) {
-					$attachment[] = sprintf('%s%s', TMP, trim($attfile));
+					$attachment[] = sprintf('%s%s%s', TMP, Configure::read('RefMan.template.attachments.path'), trim($attfile));
 				}
 				$attachfails = array();
 				foreach ($attachment as $attfile) {
