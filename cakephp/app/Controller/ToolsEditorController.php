@@ -94,19 +94,59 @@ class ToolsEditorController extends AppController {
 
 			$sendSingleEmails = $this->request->data['ToolsEditor']['mailkind'] === 's';
 
+			// referees to send messages to
+			$hasMe = false;
+			if (!$toMeOnly) {
+				foreach ($this->viewVars['referees'] as $ref) {
+					$arrReferees[] = $ref;
+					if ($this->viewVars['userpersonid'] == $ref['Person']['id']) {
+						$hasMe = true;
+					}
+				}
+			}
+
+			if (!$hasMe) {
+				$arrReferees[] = $this->Referee->getRefereeByPersonId($this->viewVars['userpersonid'], $this->viewVars['isEditor']);
+			}
+
 			// if attachment: do all of them exist?
 			$attachmentOK = true;
 			$attachment = array();
-			if ($sendEmail && !empty($this->request->data['ToolsEditor']['attachment'])) {
-				foreach (explode(';', $this->request->data['ToolsEditor']['attachment']) as $attfile) {
-					$attachment[] = sprintf('%s%s%s', TMP, Configure::read('RefMan.template.attachments.path'), trim($attfile));
-				}
+			if ($sendEmail) {
+
 				$attachfails = array();
-				foreach ($attachment as $attfile) {
-					if (!file_exists($attfile)) {
-						$attachfails[] = $attfile;
+
+				// directly prompted files
+				if (!empty($this->request->data['ToolsEditor']['attachment'])) {
+
+					foreach (explode(';', $this->request->data['ToolsEditor']['attachment']) as $attfile) {
+						$attachment[] = sprintf('%s%s%s', TMP, Configure::read('RefMan.template.attachments.path'), trim($attfile));
+					}
+					foreach ($attachment as $attfile) {
+						if (!file_exists($attfile)) {
+							$attachfails[] = $attfile;
+						}
+					}
+
+				}
+
+				// generated person data
+				if (!empty($this->request->data['ToolsEditor']['person_data'])) {
+					foreach ($arrReferees as $attperson) {
+						$tmpFile = sprintf('%s%s%s.pdf',
+															 TMP,
+															 Configure::read('RefMan.template.person_data.path'),
+															 sprintf(Configure::read('RefMan.template.person_data.file'),
+																			 RefManTemplate::fileName($attperson['Person']['name']),
+																			 RefManTemplate::fileName($attperson['Person']['first_name']),
+																			 $attperson['Person']['id']));
+						if (!file_exists($tmpFile)) {
+							$attachfails[] = $tmpFile;
+						}
 					}
 				}
+
+				// attachement error
 				if (!empty($attachfails)) {
 					$this->Session->setFlash(
 																	 __('Dateianhang "%s" existiert nicht. Keine Nachrichten wurden versendet.', implode('; ', $attachfails)),
@@ -146,21 +186,6 @@ class ToolsEditorController extends AppController {
 
 				$arrEmails = array();
 				$arrLetter = array();
-
-				// referees to send messages to
-				$hasMe = false;
-				if (!$toMeOnly) {
-					foreach ($this->viewVars['referees'] as $ref) {
-						$arrReferees[] = $ref;
-						if ($this->viewVars['userpersonid'] == $ref['Person']['id']) {
-							$hasMe = true;
-						}
-					}
-				}
-
-				if (!$hasMe) {
-					$arrReferees[] = $this->Referee->getRefereeByPersonId($this->viewVars['userpersonid'], $this->viewVars['isEditor']);
-				}
 
 				// fill templates with person values
 				foreach ($arrReferees as $referee) {
