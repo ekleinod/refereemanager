@@ -126,7 +126,7 @@
 					$txtRefView = RefManTemplate::replaceRefereeData($txtRefView, $person, 'text', 'text');
 
 					RefManTemplate::addToZip('mmd',
-																	 sprintf('%s_%s_%03d',
+																	 sprintf(Configure::read('RefMan.template.person_data.file'),
 																					 RefManTemplate::fileName($person['Person']['name']),
 																					 RefManTemplate::fileName($person['Person']['first_name']),
 																					 $person['Person']['id']),
