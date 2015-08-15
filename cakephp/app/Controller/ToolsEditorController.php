@@ -200,6 +200,17 @@ class ToolsEditorController extends AppController {
 						$Email
 								->to($contactEmail['Email']['email'])
 								->subject($this->request->data['ToolsEditor']['subject']);
+
+						// attachments
+						if (!empty($this->request->data['ToolsEditor']['person_data'])) {
+							$attachment[] = sprintf('%s%s%s.pdf',
+																			TMP,
+																			Configure::read('RefMan.template.person_data.path'),
+																			sprintf(Configure::read('RefMan.template.person_data.file'),
+																							RefManTemplate::fileName($referee['Person']['name']),
+																							RefManTemplate::fileName($referee['Person']['first_name']),
+																							$referee['Person']['id']));
+						}
 						if (!empty($attachment)) {
 							$Email->attachments($attachment);
 						}
