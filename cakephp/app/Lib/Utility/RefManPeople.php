@@ -148,10 +148,12 @@ class RefManPeople {
 
 			// next training
 			if (!empty($levReturn['lasttrainingupdate'])) {
-				$levReturn['nexttrainingupdate'] = strtotime('+2 years', CakeTime::fromString($levReturn['lasttrainingupdate']));
+				$levReturn['nexttrainingupdate'] = strtotime(sprintf('+%d years', $levReturn['TrainingLevelType']['update_interval']),
+																										 CakeTime::fromString($levReturn['lasttrainingupdate']));
 			}
 			if (empty($levReturn['nexttrainingupdate']) && !empty($levReturn['TrainingLevel']['since'])) {
-				$levReturn['nexttrainingupdate'] = strtotime('+2 years', CakeTime::fromString($levReturn['TrainingLevel']['since']));
+				$levReturn['nexttrainingupdate'] = strtotime(sprintf('+%d years', $levReturn['TrainingLevelType']['update_interval']),
+																										 CakeTime::fromString($levReturn['TrainingLevel']['since']));
 			}
 
 		}
