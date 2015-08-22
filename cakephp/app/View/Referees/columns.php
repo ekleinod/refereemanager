@@ -223,6 +223,13 @@ if ($isEditor) {
 																	'content' => $this->Template->getReplaceToken('traininglevel:nexttrainingupdate'));
 }
 
+// information per letter
+if ($isEditor) {
+	$columns['index'][] =
+			$columns['excel'][] = array('title' => __('Briefversand'),
+																	'content' => $this->Template->getReplaceToken('referee:docs_per_letter'));
+}
+
 // remarks
 	// remark
 	if ($isEditor) {
