@@ -198,7 +198,7 @@ class ToolsEditorController extends AppController {
 						// send email (set up email config correctly)
 						$Email = new CakeEmail('default');
 						$Email
-								->to($contactEmail['Email']['email'])
+								->to(array($contactEmail['Email']['email'] => RefManRefereeFormat::formatPerson($referee, 'fullname')))
 								->subject($this->request->data['ToolsEditor']['subject']);
 
 						// attachments
