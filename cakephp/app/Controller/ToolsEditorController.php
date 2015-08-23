@@ -188,10 +188,11 @@ class ToolsEditorController extends AppController {
 				$arrLetter = array();
 
 				// fill templates with person values
+				$skipsend = !empty($this->request->data['ToolsEditor']['skiptill']);
 				foreach ($arrReferees as $referee) {
 
 					$contactEmail = RefManPeople::getPrimaryContact($referee, 'Email');
-					if ($sendEmail && !empty($contactEmail)) {
+					if (!$skipsend && $sendEmail && !empty($contactEmail)) {
 
 						$txtEmail = RefManTemplate::replaceRefereeData($tplEmail, $referee, 'text', 'html');
 
@@ -251,7 +252,7 @@ class ToolsEditorController extends AppController {
 					}
 
 					$contactAddress = RefManPeople::getPrimaryContact($referee, 'Address');
-					if ($sendLetter && !empty($contactAddress) &&
+					if (!$skipsend && $sendLetter && !empty($contactAddress) &&
 							(empty($contactEmail) || ($referee['Referee']['docs_per_letter'] === true))) {
 
 						$txtLetter = RefManTemplate::replaceRefereeData($tplLetter, $referee, 'text', 'html');
@@ -268,6 +269,10 @@ class ToolsEditorController extends AppController {
 						// output for user
 						CakeLog::write('letter', __('Letter generated for %s.', RefManRefereeFormat::formatPerson($referee, 'fullname')));
 						$arrLetter[] = sprintf('%s', RefManRefereeFormat::formatPerson($referee, 'fullname'));
+					}
+
+					if ($skipsend && ($referee['Person']['name'] === $this->request->data['ToolsEditor']['skiptill'])) {
+						$skipsend = false;
 					}
 
 				}

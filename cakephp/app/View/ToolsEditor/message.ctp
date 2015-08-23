@@ -47,15 +47,15 @@
 
 					$tmpValue = empty($messagedata) ? false : $messagedata['ToolsEditor']['person_data'];
 					echo $this->RefereeForm->getInputField(null, 'checkbox', 'person_data',
-																								 __('Personendaten'), $tmpValue, __('Generierte Dateien in "%s%s%s.pdf".', TMP, Configure::read('RefMan.template.person_data.path'), sprintf(Configure::read('RefMan.template.person_data.file'), __('Name'), __('Vorname'), 0)), 'Generierte Personendaten');
+																								 __('Personendaten'), $tmpValue, __('Generierte Dateien in "%s%s%s.pdf".', TMP, Configure::read('RefMan.template.person_data.path'), sprintf(Configure::read('RefMan.template.person_data.file'), __('Name'), __('Vorname'), 0)), __('Generierte Personendaten'));
 
 					$tmpValue = empty($messagedata) ? false : $messagedata['ToolsEditor']['assignments_all'];
 					echo $this->RefereeForm->getInputField(null, 'checkbox', 'assignments_all',
-																								 __('Einsatzplan'), $tmpValue, __('Generierte Datei in "%s%s%s".', TMP, Configure::read('RefMan.template.assignments.path'), sprintf(Configure::read('RefMan.template.assignments.file_all'), $season['Season']['title_season'])), 'Gesamteinsatzplan');
+																								 __('Einsatzplan'), $tmpValue, __('Generierte Datei in "%s%s%s".', TMP, Configure::read('RefMan.template.assignments.path'), sprintf(Configure::read('RefMan.template.assignments.file_all'), $season['Season']['title_season'])), __('Gesamteinsatzplan'));
 
 					$tmpValue = empty($messagedata) ? false : $messagedata['ToolsEditor']['assignments_person'];
 					echo $this->RefereeForm->getInputField(null, 'checkbox', 'assignments_person',
-																								 __('Einsatzplan'), $tmpValue, __('Generierte Dateien in "%s%s%s".', TMP, Configure::read('RefMan.template.assignments.path'), sprintf(Configure::read('RefMan.template.assignments.file_person'), $season['Season']['title_season'], __('Name'), __('Vorname'), 0)), 'Einsatzplan für einzelne_n Schiedsrichter_in');
+																								 __('Einsatzplan'), $tmpValue, __('Generierte Dateien in "%s%s%s".', TMP, Configure::read('RefMan.template.assignments.path'), sprintf(Configure::read('RefMan.template.assignments.file_person'), $season['Season']['title_season'], __('Name'), __('Vorname'), 0)), __('Einsatzplan für einzelne_n Schiedsrichter_in'));
 				?>
 			</fieldset>
 
@@ -77,6 +77,11 @@
 																											 's' => __('SR mit Post-Adresse'),
 																											 'i' => __('Nur ich')));
 
+					$tmpValue = empty($messagedata) ? null : $messagedata['ToolsEditor']['skiptill'];
+					echo $this->RefereeForm->getInputField(null, 'text', 'skiptill',
+																								 __('Überspringen bis'), $tmpValue, __('Alle Nachrichten werden erst ab diesem Namen erzeugt, den Namen nicht mit eingeschlossen.'), __('Name'),
+																								 false);
+
 					$tmpValue = empty($messagedata) ? 's' : $messagedata['ToolsEditor']['mailkind'];
 					echo $this->RefereeForm->getInputField(null, 'radio', 'mailkind',
 																								 __('Mailversand'), $tmpValue, null, null,
@@ -86,7 +91,7 @@
 
 					$tmpValue = empty($messagedata) ? false : $messagedata['ToolsEditor']['test_only'];
 					echo $this->RefereeForm->getInputField(null, 'checkbox', 'test_only',
-																								 __('Sendemodus'), $tmpValue, 'Die Nachricht wird erzeugt und verarbeitet aber es wird keine E-Mail gesendet und kein PDF erzeugt.', 'nur Test');
+																								 __('Sendemodus'), $tmpValue, __('Die Nachricht wird erzeugt und verarbeitet aber es wird keine E-Mail gesendet und kein PDF erzeugt.'), 'nur Test');
 				?>
 			</fieldset>
 
