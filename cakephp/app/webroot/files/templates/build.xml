@@ -5,6 +5,7 @@
 <project name="mmd2pdf" default="help" basedir=".">
 
 	<property name="file:merge" value="merge" />
+	<property name="file:zip" value="pdfs.zip" />
 
 	<property name="path:mmd" value="mmd" />
 	<property name="path:generated" value="generated" />
@@ -22,7 +23,7 @@
 
 	<target name="all" description="Create one merged pdf file from mmd.">
 
-		<echo message="Create pdf file: start."/>
+		<echo message="Create pdf files and zip: start."/>
 
 		<antcall target="clear" />
 
@@ -30,9 +31,9 @@
 		<antcall target="createpdffiles" />
 		<antcall target="createpdffiles" />
 		<antcall target="createpdffiles" />
-		<antcall target="mergepdffiles" />
+		<antcall target="zippdffiles" />
 
-		<echo message="Create pdf file: stop."/>
+		<echo message="Create pdf files and zip: stop."/>
 		<echo message="Call target 'clear' to remove temporary files."/>
 
 	</target>
@@ -56,7 +57,7 @@
 		<echo message="createpdffiles"/>
 
 		<!-- force is set, because we need at several LaTeX runs to be executed -->
-		<apply executable="pdflatex" parallel="false" output="${file:merge}.single.log" force="true">
+		<apply executable="pdflatex" parallel="false" output="pdflatex.log" force="true">
 			<arg value="-interaction=nonstopmode" />
 			<arg value="-output-directory=${path:generated}" />
 			<srcfile />
@@ -69,6 +70,14 @@
 		<exec executable="pdflatex" output="${file:merge}.log">
 			<arg line="-interaction=nonstopmode ${file:merge}.tex" />
 		</exec>
+	</target>
+
+	<target name="zippdffiles" description="Create pdf zip file from pdf files.">
+		<zip destfile="${file:zip}"
+			basedir="${path:generated}"
+			compress="false"
+			includes="*.pdf"
+		/>
 	</target>
 
 	<target name="clear" description="Remove temporary files and directories.">

@@ -17,7 +17,10 @@ class RefManTemplate {
 	private static $zip = null;
 
 	/** Merge file. */
-	private static $merge = null;
+	private static $mergetex = null;
+
+	/** Merge include line. */
+	private static $mergeincludetex = null;
 
 	/** Referee relation types. */
 	private static $refereerelationtypes = null;
@@ -29,15 +32,17 @@ class RefManTemplate {
 	 * Returns template text.
 	 *
 	 * @param $id template id
+	 * @param $path template path
 	 * @return template content
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.3
 	 */
-	public static function getTemplate($id) {
-		return file_get_contents(sprintf('%s%s%s',
+	public static function getTemplate($id, $path = null) {
+		return file_get_contents(sprintf('%s%s%s%s',
 																		 WWW_ROOT,
 																		 Configure::read('RefMan.template.path'),
+																		 empty($path) ? '' : Configure::read(sprintf('RefMan.template.%s', $path)),
 																		 Configure::read(sprintf('RefMan.template.%s', $id))));
 	}
 
@@ -398,11 +403,12 @@ class RefManTemplate {
 	 */
 	public static function openZip($filename) {
 		RefManTemplate::$zip = new ZipArchive();
-		$zipfile = sprintf('%s%s.zip', TMP, $filename);
+		$zipfile = sprintf('%s%s', TMP, $filename);
 		if (RefManTemplate::$zip->open($zipfile, ZipArchive::OVERWRITE) !== TRUE) {
 			throw new CakeException(__('Zip-Archiv "%s" konnte nicht angelegt werden.', $zipfile));
 		}
-		RefManTemplate::$merge = RefManTemplate::getTemplate('merge');
+		RefManTemplate::$mergetex = RefManTemplate::getTemplate('merge.tex');
+		RefManTemplate::$mergeincludetex = RefManTemplate::getTemplate('merge.includetex');
 	}
 
 	/**
@@ -417,9 +423,11 @@ class RefManTemplate {
 	 */
 	public static function addToZip($directory, $filename, $content) {
 		RefManTemplate::$zip->addFromString(sprintf('%s/%s.mmd', $directory, $filename), $content);
-		RefManTemplate::$merge = str_replace('#includepdf#',
-																				 sprintf("\t\\includepdf{generated/%s.pdf}\n#includepdf#", $filename),
-																				 RefManTemplate::$merge);
+		RefManTemplate::$mergetex = RefManTemplate::replace(RefManTemplate::$mergetex,
+																												Configure::read('RefMan.template.merge.includetoken'),
+																												sprintf('%s%s',
+																																sprintf(RefManTemplate::$mergeincludetex, sprintf('%s/%s.pdf', $directory, $filename)),
+																																RefManTemplate::getReplaceToken(Configure::read('RefMan.template.merge.includetoken'))));
 	}
 
 	/**
@@ -431,14 +439,17 @@ class RefManTemplate {
 	 * @since 0.3
 	 */
 	public static function closeZip() {
-		RefManTemplate::$merge = str_replace('#includepdf#', '', RefManTemplate::$merge);
-		RefManTemplate::$zip->addFromString(Configure::read('RefMan.template.merge'), RefManTemplate::$merge);
+		RefManTemplate::$mergetex = RefManTemplate::replace(RefManTemplate::$mergetex,
+																												Configure::read('RefMan.template.merge.includetoken'),
+																												'');
+		RefManTemplate::$zip->addFromString(Configure::read('RefMan.template.merge.tex'), RefManTemplate::$mergetex);
 
-		RefManTemplate::$zip->addFile(sprintf('%s%s%s',
+		RefManTemplate::$zip->addFile(sprintf('%s%s%s%s',
 																					WWW_ROOT,
 																					Configure::read('RefMan.template.path'),
-																					Configure::read('RefMan.template.build')),
-																	Configure::read('RefMan.template.build'));
+																					Configure::read('RefMan.template.person-data.path'),
+																					Configure::read('RefMan.template.person-data.build')),
+																	Configure::read('RefMan.template.person-data.build'));
 
 		$zipfile = RefManTemplate::$zip->filename;
 		RefManTemplate::$zip->close();

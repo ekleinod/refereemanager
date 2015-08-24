@@ -59,8 +59,8 @@
 		}
 
 		if ($type === 'person-data') {
-			$tplRefView = RefManTemplate::getTemplate('refereeview');
-			RefManTemplate::openZip(Configure::read('RefMan.template.refereeviewout'));
+			$tplPersonData = RefManTemplate::getTemplate('person-data.template', 'person-data.path');
+			RefManTemplate::openZip(Configure::read('RefMan.template.person-data.output'));
 		}
 
 		if (empty($people)) {
@@ -118,19 +118,19 @@
 
 				if ($type === 'person-data') {
 
-					$txtRefView = $tplRefView;
+					$txtPersonData = $tplPersonData;
 
-					$txtRefView = RefManTemplate::replaceDateTimeData($txtRefView);
-					$txtRefView = RefManTemplate::replaceSeasonData($txtRefView, $season, 'text', 'text');
+					$txtPersonData = RefManTemplate::replaceDateTimeData($txtPersonData);
+					$txtPersonData = RefManTemplate::replaceSeasonData($txtPersonData, $season, 'text', 'text');
 
-					$txtRefView = RefManTemplate::replaceRefereeData($txtRefView, $person, 'text', 'text');
+					$txtPersonData = RefManTemplate::replaceRefereeData($txtPersonData, $person, 'text', 'text');
 
 					RefManTemplate::addToZip('mmd',
-																	 sprintf(Configure::read('RefMan.template.person_data.file'),
+																	 sprintf(Configure::read('RefMan.template.person-data.file'),
 																					 RefManTemplate::fileName($person['Person']['name']),
 																					 RefManTemplate::fileName($person['Person']['first_name']),
 																					 $person['Person']['id']),
-																	 $txtRefView);
+																	 $txtPersonData);
 				}
 
 			}

@@ -37,18 +37,23 @@ $config = array(
 			'attachments' => array(
 				'path' => 'attachments/',
 			),
-			'email' => 'email.mmd',
-			'letter' => 'letter.mmd',
-			'letterout' => 'letters',
-			'person_data' => array(
+			'merge' => array(
+				'tex' => 'merge.tex',
+				'includetex' => 'includeline.tex',
+				'includetoken' => 'includeline',
+			),
+			'person-data' => array(
 				'build' => 'build.xml',
 				'file' => '%s_%s_%03d',
-				'merge' => 'merge.tex',
+				'output' => 'person-data.zip',
 				'path' => 'person-data/',
 				'template' => 'person-data.mmd',
 			),
+
+			'email' => 'email.mmd',
+			'letter' => 'letter.mmd',
+			'letterout' => 'letters',
 			'path' => 'files/templates/',
-			'refereeviewout' => 'referee_views',
 		),
 	),
 );
