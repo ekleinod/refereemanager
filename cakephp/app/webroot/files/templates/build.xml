@@ -59,7 +59,7 @@
 	<target name="createpdffiles" description="Create pdf files from tex files.">
 		<echo message="createpdffiles" />
 
-		<!-- force is set, because we need at several LaTeX runs to be executed -->
+		<!-- force is set, because we need several LaTeX runs to be executed -->
 		<apply executable="pdflatex" parallel="false" output="pdflatex.log" force="true">
 			<arg value="-interaction=nonstopmode" />
 			<arg value="-output-directory=${path:generated}" />
@@ -69,18 +69,28 @@
 		</apply>
 	</target>
 
-	<target name="mergepdffiles" description="Create merged pdf file from pdf files.">
-		<exec executable="pdflatex" output="${file:merge}.log">
-			<arg line="-interaction=nonstopmode ${file:merge}.tex" />
-		</exec>
-	</target>
-
 	<target name="zippdffiles" description="Create pdf zip file from pdf files.">
 		<zip destfile="${file:zip}"
 			basedir="${path:generated}"
 			compress="false"
 			includes="*.pdf"
 		/>
+	</target>
+
+	<target name="mergepdffiles" description="TeX all merge files.">
+
+		<antcall target="createpdffiles">
+			<param name="path:generated" value="." />
+		</antcall>
+
+	</target>
+
+	<target name="zipmergefiles" description="Zip all merge files.">
+
+		<antcall target="zippdffiles">
+			<param name="path:generated" value="." />
+		</antcall>
+
 	</target>
 
 	<target name="clear" description="Remove temporary files and directories.">
