@@ -125,13 +125,13 @@
 
 					$txtPersonData = RefManTemplate::replaceRefereeData($txtPersonData, $person, 'text', 'text');
 
-					RefManTemplate::addToZip('mmd',
-																	 sprintf('%s.mmd',
+					RefManTemplate::addToZip(sprintf('%s.mmd',
 																					 sprintf(Configure::read('RefMan.template.person-data.file'),
 																										RefManTemplate::fileName($person['Person']['name']),
 																										RefManTemplate::fileName($person['Person']['first_name']),
 																										$person['Person']['id'])),
-																	 $txtPersonData);
+																	 $txtPersonData,
+																	 'mmd');
 				}
 
 			}

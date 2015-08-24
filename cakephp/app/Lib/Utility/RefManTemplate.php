@@ -423,31 +423,33 @@ class RefManTemplate {
 	/**
 	 * Adds file to zip archive.
 	 *
-	 * @param $directory directory
 	 * @param $filename filename
 	 * @param $content content
+	 * @param $directory directory
 	 *
 	 * @version 0.4
 	 * @since 0.3
 	 */
-	public static function addToZip($directory, $filename, $content) {
-		RefManTemplate::$zip->addFromString(sprintf('%s/%s', $directory, $filename), $content);
+	public static function addToZip($filename, $content, $directory = null) {
+		$outdir = empty($directory) ? '' : sprintf('%s/', $directory);
+		RefManTemplate::$zip->addFromString(sprintf('%s%s', $outdir, $filename), $content);
 	}
 
 	/**
 	 * Adds file to merge content.
 	 *
-	 * @param $directory directory
 	 * @param $filename filename
+	 * @param $directory directory
 	 *
 	 * @version 0.4
 	 * @since 0.4
 	 */
-	public static function addToMerge($directory, $filename) {
+	public static function addToMerge($filename, $directory = null) {
+		$outdir = empty($directory) ? '' : sprintf('%s/', $directory);
 		RefManTemplate::$mergetex = RefManTemplate::replace(RefManTemplate::$mergetex,
 																												Configure::read('RefMan.template.merge.includetoken'),
 																												sprintf('%s%s',
-																																sprintf(RefManTemplate::$mergeincludetex, sprintf('%s/%s', $directory, $filename)),
+																																sprintf(RefManTemplate::$mergeincludetex, sprintf('%s%s', $outdir, $filename)),
 																																RefManTemplate::getReplaceToken(Configure::read('RefMan.template.merge.includetoken'))));
 	}
 
@@ -484,7 +486,7 @@ class RefManTemplate {
 		RefManTemplate::$mergetex = RefManTemplate::replace(RefManTemplate::$mergetex,
 																												Configure::read('RefMan.template.merge.includetoken'),
 																												'');
-		RefManTemplate::$zip->addFromString($filename, RefManTemplate::$mergetex);
+		RefManTemplate::addToZip($filename, RefManTemplate::$mergetex);
 	}
 
 }

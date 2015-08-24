@@ -21,9 +21,9 @@
 		</java>
 	</target>
 
-	<target name="all" description="Create one merged pdf file from mmd.">
+	<target name="all" description="Create pdf files from mmd.">
 
-		<echo message="Create pdf files and zip: start."/>
+		<echo message="Create pdf files from mmd: start." />
 
 		<antcall target="clear" />
 
@@ -31,10 +31,13 @@
 		<antcall target="createpdffiles" />
 		<antcall target="createpdffiles" />
 		<antcall target="createpdffiles" />
-		<antcall target="zippdffiles" />
 
-		<echo message="Create pdf files and zip: stop."/>
-		<echo message="Call target 'clear' to remove temporary files."/>
+		<echo message="Create pdf files from mmd: stop." />
+		<echo />
+		<echo message="Call target 'zippdffiles' to zip pdfs in ${path:generated}." />
+		<echo message="Call target 'mergepdffiles' to tex all ${file:merge}_*.tex files." />
+		<echo message="Call target 'zipmergefiles' to zip all ${file:merge}_*.pdf files." />
+		<echo message="Call target 'clear' to remove temporary files (incl. pdf)." />
 
 	</target>
 
@@ -54,7 +57,7 @@
 	</target>
 
 	<target name="createpdffiles" description="Create pdf files from tex files.">
-		<echo message="createpdffiles"/>
+		<echo message="createpdffiles" />
 
 		<!-- force is set, because we need at several LaTeX runs to be executed -->
 		<apply executable="pdflatex" parallel="false" output="pdflatex.log" force="true">
@@ -62,7 +65,7 @@
 			<arg value="-output-directory=${path:generated}" />
 			<srcfile />
 			<fileset dir="${path:generated}" includes="*.tex" />
-			<mapper type="glob" from="*.tex" to="${path:generated}/*.pdf"/>
+			<mapper type="glob" from="*.tex" to="${path:generated}/*.pdf" />
 		</apply>
 	</target>
 
@@ -84,7 +87,7 @@
 		<delete dir="${path:generated}" />
 		<defaultexcludes remove="**/*~" />
 		<delete>
-			<fileset dir="." includes="**/*.aux, **/*.bak.vthought, **/*.bak, **/*.bbl, **/*.blg, **/*.dvi, **/*.idx, **/*.ilg, **/*.ind, **/*.lof, **/*.log, **/*.lot, **/*.lop, **/*.nav, **/*.out, **/*.ps, **/*.snm, **/*.toc, **/*.url, **/*.*~"/>
+			<fileset dir="." includes="**/*.aux, **/*.bak.vthought, **/*.bak, **/*.bbl, **/*.blg, **/*.dvi, **/*.idx, **/*.ilg, **/*.ind, **/*.lof, **/*.log, **/*.lot, **/*.lop, **/*.nav, **/*.out, **/*.ps, **/*.snm, **/*.toc, **/*.url, **/*.*~" />
 		</delete>
 		<defaultexcludes default="true" />
 	</target>

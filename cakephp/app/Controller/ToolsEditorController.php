@@ -264,13 +264,18 @@ class ToolsEditorController extends AppController {
 						$txtLetter = RefManTemplate::replace($txtLetter, 'zipcity', RefManRefereeFormat::formatAddress($contactAddress, 'zipcity', 'text'));
 
 						// store letter
-						RefManTemplate::addToZip('mmd', sprintf('letter.%s.mmd', $persondatafile), $txtLetter);
-						RefManTemplate::addToMerge('pdf', sprintf('letter.%s.pdf', $persondatafile));
+						RefManTemplate::addToZip(sprintf('letter_%s.mmd', $persondatafile), $txtLetter, 'mmd');
+						RefManTemplate::addToMerge(sprintf('letter_%s.pdf', $persondatafile), 'pdf');
+
+						// attachments
+						foreach ($attarray as $letterattachment) {
+							RefManTemplate::addToMerge($letterattachment);
+						}
 
 						// output for user
 						CakeLog::write('letter', __('Letter generated for %s.', RefManRefereeFormat::formatPerson($referee, 'fullname')));
 						$arrLetter[] = sprintf('%s', RefManRefereeFormat::formatPerson($referee, 'fullname'));
-						RefManTemplate::closeMerge(sprintf('%s.tex', $persondatafile));
+						RefManTemplate::closeMerge(sprintf('merge_%s.tex', $persondatafile));
 					}
 
 					if ($skipsend && ($referee['Person']['name'] === $this->request->data['ToolsEditor']['skiptill'])) {
