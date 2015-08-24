@@ -178,7 +178,7 @@ class ToolsEditorController extends AppController {
 				$tplLetter = RefManTemplate::replace($tplLetter, 'signature', $this->request->data['ToolsEditor']['signature']);
 
 				$tplLetter = RefManTemplate::replace($tplLetter, 'subject', $this->request->data['ToolsEditor']['subject']);
-				$tplLetter = RefManTemplate::replace($tplLetter, 'date', RefManRefereeFormat::formatDate(time(), 'medium'));
+				$tplLetter = RefManTemplate::replaceDateTimeData($tplLetter);
 
 				$arrEmails = array();
 				$arrLetter = array();
