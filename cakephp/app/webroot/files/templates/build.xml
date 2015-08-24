@@ -8,7 +8,7 @@
 	<property name="file:zip" value="pdfs.zip" />
 
 	<property name="path:mmd" value="mmd" />
-	<property name="path:generated" value="generated" />
+	<property name="path:generated" value="pdf" />
 
 	<target name="help" description="Shows help text.">
 		<echo>You can use the following targets:</echo>

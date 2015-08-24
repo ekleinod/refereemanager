@@ -10,7 +10,7 @@ $config = array(
 		),
 
 		'message' => array (
-			'opening' => 'Hallo **generated first_name**,',
+			'opening' => 'Hallo **generated person:first_name**,',
 			'closing' => 'Mit sportlichen Grüßen,',
 			'signature' => 'Ekkart.',
 		),
@@ -37,22 +37,24 @@ $config = array(
 			'attachments' => array(
 				'path' => 'attachments/',
 			),
+			'letter' => array(
+				'output' => 'letters.zip',
+				'template' => 'letter.mmd',
+			),
 			'merge' => array(
 				'tex' => 'merge.tex',
 				'includetex' => 'includeline.tex',
 				'includetoken' => 'includeline',
 			),
 			'person-data' => array(
-				'build' => 'build.xml',
 				'file' => '%s_%s_%03d',
 				'output' => 'person-data.zip',
 				'path' => 'person-data/',
 				'template' => 'person-data.mmd',
 			),
 
+			'build' => 'build.xml',
 			'email' => 'email.mmd',
-			'letter' => 'letter.mmd',
-			'letterout' => 'letters',
 			'path' => 'files/templates/',
 		),
 	),

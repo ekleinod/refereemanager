@@ -110,62 +110,58 @@ class ToolsEditorController extends AppController {
 			}
 
 			// if attachment: do all of them exist?
-			$attachmentOK = true;
 			$attachment = array();
-			if ($sendEmail) {
+			$attachfails = array();
 
-				$attachfails = array();
+			// directly prompted files
+			if (!empty($this->request->data['ToolsEditor']['attachment'])) {
 
-				// directly prompted files
-				if (!empty($this->request->data['ToolsEditor']['attachment'])) {
-
-					foreach (explode(';', $this->request->data['ToolsEditor']['attachment']) as $attfile) {
-						$attachment[] = sprintf('%s%s%s', TMP, Configure::read('RefMan.template.attachments.path'), trim($attfile));
-					}
-					foreach ($attachment as $attfile) {
-						if (!file_exists($attfile)) {
-							$attachfails[] = $attfile;
-						}
-					}
-
+				foreach (explode(';', $this->request->data['ToolsEditor']['attachment']) as $attfile) {
+					$attachment[] = sprintf('%s%s%s', TMP, Configure::read('RefMan.template.attachments.path'), trim($attfile));
 				}
-
-				// generated person data
-				if (!empty($this->request->data['ToolsEditor']['person_data'])) {
-					foreach ($arrReferees as $attperson) {
-						$tmpFile = sprintf('%s%s%s.pdf',
-															 TMP,
-															 Configure::read('RefMan.template.person_data.path'),
-															 sprintf(Configure::read('RefMan.template.person_data.file'),
-																			 RefManTemplate::fileName($attperson['Person']['name']),
-																			 RefManTemplate::fileName($attperson['Person']['first_name']),
-																			 $attperson['Person']['id']));
-						if (!file_exists($tmpFile)) {
-							$attachfails[] = $tmpFile;
-						}
+				foreach ($attachment as $attfile) {
+					if (!file_exists($attfile)) {
+						$attachfails[] = $attfile;
 					}
 				}
 
-				// attachement error
-				if (!empty($attachfails)) {
-					$this->Session->setFlash(
-																	 __('Dateianhang "%s" existiert nicht. Keine Nachrichten wurden versendet.', implode('; ', $attachfails)),
-																	 'flash',
-																	 array('class' => 'danger')
-																	 );
-					$attachmentOK = false;
+			}
+
+			// generated person data
+			if (!empty($this->request->data['ToolsEditor']['person_data'])) {
+				foreach ($arrReferees as $attperson) {
+					$tmpFile = sprintf('%s%s%s.pdf',
+														 TMP,
+														 Configure::read('RefMan.template.person-data.path'),
+														 sprintf(Configure::read('RefMan.template.person-data.file'),
+																		 RefManTemplate::fileName($attperson['Person']['name']),
+																		 RefManTemplate::fileName($attperson['Person']['first_name']),
+																		 $attperson['Person']['id']));
+					if (!file_exists($tmpFile)) {
+						$attachfails[] = $tmpFile;
+					}
 				}
 			}
 
-			if ($attachmentOK) {
+			// attachment error
+			if (!empty($attachfails)) {
+				$this->Session->setFlash(
+																 __('Dateianhang "%s" existiert nicht. Keine Nachrichten wurden versendet.', implode('; ', $attachfails)),
+																 'flash',
+																 array('class' => 'danger')
+																 );
+			}
+
+			// no attachment error - proceed
+			if (empty($attachfails)) {
 
 				// read templates
 				$tplEmail = RefManTemplate::getTemplate('email');
-				$tplLetter = RefManTemplate::getTemplate('letter');
+				$tplLetter = RefManTemplate::getTemplate('letter.template');
 
 				// start zip archive for letters
 				if ($sendLetter) {
-					RefManTemplate::openZip(Configure::read('RefMan.template.letterout'));
+					RefManTemplate::openZip(Configure::read('RefMan.template.letter.output'));
 				}
 
 				// fill templates with form values
@@ -191,6 +187,20 @@ class ToolsEditorController extends AppController {
 				$skipsend = !empty($this->request->data['ToolsEditor']['skiptill']);
 				foreach ($arrReferees as $referee) {
 
+					$persondatafile = sprintf(Configure::read('RefMan.template.person-data.file'),
+																		RefManTemplate::fileName($referee['Person']['name']),
+																		RefManTemplate::fileName($referee['Person']['first_name']),
+																		$referee['Person']['id']);
+
+					// attachments
+					$attarray = $attachment;
+					if (!empty($this->request->data['ToolsEditor']['person_data'])) {
+						$attarray[] = sprintf('%s%s%s.pdf',
+																	TMP,
+																	Configure::read('RefMan.template.person-data.path'),
+																	$persondatafile);
+					}
+
 					$contactEmail = RefManPeople::getPrimaryContact($referee, 'Email');
 					if (!$skipsend && $sendEmail && !empty($contactEmail)) {
 
@@ -203,16 +213,6 @@ class ToolsEditorController extends AppController {
 								->subject($this->request->data['ToolsEditor']['subject']);
 
 						// attachments
-						$attarray = $attachment;
-						if (!empty($this->request->data['ToolsEditor']['person_data'])) {
-							$attarray[] = sprintf('%s%s%s.pdf',
-																		TMP,
-																		Configure::read('RefMan.template.person_data.path'),
-																		sprintf(Configure::read('RefMan.template.person_data.file'),
-																						RefManTemplate::fileName($referee['Person']['name']),
-																						RefManTemplate::fileName($referee['Person']['first_name']),
-																						$referee['Person']['id']));
-						}
 						if (!empty($attarray)) {
 							$Email->attachments($attarray);
 						}
@@ -253,22 +253,24 @@ class ToolsEditorController extends AppController {
 
 					$contactAddress = RefManPeople::getPrimaryContact($referee, 'Address');
 					if (!$skipsend && $sendLetter && !empty($contactAddress) &&
-							(empty($contactEmail) || ($referee['Referee']['docs_per_letter'] === true))) {
+							(empty($contactEmail) || ($referee['Referee']['docs_per_letter'] === true) || $toMeOnly)) {
 
-						$txtLetter = RefManTemplate::replaceRefereeData($tplLetter, $referee, 'text', 'html');
+						RefManTemplate::openMerge();
+
+						// fill letter
+						$txtLetter = $tplLetter;
+						$txtLetter = RefManTemplate::replaceRefereeData($txtLetter, $referee, 'text', 'html');
 						$txtLetter = RefManTemplate::replace($txtLetter, 'streetnumber', RefManRefereeFormat::formatAddress($contactAddress, 'streetnumber', 'text'));
 						$txtLetter = RefManTemplate::replace($txtLetter, 'zipcity', RefManRefereeFormat::formatAddress($contactAddress, 'zipcity', 'text'));
 
 						// store letter
-						RefManTemplate::addToZip('mmd',
-																		 sprintf('%s_%s',
-																						 RefManTemplate::fileName($referee['Person']['name']),
-																						 RefManTemplate::fileName($referee['Person']['first_name'])),
-																		 $txtLetter);
+						RefManTemplate::addToZip('mmd', sprintf('letter.%s.mmd', $persondatafile), $txtLetter);
+						RefManTemplate::addToMerge('pdf', sprintf('letter.%s.pdf', $persondatafile));
 
 						// output for user
 						CakeLog::write('letter', __('Letter generated for %s.', RefManRefereeFormat::formatPerson($referee, 'fullname')));
 						$arrLetter[] = sprintf('%s', RefManRefereeFormat::formatPerson($referee, 'fullname'));
+						RefManTemplate::closeMerge(sprintf('%s.tex', $persondatafile));
 					}
 
 					if ($skipsend && ($referee['Person']['name'] === $this->request->data['ToolsEditor']['skiptill'])) {

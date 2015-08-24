@@ -47,7 +47,7 @@
 
 					$tmpValue = empty($messagedata) ? false : $messagedata['ToolsEditor']['person_data'];
 					echo $this->RefereeForm->getInputField(null, 'checkbox', 'person_data',
-																								 __('Personendaten'), $tmpValue, __('Generierte Dateien in "%s%s%s.pdf".', TMP, Configure::read('RefMan.template.person_data.path'), sprintf(Configure::read('RefMan.template.person_data.file'), __('Name'), __('Vorname'), 0)), __('Generierte Personendaten'));
+																								 __('Personendaten'), $tmpValue, __('Generierte Dateien in "%s%s%s.pdf".', TMP, Configure::read('RefMan.template.person-data.path'), sprintf(Configure::read('RefMan.template.person-data.file'), __('Name'), __('Vorname'), 0)), __('Generierte Personendaten'));
 
 					$tmpValue = empty($messagedata) ? false : $messagedata['ToolsEditor']['assignments_all'];
 					echo $this->RefereeForm->getInputField(null, 'checkbox', 'assignments_all',

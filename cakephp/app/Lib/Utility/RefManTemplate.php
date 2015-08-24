@@ -8,7 +8,7 @@
  * @package       Lib.Utility
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.4
  * @since 0.3
  */
 class RefManTemplate {
@@ -398,7 +398,7 @@ class RefManTemplate {
 	 *
 	 * @param $filename filename
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.3
 	 */
 	public static function openZip($filename) {
@@ -407,6 +407,15 @@ class RefManTemplate {
 		if (RefManTemplate::$zip->open($zipfile, ZipArchive::OVERWRITE) !== TRUE) {
 			throw new CakeException(__('Zip-Archiv "%s" konnte nicht angelegt werden.', $zipfile));
 		}
+	}
+
+	/**
+	 * Open merge content.
+	 *
+	 * @version 0.4
+	 * @since 0.4
+	 */
+	public static function openMerge() {
 		RefManTemplate::$mergetex = RefManTemplate::getTemplate('merge.tex');
 		RefManTemplate::$mergeincludetex = RefManTemplate::getTemplate('merge.includetex');
 	}
@@ -418,15 +427,27 @@ class RefManTemplate {
 	 * @param $filename filename
 	 * @param $content content
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.3
 	 */
 	public static function addToZip($directory, $filename, $content) {
-		RefManTemplate::$zip->addFromString(sprintf('%s/%s.mmd', $directory, $filename), $content);
+		RefManTemplate::$zip->addFromString(sprintf('%s/%s', $directory, $filename), $content);
+	}
+
+	/**
+	 * Adds file to merge content.
+	 *
+	 * @param $directory directory
+	 * @param $filename filename
+	 *
+	 * @version 0.4
+	 * @since 0.4
+	 */
+	public static function addToMerge($directory, $filename) {
 		RefManTemplate::$mergetex = RefManTemplate::replace(RefManTemplate::$mergetex,
 																												Configure::read('RefMan.template.merge.includetoken'),
 																												sprintf('%s%s',
-																																sprintf(RefManTemplate::$mergeincludetex, sprintf('%s/%s.pdf', $directory, $filename)),
+																																sprintf(RefManTemplate::$mergeincludetex, sprintf('%s/%s', $directory, $filename)),
 																																RefManTemplate::getReplaceToken(Configure::read('RefMan.template.merge.includetoken'))));
 	}
 
@@ -435,26 +456,35 @@ class RefManTemplate {
 	 *
 	 * @return filename
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.3
 	 */
 	public static function closeZip() {
-		RefManTemplate::$mergetex = RefManTemplate::replace(RefManTemplate::$mergetex,
-																												Configure::read('RefMan.template.merge.includetoken'),
-																												'');
-		RefManTemplate::$zip->addFromString(Configure::read('RefMan.template.merge.tex'), RefManTemplate::$mergetex);
-
-		RefManTemplate::$zip->addFile(sprintf('%s%s%s%s',
+		RefManTemplate::$zip->addFile(sprintf('%s%s%s',
 																					WWW_ROOT,
 																					Configure::read('RefMan.template.path'),
-																					Configure::read('RefMan.template.person-data.path'),
-																					Configure::read('RefMan.template.person-data.build')),
-																	Configure::read('RefMan.template.person-data.build'));
+																					Configure::read('RefMan.template.build')),
+																	Configure::read('RefMan.template.build'));
 
 		$zipfile = RefManTemplate::$zip->filename;
 		RefManTemplate::$zip->close();
 
 		return $zipfile;
+	}
+
+	/**
+	 * Close merge content.
+	 *
+	 * @param $filename filename
+	 *
+	 * @version 0.4
+	 * @since 0.4
+	 */
+	public static function closeMerge($filename) {
+		RefManTemplate::$mergetex = RefManTemplate::replace(RefManTemplate::$mergetex,
+																												Configure::read('RefMan.template.merge.includetoken'),
+																												'');
+		RefManTemplate::$zip->addFromString($filename, RefManTemplate::$mergetex);
 	}
 
 }
