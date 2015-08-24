@@ -2,7 +2,7 @@
 
 	$isRefView = isset($isRefView) && $isRefView;
 
-	if (($type === 'excel') || ($type === 'referee_view_zip') || ($type === 'pdf')) {
+	if (($type === 'excel') || ($type === 'person-data') || ($type === 'pdf')) {
 
 		include_once('columns.php');
 
@@ -58,7 +58,7 @@
 
 		}
 
-		if ($type === 'referee_view_zip') {
+		if ($type === 'person-data') {
 			$tplRefView = RefManTemplate::getTemplate('refereeview');
 			RefManTemplate::openZip(Configure::read('RefMan.template.refereeviewout'));
 		}
@@ -70,7 +70,7 @@
 			if ($type === 'pdf') {
 				$tcpdf->Write(0, __('Es sind keine Schiedsrichter_innen gespeichert.'));
 			}
-			if ($type === 'referee_view_zip') {
+			if ($type === 'person-data') {
 				echo __('Es sind keine Schiedsrichter_innen gespeichert.');
 			}
 		} else {
@@ -116,7 +116,7 @@
 					$pdf_data[] = array('data' => $datarow, 'style' => $this->Html->style($tmpFormat));
 				}
 
-				if ($type === 'referee_view_zip') {
+				if ($type === 'person-data') {
 
 					$txtRefView = $tplRefView;
 
@@ -172,7 +172,7 @@
 				}
 			}
 
-			if ($type === 'referee_view_zip') {
+			if ($type === 'person-data') {
 				$zipfile = RefManTemplate::closeZip();
 				$this->response->file($zipfile);
 				echo $this->response;
