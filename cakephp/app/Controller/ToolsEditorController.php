@@ -275,7 +275,7 @@ class ToolsEditorController extends AppController {
 						// output for user
 						CakeLog::write('letter', __('Letter generated for %s.', RefManRefereeFormat::formatPerson($referee, 'fullname')));
 						$arrLetter[] = sprintf('%s', RefManRefereeFormat::formatPerson($referee, 'fullname'));
-						RefManTemplate::closeMerge(sprintf('merge_%s.tex', $persondatafile));
+						RefManTemplate::closeMerge(sprintf('%s.tex', $persondatafile));
 					}
 
 					if ($skipsend && ($referee['Person']['name'] === $this->request->data['ToolsEditor']['skiptill'])) {

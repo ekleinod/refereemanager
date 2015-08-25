@@ -4,7 +4,6 @@
 
 <project name="mmd2pdf" default="help" basedir=".">
 
-	<property name="file:merge" value="merge" />
 	<property name="file:zip" value="pdfs.zip" />
 
 	<property name="path:mmd" value="mmd" />
@@ -35,8 +34,8 @@
 		<echo message="Create pdf files from mmd: stop." />
 		<echo />
 		<echo message="Call target 'zippdffiles' to zip pdfs in ${path:generated}." />
-		<echo message="Call target 'mergepdffiles' to tex all ${file:merge}_*.tex files." />
-		<echo message="Call target 'zipmergefiles' to zip all ${file:merge}_*.pdf files." />
+		<echo message="Call target 'mergepdffiles' to tex all ./*.tex files." />
+		<echo message="Call target 'zipmergefiles' to zip all ./*.pdf files." />
 		<echo message="Call target 'clear' to remove temporary files (incl. pdf)." />
 
 	</target>
@@ -77,7 +76,7 @@
 		/>
 	</target>
 
-	<target name="mergepdffiles" description="TeX all merge files.">
+	<target name="mergepdffiles" description="TeX all ./*.tex files.">
 
 		<antcall target="createpdffiles">
 			<param name="path:generated" value="." />
@@ -85,7 +84,7 @@
 
 	</target>
 
-	<target name="zipmergefiles" description="Zip all merge files.">
+	<target name="zipmergefiles" description="Zip all ./*.pdf files.">
 
 		<antcall target="zippdffiles">
 			<param name="path:generated" value="." />
