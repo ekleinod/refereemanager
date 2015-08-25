@@ -43,7 +43,11 @@
 				<?php
 					$tmpValue = empty($messagedata) ? null : $messagedata['ToolsEditor']['attachment'];
 					echo $this->RefereeForm->getInputField(null, 'text', 'attachment',
-																								 __('Dateien'), $tmpValue, __('Verzeichnis: "%s%s". Mehrere Dateien semikolonsepariert angeben.', TMP, Configure::read('RefMan.template.attachments.path')), __('Dateien'));
+																								 __('Dateien'), $tmpValue, __('Verzeichnis: "%s%s". Mehrere Dateien semikolonsepariert angeben.', TMP, Configure::read('RefMan.template.attachments.path')), __('Dateinamen'));
+
+					$tmpValue = empty($messagedata) ? null : $messagedata['ToolsEditor']['landscape'];
+					echo $this->RefereeForm->getInputField(null, 'text', 'landscape',
+																								 __('Davon Querformat'), $tmpValue, __('Nur für die Brieferzeugung wichtig. Mehrere Dateien semikolonsepariert angeben.', TMP, null), __('Dateinamen'));
 
 					$tmpValue = empty($messagedata) ? false : $messagedata['ToolsEditor']['person_data'];
 					echo $this->RefereeForm->getInputField(null, 'checkbox', 'person_data',

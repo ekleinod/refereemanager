@@ -152,6 +152,15 @@ class ToolsEditorController extends AppController {
 																 );
 			}
 
+			$landscapes = array();
+
+			// landscape files (ignore wrongly stated files)
+			if (!empty($this->request->data['ToolsEditor']['landscape'])) {
+				foreach (explode(';', $this->request->data['ToolsEditor']['landscape']) as $landscapefile) {
+					$landscapes[] = sprintf('%s%s%s', TMP, Configure::read('RefMan.template.attachments.path'), trim($landscapefile));
+				}
+			}
+
 			// no attachment error - proceed
 			if (empty($attachfails)) {
 
@@ -269,7 +278,7 @@ class ToolsEditorController extends AppController {
 
 						// attachments
 						foreach ($attarray as $letterattachment) {
-							RefManTemplate::addToMerge($letterattachment);
+							RefManTemplate::addToMerge($letterattachment, null, in_array($letterattachment, $landscapes));
 						}
 
 						// output for user

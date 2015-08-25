@@ -444,12 +444,14 @@ class RefManTemplate {
 	 * @version 0.4
 	 * @since 0.4
 	 */
-	public static function addToMerge($filename, $directory = null) {
+	public static function addToMerge($filename, $directory = null, $landscape = false) {
 		$outdir = empty($directory) ? '' : sprintf('%s/', $directory);
 		RefManTemplate::$mergetex = RefManTemplate::replace(RefManTemplate::$mergetex,
 																												Configure::read('RefMan.template.merge.includetoken'),
 																												sprintf('%s%s',
-																																sprintf(RefManTemplate::$mergeincludetex, sprintf('%s%s', $outdir, $filename)),
+																																sprintf(RefManTemplate::$mergeincludetex,
+																																				$landscape ? 'true' : 'false',
+																																				sprintf('%s%s', $outdir, $filename)),
 																																RefManTemplate::getReplaceToken(Configure::read('RefMan.template.merge.includetoken'))));
 	}
 
