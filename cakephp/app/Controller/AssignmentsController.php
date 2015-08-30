@@ -7,7 +7,7 @@ App::uses('RefManRefereeFormat', 'Utility');
  * Assignments Controller
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.4
  * @since 0.1
  */
 class AssignmentsController extends AppController {
@@ -27,6 +27,100 @@ class AssignmentsController extends AppController {
 		$this->League->recursive = -1;
 		$this->Referee->recursive = -1;
 	}
+
+	/**
+	 * Import method.
+	 *
+	 * @version 0.4
+	 * @since 0.4
+	 */
+	public function import() {
+
+		$this->set('title_for_layout', __('Import von Schiedsrichtereinsätzen'));
+
+		// create messages
+		if (!empty($this->request->data)) {
+
+			$this->set('importdata', $this->request->data);
+
+			$importresult = array();
+
+			// settings
+			$delimiter = empty($this->request->data['Assignments']['delimiter']) ? ';' : $this->request->data['Assignments']['delimiter'];
+			$enclosure = empty($this->request->data['Assignments']['enclosure']) ? '"' : $this->request->data['Assignments']['enclosure'];
+			$escape = empty($this->request->data['Assignments']['escape']) ? '\\' : $this->request->data['Assignments']['escape'];
+
+			// read and parse csv
+			$matrix = array(
+											'Datum/Uhrzeit' => 'datetime',
+											'Lokal' => 'venue',
+											'Spielnr.' => 'game_number',
+											'Liga' => 'ligue',
+											'Heimmannschaft' => 'home',
+											'Gastmannschaft' => 'off',
+											'Oberschiedsrichter' => 'referee',
+											'stellv. OSR' => 'standbyref',
+											'Schiedsrichter' => 'umpire',
+											);
+
+			$lookup = array();
+
+			// open file
+			$tmpFile = sprintf('%s%s', TMP, $this->request->data['Assignments']['csvfile']);
+			if (!file_exists($tmpFile)) {
+				$this->Session->setFlash(
+																 __('CSV-Datei "%s" existiert nicht.', $tmpFile),
+																 'flash',
+																 array('class' => 'danger')
+																 );
+			} else {
+				$handle = fopen($tmpFile, "r");
+
+				// headings
+				$csvline = fgetcsv($handle, 0, $delimiter, $enclosure, $escape);
+				foreach ($csvline as $key => $value) {
+					if (array_key_exists($value, $matrix)) {
+						$lookup[$matrix[$value]] = $key;
+					}
+				}
+
+				// read data
+				$rowCount = 0;
+				$csv = array();
+				while (($csvline = fgetcsv($handle, 0, $delimiter, $enclosure, $escape)) !== FALSE) {
+					$csv[$rowCount] = array();
+					foreach ($lookup as $key => $value) {
+						$csv[$rowCount][$key] = $csvline[$value];
+					}
+					$rowCount++;
+				}
+				fclose($handle);
+				$importresult[] = __('%d Datenzeilen eingelesen', $rowCount);
+
+				// import data
+				$assignCount = 0;
+
+				$importresult[] = __('%d Einsätze importiert', $assignCount);
+				$importresult[] = __('%d Einsätze nicht importiert', $rowCount - $assignCount);
+
+				// success
+				$this->Session->setFlash(
+																 RefManRefereeFormat::formatMultiline($importresult, '</p><p>'),
+																 'flash',
+																 array(
+																			 'class' => 'success',
+																			 'nohtml' => true,
+																			 )
+																 );
+			}
+
+		}
+
+	}
+
+
+
+
 
 	/**
 	 * Index method.

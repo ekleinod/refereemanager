@@ -10,7 +10,7 @@ App::uses('RefManTemplate', 'Utility');
  * Tools editor Controller
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.4
  * @since 0.1
  */
 class ToolsEditorController extends AppController {

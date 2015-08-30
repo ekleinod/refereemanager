@@ -3,7 +3,7 @@
 		<?php echo $this->Form->create('ToolsEditor', array('class' => 'form-horizontal')); ?>
 
 			<fieldset>
-				<legend><?php echo __('Nachricht versenden'); ?></legend>
+				<legend><?php echo __('Nachricht'); ?></legend>
 				<p>
 					<span class="help-block"><?php echo __('Der Einsatz von Platzhaltern ist möglich.'); ?></span>
 				</p>
