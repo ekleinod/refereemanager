@@ -56,22 +56,83 @@
 					<div id="navbar" class="collapse navbar-collapse">
 						<?php
 						$navarray = array(
-															array('title' => __('Schiedsrichtereinsätze'),
-																		'routing' => array('action' => 'index', 'controller' => 'assignments')
-																		),
-															array('title' => __('Schiedsrichter_innen'),
-																		'routing' => array('action' => 'index', 'controller' => 'referees')
-																		),
-															array('title' => __('Sonstiges'),
-																		'routing' => array('action' => 'index', 'controller' => 'other'),
+															array(
+																		'title' => __('Schiedsrichtereinsätze'),
+																		'routing' => array(
+																											 'action' => 'index',
+																											 'controller' => 'assignments'
+																											 ),
 																		'subnav' => array(
-																											array('title' => __('Clubs'), 'routing' => array('action' => 'index', 'controller' => 'clubs')),
-																											array('title' => __('Liga-Typen'), 'routing' => array('action' => 'index', 'controller' => 'league_types')),
-																											array('title' => __('Ligen'), 'routing' => array('action' => 'index', 'controller' => 'leagues')),
+																											array(
+																														'title' => __('Übersicht'),
+																														'routing' => array('action' => 'index', 'controller' => 'assignments')
+																														),
+																											array('divider' => 'divider', 'role' => 'editor'),
+																											array(
+																														'title' => __('Importieren'),
+																														'role' => 'editor',
+																														'routing' => array('action' => 'import', 'controller' => 'assignments')
+																														),
+																											)
+																		),
+															array(
+																		'title' => __('Schiedsrichter_innen'),
+																		'routing' => array(
+																											 'action' => 'index',
+																											 'controller' => 'referees'
+																											 ),
+																		),
+															array(
+																		'title' => __('Sonstiges'),
+																		'routing' => array(
+																											 'action' => 'index',
+																											 'controller' => 'other'
+																											 ),
+																		'subnav' => array(
+																											array(
+																														'title' => __('Clubs'),
+																														'routing' => array(
+																																							 'action' => 'index',
+																																							 'controller' => 'clubs'
+																																							 )
+																														),
+																											array(
+																														'title' => __('Liga-Typen'),
+																														'routing' => array(
+																																							 'action' => 'index',
+																																							 'controller' => 'league_types'
+																																							 )
+																														),
+																											array(
+																														'title' => __('Ligen'),
+																														'routing' => array(
+																																							 'action' => 'index',
+																																							 'controller' => 'leagues'
+																																							 )
+																														),
 																											array('divider' => 'divider'),
-																											array('title' => __('Personen'), 'role' => 'referee', 'routing' => array('action' => 'index', 'controller' => 'people')),
-																											array('title' => __('Saisons'), 'routing' => array('action' => 'index', 'controller' => 'seasons')),
-																											array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
+																											array(
+																														'title' => __('Personen'),
+																														'role' => 'referee',
+																														'routing' => array(
+																																							 'action' => 'index',
+																																							 'controller' => 'people'
+																																							 )
+																														),
+																											array(
+																														'title' => __('Saisons'),
+																														'routing' => array(
+																																							 'action' => 'index',
+																																							 'controller' => 'seasons'
+																																							 )
+																														),
+																											array(
+																														'title' => __('Teams'),
+																														'routing' => array(
+																																							 'action' => 'index',
+																																							 'controller' => 'teams'
+																																							 )
+																														),
 																											)
 																		),
 															array('title' => __('Editor-Werkzeuge'),
