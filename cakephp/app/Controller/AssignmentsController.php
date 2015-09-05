@@ -55,7 +55,7 @@ class AssignmentsController extends AppController {
 											'Datum/Uhrzeit' => 'datetime',
 											'Lokal' => 'venue',
 											'Spielnr.' => 'game_number',
-											'Liga' => 'ligue',
+											'Liga' => 'league',
 											'Heimmannschaft' => 'home',
 											'Gastmannschaft' => 'off',
 											'Oberschiedsrichter' => 'referee',
@@ -97,6 +97,13 @@ class AssignmentsController extends AppController {
 				fclose($handle);
 				$importresult[] = __('%d Datenzeilen eingelesen', $rowCount);
 
+				// preparation
+				$arrTemp = $this->League->find('all');
+				$arrLeagues = array();
+				foreach ($arrTemp as $league) {
+					$arrLeagues[$league['League']['abbreviation']] = $league['League']['id'];
+				}
+
 				// import data
 				$assignCount = 0;
 				$errors = array();
@@ -113,6 +120,12 @@ class AssignmentsController extends AppController {
 
 						$tmpData['LeagueGame']['game_number'] = $csvassignment['game_number'];
 						$tmpData['LeagueGame']['season_id'] = $theSeason['Season']['id'];
+
+						if (array_key_exists($csvassignment['league'], $arrLeagues)) {
+							$tmpData['LeagueGame']['league_id'] = $arrLeagues[$csvassignment['league']];
+						} else {
+							debug($csvassignment['league']);
+						}
 
 						$tmpDateTime = strtotime($csvassignment['datetime']);
 						$tmpData['Assignment']['start'] = RefManRefereeFormat::formatDate($tmpDateTime, 'sqldatetime');
