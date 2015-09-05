@@ -50,9 +50,9 @@ class Person extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'sex_type_id' => array('notempty', 'numeric'),
-		'name' => array('notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'sex_type_id' => array('notblank', 'numeric'),
+		'name' => array('notblank'),
 		'birthday' => array(
 												'rule' => 'date',
 												'allowEmpty' => true,

@@ -36,9 +36,9 @@ class RefereeRelation extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'referee_id' => array('notempty', 'numeric'),
-		'referee_relation_type_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'referee_id' => array('notblank', 'numeric'),
+		'referee_relation_type_id' => array('notblank', 'numeric'),
 		'club_id' => array('numeric'),
 		'league_id' => array('numeric'),
 		'sex_type_id' => array('numeric'),

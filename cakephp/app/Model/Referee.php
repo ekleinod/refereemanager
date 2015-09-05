@@ -51,8 +51,8 @@ class Referee extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'person_id' => array('isUnique', 'notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'person_id' => array('isUnique', 'notblank', 'numeric'),
 		'docs_per_letter' => array('boolean'),
 	);
 

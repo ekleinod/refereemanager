@@ -36,8 +36,8 @@ class Contact extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'contact_type_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'contact_type_id' => array('notblank', 'numeric'),
 		'is_primary' => array('boolean'),
 		'editor_only' => array('boolean'),
 		'person_id' => array('numeric'),

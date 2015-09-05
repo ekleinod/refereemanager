@@ -50,10 +50,10 @@ class League extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'title' => array('isUnique', 'notempty'),
-		'abbreviation' => array('isUnique', 'notempty'),
-		'league_type_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'title' => array('isUnique', 'notblank'),
+		'abbreviation' => array('isUnique', 'notblank'),
+		'league_type_id' => array('notblank', 'numeric'),
 	);
 
 	/**

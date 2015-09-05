@@ -36,12 +36,12 @@ class TrainingLevelType extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'sid' => array('isUnique', 'notempty'),
-		'rank' => array('isUnique', 'notempty', 'numeric'),
-		'title' => array('isUnique', 'notempty'),
-		'abbreviation' => array('isUnique', 'notempty'),
-		'update_interval' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'sid' => array('isUnique', 'notblank'),
+		'rank' => array('isUnique', 'notblank', 'numeric'),
+		'title' => array('isUnique', 'notblank'),
+		'abbreviation' => array('isUnique', 'notblank'),
+		'update_interval' => array('notblank', 'numeric'),
 	);
 
 	/**

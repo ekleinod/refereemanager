@@ -50,8 +50,8 @@ class Club extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'name' => array('notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'name' => array('notblank'),
 	);
 
 	/**

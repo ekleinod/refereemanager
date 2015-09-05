@@ -36,9 +36,9 @@ class StatusType extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'sid' => array('isUnique', 'notempty'),
-		'title' => array('isUnique', 'notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'sid' => array('isUnique', 'notblank'),
+		'title' => array('isUnique', 'notblank'),
 	);
 
 	/**

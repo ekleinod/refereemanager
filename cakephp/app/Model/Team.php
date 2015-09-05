@@ -51,9 +51,9 @@ class Team extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'club_id' => array('notempty', 'numeric'),
-		'league_type_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'club_id' => array('notblank', 'numeric'),
+		'league_type_id' => array('notblank', 'numeric'),
 		'number' => array('numeric'),
 	);
 

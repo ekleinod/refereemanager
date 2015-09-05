@@ -50,8 +50,8 @@ class Season extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'year_start' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'year_start' => array('notblank', 'numeric'),
 		'editor_only' => array('boolean'),
 	);
 

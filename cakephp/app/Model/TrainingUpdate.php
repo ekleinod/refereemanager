@@ -50,9 +50,9 @@ class TrainingUpdate extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'training_level_id' => array('notempty', 'numeric'),
-		'update' => array('date', 'notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'training_level_id' => array('notblank', 'numeric'),
+		'update' => array('date', 'notblank'),
 	);
 
 	/**

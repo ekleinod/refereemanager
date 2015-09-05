@@ -22,7 +22,7 @@ class RefManRefereeFormat {
 	 * @param $time time to format
 	 * @return string formatted string
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.1
 	 */
 	public static function sqlFromDateTime($date, $time = null) {
@@ -34,9 +34,9 @@ class RefManRefereeFormat {
 		$sReturn = null;
 
 		if (empty($time)) {
-			$sReturn = CakeTime::format(CakeTime::fromString($date), '%Y-%m-%d');
+			$sReturn = RefManRefereeFormat::formatDate(CakeTime::fromString($date), 'sqldate');
 		} else {
-			$sReturn = CakeTime::format(CakeTime::fromString(sprintf('%s %s', $date, $time)), '%Y-%m-%d %H:%M:%S');
+			$sReturn = RefManRefereeFormat::formatDate(CakeTime::fromString(sprintf('%s %s', $date, $time)), 'sqldatetime');
 		}
 
 		return $sReturn;
@@ -49,7 +49,7 @@ class RefManRefereeFormat {
 	 * @param $type format type
 	 * @return string formatted string
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.1
 	 */
 	public static function formatDate($data, $type) {
@@ -86,6 +86,12 @@ class RefManRefereeFormat {
 				break;
 			case 'medium':
 				$formatted = CakeTime::format($data, '%e. %B %Y');
+				break;
+			case 'sqldate':
+				$formatted = CakeTime::format($data, '%Y-%m-%d');
+				break;
+			case 'sqldatetime':
+				$formatted = CakeTime::format($data, '%Y-%m-%d %H:%M:%S');
 				break;
 			case 'time':
 				$formatted = CakeTime::format($data, '%H:%M');

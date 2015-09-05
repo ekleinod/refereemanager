@@ -99,6 +99,35 @@ class AssignmentsController extends AppController {
 
 				// import data
 				$assignCount = 0;
+				$errors = array();
+				foreach ($csv as $csvassignment) {
+
+					if (empty($csvassignment['game_number'])) {
+						// no league game
+					} else {
+						// league game
+
+						$theSeason = $this->Season->getSeason(null, $this->viewVars['isEditor']);
+
+						$tmpData = array();
+
+						$tmpData['LeagueGame']['game_number'] = $csvassignment['game_number'];
+						$tmpData['LeagueGame']['season_id'] = $theSeason['Season']['id'];
+
+						$tmpDateTime = strtotime($csvassignment['datetime']);
+						$tmpData['Assignment']['start'] = RefManRefereeFormat::formatDate($tmpDateTime, 'sqldatetime');
+
+						//debug($csvassignment);
+						//debug($tmpData);
+						$this->LeagueGame->create();
+						if ($this->LeagueGame->saveAssociated($tmpData, array('deep' => true))) {
+							$assignCount++;
+						} else {
+							$errors[] = $this->LeagueGame->validationErrors;
+						}
+					}
+
+				}
 
 				$importresult[] = __('%d Einsätze importiert', $assignCount);
 				$importresult[] = __('%d Einsätze nicht importiert', $rowCount - $assignCount);
@@ -108,10 +137,13 @@ class AssignmentsController extends AppController {
 																 RefManRefereeFormat::formatMultiline($importresult, '</p><p>'),
 																 'flash',
 																 array(
-																			 'class' => 'success',
+																			 'class' => (empty($errors)) ? 'success' : 'danger',
 																			 'nohtml' => true,
 																			 )
 																 );
+				if (!empty($errors)) {
+					debug($errors);
+				}
 			}
 
 		}
