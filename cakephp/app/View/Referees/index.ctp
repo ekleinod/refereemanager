@@ -1,6 +1,6 @@
-<?php echo $this->element('filter');	?>
+<?php echo $this->element('filter'); ?>
 
-<?php echo $this->element('actions_header');	?>
+<?php echo $this->element('actions_header'); ?>
 
 <?php $isRefView = isset($isRefView) && $isRefView; ?>
 

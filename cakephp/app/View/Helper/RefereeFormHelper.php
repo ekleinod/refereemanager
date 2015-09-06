@@ -84,28 +84,6 @@ class RefereeFormHelper extends AppHelper {
 			$inputparams['class'] .= ' ' . $type;
 		}
 
-		// depending on action
-		if ($action === 'view') {
-
-			$inputparams['readonly'] = 'readonly';
-			if ($type === 'select') {
-				$inputparams['type'] = 'text';
-				if (!empty($values) && (!empty($value) || ($value > 0))) {
-					$inputparams['value'] = $values[$value];
-				}
-			}
-
-		} else {
-
-			if ($required) {
-				$inputparams['required'] = 'required';
-			}
-			if (!empty($placeholder)) {
-				$inputparams['placeholder'] = $placeholder;
-			}
-
-		}
-
 		// radio input: wrap with label, empty class
 		if ($type === 'radio') {
 			$inputparams['before'] = "\n<label>\n";
@@ -119,8 +97,38 @@ class RefereeFormHelper extends AppHelper {
 			$inputparams['class'] = false;
 		}
 
-		// create and wrap input field, empty class
-		$sField = $this->Form->input($fieldid, $inputparams);
+		// depending on action
+		if ($action === 'view') {
+
+			// <p class="form-control-static">Dr.</p>
+
+			$inputparams['disabled'] = 'disabled';
+			if ($type === 'select') {
+				$inputparams['type'] = 'text';
+				if (!empty($values) && (!empty($value) || ($value > 0))) {
+					$inputparams['value'] = $values[$value];
+				}
+			}
+
+			// create input field
+			$sField = $this->Html->para(
+																	'form-control-static',
+																	empty($inputparams['value']) ? '&mdash;' : $inputparams['value']
+																	);
+
+		} else {
+
+			if ($required) {
+				$inputparams['required'] = 'required';
+			}
+			if (!empty($placeholder)) {
+				$inputparams['placeholder'] = $placeholder;
+			}
+
+			// create input field
+			$sField = $this->Form->input($fieldid, $inputparams);
+
+		}
 
 		if ($type === 'checkbox') {
 			$sField = sprintf("\n<label>\n%s %s\n</label>\n", $sField, $placeholder);
