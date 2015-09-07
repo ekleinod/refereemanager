@@ -32,7 +32,7 @@
 						$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
 						echo $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
 																									 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-																									 true, false, 0, $sextypearray);
+																									 true, false, 0, $sextypelist);
 
 						$tmpA = array('Person', 'birthday', __('Geburtstag'), __('tt.mm.yyyy'));
 						$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
@@ -67,29 +67,67 @@
 			<?php if ($isReferee) { ?>
 				<fieldset>
 					<legend><?php echo __('Bild'); ?></legend>
-					<ol>
+
 						<?php
 
 							$tmpA = array('Picture', 'url', __('Bild'), __('Bild-URL'));
 							$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
 							echo $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																										 $tmpA[2], $tmpValue, true,
-																										 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2]);
+																										 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																										 false, false);
 
 							$tmpA = array('Picture', 'remark', __('Anmerkung'));
 							$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
 							echo $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																										 $tmpA[2], $tmpValue, false,
-																										 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2]);
+																										 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																										 false, false);
 
 						?>
-					</ol>
+
+				</fieldset>
+			<?php } ?>
+
+			<?php
+				$itemCount = 0;
+				foreach ($referee['Contact'] as $contact) {
+					$itemCount++;
+					$contactKind = null;
+
+					$theContact = $this->Contact->findById($contact['id']);
+					debug($theContact);
+			?>
+				<fieldset>
+					<legend><?php echo __('Kontakt %d: %s', $itemCount, $contactKind); ?></legend>
+
+						<?php
+
+							$tmpA = array('Contact', 'editor_only', __('Sichtbarkeit'), __('Nur für Editoren'));
+							$tmpValue = (empty($contact[$tmpA[1]])) ? '' : $contact[$tmpA[1]];
+							echo $this->RefereeForm->getInputField($action, 'checkbox', sprintf('%s.%d.%s', $tmpA[0], $itemCount, $tmpA[1]),
+																										 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																										 false, false);
+
+							if (empty($tmpValue) || $isEditor) {
+								$tmpA = array('Contact', 'contact_type_id', __('Kontaktart'));
+								$tmpValue = (empty($contact[$tmpA[1]])) ? '' : $contact[$tmpA[1]];
+								echo $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%d.%s', $tmpA[0], $itemCount, $tmpA[1]),
+																											 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																											 true, false, 0, $contacttypelist);
+
+								$tmpA = array('Contact', 'remark', __('Anmerkung'));
+								$tmpValue = (empty($contact[$tmpA[1]])) ? '' : $contact[$tmpA[1]];
+								echo $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%d.%s', $tmpA[0], $itemCount, $tmpA[1]),
+																											 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																											 false, false);
+							}
+
+						?>
+
 				</fieldset>
 			<?php } ?>
 
 			<fieldset>
 				<legend><?php echo __('Vereine und Wünsche'); ?></legend>
-				<ol>
 					<?php
 						foreach ($refereerelationtypes as $sid => $refereerelationtype) {
 							if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
@@ -148,7 +186,6 @@
 						}*/
 
 					?>
-				</ol>
 			</fieldset>
 
 			<?php if (($action === 'add') || ($action === 'edit')) { ?>

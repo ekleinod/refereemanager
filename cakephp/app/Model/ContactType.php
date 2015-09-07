@@ -12,6 +12,20 @@ App::uses('AppModel', 'Model');
 class ContactType extends AppModel {
 
 	/**
+	 * Declare virtual display field in constructor to be alias-safe.
+	 *
+	 * @version 0.4
+	 * @since 0.4
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['display_contacttype'] = sprintf(
+			'%1$s.title',
+			$this->alias
+		);
+	}
+
+	/**
 	 * Model name.
 	 *
 	 * Good practice to include the model name.
@@ -24,10 +38,10 @@ class ContactType extends AppModel {
 	/**
 	 * Display field
 	 *
-	 * @version 0.1
+	 * @version 0.4
 	 * @since 0.1
 	 */
-	public $displayField = 'title';
+	public $displayField = 'display_contacttype';
 
 	/**
 	 * Validation rules
@@ -53,6 +67,9 @@ class ContactType extends AppModel {
 
 	/** Singleton for fast access. */
 	private $contacttypes = null;
+
+	/** Singleton for fast access. */
+	private $contacttypelist = null;
 
 	/**
 	 * Returns contact types.
@@ -92,7 +109,33 @@ class ContactType extends AppModel {
 	 * @since 0.3
 	 */
 	public static function compareTo($a, $b) {
-		return strcasecmp($a['ContactType']['title'], $b['ContactType']['title']);
+		return strcasecmp($a['ContactType']['display_contacttype'], $b['ContactType']['display_contacttype']);
+	}
+
+	/**
+	 * Returns contact type list.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return list of contact types
+	 *
+	 * @version 0.4
+	 * @since 0.4
+	 */
+	public function getContactTypeList() {
+		if ($this->contacttypelist == null) {
+
+			$this->contacttypelist = array();
+
+			foreach ($this->getContactTypes() as $contacttype) {
+				$this->contacttypelist[$contacttype['ContactType']['id']] = $contacttype['ContactType']['display_contacttype'];
+			}
+
+			asort($this->contacttypelist, SORT_LOCALE_STRING);
+		}
+
+		return $this->contacttypelist;
 	}
 
 }
