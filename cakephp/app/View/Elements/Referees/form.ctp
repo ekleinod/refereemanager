@@ -1,7 +1,26 @@
 <div class="row">
 	<div class="col-sm-12">
 
-		<?php echo $this->Form->create('Referee', array('class' => 'form-horizontal')); ?>
+		<?php
+			$tmpForm = $this->Form->create('Referee', array('class' => 'form-horizontal'));
+
+			// person data
+			$tmpFieldset = $this->Html->tag('legend', __('Personendaten'));
+
+			$tmpA = array('Person', 'title', __('Titel'));
+			$tmpForm .= $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+										 $tmpA[2],
+										 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+										 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+										 false, true);
+
+			$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
+
+			// fill referee data and output form
+			echo RefManTemplate::replaceRefereeData($tmpForm, $referee, 'text', 'html');
+		?>
+
+
 
 			<fieldset>
 				<legend><?php echo __('Personendaten'); ?></legend>
@@ -15,7 +34,7 @@
 																								 false, true);
 
 					$tmpA = array('Person', 'first_name', __('Vorname'));
-					$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
+					$tmpValue = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))), $referee, 'text', 'html');
 					echo $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
 																								 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
 																								 false, false);

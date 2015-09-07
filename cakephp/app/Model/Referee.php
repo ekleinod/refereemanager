@@ -192,20 +192,33 @@ class Referee extends AppModel {
 		// expand referee relations
 		$arrTemp = $referee['RefereeRelation'];
 		$referee['RefereeRelation'] = array();
-		foreach ($arrTemp as $relation) {
-			$referee['RefereeRelation'][$relation['id']] = $this->RefereeRelation->findById($relation['id']);
+		foreach ($arrTemp as $tmpValue) {
+			$referee['RefereeRelation'][$tmpValue['id']] = $this->RefereeRelation->findById($tmpValue['id']);
 		}
 
-		// remove hidden contacts
-/*		if (!empty($referee['Contact'])) {
-			$tmpContacts = array();
-			foreach ($referee['Contact'] as $contact) {
-				if (empty($contact['editor_only']) || $isEditor) {
-					$tmpContacts[] = $contact;
-				}
+		// expand referee status
+		$arrTemp = $referee['RefereeStatus'];
+		$referee['RefereeStatus'] = array();
+		foreach ($arrTemp as $tmpValue) {
+			$referee['RefereeStatus'][$tmpValue['id']] = $this->RefereeStatus->findById($tmpValue['id']);
+		}
+
+		// expand training level
+		$arrTemp = $referee['TrainingLevel'];
+		$referee['TrainingLevel'] = array();
+		foreach ($arrTemp as $tmpValue) {
+			$referee['TrainingLevel'][$tmpValue['id']] = $this->TrainingLevel->findById($tmpValue['id']);
+		}
+
+		// expand contacts and remove contacts for editor only if needed
+		$modelContact = ClassRegistry::init('Contact');
+		$arrTemp = $referee['Contact'];
+		$referee['Contact'] = array();
+		foreach ($arrTemp as $tmpValue) {
+			if (empty($tmpValue['editor_only']) || $isEditor) {
+				$referee['Contact'][$tmpValue['id']] = $modelContact->findById($tmpValue['id']);
 			}
-			$referee['Contact'] = $tmpContacts;
-		}*/
+		}
 
 	}
 
