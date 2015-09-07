@@ -86,6 +86,26 @@ class RefereeRelationType extends AppModel {
 	}
 
 	/**
+	 * Returns referee relation type by id.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @param $id id
+	 * @return referee relation types, null if there is none
+	 *
+	 * @version 0.4
+	 * @since 0.4
+	 */
+	public function getRefereeRelationTypeByID($id) {
+		$this->getRefereeRelationTypes();
+		if (array_key_exists($id, $this->refereerelationtypes)) {
+			return $this->refereerelationtypes[$id];
+		}
+		return null;
+	}
+
+	/**
 	 * Returns referee relation types with sid as index.
 	 *
 	 * Method should be static,

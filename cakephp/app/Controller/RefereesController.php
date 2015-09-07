@@ -75,7 +75,7 @@ class RefereesController extends AppController {
 	 * @param $id id of referee
 	 * @return void
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.1
 	 */
 	public function view($id = null) {
@@ -84,10 +84,9 @@ class RefereesController extends AppController {
 		if (!$this->Referee->exists()) {
 			throw new NotFoundException(__('Schiedsrichter_in mit der ID \'%s\' existiert nicht.', $id));
 		}
-		$referee = $this->Referee->read(null, $id);
 
-		$this->setAndGetStandardNewAddView($referee);
-		$this->set('title_for_layout', __('Detailanzeige Schiedsrichter%s %s', ($referee['Person']['sex_type_sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee, 'fullname')));
+		$this->setAndGetStandardNewAddView($id);
+		$this->set('title_for_layout', __('Detailanzeige Schiedsrichter%s %s', ($this->viewVars['referee']['SexType']['sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($this->viewVars['referee'], 'fullname')));
 		$this->render('/Generic/view');
 	}
 
@@ -96,19 +95,19 @@ class RefereesController extends AppController {
 	/**
 	 * Set and get standard values for new, add, view.
 	 *
-	 * @param $referee referee
+	 * @param $id referee id
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.1
 	 */
-	private function setAndGetStandardNewAddView(&$referee) {
+	private function setAndGetStandardNewAddView($id) {
 
 		$this->setAndGetStandard();
 
-		$this->Referee->fillReferee($referee, $this->viewVars['isEditor']);
+		$referee = $this->Referee->getRefereeById($id, $this->viewVars['isEditor']);
 
 		$sextypes = $this->SexType->getSexTypes();
-		$referee['Person']['sex_type_sid'] = $sextypes[$referee['Person']['sex_type_id']]['SexType']['sid'];
+		//$referee['Person']['sex_type_sid'] = $sextypes[$referee['Person']['sex_type_id']]['SexType']['sid'];
 
 		// pass information to view
 		$this->set('referee', $referee);

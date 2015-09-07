@@ -93,15 +93,15 @@
 					$itemCount++;
 					$contactKind = null;
 
-					$theContact = $this->Contact->findById($contact['id']);
-					debug($theContact);
+//					$theContact = $this->Contact->findById($contact['id']);
+//					debug($theContact);
 			?>
 				<fieldset>
 					<legend><?php echo __('Kontakt %d: %s', $itemCount, $contactKind); ?></legend>
 
 						<?php
 
-							$tmpA = array('Contact', 'editor_only', __('Sichtbarkeit'), __('Nur für Editoren'));
+/*							$tmpA = array('Contact', 'editor_only', __('Sichtbarkeit'), __('Nur für Editoren'));
 							$tmpValue = (empty($contact[$tmpA[1]])) ? '' : $contact[$tmpA[1]];
 							echo $this->RefereeForm->getInputField($action, 'checkbox', sprintf('%s.%d.%s', $tmpA[0], $itemCount, $tmpA[1]),
 																										 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
@@ -119,7 +119,7 @@
 								echo $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%d.%s', $tmpA[0], $itemCount, $tmpA[1]),
 																											 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
 																											 false, false);
-							}
+							}*/
 
 						?>
 

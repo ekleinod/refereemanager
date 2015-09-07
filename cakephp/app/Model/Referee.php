@@ -111,20 +111,21 @@ class Referee extends AppModel {
 	}
 
 	/**
-	 * Returns referee for a given person id.
+	 * Returns referee for a given id.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @param personid person id
-	 * @return referee for given person, null if there is none
+	 * @param id referee id
+	 * @param isEditor is user editor?
+	 * @return referee for given id, null if there is none
 	 *
 	 * @version 0.4
-	 * @since 0.3
+	 * @since 0.4
 	 */
-	public function getRefereeByPersonId($personid, $isEditor) {
+	public function getRefereeById($id, $isEditor) {
 
-		$referee = $this->findByPersonId($personid);
+		$referee = $this->findById($id);
 
 		if (empty($referee)) {
 			return null;
@@ -133,6 +134,36 @@ class Referee extends AppModel {
 		$this->fillReferee($referee, $isEditor);
 
 		return $referee;
+	}
+
+	/**
+	 * Returns referee id for a given person id.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @param personid person id
+	 * @return referee id for given person, null if there is none
+	 *
+	 * @version 0.4
+	 * @since 0.4
+	 */
+	public function getRefereeIdByPersonId($personid) {
+
+		$refereeid = $this->find(
+														 'first',
+														 array(
+																	 'conditions' => array('person_id' => $personid),
+																	 'recursive' => -1,
+																	 'fields' => 'id',
+																	 )
+														 );
+
+		if (empty($refereeid)) {
+			return null;
+		}
+
+		return $refereeid['Referee']['id'];
 	}
 
 	/**
@@ -158,8 +189,15 @@ class Referee extends AppModel {
 			}
 		}
 
+		// expand referee relations
+		$arrTemp = $referee['RefereeRelation'];
+		$referee['RefereeRelation'] = array();
+		foreach ($arrTemp as $relation) {
+			$referee['RefereeRelation'][$relation['id']] = $this->RefereeRelation->findById($relation['id']);
+		}
+
 		// remove hidden contacts
-		if (!empty($referee['Contact'])) {
+/*		if (!empty($referee['Contact'])) {
 			$tmpContacts = array();
 			foreach ($referee['Contact'] as $contact) {
 				if (empty($contact['editor_only']) || $isEditor) {
@@ -167,7 +205,7 @@ class Referee extends AppModel {
 				}
 			}
 			$referee['Contact'] = $tmpContacts;
-		}
+		}*/
 
 	}
 

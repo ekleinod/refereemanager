@@ -65,7 +65,7 @@ class SexType extends AppModel {
 
 	// custom programming
 
-	/* Relation types. */
+	/* Sex types. */
 	const SID_FEMALE = 'female';
 	const SID_MALE = 'male';
 	const SID_OTHER = 'other';

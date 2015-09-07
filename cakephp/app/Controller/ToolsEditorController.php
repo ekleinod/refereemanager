@@ -106,7 +106,7 @@ class ToolsEditorController extends AppController {
 			}
 
 			if (!$hasMe) {
-				$arrReferees[] = $this->Referee->getRefereeByPersonId($this->viewVars['userpersonid'], $this->viewVars['isEditor']);
+				$arrReferees[] = $this->Referee->getRefereeById($this->Referee->getRefereeIdByPersonId($this->viewVars['userpersonid']), $this->viewVars['isEditor']);
 			}
 
 			// if attachment: do all of them exist?
