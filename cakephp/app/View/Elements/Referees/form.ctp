@@ -8,103 +8,100 @@
 			$tmpFieldset = $this->Html->tag('legend', __('Personendaten'));
 
 			$tmpA = array('Person', 'title', __('Titel'));
-			$tmpForm .= $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-										 $tmpA[2],
-										 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
-										 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-										 false, true);
+			$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+												 $tmpA[2],
+												 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+												 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+												 false, true);
+
+			$tmpA = array('Person', 'first_name', __('Vorname'));
+			$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+												 $tmpA[2],
+												 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+												 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+												 false, false);
+
+			$tmpA = array('Person', 'name', __('Nachname'));
+			$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+												 $tmpA[2],
+												 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+												 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+												 true, false);
+
+			if ($isEditor) {
+
+				$tmpA = array('Person', 'sex_type_id', __('Geschlecht'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													 $tmpA[2],
+													 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													 true, false, 0, $sextypelist);
+
+				$tmpA = array('Person', 'birthday', __('Geburtstag'), __('tt.mm.yyyy'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													 $tmpA[2],
+													 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													 false, false);
+
+				$tmpA = array('Person', 'dayofdeath', __('Todestag'), __('tt.mm.yyyy'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													 $tmpA[2],
+													 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													 false, false);
+
+			}
+
+			$tmpA = array('Person', 'remark', __('Anmerkung'));
+			$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+												 $tmpA[2],
+												 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+												 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+												 false, false);
+
+			$tmpA = array('Person', 'internal_remark', __('Interne Anmerkung'));
+			$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+												 $tmpA[2],
+												 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+												 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+												 false, false);
 
 			$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
+
+
+			// picture
+			if ($isReferee) {
+				$tmpFieldset = $this->Html->tag('legend', __('Bild'));
+
+				$tmpA = array('Picture', 'url', __('Bild'), __('Bild-URL'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													 $tmpA[2],
+													 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													 false, false);
+
+				$tmpA = array('Picture', 'remark', __('Anmerkung'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													 $tmpA[2],
+													 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													 false, false);
+
+				$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
+			}
+
+			// contacts
+			$itemCount = 0;
+			foreach ($referee['Contact'] as $contactKind => $arrContacts) {
+				$itemCount++;
+				$tmpFieldset = $this->Html->tag('legend', __('Kontakt %d: %s', $itemCount, $contactKind));
+				$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
+			}
 
 			// fill referee data and output form
 			echo RefManTemplate::replaceRefereeData($tmpForm, $referee, 'text', 'html');
 		?>
-
-
-
-			<fieldset>
-				<legend><?php echo __('Personendaten'); ?></legend>
-
-				<?php
-
-					$tmpA = array('Person', 'title', __('Titel'));
-					$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-					echo $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																								 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-																								 false, true);
-
-					$tmpA = array('Person', 'first_name', __('Vorname'));
-					$tmpValue = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))), $referee, 'text', 'html');
-					echo $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																								 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-																								 false, false);
-
-					$tmpA = array('Person', 'name', __('Nachname'));
-					$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-					echo $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																								 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-																								 true, false);
-
-					if ($isEditor) {
-
-						$tmpA = array('Person', 'sex_type_id', __('Geschlecht'));
-						$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-						echo $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																									 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-																									 true, false, 0, $sextypelist);
-
-						$tmpA = array('Person', 'birthday', __('Geburtstag'), __('tt.mm.yyyy'));
-						$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-						$tmpValue = $this->RefereeFormat->formatDate($tmpValue, 'date');
-						echo $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																									 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-																									 false, false);
-
-						$tmpA = array('Person', 'dayofdeath', __('Todestag'), __('tt.mm.yyyy'));
-						$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-						$tmpValue = $this->RefereeFormat->formatDate($tmpValue, 'date');
-						echo $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																									 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-																									 false, false);
-
-					}
-
-					$tmpA = array('Person', 'remark', __('Anmerkung'));
-					$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-					echo $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																								 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-																								 false, false);
-
-					$tmpA = array('Person', 'internal_remark', __('Interne Anmerkung'));
-					$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-					echo $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																								 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-																								 false, false);
-				?>
-			</fieldset>
-
-			<?php if ($isReferee) { ?>
-				<fieldset>
-					<legend><?php echo __('Bild'); ?></legend>
-
-						<?php
-
-							$tmpA = array('Picture', 'url', __('Bild'), __('Bild-URL'));
-							$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-							echo $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																										 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-																										 false, false);
-
-							$tmpA = array('Picture', 'remark', __('Anmerkung'));
-							$tmpValue = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-							echo $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																										 $tmpA[2], $tmpValue, null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-																										 false, false);
-
-						?>
-
-				</fieldset>
-			<?php } ?>
 
 			<?php
 				$itemCount = 0;

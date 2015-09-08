@@ -18,44 +18,6 @@ App::uses('AppHelper', 'View/Helper');
 class RefManPeople {
 
 	/**
-	 * Returns all contacts.
-	 *
-	 * @param person person
-	 * @param contactkind contact kind
-	 * @return array of contacts (empty if there are none)
-	 *
-	 * @version 0.3
-	 * @since 0.3
-	 */
-	public static function getContacts($person, $contactkind) {
-		$arrReturn = array();
-
-		$model = ClassRegistry::init($contactkind);
-		$model->recursive = -1;
-		$modelTypes = ClassRegistry::init('ContactTypes');
-		$modelTypes->recursive = -1;
-
-		foreach ($person['Contact'] as $contact) {
-			$tmpData = $model->findByContactId($contact['id']);
-			if (!empty($tmpData)) {
-
-				$tmpData['info'] = array();
-				$tmpData['info']['title'] = $contact['title'];
-				$tmpData['info']['is_primary'] = $contact['is_primary'];
-				$tmpData['info']['editor_only'] = $contact['editor_only'];
-				$tmpData['info']['remark'] = $contact['remark'];
-
-				$type = $modelTypes->findById($contact['contact_type_id']);
-				$tmpData['ContactType'] = $type['ContactTypes'];
-
-				$arrReturn[] = $tmpData;
-			}
-		}
-
-		return $arrReturn;
-	}
-
-	/**
 	 * Returns primary contact.
 	 *
 	 * @param person person

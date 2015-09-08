@@ -159,18 +159,18 @@ class RefManTemplate {
 	 *
 	 * @param $text text
 	 * @param $referee referee
-	 * @param $type format type
-	 * @param $export export type
+	 * @param $type format type ('text')
+	 * @param $export export type ('html')
 	 * @return replaced text
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.3
 	 */
 	public static function replaceRefereeData($text, $referee, $type, $export) {
 		$txtReturn = $text;
 
 		$txtReturn = RefManTemplate::replacePersonData($txtReturn, $referee, $type, $export);
-
+/*
 		// referee relation types
 		if (empty(RefManTemplate::$refereerelationtypes)) {
 			$model = ClassRegistry::init('RefereeRelationType');
@@ -214,7 +214,7 @@ class RefManTemplate {
 		}
 
 		// catch all
-		$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $referee);
+		$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $referee);*/
 
 		return $txtReturn;
 	}
@@ -235,12 +235,10 @@ class RefManTemplate {
 		$txtReturn = $text;
 
 		// names
-		$txtReturn = RefManTemplate::replace($txtReturn, 'person:fullname',
-																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'fullname'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'person:name_title',
-																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'name_title'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'person:tablename',
-																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'tablename'));
+		foreach (array('fullname', 'name_title', 'tablename') as $theToken) {
+			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('person:%s', $theToken),
+																					 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, $theToken));
+		}
 
 		// dates
 		$txtReturn = RefManTemplate::replace($txtReturn, 'person:birthday',
@@ -249,7 +247,7 @@ class RefManTemplate {
 																				 (empty($person['Person']['dayofdeath'])) ? '' : sprintf('†&nbsp;%s', RefManRefereeFormat::formatDate($person['Person']['dayofdeath'], 'date')));
 
 		// contacts
-		$tmpContacts = RefManPeople::getContacts($person, 'Email');
+		$tmpContacts = $person['Contact']['Email'];
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:emails',
 																				 RefManRefereeFormat::formatContacts($tmpContacts, $type, 'Email', $export));
 		$isPrivate = false;
@@ -257,7 +255,7 @@ class RefManTemplate {
 			$isPrivate |= $tmpContact['info']['editor_only'];
 		}
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:emails:editor_only', $isPrivate);
-
+/*
 		$tmpContacts = RefManPeople::getContacts($person, 'PhoneNumber');
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:phonenumbers_national',
 																				 RefManRefereeFormat::formatContacts($tmpContacts, 'national', 'PhoneNumber', $export));
@@ -285,7 +283,7 @@ class RefManTemplate {
 																					RefManRefereeFormat::formatAddress($primaryAddress, 'streetnumber', $type));
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:primary:zipcity',
 																					RefManRefereeFormat::formatAddress($primaryAddress, 'zipcity', $type));
-
+*/
 		// catch all
 		$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $person);
 
