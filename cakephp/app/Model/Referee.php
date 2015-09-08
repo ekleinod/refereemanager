@@ -214,9 +214,20 @@ class Referee extends AppModel {
 		$modelContact = ClassRegistry::init('Contact');
 		$arrTemp = $referee['Contact'];
 		$referee['Contact'] = array();
+		foreach (array_keys($modelContact->hasOne) as $cType) {
+			$referee['Contact'][$cType] = array();
+		}
 		foreach ($arrTemp as $tmpValue) {
 			if (empty($tmpValue['editor_only']) || $isEditor) {
-				$referee['Contact'][$tmpValue['id']] = $modelContact->findById($tmpValue['id']);
+				$cTemp = $modelContact->findById($tmpValue['id']);
+				foreach (array_keys($modelContact->hasOne) as $cType) {
+					if (!empty($cTemp[$cType]['id'])) {
+						$referee['Contact'][$cType][$tmpValue['id']] = array();
+						$referee['Contact'][$cType][$tmpValue['id']]['Contact'] = $cTemp['Contact'];
+						$referee['Contact'][$cType][$tmpValue['id']][$cType] = $cTemp[$cType];
+						break;
+					}
+				}
 			}
 		}
 
