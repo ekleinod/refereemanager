@@ -104,7 +104,7 @@ class RefereesController extends AppController {
 
 		$this->setAndGetStandard();
 
-		$referee = $this->Referee->getRefereeById($id, $this->viewVars['isEditor']);
+		$referee = $this->Referee->getRefereeById($id, $this->viewVars);
 
 		$sextypes = $this->SexType->getSexTypes();
 		//$referee['Person']['sex_type_sid'] = $sextypes[$referee['Person']['sex_type_id']]['SexType']['sid'];
@@ -135,7 +135,7 @@ class RefereesController extends AppController {
 		$theSeason = $this->getSeason($season);
 		$this->setAndGetStandard();
 
-		$referees = $this->Referee->getReferees($theSeason, $this->viewVars['isEditor']);
+		$referees = $this->Referee->getReferees($theSeason, $this->viewVars);
 		$this->set('people', $referees);
 
 		$this->set('statustypes', $this->getUsedStatusTypes($referees, $theSeason));

@@ -28,23 +28,26 @@
 												 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
 												 true, false);
 
-			if ($isEditor) {
-
-				$tmpA = array('Person', 'sex_type_id', __('Geschlecht'));
+			$tmpA = array('Person', 'sex_type_id', __('Geschlecht'));
+			if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit) {
 				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
 													 $tmpA[2],
 													 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
 													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
 													 true, false, 0, $sextypelist);
+			}
 
-				$tmpA = array('Person', 'birthday', __('Geburtstag'), __('tt.mm.yyyy'));
+			$tmpA = array('Person', 'birthday', __('Geburtstag'), __('tt.mm.yyyy'));
+			if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit) {
 				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
 													 $tmpA[2],
 													 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
 													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
 													 false, false);
+			}
 
-				$tmpA = array('Person', 'dayofdeath', __('Todestag'), __('tt.mm.yyyy'));
+			$tmpA = array('Person', 'dayofdeath', __('Todestag'), __('tt.mm.yyyy'));
+			if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit) {
 				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
 													 $tmpA[2],
 													 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
@@ -71,7 +74,7 @@
 
 
 			// picture
-			if ($isReferee) {
+			if (!empty($referee['Picture']) || $isEdit) {
 				$tmpFieldset = $this->Html->tag('legend', __('Bild'));
 
 				$tmpA = array('Picture', 'url', __('Bild'), __('Bild-URL'));
