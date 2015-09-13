@@ -225,6 +225,9 @@
 				}
 			}
 
+			// training level and updates
+
+
 			// fill referee data and output form
 			echo RefManTemplate::replaceRefereeData($tmpForm, $referee, 'text', 'html');
 		?>

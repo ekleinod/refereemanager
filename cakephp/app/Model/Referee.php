@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppModel', 'Model');
+App::uses('CakeTime', 'View/Helper');
 
 /**
  * Referee Model
@@ -84,11 +85,12 @@ class Referee extends AppModel {
 	 * @param viewVars view vars
 	 * @return array of referees for given season, empty if there are none
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.1
 	 */
 	public function getReferees($season, $viewVars) {
 
+		// sorting
 		$referees = $this->find('all');
 		usort($referees, array('Person', 'compareTo'));
 
@@ -216,10 +218,47 @@ class Referee extends AppModel {
 		}
 
 		// expand training level
-		$arrTemp = $referee['TrainingLevel'];
-		$referee['TrainingLevel'] = array();
-		foreach ($arrTemp as $tmpValue) {
-			$referee['TrainingLevel'][$tmpValue['id']] = $this->TrainingLevel->findById($tmpValue['id']);
+		$referee['TrainingLevel'] = $this->TrainingLevel->findAllByRefereeId($referee['Referee']['id'],
+																																				 array(),
+																																				 array('TrainingLevelType.rank'));
+		if (!empty($referee['TrainingLevel'])) {
+			// only last level for anonymous
+			if (!$viewVars['isReferee']) {
+				$referee['TrainingLevel'] = array($referee['TrainingLevel'][count($referee['TrainingLevel']) - 1]);
+			}
+
+			// training updates
+			$modelTrainingUpdate = ClassRegistry::init('TrainingUpdate');
+			foreach($referee['TrainingLevel'] as &$traininglevel) {
+				$traininglevel['TrainingUpdate'] = $modelTrainingUpdate->findAllByTrainingLevelId($traininglevel['TrainingLevel']['id'],
+																																					 null,
+																																					 array('TrainingUpdate.update'),
+																																					 null,
+																																					 1,
+																																					 -1);
+
+				// only last update for anonymous
+				if (!empty($traininglevel['TrainingUpdate']) && !$viewVars['isReferee']) {
+					$traininglevel['TrainingUpdate'] = array($traininglevel['TrainingUpdate'][count($traininglevel['TrainingUpdate']) - 1]);
+				}
+			}
+		}
+
+		// new training level info: highest TrainingLevelType, last update, next update
+		$referee['TrainingLevelInfo'] = array('TrainingLevelType' => null, 'last_update' => null, 'next_update' => null);
+		$tmpLevel = (empty($referee['TrainingLevel'])) ? null : $referee['TrainingLevel'][count($referee['TrainingLevel']) - 1];
+		if (!empty($tmpLevel)) {
+			$referee['TrainingLevelInfo']['TrainingLevelType'] = $tmpLevel['TrainingLevelType'];
+			if ($viewVars['isReferee']) {
+				$tmpUpdate = (empty($tmpLevel['TrainingUpdate'])) ? null : $tmpLevel['TrainingUpdate'][count($tmpLevel['TrainingUpdate']) - 1];
+				$referee['TrainingLevelInfo']['last_update'] = empty($tmpUpdate) ? $tmpLevel['TrainingLevel']['since'] : $tmpUpdate['TrainingUpdate']['update'];
+				if (!empty($referee['TrainingLevelInfo']['last_update'])) {
+					$referee['TrainingLevelInfo']['next_update'] = strftime('%Y-%m-%d',
+																																	strtotime(sprintf('+%d years %s',
+																																										$tmpLevel['TrainingLevelType']['update_interval'],
+																																										$referee['TrainingLevelInfo']['last_update'])));
+				}
+			}
 		}
 
 		// expand and process contacts
