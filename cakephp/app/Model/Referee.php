@@ -193,12 +193,7 @@ class Referee extends AppModel {
 
 		// remove person data depending on access rights
 		if (!$viewVars['isEditor']) {
-			$referee['Person']['sex_type_id'] = null;
-			$referee['Person']['birthday'] = null;
-			$referee['Person']['dayofdeath'] = null;
-			$referee['Person']['remark'] = null;
 			$referee['Person']['internal_remark'] = null;
-			$referee['Person']['docs_per_letter'] = null;
 		}
 
 		// remove picture depending on access rights

@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Season Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class Season extends AppModel {
@@ -14,12 +14,12 @@ class Season extends AppModel {
 	/**
 	 * Declare virtual field in constructor to be alias-safe.
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$this->virtualFields['title_season'] = sprintf(
+		$this->virtualFields['display_title'] = sprintf(
 			'IF (%1$s.title IS NULL OR %1$s.title = \'\', CONCAT(%1$s.year_start, "-", %1$s.year_start + 1), %1$s.title)',
 			$this->alias
 		);
@@ -38,10 +38,10 @@ class Season extends AppModel {
 	/**
 	 * Display field
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'title_season';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
@@ -64,6 +64,9 @@ class Season extends AppModel {
 	public $hasMany = array('LeagueGame', 'LeaguePlannedReferee', 'RefereeReport', 'RefereeStatus', 'TeamSeason');
 
 	// custom programming
+
+	/** Singleton for fast access. */
+	private $seasonlist = null;
 
 	/**
 	 * Returns season for given start year.
@@ -115,7 +118,7 @@ class Season extends AppModel {
 	 * @param isEditor is user editor?
 	 * @return array of seasons, empty if there are none
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
 	public function getSeasons($isEditor) {
@@ -149,15 +152,20 @@ class Season extends AppModel {
 	 */
 	public function getSeasonList($isEditor) {
 
-		$seasons = array();
-
-		foreach ($this->getSeasons($isEditor) as $season) {
-			$seasons[$season['Season']['id']] = $season['Season']['title_season'];
+		if ($this->seasonlist == null) {
+			$arrConditions = array();
+			if (!$isEditor) {
+				$arrConditions['OR'] = array('editor_only' => false, 'editor_only' => NULL);
+			}
+			$this->seasonlist = $this->find('list',
+																			array(
+																						'conditions' => $arrConditions,
+																						'order' => 'year_start DESC',
+																						)
+																			);
 		}
 
-		arsort($seasons, SORT_LOCALE_STRING);
-
-		return $seasons;
+		return $this->seasonlist;
 	}
 
 	/**

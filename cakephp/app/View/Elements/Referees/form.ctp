@@ -241,7 +241,7 @@
 
 			// training level and updates
 			foreach ($referee['TrainingLevel'] as $traininglevel) {
-				$tmpFieldset = $this->Html->tag('legend', __('Ausbildung: %s', $traininglevel['TrainingLevelType']['title']));
+				$tmpFieldset = $this->Html->tag('legend', __('Ausbildung: %s', $traininglevel['TrainingLevelType']['display_title']));
 				$tmpID = $traininglevel['TrainingLevelType']['id'];
 
 				$tmpA = array('TrainingLevel', 'training_level_type_id', __('Ausbildungsart'));
@@ -270,6 +270,42 @@
 														RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
 														null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
 														true, false);
+				}
+
+				$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
+			}
+
+			// referee status
+			foreach ($referee['RefereeStatus'] as $refereestatus) {
+				$tmpFieldset = $this->Html->tag('legend', __('Schiri-Status: Saison %s', $refereestatus['Season']['display_title']));
+				$tmpID = $refereestatus['RefereeStatus']['id'];
+
+				$tmpA = array('RefereeStatus', 'status_type_id', __('Statustyp'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false, 0, $statustypelist);
+
+				debug($seasonlist);
+
+				$tmpA = array('RefereeStatus', 'season_id', __('Saison'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false, 0, $seasonlist);
+
+				if ($isEditor) {
+					$tmpA = array('RefereeStatus', 'remark', __('Anmerkung'));
+					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea',
+														sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+														$tmpA[2],
+														RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+														null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+														false, false);
 				}
 
 				$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
