@@ -18,7 +18,7 @@ class RefereesController extends AppController {
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Club', 'ContactType', 'Person', 'Referee', 'RefereeRelationType', 'Season', 'SexType', 'StatusType');
+	public $uses = array('Club', 'ContactType', 'Person', 'Referee', 'RefereeRelationType', 'Season', 'SexType', 'StatusType', 'TrainingLevelType');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
@@ -97,7 +97,7 @@ class RefereesController extends AppController {
 	 *
 	 * @param $id referee id
 	 *
-	 * @version 0.4
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	private function setAndGetStandardNewAddView($id) {
@@ -106,17 +106,15 @@ class RefereesController extends AppController {
 
 		$referee = $this->Referee->getRefereeById($id, $this->viewVars);
 
-		$sextypes = $this->SexType->getSexTypes();
-		//$referee['Person']['sex_type_sid'] = $sextypes[$referee['Person']['sex_type_id']]['SexType']['sid'];
-
 		// pass information to view
 		$this->set('referee', $referee);
-		$this->set('sextypes', $sextypes);
+		$this->set('sextypes', $this->SexType->getSexTypes());
 		$this->set('sextypelist', $this->SexType->getSexTypeList());
 		$this->set('contacttypes', $this->ContactType->getContactTypes());
 		$this->set('contacttypelist', $this->ContactType->getContactTypeList());
 		$this->set('refereerelationtypes', $this->RefereeRelationType->getRefereeRelationTypesSID());
 		$this->set('refereerelationtypelist', $this->RefereeRelationType->getRefereeRelationTypeList());
+		$this->set('trainingleveltypelist', $this->TrainingLevelType->getTrainingLevelTypeList());
 		$this->set('clubarray', $this->Club->getClubList());
 
 		$this->set('id', $referee['Referee']['id']);
