@@ -7,7 +7,7 @@ App::uses('CakeTime', 'View/Helper');
  * Referee Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class Referee extends AppModel {
@@ -15,13 +15,13 @@ class Referee extends AppModel {
 	/**
 	 * Declare virtual display field in constructor to be alias-safe.
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
 		// I can't get this one working with other tables
-		$this->virtualFields['display_referee'] = sprintf(
+		$this->virtualFields['display_title'] = sprintf(
 			'CONCAT(%1$s.id, "-", %1$s.person_id)',
 			$this->alias
 		);
@@ -40,10 +40,10 @@ class Referee extends AppModel {
 	/**
 	 * Display field
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'display_referee';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
@@ -177,7 +177,7 @@ class Referee extends AppModel {
 	 * @param referee referee
 	 * @param viewVars view vars
 	 *
-	 * @version 0.4
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	public function fillReferee(&$referee, $viewVars) {
@@ -196,6 +196,9 @@ class Referee extends AppModel {
 			$referee['Person']['sex_type_id'] = null;
 			$referee['Person']['birthday'] = null;
 			$referee['Person']['dayofdeath'] = null;
+			$referee['Person']['remark'] = null;
+			$referee['Person']['internal_remark'] = null;
+			$referee['Person']['docs_per_letter'] = null;
 		}
 
 		// remove picture depending on access rights

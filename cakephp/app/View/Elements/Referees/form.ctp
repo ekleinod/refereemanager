@@ -28,47 +28,57 @@
 												 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
 												 true, false);
 
-			$tmpA = array('Person', 'sex_type_id', __('Geschlecht'));
-			if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit) {
-				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+			if ($isEditor) {
+				$tmpA = array('Person', 'sex_type_id', __('Geschlecht'));
+				if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit) {
+					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+														 $tmpA[2],
+														 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+														 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+														 true, false, 0, $sextypelist);
+				}
+
+				$tmpA = array('Person', 'birthday', __('Geburtstag'), __('tt.mm.yyyy'));
+				if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit) {
+					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+														 $tmpA[2],
+														 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+														 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+														 false, false);
+				}
+
+				$tmpA = array('Person', 'dayofdeath', __('Todestag'), __('tt.mm.yyyy'));
+				if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit) {
+					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+														 $tmpA[2],
+														 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+														 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+														 false, false);
+
+				}
+
+				$tmpA = array('Person', 'docs_per_letter', __('Dokumentversand'), __('zusätzlich per Brief'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
+													sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false);
+
+				$tmpA = array('Person', 'remark', __('Anmerkung'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
 													 $tmpA[2],
 													 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
 													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-													 true, false, 0, $sextypelist);
-			}
+													 false, false);
 
-			$tmpA = array('Person', 'birthday', __('Geburtstag'), __('tt.mm.yyyy'));
-			if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit) {
-				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+				$tmpA = array('Person', 'internal_remark', __('Interne Anmerkung'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
 													 $tmpA[2],
 													 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
 													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
 													 false, false);
 			}
-
-			$tmpA = array('Person', 'dayofdeath', __('Todestag'), __('tt.mm.yyyy'));
-			if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit) {
-				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-													 $tmpA[2],
-													 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
-													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-													 false, false);
-
-			}
-
-			$tmpA = array('Person', 'remark', __('Anmerkung'));
-			$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-												 $tmpA[2],
-												 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
-												 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-												 false, false);
-
-			$tmpA = array('Person', 'internal_remark', __('Interne Anmerkung'));
-			$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-												 $tmpA[2],
-												 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))),
-												 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
-												 false, false);
 
 			$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
 
