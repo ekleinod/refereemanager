@@ -288,8 +288,6 @@
 													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
 													true, false, 0, $statustypelist);
 
-				debug($seasonlist);
-
 				$tmpA = array('RefereeStatus', 'season_id', __('Saison'));
 				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
 													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),

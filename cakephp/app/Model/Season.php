@@ -155,7 +155,7 @@ class Season extends AppModel {
 		if ($this->seasonlist == null) {
 			$arrConditions = array();
 			if (!$isEditor) {
-				$arrConditions['OR'] = array('editor_only' => false, 'editor_only' => NULL);
+				$arrConditions['editor_only'] = false;
 			}
 			$this->seasonlist = $this->find('list',
 																			array(

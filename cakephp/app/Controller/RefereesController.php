@@ -108,14 +108,15 @@ class RefereesController extends AppController {
 
 		// pass information to view
 		$this->set('referee', $referee);
-		$this->set('sextypes', $this->SexType->getSexTypes());
-		$this->set('sextypelist', $this->SexType->getSexTypeList());
+		$this->set('clublist', $this->Club->getClubList());
 		$this->set('contacttypes', $this->ContactType->getContactTypes());
 		$this->set('contacttypelist', $this->ContactType->getContactTypeList());
 		$this->set('refereerelationtypes', $this->RefereeRelationType->getRefereeRelationTypesSID());
 		$this->set('refereerelationtypelist', $this->RefereeRelationType->getRefereeRelationTypeList());
+		$this->set('sextypes', $this->SexType->getSexTypes());
+		$this->set('sextypelist', $this->SexType->getSexTypeList());
+		$this->set('statustypelist', $this->StatusType->getStatusTypeList());
 		$this->set('trainingleveltypelist', $this->TrainingLevelType->getTrainingLevelTypeList());
-		$this->set('clubarray', $this->Club->getClubList());
 
 		$this->set('id', $referee['Referee']['id']);
 	}

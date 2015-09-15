@@ -58,23 +58,30 @@ class StatusType extends AppModel {
 	const SID_MAILONLY = 'mailonly';
 	const SID_OTHER = 'other';
 
-	/**
-	 * Compare two objects.
-	 *
-	 * @param a first object
-	 * @param b second object
-	 * @return comparison result
-	 *  @retval <0 a<b
-	 *  @retval 0 a==b
-	 *  @retval >0 a>b
-	 *
-	 * @version 0.3
-	 * @since 0.3
-	 */
-	public static function compareTo($a, $b) {
+	/** Singleton for fast access. */
+	private $statustypelist = null;
 
-		// only criterion: sid
-		return strcasecmp($a['StatusType']['sid'], $b['StatusType']['sid']);
+	/**
+	 * Returns status type list.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return list of status types
+	 *
+	 * @version 0.6
+	 * @since 0.6
+	 */
+	public function getStatusTypelist() {
+		if ($this->statustypelist == null) {
+			$this->statustypelist = $this->find('list',
+																					array(
+																								'order' => 'title',
+																								)
+																					);
+		}
+
+		return $this->statustypelist;
 	}
 
 }
