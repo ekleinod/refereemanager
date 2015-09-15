@@ -215,6 +215,9 @@ class Referee extends AppModel {
 
 		// expand referee status
 		$arrTemp = $referee['RefereeStatus'];
+		if (!empty($arrTemp) && !$viewVars['isReferee']) {
+			$arrTemp = array($arrTemp[count($arrTemp) - 1]);
+		}
 		$referee['RefereeStatus'] = array();
 		foreach ($arrTemp as $tmpValue) {
 			$referee['RefereeStatus'][$tmpValue['id']] = $this->RefereeStatus->findById($tmpValue['id']);
