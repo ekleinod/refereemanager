@@ -40,8 +40,15 @@ COMMIT;
 START TRANSACTION;
 UPDATE `rfrmgr_referee_relation_types` SET `title`='Mitglied', `remark`='Ist Mitglied des Vereins.' WHERE `sid`='member';
 UPDATE `rfrmgr_referee_relation_types` SET `title`='Schiedst für', `remark`='Schiedsrichter_in schiedst für Verein.' WHERE `sid`='reffor';
-UPDATE `rfrmgr_referee_relation_types` SET `title`='Bevorzugt schiedsen', `remark`='Vereine, die bevorzugt geschiedst werden.' WHERE `sid`='prefer';
-UPDATE `rfrmgr_referee_relation_types` SET `title`='Nicht schiedsen', `remark`='Vereine, die nicht geschiedst werden.' WHERE `sid`='noassignment';
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Daten für die Tabelle `rfrmgr_referee_relation_types`
+-- -----------------------------------------------------
+START TRANSACTION;
+UPDATE `rfrmgr_wish_types` SET `title`='Bevorzugt schiedsen', `remark`='Einsätze, die bevorzugt geschiedst werden.' WHERE `sid`='prefer';
+UPDATE `rfrmgr_wish_types` SET `title`='Nicht schiedsen', `remark`='Einsätze, die nicht geschiedst werden sollen.' WHERE `sid`='avoid';
 
 COMMIT;
 

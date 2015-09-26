@@ -3,23 +3,23 @@
 App::uses('AppModel', 'Model');
 
 /**
- * RefereeRelation Model
+ * Wish Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
  * @version 0.6
- * @since 0.1
+ * @since 0.6
  */
-class RefereeRelation extends AppModel {
+class Wish extends AppModel {
 
 	/**
 	 * Model name.
 	 *
 	 * Good practice to include the model name.
 	 *
-	 * @version 0.1
-	 * @since 0.1
+	 * @version 0.6
+	 * @since 0.6
 	 */
-	public $name = 'RefereeRelation';
+	public $name = 'Wish';
 
 	/**
 	 * Declare virtual display field in constructor to be alias-safe.
@@ -39,7 +39,7 @@ class RefereeRelation extends AppModel {
 	 * Display field
 	 *
 	 * @version 0.6
-	 * @since 0.1
+	 * @since 0.6
 	 */
 	public $displayField = 'display_title';
 
@@ -47,23 +47,27 @@ class RefereeRelation extends AppModel {
 	 * Validation rules
 	 *
 	 * @version 0.6
-	 * @since 0.1
+	 * @since 0.6
 	 */
 	public $validate = array(
 		'id' => array('isUnique', 'notblank', 'numeric'),
 		'referee_id' => array('notblank', 'numeric'),
-		'referee_relation_type_id' => array('notblank', 'numeric'),
-		'club_id' => array('notblank', 'numeric'),
-		'season_id' => array('notblank', 'numeric'),
+		'wish_type_id' => array('notblank', 'numeric'),
+		'club_id' => array('numeric'),
+		'league_id' => array('numeric'),
+		'sex_type_id' => array('numeric'),
+		'saturday' => array('boolean'),
+		'sunday' => array('boolean'),
+		'tournament' => array('boolean'),
 	);
 
 	/**
 	 * belongsTo associations
 	 *
 	 * @version 0.6
-	 * @since 0.1
+	 * @since 0.6
 	 */
-	public $belongsTo = array('Club', 'Referee', 'RefereeRelationType', 'Season');
+	public $belongsTo = array('Club', 'League', 'Referee', 'WishType', 'SexType');
 
 }
 

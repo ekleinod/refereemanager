@@ -40,8 +40,15 @@ COMMIT;
 START TRANSACTION;
 UPDATE `rfrmgr_referee_relation_types` SET `title`='member', `remark`='Is member of the club.' WHERE `sid`='member';
 UPDATE `rfrmgr_referee_relation_types` SET `title`='referee for', `remark`='Is referee for the club.' WHERE `sid`='reffor';
-UPDATE `rfrmgr_referee_relation_types` SET `title`='prefer', `remark`='Prefer club for assignments.' WHERE `sid`='prefer';
-UPDATE `rfrmgr_referee_relation_types` SET `title`='no assignment', `remark`='Do not assign to this club.' WHERE `sid`='noassignment';
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `rfrmgr_wish_types`
+-- -----------------------------------------------------
+START TRANSACTION;
+UPDATE `rfrmgr_wish_types` SET `title`='prefer', `remark`='Preferred assignments.' WHERE `sid`='prefer';
+UPDATE `rfrmgr_wish_types` SET `title`='avoid', `remark`='Assignments to avoid.' WHERE `sid`='avoid';
 
 COMMIT;
 

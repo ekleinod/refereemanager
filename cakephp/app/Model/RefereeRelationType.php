@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * RefereeRelationType Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class RefereeRelationType extends AppModel {
@@ -22,12 +22,26 @@ class RefereeRelationType extends AppModel {
 	public $name = 'RefereeRelationType';
 
 	/**
+	 * Declare virtual display field in constructor to be alias-safe.
+	 *
+	 * @version 0.6
+	 * @since 0.6
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['display_title'] = sprintf(
+			'%1$s.title',
+			$this->alias
+		);
+	}
+
+	/**
 	 * Display field
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'title';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
@@ -54,8 +68,6 @@ class RefereeRelationType extends AppModel {
 	/* Relation types. */
 	const SID_MEMBER = 'member';
 	const SID_REFFOR = 'reffor';
-	const SID_PREFER = 'prefer';
-	const SID_NOASSIGNMENT = 'noassignment';
 
 	/** Singleton for fast access. */
 	private $refereerelationtypes = null;
