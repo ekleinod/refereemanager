@@ -697,7 +697,7 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_referee_relation_types` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Possible relations of a referee to a club or league (member, /* comment truncated */ /* prefer, avoid).*/';
+COMMENT = 'Club relations of a referee: member, reffor.';
 
 
 -- -----------------------------------------------------
@@ -709,20 +709,15 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_referee_relations` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `referee_id` INT UNSIGNED NOT NULL,
   `referee_relation_type_id` INT UNSIGNED NOT NULL,
-  `club_id` INT UNSIGNED NULL,
-  `league_id` INT UNSIGNED NULL,
-  `sex_type_id` INT UNSIGNED NULL,
-  `saturday` TINYINT(1) NULL,
-  `sunday` TINYINT(1) NULL,
+  `club_id` INT UNSIGNED NOT NULL,
+  `season_id` INT UNSIGNED NOT NULL,
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Relations between referees and clubs resp. leagues.\nClubs: m /* comment truncated */ /*ember, prefer, avoid.
-Leagues: prefer. avoid.
-Saturday/Sunday: prefer*/';
+COMMENT = 'Relations between referees and clubs: member and/or reffor.';
 
 
 -- -----------------------------------------------------
@@ -874,6 +869,50 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'Venues of tournaments.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_wish_types`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_wish_types` ;
+
+CREATE TABLE IF NOT EXISTS `rfrmgr_wish_types` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `sid` VARCHAR(20) NOT NULL,
+  `title` VARCHAR(100) NOT NULL,
+  `remark` TEXT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC),
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Wish types of a referee: prefer, avoid.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_wishes`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_wishes` ;
+
+CREATE TABLE IF NOT EXISTS `rfrmgr_wishes` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `referee_id` INT UNSIGNED NOT NULL,
+  `wish_type_id` INT UNSIGNED NOT NULL,
+  `club_id` INT UNSIGNED NULL,
+  `league_id` INT UNSIGNED NULL,
+  `sex_type_id` INT UNSIGNED NULL,
+  `saturday` TINYINT(1) NULL,
+  `sunday` TINYINT(1) NULL,
+  `tournament` TINYINT(1) NULL,
+  `remark` TEXT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Referees\' wishes for their assignments.';
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
