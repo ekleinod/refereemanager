@@ -214,13 +214,13 @@ class Referee extends AppModel {
 		}
 
 		// expand referee status
-		$arrTemp = $referee['RefereeStatus'];
-		if (!empty($arrTemp) && !$viewVars['isReferee']) {
-			$arrTemp = array($arrTemp[count($arrTemp) - 1]);
-		}
-		$referee['RefereeStatus'] = array();
-		foreach ($arrTemp as $tmpValue) {
-			$referee['RefereeStatus'][$tmpValue['id']] = $this->RefereeStatus->findById($tmpValue['id']);
+		$referee['RefereeStatus'] = $this->RefereeStatus->findAllByRefereeId($referee['Referee']['id'],
+																																				 array(),
+																																				 array('Season.year_start'));
+		if (!empty($referee['RefereeStatus'])) {
+			if (!$viewVars['isEditor']) {
+				$referee['RefereeStatus'] = array($referee['RefereeStatus'][count($referee['RefereeStatus']) - 1]);
+			}
 		}
 
 		// expand training level
@@ -228,8 +228,7 @@ class Referee extends AppModel {
 																																				 array(),
 																																				 array('TrainingLevelType.rank'));
 		if (!empty($referee['TrainingLevel'])) {
-			// only last level for anonymous
-			if (!$viewVars['isReferee']) {
+			if (!$viewVars['isEditor']) {
 				$referee['TrainingLevel'] = array($referee['TrainingLevel'][count($referee['TrainingLevel']) - 1]);
 			}
 
