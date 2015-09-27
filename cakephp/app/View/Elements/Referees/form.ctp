@@ -319,80 +319,59 @@
 				$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
 			}
 
+			// referee relations
+			foreach ($referee['RefereeRelation'] as $refereerelation) {
+				$tmpFieldset = $this->Html->tag('legend', __('Vereinsbeziehung %s: Saison %s', $refereerelation['RefereeRelationType']['display_title'], $refereerelation['Season']['display_title']));
+				$tmpID = $refereerelation['RefereeRelation']['id'];
+
+				$tmpA = array('RefereeRelation', 'referee_relation_type_id', __('Beziehungstyp'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false, 0, $refereerelationtypelist);
+
+				$tmpA = array('RefereeRelation', 'season_id', __('Saison'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false, 0, $seasonlist);
+
+				$tmpA = array('RefereeRelation', 'club_id', __('Verein'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false, 0, $clublist);
+
+				if ($isEditor) {
+					$tmpA = array('RefereeRelation', 'remark', __('Anmerkung'));
+					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea',
+														sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+														$tmpA[2],
+														RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+														null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+														false, false);
+				}
+
+				$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
+			}
 
 			// fill referee data and output form
 			echo RefManTemplate::replaceRefereeData($tmpForm, $referee, 'text', 'html');
 		?>
 
-			<fieldset>
-				<legend><?php echo __('Vereine und Wünsche'); ?></legend>
-					<?php
-						foreach ($refereerelationtypes as $sid => $refereerelationtype) {
-							if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-								$tmpA = array('RefereeRelation', 'id', $refereerelationtype['RefereeRelationType']['title']);
-								$tmpARem = array('RefereeRelation', 'remark', __('.'));
-
-								$count = 0;
-								foreach ($referee['RefereeRelation'] as $refrel) {
-									if ($refrel['referee_relation_type_id'] == $refereerelationtype['RefereeRelationType']['id']) {
-
-										$tmpValue = 0;
-										$tmpAr = null;
-
-										if (!empty($refrel['club_id'])) {
-											$tmpValue = $refrel['club_id'];
-											$tmpAr = $clubarray;
-										}
-
-										if (!empty($tmpValue)) {
-											echo $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s.%d', $tmpA[0], $tmpA[1], $count),
-																														 $tmpA[2], $tmpValue, true, '', 0, false, $tmpAr);
-
-											$tmpValueRem = (empty($referee[$tmpARem[0]]) || empty($referee[$tmpARem[0]][$tmpARem[1]])) ? '' : $referee[$tmpARem[0]][$tmpARem[1]];
-											echo $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s.%d', $tmpARem[0], $tmpARem[1], $count),
-																														 $tmpARem[2], $tmpValueRem, false,
-																														 (count($tmpARem) > 3) ? $tmpARem[3] : $tmpARem[2]);
-										}
-
-										$count++;
-									}
-								}
-
-								if ($count == 0) {
-									$tmpValue = 0;
-									$tmpAr = $clubarray;
-									echo $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s.%d', $tmpA[0], $tmpA[1], $count),
-																												 $tmpA[2], $tmpValue, true, '', 0, false, $tmpAr);
-								}
-							}
-						}
-
-						/*foreach ($refereerelationtypes as $refereerelationtype) {
-							foreach ($referee['RefereeRelation'] as $refereerelation) {
-
-								if ($refereerelation['referee_relation_type_id'] == $refereerelationtype['id']) {
-									if ($refereerelationtype['is_membership'] == 1) {
-										echo $this->RefereeForm->getInputField($action, 'select', 'RefereeRelation.id', __($refereerelationtype['title']), $refereerelation['club_id'], true, '', 0, false, $clubarray);
-									} else {
-										if ($isEditor) {
-										echo $this->RefereeForm->getInputField($action, 'select', 'RefereeRelation.id', __($refereerelationtype['title']), $refereerelation['club_id'], false, '', 0, false, $clubarray);
-										}
-									}
-								}
-
-							}
-						}*/
-
-					?>
-			</fieldset>
-
-			<?php if (($action === 'add') || ($action === 'edit')) { ?>
-				<div class="form-group">
-					<div class="col-sm-12">
-						<?php echo $this->Form->button(__('Daten speichern'), array('type' => 'submit', 'class' => 'btn btn-sm btn-default')); ?>
-					</div>
+		<?php if (($action === 'add') || ($action === 'edit')) { ?>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<?php echo $this->Form->button(__('Daten speichern'), array('type' => 'submit', 'class' => 'btn btn-sm btn-default')); ?>
 				</div>
-			<?php } ?>
+			</div>
+		<?php } ?>
 
 		<?php echo $this->Form->end(); ?>
 	</div>

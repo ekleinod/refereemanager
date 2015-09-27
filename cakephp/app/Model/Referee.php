@@ -207,10 +207,13 @@ class Referee extends AppModel {
 		}
 
 		// expand referee relations
-		$arrTemp = $referee['RefereeRelation'];
-		$referee['RefereeRelation'] = array();
-		foreach ($arrTemp as $tmpValue) {
-			$referee['RefereeRelation'][$tmpValue['id']] = $this->RefereeRelation->findById($tmpValue['id']);
+		$referee['RefereeRelation'] = $this->RefereeRelation->findAllByRefereeId($referee['Referee']['id'],
+																																						 array(),
+																																						 array('Season.year_start'));
+		if (!empty($referee['RefereeRelation'])) {
+			if (!$viewVars['isEditor']) {
+				$referee['RefereeRelation'] = array($referee['RefereeRelation'][count($referee['RefereeRelation']) - 1]);
+			}
 		}
 
 		// expand referee status
