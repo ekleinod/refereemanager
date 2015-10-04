@@ -100,8 +100,6 @@ class RefereeFormHelper extends AppHelper {
 		// depending on action
 		if ($action === 'view') {
 
-			// <p class="form-control-static">Dr.</p>
-
 			$inputparams['disabled'] = 'disabled';
 			if ($type === 'select') {
 				$inputparams['type'] = 'text';
