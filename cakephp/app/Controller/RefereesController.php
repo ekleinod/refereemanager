@@ -9,7 +9,7 @@ App::uses('RefManTemplate', 'Utility');
  * Referees Controller
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class RefereesController extends AppController {
@@ -18,7 +18,7 @@ class RefereesController extends AppController {
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Club', 'ContactType', 'Person', 'Referee', 'RefereeRelationType', 'Season', 'SexType', 'StatusType', 'TrainingLevelType');
+	public $uses = array('Club', 'ContactType', 'League', 'Person', 'Referee', 'RefereeRelationType', 'Season', 'SexType', 'StatusType', 'TrainingLevelType', 'WishType');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
@@ -111,12 +111,14 @@ class RefereesController extends AppController {
 		$this->set('clublist', $this->Club->getClubList());
 		$this->set('contacttypes', $this->ContactType->getContactTypes());
 		$this->set('contacttypelist', $this->ContactType->getContactTypeList());
+		$this->set('leaguelist', $this->League->getLeagueList());
 		$this->set('refereerelationtypes', $this->RefereeRelationType->getRefereeRelationTypesSID());
 		$this->set('refereerelationtypelist', $this->RefereeRelationType->getRefereeRelationTypeList());
 		$this->set('sextypes', $this->SexType->getSexTypes());
 		$this->set('sextypelist', $this->SexType->getSexTypeList());
 		$this->set('statustypelist', $this->StatusType->getStatusTypeList());
 		$this->set('trainingleveltypelist', $this->TrainingLevelType->getTrainingLevelTypeList());
+		$this->set('wishtypelist', $this->WishType->getWishTypeList());
 
 		$this->set('id', $referee['Referee']['id']);
 	}

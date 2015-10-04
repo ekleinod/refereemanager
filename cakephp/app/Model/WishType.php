@@ -69,6 +69,59 @@ class WishType extends AppModel {
 	const SID_PREFER = 'prefer';
 	const SID_AVOID = 'avoid';
 
+	/** Singleton for fast access. */
+	private $wishtypes = null;
+	private $wishtypelist = null;
+
+	/**
+	 * Returns wish types.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return array of wish types
+	 *
+	 * @version 0.6
+	 * @since 0.6
+	 */
+	public function getWishTypes() {
+		if ($this->wishtypes == null) {
+			$this->recursive = -1;
+			$this->wishtypes = array();
+			foreach ($this->find('all') as $wishtype) {
+				$this->wishtypes[$wishtype['WishType']['id']] = $wishtype;
+			}
+		}
+
+		return $this->wishtypes;
+	}
+
+	/**
+	 * Returns wish type list.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return list of wish types
+	 *
+	 * @version 0.6
+	 * @since 0.6
+	 */
+	public function getWishTypeList() {
+		if ($this->wishtypelist == null) {
+
+			$this->wishtypelist = array();
+
+			foreach ($this->getWishTypes() as $wishtype) {
+				$this->wishtypelist[$wishtype['WishType']['id']] = $wishtype['WishType']['title'];
+			}
+
+			asort($this->wishtypelist, SORT_LOCALE_STRING);
+		}
+
+		return $this->wishtypelist;
+	}
+
 }
 
 /* EOF */

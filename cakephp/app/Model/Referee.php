@@ -226,6 +226,13 @@ class Referee extends AppModel {
 			}
 		}
 
+		// expand wishes
+		if ($viewVars['isEditor']) {
+			$referee['Wish'] = $this->Wish->findAllByRefereeId($referee['Referee']['id']);
+		} else {
+			$referee['Wish'] = array();
+		}
+
 		// expand training level
 		$referee['TrainingLevel'] = $this->TrainingLevel->findAllByRefereeId($referee['Referee']['id'],
 																																				 array(),

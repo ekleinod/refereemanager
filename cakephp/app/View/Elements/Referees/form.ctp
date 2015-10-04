@@ -358,6 +358,77 @@
 														false, false);
 				}
 
+			}
+
+			// wishes
+			foreach ($referee['Wish'] as $wish) {
+				$tmpFieldset = $this->Html->tag('legend', __('Wunsch: %s', $wish['WishType']['display_title']));
+				$tmpID = $wish['Wish']['id'];
+
+				$tmpA = array('Wish', 'wish_type_id', __('Wunschtyp'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false, 0, $wishtypelist);
+
+				$tmpA = array('Wish', 'club_id', __('Verein'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false, 0, $clublist);
+
+				$tmpA = array('Wish', 'league_id', __('Liga'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false, 0, $leaguelist);
+
+				$tmpA = array('Wish', 'sex_type_id', __('Geschlecht'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false, 0, $sextypelist);
+
+				$tmpA = array('Wish', 'saturday', __('Sonnabend'), __('Nur Sonnabend'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false);
+
+				$tmpA = array('Wish', 'sunday', __('Sonntag'), __('Nur Sonntag'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false);
+
+				$tmpA = array('Wish', 'tournament', __('Turniere'), __('Nur Turniere'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false);
+
+				$tmpA = array('Wish', 'remark', __('Anmerkung'));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))),
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false);
+
 				$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
 			}
 
