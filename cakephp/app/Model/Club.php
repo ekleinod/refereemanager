@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Club Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class Club extends AppModel {
@@ -57,7 +57,7 @@ class Club extends AppModel {
 	/**
 	 * hasMany associations
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	public $hasMany = array('Contact', 'RefereeRelation', 'Spokesperson', 'Team', 'Tournament');

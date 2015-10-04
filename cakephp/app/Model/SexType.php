@@ -61,7 +61,7 @@ class SexType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $hasMany = array('LeagueType', 'Person', 'RefereeRelation');
+	public $hasMany = array('LeagueType', 'Person', 'Wish');
 
 	// custom programming
 

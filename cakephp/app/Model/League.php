@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * League Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class League extends AppModel {
@@ -70,7 +70,7 @@ class League extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $hasMany = array('LeagueGame',  'LeaguePlannedReferee', 'RefereeRelation', 'RefereeReport', 'TeamSeason');
+	public $hasMany = array('LeagueGame',  'LeaguePlannedReferee', 'RefereeReport', 'TeamSeason', 'Wish');
 
 	// custom programming
 

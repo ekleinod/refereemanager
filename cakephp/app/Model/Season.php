@@ -61,7 +61,7 @@ class Season extends AppModel {
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $hasMany = array('LeagueGame', 'LeaguePlannedReferee', 'RefereeReport', 'RefereeStatus', 'TeamSeason');
+	public $hasMany = array('LeagueGame', 'LeaguePlannedReferee', 'RefereeReport', 'RefereeRelation', 'RefereeStatus', 'TeamSeason');
 
 	// custom programming
 

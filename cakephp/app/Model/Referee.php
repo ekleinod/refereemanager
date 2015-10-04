@@ -68,10 +68,10 @@ class Referee extends AppModel {
 	/**
 	 * hasMany associations
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $hasMany = array('RefereeAssignment', 'RefereeRelation', 'RefereeStatus', 'TrainingLevel');
+	public $hasMany = array('RefereeAssignment', 'RefereeRelation', 'RefereeStatus', 'TrainingLevel', 'Wish');
 
 	// custom programming
 
