@@ -55,11 +55,11 @@
 
 					$tmpValue = empty($messagedata) ? false : $messagedata['ToolsEditor']['assignments_all'];
 					echo $this->RefereeForm->getInputField(null, 'checkbox', 'assignments_all',
-																								 __('Einsatzplan'), $tmpValue, __('Generierte Datei in "%s%s%s".', TMP, Configure::read('RefMan.template.assignments.path'), sprintf(Configure::read('RefMan.template.assignments.file_all'), $season['Season']['title_season'])), __('Gesamteinsatzplan'));
+																								 __('Einsatzplan'), $tmpValue, __('Generierte Datei in "%s%s%s".', TMP, Configure::read('RefMan.template.assignments.path'), sprintf(Configure::read('RefMan.template.assignments.file_all'), $season['Season']['display_title'])), __('Gesamteinsatzplan'));
 
 					$tmpValue = empty($messagedata) ? false : $messagedata['ToolsEditor']['assignments_person'];
 					echo $this->RefereeForm->getInputField(null, 'checkbox', 'assignments_person',
-																								 __('Einsatzplan'), $tmpValue, __('Generierte Dateien in "%s%s%s".', TMP, Configure::read('RefMan.template.assignments.path'), sprintf(Configure::read('RefMan.template.assignments.file_person'), $season['Season']['title_season'], __('Name'), __('Vorname'), 0)), __('Einsatzplan für einzelne_n Schiedsrichter_in'));
+																								 __('Einsatzplan'), $tmpValue, __('Generierte Dateien in "%s%s%s".', TMP, Configure::read('RefMan.template.assignments.path'), sprintf(Configure::read('RefMan.template.assignments.file_person'), $season['Season']['display_title'], __('Name'), __('Vorname'), 0)), __('Einsatzplan für einzelne_n Schiedsrichter_in'));
 				?>
 			</fieldset>
 
