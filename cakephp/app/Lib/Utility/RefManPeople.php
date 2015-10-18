@@ -12,7 +12,7 @@ App::uses('AppHelper', 'View/Helper');
  * @package       Lib.Utility
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.3
  */
 class RefManPeople {
@@ -24,27 +24,25 @@ class RefManPeople {
 	 * @param contactkind contact kind
 	 * @return primary contact (null if there is none)
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
 	public static function getPrimaryContact($person, $contactkind) {
 
-		$arrContacts = RefManPeople::getContacts($person, $contactkind);
-
 		// no contact of that kind
-		if (count($arrContacts) == 0) {
+		if (empty($person['Contact']) || empty($person['Contact'][$contactkind])) {
 			return null;
 		}
 
 		// several - search for primary
-		foreach ($arrContacts as $contact) {
+		foreach ($person['Contact'][$contactkind] as $contact) {
 			if ($contact['info']['is_primary']) {
 				return $contact;
 			}
 		}
 
 		// primary not given - take first
-		return $arrContacts[0];
+		return $person['Contact'][$contactkind][0];
 
 	}
 
