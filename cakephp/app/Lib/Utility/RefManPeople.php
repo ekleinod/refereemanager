@@ -36,13 +36,14 @@ class RefManPeople {
 
 		// several - search for primary
 		foreach ($person['Contact'][$contactkind] as $contact) {
-			if ($contact['info']['is_primary']) {
+			if ($contact['Contact']['is_primary']) {
 				return $contact;
 			}
 		}
 
 		// primary not given - take first
-		return $person['Contact'][$contactkind][0];
+		reset($person['Contact'][$contactkind]);
+		return current($person['Contact'][$contactkind]);
 
 	}
 

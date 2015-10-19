@@ -70,7 +70,7 @@
 					echo $this->RefereeForm->getInputField(null, 'select', 'Filter.season',
 																								 __('Saison'), $season['Season']['id'], null, null,
 																								 true, false, 0,
-																								 $seasonarray);
+																								 $seasonlist);
 
 					$tmpValue = empty($messagedata) ? 'i' : $messagedata['ToolsEditor']['recipient'];
 					echo $this->RefereeForm->getInputField(null, 'select', 'recipient',

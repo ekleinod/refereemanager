@@ -13,7 +13,7 @@
 									echo $this->RefereeForm->getInputField(null, 'select', 'season',
 																												 __('Saison'), $season['Season']['id'], sprintf('aktiv: %s', $season['Season']['display_title']), null,
 																												 false, true, 0,
-																												 $seasonarray);
+																												 $seasonlist);
 								}
 							?>
 

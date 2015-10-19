@@ -85,26 +85,28 @@ class Referee extends AppModel {
 	 * @param viewVars view vars
 	 * @return array of referees for given season, empty if there are none
 	 *
-	 * @version 0.4
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	public function getReferees($season, $viewVars) {
 
-		// sorting
-		$referees = $this->find('all');
-		usort($referees, array('Person', 'compareTo'));
+		$allreferees = $this->find('all',
+														array(
+																	'order' => array('Person.name', 'Person.first_name'),
+																	)
+														);
 
 		$arrReturn = array();
-		foreach ($referees as &$referee) {
+		foreach ($allreferees as &$ref) {
 
 			$useReferee = false;
-			foreach ($referee['RefereeStatus'] as $refereestatus) {
+			foreach ($ref['RefereeStatus'] as $refereestatus) {
 				$useReferee |= ($refereestatus['season_id'] == $season['Season']['id']);
 			}
 
 			if ($useReferee) {
-				$this->fillReferee($referee, $viewVars);
-				$arrReturn[] = $referee;
+				$this->fillReferee($ref, $viewVars);
+				$arrReturn[] = $ref;
 			}
 
 		}

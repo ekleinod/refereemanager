@@ -10,7 +10,7 @@ App::uses('RefManTemplate', 'Utility');
  * Tools editor Controller
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.4
+ * @version 0.6
  * @since 0.1
  */
 class ToolsEditorController extends AppController {
@@ -48,10 +48,12 @@ class ToolsEditorController extends AppController {
 	 *
 	 * @param season season to use (default: null == current season)
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	public function mailinglist($season = null) {
+
+		$this->set('title_for_layout', __('Mailverteiler'));
 
 		$this->setAndGetStandard($season);
 
@@ -62,7 +64,16 @@ class ToolsEditorController extends AppController {
 
 		$this->set('separator', $theSeparator);
 
-		$this->set('title_for_layout', __('Mailverteiler'));
+		// compute array of emails
+		$arrEMails = array();
+		foreach ($this->viewVars['referees'] as $referee) {
+			$tmpEMail = RefManPeople::getPrimaryContact($referee, 'Email');
+			if (!empty($tmpEMail)) {
+				$arrEMails[] = $tmpEMail;//$this->RefereeFormat->formatContacts(array($email), 'text', 'Email', 'text');
+			}
+		}
+		$this->set('emails', $arrEMails);
+
 	}
 
 	/**
@@ -340,15 +351,15 @@ class ToolsEditorController extends AppController {
 	 *
 	 * @param season season (default: null == current season)
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	private function setAndGetStandard($season = null) {
 
 		$theSeason = $this->getSeason($season);
-		$this->set('seasonarray', $this->Season->getSeasonList($this->viewVars['isEditor']));
+		$this->set('seasonlist', $this->Season->getSeasonList($this->viewVars['isEditor']));
 
-		$referees = $this->Referee->getReferees($theSeason, $this->viewVars['isEditor']);
+		$referees = $this->Referee->getReferees($theSeason, $this->viewVars);
 		$this->set('referees', $referees);
 
 		$this->set('controller', 'ToolsEditor');
