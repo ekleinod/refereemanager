@@ -57,7 +57,7 @@ class ToolsEditorController extends AppController {
 
 		$this->setAndGetStandard($season);
 
-		$theSeparator = ',';
+		$theSeparator = ', ';
 		if (!empty($this->request->data) && array_key_exists('ToolsEditor', $this->request->data)) {
 			$theSeparator = $this->request->data['ToolsEditor']['separator'];
 		}
@@ -69,7 +69,7 @@ class ToolsEditorController extends AppController {
 		foreach ($this->viewVars['referees'] as $referee) {
 			$tmpEMail = RefManPeople::getPrimaryContact($referee, 'Email');
 			if (!empty($tmpEMail)) {
-				$arrEMails[] = $tmpEMail;//$this->RefereeFormat->formatContacts(array($email), 'text', 'Email', 'text');
+				$arrEMails[] = $tmpEMail['Email']['email'];//$this->RefereeFormat->formatContacts(array($email), 'text', 'Email', 'text');
 			}
 		}
 		$this->set('emails', $arrEMails);

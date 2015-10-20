@@ -10,7 +10,7 @@ App::uses('CakeTime', 'Utility');
  * @package       Lib.Utility
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class RefManRefereeFormat {
@@ -150,10 +150,10 @@ class RefManRefereeFormat {
 	 * @param $separator separator character
 	 * @return formatted string
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
-	public static function formatMultiline($data, $separator = '<br />') {
+	public static function formatMultiline($data, $separator) {
 		if (empty($data)) {
 			return '';
 		}

@@ -16,7 +16,7 @@
 																								 __('Liste (eine Zeile)'), $this->RefereeFormat->formatMultiline($emails, $separator), null, null,
 																								 false);
 					echo $this->RefereeForm->getInputField(null, 'textarea', 'mailinglist.multiline',
-																								 __('Liste (mehrere Zeilen)'), $this->RefereeFormat->formatMultiline($emails, $separator, "\n"), null, null,
+																								 __('Liste (mehrere Zeilen)'), $this->RefereeFormat->formatMultiline($emails, "\n"), null, null,
 																								 false);
 
 					echo $this->RefereeForm->getInputField(null, 'text', 'separator',
@@ -35,5 +35,7 @@
 	</div>
 </div>
 
-<?php debug($emails); ?>
+<?php
+	//debug($emails);
+?>
 
