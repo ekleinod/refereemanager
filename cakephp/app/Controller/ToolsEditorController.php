@@ -69,7 +69,7 @@ class ToolsEditorController extends AppController {
 		foreach ($this->viewVars['referees'] as $referee) {
 			$tmpEMail = RefManPeople::getPrimaryContact($referee, 'Email');
 			if (!empty($tmpEMail)) {
-				$arrEMails[] = $tmpEMail['Email']['email'];//$this->RefereeFormat->formatContacts(array($email), 'text', 'Email', 'text');
+				$arrEMails[] = RefManRefereeFormat::formatContact($tmpEMail, 'text', 'Email');
 			}
 		}
 		$this->set('emails', $arrEMails);
@@ -229,7 +229,7 @@ class ToolsEditorController extends AppController {
 						// send email (set up email config correctly)
 						$Email = new CakeEmail('default');
 						$Email
-								->to(array($contactEmail['Email']['email'] => RefManRefereeFormat::formatPerson($referee, 'fullname')))
+								->to(array(RefManRefereeFormat::formatContact($contactEmail, 'text', 'Email') => RefManRefereeFormat::formatPerson($referee, 'fullname')))
 								->subject($this->request->data['ToolsEditor']['subject']);
 
 						// attachments
