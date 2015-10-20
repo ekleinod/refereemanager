@@ -205,6 +205,7 @@ class ToolsEditorController extends AppController {
 
 				// fill templates with person values
 				$skipsend = !empty($this->request->data['ToolsEditor']['skiptill']);
+
 				foreach ($arrReferees as $referee) {
 
 					$persondatafile = sprintf(Configure::read('RefMan.template.person-data.file'),
@@ -222,6 +223,7 @@ class ToolsEditorController extends AppController {
 					}
 
 					$contactEmail = RefManPeople::getPrimaryContact($referee, 'Email');
+
 					if (!$skipsend && $sendEmail && !empty($contactEmail)) {
 
 						$txtEmail = RefManTemplate::replaceRefereeData($tplEmail, $referee, 'text', 'html');
