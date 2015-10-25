@@ -106,6 +106,7 @@ class ToolsEditorController extends AppController {
 			$sendSingleEmails = $this->request->data['ToolsEditor']['mailkind'] === 's';
 
 			// referees to send messages to
+			$arrReferees = array();
 			$hasMe = false;
 			if (!$toMeOnly) {
 				foreach ($this->viewVars['referees'] as $ref) {
@@ -117,7 +118,7 @@ class ToolsEditorController extends AppController {
 			}
 
 			if (!$hasMe) {
-				$arrReferees[] = $this->Referee->getRefereeById($this->Referee->getRefereeIdByPersonId($this->viewVars['userpersonid']), $this->viewVars['isEditor']);
+				$arrReferees[] = $this->Referee->getRefereeById($this->Referee->getRefereeIdByPersonId($this->viewVars['userpersonid']), $this->viewVars);
 			}
 
 			// if attachment: do all of them exist?
