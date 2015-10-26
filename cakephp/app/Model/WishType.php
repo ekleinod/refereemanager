@@ -87,10 +87,11 @@ class WishType extends AppModel {
 	public function getWishTypes() {
 		if ($this->wishtypes == null) {
 			$this->recursive = -1;
-			$this->wishtypes = array();
-			foreach ($this->find('all') as $wishtype) {
-				$this->wishtypes[$wishtype['WishType']['id']] = $wishtype;
-			}
+			$this->wishtypes = $this->find('all',
+																		 array(
+																					 'order' => 'title',
+																					 )
+																		 );
 		}
 
 		return $this->wishtypes;
@@ -109,14 +110,11 @@ class WishType extends AppModel {
 	 */
 	public function getWishTypeList() {
 		if ($this->wishtypelist == null) {
-
-			$this->wishtypelist = array();
-
-			foreach ($this->getWishTypes() as $wishtype) {
-				$this->wishtypelist[$wishtype['WishType']['id']] = $wishtype['WishType']['title'];
-			}
-
-			asort($this->wishtypelist, SORT_LOCALE_STRING);
+			$this->wishtypelist = $this->find('list',
+																		 array(
+																					 'order' => 'title',
+																					 )
+																		 );
 		}
 
 		return $this->wishtypelist;

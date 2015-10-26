@@ -71,7 +71,6 @@ class RefereeRelationType extends AppModel {
 
 	/** Singleton for fast access. */
 	private $refereerelationtypes = null;
-	private $refereerelationtypessid = null;
 	private $refereerelationtypelist = null;
 
 	/**
@@ -82,60 +81,20 @@ class RefereeRelationType extends AppModel {
 	 *
 	 * @return array of referee relation types, empty if there are none
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
 	public function getRefereeRelationTypes() {
 		if ($this->refereerelationtypes == null) {
 			$this->recursive = -1;
-			$this->refereerelationtypes = array();
-			foreach ($this->find('all') as $refereerelationtype) {
-				$this->refereerelationtypes[$refereerelationtype['RefereeRelationType']['id']] = $refereerelationtype;
-			}
+			$this->refereerelationtypes = $this->find('all',
+																								array(
+																											'order' => 'title',
+																											)
+																								);
 		}
 
 		return $this->refereerelationtypes;
-	}
-
-	/**
-	 * Returns referee relation type by id.
-	 *
-	 * Method should be static,
-	 * maybe later when I understand how to find things in a static method
-	 *
-	 * @param $id id
-	 * @return referee relation types, null if there is none
-	 *
-	 * @version 0.4
-	 * @since 0.4
-	 */
-	public function getRefereeRelationTypeByID($id) {
-		$this->getRefereeRelationTypes();
-		if (array_key_exists($id, $this->refereerelationtypes)) {
-			return $this->refereerelationtypes[$id];
-		}
-		return null;
-	}
-
-	/**
-	 * Returns referee relation types with sid as index.
-	 *
-	 * Method should be static,
-	 * maybe later when I understand how to find things in a static method
-	 *
-	 * @return array of referee relation types, empty if there are none
-	 *
-	 * @version 0.3
-	 * @since 0.3
-	 */
-	public function getRefereeRelationTypesSID() {
-		if ($this->refereerelationtypessid == null) {
-			foreach ($this->getRefereeRelationTypes() as $refreltype) {
-				$this->refereerelationtypessid[$refreltype['RefereeRelationType']['sid']] = $refreltype;
-			}
-		}
-
-		return $this->refereerelationtypessid;
 	}
 
 	/**
@@ -146,19 +105,16 @@ class RefereeRelationType extends AppModel {
 	 *
 	 * @return list of referee relation types
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
-	public function getRefereeRelationTypeList() {
+	public function getTrainingLevelTypeList() {
 		if ($this->refereerelationtypelist == null) {
-
-			$this->refereerelationtypelist = array();
-
-			foreach ($this->getRefereeRelationTypes() as $refereerelationtype) {
-				$this->refereerelationtypelist[$refereerelationtype['RefereeRelationType']['id']] = $refereerelationtype['RefereeRelationType']['title'];
-			}
-
-			asort($this->refereerelationtypelist, SORT_LOCALE_STRING);
+			$this->refereerelationtypelist = $this->find('list',
+																									 array(
+																												 'order' => 'title',
+																												 )
+																									 );
 		}
 
 		return $this->refereerelationtypelist;

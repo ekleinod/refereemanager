@@ -53,14 +53,11 @@ if ($isReferee) {
 														'pdf' => $params);
 
 // relations
-	// relations
 	if ($isRefView) {
-		foreach ($refereerelationtypes as $sid => $refereerelationtype) {
-			if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-				$columns['index'][] =
-						$columns['excel'][] = array('title' => __($refereerelationtype['title']),
-																				'content' => $this->Template->getReplaceToken(sprintf('referee:referee_relation_%s', $sid)));
-			}
+		foreach ($refereerelationtypes as $refereerelationtype) {
+			$columns['index'][] =
+					$columns['excel'][] = array('title' => __($refereerelationtype['title']),
+																			'content' => $this->Template->getReplaceToken(sprintf('referee:referee_relation_%s', $refereerelationtype['RefereeRelationType']['sid'])));
 		}
 
 		// combined relations

@@ -25,9 +25,6 @@ class RefereesController extends AppController {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
-
-		$this->StatusType->recursive = -1;
-		$this->RefereeRelationType->recursive = -1;
 	}
 
 	/**
@@ -112,7 +109,6 @@ class RefereesController extends AppController {
 		$this->set('contacttypes', $this->ContactType->getContactTypes());
 		$this->set('contacttypelist', $this->ContactType->getContactTypeList());
 		$this->set('leaguelist', $this->League->getLeagueList());
-		$this->set('refereerelationtypes', $this->RefereeRelationType->getRefereeRelationTypesSID());
 		$this->set('refereerelationtypelist', $this->RefereeRelationType->getRefereeRelationTypeList());
 		$this->set('sextypes', $this->SexType->getSexTypes());
 		$this->set('sextypelist', $this->SexType->getSexTypeList());
@@ -139,8 +135,8 @@ class RefereesController extends AppController {
 		$referees = $this->Referee->getReferees($theSeason, $this->viewVars);
 		$this->set('people', $referees);
 
-		$this->set('statustypes', $this->getUsedStatusTypes($referees, $theSeason));
-		$this->set('refereerelationtypes', $this->getUsedRefereeRelationTypes($referees));
+		//$this->set('statustypes', $this->getUsedStatusTypes($referees, $theSeason));
+		//$this->set('refereerelationtypes', $this->getUsedRefereeRelationTypes($referees));
 
 		$this->set('isRefView', true);
 	}
@@ -154,6 +150,7 @@ class RefereesController extends AppController {
 	private function setAndGetStandard() {
 
 		$this->set('seasonlist', $this->Season->getSeasonList($this->viewVars['isEditor']));
+		$this->set('refereerelationtypes', $this->RefereeRelationType->getRefereeRelationTypes());
 
 		$this->set('controller', 'Referees');
 	}

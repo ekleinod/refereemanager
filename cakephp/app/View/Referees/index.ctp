@@ -68,11 +68,11 @@
 
 				<tbody>
 					<?php
-						foreach ($people as $person) {
+						/*foreach ($people as $person) {
 
 							$tmpFormat = null;
 							if ($isRefView) {
-								$tmpStatus = $this->People->getRefereeStatus($person, $season);
+								//$tmpStatus = $this->People->getRefereeStatus($person, $season);
 								if (($tmpStatus !== null) && (array_key_exists($tmpStatus['status_type_id'], $statustypes))) {
 									$tmpFormat = $this->Html->style(Configure::read(sprintf('RefMan.statustypes.%s', $statustypes[$tmpStatus['status_type_id']]['StatusType']['sid'])));
 								}
@@ -91,12 +91,13 @@
 																											 'text',
 																											 'html'
 																											 );
-						}
+						}*/
 					?>
 				</tbody>
 			</table>
 
-			<?php if ($isRefView) { ?>
+			<?php if (false) { ?>
+			<?php /*if ($isRefView) {*/ ?>
 
 				<h2><?php echo __('Zusatzinformationen'); ?></h2>
 
