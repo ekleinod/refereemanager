@@ -6,7 +6,7 @@
 	Do not change this file unless you know exactly what you do.
 	If you have useful changes, let me know to include them in the master.
 
-	(c) 2013-2014 by Ekkart Kleinod
+	(c) 2013-2015 by Ekkart Kleinod
 
 	@author Ekkart Kleinod
 -->
@@ -34,7 +34,7 @@
 
 	<target name="phpmyadmin2apache" description="Copies phpMyAdmin to apache directory (deletes existing files first).">
 		<antcall target="deleteandcopy">
-			<param name="path:source" value="${path:git:phpmyadmin}" />
+			<param name="path:source" value="${path:external-git:phpmyadmin}" />
 			<param name="path:target" value="${path:apache:phpmyadmin}" />
 		</antcall>
 		<mkdir dir="${path:apache:phpmyadmin}tmp" />
@@ -44,7 +44,7 @@
 
 	<target name="cakephp2apache" description="Copies CakePHP to apache directory (deletes existing files first).">
 		<antcall target="deleteandcopy">
-			<param name="path:source" value="${path:git:cakephp}" />
+			<param name="path:source" value="${path:external-git:cakephp}" />
 			<param name="path:target" value="${path:apache:refereemanager}" />
 		</antcall>
 
@@ -71,7 +71,7 @@
 	<target name="phpexcel2apache" description="Copies PHPExcel files to development directory.">
 		<mkdir dir="${path:apache:refereemanager}app${file.separator}Vendor${file.separator}PHPExcel${file.separator}Classes${file.separator}" />
 		<copy todir="${path:apache:refereemanager}app${file.separator}Vendor${file.separator}PHPExcel${file.separator}Classes${file.separator}" failonerror="true" overwrite="true">
-			<fileset dir="${path:git:phpexcel}Classes${file.separator}">
+			<fileset dir="${path:external-git:phpexcel}Classes${file.separator}">
 				<include name="**/*" />
 			</fileset>
 		</copy>
@@ -88,7 +88,7 @@
 	<target name="tcpdf2apache" description="Copies TCPDF files to development directory.">
 		<mkdir dir="${path:apache:refereemanager}app${file.separator}Vendor${file.separator}TCPDF${file.separator}" />
 		<copy todir="${path:apache:refereemanager}app${file.separator}Vendor${file.separator}TCPDF${file.separator}" failonerror="true" overwrite="true">
-			<fileset dir="${path:git:tcpdf}">
+			<fileset dir="${path:external-git:tcpdf}">
 				<include name="**/*" />
 				<exclude name="**/examples/" />
 			</fileset>
