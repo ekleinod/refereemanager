@@ -108,7 +108,7 @@ class RefereeRelationType extends AppModel {
 	 * @version 0.6
 	 * @since 0.3
 	 */
-	public function getTrainingLevelTypeList() {
+	public function getRefereeRelationTypeList() {
 		if ($this->refereerelationtypelist == null) {
 			$this->refereerelationtypelist = $this->find('list',
 																									 array(

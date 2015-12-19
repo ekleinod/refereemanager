@@ -5,10 +5,12 @@ App::uses('AppHelper', 'View/Helper');
 /**
  * RefereeForm Helper class for referee manager specific form operations.
  *
+ * This class can not be put into Lib/Utility because of following execution errors whicha re not solved yet.
+ *
  * @package       View.Helper
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class RefereeFormHelper extends AppHelper {
@@ -19,7 +21,7 @@ class RefereeFormHelper extends AppHelper {
 	/**
 	 * Returns text label and field.
 	 *
-	 * @version 0.4
+	 * @version 0.6
 	 * @since 0.3
 	 */
 	public function getInputField(
