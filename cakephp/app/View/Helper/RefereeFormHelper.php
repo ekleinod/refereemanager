@@ -103,11 +103,19 @@ class RefereeFormHelper extends AppHelper {
 		if ($action === 'view') {
 
 			$inputparams['disabled'] = 'disabled';
+
 			if ($type === 'select') {
 				$inputparams['type'] = 'text';
 				if (!empty($values) && (!empty($value) || ($value > 0))) {
 					$inputparams['value'] = $values[$value];
 				}
+			}
+			if ($type === 'checkbox') {
+				$inputparams['type'] = 'text';
+				$inputparams['value'] = ((empty($value)) ?
+																 __('nein') :
+																 (($value == 1) ? __('ja') : h($value))
+																 );
 			}
 
 			// create input field
@@ -115,6 +123,10 @@ class RefereeFormHelper extends AppHelper {
 																	'form-control-static',
 																	empty($inputparams['value']) ? '&mdash;' : $inputparams['value']
 																	);
+
+			if ($type === 'checkbox') {
+				$sField = sprintf("%s (%s)", $sField, $placeholder);
+			}
 
 		} else {
 
@@ -128,10 +140,10 @@ class RefereeFormHelper extends AppHelper {
 			// create input field
 			$sField = $this->Form->input($fieldid, $inputparams);
 
-		}
+			if ($type === 'checkbox') {
+				$sField = sprintf("\n<label>\n%s %s\n</label>\n", $sField, $placeholder);
+			}
 
-		if ($type === 'checkbox') {
-			$sField = sprintf("\n<label>\n%s %s\n</label>\n", $sField, $placeholder);
 		}
 
 		if (!empty($help)) {
