@@ -194,6 +194,19 @@ class RefManTemplate {
 			}
 		}
 
+		// refereestatus
+		if (!empty($referee['RefereeStatus'])) {
+			foreach ($referee['RefereeStatus'] as $refereestatus) {
+				$partID = 'RefereeStatus';
+				$tmpID = $refereestatus[$partID]['id'];
+				foreach ($refereestatus[$partID] as $valueID => $value) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																							 ((in_array(strtolower($valueID), $dateFields)) ? RefManRefereeFormat::formatDate($value, 'date') : $value));
+				}
+			}
+		}
+
 
 /*
 		// referee relation types
@@ -207,39 +220,9 @@ class RefManTemplate {
 			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('referee:referee_relation_%s', $sid),
 																					 RefManRefereeFormat::formatRelations(RefManPeople::getRelations($referee, $sid), $type, $export));
 		}
-
-		// training
-		$traininglevel = RefManPeople::getTrainingLevel($referee);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:title',
-																				 (empty($traininglevel) || empty($traininglevel['TrainingLevelType']['title'])) ? '' : $traininglevel['TrainingLevelType']['title']);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:abbreviation',
-																				 (empty($traininglevel) || empty($traininglevel['TrainingLevelType']['abbreviation'])) ? '' : $traininglevel['TrainingLevelType']['abbreviation']);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:since',
-																				 (empty($traininglevel) || empty($traininglevel['TrainingLevel']['since'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['TrainingLevel']['since'], 'date'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:lasttrainingupdate',
-																				 (empty($traininglevel) || empty($traininglevel['lasttrainingupdate'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['lasttrainingupdate'], 'date'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:nexttrainingupdate',
-																				 (empty($traininglevel) || empty($traininglevel['nexttrainingupdate'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['nexttrainingupdate'], 'year'));
-
-		// status
-		if (empty(RefManTemplate::$statustypes)) {
-			$model = ClassRegistry::init('StatusType');
-			$model->recursive = -1;
-			$tmp = $model->find('all');
-			RefManTemplate::$statustypes = array();
-			foreach ($tmp as $statustype) {
-				RefManTemplate::$statustypes[$statustype['StatusType']['id']] = $statustype;
-			}
-		}
-		foreach ($referee['RefereeStatus'] as $refereestatus) {
-			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('refereestatus:%s:title', $refereestatus['season_id']),
-																					 RefManTemplate::$statustypes[$refereestatus['status_type_id']]['StatusType']['title']);
-			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('refereestatus:%s:remark', $refereestatus['season_id']),
-																					 (empty($refereestatus['remark'])) ? '' : $refereestatus['remark']);
-		}
-
+*/
 		// catch all
-		$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $referee);*/
+		$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $referee);
 
 		return $txtReturn;
 	}
