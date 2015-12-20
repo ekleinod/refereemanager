@@ -207,20 +207,19 @@ class RefManTemplate {
 			}
 		}
 
+		// refereerelation
+		if (!empty($referee['RefereeRelation'])) {
+			foreach ($referee['RefereeRelation'] as $refereerelation) {
+				$partID = 'RefereeRelation';
+				$tmpID = $refereerelation[$partID]['id'];
+				foreach ($refereerelation[$partID] as $valueID => $value) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																							 ((in_array(strtolower($valueID), $dateFields)) ? RefManRefereeFormat::formatDate($value, 'date') : $value));
+				}
+			}
+		}
 
-/*
-		// referee relation types
-		if (empty(RefManTemplate::$refereerelationtypes)) {
-			$model = ClassRegistry::init('RefereeRelationType');
-			$model->recursive = -1;
-			RefManTemplate::$refereerelationtypes = $model->find('all');
-		}
-		foreach (RefManTemplate::$refereerelationtypes as $relationtype) {
-			$sid = $relationtype['RefereeRelationType']['sid'];
-			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('referee:referee_relation_%s', $sid),
-																					 RefManRefereeFormat::formatRelations(RefManPeople::getRelations($referee, $sid), $type, $export));
-		}
-*/
 		// catch all
 		$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $referee);
 
