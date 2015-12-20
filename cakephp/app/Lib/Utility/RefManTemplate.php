@@ -170,6 +170,25 @@ class RefManTemplate {
 		$txtReturn = $text;
 
 		$txtReturn = RefManTemplate::replacePersonData($txtReturn, $referee, $type, $export);
+
+		// traininglevel
+/*		if (!empty($referee['TrainingLevel'])) {
+			foreach ($referee['TrainingLevel'] as $contactType) {
+				if (!empty($person['Contact'][$contactType])) {
+					foreach ($person['Contact'][$contactType] as $contactid => $contactDetail) {
+						foreach ($contactDetail as $partid => $part) {
+							foreach ($part as $valueid => $value) {
+								$txtReturn = RefManTemplate::replace($txtReturn,
+																										 sprintf('%s:%d:%s', strtolower($partid), $contactid, strtolower($valueid)),
+																										 $value);
+							}
+						}
+					}
+				}
+			}
+		}*/
+
+
 /*
 		// referee relation types
 		if (empty(RefManTemplate::$refereerelationtypes)) {
@@ -249,15 +268,13 @@ class RefManTemplate {
 		// contacts
 		if (!empty($person['Contact'])) {
 			$modelContact = ClassRegistry::init('Contact');
-			foreach ($modelContact->getContactKinds() as $contactType) {
-				if (!empty($person['Contact'][$contactType])) {
-					foreach ($person['Contact'][$contactType] as $contactid => $contactDetail) {
-						foreach ($contactDetail as $partid => $part) {
-							foreach ($part as $valueid => $value) {
-								$txtReturn = RefManTemplate::replace($txtReturn,
-																										 sprintf('%s:%d:%s', strtolower($partid), $contactid, strtolower($valueid)),
-																										 $value);
-							}
+			foreach ($person['Contact'] as $contactType => $typeContacts) {
+				foreach ($typeContacts as $contactid => $contactDetail) {
+					foreach ($contactDetail as $partid => $part) {
+						foreach ($part as $valueid => $value) {
+							$txtReturn = RefManTemplate::replace($txtReturn,
+																									 sprintf('%s:%d:%s', strtolower($partid), $contactid, strtolower($valueid)),
+																									 $value);
 						}
 					}
 				}
