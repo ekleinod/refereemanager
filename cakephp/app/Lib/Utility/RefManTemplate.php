@@ -352,9 +352,11 @@ class RefManTemplate {
 		foreach ($object as $objectkey => $objectentry) {
 			foreach ($objectentry as $entrykey => $entryvalue) {
 				if (!is_array($entryvalue)) {
-					$txtReturn = RefManTemplate::replace($txtReturn,
+					$txtReturn = RefManTemplate::replace(
+																							 $txtReturn,
 																							 sprintf('%s:%s', strtolower($objectkey), strtolower($entrykey)),
-																							 empty($entryvalue) ? '' : $entryvalue);
+																							 empty($entryvalue) ? '' : $entryvalue
+																							 );
 				}
 			}
 		}
