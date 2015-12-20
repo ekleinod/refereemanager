@@ -283,7 +283,7 @@ class Referee extends AppModel {
 		$referee['Contact'] = array();
 		if ($viewVars['isReferee']) {
 			$modelContact = ClassRegistry::init('Contact');
-			foreach (array_keys($modelContact->hasOne) as $cType) {
+			foreach ($modelContact->getContactKinds() as $cType) {
 				if (($cType !== 'Address') || $viewVars['isEditor']) {
 					$referee['Contact'][$cType] = array();
 				}

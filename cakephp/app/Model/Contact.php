@@ -68,6 +68,21 @@ class Contact extends AppModel {
 	 */
 	public $belongsTo = array('ContactType', 'Person', 'Club');
 
+	// custom programming
+
+	/**
+	 * Returns all possible contact kinds.
+	 *
+	 *
+	 * @return array of contact kinds
+	 *
+	 * @version 0.4
+	 * @since 0.4
+	 */
+	public function getContactKinds() {
+		return array_keys($this->hasOne);
+	}
+
 }
 
 /* EOF */
