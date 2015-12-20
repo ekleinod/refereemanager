@@ -247,7 +247,10 @@ class RefManTemplate {
 																				 (empty($person['Person']['dayofdeath'])) ? '' : sprintf('†&nbsp;%s', RefManRefereeFormat::formatDate($person['Person']['dayofdeath'], 'date')));
 
 		// contacts
-		$tmpContacts = $person['Contact']['Email'];
+		$modelContact = ClassRegistry::init('RefereeRelation');
+		foreach ($modelContact->getContactKinds() as $cType) {
+		}
+/*		$tmpContacts = $person['Contact']['Email'];
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:emails',
 																				 RefManRefereeFormat::formatContacts($tmpContacts, $type, 'Email', $export));
 		$isPrivate = false;
@@ -255,7 +258,7 @@ class RefManTemplate {
 			$isPrivate |= $tmpContact['info']['editor_only'];
 		}
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:emails:editor_only', $isPrivate);
-/*
+
 		$tmpContacts = RefManPeople::getContacts($person, 'PhoneNumber');
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:phonenumbers_national',
 																				 RefManRefereeFormat::formatContacts($tmpContacts, 'national', 'PhoneNumber', $export));

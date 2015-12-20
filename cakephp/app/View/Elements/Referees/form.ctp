@@ -125,7 +125,8 @@
 				foreach ($arrContacts as $contactid => $contact) {
 					$tmpFieldset = $this->Html->tag('legend', __('Kontakt: %s', $contactKind));
 
-					$tmpID = $contact[$contactKind]['id'];
+//					$tmpID = $contact[$contactKind]['id'];
+					$tmpID = $contactid;
 
 					switch ($contactKind) {
 						case 'Address':
@@ -218,7 +219,7 @@
 							break;
 					}
 
-					$tmpID = $contactid;
+//					$tmpID = $contactid;
 
 					$tmpA = array('Contact', 'contact_type_id', __('Kontaktart'));
 					$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
