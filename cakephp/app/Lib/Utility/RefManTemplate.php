@@ -172,21 +172,27 @@ class RefManTemplate {
 		$txtReturn = RefManTemplate::replacePersonData($txtReturn, $referee, $type, $export);
 
 		// traininglevel
-/*		if (!empty($referee['TrainingLevel'])) {
-			foreach ($referee['TrainingLevel'] as $contactType) {
-				if (!empty($person['Contact'][$contactType])) {
-					foreach ($person['Contact'][$contactType] as $contactid => $contactDetail) {
-						foreach ($contactDetail as $partid => $part) {
-							foreach ($part as $valueid => $value) {
-								$txtReturn = RefManTemplate::replace($txtReturn,
-																										 sprintf('%s:%d:%s', strtolower($partid), $contactid, strtolower($valueid)),
-																										 $value);
-							}
-						}
+		if (!empty($referee['TrainingLevel'])) {
+			$dateFields = array('since', 'update');
+			foreach ($referee['TrainingLevel'] as $traininglevel) {
+				$partID = 'TrainingLevel';
+				$tmpID = $traininglevel[$partID]['id'];
+				foreach ($traininglevel[$partID] as $valueID => $value) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																							 ((in_array(strtolower($valueID), $dateFields)) ? RefManRefereeFormat::formatDate($value, 'date') : $value));
+				}
+				$partID = 'TrainingUpdate';
+				foreach ($traininglevel[$partID] as $trainingupdate) {
+					$tmpID = $trainingupdate[$partID]['id'];
+					foreach ($trainingupdate[$partID] as $valueID => $value) {
+						$txtReturn = RefManTemplate::replace($txtReturn,
+																								 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																								 ((in_array(strtolower($valueID), $dateFields)) ? RefManRefereeFormat::formatDate($value, 'date') : $value));
 					}
 				}
 			}
-		}*/
+		}
 
 
 /*
@@ -267,13 +273,12 @@ class RefManTemplate {
 
 		// contacts
 		if (!empty($person['Contact'])) {
-			$modelContact = ClassRegistry::init('Contact');
 			foreach ($person['Contact'] as $contactType => $typeContacts) {
-				foreach ($typeContacts as $contactid => $contactDetail) {
-					foreach ($contactDetail as $partid => $part) {
-						foreach ($part as $valueid => $value) {
+				foreach ($typeContacts as $contactID => $contactDetail) {
+					foreach ($contactDetail as $partID => $part) {
+						foreach ($part as $valueID => $value) {
 							$txtReturn = RefManTemplate::replace($txtReturn,
-																									 sprintf('%s:%d:%s', strtolower($partid), $contactid, strtolower($valueid)),
+																									 sprintf('%s:%d:%s', strtolower($partID), $contactID, strtolower($valueID)),
 																									 $value);
 						}
 					}

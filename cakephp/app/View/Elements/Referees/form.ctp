@@ -273,7 +273,7 @@
 			// training level and updates
 			foreach ($referee['TrainingLevel'] as $traininglevel) {
 				$tmpFieldset = $this->Html->tag('legend', __('Ausbildung: %s', $traininglevel['TrainingLevelType']['display_title']));
-				$tmpID = $traininglevel['TrainingLevelType']['id'];
+				$tmpID = $traininglevel['TrainingLevel']['id'];
 
 				$tmpA = array('TrainingLevel', 'training_level_type_id', __('Ausbildungsart'));
 				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
