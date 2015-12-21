@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * StatusType Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class StatusType extends AppModel {
@@ -59,29 +59,60 @@ class StatusType extends AppModel {
 	const SID_OTHER = 'other';
 
 	/** Singleton for fast access. */
-	private $statustypelist = null;
+	private $types = null;
+	private $typelist = null;
 
 	/**
-	 * Returns status type list.
+	 * Returns types.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return list of status types
+	 * @return array of types, empty if there are none
 	 *
 	 * @version 0.6
 	 * @since 0.6
 	 */
-	public function getStatusTypelist() {
-		if ($this->statustypelist == null) {
-			$this->statustypelist = $this->find('list',
-																					array(
-																								'order' => 'title',
-																								)
-																					);
+	public function getTypes() {
+		if ($this->types == null) {
+			$this->recursive = -1;
+			$arrTemp = $this->find('all',
+														 array(
+																	 'order' => 'title',
+																	 )
+														 );
+
+			// sids for keys (maybe there is a better/faster solution?)
+			$this->types = array();
+			foreach ($arrTemp as $dtaTemp) {
+				$this->types[$dtaTemp['StatusType']['sid']] = $dtaTemp;
+			}
 		}
 
-		return $this->statustypelist;
+		return $this->types;
+	}
+
+	/**
+	 * Returns type list.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return list of types
+	 *
+	 * @version 0.6
+	 * @since 0.6
+	 */
+	public function getTypeList() {
+		if ($this->typelist == null) {
+			$this->typelist = $this->find('list',
+																		array(
+																					'order' => 'title',
+																					)
+																		);
+		}
+
+		return $this->typelist;
 	}
 
 }

@@ -2,6 +2,7 @@
 
 App::uses('AppController', 'Controller');
 App::uses('RefManPeople', 'Utility');
+App::uses('RefManReferee', 'Utility');
 App::uses('RefManRefereeFormat', 'Utility');
 App::uses('RefManTemplate', 'Utility');
 
@@ -159,7 +160,8 @@ class RefereesController extends AppController {
 		$referees = $this->Referee->getReferees($theSeason, $this->viewVars);
 		$this->set('people', $referees);
 
-		//$this->set('statustypes', $this->getUsedStatusTypes($referees, $theSeason));
+//		$this->set('statustypes', $this->getUsedStatusTypes($referees, $theSeason));
+		$this->set('statustypes', $this->StatusType->getTypes());
 		$this->set('refereerelationtypes', $this->RefereeRelationType->getTypes());
 		$this->set('wishtypes', $this->WishType->getTypes());
 
@@ -220,33 +222,6 @@ class RefereesController extends AppController {
 		}
 
 		return $statustypes;
-	}
-
-	/**
-	 * Returns used referee relation types of referees.
-	 *
-	 * @param $referees array of referees
-	 * @return used referee relation types
-	 *
-	 * @version 0.3
-	 * @since 0.1
-	 */
-	private function getUsedRefereeRelationTypes($referees) {
-
-		$arrTemp = array();
-		foreach ($referees as $referee) {
-			foreach ($referee['RefereeRelation'] as $relation) {
-				$arrTemp[$relation['referee_relation_type_id']] = true;
-			}
-		}
-
-		$refereerelationtypes = array();
-		foreach ($arrTemp as $id => $dummy) {
-			$tpeTemp = $this->RefereeRelationType->findById($id);
-			$refereerelationtypes[$tpeTemp['RefereeRelationType']['sid']] = $tpeTemp['RefereeRelationType'];
-		}
-
-		return $refereerelationtypes;
 	}
 
 }
