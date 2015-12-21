@@ -84,7 +84,31 @@ class RefereesController extends AppController {
 
 		$this->setAndGetStandardNewAddView($id);
 		$this->set('title_for_layout', __('Detailanzeige Schiedsrichter%s %s', ($this->viewVars['referee']['SexType']['sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($this->viewVars['referee'], 'fullname')));
+
 		$this->render('/Generic/view');
+	}
+
+	/**
+	 * Edit method: edit the referee with the given id.
+	 *
+	 * @param $id id of referee
+	 * @return void
+	 *
+	 * @version 0.4
+	 * @since 0.1
+	 */
+	public function edit($id = null) {
+
+		$this->Referee->id = $id;
+		if (!$this->Referee->exists()) {
+			throw new NotFoundException(__('Schiedsrichter_in mit der ID \'%s\' existiert nicht.', $id));
+		}
+
+
+		$this->setAndGetStandardNewAddView($id);
+		$this->set('title_for_layout', __('Schiedsrichter%s %s editieren', ($this->viewVars['referee']['SexType']['sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($this->viewVars['referee'], 'fullname')));
+
+		$this->render('/Generic/edit');
 	}
 
 
@@ -223,40 +247,6 @@ class RefereesController extends AppController {
 		}
 
 		return $refereerelationtypes;
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-	/**
-	 * Edit method: edit the referee with the given id.
-	 *
-	 * @param $id id of referee
-	 * @return void
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public function edit($id = null) {
-
-		$this->Referee->id = $id;
-		if (!$this->Referee->exists()) {
-			throw new NotFoundException(__('Schiedsrichter_in mit der ID \'%s\' existiert nicht.', $id));
-		}
-		$referee = $this->Referee->read(null, $id);
-
-		$this->setAndGetStandardNewAddView($referee);
-
-		$this->set('title_for_layout', __('Schiedsrichter%s %s editieren', ($referee['Person']['sex_type_sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
-		$this->render('/Generic/edit');
 	}
 
 }
