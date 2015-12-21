@@ -70,54 +70,60 @@ class WishType extends AppModel {
 	const SID_AVOID = 'avoid';
 
 	/** Singleton for fast access. */
-	private $wishtypes = null;
-	private $wishtypelist = null;
+	private $types = null;
+	private $typelist = null;
 
 	/**
-	 * Returns wish types.
+	 * Returns types.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return array of wish types
+	 * @return array of types, empty if there are none
 	 *
 	 * @version 0.6
-	 * @since 0.6
+	 * @since 0.3
 	 */
-	public function getWishTypes() {
-		if ($this->wishtypes == null) {
+	public function getTypes() {
+		if ($this->types == null) {
 			$this->recursive = -1;
-			$this->wishtypes = $this->find('all',
-																		 array(
-																					 'order' => 'title',
-																					 )
-																		 );
+			$arrTemp = $this->find('all',
+														 array(
+																	 'order' => 'title',
+																	 )
+														 );
+
+			// sids for keys (maybe there is a better/faster solution?)
+			$this->types = array();
+			foreach ($arrTemp as $dtaTemp) {
+				$this->types[$dtaTemp['WishType']['sid']] = $dtaTemp;
+			}
 		}
 
-		return $this->wishtypes;
+		return $this->types;
 	}
 
 	/**
-	 * Returns wish type list.
+	 * Returns type list.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return list of wish types
+	 * @return list of types
 	 *
 	 * @version 0.6
-	 * @since 0.6
+	 * @since 0.3
 	 */
-	public function getWishTypeList() {
-		if ($this->wishtypelist == null) {
-			$this->wishtypelist = $this->find('list',
-																		 array(
-																					 'order' => 'title',
-																					 )
-																		 );
+	public function getTypeList() {
+		if ($this->typelist == null) {
+			$this->typelist = $this->find('list',
+																		array(
+																					'order' => 'title',
+																					)
+																		);
 		}
 
-		return $this->wishtypelist;
+		return $this->typelist;
 	}
 
 }

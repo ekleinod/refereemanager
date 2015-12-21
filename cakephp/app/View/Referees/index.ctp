@@ -131,7 +131,7 @@
 		?>
 
 		<?php
-			//debug($people);
+			debug($refereerelationtypes);
 		?>
 
 	</div>

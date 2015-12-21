@@ -70,54 +70,60 @@ class RefereeRelationType extends AppModel {
 	const SID_REFFOR = 'reffor';
 
 	/** Singleton for fast access. */
-	private $refereerelationtypes = null;
-	private $refereerelationtypelist = null;
+	private $types = null;
+	private $typelist = null;
 
 	/**
-	 * Returns referee relation types.
+	 * Returns types.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return array of referee relation types, empty if there are none
+	 * @return array of types, empty if there are none
 	 *
 	 * @version 0.6
 	 * @since 0.3
 	 */
-	public function getRefereeRelationTypes() {
-		if ($this->refereerelationtypes == null) {
+	public function getTypes() {
+		if ($this->types == null) {
 			$this->recursive = -1;
-			$this->refereerelationtypes = $this->find('all',
-																								array(
-																											'order' => 'title',
-																											)
-																								);
+			$arrTemp = $this->find('all',
+														 array(
+																	 'order' => 'title',
+																	 )
+														 );
+
+			// sids for keys (maybe there is a better/faster solution?)
+			$this->types = array();
+			foreach ($arrTemp as $dtaTemp) {
+				$this->types[$dtaTemp['RefereeRelationType']['sid']] = $dtaTemp;
+			}
 		}
 
-		return $this->refereerelationtypes;
+		return $this->types;
 	}
 
 	/**
-	 * Returns referee relation type list.
+	 * Returns type list.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return list of referee relation types
+	 * @return list of types
 	 *
 	 * @version 0.6
 	 * @since 0.3
 	 */
-	public function getRefereeRelationTypeList() {
-		if ($this->refereerelationtypelist == null) {
-			$this->refereerelationtypelist = $this->find('list',
-																									 array(
-																												 'order' => 'title',
-																												 )
-																									 );
+	public function getTypeList() {
+		if ($this->typelist == null) {
+			$this->typelist = $this->find('list',
+																		array(
+																					'order' => 'title',
+																					)
+																		);
 		}
 
-		return $this->refereerelationtypelist;
+		return $this->typelist;
 	}
 
 }

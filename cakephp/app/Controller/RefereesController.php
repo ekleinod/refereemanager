@@ -133,12 +133,12 @@ class RefereesController extends AppController {
 		$this->set('contacttypes', $this->ContactType->getContactTypes());
 		$this->set('contacttypelist', $this->ContactType->getContactTypeList());
 		$this->set('leaguelist', $this->League->getLeagueList());
-		$this->set('refereerelationtypelist', $this->RefereeRelationType->getRefereeRelationTypeList());
+		$this->set('refereerelationtypelist', $this->RefereeRelationType->getTypeList());
 		$this->set('sextypes', $this->SexType->getSexTypes());
 		$this->set('sextypelist', $this->SexType->getSexTypeList());
 		$this->set('statustypelist', $this->StatusType->getStatusTypeList());
 		$this->set('trainingleveltypelist', $this->TrainingLevelType->getTrainingLevelTypeList());
-		$this->set('wishtypelist', $this->WishType->getWishTypeList());
+		$this->set('wishtypelist', $this->WishType->getTypeList());
 
 		$this->set('id', $referee['Referee']['id']);
 	}
@@ -160,7 +160,8 @@ class RefereesController extends AppController {
 		$this->set('people', $referees);
 
 		//$this->set('statustypes', $this->getUsedStatusTypes($referees, $theSeason));
-		//$this->set('refereerelationtypes', $this->getUsedRefereeRelationTypes($referees));
+		$this->set('refereerelationtypes', $this->RefereeRelationType->getTypes());
+		$this->set('wishtypes', $this->WishType->getTypes());
 
 		$this->set('isRefView', true);
 	}
@@ -174,7 +175,6 @@ class RefereesController extends AppController {
 	private function setAndGetStandard() {
 
 		$this->set('seasonlist', $this->Season->getSeasonList($this->viewVars['isEditor']));
-		$this->set('refereerelationtypes', $this->RefereeRelationType->getRefereeRelationTypes());
 
 		$this->set('controller', 'Referees');
 	}
