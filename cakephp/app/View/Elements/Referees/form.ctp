@@ -263,7 +263,7 @@
 														null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
 														false, false);
 
-					$tmpA = array('Contact', 'editor_only', __('Sichtbarkeit'), __('Nur für Editoren'));
+					$tmpA = array('Contact', 'editor_only', __('Nur für Editoren'));
 					$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
 					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
 														sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),

@@ -202,7 +202,7 @@ class RefManTemplate {
 				foreach ($refereestatus[$partID] as $valueID => $value) {
 					$txtReturn = RefManTemplate::replace($txtReturn,
 																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
-																							 ((in_array(strtolower($valueID), $dateFields)) ? RefManRefereeFormat::formatDate($value, 'date') : $value));
+																							 $value);
 				}
 			}
 		}
@@ -215,7 +215,20 @@ class RefManTemplate {
 				foreach ($refereerelation[$partID] as $valueID => $value) {
 					$txtReturn = RefManTemplate::replace($txtReturn,
 																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
-																							 ((in_array(strtolower($valueID), $dateFields)) ? RefManRefereeFormat::formatDate($value, 'date') : $value));
+																							 $value);
+				}
+			}
+		}
+
+		// wishes
+		if (!empty($referee['Wish'])) {
+			foreach ($referee['Wish'] as $wish) {
+				$partID = 'Wish';
+				$tmpID = $wish[$partID]['id'];
+				foreach ($wish[$partID] as $valueID => $value) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																							 $value);
 				}
 			}
 		}
