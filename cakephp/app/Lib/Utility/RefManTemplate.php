@@ -247,8 +247,21 @@ class RefManTemplate {
 																				 (empty($person['Person']['dayofdeath'])) ? '' : sprintf('†&nbsp;%s', RefManRefereeFormat::formatDate($person['Person']['dayofdeath'], 'date')));
 
 		// contacts
-		$modelContact = ClassRegistry::init('RefereeRelation');
-		foreach ($modelContact->getContactKinds() as $cType) {
+		$modelName = 'Contact';
+		if (array_key_exists($modelName, $person) && !empty($person[$modelName])) {
+			$modelContact = ClassRegistry::init($modelName);
+			foreach ($modelContact->getContactKinds() as $cType) {
+
+				if (array_key_exists($cType, $person[$modelName]) && !empty($person[$modelName][$cType])) {
+					foreach ($person[$modelName][$cType] as $theID => $theContent) {
+						debug($theID);
+					}
+				}
+
+				// catch all
+				//$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $person);
+
+			}
 		}
 /*		$tmpContacts = $person['Contact']['Email'];
 		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:emails',
