@@ -122,11 +122,28 @@
 
 			// contacts
 			foreach ($referee['Contact'] as $contactKind => $arrContacts) {
+				if ($isEdit) {
+					$arrContacts[0] = array();
+				}
 				foreach ($arrContacts as $contactid => $contact) {
 					$tmpFieldset = $this->Html->tag('legend', __('Kontakt: %s', $contactKind));
 
-//					$tmpID = $contact[$contactKind]['id'];
 					$tmpID = $contactid;
+
+					if ($isEdit) {
+						if ($tmpID == 0) {
+							$tmpA = array('Contact', 'add', __('Neu'));
+						} else {
+							$tmpA = array('Contact', 'delete', __('Löschen'));
+						}
+						$tmpB = 0;
+						$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
+															sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+															$tmpA[2],
+															$tmpB,
+															null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+															false, false);
+					}
 
 					switch ($contactKind) {
 						case 'Address':
@@ -219,8 +236,6 @@
 							break;
 					}
 
-//					$tmpID = $contactid;
-
 					$tmpA = array('Contact', 'contact_type_id', __('Kontaktart'));
 					$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
 					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
@@ -239,7 +254,7 @@
 														null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
 														false, false);
 
-					$tmpA = array('Contact', 'is_primary', __('Primärkontakt'), __('Primärkontakt'));
+					$tmpA = array('Contact', 'is_primary', __('Primärkontakt'));
 					$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
 					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
 														sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
@@ -273,7 +288,7 @@
 			// training level and updates
 			foreach ($referee['TrainingLevel'] as $traininglevel) {
 				$tmpFieldset = $this->Html->tag('legend', __('Ausbildung: %s', $traininglevel['TrainingLevelType']['display_title']));
-				$tmpID = $traininglevel['TrainingLevelType']['id'];
+				$tmpID = $traininglevel['TrainingLevel']['id'];
 
 				$tmpA = array('TrainingLevel', 'training_level_type_id', __('Ausbildungsart'));
 				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');

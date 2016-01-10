@@ -56,8 +56,8 @@ if ($isReferee) {
 	if ($isRefView) {
 		foreach ($refereerelationtypes as $refereerelationtype) {
 			$columns['index'][] =
-					$columns['excel'][] = array('title' => __($refereerelationtype['title']),
-																			'content' => $this->Template->getReplaceToken(sprintf('referee:referee_relation_%s', $refereerelationtype['RefereeRelationType']['sid'])));
+					$columns['excel'][] = array('title' => __($refereerelationtype['RefereeRelationType']['display_title']),
+																			'content' => $this->Template->getReplaceToken(sprintf('referee_relation:%s:current', $refereerelationtype['RefereeRelationType']['sid'])));
 		}
 
 		// combined relations
@@ -72,34 +72,22 @@ if ($isReferee) {
 
 		// member and reffor
 		$columns['pdf'][] = array('title' => sprintf('%s<br /><em>%s</em>',
-																								 __($refereerelationtypes[RefereeRelationType::SID_MEMBER]['title']),
-																								 __($refereerelationtypes[RefereeRelationType::SID_REFFOR]['title'])),
+																								 __($refereerelationtypes[RefereeRelationType::SID_MEMBER]['RefereeRelationType']['display_title']),
+																								 __($refereerelationtypes[RefereeRelationType::SID_REFFOR]['RefereeRelationType']['display_title'])),
 															'content' => sprintf('%s%s',
-																									 $this->Template->getReplaceToken(sprintf('referee:referee_relation_%s', RefereeRelationType::SID_MEMBER)),
-																									 $this->Template->getNotEmptyToken(sprintf('referee:referee_relation_%s', RefereeRelationType::SID_REFFOR), sprintf('<br /><em>%s</em>', $this->Template->getReplaceToken(sprintf('referee:referee_relation_%s', RefereeRelationType::SID_REFFOR))))),
+																									 $this->Template->getReplaceToken(sprintf('referee_relation:%s:current', RefereeRelationType::SID_MEMBER)),
+																									 $this->Template->getNotEmptyToken(sprintf('referee_relation:%s:current', RefereeRelationType::SID_REFFOR), sprintf('<br /><em>%s</em>', $this->Template->getReplaceToken(sprintf('referee_relation:%s:current', RefereeRelationType::SID_REFFOR))))),
 															'pdf' => $params);
 
-		// prefer and noassignment
-		if ($isEditor) {
-			$columns['pdf'][] = array('title' => sprintf('%s<br /><em>%s</em>',
-																									 __($refereerelationtypes[RefereeRelationType::SID_PREFER]['title']),
-																									 __($refereerelationtypes[RefereeRelationType::SID_NOASSIGNMENT]['title'])),
-																'content' => sprintf('%s%s',
-																										 $this->Template->getReplaceToken(sprintf('referee:referee_relation_%s', RefereeRelationType::SID_PREFER)),
-																										 $this->Template->getNotEmptyToken(sprintf('referee:referee_relation_%s', RefereeRelationType::SID_NOASSIGNMENT), sprintf('<br /><em>%s</em>', $this->Template->getReplaceToken(sprintf('referee:referee_relation_%s', RefereeRelationType::SID_NOASSIGNMENT))))),
-																'pdf' => $params);
+	}
 
-			// other (should not be reached)
-			foreach ($refereerelationtypes as $sid => $refereerelationtype) {
-				if (($sid != RefereeRelationType::SID_MEMBER) &&
-						($sid != RefereeRelationType::SID_REFFOR) &&
-						($sid != RefereeRelationType::SID_PREFER) &&
-						($sid != RefereeRelationType::SID_NOASSIGNMENT)) {
-					$columns['pdf'][] = array('title' => __($refereerelationtype['title']),
-																		'content' => $this->Template->getReplaceToken(sprintf('referee:referee_relation_%s', $sid)),
-																		'pdf' => $params);
-				}
-			}
+// wishes
+	if ($isRefView) {
+		foreach ($wishtypes as $wishtype) {
+			$columns['index'][] =
+					$columns['pdf'][] =
+					$columns['excel'][] = array('title' => __($wishtype['WishType']['display_title']),
+																			'content' => $this->Template->getReplaceToken(sprintf('wish:%s:current', $wishtype['WishType']['sid'])));
 		}
 	}
 

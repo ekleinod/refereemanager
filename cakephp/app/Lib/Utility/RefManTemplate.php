@@ -170,51 +170,58 @@ class RefManTemplate {
 		$txtReturn = $text;
 
 		$txtReturn = RefManTemplate::replacePersonData($txtReturn, $referee, $type, $export);
-/*
-		// referee relation types
-		if (empty(RefManTemplate::$refereerelationtypes)) {
-			$model = ClassRegistry::init('RefereeRelationType');
-			$model->recursive = -1;
-			RefManTemplate::$refereerelationtypes = $model->find('all');
-		}
-		foreach (RefManTemplate::$refereerelationtypes as $relationtype) {
-			$sid = $relationtype['RefereeRelationType']['sid'];
-			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('referee:referee_relation_%s', $sid),
-																					 RefManRefereeFormat::formatRelations(RefManPeople::getRelations($referee, $sid), $type, $export));
-		}
 
-		// training
-		$traininglevel = RefManPeople::getTrainingLevel($referee);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:title',
-																				 (empty($traininglevel) || empty($traininglevel['TrainingLevelType']['title'])) ? '' : $traininglevel['TrainingLevelType']['title']);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:abbreviation',
-																				 (empty($traininglevel) || empty($traininglevel['TrainingLevelType']['abbreviation'])) ? '' : $traininglevel['TrainingLevelType']['abbreviation']);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:since',
-																				 (empty($traininglevel) || empty($traininglevel['TrainingLevel']['since'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['TrainingLevel']['since'], 'date'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:lasttrainingupdate',
-																				 (empty($traininglevel) || empty($traininglevel['lasttrainingupdate'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['lasttrainingupdate'], 'date'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:nexttrainingupdate',
-																				 (empty($traininglevel) || empty($traininglevel['nexttrainingupdate'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['nexttrainingupdate'], 'year'));
-
-		// status
-		if (empty(RefManTemplate::$statustypes)) {
-			$model = ClassRegistry::init('StatusType');
-			$model->recursive = -1;
-			$tmp = $model->find('all');
-			RefManTemplate::$statustypes = array();
-			foreach ($tmp as $statustype) {
-				RefManTemplate::$statustypes[$statustype['StatusType']['id']] = $statustype;
+		// traininglevel
+		if (!empty($referee['TrainingLevel'])) {
+			$dateFields = array('since', 'update');
+			foreach ($referee['TrainingLevel'] as $traininglevel) {
+				$partID = 'TrainingLevel';
+				$tmpID = $traininglevel[$partID]['id'];
+				foreach ($traininglevel[$partID] as $valueID => $value) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																							 ((in_array(strtolower($valueID), $dateFields)) ? RefManRefereeFormat::formatDate($value, 'date') : $value));
+				}
+				$partID = 'TrainingUpdate';
+				foreach ($traininglevel[$partID] as $trainingupdate) {
+					$tmpID = $trainingupdate[$partID]['id'];
+					foreach ($trainingupdate[$partID] as $valueID => $value) {
+						$txtReturn = RefManTemplate::replace($txtReturn,
+																								 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																								 ((in_array(strtolower($valueID), $dateFields)) ? RefManRefereeFormat::formatDate($value, 'date') : $value));
+					}
+				}
 			}
 		}
-		foreach ($referee['RefereeStatus'] as $refereestatus) {
-			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('refereestatus:%s:title', $refereestatus['season_id']),
-																					 RefManTemplate::$statustypes[$refereestatus['status_type_id']]['StatusType']['title']);
-			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('refereestatus:%s:remark', $refereestatus['season_id']),
-																					 (empty($refereestatus['remark'])) ? '' : $refereestatus['remark']);
+
+		// refereestatus
+		if (!empty($referee['RefereeStatus'])) {
+			foreach ($referee['RefereeStatus'] as $refereestatus) {
+				$partID = 'RefereeStatus';
+				$tmpID = $refereestatus[$partID]['id'];
+				foreach ($refereestatus[$partID] as $valueID => $value) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																							 ((in_array(strtolower($valueID), $dateFields)) ? RefManRefereeFormat::formatDate($value, 'date') : $value));
+				}
+			}
+		}
+
+		// refereerelation
+		if (!empty($referee['RefereeRelation'])) {
+			foreach ($referee['RefereeRelation'] as $refereerelation) {
+				$partID = 'RefereeRelation';
+				$tmpID = $refereerelation[$partID]['id'];
+				foreach ($refereerelation[$partID] as $valueID => $value) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																							 ((in_array(strtolower($valueID), $dateFields)) ? RefManRefereeFormat::formatDate($value, 'date') : $value));
+				}
+			}
 		}
 
 		// catch all
-		$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $referee);*/
+		$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $referee);
 
 		return $txtReturn;
 	}
@@ -247,6 +254,7 @@ class RefManTemplate {
 																				 (empty($person['Person']['dayofdeath'])) ? '' : sprintf('†&nbsp;%s', RefManRefereeFormat::formatDate($person['Person']['dayofdeath'], 'date')));
 
 		// contacts
+<<<<<<< HEAD
 		$modelName = 'Contact';
 		if (array_key_exists($modelName, $person) && !empty($person[$modelName])) {
 			$modelContact = ClassRegistry::init($modelName);
@@ -287,19 +295,22 @@ class RefManTemplate {
 		$isPrivate = false;
 		foreach ($tmpContacts as $tmpContact) {
 			$isPrivate |= $tmpContact['info']['editor_only'];
+=======
+		if (!empty($person['Contact'])) {
+			foreach ($person['Contact'] as $contactType => $typeContacts) {
+				foreach ($typeContacts as $contactID => $contactDetail) {
+					foreach ($contactDetail as $partID => $part) {
+						foreach ($part as $valueID => $value) {
+							$txtReturn = RefManTemplate::replace($txtReturn,
+																									 sprintf('%s:%d:%s', strtolower($partID), $contactID, strtolower($valueID)),
+																									 $value);
+						}
+					}
+				}
+			}
+>>>>>>> 4c998f3ea08c45697a92a437d1a5de8be04fedfb
 		}
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:addresses:editor_only', $isPrivate);
 
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:urls',
-																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Url'), $type, 'Url', $export));
-
-		// primary contact
-		$primaryAddress = RefManPeople::getPrimaryContact($person, 'Address');
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:primary:streetnumber',
-																					RefManRefereeFormat::formatAddress($primaryAddress, 'streetnumber', $type));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:primary:zipcity',
-																					RefManRefereeFormat::formatAddress($primaryAddress, 'zipcity', $type));
-*/
 		// catch all
 		$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $person);
 

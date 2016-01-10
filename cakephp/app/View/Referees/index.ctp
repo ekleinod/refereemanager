@@ -50,7 +50,7 @@
 
 
 			<table class="table table-striped table-bordered table-condensed table-responsive">
-				<caption><?php echo $title_for_layout; ?> <?php echo $season['Season']['title_season']; ?></caption>
+				<caption><?php echo $title_for_layout; ?> <?php echo $season['Season']['display_title']; ?></caption>
 
 				<?php
 					include_once('columns.php');
@@ -68,13 +68,13 @@
 
 				<tbody>
 					<?php
-						/*foreach ($people as $person) {
+						foreach ($people as $person) {
 
 							$tmpFormat = null;
 							if ($isRefView) {
-								//$tmpStatus = $this->People->getRefereeStatus($person, $season);
-								if (($tmpStatus !== null) && (array_key_exists($tmpStatus['status_type_id'], $statustypes))) {
-									$tmpFormat = $this->Html->style(Configure::read(sprintf('RefMan.statustypes.%s', $statustypes[$tmpStatus['status_type_id']]['StatusType']['sid'])));
+								$tmpStatus = $this->Referee->getRefereeStatus($person, $season);
+								if ($tmpStatus !== null) {
+									$tmpFormat = $this->Html->style(Configure::read(sprintf('RefMan.statustypes.%s', $tmpStatus['StatusType']['sid'])));
 								}
 							}
 
@@ -91,7 +91,7 @@
 																											 'text',
 																											 'html'
 																											 );
-						}*/
+						}
 					?>
 				</tbody>
 			</table>
@@ -131,7 +131,7 @@
 		?>
 
 		<?php
-			//debug($people);
+			debug($people);
 		?>
 
 	</div>
