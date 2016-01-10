@@ -72,46 +72,46 @@ class SexType extends AppModel {
 	const SID_UNKNOWN = 'unknown';
 
 	/** Singletons for fast access. */
-	private $sextypes = null;
-	private $sextypelist = null;
+	private $types = null;
+	private $typelist = null;
 
 	/**
-	 * Returns sex types.
+	 * Returns types.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return array of sex types
+	 * @return array of types
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
-	public function getSexTypes() {
-		if ($this->sextypes == null) {
+	public function getTypes() {
+		if ($this->types == null) {
 			$this->recursive = -1;
-			$this->sextypes = array();
+			$this->types = array();
 			foreach ($this->find('all') as $sextype) {
-				$this->sextypes[$sextype['SexType']['id']] = $sextype;
+				$this->types[$sextype['SexType']['id']] = $sextype;
 			}
 		}
 
-		return $this->sextypes;
+		return $this->types;
 	}
 
 	/**
-	 * Returns sex type.
+	 * Returns type.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @param sid sex type's sid
-	 * @return sex type
+	 * @param sid type's sid
+	 * @return type
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public function getSexType($sid) {
-		foreach ($this->getSexTypes() as $sextype) {
+	public function getType($sid) {
+		foreach ($this->getTypes() as $sextype) {
 			if ($sextype['SexType']['sid'] === $sid) {
 				return $sextype;
 			}
@@ -121,29 +121,29 @@ class SexType extends AppModel {
 	}
 
 	/**
-	 * Returns sex type list.
+	 * Returns type list.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return list of sex types
+	 * @return list of types
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
-	public function getSexTypeList() {
-		if ($this->sextypelist == null) {
+	public function getTypelist() {
+		if ($this->typelist == null) {
 
-			$this->sextypelist = array();
+			$this->typelist = array();
 
-			foreach ($this->getSexTypes() as $sextype) {
-				$this->sextypelist[$sextype['SexType']['id']] = $sextype['SexType']['display_title'];
+			foreach ($this->gettypes() as $sextype) {
+				$this->typelist[$sextype['SexType']['id']] = $sextype['SexType']['display_title'];
 			}
 
-			asort($this->sextypelist, SORT_LOCALE_STRING);
+			asort($this->typelist, SORT_LOCALE_STRING);
 		}
 
-		return $this->sextypelist;
+		return $this->typelist;
 	}
 
 }

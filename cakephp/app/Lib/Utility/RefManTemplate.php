@@ -8,7 +8,7 @@
  * @package       Lib.Utility
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.4
+ * @version 0.6
  * @since 0.3
  */
 class RefManTemplate {
@@ -254,61 +254,12 @@ class RefManTemplate {
 																				 (empty($person['Person']['dayofdeath'])) ? '' : sprintf('†&nbsp;%s', RefManRefereeFormat::formatDate($person['Person']['dayofdeath'], 'date')));
 
 		// contacts
-<<<<<<< HEAD
-		$modelName = 'Contact';
-		if (array_key_exists($modelName, $person) && !empty($person[$modelName])) {
-			$modelContact = ClassRegistry::init($modelName);
-			foreach ($modelContact->getContactKinds() as $cType) {
-
-				if (array_key_exists($cType, $person[$modelName]) && !empty($person[$modelName][$cType])) {
-					foreach ($person[$modelName][$cType] as $theID => $theContent) {
-						debug($theID);
-					}
-				}
-
-				// catch all
-				//$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $person);
-
-			}
-		}
-/*		$tmpContacts = $person['Contact']['Email'];
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:emails',
-																				 RefManRefereeFormat::formatContacts($tmpContacts, $type, 'Email', $export));
-		$isPrivate = false;
-		foreach ($tmpContacts as $tmpContact) {
-			$isPrivate |= $tmpContact['info']['editor_only'];
-		}
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:emails:editor_only', $isPrivate);
-
-		$tmpContacts = RefManPeople::getContacts($person, 'PhoneNumber');
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:phonenumbers_national',
-																				 RefManRefereeFormat::formatContacts($tmpContacts, 'national', 'PhoneNumber', $export));
-		$isPrivate = false;
-		foreach ($tmpContacts as $tmpContact) {
-			$isPrivate |= $tmpContact['info']['editor_only'];
-		}
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:phonenumbers:editor_only', $isPrivate);
-
-		$tmpContacts = RefManPeople::getContacts($person, 'Address');
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:addresses_fulladdress',
-																				 RefManRefereeFormat::formatContacts($tmpContacts, 'fulladdress', 'Address', $export));
-		$isPrivate = false;
-		foreach ($tmpContacts as $tmpContact) {
-			$isPrivate |= $tmpContact['info']['editor_only'];
-=======
 		if (!empty($person['Contact'])) {
 			foreach ($person['Contact'] as $contactType => $typeContacts) {
 				foreach ($typeContacts as $contactID => $contactDetail) {
-					foreach ($contactDetail as $partID => $part) {
-						foreach ($part as $valueID => $value) {
-							$txtReturn = RefManTemplate::replace($txtReturn,
-																									 sprintf('%s:%d:%s', strtolower($partID), $contactID, strtolower($valueID)),
-																									 $value);
-						}
-					}
+					$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $contactDetail, $contactID);
 				}
 			}
->>>>>>> 4c998f3ea08c45697a92a437d1a5de8be04fedfb
 		}
 
 		// catch all
@@ -370,18 +321,20 @@ class RefManTemplate {
 	 * @param $object object
 	 * @return replaced text
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
-	public static function replaceSimpleObjectData($text, $object) {
+	public static function replaceSimpleObjectData($text, $object, $id = null) {
 		$txtReturn = $text;
+
+		$token = (empty($id)) ? '%s:%s' : '%1$s:%3$d:%2$s';
 
 		foreach ($object as $objectkey => $objectentry) {
 			foreach ($objectentry as $entrykey => $entryvalue) {
 				if (!is_array($entryvalue)) {
 					$txtReturn = RefManTemplate::replace(
 																							 $txtReturn,
-																							 sprintf('%s:%s', strtolower($objectkey), strtolower($entrykey)),
+																							 sprintf($token, strtolower($objectkey), strtolower($entrykey), $id),
 																							 empty($entryvalue) ? '' : $entryvalue
 																							 );
 				}

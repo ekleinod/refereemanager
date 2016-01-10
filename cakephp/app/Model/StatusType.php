@@ -22,12 +22,26 @@ class StatusType extends AppModel {
 	public $name = 'StatusType';
 
 	/**
+	 * Declare virtual display field in constructor to be alias-safe.
+	 *
+	 * @version 0.6
+	 * @since 0.6
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['display_title'] = sprintf(
+			'%1$s.title',
+			$this->alias
+		);
+	}
+
+	/**
 	 * Display field
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'title';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
