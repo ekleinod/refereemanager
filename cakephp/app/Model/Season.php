@@ -139,7 +139,7 @@ class Season extends AppModel {
 	}
 
 	/**
-	 * Returns season lists.
+	 * Returns season list.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
