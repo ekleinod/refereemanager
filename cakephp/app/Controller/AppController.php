@@ -201,7 +201,7 @@ class AppController extends Controller {
 			$year = $theSeason['Season']['year_start'];
 		}
 
-		$theSeason = $this->Season->getSeason($year, $this->viewVars['isEditor']);
+		$theSeason = $this->Season->getSeason($this->viewVars['isEditor'], $year);
 		$this->set('season', $theSeason);
 
 		return $theSeason;

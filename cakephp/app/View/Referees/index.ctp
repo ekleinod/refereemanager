@@ -91,6 +91,7 @@
 																											 'text',
 																											 'html'
 																											 );
+
 						}
 					?>
 				</tbody>

@@ -114,7 +114,7 @@ class AssignmentsController extends AppController {
 					} else {
 						// league game
 
-						$theSeason = $this->Season->getSeason(null, $this->viewVars['isEditor']);
+						$theSeason = $this->Season->getSeason($this->viewVars['isEditor']);
 
 						$tmpData = array();
 

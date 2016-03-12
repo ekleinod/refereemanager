@@ -22,11 +22,11 @@ class RefManTemplate {
 	/** Merge include line. */
 	private static $mergeincludetex = null;
 
-	/** Referee relation types. */
-	private static $refereerelationtypes = null;
+	/** Keyword for current season. */
+	const KEY_CURRENT = 'current';
 
-	/** Referee status types. */
-	private static $statustypes = null;
+	/** Keyword for display title. */
+	const KEY_TITLE = 'disptitle';
 
 	/**
 	 * Returns template text.
@@ -149,9 +149,22 @@ class RefManTemplate {
 		$txtReturn = preg_replace($conditions, $replacements, $txtReturn);
 
 		// replace token with value
-		$txtReturn = str_replace(RefManTemplate::getReplaceToken($token), $value, $txtReturn);
+		return RefManTemplate::replaceText($txtReturn, RefManTemplate::getReplaceToken($token), $value);
+	}
 
-		return $txtReturn;
+	/**
+	 * Replaces replacee in text with value.
+	 *
+	 * @param $text text
+	 * @param $replacee text to be replaced
+	 * @param $value value
+	 * @return replaced text
+	 *
+	 * @version 0.6
+	 * @since 0.6
+	 */
+	public static function replaceText($text, $replacee, $value) {
+		return str_replace($replacee, $value, $text);
 	}
 
 	/**
@@ -170,6 +183,49 @@ class RefManTemplate {
 		$txtReturn = $text;
 
 		$txtReturn = RefManTemplate::replacePersonData($txtReturn, $referee, $type, $export);
+
+		// current season
+		$modelSeason = ClassRegistry::init('Season');
+		$curSeason = $modelSeason->getSeason(false);
+
+		// refereerelation
+		$arrRelevant = array('Club');
+		if (!empty($referee['RefereeRelation'])) {
+			foreach ($referee['RefereeRelation'] as $refereerelation) {
+
+				$partID = 'RefereeRelation';
+				$tmpID = $refereerelation[$partID]['id'];
+
+				if ($refereerelation['Season']['year_start'] == $curSeason['Season']['year_start']) {
+					$txtReturn = RefManTemplate::replaceText($txtReturn,
+																							 sprintf('%s:%s:%s', strtolower($partID), strtolower($refereerelation['RefereeRelationType']['sid']), RefManTemplate::KEY_CURRENT),
+																							 sprintf('%s:%d', strtolower($partID), $tmpID));
+				}
+
+				foreach ($refereerelation[$partID] as $valueID => $value) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																							 $value);
+				}
+
+				foreach ($arrRelevant as $relevant) {
+					foreach ($refereerelation[$relevant] as $valueID => $value) {
+						$txtReturn = RefManTemplate::replaceText($txtReturn,
+																								 sprintf('%s:%d:%s', strtolower($partID), $tmpID, RefManTemplate::KEY_TITLE),
+																								 sprintf('%s:%d:%s', strtolower($partID), $tmpID, 'display_title'));
+						$txtReturn = RefManTemplate::replace($txtReturn,
+																								 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																								 $value);
+					}
+				}
+			}
+		}
+		$modelRefRelTypes = ClassRegistry::init('RefereeRelationType');
+		foreach ($modelRefRelTypes->getTypes() as $type) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%s:%s:%s', strtolower('RefereeRelation'), strtolower($type['RefereeRelationType']['sid']), RefManTemplate::KEY_CURRENT, RefManTemplate::KEY_TITLE),
+																							 '');
+		}
 
 		// traininglevel
 		if (!empty($referee['TrainingLevel'])) {
@@ -200,19 +256,6 @@ class RefManTemplate {
 				$partID = 'RefereeStatus';
 				$tmpID = $refereestatus[$partID]['id'];
 				foreach ($refereestatus[$partID] as $valueID => $value) {
-					$txtReturn = RefManTemplate::replace($txtReturn,
-																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
-																							 $value);
-				}
-			}
-		}
-
-		// refereerelation
-		if (!empty($referee['RefereeRelation'])) {
-			foreach ($referee['RefereeRelation'] as $refereerelation) {
-				$partID = 'RefereeRelation';
-				$tmpID = $refereerelation[$partID]['id'];
-				foreach ($refereerelation[$partID] as $valueID => $value) {
 					$txtReturn = RefManTemplate::replace($txtReturn,
 																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
 																							 $value);

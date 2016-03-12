@@ -74,14 +74,14 @@ class Season extends AppModel {
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @param year start year of season (null == current season)
 	 * @param isEditor is user editor?
+	 * @param year start year of season (null == current season)
 	 * @return season for given start year, null if not present
 	 *
 	 * @version 0.4
 	 * @since 0.1
 	 */
-	public function getSeason($year, $isEditor) {
+	public function getSeason($isEditor, $year = null) {
 
 		$newSeason = 7;
 
