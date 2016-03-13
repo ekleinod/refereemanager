@@ -227,6 +227,28 @@ class RefManTemplate {
 																							 '');
 		}
 
+		// wishes
+		$arrRelevant = array('Club', 'League', 'SexType', 'saturday', 'sunday', 'tournament');
+		if (!empty($referee['Wish'])) {
+			foreach ($referee['Wish'] as $wish) {
+
+				$partID = 'Wish';
+				$tmpID = $wish[$partID]['id'];
+
+				foreach ($wish[$partID] as $valueID => $value) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																							 $value);
+				}
+			}
+		}
+		$modelWishTypes = ClassRegistry::init('WishType');
+		foreach ($modelWishTypes->getTypes() as $type) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%s:%s:%s', strtolower('Wish'), strtolower($type['WishType']['sid']), RefManTemplate::KEY_CURRENT, RefManTemplate::KEY_TITLE),
+																							 '');
+		}
+
 		// traininglevel
 		if (!empty($referee['TrainingLevel'])) {
 			$dateFields = array('since', 'update');
@@ -256,19 +278,6 @@ class RefManTemplate {
 				$partID = 'RefereeStatus';
 				$tmpID = $refereestatus[$partID]['id'];
 				foreach ($refereestatus[$partID] as $valueID => $value) {
-					$txtReturn = RefManTemplate::replace($txtReturn,
-																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
-																							 $value);
-				}
-			}
-		}
-
-		// wishes
-		if (!empty($referee['Wish'])) {
-			foreach ($referee['Wish'] as $wish) {
-				$partID = 'Wish';
-				$tmpID = $wish[$partID]['id'];
-				foreach ($wish[$partID] as $valueID => $value) {
 					$txtReturn = RefManTemplate::replace($txtReturn,
 																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
 																							 $value);
