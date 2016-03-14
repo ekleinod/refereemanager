@@ -20,7 +20,7 @@ class League extends AppModel {
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
 		$this->virtualFields['display_title'] = sprintf(
-			'CONCAT(%1$s.title, " (", %1$s.abbreviation, ")")',
+			'%1$s.title',
 			$this->alias
 		);
 	}

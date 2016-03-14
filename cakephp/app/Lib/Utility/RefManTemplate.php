@@ -173,7 +173,7 @@ class RefManTemplate {
 	 * @param $export export type ('html')
 	 * @return replaced text
 	 *
-	 * @version 0.4
+	 * @version 0.6
 	 * @since 0.3
 	 */
 	public static function replaceRefereeData($text, $referee, $type, $export) {
@@ -202,7 +202,7 @@ class RefManTemplate {
 				$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, array($partID => $refereerelation[$partID]), $tmpID);
 
 				foreach ($arrRelevantModels as $relevantModel) {
-					$relevantKey = sprintf('%s_id', strtolower($relevantModel));
+					$relevantKey = sprintf('%s_id', Inflector::underscore($relevantModel));
 					if ($refereerelation[$partID][$relevantKey]) {
 						$txtReturn = RefManTemplate::replace($txtReturn,
 																								 sprintf('%s:%d', strtolower($partID), $tmpID),
@@ -221,33 +221,55 @@ class RefManTemplate {
 		}
 
 		// wishes
-		$arrRelevant = array('Club', 'League', 'SexType', 'saturday', 'sunday', 'tournament');
+		$arrRelevantAttributes = array('saturday' => __('Sonnabend'), 'sunday' => __('Sonntag'), 'tournament' => __('Turniere'), 'remark' => 'Anmerkung');
+		$arrRelevantModels = array('Club', 'League', 'SexType');
 		if (!empty($referee['Wish'])) {
-			$isFurther = false;
 			foreach ($referee['Wish'] as $wish) {
 
 				$partID = 'Wish';
 				$tmpID = $wish[$partID]['id'];
 
-/*				if ($wish['Season']['year_start'] == $curSeason['Season']['year_start']) {
-					$txtReturn = RefManTemplate::replace($txtReturn,
-																							 sprintf('%s:%s:%s', strtolower($partID), strtolower($wish['WishType']['sid']), RefManTemplate::KEY_CURRENT),
-																							 RefManTemplate::getReplaceToken(sprintf('%s:%d', strtolower($partID), $tmpID)));
-				}*/
+				$txtReturn = RefManTemplate::replace($txtReturn,
+																						 sprintf('%s:%s', strtolower($partID), strtolower($wish['WishType']['sid'])),
+																						 sprintf('%s, %s',
+																										 RefManTemplate::getReplaceToken(sprintf('%s:%d', strtolower($partID), $tmpID)),
+																										 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($partID), strtolower($wish['WishType']['sid'])))));
 
-				foreach ($wish[$partID] as $valueID => $value) {
-					$txtReturn = RefManTemplate::replace($txtReturn,
-																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
-																							 $value);
+				$output = ($wish[$partID]['remark']) ? sprintf('%%s (%s)', $wish[$partID]['remark']) : '%s';
+
+				foreach ($arrRelevantModels as $relevantModel) {
+					$relevantKey = sprintf('%s_id', Inflector::underscore($relevantModel));
+					if ($wish[$partID][$relevantKey]) {
+						$txtReturn = RefManTemplate::replace($txtReturn,
+																								 sprintf('%s:%d', strtolower($partID), $tmpID),
+																								 sprintf($output, RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($relevantModel), $wish[$partID][$relevantKey], 'display_title'))));
+
+						$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, array($relevantModel => $wish[$relevantModel]), $wish[$partID][$relevantKey]);
+					}
 				}
+
+				foreach ($arrRelevantAttributes as $relevantAttribute => $relevantOutput) {
+					if ($wish[$partID][$relevantAttribute]) {
+						$output = ($relevantAttribute === 'remark') ? $wish[$partID][$relevantAttribute] : $output;
+						$txtReturn = RefManTemplate::replace($txtReturn,
+																								 sprintf('%s:%d', strtolower($partID), $tmpID),
+																								 sprintf($output, $relevantOutput));
+					}
+				}
+
+				$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, array($partID => $wish[$partID]), $tmpID);
+
 			}
 		}
-/*		$modelWishTypes = ClassRegistry::init('WishType');
+		$modelWishTypes = ClassRegistry::init('WishType');
 		foreach ($modelWishTypes->getTypes() as $type) {
+					$txtReturn = RefManTemplate::replaceText($txtReturn,
+																									 sprintf(', %s', RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower('Wish'), strtolower($type['WishType']['sid'])))),
+																									 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower('Wish'), strtolower($type['WishType']['sid']))));
 					$txtReturn = RefManTemplate::replace($txtReturn,
-																							 sprintf('%s:%s:%s', strtolower('Wish'), strtolower($type['WishType']['sid']), RefManTemplate::KEY_CURRENT),
+																							 sprintf('%s:%s', strtolower('Wish'), strtolower($type['WishType']['sid'])),
 																							 '');
-		}*/
+		}
 
 		// traininglevel
 		if (!empty($referee['TrainingLevel'])) {
