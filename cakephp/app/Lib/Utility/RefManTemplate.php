@@ -25,9 +25,6 @@ class RefManTemplate {
 	/** Keyword for current season. */
 	const KEY_CURRENT = 'current';
 
-	/** Keyword for display title. */
-	const KEY_TITLE = 'disptitle';
-
 	/**
 	 * Returns template text.
 	 *
@@ -189,7 +186,7 @@ class RefManTemplate {
 		$curSeason = $modelSeason->getSeason(false);
 
 		// refereerelation
-		$arrRelevant = array('Club');
+		$arrRelevantModels = array('Club');
 		if (!empty($referee['RefereeRelation'])) {
 			foreach ($referee['RefereeRelation'] as $refereerelation) {
 
@@ -198,24 +195,20 @@ class RefManTemplate {
 
 				if ($refereerelation['Season']['year_start'] == $curSeason['Season']['year_start']) {
 					$txtReturn = RefManTemplate::replaceText($txtReturn,
-																							 sprintf('%s:%s:%s', strtolower($partID), strtolower($refereerelation['RefereeRelationType']['sid']), RefManTemplate::KEY_CURRENT),
-																							 sprintf('%s:%d', strtolower($partID), $tmpID));
+																									 sprintf('%s:%s:%s', strtolower($partID), strtolower($refereerelation['RefereeRelationType']['sid']), RefManTemplate::KEY_CURRENT),
+																									 sprintf('%s:%d', strtolower($partID), $tmpID));
 				}
 
-				foreach ($refereerelation[$partID] as $valueID => $value) {
-					$txtReturn = RefManTemplate::replace($txtReturn,
-																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
-																							 $value);
-				}
+				$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, array($partID => $refereerelation[$partID]), $tmpID);
 
-				foreach ($arrRelevant as $relevant) {
-					foreach ($refereerelation[$relevant] as $valueID => $value) {
-						$txtReturn = RefManTemplate::replaceText($txtReturn,
-																								 sprintf('%s:%d:%s', strtolower($partID), $tmpID, RefManTemplate::KEY_TITLE),
-																								 sprintf('%s:%d:%s', strtolower($partID), $tmpID, 'display_title'));
+				foreach ($arrRelevantModels as $relevantModel) {
+					$relevantKey = sprintf('%s_id', strtolower($relevantModel));
+					if ($refereerelation[$partID][$relevantKey]) {
 						$txtReturn = RefManTemplate::replace($txtReturn,
-																								 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
-																								 $value);
+																								 sprintf('%s:%d', strtolower($partID), $tmpID),
+																								 RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($relevantModel), $refereerelation[$partID][$relevantKey], 'display_title')));
+
+						$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, array($relevantModel => $refereerelation[$relevantModel]), $refereerelation[$partID][$relevantKey]);
 					}
 				}
 			}
@@ -223,17 +216,24 @@ class RefManTemplate {
 		$modelRefRelTypes = ClassRegistry::init('RefereeRelationType');
 		foreach ($modelRefRelTypes->getTypes() as $type) {
 					$txtReturn = RefManTemplate::replace($txtReturn,
-																							 sprintf('%s:%s:%s:%s', strtolower('RefereeRelation'), strtolower($type['RefereeRelationType']['sid']), RefManTemplate::KEY_CURRENT, RefManTemplate::KEY_TITLE),
+																							 sprintf('%s:%s:%s', strtolower('RefereeRelation'), strtolower($type['RefereeRelationType']['sid']), RefManTemplate::KEY_CURRENT),
 																							 '');
 		}
 
 		// wishes
 		$arrRelevant = array('Club', 'League', 'SexType', 'saturday', 'sunday', 'tournament');
 		if (!empty($referee['Wish'])) {
+			$isFurther = false;
 			foreach ($referee['Wish'] as $wish) {
 
 				$partID = 'Wish';
 				$tmpID = $wish[$partID]['id'];
+
+/*				if ($wish['Season']['year_start'] == $curSeason['Season']['year_start']) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%s:%s', strtolower($partID), strtolower($wish['WishType']['sid']), RefManTemplate::KEY_CURRENT),
+																							 RefManTemplate::getReplaceToken(sprintf('%s:%d', strtolower($partID), $tmpID)));
+				}*/
 
 				foreach ($wish[$partID] as $valueID => $value) {
 					$txtReturn = RefManTemplate::replace($txtReturn,
@@ -242,12 +242,12 @@ class RefManTemplate {
 				}
 			}
 		}
-		$modelWishTypes = ClassRegistry::init('WishType');
+/*		$modelWishTypes = ClassRegistry::init('WishType');
 		foreach ($modelWishTypes->getTypes() as $type) {
 					$txtReturn = RefManTemplate::replace($txtReturn,
-																							 sprintf('%s:%s:%s:%s', strtolower('Wish'), strtolower($type['WishType']['sid']), RefManTemplate::KEY_CURRENT, RefManTemplate::KEY_TITLE),
+																							 sprintf('%s:%s:%s', strtolower('Wish'), strtolower($type['WishType']['sid']), RefManTemplate::KEY_CURRENT),
 																							 '');
-		}
+		}*/
 
 		// traininglevel
 		if (!empty($referee['TrainingLevel'])) {
