@@ -272,16 +272,30 @@ class RefManTemplate {
 		}
 
 		// traininglevel
+		$arrRelevantModels = array('TrainingLevelType');
 		if (!empty($referee['TrainingLevel'])) {
 			$dateFields = array('since', 'update');
+
+			$partID = 'TrainingLevel';
+			$txtReturn = RefManTemplate::replaceText($txtReturn,
+																							 sprintf('%s:%s', strtolower($partID), RefManTemplate::KEY_CURRENT),
+																							 sprintf('%s:%d', strtolower($partID), $referee[$partID][count($referee[$partID]) - 1][$partID]['id']));
+
 			foreach ($referee['TrainingLevel'] as $traininglevel) {
+
 				$partID = 'TrainingLevel';
 				$tmpID = $traininglevel[$partID]['id'];
-				foreach ($traininglevel[$partID] as $valueID => $value) {
-					$txtReturn = RefManTemplate::replace($txtReturn,
-																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
-																							 ((in_array(strtolower($valueID), $dateFields)) ? RefManRefereeFormat::formatDate($value, 'date') : $value));
+
+				foreach ($dateFields as $dateField) {
+					if (array_key_exists($dateField, $traininglevel[$partID])) {
+						$txtReturn = RefManTemplate::replace($txtReturn,
+																								 sprintf('%s:%d:%s', strtolower($partID), $tmpID, $dateField),
+																								 RefManRefereeFormat::formatDate($traininglevel[$partID][$dateField], 'date'));
+					}
 				}
+
+				$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, array($partID => $traininglevel[$partID]), $tmpID);
+
 				$partID = 'TrainingUpdate';
 				foreach ($traininglevel[$partID] as $trainingupdate) {
 					$tmpID = $trainingupdate[$partID]['id'];

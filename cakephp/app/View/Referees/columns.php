@@ -82,7 +82,7 @@ if ($isReferee) {
 	}
 
 // wishes
-	if ($isRefView) {
+	if ($isRefView && $isEditor) {
 		foreach ($wishtypes as $wishtype) {
 			$columns['index'][] =
 					$columns['pdf'][] =
@@ -183,7 +183,7 @@ if ($isRefView) {
 	$columns['index'][] =
 			$columns['pdf'][] =
 			$columns['excel'][] = array('title' => __('Ausbildung'),
-																	'content' => $this->Template->getReplaceToken('traininglevel:abbreviation'),
+																	'content' => $this->Template->getReplaceToken(sprintf('traininglevel:%s:since', RefManTemplate::KEY_CURRENT)),
 																	'pdf' => $params);
 }
 
