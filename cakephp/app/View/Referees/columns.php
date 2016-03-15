@@ -183,7 +183,7 @@ if ($isRefView) {
 	$columns['index'][] =
 			$columns['pdf'][] =
 			$columns['excel'][] = array('title' => __('Ausbildung'),
-																	'content' => $this->Template->getReplaceToken(sprintf('traininglevel:%s:since', RefManTemplate::KEY_CURRENT)),
+																	'content' => $this->Template->getReplaceToken(sprintf('traininglevel:%s:abbreviation', RefManTemplate::KEY_CURRENT)),
 																	'pdf' => $params);
 }
 
