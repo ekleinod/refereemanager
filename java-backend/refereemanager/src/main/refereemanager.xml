@@ -42,6 +42,9 @@
 
       <!-- The destination directory of your generated classes -->
       <directory>src/main/java/</directory>
+      
+      <!-- The file encoding to be used with all output files -->
+      <encoding>UTF-8</encoding>
     </target>
   </generator>
 </configuration>
