@@ -6,3 +6,5 @@ empty
 /cakephp/lib/
 /cakephp/plugins/
 /cakephp/vendors/
+/java-backend/refereemanager/target/
+
