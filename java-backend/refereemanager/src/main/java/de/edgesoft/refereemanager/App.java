@@ -10,7 +10,7 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.types.UInteger;
 
-import static de.edgesoft.refereemanager.jooq.tables.RfrmgrPeople.RFRMGR_PEOPLE;
+import static de.edgesoft.refereemanager.jooq.tables.People.RFRMGR_PEOPLE;
 
 
 /**
