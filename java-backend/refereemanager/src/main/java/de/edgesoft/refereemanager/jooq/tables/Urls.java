@@ -36,12 +36,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Urls extends TableImpl<UrlsRecord> {
 
-    private static final long serialVersionUID = -1372809646;
+    private static final long serialVersionUID = 1572953759;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_urls</code>
      */
-    public static final Urls RFRMGR_URLS = new Urls();
+    public static final Urls URLS = new Urls();
 
     /**
      * The class holding records for this type
@@ -77,7 +77,7 @@ public class Urls extends TableImpl<UrlsRecord> {
      * Create an aliased <code>refereemanager.rfrmgr_urls</code> table reference
      */
     public Urls(String alias) {
-        this(alias, RFRMGR_URLS);
+        this(alias, URLS);
     }
 
     private Urls(String alias, Table<UrlsRecord> aliased) {
@@ -101,7 +101,7 @@ public class Urls extends TableImpl<UrlsRecord> {
      */
     @Override
     public Identity<UrlsRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_URLS;
+        return Keys.IDENTITY_URLS;
     }
 
     /**

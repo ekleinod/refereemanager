@@ -30,7 +30,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereeAssignmentRemarkTypesRecord extends UpdatableRecordImpl<RefereeAssignmentRemarkTypesRecord> implements Record3<UInteger, String, String> {
 
-    private static final long serialVersionUID = 460081620;
+    private static final long serialVersionUID = 662857683;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_referee_assignment_remark_types.id</code>.
@@ -111,7 +111,7 @@ public class RefereeAssignmentRemarkTypesRecord extends UpdatableRecordImpl<Refe
      */
     @Override
     public Field<UInteger> field1() {
-        return RefereeAssignmentRemarkTypes.RFRMGR_REFEREE_ASSIGNMENT_REMARK_TYPES.ID;
+        return RefereeAssignmentRemarkTypes.REFEREE_ASSIGNMENT_REMARK_TYPES.ID;
     }
 
     /**
@@ -119,7 +119,7 @@ public class RefereeAssignmentRemarkTypesRecord extends UpdatableRecordImpl<Refe
      */
     @Override
     public Field<String> field2() {
-        return RefereeAssignmentRemarkTypes.RFRMGR_REFEREE_ASSIGNMENT_REMARK_TYPES.TITLE;
+        return RefereeAssignmentRemarkTypes.REFEREE_ASSIGNMENT_REMARK_TYPES.TITLE;
     }
 
     /**
@@ -127,7 +127,7 @@ public class RefereeAssignmentRemarkTypesRecord extends UpdatableRecordImpl<Refe
      */
     @Override
     public Field<String> field3() {
-        return RefereeAssignmentRemarkTypes.RFRMGR_REFEREE_ASSIGNMENT_REMARK_TYPES.REMARK;
+        return RefereeAssignmentRemarkTypes.REFEREE_ASSIGNMENT_REMARK_TYPES.REMARK;
     }
 
     /**
@@ -200,14 +200,14 @@ public class RefereeAssignmentRemarkTypesRecord extends UpdatableRecordImpl<Refe
      * Create a detached RefereeAssignmentRemarkTypesRecord
      */
     public RefereeAssignmentRemarkTypesRecord() {
-        super(RefereeAssignmentRemarkTypes.RFRMGR_REFEREE_ASSIGNMENT_REMARK_TYPES);
+        super(RefereeAssignmentRemarkTypes.REFEREE_ASSIGNMENT_REMARK_TYPES);
     }
 
     /**
      * Create a detached, initialised RefereeAssignmentRemarkTypesRecord
      */
     public RefereeAssignmentRemarkTypesRecord(UInteger id, String title, String remark) {
-        super(RefereeAssignmentRemarkTypes.RFRMGR_REFEREE_ASSIGNMENT_REMARK_TYPES);
+        super(RefereeAssignmentRemarkTypes.REFEREE_ASSIGNMENT_REMARK_TYPES);
 
         set(0, id);
         set(1, title);

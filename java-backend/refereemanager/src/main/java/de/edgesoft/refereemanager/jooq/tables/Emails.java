@@ -36,12 +36,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Emails extends TableImpl<EmailsRecord> {
 
-    private static final long serialVersionUID = 1569408869;
+    private static final long serialVersionUID = 462956040;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_emails</code>
      */
-    public static final Emails RFRMGR_EMAILS = new Emails();
+    public static final Emails EMAILS = new Emails();
 
     /**
      * The class holding records for this type
@@ -77,7 +77,7 @@ public class Emails extends TableImpl<EmailsRecord> {
      * Create an aliased <code>refereemanager.rfrmgr_emails</code> table reference
      */
     public Emails(String alias) {
-        this(alias, RFRMGR_EMAILS);
+        this(alias, EMAILS);
     }
 
     private Emails(String alias, Table<EmailsRecord> aliased) {
@@ -101,7 +101,7 @@ public class Emails extends TableImpl<EmailsRecord> {
      */
     @Override
     public Identity<EmailsRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_EMAILS;
+        return Keys.IDENTITY_EMAILS;
     }
 
     /**

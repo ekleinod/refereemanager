@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LeaguePlannedRefereesRecord extends UpdatableRecordImpl<LeaguePlannedRefereesRecord> implements Record5<UInteger, UInteger, UInteger, UInteger, UInteger> {
 
-    private static final long serialVersionUID = 179606838;
+    private static final long serialVersionUID = 716142227;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_league_planned_referees.id</code>.
@@ -138,7 +138,7 @@ public class LeaguePlannedRefereesRecord extends UpdatableRecordImpl<LeaguePlann
      */
     @Override
     public Field<UInteger> field1() {
-        return LeaguePlannedReferees.RFRMGR_LEAGUE_PLANNED_REFEREES.ID;
+        return LeaguePlannedReferees.LEAGUE_PLANNED_REFEREES.ID;
     }
 
     /**
@@ -146,7 +146,7 @@ public class LeaguePlannedRefereesRecord extends UpdatableRecordImpl<LeaguePlann
      */
     @Override
     public Field<UInteger> field2() {
-        return LeaguePlannedReferees.RFRMGR_LEAGUE_PLANNED_REFEREES.LEAGUE_ID;
+        return LeaguePlannedReferees.LEAGUE_PLANNED_REFEREES.LEAGUE_ID;
     }
 
     /**
@@ -154,7 +154,7 @@ public class LeaguePlannedRefereesRecord extends UpdatableRecordImpl<LeaguePlann
      */
     @Override
     public Field<UInteger> field3() {
-        return LeaguePlannedReferees.RFRMGR_LEAGUE_PLANNED_REFEREES.SEASON_ID;
+        return LeaguePlannedReferees.LEAGUE_PLANNED_REFEREES.SEASON_ID;
     }
 
     /**
@@ -162,7 +162,7 @@ public class LeaguePlannedRefereesRecord extends UpdatableRecordImpl<LeaguePlann
      */
     @Override
     public Field<UInteger> field4() {
-        return LeaguePlannedReferees.RFRMGR_LEAGUE_PLANNED_REFEREES.REFEREE_ASSIGNMENT_TYPE_ID;
+        return LeaguePlannedReferees.LEAGUE_PLANNED_REFEREES.REFEREE_ASSIGNMENT_TYPE_ID;
     }
 
     /**
@@ -170,7 +170,7 @@ public class LeaguePlannedRefereesRecord extends UpdatableRecordImpl<LeaguePlann
      */
     @Override
     public Field<UInteger> field5() {
-        return LeaguePlannedReferees.RFRMGR_LEAGUE_PLANNED_REFEREES.QUANTITY;
+        return LeaguePlannedReferees.LEAGUE_PLANNED_REFEREES.QUANTITY;
     }
 
     /**
@@ -279,14 +279,14 @@ public class LeaguePlannedRefereesRecord extends UpdatableRecordImpl<LeaguePlann
      * Create a detached LeaguePlannedRefereesRecord
      */
     public LeaguePlannedRefereesRecord() {
-        super(LeaguePlannedReferees.RFRMGR_LEAGUE_PLANNED_REFEREES);
+        super(LeaguePlannedReferees.LEAGUE_PLANNED_REFEREES);
     }
 
     /**
      * Create a detached, initialised LeaguePlannedRefereesRecord
      */
     public LeaguePlannedRefereesRecord(UInteger id, UInteger leagueId, UInteger seasonId, UInteger refereeAssignmentTypeId, UInteger quantity) {
-        super(LeaguePlannedReferees.RFRMGR_LEAGUE_PLANNED_REFEREES);
+        super(LeaguePlannedReferees.LEAGUE_PLANNED_REFEREES);
 
         set(0, id);
         set(1, leagueId);

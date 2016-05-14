@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DatabaseTablesRecord extends UpdatableRecordImpl<DatabaseTablesRecord> implements Record2<UInteger, String> {
 
-    private static final long serialVersionUID = -1809639069;
+    private static final long serialVersionUID = -102163543;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_database_tables.id</code>.
@@ -96,7 +96,7 @@ public class DatabaseTablesRecord extends UpdatableRecordImpl<DatabaseTablesReco
      */
     @Override
     public Field<UInteger> field1() {
-        return DatabaseTables.RFRMGR_DATABASE_TABLES.ID;
+        return DatabaseTables.DATABASE_TABLES.ID;
     }
 
     /**
@@ -104,7 +104,7 @@ public class DatabaseTablesRecord extends UpdatableRecordImpl<DatabaseTablesReco
      */
     @Override
     public Field<String> field2() {
-        return DatabaseTables.RFRMGR_DATABASE_TABLES.TABLE_NAME;
+        return DatabaseTables.DATABASE_TABLES.TABLE_NAME;
     }
 
     /**
@@ -159,14 +159,14 @@ public class DatabaseTablesRecord extends UpdatableRecordImpl<DatabaseTablesReco
      * Create a detached DatabaseTablesRecord
      */
     public DatabaseTablesRecord() {
-        super(DatabaseTables.RFRMGR_DATABASE_TABLES);
+        super(DatabaseTables.DATABASE_TABLES);
     }
 
     /**
      * Create a detached, initialised DatabaseTablesRecord
      */
     public DatabaseTablesRecord(UInteger id, String tableName) {
-        super(DatabaseTables.RFRMGR_DATABASE_TABLES);
+        super(DatabaseTables.DATABASE_TABLES);
 
         set(0, id);
         set(1, tableName);

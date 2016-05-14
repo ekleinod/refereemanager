@@ -76,7 +76,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Refereemanager extends SchemaImpl {
 
-    private static final long serialVersionUID = 335805581;
+    private static final long serialVersionUID = -735581934;
 
     /**
      * The reference instance of <code>refereemanager</code>
@@ -86,238 +86,238 @@ public class Refereemanager extends SchemaImpl {
     /**
      * Activity log of selected data tables. Only those tables are  / * comment truncated * / / *logged that are important to the user.* /
      */
-    public final ActivityLogs RFRMGR_ACTIVITY_LOGS = de.edgesoft.refereemanager.jooq.tables.ActivityLogs.RFRMGR_ACTIVITY_LOGS;
+    public final ActivityLogs ACTIVITY_LOGS = de.edgesoft.refereemanager.jooq.tables.ActivityLogs.ACTIVITY_LOGS;
 
     /**
      * All addresses.
      */
-    public final Addresses RFRMGR_ADDRESSES = de.edgesoft.refereemanager.jooq.tables.Addresses.RFRMGR_ADDRESSES;
+    public final Addresses ADDRESSES = de.edgesoft.refereemanager.jooq.tables.Addresses.ADDRESSES;
 
     /**
      * Assignments.
      */
-    public final Assignments RFRMGR_ASSIGNMENTS = de.edgesoft.refereemanager.jooq.tables.Assignments.RFRMGR_ASSIGNMENTS;
+    public final Assignments ASSIGNMENTS = de.edgesoft.refereemanager.jooq.tables.Assignments.ASSIGNMENTS;
 
     /**
      * All clubs.
      */
-    public final Clubs RFRMGR_CLUBS = de.edgesoft.refereemanager.jooq.tables.Clubs.RFRMGR_CLUBS;
+    public final Clubs CLUBS = de.edgesoft.refereemanager.jooq.tables.Clubs.CLUBS;
 
     /**
      * Base table for contacts. Specialized to email, phone etc.
      */
-    public final Contacts RFRMGR_CONTACTS = de.edgesoft.refereemanager.jooq.tables.Contacts.RFRMGR_CONTACTS;
+    public final Contacts CONTACTS = de.edgesoft.refereemanager.jooq.tables.Contacts.CONTACTS;
 
     /**
      * Possible types of contacts, such as private, working.
      */
-    public final ContactTypes RFRMGR_CONTACT_TYPES = de.edgesoft.refereemanager.jooq.tables.ContactTypes.RFRMGR_CONTACT_TYPES;
+    public final ContactTypes CONTACT_TYPES = de.edgesoft.refereemanager.jooq.tables.ContactTypes.CONTACT_TYPES;
 
     /**
      * All database columns that have to be logged,
      */
-    public final DatabaseColumns RFRMGR_DATABASE_COLUMNS = de.edgesoft.refereemanager.jooq.tables.DatabaseColumns.RFRMGR_DATABASE_COLUMNS;
+    public final DatabaseColumns DATABASE_COLUMNS = de.edgesoft.refereemanager.jooq.tables.DatabaseColumns.DATABASE_COLUMNS;
 
     /**
      * All database tables that have to be logged,
      */
-    public final DatabaseTables RFRMGR_DATABASE_TABLES = de.edgesoft.refereemanager.jooq.tables.DatabaseTables.RFRMGR_DATABASE_TABLES;
+    public final DatabaseTables DATABASE_TABLES = de.edgesoft.refereemanager.jooq.tables.DatabaseTables.DATABASE_TABLES;
 
     /**
      * All email adresses.
      */
-    public final Emails RFRMGR_EMAILS = de.edgesoft.refereemanager.jooq.tables.Emails.RFRMGR_EMAILS;
+    public final Emails EMAILS = de.edgesoft.refereemanager.jooq.tables.Emails.EMAILS;
 
     /**
      * All leagues.
      */
-    public final Leagues RFRMGR_LEAGUES = de.edgesoft.refereemanager.jooq.tables.Leagues.RFRMGR_LEAGUES;
+    public final Leagues LEAGUES = de.edgesoft.refereemanager.jooq.tables.Leagues.LEAGUES;
 
     /**
      * Assignments for league games.
 League and season can be deduc / * comment truncated * / / *ed from the associated teams, they are stored because no team could be specified or teams of different seasons/leagues (e.g. relegation games).* /
      */
-    public final LeagueGames RFRMGR_LEAGUE_GAMES = de.edgesoft.refereemanager.jooq.tables.LeagueGames.RFRMGR_LEAGUE_GAMES;
+    public final LeagueGames LEAGUE_GAMES = de.edgesoft.refereemanager.jooq.tables.LeagueGames.LEAGUE_GAMES;
 
     /**
      * Teams of a league game and their role: home or off team.
      */
-    public final LeagueGameTeams RFRMGR_LEAGUE_GAME_TEAMS = de.edgesoft.refereemanager.jooq.tables.LeagueGameTeams.RFRMGR_LEAGUE_GAME_TEAMS;
+    public final LeagueGameTeams LEAGUE_GAME_TEAMS = de.edgesoft.refereemanager.jooq.tables.LeagueGameTeams.LEAGUE_GAME_TEAMS;
 
     /**
      * Types of league game teams, such as home team, off team, etc / * comment truncated * / / *.* /
      */
-    public final LeagueGameTeamTypes RFRMGR_LEAGUE_GAME_TEAM_TYPES = de.edgesoft.refereemanager.jooq.tables.LeagueGameTeamTypes.RFRMGR_LEAGUE_GAME_TEAM_TYPES;
+    public final LeagueGameTeamTypes LEAGUE_GAME_TEAM_TYPES = de.edgesoft.refereemanager.jooq.tables.LeagueGameTeamTypes.LEAGUE_GAME_TEAM_TYPES;
 
     /**
      * Planned numbers of referees by assignment type.
      */
-    public final LeaguePlannedReferees RFRMGR_LEAGUE_PLANNED_REFEREES = de.edgesoft.refereemanager.jooq.tables.LeaguePlannedReferees.RFRMGR_LEAGUE_PLANNED_REFEREES;
+    public final LeaguePlannedReferees LEAGUE_PLANNED_REFEREES = de.edgesoft.refereemanager.jooq.tables.LeaguePlannedReferees.LEAGUE_PLANNED_REFEREES;
 
     /**
      * All league types.
      */
-    public final LeagueTypes RFRMGR_LEAGUE_TYPES = de.edgesoft.refereemanager.jooq.tables.LeagueTypes.RFRMGR_LEAGUE_TYPES;
+    public final LeagueTypes LEAGUE_TYPES = de.edgesoft.refereemanager.jooq.tables.LeagueTypes.LEAGUE_TYPES;
 
     /**
      * Alle people go here, specializations, such as referees, have / * comment truncated * / / * their own table.* /
      */
-    public final People RFRMGR_PEOPLE = de.edgesoft.refereemanager.jooq.tables.People.RFRMGR_PEOPLE;
+    public final People PEOPLE = de.edgesoft.refereemanager.jooq.tables.People.PEOPLE;
 
     /**
      * Preferences for a person.
      */
-    public final PersonPreferences RFRMGR_PERSON_PREFERENCES = de.edgesoft.refereemanager.jooq.tables.PersonPreferences.RFRMGR_PERSON_PREFERENCES;
+    public final PersonPreferences PERSON_PREFERENCES = de.edgesoft.refereemanager.jooq.tables.PersonPreferences.PERSON_PREFERENCES;
 
     /**
      * All phone numbers.
      */
-    public final PhoneNumbers RFRMGR_PHONE_NUMBERS = de.edgesoft.refereemanager.jooq.tables.PhoneNumbers.RFRMGR_PHONE_NUMBERS;
+    public final PhoneNumbers PHONE_NUMBERS = de.edgesoft.refereemanager.jooq.tables.PhoneNumbers.PHONE_NUMBERS;
 
     /**
      * Picture storage (link to pictures, not the pics themselves.
      */
-    public final Pictures RFRMGR_PICTURES = de.edgesoft.refereemanager.jooq.tables.Pictures.RFRMGR_PICTURES;
+    public final Pictures PICTURES = de.edgesoft.refereemanager.jooq.tables.Pictures.PICTURES;
 
     /**
      * Storage of all referees.
      */
-    public final Referees RFRMGR_REFEREES = de.edgesoft.refereemanager.jooq.tables.Referees.RFRMGR_REFEREES;
+    public final Referees REFEREES = de.edgesoft.refereemanager.jooq.tables.Referees.REFEREES;
 
     /**
      * Referee's assignments with their role.
      */
-    public final RefereeAssignments RFRMGR_REFEREE_ASSIGNMENTS = de.edgesoft.refereemanager.jooq.tables.RefereeAssignments.RFRMGR_REFEREE_ASSIGNMENTS;
+    public final RefereeAssignments REFEREE_ASSIGNMENTS = de.edgesoft.refereemanager.jooq.tables.RefereeAssignments.REFEREE_ASSIGNMENTS;
 
     /**
      * Types of assignment remarks such as answering machine, call  / * comment truncated * / / *back.* /
      */
-    public final RefereeAssignmentRemarkTypes RFRMGR_REFEREE_ASSIGNMENT_REMARK_TYPES = de.edgesoft.refereemanager.jooq.tables.RefereeAssignmentRemarkTypes.RFRMGR_REFEREE_ASSIGNMENT_REMARK_TYPES;
+    public final RefereeAssignmentRemarkTypes REFEREE_ASSIGNMENT_REMARK_TYPES = de.edgesoft.refereemanager.jooq.tables.RefereeAssignmentRemarkTypes.REFEREE_ASSIGNMENT_REMARK_TYPES;
 
     /**
      * Possible assignment status of a referee (yes, no, maybe). Mo / * comment truncated * / / *stly relevant for tournament games.* /
      */
-    public final RefereeAssignmentStatusTypes RFRMGR_REFEREE_ASSIGNMENT_STATUS_TYPES = de.edgesoft.refereemanager.jooq.tables.RefereeAssignmentStatusTypes.RFRMGR_REFEREE_ASSIGNMENT_STATUS_TYPES;
+    public final RefereeAssignmentStatusTypes REFEREE_ASSIGNMENT_STATUS_TYPES = de.edgesoft.refereemanager.jooq.tables.RefereeAssignmentStatusTypes.REFEREE_ASSIGNMENT_STATUS_TYPES;
 
     /**
      * Possible types of referee's assignments such as umpire, stan / * comment truncated * / / *dby umpire, referee, racket control.* /
      */
-    public final RefereeAssignmentTypes RFRMGR_REFEREE_ASSIGNMENT_TYPES = de.edgesoft.refereemanager.jooq.tables.RefereeAssignmentTypes.RFRMGR_REFEREE_ASSIGNMENT_TYPES;
+    public final RefereeAssignmentTypes REFEREE_ASSIGNMENT_TYPES = de.edgesoft.refereemanager.jooq.tables.RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES;
 
     /**
      * Relations between referees and clubs: member and/or reffor.
      */
-    public final RefereeRelations RFRMGR_REFEREE_RELATIONS = de.edgesoft.refereemanager.jooq.tables.RefereeRelations.RFRMGR_REFEREE_RELATIONS;
+    public final RefereeRelations REFEREE_RELATIONS = de.edgesoft.refereemanager.jooq.tables.RefereeRelations.REFEREE_RELATIONS;
 
     /**
      * Club relations of a referee: member, reffor.
      */
-    public final RefereeRelationTypes RFRMGR_REFEREE_RELATION_TYPES = de.edgesoft.refereemanager.jooq.tables.RefereeRelationTypes.RFRMGR_REFEREE_RELATION_TYPES;
+    public final RefereeRelationTypes REFEREE_RELATION_TYPES = de.edgesoft.refereemanager.jooq.tables.RefereeRelationTypes.REFEREE_RELATION_TYPES;
 
     /**
      * Recipients of umpire reports.
      */
-    public final RefereeReports RFRMGR_REFEREE_REPORTS = de.edgesoft.refereemanager.jooq.tables.RefereeReports.RFRMGR_REFEREE_REPORTS;
+    public final RefereeReports REFEREE_REPORTS = de.edgesoft.refereemanager.jooq.tables.RefereeReports.REFEREE_REPORTS;
 
     /**
      * All league types.
      */
-    public final RefereeReportRecipients RFRMGR_REFEREE_REPORT_RECIPIENTS = de.edgesoft.refereemanager.jooq.tables.RefereeReportRecipients.RFRMGR_REFEREE_REPORT_RECIPIENTS;
+    public final RefereeReportRecipients REFEREE_REPORT_RECIPIENTS = de.edgesoft.refereemanager.jooq.tables.RefereeReportRecipients.REFEREE_REPORT_RECIPIENTS;
 
     /**
      * Referee's status.
      */
-    public final RefereeStatuses RFRMGR_REFEREE_STATUSES = de.edgesoft.refereemanager.jooq.tables.RefereeStatuses.RFRMGR_REFEREE_STATUSES;
+    public final RefereeStatuses REFEREE_STATUSES = de.edgesoft.refereemanager.jooq.tables.RefereeStatuses.REFEREE_STATUSES;
 
     /**
      * All seasons.
      */
-    public final Seasons RFRMGR_SEASONS = de.edgesoft.refereemanager.jooq.tables.Seasons.RFRMGR_SEASONS;
+    public final Seasons SEASONS = de.edgesoft.refereemanager.jooq.tables.Seasons.SEASONS;
 
     /**
      * Lookup table for sexes.
      */
-    public final SexTypes RFRMGR_SEX_TYPES = de.edgesoft.refereemanager.jooq.tables.SexTypes.RFRMGR_SEX_TYPES;
+    public final SexTypes SEX_TYPES = de.edgesoft.refereemanager.jooq.tables.SexTypes.SEX_TYPES;
 
     /**
      * Spokespeople of teams and clubs.
      */
-    public final Spokespeople RFRMGR_SPOKESPEOPLE = de.edgesoft.refereemanager.jooq.tables.Spokespeople.RFRMGR_SPOKESPEOPLE;
+    public final Spokespeople SPOKESPEOPLE = de.edgesoft.refereemanager.jooq.tables.Spokespeople.SPOKESPEOPLE;
 
     /**
      * Possible referee statuses such as "interested in many assign / * comment truncated * / / *ments", "not active", etc.* /
      */
-    public final StatusTypes RFRMGR_STATUS_TYPES = de.edgesoft.refereemanager.jooq.tables.StatusTypes.RFRMGR_STATUS_TYPES;
+    public final StatusTypes STATUS_TYPES = de.edgesoft.refereemanager.jooq.tables.StatusTypes.STATUS_TYPES;
 
     /**
      * All teams.
      */
-    public final Teams RFRMGR_TEAMS = de.edgesoft.refereemanager.jooq.tables.Teams.RFRMGR_TEAMS;
+    public final Teams TEAMS = de.edgesoft.refereemanager.jooq.tables.Teams.TEAMS;
 
     /**
      * Association of teams in a specified season.
      */
-    public final TeamSeasons RFRMGR_TEAM_SEASONS = de.edgesoft.refereemanager.jooq.tables.TeamSeasons.RFRMGR_TEAM_SEASONS;
+    public final TeamSeasons TEAM_SEASONS = de.edgesoft.refereemanager.jooq.tables.TeamSeasons.TEAM_SEASONS;
 
     /**
      * Venues of teams in a season.
      */
-    public final TeamVenues RFRMGR_TEAM_VENUES = de.edgesoft.refereemanager.jooq.tables.TeamVenues.RFRMGR_TEAM_VENUES;
+    public final TeamVenues TEAM_VENUES = de.edgesoft.refereemanager.jooq.tables.TeamVenues.TEAM_VENUES;
 
     /**
      * Tournaments with games.
      */
-    public final Tournaments RFRMGR_TOURNAMENTS = de.edgesoft.refereemanager.jooq.tables.Tournaments.RFRMGR_TOURNAMENTS;
+    public final Tournaments TOURNAMENTS = de.edgesoft.refereemanager.jooq.tables.Tournaments.TOURNAMENTS;
 
     /**
      * Assignments for tournament games.
      */
-    public final TournamentGames RFRMGR_TOURNAMENT_GAMES = de.edgesoft.refereemanager.jooq.tables.TournamentGames.RFRMGR_TOURNAMENT_GAMES;
+    public final TournamentGames TOURNAMENT_GAMES = de.edgesoft.refereemanager.jooq.tables.TournamentGames.TOURNAMENT_GAMES;
 
     /**
      * Venues of tournaments.
      */
-    public final TournamentVenues RFRMGR_TOURNAMENT_VENUES = de.edgesoft.refereemanager.jooq.tables.TournamentVenues.RFRMGR_TOURNAMENT_VENUES;
+    public final TournamentVenues TOURNAMENT_VENUES = de.edgesoft.refereemanager.jooq.tables.TournamentVenues.TOURNAMENT_VENUES;
 
     /**
      * Achieved training levels for referees.
      */
-    public final TrainingLevels RFRMGR_TRAINING_LEVELS = de.edgesoft.refereemanager.jooq.tables.TrainingLevels.RFRMGR_TRAINING_LEVELS;
+    public final TrainingLevels TRAINING_LEVELS = de.edgesoft.refereemanager.jooq.tables.TrainingLevels.TRAINING_LEVELS;
 
     /**
      * Possible training levels such as international referee, Germ / * comment truncated * / / *an referee.* /
      */
-    public final TrainingLevelTypes RFRMGR_TRAINING_LEVEL_TYPES = de.edgesoft.refereemanager.jooq.tables.TrainingLevelTypes.RFRMGR_TRAINING_LEVEL_TYPES;
+    public final TrainingLevelTypes TRAINING_LEVEL_TYPES = de.edgesoft.refereemanager.jooq.tables.TrainingLevelTypes.TRAINING_LEVEL_TYPES;
 
     /**
      * Updates of the training levels.
      */
-    public final TrainingUpdates RFRMGR_TRAINING_UPDATES = de.edgesoft.refereemanager.jooq.tables.TrainingUpdates.RFRMGR_TRAINING_UPDATES;
+    public final TrainingUpdates TRAINING_UPDATES = de.edgesoft.refereemanager.jooq.tables.TrainingUpdates.TRAINING_UPDATES;
 
     /**
      * All urls.
      */
-    public final Urls RFRMGR_URLS = de.edgesoft.refereemanager.jooq.tables.Urls.RFRMGR_URLS;
+    public final Urls URLS = de.edgesoft.refereemanager.jooq.tables.Urls.URLS;
 
     /**
      * User table for access rights.
      */
-    public final Users RFRMGR_USERS = de.edgesoft.refereemanager.jooq.tables.Users.RFRMGR_USERS;
+    public final Users USERS = de.edgesoft.refereemanager.jooq.tables.Users.USERS;
 
     /**
      * Roles of users, such as admin, editor.
      */
-    public final UserRoles RFRMGR_USER_ROLES = de.edgesoft.refereemanager.jooq.tables.UserRoles.RFRMGR_USER_ROLES;
+    public final UserRoles USER_ROLES = de.edgesoft.refereemanager.jooq.tables.UserRoles.USER_ROLES;
 
     /**
      * Referees' wishes for their assignments.
      */
-    public final Wishes RFRMGR_WISHES = de.edgesoft.refereemanager.jooq.tables.Wishes.RFRMGR_WISHES;
+    public final Wishes WISHES = de.edgesoft.refereemanager.jooq.tables.Wishes.WISHES;
 
     /**
      * Wish types of a referee: prefer, avoid.
      */
-    public final WishTypes RFRMGR_WISH_TYPES = de.edgesoft.refereemanager.jooq.tables.WishTypes.RFRMGR_WISH_TYPES;
+    public final WishTypes WISH_TYPES = de.edgesoft.refereemanager.jooq.tables.WishTypes.WISH_TYPES;
 
     /**
      * No further instances allowed
@@ -344,52 +344,52 @@ League and season can be deduc / * comment truncated * / / *ed from the associat
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
-            ActivityLogs.RFRMGR_ACTIVITY_LOGS,
-            Addresses.RFRMGR_ADDRESSES,
-            Assignments.RFRMGR_ASSIGNMENTS,
-            Clubs.RFRMGR_CLUBS,
-            Contacts.RFRMGR_CONTACTS,
-            ContactTypes.RFRMGR_CONTACT_TYPES,
-            DatabaseColumns.RFRMGR_DATABASE_COLUMNS,
-            DatabaseTables.RFRMGR_DATABASE_TABLES,
-            Emails.RFRMGR_EMAILS,
-            Leagues.RFRMGR_LEAGUES,
-            LeagueGames.RFRMGR_LEAGUE_GAMES,
-            LeagueGameTeams.RFRMGR_LEAGUE_GAME_TEAMS,
-            LeagueGameTeamTypes.RFRMGR_LEAGUE_GAME_TEAM_TYPES,
-            LeaguePlannedReferees.RFRMGR_LEAGUE_PLANNED_REFEREES,
-            LeagueTypes.RFRMGR_LEAGUE_TYPES,
-            People.RFRMGR_PEOPLE,
-            PersonPreferences.RFRMGR_PERSON_PREFERENCES,
-            PhoneNumbers.RFRMGR_PHONE_NUMBERS,
-            Pictures.RFRMGR_PICTURES,
-            Referees.RFRMGR_REFEREES,
-            RefereeAssignments.RFRMGR_REFEREE_ASSIGNMENTS,
-            RefereeAssignmentRemarkTypes.RFRMGR_REFEREE_ASSIGNMENT_REMARK_TYPES,
-            RefereeAssignmentStatusTypes.RFRMGR_REFEREE_ASSIGNMENT_STATUS_TYPES,
-            RefereeAssignmentTypes.RFRMGR_REFEREE_ASSIGNMENT_TYPES,
-            RefereeRelations.RFRMGR_REFEREE_RELATIONS,
-            RefereeRelationTypes.RFRMGR_REFEREE_RELATION_TYPES,
-            RefereeReports.RFRMGR_REFEREE_REPORTS,
-            RefereeReportRecipients.RFRMGR_REFEREE_REPORT_RECIPIENTS,
-            RefereeStatuses.RFRMGR_REFEREE_STATUSES,
-            Seasons.RFRMGR_SEASONS,
-            SexTypes.RFRMGR_SEX_TYPES,
-            Spokespeople.RFRMGR_SPOKESPEOPLE,
-            StatusTypes.RFRMGR_STATUS_TYPES,
-            Teams.RFRMGR_TEAMS,
-            TeamSeasons.RFRMGR_TEAM_SEASONS,
-            TeamVenues.RFRMGR_TEAM_VENUES,
-            Tournaments.RFRMGR_TOURNAMENTS,
-            TournamentGames.RFRMGR_TOURNAMENT_GAMES,
-            TournamentVenues.RFRMGR_TOURNAMENT_VENUES,
-            TrainingLevels.RFRMGR_TRAINING_LEVELS,
-            TrainingLevelTypes.RFRMGR_TRAINING_LEVEL_TYPES,
-            TrainingUpdates.RFRMGR_TRAINING_UPDATES,
-            Urls.RFRMGR_URLS,
-            Users.RFRMGR_USERS,
-            UserRoles.RFRMGR_USER_ROLES,
-            Wishes.RFRMGR_WISHES,
-            WishTypes.RFRMGR_WISH_TYPES);
+            ActivityLogs.ACTIVITY_LOGS,
+            Addresses.ADDRESSES,
+            Assignments.ASSIGNMENTS,
+            Clubs.CLUBS,
+            Contacts.CONTACTS,
+            ContactTypes.CONTACT_TYPES,
+            DatabaseColumns.DATABASE_COLUMNS,
+            DatabaseTables.DATABASE_TABLES,
+            Emails.EMAILS,
+            Leagues.LEAGUES,
+            LeagueGames.LEAGUE_GAMES,
+            LeagueGameTeams.LEAGUE_GAME_TEAMS,
+            LeagueGameTeamTypes.LEAGUE_GAME_TEAM_TYPES,
+            LeaguePlannedReferees.LEAGUE_PLANNED_REFEREES,
+            LeagueTypes.LEAGUE_TYPES,
+            People.PEOPLE,
+            PersonPreferences.PERSON_PREFERENCES,
+            PhoneNumbers.PHONE_NUMBERS,
+            Pictures.PICTURES,
+            Referees.REFEREES,
+            RefereeAssignments.REFEREE_ASSIGNMENTS,
+            RefereeAssignmentRemarkTypes.REFEREE_ASSIGNMENT_REMARK_TYPES,
+            RefereeAssignmentStatusTypes.REFEREE_ASSIGNMENT_STATUS_TYPES,
+            RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES,
+            RefereeRelations.REFEREE_RELATIONS,
+            RefereeRelationTypes.REFEREE_RELATION_TYPES,
+            RefereeReports.REFEREE_REPORTS,
+            RefereeReportRecipients.REFEREE_REPORT_RECIPIENTS,
+            RefereeStatuses.REFEREE_STATUSES,
+            Seasons.SEASONS,
+            SexTypes.SEX_TYPES,
+            Spokespeople.SPOKESPEOPLE,
+            StatusTypes.STATUS_TYPES,
+            Teams.TEAMS,
+            TeamSeasons.TEAM_SEASONS,
+            TeamVenues.TEAM_VENUES,
+            Tournaments.TOURNAMENTS,
+            TournamentGames.TOURNAMENT_GAMES,
+            TournamentVenues.TOURNAMENT_VENUES,
+            TrainingLevels.TRAINING_LEVELS,
+            TrainingLevelTypes.TRAINING_LEVEL_TYPES,
+            TrainingUpdates.TRAINING_UPDATES,
+            Urls.URLS,
+            Users.USERS,
+            UserRoles.USER_ROLES,
+            Wishes.WISHES,
+            WishTypes.WISH_TYPES);
     }
 }

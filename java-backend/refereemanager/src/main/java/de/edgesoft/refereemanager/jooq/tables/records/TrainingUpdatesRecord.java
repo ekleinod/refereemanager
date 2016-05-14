@@ -31,7 +31,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TrainingUpdatesRecord extends UpdatableRecordImpl<TrainingUpdatesRecord> implements Record3<UInteger, UInteger, Date> {
 
-    private static final long serialVersionUID = 670973446;
+    private static final long serialVersionUID = 991511571;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_training_updates.id</code>.
@@ -112,7 +112,7 @@ public class TrainingUpdatesRecord extends UpdatableRecordImpl<TrainingUpdatesRe
      */
     @Override
     public Field<UInteger> field1() {
-        return TrainingUpdates.RFRMGR_TRAINING_UPDATES.ID;
+        return TrainingUpdates.TRAINING_UPDATES.ID;
     }
 
     /**
@@ -120,7 +120,7 @@ public class TrainingUpdatesRecord extends UpdatableRecordImpl<TrainingUpdatesRe
      */
     @Override
     public Field<UInteger> field2() {
-        return TrainingUpdates.RFRMGR_TRAINING_UPDATES.TRAINING_LEVEL_ID;
+        return TrainingUpdates.TRAINING_UPDATES.TRAINING_LEVEL_ID;
     }
 
     /**
@@ -128,7 +128,7 @@ public class TrainingUpdatesRecord extends UpdatableRecordImpl<TrainingUpdatesRe
      */
     @Override
     public Field<Date> field3() {
-        return TrainingUpdates.RFRMGR_TRAINING_UPDATES.UPDATE;
+        return TrainingUpdates.TRAINING_UPDATES.UPDATE;
     }
 
     /**
@@ -201,14 +201,14 @@ public class TrainingUpdatesRecord extends UpdatableRecordImpl<TrainingUpdatesRe
      * Create a detached TrainingUpdatesRecord
      */
     public TrainingUpdatesRecord() {
-        super(TrainingUpdates.RFRMGR_TRAINING_UPDATES);
+        super(TrainingUpdates.TRAINING_UPDATES);
     }
 
     /**
      * Create a detached, initialised TrainingUpdatesRecord
      */
     public TrainingUpdatesRecord(UInteger id, UInteger trainingLevelId, Date update) {
-        super(TrainingUpdates.RFRMGR_TRAINING_UPDATES);
+        super(TrainingUpdates.TRAINING_UPDATES);
 
         set(0, id);
         set(1, trainingLevelId);

@@ -31,7 +31,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TournamentsRecord extends UpdatableRecordImpl<TournamentsRecord> implements Record9<UInteger, String, Timestamp, Timestamp, String, String, UInteger, UInteger, String> {
 
-    private static final long serialVersionUID = 1351850805;
+    private static final long serialVersionUID = 1927145538;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_tournaments.id</code>.
@@ -196,7 +196,7 @@ public class TournamentsRecord extends UpdatableRecordImpl<TournamentsRecord> im
      */
     @Override
     public Field<UInteger> field1() {
-        return Tournaments.RFRMGR_TOURNAMENTS.ID;
+        return Tournaments.TOURNAMENTS.ID;
     }
 
     /**
@@ -204,7 +204,7 @@ public class TournamentsRecord extends UpdatableRecordImpl<TournamentsRecord> im
      */
     @Override
     public Field<String> field2() {
-        return Tournaments.RFRMGR_TOURNAMENTS.NAME;
+        return Tournaments.TOURNAMENTS.NAME;
     }
 
     /**
@@ -212,7 +212,7 @@ public class TournamentsRecord extends UpdatableRecordImpl<TournamentsRecord> im
      */
     @Override
     public Field<Timestamp> field3() {
-        return Tournaments.RFRMGR_TOURNAMENTS.START;
+        return Tournaments.TOURNAMENTS.START;
     }
 
     /**
@@ -220,7 +220,7 @@ public class TournamentsRecord extends UpdatableRecordImpl<TournamentsRecord> im
      */
     @Override
     public Field<Timestamp> field4() {
-        return Tournaments.RFRMGR_TOURNAMENTS.END;
+        return Tournaments.TOURNAMENTS.END;
     }
 
     /**
@@ -228,7 +228,7 @@ public class TournamentsRecord extends UpdatableRecordImpl<TournamentsRecord> im
      */
     @Override
     public Field<String> field5() {
-        return Tournaments.RFRMGR_TOURNAMENTS.ANNOUNCEMENT_URL;
+        return Tournaments.TOURNAMENTS.ANNOUNCEMENT_URL;
     }
 
     /**
@@ -236,7 +236,7 @@ public class TournamentsRecord extends UpdatableRecordImpl<TournamentsRecord> im
      */
     @Override
     public Field<String> field6() {
-        return Tournaments.RFRMGR_TOURNAMENTS.INFORMATION_URL;
+        return Tournaments.TOURNAMENTS.INFORMATION_URL;
     }
 
     /**
@@ -244,7 +244,7 @@ public class TournamentsRecord extends UpdatableRecordImpl<TournamentsRecord> im
      */
     @Override
     public Field<UInteger> field7() {
-        return Tournaments.RFRMGR_TOURNAMENTS.CLUB_ID;
+        return Tournaments.TOURNAMENTS.CLUB_ID;
     }
 
     /**
@@ -252,7 +252,7 @@ public class TournamentsRecord extends UpdatableRecordImpl<TournamentsRecord> im
      */
     @Override
     public Field<UInteger> field8() {
-        return Tournaments.RFRMGR_TOURNAMENTS.PERSON_ID;
+        return Tournaments.TOURNAMENTS.PERSON_ID;
     }
 
     /**
@@ -260,7 +260,7 @@ public class TournamentsRecord extends UpdatableRecordImpl<TournamentsRecord> im
      */
     @Override
     public Field<String> field9() {
-        return Tournaments.RFRMGR_TOURNAMENTS.REMARK;
+        return Tournaments.TOURNAMENTS.REMARK;
     }
 
     /**
@@ -441,14 +441,14 @@ public class TournamentsRecord extends UpdatableRecordImpl<TournamentsRecord> im
      * Create a detached TournamentsRecord
      */
     public TournamentsRecord() {
-        super(Tournaments.RFRMGR_TOURNAMENTS);
+        super(Tournaments.TOURNAMENTS);
     }
 
     /**
      * Create a detached, initialised TournamentsRecord
      */
     public TournamentsRecord(UInteger id, String name, Timestamp start, Timestamp end, String announcementUrl, String informationUrl, UInteger clubId, UInteger personId, String remark) {
-        super(Tournaments.RFRMGR_TOURNAMENTS);
+        super(Tournaments.TOURNAMENTS);
 
         set(0, id);
         set(1, name);

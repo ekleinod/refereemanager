@@ -37,12 +37,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereeAssignmentStatusTypes extends TableImpl<RefereeAssignmentStatusTypesRecord> {
 
-    private static final long serialVersionUID = -778987411;
+    private static final long serialVersionUID = -1080847620;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_referee_assignment_status_types</code>
      */
-    public static final RefereeAssignmentStatusTypes RFRMGR_REFEREE_ASSIGNMENT_STATUS_TYPES = new RefereeAssignmentStatusTypes();
+    public static final RefereeAssignmentStatusTypes REFEREE_ASSIGNMENT_STATUS_TYPES = new RefereeAssignmentStatusTypes();
 
     /**
      * The class holding records for this type
@@ -83,7 +83,7 @@ public class RefereeAssignmentStatusTypes extends TableImpl<RefereeAssignmentSta
      * Create an aliased <code>refereemanager.rfrmgr_referee_assignment_status_types</code> table reference
      */
     public RefereeAssignmentStatusTypes(String alias) {
-        this(alias, RFRMGR_REFEREE_ASSIGNMENT_STATUS_TYPES);
+        this(alias, REFEREE_ASSIGNMENT_STATUS_TYPES);
     }
 
     private RefereeAssignmentStatusTypes(String alias, Table<RefereeAssignmentStatusTypesRecord> aliased) {
@@ -107,7 +107,7 @@ public class RefereeAssignmentStatusTypes extends TableImpl<RefereeAssignmentSta
      */
     @Override
     public Identity<RefereeAssignmentStatusTypesRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_REFEREE_ASSIGNMENT_STATUS_TYPES;
+        return Keys.IDENTITY_REFEREE_ASSIGNMENT_STATUS_TYPES;
     }
 
     /**

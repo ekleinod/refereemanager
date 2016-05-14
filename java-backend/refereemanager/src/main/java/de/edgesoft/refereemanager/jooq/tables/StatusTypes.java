@@ -37,12 +37,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class StatusTypes extends TableImpl<StatusTypesRecord> {
 
-    private static final long serialVersionUID = -1588504459;
+    private static final long serialVersionUID = -501465950;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_status_types</code>
      */
-    public static final StatusTypes RFRMGR_STATUS_TYPES = new StatusTypes();
+    public static final StatusTypes STATUS_TYPES = new StatusTypes();
 
     /**
      * The class holding records for this type
@@ -83,7 +83,7 @@ public class StatusTypes extends TableImpl<StatusTypesRecord> {
      * Create an aliased <code>refereemanager.rfrmgr_status_types</code> table reference
      */
     public StatusTypes(String alias) {
-        this(alias, RFRMGR_STATUS_TYPES);
+        this(alias, STATUS_TYPES);
     }
 
     private StatusTypes(String alias, Table<StatusTypesRecord> aliased) {
@@ -107,7 +107,7 @@ public class StatusTypes extends TableImpl<StatusTypesRecord> {
      */
     @Override
     public Identity<StatusTypesRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_STATUS_TYPES;
+        return Keys.IDENTITY_STATUS_TYPES;
     }
 
     /**

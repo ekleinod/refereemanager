@@ -36,12 +36,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SexTypes extends TableImpl<SexTypesRecord> {
 
-    private static final long serialVersionUID = 1501102751;
+    private static final long serialVersionUID = 1770550720;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_sex_types</code>
      */
-    public static final SexTypes RFRMGR_SEX_TYPES = new SexTypes();
+    public static final SexTypes SEX_TYPES = new SexTypes();
 
     /**
      * The class holding records for this type
@@ -82,7 +82,7 @@ public class SexTypes extends TableImpl<SexTypesRecord> {
      * Create an aliased <code>refereemanager.rfrmgr_sex_types</code> table reference
      */
     public SexTypes(String alias) {
-        this(alias, RFRMGR_SEX_TYPES);
+        this(alias, SEX_TYPES);
     }
 
     private SexTypes(String alias, Table<SexTypesRecord> aliased) {
@@ -106,7 +106,7 @@ public class SexTypes extends TableImpl<SexTypesRecord> {
      */
     @Override
     public Identity<SexTypesRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_SEX_TYPES;
+        return Keys.IDENTITY_SEX_TYPES;
     }
 
     /**

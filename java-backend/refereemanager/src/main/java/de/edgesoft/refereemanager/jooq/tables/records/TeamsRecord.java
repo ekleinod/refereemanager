@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeamsRecord extends UpdatableRecordImpl<TeamsRecord> implements Record6<UInteger, UInteger, UInteger, UInteger, String, String> {
 
-    private static final long serialVersionUID = 1190696014;
+    private static final long serialVersionUID = 1306404168;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_teams.id</code>.
@@ -152,7 +152,7 @@ public class TeamsRecord extends UpdatableRecordImpl<TeamsRecord> implements Rec
      */
     @Override
     public Field<UInteger> field1() {
-        return Teams.RFRMGR_TEAMS.ID;
+        return Teams.TEAMS.ID;
     }
 
     /**
@@ -160,7 +160,7 @@ public class TeamsRecord extends UpdatableRecordImpl<TeamsRecord> implements Rec
      */
     @Override
     public Field<UInteger> field2() {
-        return Teams.RFRMGR_TEAMS.CLUB_ID;
+        return Teams.TEAMS.CLUB_ID;
     }
 
     /**
@@ -168,7 +168,7 @@ public class TeamsRecord extends UpdatableRecordImpl<TeamsRecord> implements Rec
      */
     @Override
     public Field<UInteger> field3() {
-        return Teams.RFRMGR_TEAMS.LEAGUE_TYPE_ID;
+        return Teams.TEAMS.LEAGUE_TYPE_ID;
     }
 
     /**
@@ -176,7 +176,7 @@ public class TeamsRecord extends UpdatableRecordImpl<TeamsRecord> implements Rec
      */
     @Override
     public Field<UInteger> field4() {
-        return Teams.RFRMGR_TEAMS.NUMBER;
+        return Teams.TEAMS.NUMBER;
     }
 
     /**
@@ -184,7 +184,7 @@ public class TeamsRecord extends UpdatableRecordImpl<TeamsRecord> implements Rec
      */
     @Override
     public Field<String> field5() {
-        return Teams.RFRMGR_TEAMS.NAME;
+        return Teams.TEAMS.NAME;
     }
 
     /**
@@ -192,7 +192,7 @@ public class TeamsRecord extends UpdatableRecordImpl<TeamsRecord> implements Rec
      */
     @Override
     public Field<String> field6() {
-        return Teams.RFRMGR_TEAMS.REMARK;
+        return Teams.TEAMS.REMARK;
     }
 
     /**
@@ -319,14 +319,14 @@ public class TeamsRecord extends UpdatableRecordImpl<TeamsRecord> implements Rec
      * Create a detached TeamsRecord
      */
     public TeamsRecord() {
-        super(Teams.RFRMGR_TEAMS);
+        super(Teams.TEAMS);
     }
 
     /**
      * Create a detached, initialised TeamsRecord
      */
     public TeamsRecord(UInteger id, UInteger clubId, UInteger leagueTypeId, UInteger number, String name, String remark) {
-        super(Teams.RFRMGR_TEAMS);
+        super(Teams.TEAMS);
 
         set(0, id);
         set(1, clubId);

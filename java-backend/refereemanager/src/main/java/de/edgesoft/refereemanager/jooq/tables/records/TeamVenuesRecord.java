@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeamVenuesRecord extends UpdatableRecordImpl<TeamVenuesRecord> implements Record4<UInteger, UInteger, UInteger, UInteger> {
 
-    private static final long serialVersionUID = -1097183414;
+    private static final long serialVersionUID = -2001069104;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_team_venues.id</code>.
@@ -124,7 +124,7 @@ public class TeamVenuesRecord extends UpdatableRecordImpl<TeamVenuesRecord> impl
      */
     @Override
     public Field<UInteger> field1() {
-        return TeamVenues.RFRMGR_TEAM_VENUES.ID;
+        return TeamVenues.TEAM_VENUES.ID;
     }
 
     /**
@@ -132,7 +132,7 @@ public class TeamVenuesRecord extends UpdatableRecordImpl<TeamVenuesRecord> impl
      */
     @Override
     public Field<UInteger> field2() {
-        return TeamVenues.RFRMGR_TEAM_VENUES.TEAM_SEASON_ID;
+        return TeamVenues.TEAM_VENUES.TEAM_SEASON_ID;
     }
 
     /**
@@ -140,7 +140,7 @@ public class TeamVenuesRecord extends UpdatableRecordImpl<TeamVenuesRecord> impl
      */
     @Override
     public Field<UInteger> field3() {
-        return TeamVenues.RFRMGR_TEAM_VENUES.CONTACT_ID;
+        return TeamVenues.TEAM_VENUES.CONTACT_ID;
     }
 
     /**
@@ -148,7 +148,7 @@ public class TeamVenuesRecord extends UpdatableRecordImpl<TeamVenuesRecord> impl
      */
     @Override
     public Field<UInteger> field4() {
-        return TeamVenues.RFRMGR_TEAM_VENUES.NUMBER;
+        return TeamVenues.TEAM_VENUES.NUMBER;
     }
 
     /**
@@ -239,14 +239,14 @@ public class TeamVenuesRecord extends UpdatableRecordImpl<TeamVenuesRecord> impl
      * Create a detached TeamVenuesRecord
      */
     public TeamVenuesRecord() {
-        super(TeamVenues.RFRMGR_TEAM_VENUES);
+        super(TeamVenues.TEAM_VENUES);
     }
 
     /**
      * Create a detached, initialised TeamVenuesRecord
      */
     public TeamVenuesRecord(UInteger id, UInteger teamSeasonId, UInteger contactId, UInteger number) {
-        super(TeamVenues.RFRMGR_TEAM_VENUES);
+        super(TeamVenues.TEAM_VENUES);
 
         set(0, id);
         set(1, teamSeasonId);

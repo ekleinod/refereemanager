@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class WishesRecord extends UpdatableRecordImpl<WishesRecord> implements Record10<UInteger, UInteger, UInteger, UInteger, UInteger, UInteger, Byte, Byte, Byte, String> {
 
-    private static final long serialVersionUID = -632265928;
+    private static final long serialVersionUID = 413626724;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_wishes.id</code>.
@@ -208,7 +208,7 @@ public class WishesRecord extends UpdatableRecordImpl<WishesRecord> implements R
      */
     @Override
     public Field<UInteger> field1() {
-        return Wishes.RFRMGR_WISHES.ID;
+        return Wishes.WISHES.ID;
     }
 
     /**
@@ -216,7 +216,7 @@ public class WishesRecord extends UpdatableRecordImpl<WishesRecord> implements R
      */
     @Override
     public Field<UInteger> field2() {
-        return Wishes.RFRMGR_WISHES.REFEREE_ID;
+        return Wishes.WISHES.REFEREE_ID;
     }
 
     /**
@@ -224,7 +224,7 @@ public class WishesRecord extends UpdatableRecordImpl<WishesRecord> implements R
      */
     @Override
     public Field<UInteger> field3() {
-        return Wishes.RFRMGR_WISHES.WISH_TYPE_ID;
+        return Wishes.WISHES.WISH_TYPE_ID;
     }
 
     /**
@@ -232,7 +232,7 @@ public class WishesRecord extends UpdatableRecordImpl<WishesRecord> implements R
      */
     @Override
     public Field<UInteger> field4() {
-        return Wishes.RFRMGR_WISHES.CLUB_ID;
+        return Wishes.WISHES.CLUB_ID;
     }
 
     /**
@@ -240,7 +240,7 @@ public class WishesRecord extends UpdatableRecordImpl<WishesRecord> implements R
      */
     @Override
     public Field<UInteger> field5() {
-        return Wishes.RFRMGR_WISHES.LEAGUE_ID;
+        return Wishes.WISHES.LEAGUE_ID;
     }
 
     /**
@@ -248,7 +248,7 @@ public class WishesRecord extends UpdatableRecordImpl<WishesRecord> implements R
      */
     @Override
     public Field<UInteger> field6() {
-        return Wishes.RFRMGR_WISHES.SEX_TYPE_ID;
+        return Wishes.WISHES.SEX_TYPE_ID;
     }
 
     /**
@@ -256,7 +256,7 @@ public class WishesRecord extends UpdatableRecordImpl<WishesRecord> implements R
      */
     @Override
     public Field<Byte> field7() {
-        return Wishes.RFRMGR_WISHES.SATURDAY;
+        return Wishes.WISHES.SATURDAY;
     }
 
     /**
@@ -264,7 +264,7 @@ public class WishesRecord extends UpdatableRecordImpl<WishesRecord> implements R
      */
     @Override
     public Field<Byte> field8() {
-        return Wishes.RFRMGR_WISHES.SUNDAY;
+        return Wishes.WISHES.SUNDAY;
     }
 
     /**
@@ -272,7 +272,7 @@ public class WishesRecord extends UpdatableRecordImpl<WishesRecord> implements R
      */
     @Override
     public Field<Byte> field9() {
-        return Wishes.RFRMGR_WISHES.TOURNAMENT;
+        return Wishes.WISHES.TOURNAMENT;
     }
 
     /**
@@ -280,7 +280,7 @@ public class WishesRecord extends UpdatableRecordImpl<WishesRecord> implements R
      */
     @Override
     public Field<String> field10() {
-        return Wishes.RFRMGR_WISHES.REMARK;
+        return Wishes.WISHES.REMARK;
     }
 
     /**
@@ -479,14 +479,14 @@ public class WishesRecord extends UpdatableRecordImpl<WishesRecord> implements R
      * Create a detached WishesRecord
      */
     public WishesRecord() {
-        super(Wishes.RFRMGR_WISHES);
+        super(Wishes.WISHES);
     }
 
     /**
      * Create a detached, initialised WishesRecord
      */
     public WishesRecord(UInteger id, UInteger refereeId, UInteger wishTypeId, UInteger clubId, UInteger leagueId, UInteger sexTypeId, Byte saturday, Byte sunday, Byte tournament, String remark) {
-        super(Wishes.RFRMGR_WISHES);
+        super(Wishes.WISHES);
 
         set(0, id);
         set(1, refereeId);

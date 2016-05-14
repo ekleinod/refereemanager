@@ -31,7 +31,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PeopleRecord extends TableRecordImpl<PeopleRecord> implements Record9<UInteger, UInteger, String, String, String, Date, Date, String, String> {
 
-    private static final long serialVersionUID = -2124160607;
+    private static final long serialVersionUID = 1779780222;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_people.id</code>.
@@ -184,7 +184,7 @@ public class PeopleRecord extends TableRecordImpl<PeopleRecord> implements Recor
      */
     @Override
     public Field<UInteger> field1() {
-        return People.RFRMGR_PEOPLE.ID;
+        return People.PEOPLE.ID;
     }
 
     /**
@@ -192,7 +192,7 @@ public class PeopleRecord extends TableRecordImpl<PeopleRecord> implements Recor
      */
     @Override
     public Field<UInteger> field2() {
-        return People.RFRMGR_PEOPLE.SEX_TYPE_ID;
+        return People.PEOPLE.SEX_TYPE_ID;
     }
 
     /**
@@ -200,7 +200,7 @@ public class PeopleRecord extends TableRecordImpl<PeopleRecord> implements Recor
      */
     @Override
     public Field<String> field3() {
-        return People.RFRMGR_PEOPLE.TITLE;
+        return People.PEOPLE.TITLE;
     }
 
     /**
@@ -208,7 +208,7 @@ public class PeopleRecord extends TableRecordImpl<PeopleRecord> implements Recor
      */
     @Override
     public Field<String> field4() {
-        return People.RFRMGR_PEOPLE.FIRST_NAME;
+        return People.PEOPLE.FIRST_NAME;
     }
 
     /**
@@ -216,7 +216,7 @@ public class PeopleRecord extends TableRecordImpl<PeopleRecord> implements Recor
      */
     @Override
     public Field<String> field5() {
-        return People.RFRMGR_PEOPLE.NAME;
+        return People.PEOPLE.NAME;
     }
 
     /**
@@ -224,7 +224,7 @@ public class PeopleRecord extends TableRecordImpl<PeopleRecord> implements Recor
      */
     @Override
     public Field<Date> field6() {
-        return People.RFRMGR_PEOPLE.BIRTHDAY;
+        return People.PEOPLE.BIRTHDAY;
     }
 
     /**
@@ -232,7 +232,7 @@ public class PeopleRecord extends TableRecordImpl<PeopleRecord> implements Recor
      */
     @Override
     public Field<Date> field7() {
-        return People.RFRMGR_PEOPLE.DAYOFDEATH;
+        return People.PEOPLE.DAYOFDEATH;
     }
 
     /**
@@ -240,7 +240,7 @@ public class PeopleRecord extends TableRecordImpl<PeopleRecord> implements Recor
      */
     @Override
     public Field<String> field8() {
-        return People.RFRMGR_PEOPLE.REMARK;
+        return People.PEOPLE.REMARK;
     }
 
     /**
@@ -248,7 +248,7 @@ public class PeopleRecord extends TableRecordImpl<PeopleRecord> implements Recor
      */
     @Override
     public Field<String> field9() {
-        return People.RFRMGR_PEOPLE.INTERNAL_REMARK;
+        return People.PEOPLE.INTERNAL_REMARK;
     }
 
     /**
@@ -429,14 +429,14 @@ public class PeopleRecord extends TableRecordImpl<PeopleRecord> implements Recor
      * Create a detached PeopleRecord
      */
     public PeopleRecord() {
-        super(People.RFRMGR_PEOPLE);
+        super(People.PEOPLE);
     }
 
     /**
      * Create a detached, initialised PeopleRecord
      */
     public PeopleRecord(UInteger id, UInteger sexTypeId, String title, String firstName, String name, Date birthday, Date dayofdeath, String remark, String internalRemark) {
-        super(People.RFRMGR_PEOPLE);
+        super(People.PEOPLE);
 
         set(0, id);
         set(1, sexTypeId);

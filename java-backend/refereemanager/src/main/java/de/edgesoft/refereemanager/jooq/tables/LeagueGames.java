@@ -39,12 +39,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LeagueGames extends TableImpl<LeagueGamesRecord> {
 
-    private static final long serialVersionUID = -732079320;
+    private static final long serialVersionUID = 439624075;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_league_games</code>
      */
-    public static final LeagueGames RFRMGR_LEAGUE_GAMES = new LeagueGames();
+    public static final LeagueGames LEAGUE_GAMES = new LeagueGames();
 
     /**
      * The class holding records for this type
@@ -95,7 +95,7 @@ public class LeagueGames extends TableImpl<LeagueGamesRecord> {
      * Create an aliased <code>refereemanager.rfrmgr_league_games</code> table reference
      */
     public LeagueGames(String alias) {
-        this(alias, RFRMGR_LEAGUE_GAMES);
+        this(alias, LEAGUE_GAMES);
     }
 
     private LeagueGames(String alias, Table<LeagueGamesRecord> aliased) {
@@ -119,7 +119,7 @@ public class LeagueGames extends TableImpl<LeagueGamesRecord> {
      */
     @Override
     public Identity<LeagueGamesRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_LEAGUE_GAMES;
+        return Keys.IDENTITY_LEAGUE_GAMES;
     }
 
     /**

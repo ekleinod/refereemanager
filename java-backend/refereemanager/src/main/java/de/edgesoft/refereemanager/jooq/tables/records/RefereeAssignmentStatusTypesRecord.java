@@ -30,7 +30,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereeAssignmentStatusTypesRecord extends UpdatableRecordImpl<RefereeAssignmentStatusTypesRecord> implements Record4<UInteger, String, String, String> {
 
-    private static final long serialVersionUID = 1487164014;
+    private static final long serialVersionUID = 152769350;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_referee_assignment_status_types.id</code>.
@@ -125,7 +125,7 @@ public class RefereeAssignmentStatusTypesRecord extends UpdatableRecordImpl<Refe
      */
     @Override
     public Field<UInteger> field1() {
-        return RefereeAssignmentStatusTypes.RFRMGR_REFEREE_ASSIGNMENT_STATUS_TYPES.ID;
+        return RefereeAssignmentStatusTypes.REFEREE_ASSIGNMENT_STATUS_TYPES.ID;
     }
 
     /**
@@ -133,7 +133,7 @@ public class RefereeAssignmentStatusTypesRecord extends UpdatableRecordImpl<Refe
      */
     @Override
     public Field<String> field2() {
-        return RefereeAssignmentStatusTypes.RFRMGR_REFEREE_ASSIGNMENT_STATUS_TYPES.SID;
+        return RefereeAssignmentStatusTypes.REFEREE_ASSIGNMENT_STATUS_TYPES.SID;
     }
 
     /**
@@ -141,7 +141,7 @@ public class RefereeAssignmentStatusTypesRecord extends UpdatableRecordImpl<Refe
      */
     @Override
     public Field<String> field3() {
-        return RefereeAssignmentStatusTypes.RFRMGR_REFEREE_ASSIGNMENT_STATUS_TYPES.TITLE;
+        return RefereeAssignmentStatusTypes.REFEREE_ASSIGNMENT_STATUS_TYPES.TITLE;
     }
 
     /**
@@ -149,7 +149,7 @@ public class RefereeAssignmentStatusTypesRecord extends UpdatableRecordImpl<Refe
      */
     @Override
     public Field<String> field4() {
-        return RefereeAssignmentStatusTypes.RFRMGR_REFEREE_ASSIGNMENT_STATUS_TYPES.REMARK;
+        return RefereeAssignmentStatusTypes.REFEREE_ASSIGNMENT_STATUS_TYPES.REMARK;
     }
 
     /**
@@ -240,14 +240,14 @@ public class RefereeAssignmentStatusTypesRecord extends UpdatableRecordImpl<Refe
      * Create a detached RefereeAssignmentStatusTypesRecord
      */
     public RefereeAssignmentStatusTypesRecord() {
-        super(RefereeAssignmentStatusTypes.RFRMGR_REFEREE_ASSIGNMENT_STATUS_TYPES);
+        super(RefereeAssignmentStatusTypes.REFEREE_ASSIGNMENT_STATUS_TYPES);
     }
 
     /**
      * Create a detached, initialised RefereeAssignmentStatusTypesRecord
      */
     public RefereeAssignmentStatusTypesRecord(UInteger id, String sid, String title, String remark) {
-        super(RefereeAssignmentStatusTypes.RFRMGR_REFEREE_ASSIGNMENT_STATUS_TYPES);
+        super(RefereeAssignmentStatusTypes.REFEREE_ASSIGNMENT_STATUS_TYPES);
 
         set(0, id);
         set(1, sid);

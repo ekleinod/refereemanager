@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereeAssignmentsRecord extends UpdatableRecordImpl<RefereeAssignmentsRecord> implements Record7<UInteger, UInteger, UInteger, UInteger, UInteger, UInteger, String> {
 
-    private static final long serialVersionUID = 91002662;
+    private static final long serialVersionUID = 1274827313;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_referee_assignments.id</code>.
@@ -166,7 +166,7 @@ public class RefereeAssignmentsRecord extends UpdatableRecordImpl<RefereeAssignm
      */
     @Override
     public Field<UInteger> field1() {
-        return RefereeAssignments.RFRMGR_REFEREE_ASSIGNMENTS.ID;
+        return RefereeAssignments.REFEREE_ASSIGNMENTS.ID;
     }
 
     /**
@@ -174,7 +174,7 @@ public class RefereeAssignmentsRecord extends UpdatableRecordImpl<RefereeAssignm
      */
     @Override
     public Field<UInteger> field2() {
-        return RefereeAssignments.RFRMGR_REFEREE_ASSIGNMENTS.ASSIGNMENT_ID;
+        return RefereeAssignments.REFEREE_ASSIGNMENTS.ASSIGNMENT_ID;
     }
 
     /**
@@ -182,7 +182,7 @@ public class RefereeAssignmentsRecord extends UpdatableRecordImpl<RefereeAssignm
      */
     @Override
     public Field<UInteger> field3() {
-        return RefereeAssignments.RFRMGR_REFEREE_ASSIGNMENTS.REFEREE_ASSIGNMENT_TYPE_ID;
+        return RefereeAssignments.REFEREE_ASSIGNMENTS.REFEREE_ASSIGNMENT_TYPE_ID;
     }
 
     /**
@@ -190,7 +190,7 @@ public class RefereeAssignmentsRecord extends UpdatableRecordImpl<RefereeAssignm
      */
     @Override
     public Field<UInteger> field4() {
-        return RefereeAssignments.RFRMGR_REFEREE_ASSIGNMENTS.REFEREE_ID;
+        return RefereeAssignments.REFEREE_ASSIGNMENTS.REFEREE_ID;
     }
 
     /**
@@ -198,7 +198,7 @@ public class RefereeAssignmentsRecord extends UpdatableRecordImpl<RefereeAssignm
      */
     @Override
     public Field<UInteger> field5() {
-        return RefereeAssignments.RFRMGR_REFEREE_ASSIGNMENTS.REFEREE_ASSIGNMENT_STATUS_TYPE_ID;
+        return RefereeAssignments.REFEREE_ASSIGNMENTS.REFEREE_ASSIGNMENT_STATUS_TYPE_ID;
     }
 
     /**
@@ -206,7 +206,7 @@ public class RefereeAssignmentsRecord extends UpdatableRecordImpl<RefereeAssignm
      */
     @Override
     public Field<UInteger> field6() {
-        return RefereeAssignments.RFRMGR_REFEREE_ASSIGNMENTS.REFEREE_ASSIGNMENT_REMARK_TYPE_ID;
+        return RefereeAssignments.REFEREE_ASSIGNMENTS.REFEREE_ASSIGNMENT_REMARK_TYPE_ID;
     }
 
     /**
@@ -214,7 +214,7 @@ public class RefereeAssignmentsRecord extends UpdatableRecordImpl<RefereeAssignm
      */
     @Override
     public Field<String> field7() {
-        return RefereeAssignments.RFRMGR_REFEREE_ASSIGNMENTS.REMARK;
+        return RefereeAssignments.REFEREE_ASSIGNMENTS.REMARK;
     }
 
     /**
@@ -359,14 +359,14 @@ public class RefereeAssignmentsRecord extends UpdatableRecordImpl<RefereeAssignm
      * Create a detached RefereeAssignmentsRecord
      */
     public RefereeAssignmentsRecord() {
-        super(RefereeAssignments.RFRMGR_REFEREE_ASSIGNMENTS);
+        super(RefereeAssignments.REFEREE_ASSIGNMENTS);
     }
 
     /**
      * Create a detached, initialised RefereeAssignmentsRecord
      */
     public RefereeAssignmentsRecord(UInteger id, UInteger assignmentId, UInteger refereeAssignmentTypeId, UInteger refereeId, UInteger refereeAssignmentStatusTypeId, UInteger refereeAssignmentRemarkTypeId, String remark) {
-        super(RefereeAssignments.RFRMGR_REFEREE_ASSIGNMENTS);
+        super(RefereeAssignments.REFEREE_ASSIGNMENTS);
 
         set(0, id);
         set(1, assignmentId);

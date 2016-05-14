@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereeReportsRecord extends UpdatableRecordImpl<RefereeReportsRecord> implements Record4<UInteger, UInteger, UInteger, String> {
 
-    private static final long serialVersionUID = 1429194389;
+    private static final long serialVersionUID = -1464715053;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_referee_reports.id</code>.
@@ -124,7 +124,7 @@ public class RefereeReportsRecord extends UpdatableRecordImpl<RefereeReportsReco
      */
     @Override
     public Field<UInteger> field1() {
-        return RefereeReports.RFRMGR_REFEREE_REPORTS.ID;
+        return RefereeReports.REFEREE_REPORTS.ID;
     }
 
     /**
@@ -132,7 +132,7 @@ public class RefereeReportsRecord extends UpdatableRecordImpl<RefereeReportsReco
      */
     @Override
     public Field<UInteger> field2() {
-        return RefereeReports.RFRMGR_REFEREE_REPORTS.LEAGUE_ID;
+        return RefereeReports.REFEREE_REPORTS.LEAGUE_ID;
     }
 
     /**
@@ -140,7 +140,7 @@ public class RefereeReportsRecord extends UpdatableRecordImpl<RefereeReportsReco
      */
     @Override
     public Field<UInteger> field3() {
-        return RefereeReports.RFRMGR_REFEREE_REPORTS.SEASON_ID;
+        return RefereeReports.REFEREE_REPORTS.SEASON_ID;
     }
 
     /**
@@ -148,7 +148,7 @@ public class RefereeReportsRecord extends UpdatableRecordImpl<RefereeReportsReco
      */
     @Override
     public Field<String> field4() {
-        return RefereeReports.RFRMGR_REFEREE_REPORTS.URL;
+        return RefereeReports.REFEREE_REPORTS.URL;
     }
 
     /**
@@ -239,14 +239,14 @@ public class RefereeReportsRecord extends UpdatableRecordImpl<RefereeReportsReco
      * Create a detached RefereeReportsRecord
      */
     public RefereeReportsRecord() {
-        super(RefereeReports.RFRMGR_REFEREE_REPORTS);
+        super(RefereeReports.REFEREE_REPORTS);
     }
 
     /**
      * Create a detached, initialised RefereeReportsRecord
      */
     public RefereeReportsRecord(UInteger id, UInteger leagueId, UInteger seasonId, String url) {
-        super(RefereeReports.RFRMGR_REFEREE_REPORTS);
+        super(RefereeReports.REFEREE_REPORTS);
 
         set(0, id);
         set(1, leagueId);

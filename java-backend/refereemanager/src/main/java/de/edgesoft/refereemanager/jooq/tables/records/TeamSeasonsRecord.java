@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TeamSeasonsRecord extends UpdatableRecordImpl<TeamSeasonsRecord> implements Record4<UInteger, UInteger, UInteger, UInteger> {
 
-    private static final long serialVersionUID = 1287178786;
+    private static final long serialVersionUID = -784444908;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_team_seasons.id</code>.
@@ -124,7 +124,7 @@ public class TeamSeasonsRecord extends UpdatableRecordImpl<TeamSeasonsRecord> im
      */
     @Override
     public Field<UInteger> field1() {
-        return TeamSeasons.RFRMGR_TEAM_SEASONS.ID;
+        return TeamSeasons.TEAM_SEASONS.ID;
     }
 
     /**
@@ -132,7 +132,7 @@ public class TeamSeasonsRecord extends UpdatableRecordImpl<TeamSeasonsRecord> im
      */
     @Override
     public Field<UInteger> field2() {
-        return TeamSeasons.RFRMGR_TEAM_SEASONS.TEAM_ID;
+        return TeamSeasons.TEAM_SEASONS.TEAM_ID;
     }
 
     /**
@@ -140,7 +140,7 @@ public class TeamSeasonsRecord extends UpdatableRecordImpl<TeamSeasonsRecord> im
      */
     @Override
     public Field<UInteger> field3() {
-        return TeamSeasons.RFRMGR_TEAM_SEASONS.SEASON_ID;
+        return TeamSeasons.TEAM_SEASONS.SEASON_ID;
     }
 
     /**
@@ -148,7 +148,7 @@ public class TeamSeasonsRecord extends UpdatableRecordImpl<TeamSeasonsRecord> im
      */
     @Override
     public Field<UInteger> field4() {
-        return TeamSeasons.RFRMGR_TEAM_SEASONS.LEAGUE_ID;
+        return TeamSeasons.TEAM_SEASONS.LEAGUE_ID;
     }
 
     /**
@@ -239,14 +239,14 @@ public class TeamSeasonsRecord extends UpdatableRecordImpl<TeamSeasonsRecord> im
      * Create a detached TeamSeasonsRecord
      */
     public TeamSeasonsRecord() {
-        super(TeamSeasons.RFRMGR_TEAM_SEASONS);
+        super(TeamSeasons.TEAM_SEASONS);
     }
 
     /**
      * Create a detached, initialised TeamSeasonsRecord
      */
     public TeamSeasonsRecord(UInteger id, UInteger teamId, UInteger seasonId, UInteger leagueId) {
-        super(TeamSeasons.RFRMGR_TEAM_SEASONS);
+        super(TeamSeasons.TEAM_SEASONS);
 
         set(0, id);
         set(1, teamId);

@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SpokespeopleRecord extends UpdatableRecordImpl<SpokespeopleRecord> implements Record4<UInteger, UInteger, UInteger, UInteger> {
 
-    private static final long serialVersionUID = -2023791205;
+    private static final long serialVersionUID = 1306262139;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_spokespeople.id</code>.
@@ -124,7 +124,7 @@ public class SpokespeopleRecord extends UpdatableRecordImpl<SpokespeopleRecord> 
      */
     @Override
     public Field<UInteger> field1() {
-        return Spokespeople.RFRMGR_SPOKESPEOPLE.ID;
+        return Spokespeople.SPOKESPEOPLE.ID;
     }
 
     /**
@@ -132,7 +132,7 @@ public class SpokespeopleRecord extends UpdatableRecordImpl<SpokespeopleRecord> 
      */
     @Override
     public Field<UInteger> field2() {
-        return Spokespeople.RFRMGR_SPOKESPEOPLE.PERSON_ID;
+        return Spokespeople.SPOKESPEOPLE.PERSON_ID;
     }
 
     /**
@@ -140,7 +140,7 @@ public class SpokespeopleRecord extends UpdatableRecordImpl<SpokespeopleRecord> 
      */
     @Override
     public Field<UInteger> field3() {
-        return Spokespeople.RFRMGR_SPOKESPEOPLE.TEAM_SEASON_ID;
+        return Spokespeople.SPOKESPEOPLE.TEAM_SEASON_ID;
     }
 
     /**
@@ -148,7 +148,7 @@ public class SpokespeopleRecord extends UpdatableRecordImpl<SpokespeopleRecord> 
      */
     @Override
     public Field<UInteger> field4() {
-        return Spokespeople.RFRMGR_SPOKESPEOPLE.CLUB_ID;
+        return Spokespeople.SPOKESPEOPLE.CLUB_ID;
     }
 
     /**
@@ -239,14 +239,14 @@ public class SpokespeopleRecord extends UpdatableRecordImpl<SpokespeopleRecord> 
      * Create a detached SpokespeopleRecord
      */
     public SpokespeopleRecord() {
-        super(Spokespeople.RFRMGR_SPOKESPEOPLE);
+        super(Spokespeople.SPOKESPEOPLE);
     }
 
     /**
      * Create a detached, initialised SpokespeopleRecord
      */
     public SpokespeopleRecord(UInteger id, UInteger personId, UInteger teamSeasonId, UInteger clubId) {
-        super(Spokespeople.RFRMGR_SPOKESPEOPLE);
+        super(Spokespeople.SPOKESPEOPLE);
 
         set(0, id);
         set(1, personId);

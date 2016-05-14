@@ -37,12 +37,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Assignments extends TableImpl<AssignmentsRecord> {
 
-    private static final long serialVersionUID = 856016965;
+    private static final long serialVersionUID = -2040598154;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_assignments</code>
      */
-    public static final Assignments RFRMGR_ASSIGNMENTS = new Assignments();
+    public static final Assignments ASSIGNMENTS = new Assignments();
 
     /**
      * The class holding records for this type
@@ -83,7 +83,7 @@ public class Assignments extends TableImpl<AssignmentsRecord> {
      * Create an aliased <code>refereemanager.rfrmgr_assignments</code> table reference
      */
     public Assignments(String alias) {
-        this(alias, RFRMGR_ASSIGNMENTS);
+        this(alias, ASSIGNMENTS);
     }
 
     private Assignments(String alias, Table<AssignmentsRecord> aliased) {
@@ -107,7 +107,7 @@ public class Assignments extends TableImpl<AssignmentsRecord> {
      */
     @Override
     public Identity<AssignmentsRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_ASSIGNMENTS;
+        return Keys.IDENTITY_ASSIGNMENTS;
     }
 
     /**

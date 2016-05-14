@@ -30,7 +30,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LeagueGameTeamTypesRecord extends UpdatableRecordImpl<LeagueGameTeamTypesRecord> implements Record5<UInteger, String, String, String, String> {
 
-    private static final long serialVersionUID = -1883854377;
+    private static final long serialVersionUID = 1672381756;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_league_game_team_types.id</code>.
@@ -139,7 +139,7 @@ public class LeagueGameTeamTypesRecord extends UpdatableRecordImpl<LeagueGameTea
      */
     @Override
     public Field<UInteger> field1() {
-        return LeagueGameTeamTypes.RFRMGR_LEAGUE_GAME_TEAM_TYPES.ID;
+        return LeagueGameTeamTypes.LEAGUE_GAME_TEAM_TYPES.ID;
     }
 
     /**
@@ -147,7 +147,7 @@ public class LeagueGameTeamTypesRecord extends UpdatableRecordImpl<LeagueGameTea
      */
     @Override
     public Field<String> field2() {
-        return LeagueGameTeamTypes.RFRMGR_LEAGUE_GAME_TEAM_TYPES.SID;
+        return LeagueGameTeamTypes.LEAGUE_GAME_TEAM_TYPES.SID;
     }
 
     /**
@@ -155,7 +155,7 @@ public class LeagueGameTeamTypesRecord extends UpdatableRecordImpl<LeagueGameTea
      */
     @Override
     public Field<String> field3() {
-        return LeagueGameTeamTypes.RFRMGR_LEAGUE_GAME_TEAM_TYPES.TITLE;
+        return LeagueGameTeamTypes.LEAGUE_GAME_TEAM_TYPES.TITLE;
     }
 
     /**
@@ -163,7 +163,7 @@ public class LeagueGameTeamTypesRecord extends UpdatableRecordImpl<LeagueGameTea
      */
     @Override
     public Field<String> field4() {
-        return LeagueGameTeamTypes.RFRMGR_LEAGUE_GAME_TEAM_TYPES.ABBREVIATION;
+        return LeagueGameTeamTypes.LEAGUE_GAME_TEAM_TYPES.ABBREVIATION;
     }
 
     /**
@@ -171,7 +171,7 @@ public class LeagueGameTeamTypesRecord extends UpdatableRecordImpl<LeagueGameTea
      */
     @Override
     public Field<String> field5() {
-        return LeagueGameTeamTypes.RFRMGR_LEAGUE_GAME_TEAM_TYPES.REMARK;
+        return LeagueGameTeamTypes.LEAGUE_GAME_TEAM_TYPES.REMARK;
     }
 
     /**
@@ -280,14 +280,14 @@ public class LeagueGameTeamTypesRecord extends UpdatableRecordImpl<LeagueGameTea
      * Create a detached LeagueGameTeamTypesRecord
      */
     public LeagueGameTeamTypesRecord() {
-        super(LeagueGameTeamTypes.RFRMGR_LEAGUE_GAME_TEAM_TYPES);
+        super(LeagueGameTeamTypes.LEAGUE_GAME_TEAM_TYPES);
     }
 
     /**
      * Create a detached, initialised LeagueGameTeamTypesRecord
      */
     public LeagueGameTeamTypesRecord(UInteger id, String sid, String title, String abbreviation, String remark) {
-        super(LeagueGameTeamTypes.RFRMGR_LEAGUE_GAME_TEAM_TYPES);
+        super(LeagueGameTeamTypes.LEAGUE_GAME_TEAM_TYPES);
 
         set(0, id);
         set(1, sid);

@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ClubsRecord extends UpdatableRecordImpl<ClubsRecord> implements Record4<UInteger, String, String, String> {
 
-    private static final long serialVersionUID = -369659139;
+    private static final long serialVersionUID = 1231781545;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_clubs.id</code>.
@@ -124,7 +124,7 @@ public class ClubsRecord extends UpdatableRecordImpl<ClubsRecord> implements Rec
      */
     @Override
     public Field<UInteger> field1() {
-        return Clubs.RFRMGR_CLUBS.ID;
+        return Clubs.CLUBS.ID;
     }
 
     /**
@@ -132,7 +132,7 @@ public class ClubsRecord extends UpdatableRecordImpl<ClubsRecord> implements Rec
      */
     @Override
     public Field<String> field2() {
-        return Clubs.RFRMGR_CLUBS.NAME;
+        return Clubs.CLUBS.NAME;
     }
 
     /**
@@ -140,7 +140,7 @@ public class ClubsRecord extends UpdatableRecordImpl<ClubsRecord> implements Rec
      */
     @Override
     public Field<String> field3() {
-        return Clubs.RFRMGR_CLUBS.ABBREVIATION;
+        return Clubs.CLUBS.ABBREVIATION;
     }
 
     /**
@@ -148,7 +148,7 @@ public class ClubsRecord extends UpdatableRecordImpl<ClubsRecord> implements Rec
      */
     @Override
     public Field<String> field4() {
-        return Clubs.RFRMGR_CLUBS.REMARK;
+        return Clubs.CLUBS.REMARK;
     }
 
     /**
@@ -239,14 +239,14 @@ public class ClubsRecord extends UpdatableRecordImpl<ClubsRecord> implements Rec
      * Create a detached ClubsRecord
      */
     public ClubsRecord() {
-        super(Clubs.RFRMGR_CLUBS);
+        super(Clubs.CLUBS);
     }
 
     /**
      * Create a detached, initialised ClubsRecord
      */
     public ClubsRecord(UInteger id, String name, String abbreviation, String remark) {
-        super(Clubs.RFRMGR_CLUBS);
+        super(Clubs.CLUBS);
 
         set(0, id);
         set(1, name);

@@ -30,7 +30,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TrainingLevelTypesRecord extends UpdatableRecordImpl<TrainingLevelTypesRecord> implements Record7<UInteger, String, UInteger, String, String, UInteger, String> {
 
-    private static final long serialVersionUID = -429236265;
+    private static final long serialVersionUID = 180655620;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_training_level_types.id</code>.
@@ -167,7 +167,7 @@ public class TrainingLevelTypesRecord extends UpdatableRecordImpl<TrainingLevelT
      */
     @Override
     public Field<UInteger> field1() {
-        return TrainingLevelTypes.RFRMGR_TRAINING_LEVEL_TYPES.ID;
+        return TrainingLevelTypes.TRAINING_LEVEL_TYPES.ID;
     }
 
     /**
@@ -175,7 +175,7 @@ public class TrainingLevelTypesRecord extends UpdatableRecordImpl<TrainingLevelT
      */
     @Override
     public Field<String> field2() {
-        return TrainingLevelTypes.RFRMGR_TRAINING_LEVEL_TYPES.SID;
+        return TrainingLevelTypes.TRAINING_LEVEL_TYPES.SID;
     }
 
     /**
@@ -183,7 +183,7 @@ public class TrainingLevelTypesRecord extends UpdatableRecordImpl<TrainingLevelT
      */
     @Override
     public Field<UInteger> field3() {
-        return TrainingLevelTypes.RFRMGR_TRAINING_LEVEL_TYPES.RANK;
+        return TrainingLevelTypes.TRAINING_LEVEL_TYPES.RANK;
     }
 
     /**
@@ -191,7 +191,7 @@ public class TrainingLevelTypesRecord extends UpdatableRecordImpl<TrainingLevelT
      */
     @Override
     public Field<String> field4() {
-        return TrainingLevelTypes.RFRMGR_TRAINING_LEVEL_TYPES.TITLE;
+        return TrainingLevelTypes.TRAINING_LEVEL_TYPES.TITLE;
     }
 
     /**
@@ -199,7 +199,7 @@ public class TrainingLevelTypesRecord extends UpdatableRecordImpl<TrainingLevelT
      */
     @Override
     public Field<String> field5() {
-        return TrainingLevelTypes.RFRMGR_TRAINING_LEVEL_TYPES.ABBREVIATION;
+        return TrainingLevelTypes.TRAINING_LEVEL_TYPES.ABBREVIATION;
     }
 
     /**
@@ -207,7 +207,7 @@ public class TrainingLevelTypesRecord extends UpdatableRecordImpl<TrainingLevelT
      */
     @Override
     public Field<UInteger> field6() {
-        return TrainingLevelTypes.RFRMGR_TRAINING_LEVEL_TYPES.UPDATE_INTERVAL;
+        return TrainingLevelTypes.TRAINING_LEVEL_TYPES.UPDATE_INTERVAL;
     }
 
     /**
@@ -215,7 +215,7 @@ public class TrainingLevelTypesRecord extends UpdatableRecordImpl<TrainingLevelT
      */
     @Override
     public Field<String> field7() {
-        return TrainingLevelTypes.RFRMGR_TRAINING_LEVEL_TYPES.REMARK;
+        return TrainingLevelTypes.TRAINING_LEVEL_TYPES.REMARK;
     }
 
     /**
@@ -360,14 +360,14 @@ public class TrainingLevelTypesRecord extends UpdatableRecordImpl<TrainingLevelT
      * Create a detached TrainingLevelTypesRecord
      */
     public TrainingLevelTypesRecord() {
-        super(TrainingLevelTypes.RFRMGR_TRAINING_LEVEL_TYPES);
+        super(TrainingLevelTypes.TRAINING_LEVEL_TYPES);
     }
 
     /**
      * Create a detached, initialised TrainingLevelTypesRecord
      */
     public TrainingLevelTypesRecord(UInteger id, String sid, UInteger rank, String title, String abbreviation, UInteger updateInterval, String remark) {
-        super(TrainingLevelTypes.RFRMGR_TRAINING_LEVEL_TYPES);
+        super(TrainingLevelTypes.TRAINING_LEVEL_TYPES);
 
         set(0, id);
         set(1, sid);

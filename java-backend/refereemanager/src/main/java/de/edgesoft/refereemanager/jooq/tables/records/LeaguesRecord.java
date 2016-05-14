@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LeaguesRecord extends UpdatableRecordImpl<LeaguesRecord> implements Record5<UInteger, String, String, UInteger, String> {
 
-    private static final long serialVersionUID = 1890776689;
+    private static final long serialVersionUID = -641910364;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_leagues.id</code>.
@@ -138,7 +138,7 @@ public class LeaguesRecord extends UpdatableRecordImpl<LeaguesRecord> implements
      */
     @Override
     public Field<UInteger> field1() {
-        return Leagues.RFRMGR_LEAGUES.ID;
+        return Leagues.LEAGUES.ID;
     }
 
     /**
@@ -146,7 +146,7 @@ public class LeaguesRecord extends UpdatableRecordImpl<LeaguesRecord> implements
      */
     @Override
     public Field<String> field2() {
-        return Leagues.RFRMGR_LEAGUES.TITLE;
+        return Leagues.LEAGUES.TITLE;
     }
 
     /**
@@ -154,7 +154,7 @@ public class LeaguesRecord extends UpdatableRecordImpl<LeaguesRecord> implements
      */
     @Override
     public Field<String> field3() {
-        return Leagues.RFRMGR_LEAGUES.ABBREVIATION;
+        return Leagues.LEAGUES.ABBREVIATION;
     }
 
     /**
@@ -162,7 +162,7 @@ public class LeaguesRecord extends UpdatableRecordImpl<LeaguesRecord> implements
      */
     @Override
     public Field<UInteger> field4() {
-        return Leagues.RFRMGR_LEAGUES.LEAGUE_TYPE_ID;
+        return Leagues.LEAGUES.LEAGUE_TYPE_ID;
     }
 
     /**
@@ -170,7 +170,7 @@ public class LeaguesRecord extends UpdatableRecordImpl<LeaguesRecord> implements
      */
     @Override
     public Field<String> field5() {
-        return Leagues.RFRMGR_LEAGUES.REMARK;
+        return Leagues.LEAGUES.REMARK;
     }
 
     /**
@@ -279,14 +279,14 @@ public class LeaguesRecord extends UpdatableRecordImpl<LeaguesRecord> implements
      * Create a detached LeaguesRecord
      */
     public LeaguesRecord() {
-        super(Leagues.RFRMGR_LEAGUES);
+        super(Leagues.LEAGUES);
     }
 
     /**
      * Create a detached, initialised LeaguesRecord
      */
     public LeaguesRecord(UInteger id, String title, String abbreviation, UInteger leagueTypeId, String remark) {
-        super(Leagues.RFRMGR_LEAGUES);
+        super(Leagues.LEAGUES);
 
         set(0, id);
         set(1, title);

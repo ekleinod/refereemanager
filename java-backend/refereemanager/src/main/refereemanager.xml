@@ -16,8 +16,27 @@
          Defaults to org.jooq.util.JavaGenerator -->
     <name>org.jooq.util.JavaGenerator</name>
     
+    <!-- Remove table prefix from generated classes. -->
     <strategy>
-    	<name>de.edgesoft.util.PrefixGeneratorStrategy</name>
+    	<matchers>
+    		<tables>
+    			<table>
+    				<expression>^rfrmgr_(.*)$</expression>
+    				<tableClass>
+    					<transform>PASCAL</transform>
+						<expression>$1</expression>
+					</tableClass>
+    				<tableIdentifier>
+    					<transform>UPPER</transform>
+						<expression>$1</expression>
+					</tableIdentifier>
+    				<recordClass>
+    					<transform>PASCAL</transform>
+						<expression>$1_Record</expression>
+					</recordClass>
+    			</table>
+    		</tables>
+    	</matchers>
     </strategy>
 
     <database>

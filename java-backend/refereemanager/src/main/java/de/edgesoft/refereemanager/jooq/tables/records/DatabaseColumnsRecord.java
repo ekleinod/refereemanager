@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DatabaseColumnsRecord extends UpdatableRecordImpl<DatabaseColumnsRecord> implements Record2<UInteger, String> {
 
-    private static final long serialVersionUID = -1115192333;
+    private static final long serialVersionUID = -581596957;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_database_columns.id</code>.
@@ -96,7 +96,7 @@ public class DatabaseColumnsRecord extends UpdatableRecordImpl<DatabaseColumnsRe
      */
     @Override
     public Field<UInteger> field1() {
-        return DatabaseColumns.RFRMGR_DATABASE_COLUMNS.ID;
+        return DatabaseColumns.DATABASE_COLUMNS.ID;
     }
 
     /**
@@ -104,7 +104,7 @@ public class DatabaseColumnsRecord extends UpdatableRecordImpl<DatabaseColumnsRe
      */
     @Override
     public Field<String> field2() {
-        return DatabaseColumns.RFRMGR_DATABASE_COLUMNS.COLUMN_NAME;
+        return DatabaseColumns.DATABASE_COLUMNS.COLUMN_NAME;
     }
 
     /**
@@ -159,14 +159,14 @@ public class DatabaseColumnsRecord extends UpdatableRecordImpl<DatabaseColumnsRe
      * Create a detached DatabaseColumnsRecord
      */
     public DatabaseColumnsRecord() {
-        super(DatabaseColumns.RFRMGR_DATABASE_COLUMNS);
+        super(DatabaseColumns.DATABASE_COLUMNS);
     }
 
     /**
      * Create a detached, initialised DatabaseColumnsRecord
      */
     public DatabaseColumnsRecord(UInteger id, String columnName) {
-        super(DatabaseColumns.RFRMGR_DATABASE_COLUMNS);
+        super(DatabaseColumns.DATABASE_COLUMNS);
 
         set(0, id);
         set(1, columnName);

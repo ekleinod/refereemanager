@@ -36,12 +36,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Pictures extends TableImpl<PicturesRecord> {
 
-    private static final long serialVersionUID = 353306623;
+    private static final long serialVersionUID = -1636307102;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_pictures</code>
      */
-    public static final Pictures RFRMGR_PICTURES = new Pictures();
+    public static final Pictures PICTURES = new Pictures();
 
     /**
      * The class holding records for this type
@@ -82,7 +82,7 @@ public class Pictures extends TableImpl<PicturesRecord> {
      * Create an aliased <code>refereemanager.rfrmgr_pictures</code> table reference
      */
     public Pictures(String alias) {
-        this(alias, RFRMGR_PICTURES);
+        this(alias, PICTURES);
     }
 
     private Pictures(String alias, Table<PicturesRecord> aliased) {
@@ -106,7 +106,7 @@ public class Pictures extends TableImpl<PicturesRecord> {
      */
     @Override
     public Identity<PicturesRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_PICTURES;
+        return Keys.IDENTITY_PICTURES;
     }
 
     /**

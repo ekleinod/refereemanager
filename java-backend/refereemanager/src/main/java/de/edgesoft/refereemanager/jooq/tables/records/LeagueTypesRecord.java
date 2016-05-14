@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LeagueTypesRecord extends UpdatableRecordImpl<LeagueTypesRecord> implements Record4<UInteger, String, UInteger, String> {
 
-    private static final long serialVersionUID = -195251864;
+    private static final long serialVersionUID = 1559155060;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_league_types.id</code>.
@@ -124,7 +124,7 @@ public class LeagueTypesRecord extends UpdatableRecordImpl<LeagueTypesRecord> im
      */
     @Override
     public Field<UInteger> field1() {
-        return LeagueTypes.RFRMGR_LEAGUE_TYPES.ID;
+        return LeagueTypes.LEAGUE_TYPES.ID;
     }
 
     /**
@@ -132,7 +132,7 @@ public class LeagueTypesRecord extends UpdatableRecordImpl<LeagueTypesRecord> im
      */
     @Override
     public Field<String> field2() {
-        return LeagueTypes.RFRMGR_LEAGUE_TYPES.TITLE;
+        return LeagueTypes.LEAGUE_TYPES.TITLE;
     }
 
     /**
@@ -140,7 +140,7 @@ public class LeagueTypesRecord extends UpdatableRecordImpl<LeagueTypesRecord> im
      */
     @Override
     public Field<UInteger> field3() {
-        return LeagueTypes.RFRMGR_LEAGUE_TYPES.SEX_TYPE_ID;
+        return LeagueTypes.LEAGUE_TYPES.SEX_TYPE_ID;
     }
 
     /**
@@ -148,7 +148,7 @@ public class LeagueTypesRecord extends UpdatableRecordImpl<LeagueTypesRecord> im
      */
     @Override
     public Field<String> field4() {
-        return LeagueTypes.RFRMGR_LEAGUE_TYPES.REMARK;
+        return LeagueTypes.LEAGUE_TYPES.REMARK;
     }
 
     /**
@@ -239,14 +239,14 @@ public class LeagueTypesRecord extends UpdatableRecordImpl<LeagueTypesRecord> im
      * Create a detached LeagueTypesRecord
      */
     public LeagueTypesRecord() {
-        super(LeagueTypes.RFRMGR_LEAGUE_TYPES);
+        super(LeagueTypes.LEAGUE_TYPES);
     }
 
     /**
      * Create a detached, initialised LeagueTypesRecord
      */
     public LeagueTypesRecord(UInteger id, String title, UInteger sexTypeId, String remark) {
-        super(LeagueTypes.RFRMGR_LEAGUE_TYPES);
+        super(LeagueTypes.LEAGUE_TYPES);
 
         set(0, id);
         set(1, title);

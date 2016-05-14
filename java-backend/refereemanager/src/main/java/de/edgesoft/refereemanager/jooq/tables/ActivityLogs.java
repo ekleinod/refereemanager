@@ -38,12 +38,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityLogs extends TableImpl<ActivityLogsRecord> {
 
-    private static final long serialVersionUID = -1262165988;
+    private static final long serialVersionUID = -1247833373;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_activity_logs</code>
      */
-    public static final ActivityLogs RFRMGR_ACTIVITY_LOGS = new ActivityLogs();
+    public static final ActivityLogs ACTIVITY_LOGS = new ActivityLogs();
 
     /**
      * The class holding records for this type
@@ -109,7 +109,7 @@ public class ActivityLogs extends TableImpl<ActivityLogsRecord> {
      * Create an aliased <code>refereemanager.rfrmgr_activity_logs</code> table reference
      */
     public ActivityLogs(String alias) {
-        this(alias, RFRMGR_ACTIVITY_LOGS);
+        this(alias, ACTIVITY_LOGS);
     }
 
     private ActivityLogs(String alias, Table<ActivityLogsRecord> aliased) {
@@ -133,7 +133,7 @@ public class ActivityLogs extends TableImpl<ActivityLogsRecord> {
      */
     @Override
     public Identity<ActivityLogsRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_ACTIVITY_LOGS;
+        return Keys.IDENTITY_ACTIVITY_LOGS;
     }
 
     /**

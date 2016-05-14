@@ -31,7 +31,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TrainingLevelsRecord extends UpdatableRecordImpl<TrainingLevelsRecord> implements Record4<UInteger, UInteger, UInteger, Date> {
 
-    private static final long serialVersionUID = -1672945351;
+    private static final long serialVersionUID = 1155100293;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_training_levels.id</code>.
@@ -126,7 +126,7 @@ public class TrainingLevelsRecord extends UpdatableRecordImpl<TrainingLevelsReco
      */
     @Override
     public Field<UInteger> field1() {
-        return TrainingLevels.RFRMGR_TRAINING_LEVELS.ID;
+        return TrainingLevels.TRAINING_LEVELS.ID;
     }
 
     /**
@@ -134,7 +134,7 @@ public class TrainingLevelsRecord extends UpdatableRecordImpl<TrainingLevelsReco
      */
     @Override
     public Field<UInteger> field2() {
-        return TrainingLevels.RFRMGR_TRAINING_LEVELS.REFEREE_ID;
+        return TrainingLevels.TRAINING_LEVELS.REFEREE_ID;
     }
 
     /**
@@ -142,7 +142,7 @@ public class TrainingLevelsRecord extends UpdatableRecordImpl<TrainingLevelsReco
      */
     @Override
     public Field<UInteger> field3() {
-        return TrainingLevels.RFRMGR_TRAINING_LEVELS.TRAINING_LEVEL_TYPE_ID;
+        return TrainingLevels.TRAINING_LEVELS.TRAINING_LEVEL_TYPE_ID;
     }
 
     /**
@@ -150,7 +150,7 @@ public class TrainingLevelsRecord extends UpdatableRecordImpl<TrainingLevelsReco
      */
     @Override
     public Field<Date> field4() {
-        return TrainingLevels.RFRMGR_TRAINING_LEVELS.SINCE;
+        return TrainingLevels.TRAINING_LEVELS.SINCE;
     }
 
     /**
@@ -241,14 +241,14 @@ public class TrainingLevelsRecord extends UpdatableRecordImpl<TrainingLevelsReco
      * Create a detached TrainingLevelsRecord
      */
     public TrainingLevelsRecord() {
-        super(TrainingLevels.RFRMGR_TRAINING_LEVELS);
+        super(TrainingLevels.TRAINING_LEVELS);
     }
 
     /**
      * Create a detached, initialised TrainingLevelsRecord
      */
     public TrainingLevelsRecord(UInteger id, UInteger refereeId, UInteger trainingLevelTypeId, Date since) {
-        super(TrainingLevels.RFRMGR_TRAINING_LEVELS);
+        super(TrainingLevels.TRAINING_LEVELS);
 
         set(0, id);
         set(1, refereeId);

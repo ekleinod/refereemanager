@@ -10,7 +10,7 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.types.UInteger;
 
-import static de.edgesoft.refereemanager.jooq.tables.People.RFRMGR_PEOPLE;
+import static de.edgesoft.refereemanager.jooq.tables.People.PEOPLE;
 
 
 /**
@@ -29,11 +29,11 @@ public class App
         // PreparedStatement and ResultSet are handled by jOOQ, internally
         try (Connection conn = DriverManager.getConnection(url, userName, password)) {
         	DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
-        	Result<Record> result = create.select().from(RFRMGR_PEOPLE).fetch();
+        	Result<Record> result = create.select().from(PEOPLE).fetch();
         	for (Record r : result) {
-        	    UInteger id = r.getValue(RFRMGR_PEOPLE.ID);
-        	    String firstName = r.getValue(RFRMGR_PEOPLE.FIRST_NAME);
-        	    String lastName = r.getValue(RFRMGR_PEOPLE.NAME);
+        	    UInteger id = r.getValue(PEOPLE.ID);
+        	    String firstName = r.getValue(PEOPLE.FIRST_NAME);
+        	    String lastName = r.getValue(PEOPLE.NAME);
 
         	    System.out.println("ID: " + id + " first name: " + firstName + " last name: " + lastName);
         	}

@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ContactsRecord extends UpdatableRecordImpl<ContactsRecord> implements Record8<UInteger, UInteger, String, Byte, Byte, UInteger, UInteger, String> {
 
-    private static final long serialVersionUID = -109490496;
+    private static final long serialVersionUID = 1993905594;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_contacts.id</code>.
@@ -180,7 +180,7 @@ public class ContactsRecord extends UpdatableRecordImpl<ContactsRecord> implemen
      */
     @Override
     public Field<UInteger> field1() {
-        return Contacts.RFRMGR_CONTACTS.ID;
+        return Contacts.CONTACTS.ID;
     }
 
     /**
@@ -188,7 +188,7 @@ public class ContactsRecord extends UpdatableRecordImpl<ContactsRecord> implemen
      */
     @Override
     public Field<UInteger> field2() {
-        return Contacts.RFRMGR_CONTACTS.CONTACT_TYPE_ID;
+        return Contacts.CONTACTS.CONTACT_TYPE_ID;
     }
 
     /**
@@ -196,7 +196,7 @@ public class ContactsRecord extends UpdatableRecordImpl<ContactsRecord> implemen
      */
     @Override
     public Field<String> field3() {
-        return Contacts.RFRMGR_CONTACTS.TITLE;
+        return Contacts.CONTACTS.TITLE;
     }
 
     /**
@@ -204,7 +204,7 @@ public class ContactsRecord extends UpdatableRecordImpl<ContactsRecord> implemen
      */
     @Override
     public Field<Byte> field4() {
-        return Contacts.RFRMGR_CONTACTS.IS_PRIMARY;
+        return Contacts.CONTACTS.IS_PRIMARY;
     }
 
     /**
@@ -212,7 +212,7 @@ public class ContactsRecord extends UpdatableRecordImpl<ContactsRecord> implemen
      */
     @Override
     public Field<Byte> field5() {
-        return Contacts.RFRMGR_CONTACTS.EDITOR_ONLY;
+        return Contacts.CONTACTS.EDITOR_ONLY;
     }
 
     /**
@@ -220,7 +220,7 @@ public class ContactsRecord extends UpdatableRecordImpl<ContactsRecord> implemen
      */
     @Override
     public Field<UInteger> field6() {
-        return Contacts.RFRMGR_CONTACTS.PERSON_ID;
+        return Contacts.CONTACTS.PERSON_ID;
     }
 
     /**
@@ -228,7 +228,7 @@ public class ContactsRecord extends UpdatableRecordImpl<ContactsRecord> implemen
      */
     @Override
     public Field<UInteger> field7() {
-        return Contacts.RFRMGR_CONTACTS.CLUB_ID;
+        return Contacts.CONTACTS.CLUB_ID;
     }
 
     /**
@@ -236,7 +236,7 @@ public class ContactsRecord extends UpdatableRecordImpl<ContactsRecord> implemen
      */
     @Override
     public Field<String> field8() {
-        return Contacts.RFRMGR_CONTACTS.REMARK;
+        return Contacts.CONTACTS.REMARK;
     }
 
     /**
@@ -399,14 +399,14 @@ public class ContactsRecord extends UpdatableRecordImpl<ContactsRecord> implemen
      * Create a detached ContactsRecord
      */
     public ContactsRecord() {
-        super(Contacts.RFRMGR_CONTACTS);
+        super(Contacts.CONTACTS);
     }
 
     /**
      * Create a detached, initialised ContactsRecord
      */
     public ContactsRecord(UInteger id, UInteger contactTypeId, String title, Byte isPrimary, Byte editorOnly, UInteger personId, UInteger clubId, String remark) {
-        super(Contacts.RFRMGR_CONTACTS);
+        super(Contacts.CONTACTS);
 
         set(0, id);
         set(1, contactTypeId);

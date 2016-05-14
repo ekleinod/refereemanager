@@ -36,12 +36,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PersonPreferences extends TableImpl<PersonPreferencesRecord> {
 
-    private static final long serialVersionUID = -350879984;
+    private static final long serialVersionUID = -1861767391;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_person_preferences</code>
      */
-    public static final PersonPreferences RFRMGR_PERSON_PREFERENCES = new PersonPreferences();
+    public static final PersonPreferences PERSON_PREFERENCES = new PersonPreferences();
 
     /**
      * The class holding records for this type
@@ -82,7 +82,7 @@ public class PersonPreferences extends TableImpl<PersonPreferencesRecord> {
      * Create an aliased <code>refereemanager.rfrmgr_person_preferences</code> table reference
      */
     public PersonPreferences(String alias) {
-        this(alias, RFRMGR_PERSON_PREFERENCES);
+        this(alias, PERSON_PREFERENCES);
     }
 
     private PersonPreferences(String alias, Table<PersonPreferencesRecord> aliased) {
@@ -106,7 +106,7 @@ public class PersonPreferences extends TableImpl<PersonPreferencesRecord> {
      */
     @Override
     public Identity<PersonPreferencesRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_PERSON_PREFERENCES;
+        return Keys.IDENTITY_PERSON_PREFERENCES;
     }
 
     /**

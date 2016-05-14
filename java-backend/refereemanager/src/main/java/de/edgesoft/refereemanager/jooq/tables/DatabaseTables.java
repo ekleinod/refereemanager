@@ -36,12 +36,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DatabaseTables extends TableImpl<DatabaseTablesRecord> {
 
-    private static final long serialVersionUID = -788813632;
+    private static final long serialVersionUID = 774284029;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_database_tables</code>
      */
-    public static final DatabaseTables RFRMGR_DATABASE_TABLES = new DatabaseTables();
+    public static final DatabaseTables DATABASE_TABLES = new DatabaseTables();
 
     /**
      * The class holding records for this type
@@ -72,7 +72,7 @@ public class DatabaseTables extends TableImpl<DatabaseTablesRecord> {
      * Create an aliased <code>refereemanager.rfrmgr_database_tables</code> table reference
      */
     public DatabaseTables(String alias) {
-        this(alias, RFRMGR_DATABASE_TABLES);
+        this(alias, DATABASE_TABLES);
     }
 
     private DatabaseTables(String alias, Table<DatabaseTablesRecord> aliased) {
@@ -96,7 +96,7 @@ public class DatabaseTables extends TableImpl<DatabaseTablesRecord> {
      */
     @Override
     public Identity<DatabaseTablesRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_DATABASE_TABLES;
+        return Keys.IDENTITY_DATABASE_TABLES;
     }
 
     /**

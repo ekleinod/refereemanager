@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SexTypesRecord extends UpdatableRecordImpl<SexTypesRecord> implements Record4<UInteger, String, String, String> {
 
-    private static final long serialVersionUID = -1927977939;
+    private static final long serialVersionUID = 1449657525;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_sex_types.id</code>.
@@ -124,7 +124,7 @@ public class SexTypesRecord extends UpdatableRecordImpl<SexTypesRecord> implemen
      */
     @Override
     public Field<UInteger> field1() {
-        return SexTypes.RFRMGR_SEX_TYPES.ID;
+        return SexTypes.SEX_TYPES.ID;
     }
 
     /**
@@ -132,7 +132,7 @@ public class SexTypesRecord extends UpdatableRecordImpl<SexTypesRecord> implemen
      */
     @Override
     public Field<String> field2() {
-        return SexTypes.RFRMGR_SEX_TYPES.SID;
+        return SexTypes.SEX_TYPES.SID;
     }
 
     /**
@@ -140,7 +140,7 @@ public class SexTypesRecord extends UpdatableRecordImpl<SexTypesRecord> implemen
      */
     @Override
     public Field<String> field3() {
-        return SexTypes.RFRMGR_SEX_TYPES.TITLE;
+        return SexTypes.SEX_TYPES.TITLE;
     }
 
     /**
@@ -148,7 +148,7 @@ public class SexTypesRecord extends UpdatableRecordImpl<SexTypesRecord> implemen
      */
     @Override
     public Field<String> field4() {
-        return SexTypes.RFRMGR_SEX_TYPES.REMARK;
+        return SexTypes.SEX_TYPES.REMARK;
     }
 
     /**
@@ -239,14 +239,14 @@ public class SexTypesRecord extends UpdatableRecordImpl<SexTypesRecord> implemen
      * Create a detached SexTypesRecord
      */
     public SexTypesRecord() {
-        super(SexTypes.RFRMGR_SEX_TYPES);
+        super(SexTypes.SEX_TYPES);
     }
 
     /**
      * Create a detached, initialised SexTypesRecord
      */
     public SexTypesRecord(UInteger id, String sid, String title, String remark) {
-        super(SexTypes.RFRMGR_SEX_TYPES);
+        super(SexTypes.SEX_TYPES);
 
         set(0, id);
         set(1, sid);

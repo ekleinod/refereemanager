@@ -30,7 +30,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class StatusTypesRecord extends UpdatableRecordImpl<StatusTypesRecord> implements Record4<UInteger, String, String, String> {
 
-    private static final long serialVersionUID = 1174855757;
+    private static final long serialVersionUID = -1864233799;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_status_types.id</code>.
@@ -125,7 +125,7 @@ public class StatusTypesRecord extends UpdatableRecordImpl<StatusTypesRecord> im
      */
     @Override
     public Field<UInteger> field1() {
-        return StatusTypes.RFRMGR_STATUS_TYPES.ID;
+        return StatusTypes.STATUS_TYPES.ID;
     }
 
     /**
@@ -133,7 +133,7 @@ public class StatusTypesRecord extends UpdatableRecordImpl<StatusTypesRecord> im
      */
     @Override
     public Field<String> field2() {
-        return StatusTypes.RFRMGR_STATUS_TYPES.SID;
+        return StatusTypes.STATUS_TYPES.SID;
     }
 
     /**
@@ -141,7 +141,7 @@ public class StatusTypesRecord extends UpdatableRecordImpl<StatusTypesRecord> im
      */
     @Override
     public Field<String> field3() {
-        return StatusTypes.RFRMGR_STATUS_TYPES.TITLE;
+        return StatusTypes.STATUS_TYPES.TITLE;
     }
 
     /**
@@ -149,7 +149,7 @@ public class StatusTypesRecord extends UpdatableRecordImpl<StatusTypesRecord> im
      */
     @Override
     public Field<String> field4() {
-        return StatusTypes.RFRMGR_STATUS_TYPES.REMARK;
+        return StatusTypes.STATUS_TYPES.REMARK;
     }
 
     /**
@@ -240,14 +240,14 @@ public class StatusTypesRecord extends UpdatableRecordImpl<StatusTypesRecord> im
      * Create a detached StatusTypesRecord
      */
     public StatusTypesRecord() {
-        super(StatusTypes.RFRMGR_STATUS_TYPES);
+        super(StatusTypes.STATUS_TYPES);
     }
 
     /**
      * Create a detached, initialised StatusTypesRecord
      */
     public StatusTypesRecord(UInteger id, String sid, String title, String remark) {
-        super(StatusTypes.RFRMGR_STATUS_TYPES);
+        super(StatusTypes.STATUS_TYPES);
 
         set(0, id);
         set(1, sid);

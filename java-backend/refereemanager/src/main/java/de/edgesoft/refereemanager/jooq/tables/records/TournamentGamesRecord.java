@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TournamentGamesRecord extends UpdatableRecordImpl<TournamentGamesRecord> implements Record3<UInteger, UInteger, UInteger> {
 
-    private static final long serialVersionUID = -603663073;
+    private static final long serialVersionUID = 1514130432;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_tournament_games.id</code>.
@@ -110,7 +110,7 @@ public class TournamentGamesRecord extends UpdatableRecordImpl<TournamentGamesRe
      */
     @Override
     public Field<UInteger> field1() {
-        return TournamentGames.RFRMGR_TOURNAMENT_GAMES.ID;
+        return TournamentGames.TOURNAMENT_GAMES.ID;
     }
 
     /**
@@ -118,7 +118,7 @@ public class TournamentGamesRecord extends UpdatableRecordImpl<TournamentGamesRe
      */
     @Override
     public Field<UInteger> field2() {
-        return TournamentGames.RFRMGR_TOURNAMENT_GAMES.ASSIGNMENT_ID;
+        return TournamentGames.TOURNAMENT_GAMES.ASSIGNMENT_ID;
     }
 
     /**
@@ -126,7 +126,7 @@ public class TournamentGamesRecord extends UpdatableRecordImpl<TournamentGamesRe
      */
     @Override
     public Field<UInteger> field3() {
-        return TournamentGames.RFRMGR_TOURNAMENT_GAMES.TOURNAMENT_ID;
+        return TournamentGames.TOURNAMENT_GAMES.TOURNAMENT_ID;
     }
 
     /**
@@ -199,14 +199,14 @@ public class TournamentGamesRecord extends UpdatableRecordImpl<TournamentGamesRe
      * Create a detached TournamentGamesRecord
      */
     public TournamentGamesRecord() {
-        super(TournamentGames.RFRMGR_TOURNAMENT_GAMES);
+        super(TournamentGames.TOURNAMENT_GAMES);
     }
 
     /**
      * Create a detached, initialised TournamentGamesRecord
      */
     public TournamentGamesRecord(UInteger id, UInteger assignmentId, UInteger tournamentId) {
-        super(TournamentGames.RFRMGR_TOURNAMENT_GAMES);
+        super(TournamentGames.TOURNAMENT_GAMES);
 
         set(0, id);
         set(1, assignmentId);

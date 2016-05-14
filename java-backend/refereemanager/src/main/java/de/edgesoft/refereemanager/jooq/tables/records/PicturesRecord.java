@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PicturesRecord extends UpdatableRecordImpl<PicturesRecord> implements Record4<UInteger, UInteger, String, String> {
 
-    private static final long serialVersionUID = -1837432128;
+    private static final long serialVersionUID = -1215896906;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_pictures.id</code>.
@@ -124,7 +124,7 @@ public class PicturesRecord extends UpdatableRecordImpl<PicturesRecord> implemen
      */
     @Override
     public Field<UInteger> field1() {
-        return Pictures.RFRMGR_PICTURES.ID;
+        return Pictures.PICTURES.ID;
     }
 
     /**
@@ -132,7 +132,7 @@ public class PicturesRecord extends UpdatableRecordImpl<PicturesRecord> implemen
      */
     @Override
     public Field<UInteger> field2() {
-        return Pictures.RFRMGR_PICTURES.PERSON_ID;
+        return Pictures.PICTURES.PERSON_ID;
     }
 
     /**
@@ -140,7 +140,7 @@ public class PicturesRecord extends UpdatableRecordImpl<PicturesRecord> implemen
      */
     @Override
     public Field<String> field3() {
-        return Pictures.RFRMGR_PICTURES.URL;
+        return Pictures.PICTURES.URL;
     }
 
     /**
@@ -148,7 +148,7 @@ public class PicturesRecord extends UpdatableRecordImpl<PicturesRecord> implemen
      */
     @Override
     public Field<String> field4() {
-        return Pictures.RFRMGR_PICTURES.REMARK;
+        return Pictures.PICTURES.REMARK;
     }
 
     /**
@@ -239,14 +239,14 @@ public class PicturesRecord extends UpdatableRecordImpl<PicturesRecord> implemen
      * Create a detached PicturesRecord
      */
     public PicturesRecord() {
-        super(Pictures.RFRMGR_PICTURES);
+        super(Pictures.PICTURES);
     }
 
     /**
      * Create a detached, initialised PicturesRecord
      */
     public PicturesRecord(UInteger id, UInteger personId, String url, String remark) {
-        super(Pictures.RFRMGR_PICTURES);
+        super(Pictures.PICTURES);
 
         set(0, id);
         set(1, personId);

@@ -32,7 +32,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LeagueGamesRecord extends UpdatableRecordImpl<LeagueGamesRecord> implements Record6<UInteger, UInteger, UInteger, UInteger, UInteger, UInteger> {
 
-    private static final long serialVersionUID = 1925530179;
+    private static final long serialVersionUID = 421125085;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_league_games.id</code>.
@@ -155,7 +155,7 @@ public class LeagueGamesRecord extends UpdatableRecordImpl<LeagueGamesRecord> im
      */
     @Override
     public Field<UInteger> field1() {
-        return LeagueGames.RFRMGR_LEAGUE_GAMES.ID;
+        return LeagueGames.LEAGUE_GAMES.ID;
     }
 
     /**
@@ -163,7 +163,7 @@ public class LeagueGamesRecord extends UpdatableRecordImpl<LeagueGamesRecord> im
      */
     @Override
     public Field<UInteger> field2() {
-        return LeagueGames.RFRMGR_LEAGUE_GAMES.ASSIGNMENT_ID;
+        return LeagueGames.LEAGUE_GAMES.ASSIGNMENT_ID;
     }
 
     /**
@@ -171,7 +171,7 @@ public class LeagueGamesRecord extends UpdatableRecordImpl<LeagueGamesRecord> im
      */
     @Override
     public Field<UInteger> field3() {
-        return LeagueGames.RFRMGR_LEAGUE_GAMES.GAME_NUMBER;
+        return LeagueGames.LEAGUE_GAMES.GAME_NUMBER;
     }
 
     /**
@@ -179,7 +179,7 @@ public class LeagueGamesRecord extends UpdatableRecordImpl<LeagueGamesRecord> im
      */
     @Override
     public Field<UInteger> field4() {
-        return LeagueGames.RFRMGR_LEAGUE_GAMES.SEASON_ID;
+        return LeagueGames.LEAGUE_GAMES.SEASON_ID;
     }
 
     /**
@@ -187,7 +187,7 @@ public class LeagueGamesRecord extends UpdatableRecordImpl<LeagueGamesRecord> im
      */
     @Override
     public Field<UInteger> field5() {
-        return LeagueGames.RFRMGR_LEAGUE_GAMES.LEAGUE_ID;
+        return LeagueGames.LEAGUE_GAMES.LEAGUE_ID;
     }
 
     /**
@@ -195,7 +195,7 @@ public class LeagueGamesRecord extends UpdatableRecordImpl<LeagueGamesRecord> im
      */
     @Override
     public Field<UInteger> field6() {
-        return LeagueGames.RFRMGR_LEAGUE_GAMES.TEAM_VENUE_ID;
+        return LeagueGames.LEAGUE_GAMES.TEAM_VENUE_ID;
     }
 
     /**
@@ -322,14 +322,14 @@ public class LeagueGamesRecord extends UpdatableRecordImpl<LeagueGamesRecord> im
      * Create a detached LeagueGamesRecord
      */
     public LeagueGamesRecord() {
-        super(LeagueGames.RFRMGR_LEAGUE_GAMES);
+        super(LeagueGames.LEAGUE_GAMES);
     }
 
     /**
      * Create a detached, initialised LeagueGamesRecord
      */
     public LeagueGamesRecord(UInteger id, UInteger assignmentId, UInteger gameNumber, UInteger seasonId, UInteger leagueId, UInteger teamVenueId) {
-        super(LeagueGames.RFRMGR_LEAGUE_GAMES);
+        super(LeagueGames.LEAGUE_GAMES);
 
         set(0, id);
         set(1, assignmentId);

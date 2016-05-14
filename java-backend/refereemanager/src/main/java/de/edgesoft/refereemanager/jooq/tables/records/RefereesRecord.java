@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereesRecord extends UpdatableRecordImpl<RefereesRecord> implements Record3<UInteger, UInteger, Byte> {
 
-    private static final long serialVersionUID = 502438022;
+    private static final long serialVersionUID = -1864892069;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_referees.id</code>.
@@ -110,7 +110,7 @@ public class RefereesRecord extends UpdatableRecordImpl<RefereesRecord> implemen
      */
     @Override
     public Field<UInteger> field1() {
-        return Referees.RFRMGR_REFEREES.ID;
+        return Referees.REFEREES.ID;
     }
 
     /**
@@ -118,7 +118,7 @@ public class RefereesRecord extends UpdatableRecordImpl<RefereesRecord> implemen
      */
     @Override
     public Field<UInteger> field2() {
-        return Referees.RFRMGR_REFEREES.PERSON_ID;
+        return Referees.REFEREES.PERSON_ID;
     }
 
     /**
@@ -126,7 +126,7 @@ public class RefereesRecord extends UpdatableRecordImpl<RefereesRecord> implemen
      */
     @Override
     public Field<Byte> field3() {
-        return Referees.RFRMGR_REFEREES.DOCS_PER_LETTER;
+        return Referees.REFEREES.DOCS_PER_LETTER;
     }
 
     /**
@@ -199,14 +199,14 @@ public class RefereesRecord extends UpdatableRecordImpl<RefereesRecord> implemen
      * Create a detached RefereesRecord
      */
     public RefereesRecord() {
-        super(Referees.RFRMGR_REFEREES);
+        super(Referees.REFEREES);
     }
 
     /**
      * Create a detached, initialised RefereesRecord
      */
     public RefereesRecord(UInteger id, UInteger personId, Byte docsPerLetter) {
-        super(Referees.RFRMGR_REFEREES);
+        super(Referees.REFEREES);
 
         set(0, id);
         set(1, personId);

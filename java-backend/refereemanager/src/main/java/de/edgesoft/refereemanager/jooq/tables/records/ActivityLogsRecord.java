@@ -32,7 +32,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityLogsRecord extends UpdatableRecordImpl<ActivityLogsRecord> implements Record9<UInteger, UInteger, UInteger, Integer, String, String, Integer, String, Timestamp> {
 
-    private static final long serialVersionUID = 1898860969;
+    private static final long serialVersionUID = 1705855652;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_activity_logs.id</code>.
@@ -197,7 +197,7 @@ public class ActivityLogsRecord extends UpdatableRecordImpl<ActivityLogsRecord> 
      */
     @Override
     public Field<UInteger> field1() {
-        return ActivityLogs.RFRMGR_ACTIVITY_LOGS.ID;
+        return ActivityLogs.ACTIVITY_LOGS.ID;
     }
 
     /**
@@ -205,7 +205,7 @@ public class ActivityLogsRecord extends UpdatableRecordImpl<ActivityLogsRecord> 
      */
     @Override
     public Field<UInteger> field2() {
-        return ActivityLogs.RFRMGR_ACTIVITY_LOGS.DATABASE_TABLE_ID;
+        return ActivityLogs.ACTIVITY_LOGS.DATABASE_TABLE_ID;
     }
 
     /**
@@ -213,7 +213,7 @@ public class ActivityLogsRecord extends UpdatableRecordImpl<ActivityLogsRecord> 
      */
     @Override
     public Field<UInteger> field3() {
-        return ActivityLogs.RFRMGR_ACTIVITY_LOGS.DATABASE_COLUMN_ID;
+        return ActivityLogs.ACTIVITY_LOGS.DATABASE_COLUMN_ID;
     }
 
     /**
@@ -221,7 +221,7 @@ public class ActivityLogsRecord extends UpdatableRecordImpl<ActivityLogsRecord> 
      */
     @Override
     public Field<Integer> field4() {
-        return ActivityLogs.RFRMGR_ACTIVITY_LOGS.ROW_ID;
+        return ActivityLogs.ACTIVITY_LOGS.ROW_ID;
     }
 
     /**
@@ -229,7 +229,7 @@ public class ActivityLogsRecord extends UpdatableRecordImpl<ActivityLogsRecord> 
      */
     @Override
     public Field<String> field5() {
-        return ActivityLogs.RFRMGR_ACTIVITY_LOGS.OLD_VALUE;
+        return ActivityLogs.ACTIVITY_LOGS.OLD_VALUE;
     }
 
     /**
@@ -237,7 +237,7 @@ public class ActivityLogsRecord extends UpdatableRecordImpl<ActivityLogsRecord> 
      */
     @Override
     public Field<String> field6() {
-        return ActivityLogs.RFRMGR_ACTIVITY_LOGS.NEW_VALUE;
+        return ActivityLogs.ACTIVITY_LOGS.NEW_VALUE;
     }
 
     /**
@@ -245,7 +245,7 @@ public class ActivityLogsRecord extends UpdatableRecordImpl<ActivityLogsRecord> 
      */
     @Override
     public Field<Integer> field7() {
-        return ActivityLogs.RFRMGR_ACTIVITY_LOGS.USER_ID;
+        return ActivityLogs.ACTIVITY_LOGS.USER_ID;
     }
 
     /**
@@ -253,7 +253,7 @@ public class ActivityLogsRecord extends UpdatableRecordImpl<ActivityLogsRecord> 
      */
     @Override
     public Field<String> field8() {
-        return ActivityLogs.RFRMGR_ACTIVITY_LOGS.REMARK;
+        return ActivityLogs.ACTIVITY_LOGS.REMARK;
     }
 
     /**
@@ -261,7 +261,7 @@ public class ActivityLogsRecord extends UpdatableRecordImpl<ActivityLogsRecord> 
      */
     @Override
     public Field<Timestamp> field9() {
-        return ActivityLogs.RFRMGR_ACTIVITY_LOGS.CREATED;
+        return ActivityLogs.ACTIVITY_LOGS.CREATED;
     }
 
     /**
@@ -442,14 +442,14 @@ public class ActivityLogsRecord extends UpdatableRecordImpl<ActivityLogsRecord> 
      * Create a detached ActivityLogsRecord
      */
     public ActivityLogsRecord() {
-        super(ActivityLogs.RFRMGR_ACTIVITY_LOGS);
+        super(ActivityLogs.ACTIVITY_LOGS);
     }
 
     /**
      * Create a detached, initialised ActivityLogsRecord
      */
     public ActivityLogsRecord(UInteger id, UInteger databaseTableId, UInteger databaseColumnId, Integer rowId, String oldValue, String newValue, Integer userId, String remark, Timestamp created) {
-        super(ActivityLogs.RFRMGR_ACTIVITY_LOGS);
+        super(ActivityLogs.ACTIVITY_LOGS);
 
         set(0, id);
         set(1, databaseTableId);

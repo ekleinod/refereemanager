@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereeStatusesRecord extends UpdatableRecordImpl<RefereeStatusesRecord> implements Record5<UInteger, UInteger, UInteger, UInteger, String> {
 
-    private static final long serialVersionUID = 1810901609;
+    private static final long serialVersionUID = 805971974;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_referee_statuses.id</code>.
@@ -138,7 +138,7 @@ public class RefereeStatusesRecord extends UpdatableRecordImpl<RefereeStatusesRe
      */
     @Override
     public Field<UInteger> field1() {
-        return RefereeStatuses.RFRMGR_REFEREE_STATUSES.ID;
+        return RefereeStatuses.REFEREE_STATUSES.ID;
     }
 
     /**
@@ -146,7 +146,7 @@ public class RefereeStatusesRecord extends UpdatableRecordImpl<RefereeStatusesRe
      */
     @Override
     public Field<UInteger> field2() {
-        return RefereeStatuses.RFRMGR_REFEREE_STATUSES.REFEREE_ID;
+        return RefereeStatuses.REFEREE_STATUSES.REFEREE_ID;
     }
 
     /**
@@ -154,7 +154,7 @@ public class RefereeStatusesRecord extends UpdatableRecordImpl<RefereeStatusesRe
      */
     @Override
     public Field<UInteger> field3() {
-        return RefereeStatuses.RFRMGR_REFEREE_STATUSES.STATUS_TYPE_ID;
+        return RefereeStatuses.REFEREE_STATUSES.STATUS_TYPE_ID;
     }
 
     /**
@@ -162,7 +162,7 @@ public class RefereeStatusesRecord extends UpdatableRecordImpl<RefereeStatusesRe
      */
     @Override
     public Field<UInteger> field4() {
-        return RefereeStatuses.RFRMGR_REFEREE_STATUSES.SEASON_ID;
+        return RefereeStatuses.REFEREE_STATUSES.SEASON_ID;
     }
 
     /**
@@ -170,7 +170,7 @@ public class RefereeStatusesRecord extends UpdatableRecordImpl<RefereeStatusesRe
      */
     @Override
     public Field<String> field5() {
-        return RefereeStatuses.RFRMGR_REFEREE_STATUSES.REMARK;
+        return RefereeStatuses.REFEREE_STATUSES.REMARK;
     }
 
     /**
@@ -279,14 +279,14 @@ public class RefereeStatusesRecord extends UpdatableRecordImpl<RefereeStatusesRe
      * Create a detached RefereeStatusesRecord
      */
     public RefereeStatusesRecord() {
-        super(RefereeStatuses.RFRMGR_REFEREE_STATUSES);
+        super(RefereeStatuses.REFEREE_STATUSES);
     }
 
     /**
      * Create a detached, initialised RefereeStatusesRecord
      */
     public RefereeStatusesRecord(UInteger id, UInteger refereeId, UInteger statusTypeId, UInteger seasonId, String remark) {
-        super(RefereeStatuses.RFRMGR_REFEREE_STATUSES);
+        super(RefereeStatuses.REFEREE_STATUSES);
 
         set(0, id);
         set(1, refereeId);

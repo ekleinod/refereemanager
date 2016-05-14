@@ -37,12 +37,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TrainingLevelTypes extends TableImpl<TrainingLevelTypesRecord> {
 
-    private static final long serialVersionUID = 1358364953;
+    private static final long serialVersionUID = -1609961198;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_training_level_types</code>
      */
-    public static final TrainingLevelTypes RFRMGR_TRAINING_LEVEL_TYPES = new TrainingLevelTypes();
+    public static final TrainingLevelTypes TRAINING_LEVEL_TYPES = new TrainingLevelTypes();
 
     /**
      * The class holding records for this type
@@ -98,7 +98,7 @@ public class TrainingLevelTypes extends TableImpl<TrainingLevelTypesRecord> {
      * Create an aliased <code>refereemanager.rfrmgr_training_level_types</code> table reference
      */
     public TrainingLevelTypes(String alias) {
-        this(alias, RFRMGR_TRAINING_LEVEL_TYPES);
+        this(alias, TRAINING_LEVEL_TYPES);
     }
 
     private TrainingLevelTypes(String alias, Table<TrainingLevelTypesRecord> aliased) {
@@ -122,7 +122,7 @@ public class TrainingLevelTypes extends TableImpl<TrainingLevelTypesRecord> {
      */
     @Override
     public Identity<TrainingLevelTypesRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_TRAINING_LEVEL_TYPES;
+        return Keys.IDENTITY_TRAINING_LEVEL_TYPES;
     }
 
     /**

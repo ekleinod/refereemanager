@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EmailsRecord extends UpdatableRecordImpl<EmailsRecord> implements Record3<UInteger, UInteger, String> {
 
-    private static final long serialVersionUID = -2095732973;
+    private static final long serialVersionUID = -1134329356;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_emails.id</code>.
@@ -110,7 +110,7 @@ public class EmailsRecord extends UpdatableRecordImpl<EmailsRecord> implements R
      */
     @Override
     public Field<UInteger> field1() {
-        return Emails.RFRMGR_EMAILS.ID;
+        return Emails.EMAILS.ID;
     }
 
     /**
@@ -118,7 +118,7 @@ public class EmailsRecord extends UpdatableRecordImpl<EmailsRecord> implements R
      */
     @Override
     public Field<UInteger> field2() {
-        return Emails.RFRMGR_EMAILS.CONTACT_ID;
+        return Emails.EMAILS.CONTACT_ID;
     }
 
     /**
@@ -126,7 +126,7 @@ public class EmailsRecord extends UpdatableRecordImpl<EmailsRecord> implements R
      */
     @Override
     public Field<String> field3() {
-        return Emails.RFRMGR_EMAILS.EMAIL;
+        return Emails.EMAILS.EMAIL;
     }
 
     /**
@@ -199,14 +199,14 @@ public class EmailsRecord extends UpdatableRecordImpl<EmailsRecord> implements R
      * Create a detached EmailsRecord
      */
     public EmailsRecord() {
-        super(Emails.RFRMGR_EMAILS);
+        super(Emails.EMAILS);
     }
 
     /**
      * Create a detached, initialised EmailsRecord
      */
     public EmailsRecord(UInteger id, UInteger contactId, String email) {
-        super(Emails.RFRMGR_EMAILS);
+        super(Emails.EMAILS);
 
         set(0, id);
         set(1, contactId);

@@ -30,7 +30,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereeAssignmentTypesRecord extends UpdatableRecordImpl<RefereeAssignmentTypesRecord> implements Record5<UInteger, String, String, String, String> {
 
-    private static final long serialVersionUID = -1745264837;
+    private static final long serialVersionUID = -1716392308;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_referee_assignment_types.id</code>.
@@ -139,7 +139,7 @@ public class RefereeAssignmentTypesRecord extends UpdatableRecordImpl<RefereeAss
      */
     @Override
     public Field<UInteger> field1() {
-        return RefereeAssignmentTypes.RFRMGR_REFEREE_ASSIGNMENT_TYPES.ID;
+        return RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.ID;
     }
 
     /**
@@ -147,7 +147,7 @@ public class RefereeAssignmentTypesRecord extends UpdatableRecordImpl<RefereeAss
      */
     @Override
     public Field<String> field2() {
-        return RefereeAssignmentTypes.RFRMGR_REFEREE_ASSIGNMENT_TYPES.SID;
+        return RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.SID;
     }
 
     /**
@@ -155,7 +155,7 @@ public class RefereeAssignmentTypesRecord extends UpdatableRecordImpl<RefereeAss
      */
     @Override
     public Field<String> field3() {
-        return RefereeAssignmentTypes.RFRMGR_REFEREE_ASSIGNMENT_TYPES.TITLE;
+        return RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.TITLE;
     }
 
     /**
@@ -163,7 +163,7 @@ public class RefereeAssignmentTypesRecord extends UpdatableRecordImpl<RefereeAss
      */
     @Override
     public Field<String> field4() {
-        return RefereeAssignmentTypes.RFRMGR_REFEREE_ASSIGNMENT_TYPES.ABBREVIATION;
+        return RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.ABBREVIATION;
     }
 
     /**
@@ -171,7 +171,7 @@ public class RefereeAssignmentTypesRecord extends UpdatableRecordImpl<RefereeAss
      */
     @Override
     public Field<String> field5() {
-        return RefereeAssignmentTypes.RFRMGR_REFEREE_ASSIGNMENT_TYPES.REMARK;
+        return RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.REMARK;
     }
 
     /**
@@ -280,14 +280,14 @@ public class RefereeAssignmentTypesRecord extends UpdatableRecordImpl<RefereeAss
      * Create a detached RefereeAssignmentTypesRecord
      */
     public RefereeAssignmentTypesRecord() {
-        super(RefereeAssignmentTypes.RFRMGR_REFEREE_ASSIGNMENT_TYPES);
+        super(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES);
     }
 
     /**
      * Create a detached, initialised RefereeAssignmentTypesRecord
      */
     public RefereeAssignmentTypesRecord(UInteger id, String sid, String title, String abbreviation, String remark) {
-        super(RefereeAssignmentTypes.RFRMGR_REFEREE_ASSIGNMENT_TYPES);
+        super(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES);
 
         set(0, id);
         set(1, sid);

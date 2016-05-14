@@ -31,7 +31,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AssignmentsRecord extends UpdatableRecordImpl<AssignmentsRecord> implements Record4<UInteger, Timestamp, Timestamp, String> {
 
-    private static final long serialVersionUID = 180977687;
+    private static final long serialVersionUID = 1074815759;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_assignments.id</code>.
@@ -126,7 +126,7 @@ public class AssignmentsRecord extends UpdatableRecordImpl<AssignmentsRecord> im
      */
     @Override
     public Field<UInteger> field1() {
-        return Assignments.RFRMGR_ASSIGNMENTS.ID;
+        return Assignments.ASSIGNMENTS.ID;
     }
 
     /**
@@ -134,7 +134,7 @@ public class AssignmentsRecord extends UpdatableRecordImpl<AssignmentsRecord> im
      */
     @Override
     public Field<Timestamp> field2() {
-        return Assignments.RFRMGR_ASSIGNMENTS.START;
+        return Assignments.ASSIGNMENTS.START;
     }
 
     /**
@@ -142,7 +142,7 @@ public class AssignmentsRecord extends UpdatableRecordImpl<AssignmentsRecord> im
      */
     @Override
     public Field<Timestamp> field3() {
-        return Assignments.RFRMGR_ASSIGNMENTS.END;
+        return Assignments.ASSIGNMENTS.END;
     }
 
     /**
@@ -150,7 +150,7 @@ public class AssignmentsRecord extends UpdatableRecordImpl<AssignmentsRecord> im
      */
     @Override
     public Field<String> field4() {
-        return Assignments.RFRMGR_ASSIGNMENTS.REMARK;
+        return Assignments.ASSIGNMENTS.REMARK;
     }
 
     /**
@@ -241,14 +241,14 @@ public class AssignmentsRecord extends UpdatableRecordImpl<AssignmentsRecord> im
      * Create a detached AssignmentsRecord
      */
     public AssignmentsRecord() {
-        super(Assignments.RFRMGR_ASSIGNMENTS);
+        super(Assignments.ASSIGNMENTS);
     }
 
     /**
      * Create a detached, initialised AssignmentsRecord
      */
     public AssignmentsRecord(UInteger id, Timestamp start, Timestamp end, String remark) {
-        super(Assignments.RFRMGR_ASSIGNMENTS);
+        super(Assignments.ASSIGNMENTS);
 
         set(0, id);
         set(1, start);

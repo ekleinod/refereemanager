@@ -36,12 +36,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Contacts extends TableImpl<ContactsRecord> {
 
-    private static final long serialVersionUID = 2020978642;
+    private static final long serialVersionUID = 359529391;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_contacts</code>
      */
-    public static final Contacts RFRMGR_CONTACTS = new Contacts();
+    public static final Contacts CONTACTS = new Contacts();
 
     /**
      * The class holding records for this type
@@ -102,7 +102,7 @@ public class Contacts extends TableImpl<ContactsRecord> {
      * Create an aliased <code>refereemanager.rfrmgr_contacts</code> table reference
      */
     public Contacts(String alias) {
-        this(alias, RFRMGR_CONTACTS);
+        this(alias, CONTACTS);
     }
 
     private Contacts(String alias, Table<ContactsRecord> aliased) {
@@ -126,7 +126,7 @@ public class Contacts extends TableImpl<ContactsRecord> {
      */
     @Override
     public Identity<ContactsRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_CONTACTS;
+        return Keys.IDENTITY_CONTACTS;
     }
 
     /**

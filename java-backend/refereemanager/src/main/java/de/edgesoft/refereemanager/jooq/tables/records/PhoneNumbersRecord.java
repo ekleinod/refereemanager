@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PhoneNumbersRecord extends UpdatableRecordImpl<PhoneNumbersRecord> implements Record5<UInteger, UInteger, String, String, String> {
 
-    private static final long serialVersionUID = -934173070;
+    private static final long serialVersionUID = -588319601;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_phone_numbers.id</code>.
@@ -138,7 +138,7 @@ public class PhoneNumbersRecord extends UpdatableRecordImpl<PhoneNumbersRecord> 
      */
     @Override
     public Field<UInteger> field1() {
-        return PhoneNumbers.RFRMGR_PHONE_NUMBERS.ID;
+        return PhoneNumbers.PHONE_NUMBERS.ID;
     }
 
     /**
@@ -146,7 +146,7 @@ public class PhoneNumbersRecord extends UpdatableRecordImpl<PhoneNumbersRecord> 
      */
     @Override
     public Field<UInteger> field2() {
-        return PhoneNumbers.RFRMGR_PHONE_NUMBERS.CONTACT_ID;
+        return PhoneNumbers.PHONE_NUMBERS.CONTACT_ID;
     }
 
     /**
@@ -154,7 +154,7 @@ public class PhoneNumbersRecord extends UpdatableRecordImpl<PhoneNumbersRecord> 
      */
     @Override
     public Field<String> field3() {
-        return PhoneNumbers.RFRMGR_PHONE_NUMBERS.COUNTRY_CODE;
+        return PhoneNumbers.PHONE_NUMBERS.COUNTRY_CODE;
     }
 
     /**
@@ -162,7 +162,7 @@ public class PhoneNumbersRecord extends UpdatableRecordImpl<PhoneNumbersRecord> 
      */
     @Override
     public Field<String> field4() {
-        return PhoneNumbers.RFRMGR_PHONE_NUMBERS.AREA_CODE;
+        return PhoneNumbers.PHONE_NUMBERS.AREA_CODE;
     }
 
     /**
@@ -170,7 +170,7 @@ public class PhoneNumbersRecord extends UpdatableRecordImpl<PhoneNumbersRecord> 
      */
     @Override
     public Field<String> field5() {
-        return PhoneNumbers.RFRMGR_PHONE_NUMBERS.NUMBER;
+        return PhoneNumbers.PHONE_NUMBERS.NUMBER;
     }
 
     /**
@@ -279,14 +279,14 @@ public class PhoneNumbersRecord extends UpdatableRecordImpl<PhoneNumbersRecord> 
      * Create a detached PhoneNumbersRecord
      */
     public PhoneNumbersRecord() {
-        super(PhoneNumbers.RFRMGR_PHONE_NUMBERS);
+        super(PhoneNumbers.PHONE_NUMBERS);
     }
 
     /**
      * Create a detached, initialised PhoneNumbersRecord
      */
     public PhoneNumbersRecord(UInteger id, UInteger contactId, String countryCode, String areaCode, String number) {
-        super(PhoneNumbers.RFRMGR_PHONE_NUMBERS);
+        super(PhoneNumbers.PHONE_NUMBERS);
 
         set(0, id);
         set(1, contactId);

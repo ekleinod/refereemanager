@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class WishTypesRecord extends UpdatableRecordImpl<WishTypesRecord> implements Record4<UInteger, String, String, String> {
 
-    private static final long serialVersionUID = -303835069;
+    private static final long serialVersionUID = -949531493;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_wish_types.id</code>.
@@ -124,7 +124,7 @@ public class WishTypesRecord extends UpdatableRecordImpl<WishTypesRecord> implem
      */
     @Override
     public Field<UInteger> field1() {
-        return WishTypes.RFRMGR_WISH_TYPES.ID;
+        return WishTypes.WISH_TYPES.ID;
     }
 
     /**
@@ -132,7 +132,7 @@ public class WishTypesRecord extends UpdatableRecordImpl<WishTypesRecord> implem
      */
     @Override
     public Field<String> field2() {
-        return WishTypes.RFRMGR_WISH_TYPES.SID;
+        return WishTypes.WISH_TYPES.SID;
     }
 
     /**
@@ -140,7 +140,7 @@ public class WishTypesRecord extends UpdatableRecordImpl<WishTypesRecord> implem
      */
     @Override
     public Field<String> field3() {
-        return WishTypes.RFRMGR_WISH_TYPES.TITLE;
+        return WishTypes.WISH_TYPES.TITLE;
     }
 
     /**
@@ -148,7 +148,7 @@ public class WishTypesRecord extends UpdatableRecordImpl<WishTypesRecord> implem
      */
     @Override
     public Field<String> field4() {
-        return WishTypes.RFRMGR_WISH_TYPES.REMARK;
+        return WishTypes.WISH_TYPES.REMARK;
     }
 
     /**
@@ -239,14 +239,14 @@ public class WishTypesRecord extends UpdatableRecordImpl<WishTypesRecord> implem
      * Create a detached WishTypesRecord
      */
     public WishTypesRecord() {
-        super(WishTypes.RFRMGR_WISH_TYPES);
+        super(WishTypes.WISH_TYPES);
     }
 
     /**
      * Create a detached, initialised WishTypesRecord
      */
     public WishTypesRecord(UInteger id, String sid, String title, String remark) {
-        super(WishTypes.RFRMGR_WISH_TYPES);
+        super(WishTypes.WISH_TYPES);
 
         set(0, id);
         set(1, sid);

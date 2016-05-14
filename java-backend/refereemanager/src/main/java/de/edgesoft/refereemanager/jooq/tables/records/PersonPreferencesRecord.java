@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PersonPreferencesRecord extends UpdatableRecordImpl<PersonPreferencesRecord> implements Record4<UInteger, UInteger, String, Integer> {
 
-    private static final long serialVersionUID = -1006180226;
+    private static final long serialVersionUID = 756203598;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_person_preferences.id</code>.
@@ -124,7 +124,7 @@ public class PersonPreferencesRecord extends UpdatableRecordImpl<PersonPreferenc
      */
     @Override
     public Field<UInteger> field1() {
-        return PersonPreferences.RFRMGR_PERSON_PREFERENCES.ID;
+        return PersonPreferences.PERSON_PREFERENCES.ID;
     }
 
     /**
@@ -132,7 +132,7 @@ public class PersonPreferencesRecord extends UpdatableRecordImpl<PersonPreferenc
      */
     @Override
     public Field<UInteger> field2() {
-        return PersonPreferences.RFRMGR_PERSON_PREFERENCES.PERSON_ID;
+        return PersonPreferences.PERSON_PREFERENCES.PERSON_ID;
     }
 
     /**
@@ -140,7 +140,7 @@ public class PersonPreferencesRecord extends UpdatableRecordImpl<PersonPreferenc
      */
     @Override
     public Field<String> field3() {
-        return PersonPreferences.RFRMGR_PERSON_PREFERENCES.LANGUAGE;
+        return PersonPreferences.PERSON_PREFERENCES.LANGUAGE;
     }
 
     /**
@@ -148,7 +148,7 @@ public class PersonPreferencesRecord extends UpdatableRecordImpl<PersonPreferenc
      */
     @Override
     public Field<Integer> field4() {
-        return PersonPreferences.RFRMGR_PERSON_PREFERENCES.ASSIGNMENT_NOTIFICATION_INTERVAL;
+        return PersonPreferences.PERSON_PREFERENCES.ASSIGNMENT_NOTIFICATION_INTERVAL;
     }
 
     /**
@@ -239,14 +239,14 @@ public class PersonPreferencesRecord extends UpdatableRecordImpl<PersonPreferenc
      * Create a detached PersonPreferencesRecord
      */
     public PersonPreferencesRecord() {
-        super(PersonPreferences.RFRMGR_PERSON_PREFERENCES);
+        super(PersonPreferences.PERSON_PREFERENCES);
     }
 
     /**
      * Create a detached, initialised PersonPreferencesRecord
      */
     public PersonPreferencesRecord(UInteger id, UInteger personId, String language, Integer assignmentNotificationInterval) {
-        super(PersonPreferences.RFRMGR_PERSON_PREFERENCES);
+        super(PersonPreferences.PERSON_PREFERENCES);
 
         set(0, id);
         set(1, personId);

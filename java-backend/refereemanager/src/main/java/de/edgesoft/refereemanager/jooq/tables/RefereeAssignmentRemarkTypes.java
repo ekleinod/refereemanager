@@ -37,12 +37,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereeAssignmentRemarkTypes extends TableImpl<RefereeAssignmentRemarkTypesRecord> {
 
-    private static final long serialVersionUID = 1592975924;
+    private static final long serialVersionUID = -1783120323;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_referee_assignment_remark_types</code>
      */
-    public static final RefereeAssignmentRemarkTypes RFRMGR_REFEREE_ASSIGNMENT_REMARK_TYPES = new RefereeAssignmentRemarkTypes();
+    public static final RefereeAssignmentRemarkTypes REFEREE_ASSIGNMENT_REMARK_TYPES = new RefereeAssignmentRemarkTypes();
 
     /**
      * The class holding records for this type
@@ -78,7 +78,7 @@ public class RefereeAssignmentRemarkTypes extends TableImpl<RefereeAssignmentRem
      * Create an aliased <code>refereemanager.rfrmgr_referee_assignment_remark_types</code> table reference
      */
     public RefereeAssignmentRemarkTypes(String alias) {
-        this(alias, RFRMGR_REFEREE_ASSIGNMENT_REMARK_TYPES);
+        this(alias, REFEREE_ASSIGNMENT_REMARK_TYPES);
     }
 
     private RefereeAssignmentRemarkTypes(String alias, Table<RefereeAssignmentRemarkTypesRecord> aliased) {
@@ -102,7 +102,7 @@ public class RefereeAssignmentRemarkTypes extends TableImpl<RefereeAssignmentRem
      */
     @Override
     public Identity<RefereeAssignmentRemarkTypesRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_REFEREE_ASSIGNMENT_REMARK_TYPES;
+        return Keys.IDENTITY_REFEREE_ASSIGNMENT_REMARK_TYPES;
     }
 
     /**

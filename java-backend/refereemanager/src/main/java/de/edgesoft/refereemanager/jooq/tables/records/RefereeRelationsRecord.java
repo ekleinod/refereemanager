@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereeRelationsRecord extends UpdatableRecordImpl<RefereeRelationsRecord> implements Record6<UInteger, UInteger, UInteger, UInteger, UInteger, String> {
 
-    private static final long serialVersionUID = 1630439225;
+    private static final long serialVersionUID = -411250407;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_referee_relations.id</code>.
@@ -152,7 +152,7 @@ public class RefereeRelationsRecord extends UpdatableRecordImpl<RefereeRelations
      */
     @Override
     public Field<UInteger> field1() {
-        return RefereeRelations.RFRMGR_REFEREE_RELATIONS.ID;
+        return RefereeRelations.REFEREE_RELATIONS.ID;
     }
 
     /**
@@ -160,7 +160,7 @@ public class RefereeRelationsRecord extends UpdatableRecordImpl<RefereeRelations
      */
     @Override
     public Field<UInteger> field2() {
-        return RefereeRelations.RFRMGR_REFEREE_RELATIONS.REFEREE_ID;
+        return RefereeRelations.REFEREE_RELATIONS.REFEREE_ID;
     }
 
     /**
@@ -168,7 +168,7 @@ public class RefereeRelationsRecord extends UpdatableRecordImpl<RefereeRelations
      */
     @Override
     public Field<UInteger> field3() {
-        return RefereeRelations.RFRMGR_REFEREE_RELATIONS.REFEREE_RELATION_TYPE_ID;
+        return RefereeRelations.REFEREE_RELATIONS.REFEREE_RELATION_TYPE_ID;
     }
 
     /**
@@ -176,7 +176,7 @@ public class RefereeRelationsRecord extends UpdatableRecordImpl<RefereeRelations
      */
     @Override
     public Field<UInteger> field4() {
-        return RefereeRelations.RFRMGR_REFEREE_RELATIONS.CLUB_ID;
+        return RefereeRelations.REFEREE_RELATIONS.CLUB_ID;
     }
 
     /**
@@ -184,7 +184,7 @@ public class RefereeRelationsRecord extends UpdatableRecordImpl<RefereeRelations
      */
     @Override
     public Field<UInteger> field5() {
-        return RefereeRelations.RFRMGR_REFEREE_RELATIONS.SEASON_ID;
+        return RefereeRelations.REFEREE_RELATIONS.SEASON_ID;
     }
 
     /**
@@ -192,7 +192,7 @@ public class RefereeRelationsRecord extends UpdatableRecordImpl<RefereeRelations
      */
     @Override
     public Field<String> field6() {
-        return RefereeRelations.RFRMGR_REFEREE_RELATIONS.REMARK;
+        return RefereeRelations.REFEREE_RELATIONS.REMARK;
     }
 
     /**
@@ -319,14 +319,14 @@ public class RefereeRelationsRecord extends UpdatableRecordImpl<RefereeRelations
      * Create a detached RefereeRelationsRecord
      */
     public RefereeRelationsRecord() {
-        super(RefereeRelations.RFRMGR_REFEREE_RELATIONS);
+        super(RefereeRelations.REFEREE_RELATIONS);
     }
 
     /**
      * Create a detached, initialised RefereeRelationsRecord
      */
     public RefereeRelationsRecord(UInteger id, UInteger refereeId, UInteger refereeRelationTypeId, UInteger clubId, UInteger seasonId, String remark) {
-        super(RefereeRelations.RFRMGR_REFEREE_RELATIONS);
+        super(RefereeRelations.REFEREE_RELATIONS);
 
         set(0, id);
         set(1, refereeId);

@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AddressesRecord extends UpdatableRecordImpl<AddressesRecord> implements Record6<UInteger, UInteger, String, String, String, String> {
 
-    private static final long serialVersionUID = 1435851326;
+    private static final long serialVersionUID = 47012608;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_addresses.id</code>.
@@ -152,7 +152,7 @@ public class AddressesRecord extends UpdatableRecordImpl<AddressesRecord> implem
      */
     @Override
     public Field<UInteger> field1() {
-        return Addresses.RFRMGR_ADDRESSES.ID;
+        return Addresses.ADDRESSES.ID;
     }
 
     /**
@@ -160,7 +160,7 @@ public class AddressesRecord extends UpdatableRecordImpl<AddressesRecord> implem
      */
     @Override
     public Field<UInteger> field2() {
-        return Addresses.RFRMGR_ADDRESSES.CONTACT_ID;
+        return Addresses.ADDRESSES.CONTACT_ID;
     }
 
     /**
@@ -168,7 +168,7 @@ public class AddressesRecord extends UpdatableRecordImpl<AddressesRecord> implem
      */
     @Override
     public Field<String> field3() {
-        return Addresses.RFRMGR_ADDRESSES.STREET;
+        return Addresses.ADDRESSES.STREET;
     }
 
     /**
@@ -176,7 +176,7 @@ public class AddressesRecord extends UpdatableRecordImpl<AddressesRecord> implem
      */
     @Override
     public Field<String> field4() {
-        return Addresses.RFRMGR_ADDRESSES.NUMBER;
+        return Addresses.ADDRESSES.NUMBER;
     }
 
     /**
@@ -184,7 +184,7 @@ public class AddressesRecord extends UpdatableRecordImpl<AddressesRecord> implem
      */
     @Override
     public Field<String> field5() {
-        return Addresses.RFRMGR_ADDRESSES.ZIP_CODE;
+        return Addresses.ADDRESSES.ZIP_CODE;
     }
 
     /**
@@ -192,7 +192,7 @@ public class AddressesRecord extends UpdatableRecordImpl<AddressesRecord> implem
      */
     @Override
     public Field<String> field6() {
-        return Addresses.RFRMGR_ADDRESSES.CITY;
+        return Addresses.ADDRESSES.CITY;
     }
 
     /**
@@ -319,14 +319,14 @@ public class AddressesRecord extends UpdatableRecordImpl<AddressesRecord> implem
      * Create a detached AddressesRecord
      */
     public AddressesRecord() {
-        super(Addresses.RFRMGR_ADDRESSES);
+        super(Addresses.ADDRESSES);
     }
 
     /**
      * Create a detached, initialised AddressesRecord
      */
     public AddressesRecord(UInteger id, UInteger contactId, String street, String number, String zipCode, String city) {
-        super(Addresses.RFRMGR_ADDRESSES);
+        super(Addresses.ADDRESSES);
 
         set(0, id);
         set(1, contactId);

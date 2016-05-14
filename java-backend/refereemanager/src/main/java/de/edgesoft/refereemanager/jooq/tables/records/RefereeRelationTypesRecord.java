@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereeRelationTypesRecord extends UpdatableRecordImpl<RefereeRelationTypesRecord> implements Record4<UInteger, String, String, String> {
 
-    private static final long serialVersionUID = 595787013;
+    private static final long serialVersionUID = 1730376477;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_referee_relation_types.id</code>.
@@ -124,7 +124,7 @@ public class RefereeRelationTypesRecord extends UpdatableRecordImpl<RefereeRelat
      */
     @Override
     public Field<UInteger> field1() {
-        return RefereeRelationTypes.RFRMGR_REFEREE_RELATION_TYPES.ID;
+        return RefereeRelationTypes.REFEREE_RELATION_TYPES.ID;
     }
 
     /**
@@ -132,7 +132,7 @@ public class RefereeRelationTypesRecord extends UpdatableRecordImpl<RefereeRelat
      */
     @Override
     public Field<String> field2() {
-        return RefereeRelationTypes.RFRMGR_REFEREE_RELATION_TYPES.SID;
+        return RefereeRelationTypes.REFEREE_RELATION_TYPES.SID;
     }
 
     /**
@@ -140,7 +140,7 @@ public class RefereeRelationTypesRecord extends UpdatableRecordImpl<RefereeRelat
      */
     @Override
     public Field<String> field3() {
-        return RefereeRelationTypes.RFRMGR_REFEREE_RELATION_TYPES.TITLE;
+        return RefereeRelationTypes.REFEREE_RELATION_TYPES.TITLE;
     }
 
     /**
@@ -148,7 +148,7 @@ public class RefereeRelationTypesRecord extends UpdatableRecordImpl<RefereeRelat
      */
     @Override
     public Field<String> field4() {
-        return RefereeRelationTypes.RFRMGR_REFEREE_RELATION_TYPES.REMARK;
+        return RefereeRelationTypes.REFEREE_RELATION_TYPES.REMARK;
     }
 
     /**
@@ -239,14 +239,14 @@ public class RefereeRelationTypesRecord extends UpdatableRecordImpl<RefereeRelat
      * Create a detached RefereeRelationTypesRecord
      */
     public RefereeRelationTypesRecord() {
-        super(RefereeRelationTypes.RFRMGR_REFEREE_RELATION_TYPES);
+        super(RefereeRelationTypes.REFEREE_RELATION_TYPES);
     }
 
     /**
      * Create a detached, initialised RefereeRelationTypesRecord
      */
     public RefereeRelationTypesRecord(UInteger id, String sid, String title, String remark) {
-        super(RefereeRelationTypes.RFRMGR_REFEREE_RELATION_TYPES);
+        super(RefereeRelationTypes.REFEREE_RELATION_TYPES);
 
         set(0, id);
         set(1, sid);

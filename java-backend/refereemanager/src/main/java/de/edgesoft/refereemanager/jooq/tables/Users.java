@@ -37,12 +37,12 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-    private static final long serialVersionUID = -243531875;
+    private static final long serialVersionUID = -38043578;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_users</code>
      */
-    public static final Users RFRMGR_USERS = new Users();
+    public static final Users USERS = new Users();
 
     /**
      * The class holding records for this type
@@ -103,7 +103,7 @@ public class Users extends TableImpl<UsersRecord> {
      * Create an aliased <code>refereemanager.rfrmgr_users</code> table reference
      */
     public Users(String alias) {
-        this(alias, RFRMGR_USERS);
+        this(alias, USERS);
     }
 
     private Users(String alias, Table<UsersRecord> aliased) {
@@ -127,7 +127,7 @@ public class Users extends TableImpl<UsersRecord> {
      */
     @Override
     public Identity<UsersRecord, UInteger> getIdentity() {
-        return Keys.IDENTITY_RFRMGR_USERS;
+        return Keys.IDENTITY_USERS;
     }
 
     /**

@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UrlsRecord extends UpdatableRecordImpl<UrlsRecord> implements Record3<UInteger, UInteger, String> {
 
-    private static final long serialVersionUID = -285301665;
+    private static final long serialVersionUID = 1005259262;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_urls.id</code>.
@@ -110,7 +110,7 @@ public class UrlsRecord extends UpdatableRecordImpl<UrlsRecord> implements Recor
      */
     @Override
     public Field<UInteger> field1() {
-        return Urls.RFRMGR_URLS.ID;
+        return Urls.URLS.ID;
     }
 
     /**
@@ -118,7 +118,7 @@ public class UrlsRecord extends UpdatableRecordImpl<UrlsRecord> implements Recor
      */
     @Override
     public Field<UInteger> field2() {
-        return Urls.RFRMGR_URLS.CONTACT_ID;
+        return Urls.URLS.CONTACT_ID;
     }
 
     /**
@@ -126,7 +126,7 @@ public class UrlsRecord extends UpdatableRecordImpl<UrlsRecord> implements Recor
      */
     @Override
     public Field<String> field3() {
-        return Urls.RFRMGR_URLS.URL;
+        return Urls.URLS.URL;
     }
 
     /**
@@ -199,14 +199,14 @@ public class UrlsRecord extends UpdatableRecordImpl<UrlsRecord> implements Recor
      * Create a detached UrlsRecord
      */
     public UrlsRecord() {
-        super(Urls.RFRMGR_URLS);
+        super(Urls.URLS);
     }
 
     /**
      * Create a detached, initialised UrlsRecord
      */
     public UrlsRecord(UInteger id, UInteger contactId, String url) {
-        super(Urls.RFRMGR_URLS);
+        super(Urls.URLS);
 
         set(0, id);
         set(1, contactId);

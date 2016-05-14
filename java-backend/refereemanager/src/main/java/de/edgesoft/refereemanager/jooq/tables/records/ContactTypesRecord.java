@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ContactTypesRecord extends UpdatableRecordImpl<ContactTypesRecord> implements Record4<UInteger, String, String, String> {
 
-    private static final long serialVersionUID = 1330028029;
+    private static final long serialVersionUID = -910851691;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_contact_types.id</code>.
@@ -124,7 +124,7 @@ public class ContactTypesRecord extends UpdatableRecordImpl<ContactTypesRecord> 
      */
     @Override
     public Field<UInteger> field1() {
-        return ContactTypes.RFRMGR_CONTACT_TYPES.ID;
+        return ContactTypes.CONTACT_TYPES.ID;
     }
 
     /**
@@ -132,7 +132,7 @@ public class ContactTypesRecord extends UpdatableRecordImpl<ContactTypesRecord> 
      */
     @Override
     public Field<String> field2() {
-        return ContactTypes.RFRMGR_CONTACT_TYPES.TITLE;
+        return ContactTypes.CONTACT_TYPES.TITLE;
     }
 
     /**
@@ -140,7 +140,7 @@ public class ContactTypesRecord extends UpdatableRecordImpl<ContactTypesRecord> 
      */
     @Override
     public Field<String> field3() {
-        return ContactTypes.RFRMGR_CONTACT_TYPES.ABBREVIATION;
+        return ContactTypes.CONTACT_TYPES.ABBREVIATION;
     }
 
     /**
@@ -148,7 +148,7 @@ public class ContactTypesRecord extends UpdatableRecordImpl<ContactTypesRecord> 
      */
     @Override
     public Field<String> field4() {
-        return ContactTypes.RFRMGR_CONTACT_TYPES.REMARK;
+        return ContactTypes.CONTACT_TYPES.REMARK;
     }
 
     /**
@@ -239,14 +239,14 @@ public class ContactTypesRecord extends UpdatableRecordImpl<ContactTypesRecord> 
      * Create a detached ContactTypesRecord
      */
     public ContactTypesRecord() {
-        super(ContactTypes.RFRMGR_CONTACT_TYPES);
+        super(ContactTypes.CONTACT_TYPES);
     }
 
     /**
      * Create a detached, initialised ContactTypesRecord
      */
     public ContactTypesRecord(UInteger id, String title, String abbreviation, String remark) {
-        super(ContactTypes.RFRMGR_CONTACT_TYPES);
+        super(ContactTypes.CONTACT_TYPES);
 
         set(0, id);
         set(1, title);

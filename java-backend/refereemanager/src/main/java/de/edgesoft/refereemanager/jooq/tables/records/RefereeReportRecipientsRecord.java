@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereeReportRecipientsRecord extends UpdatableRecordImpl<RefereeReportRecipientsRecord> implements Record3<UInteger, Integer, Integer> {
 
-    private static final long serialVersionUID = 142639854;
+    private static final long serialVersionUID = -1208529023;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_referee_report_recipients.id</code>.
@@ -110,7 +110,7 @@ public class RefereeReportRecipientsRecord extends UpdatableRecordImpl<RefereeRe
      */
     @Override
     public Field<UInteger> field1() {
-        return RefereeReportRecipients.RFRMGR_REFEREE_REPORT_RECIPIENTS.ID;
+        return RefereeReportRecipients.REFEREE_REPORT_RECIPIENTS.ID;
     }
 
     /**
@@ -118,7 +118,7 @@ public class RefereeReportRecipientsRecord extends UpdatableRecordImpl<RefereeRe
      */
     @Override
     public Field<Integer> field2() {
-        return RefereeReportRecipients.RFRMGR_REFEREE_REPORT_RECIPIENTS.REFEREE_REPORT_ID;
+        return RefereeReportRecipients.REFEREE_REPORT_RECIPIENTS.REFEREE_REPORT_ID;
     }
 
     /**
@@ -126,7 +126,7 @@ public class RefereeReportRecipientsRecord extends UpdatableRecordImpl<RefereeRe
      */
     @Override
     public Field<Integer> field3() {
-        return RefereeReportRecipients.RFRMGR_REFEREE_REPORT_RECIPIENTS.PERSON_ID;
+        return RefereeReportRecipients.REFEREE_REPORT_RECIPIENTS.PERSON_ID;
     }
 
     /**
@@ -199,14 +199,14 @@ public class RefereeReportRecipientsRecord extends UpdatableRecordImpl<RefereeRe
      * Create a detached RefereeReportRecipientsRecord
      */
     public RefereeReportRecipientsRecord() {
-        super(RefereeReportRecipients.RFRMGR_REFEREE_REPORT_RECIPIENTS);
+        super(RefereeReportRecipients.REFEREE_REPORT_RECIPIENTS);
     }
 
     /**
      * Create a detached, initialised RefereeReportRecipientsRecord
      */
     public RefereeReportRecipientsRecord(UInteger id, Integer refereeReportId, Integer personId) {
-        super(RefereeReportRecipients.RFRMGR_REFEREE_REPORT_RECIPIENTS);
+        super(RefereeReportRecipients.REFEREE_REPORT_RECIPIENTS);
 
         set(0, id);
         set(1, refereeReportId);

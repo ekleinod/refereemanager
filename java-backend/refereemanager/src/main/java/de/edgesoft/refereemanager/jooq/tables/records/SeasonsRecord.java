@@ -31,7 +31,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SeasonsRecord extends UpdatableRecordImpl<SeasonsRecord> implements Record5<UInteger, Date, String, Byte, String> {
 
-    private static final long serialVersionUID = 823642699;
+    private static final long serialVersionUID = 570107214;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_seasons.id</code>.
@@ -140,7 +140,7 @@ public class SeasonsRecord extends UpdatableRecordImpl<SeasonsRecord> implements
      */
     @Override
     public Field<UInteger> field1() {
-        return Seasons.RFRMGR_SEASONS.ID;
+        return Seasons.SEASONS.ID;
     }
 
     /**
@@ -148,7 +148,7 @@ public class SeasonsRecord extends UpdatableRecordImpl<SeasonsRecord> implements
      */
     @Override
     public Field<Date> field2() {
-        return Seasons.RFRMGR_SEASONS.YEAR_START;
+        return Seasons.SEASONS.YEAR_START;
     }
 
     /**
@@ -156,7 +156,7 @@ public class SeasonsRecord extends UpdatableRecordImpl<SeasonsRecord> implements
      */
     @Override
     public Field<String> field3() {
-        return Seasons.RFRMGR_SEASONS.TITLE;
+        return Seasons.SEASONS.TITLE;
     }
 
     /**
@@ -164,7 +164,7 @@ public class SeasonsRecord extends UpdatableRecordImpl<SeasonsRecord> implements
      */
     @Override
     public Field<Byte> field4() {
-        return Seasons.RFRMGR_SEASONS.EDITOR_ONLY;
+        return Seasons.SEASONS.EDITOR_ONLY;
     }
 
     /**
@@ -172,7 +172,7 @@ public class SeasonsRecord extends UpdatableRecordImpl<SeasonsRecord> implements
      */
     @Override
     public Field<String> field5() {
-        return Seasons.RFRMGR_SEASONS.REMARK;
+        return Seasons.SEASONS.REMARK;
     }
 
     /**
@@ -281,14 +281,14 @@ public class SeasonsRecord extends UpdatableRecordImpl<SeasonsRecord> implements
      * Create a detached SeasonsRecord
      */
     public SeasonsRecord() {
-        super(Seasons.RFRMGR_SEASONS);
+        super(Seasons.SEASONS);
     }
 
     /**
      * Create a detached, initialised SeasonsRecord
      */
     public SeasonsRecord(UInteger id, Date yearStart, String title, Byte editorOnly, String remark) {
-        super(Seasons.RFRMGR_SEASONS);
+        super(Seasons.SEASONS);
 
         set(0, id);
         set(1, yearStart);

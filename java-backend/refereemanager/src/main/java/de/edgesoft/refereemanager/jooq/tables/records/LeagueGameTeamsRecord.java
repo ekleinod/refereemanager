@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LeagueGameTeamsRecord extends UpdatableRecordImpl<LeagueGameTeamsRecord> implements Record4<UInteger, UInteger, UInteger, UInteger> {
 
-    private static final long serialVersionUID = 138428970;
+    private static final long serialVersionUID = -635376970;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_league_game_teams.id</code>.
@@ -124,7 +124,7 @@ public class LeagueGameTeamsRecord extends UpdatableRecordImpl<LeagueGameTeamsRe
      */
     @Override
     public Field<UInteger> field1() {
-        return LeagueGameTeams.RFRMGR_LEAGUE_GAME_TEAMS.ID;
+        return LeagueGameTeams.LEAGUE_GAME_TEAMS.ID;
     }
 
     /**
@@ -132,7 +132,7 @@ public class LeagueGameTeamsRecord extends UpdatableRecordImpl<LeagueGameTeamsRe
      */
     @Override
     public Field<UInteger> field2() {
-        return LeagueGameTeams.RFRMGR_LEAGUE_GAME_TEAMS.LEAGUE_GAME_ID;
+        return LeagueGameTeams.LEAGUE_GAME_TEAMS.LEAGUE_GAME_ID;
     }
 
     /**
@@ -140,7 +140,7 @@ public class LeagueGameTeamsRecord extends UpdatableRecordImpl<LeagueGameTeamsRe
      */
     @Override
     public Field<UInteger> field3() {
-        return LeagueGameTeams.RFRMGR_LEAGUE_GAME_TEAMS.LEAGUE_GAME_TEAM_TYPE_ID;
+        return LeagueGameTeams.LEAGUE_GAME_TEAMS.LEAGUE_GAME_TEAM_TYPE_ID;
     }
 
     /**
@@ -148,7 +148,7 @@ public class LeagueGameTeamsRecord extends UpdatableRecordImpl<LeagueGameTeamsRe
      */
     @Override
     public Field<UInteger> field4() {
-        return LeagueGameTeams.RFRMGR_LEAGUE_GAME_TEAMS.TEAM_SEASON_ID;
+        return LeagueGameTeams.LEAGUE_GAME_TEAMS.TEAM_SEASON_ID;
     }
 
     /**
@@ -239,14 +239,14 @@ public class LeagueGameTeamsRecord extends UpdatableRecordImpl<LeagueGameTeamsRe
      * Create a detached LeagueGameTeamsRecord
      */
     public LeagueGameTeamsRecord() {
-        super(LeagueGameTeams.RFRMGR_LEAGUE_GAME_TEAMS);
+        super(LeagueGameTeams.LEAGUE_GAME_TEAMS);
     }
 
     /**
      * Create a detached, initialised LeagueGameTeamsRecord
      */
     public LeagueGameTeamsRecord(UInteger id, UInteger leagueGameId, UInteger leagueGameTeamTypeId, UInteger teamSeasonId) {
-        super(LeagueGameTeams.RFRMGR_LEAGUE_GAME_TEAMS);
+        super(LeagueGameTeams.LEAGUE_GAME_TEAMS);
 
         set(0, id);
         set(1, leagueGameId);

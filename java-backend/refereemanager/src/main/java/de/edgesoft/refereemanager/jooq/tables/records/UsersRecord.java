@@ -31,7 +31,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Record8<UInteger, String, String, String, Integer, Integer, Timestamp, Timestamp> {
 
-    private static final long serialVersionUID = 1330739512;
+    private static final long serialVersionUID = 2061244764;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_users.id</code>.
@@ -182,7 +182,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      */
     @Override
     public Field<UInteger> field1() {
-        return Users.RFRMGR_USERS.ID;
+        return Users.USERS.ID;
     }
 
     /**
@@ -190,7 +190,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      */
     @Override
     public Field<String> field2() {
-        return Users.RFRMGR_USERS.USERNAME;
+        return Users.USERS.USERNAME;
     }
 
     /**
@@ -198,7 +198,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      */
     @Override
     public Field<String> field3() {
-        return Users.RFRMGR_USERS.PASSWORD;
+        return Users.USERS.PASSWORD;
     }
 
     /**
@@ -206,7 +206,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      */
     @Override
     public Field<String> field4() {
-        return Users.RFRMGR_USERS.SALT;
+        return Users.USERS.SALT;
     }
 
     /**
@@ -214,7 +214,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      */
     @Override
     public Field<Integer> field5() {
-        return Users.RFRMGR_USERS.USER_ROLE_ID;
+        return Users.USERS.USER_ROLE_ID;
     }
 
     /**
@@ -222,7 +222,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      */
     @Override
     public Field<Integer> field6() {
-        return Users.RFRMGR_USERS.PERSON_ID;
+        return Users.USERS.PERSON_ID;
     }
 
     /**
@@ -230,7 +230,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      */
     @Override
     public Field<Timestamp> field7() {
-        return Users.RFRMGR_USERS.CREATED;
+        return Users.USERS.CREATED;
     }
 
     /**
@@ -238,7 +238,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      */
     @Override
     public Field<Timestamp> field8() {
-        return Users.RFRMGR_USERS.MODIFIED;
+        return Users.USERS.MODIFIED;
     }
 
     /**
@@ -401,14 +401,14 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      * Create a detached UsersRecord
      */
     public UsersRecord() {
-        super(Users.RFRMGR_USERS);
+        super(Users.USERS);
     }
 
     /**
      * Create a detached, initialised UsersRecord
      */
     public UsersRecord(UInteger id, String username, String password, String salt, Integer userRoleId, Integer personId, Timestamp created, Timestamp modified) {
-        super(Users.RFRMGR_USERS);
+        super(Users.USERS);
 
         set(0, id);
         set(1, username);

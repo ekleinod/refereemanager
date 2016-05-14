@@ -29,7 +29,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TournamentVenuesRecord extends UpdatableRecordImpl<TournamentVenuesRecord> implements Record3<UInteger, UInteger, UInteger> {
 
-    private static final long serialVersionUID = -1761611801;
+    private static final long serialVersionUID = -836863000;
 
     /**
      * Setter for <code>refereemanager.rfrmgr_tournament_venues.id</code>.
@@ -110,7 +110,7 @@ public class TournamentVenuesRecord extends UpdatableRecordImpl<TournamentVenues
      */
     @Override
     public Field<UInteger> field1() {
-        return TournamentVenues.RFRMGR_TOURNAMENT_VENUES.ID;
+        return TournamentVenues.TOURNAMENT_VENUES.ID;
     }
 
     /**
@@ -118,7 +118,7 @@ public class TournamentVenuesRecord extends UpdatableRecordImpl<TournamentVenues
      */
     @Override
     public Field<UInteger> field2() {
-        return TournamentVenues.RFRMGR_TOURNAMENT_VENUES.TOURNAMENT_ID;
+        return TournamentVenues.TOURNAMENT_VENUES.TOURNAMENT_ID;
     }
 
     /**
@@ -126,7 +126,7 @@ public class TournamentVenuesRecord extends UpdatableRecordImpl<TournamentVenues
      */
     @Override
     public Field<UInteger> field3() {
-        return TournamentVenues.RFRMGR_TOURNAMENT_VENUES.CONTACT_ID;
+        return TournamentVenues.TOURNAMENT_VENUES.CONTACT_ID;
     }
 
     /**
@@ -199,14 +199,14 @@ public class TournamentVenuesRecord extends UpdatableRecordImpl<TournamentVenues
      * Create a detached TournamentVenuesRecord
      */
     public TournamentVenuesRecord() {
-        super(TournamentVenues.RFRMGR_TOURNAMENT_VENUES);
+        super(TournamentVenues.TOURNAMENT_VENUES);
     }
 
     /**
      * Create a detached, initialised TournamentVenuesRecord
      */
     public TournamentVenuesRecord(UInteger id, UInteger tournamentId, UInteger contactId) {
-        super(TournamentVenues.RFRMGR_TOURNAMENT_VENUES);
+        super(TournamentVenues.TOURNAMENT_VENUES);
 
         set(0, id);
         set(1, tournamentId);
