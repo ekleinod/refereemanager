@@ -5,6 +5,8 @@ import static de.edgesoft.refereemanager.jooq.tables.People.PEOPLE;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -45,7 +47,9 @@ public class App {
 			e.printStackTrace();
 		}
 		
-		getMe();
+		final Logger logger = LogManager.getLogger();
+		
+		logger.debug(getMe());
 	}
 	
 	public static String getMe() {
