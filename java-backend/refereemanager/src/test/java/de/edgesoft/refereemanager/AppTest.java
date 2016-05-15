@@ -29,7 +29,7 @@ public class AppTest extends TestCase {
 	 * Rigourous Test :-)
 	 */
 	public void testApp() {
-		assertEquals("Ekkart", App.getMe());
+		assertEquals("Ekkart", ListReferees.getMe());
 	}
 }
 
