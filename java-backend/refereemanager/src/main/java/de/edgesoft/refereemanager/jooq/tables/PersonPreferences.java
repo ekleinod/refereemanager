@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -36,7 +37,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PersonPreferences extends TableImpl<PersonPreferencesRecord> {
 
-    private static final long serialVersionUID = -1861767391;
+    private static final long serialVersionUID = -1110047301;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_person_preferences</code>
@@ -123,6 +124,14 @@ public class PersonPreferences extends TableImpl<PersonPreferencesRecord> {
     @Override
     public List<UniqueKey<PersonPreferencesRecord>> getKeys() {
         return Arrays.<UniqueKey<PersonPreferencesRecord>>asList(Keys.KEY_RFRMGR_PERSON_PREFERENCES_PRIMARY, Keys.KEY_RFRMGR_PERSON_PREFERENCES_ID_UNIQUE, Keys.KEY_RFRMGR_PERSON_PREFERENCES_SID_UNIQUE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<PersonPreferencesRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<PersonPreferencesRecord, ?>>asList(Keys.FK_RFRMGR_PREFERENCES_RFRMGR_PEOPLE1);
     }
 
     /**

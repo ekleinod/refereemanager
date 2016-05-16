@@ -3,6 +3,10 @@ package de.edgesoft.refereemanager.utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
+
 /**
  * Provides methods and properties for jdbc connections.
  *
@@ -35,18 +39,44 @@ public class ConnectionHelper {
 	public static final String password = "";
 	public static final String url = "jdbc:mysql://localhost:3306/refereemanager";
 	
+	/** Connection singleton. */
+	private static Connection theConnection = null;
+	
+	/** Context singleton. */
+	private static DSLContext theContext = null;
+	
 	/**
 	 * Returns database connection.
 	 * 
 	 * @return database connection
+	 * 
+	 * @version 0.1.0
+	 * @since 0.1.0
 	 */
 	public static Connection getConnection() {
-        try {
-        	return DriverManager.getConnection(url, userName, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+		if (theConnection == null) {
+	        try {
+	        	theConnection = DriverManager.getConnection(url, userName, password);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+		}
+        return theConnection;
+    }
+
+	/**
+	 * Returns dsl context.
+	 * 
+	 * @return dsl context
+	 * 
+	 * @version 0.1.0
+	 * @since 0.1.0
+	 */
+	public static DSLContext getContext() {
+		if (theContext == null) {
+			theContext = DSL.using(ConnectionHelper.getConnection(), SQLDialect.MYSQL);
+		}
+		return theContext;
     }
 
 }

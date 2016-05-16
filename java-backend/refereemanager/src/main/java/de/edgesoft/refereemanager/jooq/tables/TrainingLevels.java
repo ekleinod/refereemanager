@@ -15,6 +15,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -37,7 +38,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TrainingLevels extends TableImpl<TrainingLevelsRecord> {
 
-    private static final long serialVersionUID = -202101062;
+    private static final long serialVersionUID = -1314965354;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_training_levels</code>
@@ -124,6 +125,14 @@ public class TrainingLevels extends TableImpl<TrainingLevelsRecord> {
     @Override
     public List<UniqueKey<TrainingLevelsRecord>> getKeys() {
         return Arrays.<UniqueKey<TrainingLevelsRecord>>asList(Keys.KEY_RFRMGR_TRAINING_LEVELS_PRIMARY, Keys.KEY_RFRMGR_TRAINING_LEVELS_ID_UNIQUE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<TrainingLevelsRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<TrainingLevelsRecord, ?>>asList(Keys.FK_RFRMGR_REFEREES_TRAINING_LEVELS_RFRMGR_REFEREES1, Keys.FK_RFRMGR_REFEREES_TRAINING_LEVELS_RFRMGR_TRAINING_LEVELS1);
     }
 
     /**

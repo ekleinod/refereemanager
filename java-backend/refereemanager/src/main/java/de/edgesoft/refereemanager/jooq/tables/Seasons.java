@@ -8,7 +8,6 @@ import de.edgesoft.refereemanager.jooq.Keys;
 import de.edgesoft.refereemanager.jooq.Refereemanager;
 import de.edgesoft.refereemanager.jooq.tables.records.SeasonsRecord;
 
-import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +36,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Seasons extends TableImpl<SeasonsRecord> {
 
-    private static final long serialVersionUID = -1120164010;
+    private static final long serialVersionUID = 1400056064;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_seasons</code>
@@ -60,7 +59,7 @@ public class Seasons extends TableImpl<SeasonsRecord> {
     /**
      * The column <code>refereemanager.rfrmgr_seasons.year_start</code>.
      */
-    public final TableField<SeasonsRecord, Date> YEAR_START = createField("year_start", org.jooq.impl.SQLDataType.DATE.nullable(false), this, "");
+    public final TableField<SeasonsRecord, Integer> YEAR_START = createField("year_start", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>refereemanager.rfrmgr_seasons.title</code>.

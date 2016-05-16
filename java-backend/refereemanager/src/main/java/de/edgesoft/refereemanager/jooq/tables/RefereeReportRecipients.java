@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -36,7 +37,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereeReportRecipients extends TableImpl<RefereeReportRecipientsRecord> {
 
-    private static final long serialVersionUID = 1602552474;
+    private static final long serialVersionUID = -14859440;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_referee_report_recipients</code>
@@ -59,12 +60,12 @@ public class RefereeReportRecipients extends TableImpl<RefereeReportRecipientsRe
     /**
      * The column <code>refereemanager.rfrmgr_referee_report_recipients.referee_report_id</code>.
      */
-    public final TableField<RefereeReportRecipientsRecord, Integer> REFEREE_REPORT_ID = createField("referee_report_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RefereeReportRecipientsRecord, UInteger> REFEREE_REPORT_ID = createField("referee_report_id", org.jooq.impl.SQLDataType.INTEGERUNSIGNED.nullable(false), this, "");
 
     /**
      * The column <code>refereemanager.rfrmgr_referee_report_recipients.person_id</code>.
      */
-    public final TableField<RefereeReportRecipientsRecord, Integer> PERSON_ID = createField("person_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RefereeReportRecipientsRecord, UInteger> PERSON_ID = createField("person_id", org.jooq.impl.SQLDataType.INTEGERUNSIGNED.nullable(false), this, "");
 
     /**
      * Create a <code>refereemanager.rfrmgr_referee_report_recipients</code> table reference
@@ -118,6 +119,14 @@ public class RefereeReportRecipients extends TableImpl<RefereeReportRecipientsRe
     @Override
     public List<UniqueKey<RefereeReportRecipientsRecord>> getKeys() {
         return Arrays.<UniqueKey<RefereeReportRecipientsRecord>>asList(Keys.KEY_RFRMGR_REFEREE_REPORT_RECIPIENTS_PRIMARY, Keys.KEY_RFRMGR_REFEREE_REPORT_RECIPIENTS_ID_UNIQUE, Keys.KEY_RFRMGR_REFEREE_REPORT_RECIPIENTS_TITLE_UNIQUE, Keys.KEY_RFRMGR_REFEREE_REPORT_RECIPIENTS_PERSON_ID_UNIQUE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<RefereeReportRecipientsRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<RefereeReportRecipientsRecord, ?>>asList(Keys.FK_RFRMGR_REFEREE_REPORT_RECIPIENTS_RFRMGR_REFEREE_REPORTS1, Keys.FK_RFRMGR_REFEREE_REPORT_RECIPIENTS_RFRMGR_PEOPLE1);
     }
 
     /**

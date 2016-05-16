@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -36,7 +37,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Referees extends TableImpl<RefereesRecord> {
 
-    private static final long serialVersionUID = 1612486731;
+    private static final long serialVersionUID = -829736886;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_referees</code>
@@ -118,6 +119,14 @@ public class Referees extends TableImpl<RefereesRecord> {
     @Override
     public List<UniqueKey<RefereesRecord>> getKeys() {
         return Arrays.<UniqueKey<RefereesRecord>>asList(Keys.KEY_RFRMGR_REFEREES_PRIMARY, Keys.KEY_RFRMGR_REFEREES_ID_UNIQUE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<RefereesRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<RefereesRecord, ?>>asList(Keys.FK_REFEREES_RFRMGR_PEOPLE);
     }
 
     /**

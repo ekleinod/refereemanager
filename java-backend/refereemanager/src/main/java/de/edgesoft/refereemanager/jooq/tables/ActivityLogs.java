@@ -15,6 +15,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -38,7 +39,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityLogs extends TableImpl<ActivityLogsRecord> {
 
-    private static final long serialVersionUID = -1247833373;
+    private static final long serialVersionUID = 946028658;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_activity_logs</code>
@@ -86,7 +87,7 @@ public class ActivityLogs extends TableImpl<ActivityLogsRecord> {
     /**
      * The column <code>refereemanager.rfrmgr_activity_logs.user_id</code>.
      */
-    public final TableField<ActivityLogsRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "\n");
+    public final TableField<ActivityLogsRecord, UInteger> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGERUNSIGNED.nullable(false), this, "\n");
 
     /**
      * The column <code>refereemanager.rfrmgr_activity_logs.remark</code>.
@@ -150,6 +151,14 @@ public class ActivityLogs extends TableImpl<ActivityLogsRecord> {
     @Override
     public List<UniqueKey<ActivityLogsRecord>> getKeys() {
         return Arrays.<UniqueKey<ActivityLogsRecord>>asList(Keys.KEY_RFRMGR_ACTIVITY_LOGS_PRIMARY, Keys.KEY_RFRMGR_ACTIVITY_LOGS_ID_UNIQUE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<ActivityLogsRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<ActivityLogsRecord, ?>>asList(Keys.FK_RFRMGR_ACTIVITY_LOGS_RFRMGR_DATABASE_TABLES1, Keys.FK_RFRMGR_ACTIVITY_LOGS_RFRMGR_DATABASE_COLUMNS1, Keys.FK_RFRMGR_ACTIVITY_LOG_RFRMGR_USERS1);
     }
 
     /**

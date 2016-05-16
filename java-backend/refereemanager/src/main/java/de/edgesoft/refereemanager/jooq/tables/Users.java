@@ -15,6 +15,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -37,7 +38,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-    private static final long serialVersionUID = -38043578;
+    private static final long serialVersionUID = -5316817;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_users</code>
@@ -75,12 +76,12 @@ public class Users extends TableImpl<UsersRecord> {
     /**
      * The column <code>refereemanager.rfrmgr_users.user_role_id</code>.
      */
-    public final TableField<UsersRecord, Integer> USER_ROLE_ID = createField("user_role_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<UsersRecord, UInteger> USER_ROLE_ID = createField("user_role_id", org.jooq.impl.SQLDataType.INTEGERUNSIGNED.nullable(false), this, "");
 
     /**
      * The column <code>refereemanager.rfrmgr_users.person_id</code>.
      */
-    public final TableField<UsersRecord, Integer> PERSON_ID = createField("person_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<UsersRecord, UInteger> PERSON_ID = createField("person_id", org.jooq.impl.SQLDataType.INTEGERUNSIGNED, this, "");
 
     /**
      * The column <code>refereemanager.rfrmgr_users.created</code>.
@@ -144,6 +145,14 @@ public class Users extends TableImpl<UsersRecord> {
     @Override
     public List<UniqueKey<UsersRecord>> getKeys() {
         return Arrays.<UniqueKey<UsersRecord>>asList(Keys.KEY_RFRMGR_USERS_PRIMARY, Keys.KEY_RFRMGR_USERS_ID_UNIQUE, Keys.KEY_RFRMGR_USERS_USERNAME_UNIQUE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<UsersRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<UsersRecord, ?>>asList(Keys.FK_RFRMGR_USERS_RFRMGR_USER_ROLES1, Keys.FK_RFRMGR_USERS_RFRMGR_PEOPLE1);
     }
 
     /**

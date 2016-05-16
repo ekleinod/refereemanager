@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -36,7 +37,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Spokespeople extends TableImpl<SpokespeopleRecord> {
 
-    private static final long serialVersionUID = -1533209320;
+    private static final long serialVersionUID = 1748546456;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_spokespeople</code>
@@ -123,6 +124,14 @@ public class Spokespeople extends TableImpl<SpokespeopleRecord> {
     @Override
     public List<UniqueKey<SpokespeopleRecord>> getKeys() {
         return Arrays.<UniqueKey<SpokespeopleRecord>>asList(Keys.KEY_RFRMGR_SPOKESPEOPLE_PRIMARY, Keys.KEY_RFRMGR_SPOKESPEOPLE_ID_UNIQUE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<SpokespeopleRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<SpokespeopleRecord, ?>>asList(Keys.FK_RFRMGR_TEAM_SEASONS_LEAGUES_SPOKESPERSONS_RFRMGR_PEOPLE1, Keys.FK_RFRMGR_SPOKESPEOPLE_RFRMGR_TEAM_SEASONS1, Keys.FK_RFRMGR_SPOKESPEOPLE_RFRMGR_CLUBS1);
     }
 
     /**

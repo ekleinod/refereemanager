@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -36,7 +37,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RefereeAssignments extends TableImpl<RefereeAssignmentsRecord> {
 
-    private static final long serialVersionUID = 1226488722;
+    private static final long serialVersionUID = -1107550767;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_referee_assignments</code>
@@ -138,6 +139,14 @@ public class RefereeAssignments extends TableImpl<RefereeAssignmentsRecord> {
     @Override
     public List<UniqueKey<RefereeAssignmentsRecord>> getKeys() {
         return Arrays.<UniqueKey<RefereeAssignmentsRecord>>asList(Keys.KEY_RFRMGR_REFEREE_ASSIGNMENTS_PRIMARY, Keys.KEY_RFRMGR_REFEREE_ASSIGNMENTS_ID_UNIQUE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<RefereeAssignmentsRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<RefereeAssignmentsRecord, ?>>asList(Keys.FK_RFRMGR_REFEREE_ASSIGNMENTS_RFRMGR_ASSIGNMENTS1, Keys.FK_RFRMGR_REFEREE_ASSIGNMENTS_RFRMGR_REFEREE_ASSIGNMENT_ROLES1, Keys.FK_RFRMGR_REFEREE_ASSIGNMENTS_RFRMGR_REFEREES1, Keys.FK_RFRMGR_REFEREE_ASSIGNMENTS_RFRMGR_ASSIGNMENT_STATUS_TYPES1, Keys.FK_RFRMGR_REFEREE_ASSIGNMENTS_RFRMGR_REFEREE_ASSIGNMENT_REMAR1);
     }
 
     /**

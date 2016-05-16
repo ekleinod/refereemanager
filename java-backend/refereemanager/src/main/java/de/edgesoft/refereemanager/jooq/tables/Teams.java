@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -36,7 +37,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Teams extends TableImpl<TeamsRecord> {
 
-    private static final long serialVersionUID = 692885140;
+    private static final long serialVersionUID = 1811283787;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_teams</code>
@@ -133,6 +134,14 @@ public class Teams extends TableImpl<TeamsRecord> {
     @Override
     public List<UniqueKey<TeamsRecord>> getKeys() {
         return Arrays.<UniqueKey<TeamsRecord>>asList(Keys.KEY_RFRMGR_TEAMS_PRIMARY, Keys.KEY_RFRMGR_TEAMS_ID_UNIQUE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<TeamsRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<TeamsRecord, ?>>asList(Keys.FK_RFRMGR_TEAMS_RFRMGR_CLUBS1, Keys.FK_RFRMGR_TEAMS_RFRMGR_LEAGUE_TYPES1);
     }
 
     /**

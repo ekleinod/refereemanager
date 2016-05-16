@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -36,7 +37,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Wishes extends TableImpl<WishesRecord> {
 
-    private static final long serialVersionUID = 1935697304;
+    private static final long serialVersionUID = -619879627;
 
     /**
      * The reference instance of <code>refereemanager.rfrmgr_wishes</code>
@@ -153,6 +154,14 @@ public class Wishes extends TableImpl<WishesRecord> {
     @Override
     public List<UniqueKey<WishesRecord>> getKeys() {
         return Arrays.<UniqueKey<WishesRecord>>asList(Keys.KEY_RFRMGR_WISHES_PRIMARY, Keys.KEY_RFRMGR_WISHES_ID_UNIQUE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ForeignKey<WishesRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<WishesRecord, ?>>asList(Keys.FK_RFRMGR_REFEREES_CLUBS_RFRMGR_REFEREES10, Keys.FK_RFRMGR_REFEREE_WISHES_RFRMGR_WISH_TYPES1, Keys.FK_RFRMGR_REFEREES_CLUBS_RFRMGR_CLUBS10, Keys.FK_RFRMGR_REFEREES_RELATIONS_RFRMGR_LEAGUES10, Keys.FK_RFRMGR_REFEREE_RELATIONS_FRMGR_SEX_TYPES10);
     }
 
     /**
