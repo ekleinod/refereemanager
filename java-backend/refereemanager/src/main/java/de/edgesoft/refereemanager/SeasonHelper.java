@@ -95,6 +95,9 @@ public class SeasonHelper extends AbstractMainClass {
 	/**
 	 * Returns season list.
 	 * 
+	 * @return list of seasons
+	 *  @retval empty if no seasons exists
+	 * 
 	 * @version 0.1.0
 	 * @since 0.1.0
 	 */
@@ -112,6 +115,9 @@ public class SeasonHelper extends AbstractMainClass {
 	
 	/**
 	 * Returns current season.
+	 * 
+	 * @return current season
+	 *  @retval null if no current season exists
 	 * 
 	 * @version 0.1.0
 	 * @since 0.1.0

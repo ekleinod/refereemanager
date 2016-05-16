@@ -1,21 +1,17 @@
 package de.edgesoft.refereemanager;
 
-import static de.edgesoft.refereemanager.jooq.tables.People.PEOPLE;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
-import org.jooq.types.UInteger;
 
+import de.edgesoft.edgeutils.Messages;
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
+import de.edgesoft.refereemanager.jooq.tables.People;
+import de.edgesoft.refereemanager.jooq.tables.Referees;
 import de.edgesoft.refereemanager.utils.ConnectionHelper;
 
 /**
- * Returns/displays a list of referees for a given season.
+ * Methods for referees.
  *
  * ## Legal stuff
  * 
@@ -40,7 +36,7 @@ import de.edgesoft.refereemanager.utils.ConnectionHelper;
  * @version 0.1.0
  * @since 0.1.0
  */
-public class ListReferees extends AbstractMainClass {
+public class RefereeHelper extends AbstractMainClass {
 	
 	/**
 	 * Command line entry point.
@@ -51,7 +47,7 @@ public class ListReferees extends AbstractMainClass {
 	 * @since 0.1.0
 	 */
 	public static void main(String[] args) {
-		new ListReferees().executeOperation(args);
+		new RefereeHelper().executeOperation(args);
 	}
 
 	/**
@@ -68,38 +64,48 @@ public class ListReferees extends AbstractMainClass {
 	@Override
 	public void executeOperation(String[] args) {
 		
-		setDescription("List referees for a specific season.");
+		setDescription("Methods for referees.");
 		
+		addOption("l", "list", "list all referees of a specific season ", false, false);
 		addOption("s", "season", "season to list referees for (omit for current season)", true, false);
+		addOption("h", "help", "display help message", false, false);
 		
 		init(args);
 		
-		listReferees(getOptionValue("s"));
+		boolean showHelp = true;
+		
+		if (hasOption("l")) {
+			System.out.println(getRefereeList(getOptionValue("s")));
+			showHelp = false;
+		} 
+		
+		if (showHelp) {
+			Messages.printMessage(getUsage());
+		}
 		
 	}
 
 	/**
-	 * Lists referees.
+	 * Returns season list.
 	 * 
-	 * @param theSeason season
+	 * @param theSeason season (current season if empty)
+	 * 
+	 * @return list of referees
+	 *  @retval empty if no referees exists
+	 * 
+	 * @version 0.1.0
+	 * @since 0.1.0
 	 */
-	public static void listReferees(String theSeason) {
+	public Result<Record> getRefereeList(String theSeason) {
 		
-		final Logger logger = LogManager.getLogger();
-		
-		DSLContext create = DSL.using(ConnectionHelper.getConnection(), SQLDialect.MYSQL);
+		DSLContext create = ConnectionHelper.getContext();
 		
 		Result<Record> result = create.select()
-				.from(PEOPLE)
+				.from(Referees.REFEREES)
+				.join(People.PEOPLE).onKey()
 				.fetch();
 		
-		for (Record r : result) {
-			UInteger id = r.getValue(PEOPLE.ID);
-			String firstName = r.getValue(PEOPLE.FIRST_NAME);
-			String lastName = r.getValue(PEOPLE.NAME);
-
-			logger.info("ID: " + id + " first name: " + firstName + " last name: " + lastName);
-		}
+		return result;
 		
 	}
 	
