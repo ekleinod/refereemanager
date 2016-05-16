@@ -2,9 +2,8 @@ package de.edgesoft.refereemanager;
 
 import static de.edgesoft.refereemanager.jooq.tables.People.PEOPLE;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -13,6 +12,7 @@ import org.jooq.impl.DSL;
 import org.jooq.types.UInteger;
 
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
+import de.edgesoft.refereemanager.utils.ConnectionHelper;
 
 /**
  * Returns/displays a list of referees for a given season.
@@ -42,73 +42,67 @@ import de.edgesoft.edgeutils.commandline.AbstractMainClass;
  */
 public class ListReferees extends AbstractMainClass {
 	
+	/**
+	 * Command line entry point.
+	 * 
+	 * @param args command line arguments
+	 * 
+	 * @version 0.1.0
+	 * @since 0.1.0
+	 */
 	public static void main(String[] args) {
+		new ListReferees().executeOperation(args);
+	}
+
+	/**
+	 * Programmatic entry point, initializing and executing main functionality.
+	 * 
+	 * - set description setDescription("...");
+	 * - add options addOption("short", "long", "description", argument?, required?);
+	 * - call init(args);
+	 * - call operation execution with arguments
+	 * 
+	 * @version 0.1.0
+	 * @since 0.1.0
+	 */
+	@Override
+	public void executeOperation(String[] args) {
 		
-		setCallingClass(ListReferees.class);
 		setDescription("List referees for a specific season.");
+		
 		addOption("s", "season", "season to list referees for (omit for current season)", true, false);
 		
 		init(args);
 		
-		System.out.println(getUsage());
+		listReferees(getOptionValue("s"));
 		
-//		String userName = "root";
-//		String password = "";
-//		String url = "jdbc:mysql://localhost:3306/refereemanager";
-//
-//		// Connection is the only JDBC resource that we need
-//		// PreparedStatement and ResultSet are handled by jOOQ, internally
-//		try (Connection conn = DriverManager.getConnection(url, userName, password)) {
-//			DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
-//			Result<Record> result = create.select()
-//					.from(PEOPLE)
-//					.fetch();
-//			
-//			for (Record r : result) {
-//				UInteger id = r.getValue(PEOPLE.ID);
-//				String firstName = r.getValue(PEOPLE.FIRST_NAME);
-//				String lastName = r.getValue(PEOPLE.NAME);
-//
-//				System.out.println("ID: " + id + " first name: " + firstName + " last name: " + lastName);
-//			}
-//		}
-//
-//		// For the sake of this tutorial, let's keep exception handling simple
-//		catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		final Logger logger = LogManager.getLogger();
-//		
-//		logger.debug(getMe());
+	}
+
+	/**
+	 * Lists referees.
+	 * 
+	 * @param theSeason season
+	 */
+	public static void listReferees(String theSeason) {
+		
+		final Logger logger = LogManager.getLogger();
+		
+		DSLContext create = DSL.using(ConnectionHelper.getConnection(), SQLDialect.MYSQL);
+		
+		Result<Record> result = create.select()
+				.from(PEOPLE)
+				.fetch();
+		
+		for (Record r : result) {
+			UInteger id = r.getValue(PEOPLE.ID);
+			String firstName = r.getValue(PEOPLE.FIRST_NAME);
+			String lastName = r.getValue(PEOPLE.NAME);
+
+			logger.info("ID: " + id + " first name: " + firstName + " last name: " + lastName);
+		}
+		
 	}
 	
-	public static String getMe() {
-		String sReturn = "notfound";
-		
-		String userName = "root";
-		String password = "";
-		String url = "jdbc:mysql://localhost:3306/refereemanager";
-		try (Connection conn = DriverManager.getConnection(url, userName, password)) {
-			DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
-			Result<Record> result = create.select()
-					.from(PEOPLE)
-					.where(PEOPLE.ID.equal(UInteger.valueOf(6)))
-					.fetch();
-			
-			for (Record r : result) {
-				sReturn = r.getValue(PEOPLE.FIRST_NAME);
-			}
-		}
-
-		// For the sake of this tutorial, let's keep exception handling simple
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return sReturn;
-	}
-
 }
 
 /* EOF */

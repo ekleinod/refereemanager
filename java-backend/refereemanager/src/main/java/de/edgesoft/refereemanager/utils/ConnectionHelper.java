@@ -1,5 +1,8 @@
 package de.edgesoft.refereemanager.utils;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+
 /**
  * Provides methods and properties for jdbc connections.
  *
@@ -26,11 +29,25 @@ package de.edgesoft.refereemanager.utils;
  * @version 0.1.0
  * @since 0.1.0
  */
-public class Connection {
+public class ConnectionHelper {
 	
 	public static final String userName = "root";
 	public static final String password = "";
 	public static final String url = "jdbc:mysql://localhost:3306/refereemanager";
+	
+	/**
+	 * Returns database connection.
+	 * 
+	 * @return database connection
+	 */
+	public static Connection getConnection() {
+        try {
+        	return DriverManager.getConnection(url, userName, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
 
