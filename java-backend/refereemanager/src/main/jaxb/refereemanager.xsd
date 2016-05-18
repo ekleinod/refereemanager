@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+XSD-Schema for refereemanager.
+
+## Legal stuff
+
+Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+
+This file is part of refereemanager.
+
+refereemanager is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+refereemanager is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
+
+@author Ekkart Kleinod
+@version 0.1.0
+@since 0.1.0
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+	jxb:version="2.1">
+
+	<!-- allow xml:base attribute in order to avoid include errors -->
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2005/08/xml.xsd"/>
+
+	<xsd:include schemaLocation="../../../../edgeutils/jaxb/commons.xsd"/>
+
+	<xsd:element name="refereemanager" type="RefereeManagerType"/>
+
+	<xsd:complexType name="RefereeManagerType">
+		<xsd:sequence>
+			<xsd:element name="info" type="InfoType" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="content" type="ContentType" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+		<xsd:attribute ref="xml:base" />
+	</xsd:complexType>
+
+	<xsd:complexType name="ContentType">
+		<xsd:sequence>
+			<xsd:element name="person" type="PersonType" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="referee" type="RefereeType" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PersonType">
+		<xsd:sequence>
+			<xsd:element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="first_name" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="RefereeType">
+		<xsd:complexContent>
+			<xsd:extension base="PersonType">
+				<xsd:sequence>
+					<xsd:element name="docs_by_letter" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+</xsd:schema>
+
+<!-- EOF -->
