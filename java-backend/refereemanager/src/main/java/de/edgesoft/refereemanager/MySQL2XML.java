@@ -5,6 +5,9 @@ import java.util.Calendar;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.Result;
 
 import de.edgesoft.edgeutils.EdgeUtilsException;
 import de.edgesoft.edgeutils.Messages;
@@ -12,12 +15,19 @@ import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.commons.InfoType;
 import de.edgesoft.edgeutils.commons.ext.VersionTypeExt;
 import de.edgesoft.edgeutils.files.JAXBFiles;
+import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.ContentType;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
-import de.edgesoft.refereemanager.jaxb.PersonType;
 import de.edgesoft.refereemanager.jaxb.RefereeManagerType;
 import de.edgesoft.refereemanager.jaxb.RefereeType;
+import de.edgesoft.refereemanager.jaxb.SexType;
+import de.edgesoft.refereemanager.jooq.tables.ContactTypes;
+import de.edgesoft.refereemanager.jooq.tables.People;
+import de.edgesoft.refereemanager.jooq.tables.Referees;
+import de.edgesoft.refereemanager.jooq.tables.SexTypes;
+import de.edgesoft.refereemanager.utils.ConnectionHelper;
 import de.edgesoft.refereemanager.utils.Constants;
+import de.edgesoft.refereemanager.utils.JAXBHelper;
 
 /**
  * Data conversion from MySQL to XML.
@@ -107,7 +117,8 @@ public class MySQL2XML extends AbstractMainClass {
 		
 		logger.info("start conversion.");
 		
-//		DSLContext create = ConnectionHelper.getContext();
+		DSLContext create = ConnectionHelper.getContext();
+		Result<Record> result = null;
 		
 		logger.info("connection context created.");
 		
@@ -122,21 +133,66 @@ public class MySQL2XML extends AbstractMainClass {
 		mgrDoc.getInfo().setAppversion(new VersionTypeExt(Constants.APPVERSION));
 		mgrDoc.getInfo().setDocversion(new VersionTypeExt(Constants.DOCVERSION));
 		
-		mgrDoc.setContent(new ContentType());
+		ContentType theContent = new ContentType();
+		mgrDoc.setContent(theContent);
 		
-		logger.info("converting people.");
 		
-		PersonType aPerson = new PersonType();
-		aPerson.setFirstName("Max");
-		aPerson.setName("Mustermann");
-		mgrDoc.getContent().getPerson().add(aPerson);
+		logger.info("converting sex types.");
+		
+		result = create.select()
+				.from(SexTypes.SEX_TYPES)
+				.orderBy(SexTypes.SEX_TYPES.SID.asc())
+				.fetch();
+		
+		for (Record record : result) {
+			SexType aType = new SexType();
+			aType.setId(JAXBHelper.getID(aType, record.getValue(SexTypes.SEX_TYPES.SID)));
+			aType.setTitle(record.getValue(SexTypes.SEX_TYPES.TITLE));
+			aType.setRemark(record.getValue(SexTypes.SEX_TYPES.REMARK));
+			theContent.getSextype().add(aType);
+		}
+		
+		
+		logger.info("converting contact types.");
+		
+		result = create.select()
+				.from(ContactTypes.CONTACT_TYPES)
+				.orderBy(ContactTypes.CONTACT_TYPES.TITLE.asc())
+				.fetch();
+		
+		for (Record record : result) {
+			ContactType aType = new ContactType();
+			aType.setId(JAXBHelper.getID(aType, record.getValue(ContactTypes.CONTACT_TYPES.ID)));
+			aType.setTitle(record.getValue(ContactTypes.CONTACT_TYPES.TITLE));
+			aType.setAbbreviation(record.getValue(ContactTypes.CONTACT_TYPES.ABBREVIATION));
+			aType.setRemark(record.getValue(ContactTypes.CONTACT_TYPES.REMARK));
+			theContent.getContacttype().add(aType);
+		}
+		
 		
 		logger.info("converting referees.");
 		
-		RefereeType aReferee = new RefereeType();
-		aReferee.setTitle("Dr.");
-		aReferee.setName("Musterfrau");
-		mgrDoc.getContent().getReferee().add(aReferee);
+		result = create.select()
+				.from(Referees.REFEREES)
+				.join(People.PEOPLE).onKey()
+				.orderBy(People.PEOPLE.ID.asc())
+				.fetch();
+		
+		for (Record record : result) {
+			RefereeType aType = new RefereeType();
+			aType.setId(JAXBHelper.getID(aType, record.getValue(Referees.REFEREES.ID)));
+			if ((record.getValue(Referees.REFEREES.DOCS_PER_LETTER) != null) && (record.getValue(Referees.REFEREES.DOCS_PER_LETTER) != 0)) {
+				aType.setDocsByLetter(true);
+			}
+			
+			aType.setTitle(record.getValue(People.PEOPLE.TITLE));
+			aType.setFirstName(record.getValue(People.PEOPLE.FIRST_NAME));
+			aType.setName(record.getValue(People.PEOPLE.NAME));
+			aType.setRemark(record.getValue(People.PEOPLE.REMARK));
+			
+			theContent.getReferee().add(aType);
+		}
+		
 		
 		logger.info(MessageFormat.format("writing xml file ''{0}''.", theXMLFile));
 		

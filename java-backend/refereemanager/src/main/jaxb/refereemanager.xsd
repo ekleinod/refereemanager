@@ -50,15 +50,28 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:sequence>
 			<xsd:element name="person" type="PersonType" minOccurs="0" maxOccurs="unbounded" />
 			<xsd:element name="referee" type="RefereeType" minOccurs="0" maxOccurs="unbounded" />
+
+			<!-- types -->
+			<xsd:element name="sextype" type="SexType" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="contacttype" type="ContactType" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
 	</xsd:complexType>
 
 	<xsd:complexType name="PersonType">
-		<xsd:sequence>
-			<xsd:element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" />
-			<xsd:element name="first_name" type="xsd:string" minOccurs="0" maxOccurs="1" />
-			<xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1" />
-		</xsd:sequence>
+		<xsd:complexContent>
+			<xsd:extension base="TitledType">
+				<xsd:sequence>
+					<xsd:element name="first_name" type="xsd:string" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="birthday" type="xsd:date" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="day_of_death" type="xsd:date" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="internal_remark" type="xsd:string" minOccurs="0" maxOccurs="1" />
+
+					<!-- references -->
+					<xsd:element name="sextyperef" type="RefType" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
 	</xsd:complexType>
 
 	<xsd:complexType name="RefereeType">
@@ -66,6 +79,34 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:extension base="PersonType">
 				<xsd:sequence>
 					<xsd:element name="docs_by_letter" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="SexType">
+		<xsd:complexContent>
+			<xsd:extension base="TitledType">
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="ContactType">
+		<xsd:complexContent>
+			<xsd:extension base="TitledType">
+				<xsd:sequence>
+					<xsd:element name="abbreviation" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="TitledType">
+		<xsd:complexContent>
+			<xsd:extension base="IDType">
+				<xsd:sequence>
+					<xsd:element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="remark" type="xsd:string" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

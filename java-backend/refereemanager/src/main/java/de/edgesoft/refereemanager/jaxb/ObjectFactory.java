@@ -42,6 +42,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SexType }
+     * 
+     */
+    public SexType createSexType() {
+        return new SexType();
+    }
+
+    /**
+     * Create an instance of {@link ContactType }
+     * 
+     */
+    public ContactType createContactType() {
+        return new ContactType();
+    }
+
+    /**
      * Create an instance of {@link ContentType }
      * 
      */
@@ -50,19 +66,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RefereeType }
-     * 
-     */
-    public RefereeType createRefereeType() {
-        return new RefereeType();
-    }
-
-    /**
      * Create an instance of {@link PersonType }
      * 
      */
     public PersonType createPersonType() {
         return new PersonType();
+    }
+
+    /**
+     * Create an instance of {@link TitledType }
+     * 
+     */
+    public TitledType createTitledType() {
+        return new TitledType();
+    }
+
+    /**
+     * Create an instance of {@link RefereeType }
+     * 
+     */
+    public RefereeType createRefereeType() {
+        return new RefereeType();
     }
 
     /**

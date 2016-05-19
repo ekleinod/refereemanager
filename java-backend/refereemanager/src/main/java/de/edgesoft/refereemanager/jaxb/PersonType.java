@@ -1,11 +1,15 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import java.util.Calendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.commons.RefType;
 
 
 /**
@@ -16,13 +20,16 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="PersonType">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{}TitledType">
  *       &lt;sequence>
- *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="first_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="birthday" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
+ *         &lt;element name="day_of_death" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
+ *         &lt;element name="internal_remark" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="sextyperef" type="{}RefType"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -31,44 +38,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PersonType", propOrder = {
-    "title",
     "firstName",
-    "name"
+    "name",
+    "birthday",
+    "dayOfDeath",
+    "internalRemark",
+    "sextyperef"
 })
 @XmlSeeAlso({
     RefereeType.class
 })
-public class PersonType {
+public class PersonType
+    extends TitledType
+{
 
-    protected String title;
     @XmlElement(name = "first_name")
     protected String firstName;
     @XmlElement(required = true)
     protected String name;
-
-    /**
-     * Gets the value of the title property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * Sets the value of the title property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setTitle(String value) {
-        this.title = value;
-    }
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(Adapter2 .class)
+    @XmlSchemaType(name = "date")
+    protected Calendar birthday;
+    @XmlElement(name = "day_of_death", type = String.class)
+    @XmlJavaTypeAdapter(Adapter2 .class)
+    @XmlSchemaType(name = "date")
+    protected Calendar dayOfDeath;
+    @XmlElement(name = "internal_remark")
+    protected String internalRemark;
+    @XmlElement(required = true)
+    protected RefType sextyperef;
 
     /**
      * Gets the value of the firstName property.
@@ -116,6 +115,102 @@ public class PersonType {
      */
     public void setName(String value) {
         this.name = value;
+    }
+
+    /**
+     * Gets the value of the birthday property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public Calendar getBirthday() {
+        return birthday;
+    }
+
+    /**
+     * Sets the value of the birthday property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setBirthday(Calendar value) {
+        this.birthday = value;
+    }
+
+    /**
+     * Gets the value of the dayOfDeath property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public Calendar getDayOfDeath() {
+        return dayOfDeath;
+    }
+
+    /**
+     * Sets the value of the dayOfDeath property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDayOfDeath(Calendar value) {
+        this.dayOfDeath = value;
+    }
+
+    /**
+     * Gets the value of the internalRemark property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getInternalRemark() {
+        return internalRemark;
+    }
+
+    /**
+     * Sets the value of the internalRemark property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setInternalRemark(String value) {
+        this.internalRemark = value;
+    }
+
+    /**
+     * Gets the value of the sextyperef property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link RefType }
+     *     
+     */
+    public RefType getSextyperef() {
+        return sextyperef;
+    }
+
+    /**
+     * Sets the value of the sextyperef property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link RefType }
+     *     
+     */
+    public void setSextyperef(RefType value) {
+        this.sextyperef = value;
     }
 
 }

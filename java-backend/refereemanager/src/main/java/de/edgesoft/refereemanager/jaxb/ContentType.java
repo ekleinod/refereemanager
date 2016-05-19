@@ -20,6 +20,8 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="person" type="{}PersonType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="referee" type="{}RefereeType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="sextype" type="{}SexType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="contacttype" type="{}ContactType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -31,12 +33,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ContentType", propOrder = {
     "person",
-    "referee"
+    "referee",
+    "sextype",
+    "contacttype"
 })
 public class ContentType {
 
     protected List<PersonType> person;
     protected List<RefereeType> referee;
+    protected List<SexType> sextype;
+    protected List<ContactType> contacttype;
 
     /**
      * Gets the value of the person property.
@@ -94,6 +100,64 @@ public class ContentType {
             referee = new ArrayList<RefereeType>();
         }
         return this.referee;
+    }
+
+    /**
+     * Gets the value of the sextype property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the sextype property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getSextype().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link SexType }
+     * 
+     * 
+     */
+    public List<SexType> getSextype() {
+        if (sextype == null) {
+            sextype = new ArrayList<SexType>();
+        }
+        return this.sextype;
+    }
+
+    /**
+     * Gets the value of the contacttype property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the contacttype property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getContacttype().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link ContactType }
+     * 
+     * 
+     */
+    public List<ContactType> getContacttype() {
+        if (contacttype == null) {
+            contacttype = new ArrayList<ContactType>();
+        }
+        return this.contacttype;
     }
 
 }
