@@ -35,9 +35,9 @@ import org.jooq.impl.DSL;
  */
 public class ConnectionHelper {
 	
-	public static final String userName = "root";
-	public static final String password = "";
-	public static final String url = "jdbc:mysql://localhost:3306/refereemanager";
+	public static final String USERNAME = "root";
+	public static final String PASSWORD = "";
+	public static final String URL = "jdbc:mysql://localhost:3306/refereemanager";
 	
 	/** Connection singleton. */
 	private static Connection theConnection = null;
@@ -56,7 +56,7 @@ public class ConnectionHelper {
 	public static Connection getConnection() {
 		if (theConnection == null) {
 	        try {
-	        	theConnection = DriverManager.getConnection(url, userName, password);
+	        	theConnection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }

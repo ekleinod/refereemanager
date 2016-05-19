@@ -1,12 +1,23 @@
 package de.edgesoft.refereemanager;
 
+import java.text.MessageFormat;
+import java.util.Calendar;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jooq.DSLContext;
 
+import de.edgesoft.edgeutils.EdgeUtilsException;
 import de.edgesoft.edgeutils.Messages;
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
-import de.edgesoft.refereemanager.utils.ConnectionHelper;
+import de.edgesoft.edgeutils.commons.InfoType;
+import de.edgesoft.edgeutils.commons.ext.VersionTypeExt;
+import de.edgesoft.edgeutils.files.JAXBFiles;
+import de.edgesoft.refereemanager.jaxb.ContentType;
+import de.edgesoft.refereemanager.jaxb.ObjectFactory;
+import de.edgesoft.refereemanager.jaxb.PersonType;
+import de.edgesoft.refereemanager.jaxb.RefereeManagerType;
+import de.edgesoft.refereemanager.jaxb.RefereeType;
+import de.edgesoft.refereemanager.utils.Constants;
 
 /**
  * Data conversion from MySQL to XML.
@@ -96,11 +107,45 @@ public class MySQL2XML extends AbstractMainClass {
 		
 		logger.info("start conversion.");
 		
-		DSLContext create = ConnectionHelper.getContext();
+//		DSLContext create = ConnectionHelper.getContext();
 		
 		logger.info("connection context created.");
 		
+		logger.info("initializing conversion.");
 		
+		RefereeManagerType mgrDoc = new RefereeManagerType();
+		
+		mgrDoc.setInfo(new InfoType());
+		mgrDoc.getInfo().setCreated(Calendar.getInstance());
+		mgrDoc.getInfo().setModified(Calendar.getInstance());
+		mgrDoc.getInfo().setCreator(this.getClass().getCanonicalName());
+		mgrDoc.getInfo().setAppversion(new VersionTypeExt(Constants.APPVERSION));
+		mgrDoc.getInfo().setDocversion(new VersionTypeExt(Constants.DOCVERSION));
+		
+		mgrDoc.setContent(new ContentType());
+		
+		logger.info("converting people.");
+		
+		PersonType aPerson = new PersonType();
+		aPerson.setFirstName("Max");
+		aPerson.setName("Mustermann");
+		mgrDoc.getContent().getPerson().add(aPerson);
+		
+		logger.info("converting referees.");
+		
+		RefereeType aReferee = new RefereeType();
+		aReferee.setTitle("Dr.");
+		aReferee.setName("Musterfrau");
+		mgrDoc.getContent().getReferee().add(aReferee);
+		
+		logger.info(MessageFormat.format("writing xml file ''{0}''.", theXMLFile));
+		
+		try {
+			JAXBFiles.marshal(new ObjectFactory().createRefereemanager(mgrDoc), theXMLFile, null);
+		} catch (EdgeUtilsException e) {
+			logger.error(e);
+		}
+
 		logger.info("stopped conversion.");
 		
 	}
