@@ -5,22 +5,23 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.edgeutils.commons.IDType;
 
 
 /**
- * <p>Java class for TitledType complex type.
+ * <p>Java class for TitledIDType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="TitledType">
+ * &lt;complexType name="TitledIDType">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{}IDType">
  *       &lt;sequence>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="remark" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -28,14 +29,18 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TitledType", propOrder = {
+@XmlType(name = "TitledIDType", propOrder = {
     "title",
     "remark"
 })
 @XmlSeeAlso({
-    Picture.class
+    SexType.class,
+    ContactType.class,
+    Person.class
 })
-public class TitledType {
+public class TitledIDType
+    extends IDType
+{
 
     protected String title;
     protected String remark;

@@ -4,20 +4,21 @@ package de.edgesoft.refereemanager.jaxb;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for RefereeType complex type.
+ * <p>Java class for Picture complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="RefereeType">
+ * &lt;complexType name="Picture">
  *   &lt;complexContent>
- *     &lt;extension base="{}PersonType">
+ *     &lt;extension base="{}TitledType">
  *       &lt;sequence>
- *         &lt;element name="docs_by_letter" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="url" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -27,38 +28,39 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RefereeType", propOrder = {
-    "docsByLetter"
+@XmlType(name = "Picture", propOrder = {
+    "url"
 })
-public class RefereeType
-    extends PersonType
+public class Picture
+    extends TitledType
 {
 
-    @XmlElement(name = "docs_by_letter")
-    protected Boolean docsByLetter;
+    @XmlElement(required = true)
+    @XmlSchemaType(name = "anyURI")
+    protected String url;
 
     /**
-     * Gets the value of the docsByLetter property.
+     * Gets the value of the url property.
      * 
      * @return
      *     possible object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public Boolean isDocsByLetter() {
-        return docsByLetter;
+    public String getUrl() {
+        return url;
     }
 
     /**
-     * Sets the value of the docsByLetter property.
+     * Sets the value of the url property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public void setDocsByLetter(Boolean value) {
-        this.docsByLetter = value;
+    public void setUrl(String value) {
+        this.url = value;
     }
 
 }

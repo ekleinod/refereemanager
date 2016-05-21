@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="ContactType">
  *   &lt;complexContent>
- *     &lt;extension base="{}TitledType">
+ *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
  *         &lt;element name="abbreviation" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
     "abbreviation"
 })
 public class ContactType
-    extends TitledType
+    extends TitledIDType
 {
 
     protected String abbreviation;

@@ -1,7 +1,9 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -13,20 +15,21 @@ import de.edgesoft.edgeutils.commons.RefType;
 
 
 /**
- * <p>Java class for PersonType complex type.
+ * <p>Java class for Person complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="PersonType">
+ * &lt;complexType name="Person">
  *   &lt;complexContent>
- *     &lt;extension base="{}TitledType">
+ *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
  *         &lt;element name="first_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="birthday" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
  *         &lt;element name="day_of_death" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
  *         &lt;element name="internal_remark" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="picture" type="{}Picture" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sextyperef" type="{}RefType"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -37,19 +40,20 @@ import de.edgesoft.edgeutils.commons.RefType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PersonType", propOrder = {
+@XmlType(name = "Person", propOrder = {
     "firstName",
     "name",
     "birthday",
     "dayOfDeath",
     "internalRemark",
+    "picture",
     "sextyperef"
 })
 @XmlSeeAlso({
-    RefereeType.class
+    Referee.class
 })
-public class PersonType
-    extends TitledType
+public class Person
+    extends TitledIDType
 {
 
     @XmlElement(name = "first_name")
@@ -66,6 +70,7 @@ public class PersonType
     protected Calendar dayOfDeath;
     @XmlElement(name = "internal_remark")
     protected String internalRemark;
+    protected List<Picture> picture;
     @XmlElement(required = true)
     protected RefType sextyperef;
 
@@ -187,6 +192,35 @@ public class PersonType
      */
     public void setInternalRemark(String value) {
         this.internalRemark = value;
+    }
+
+    /**
+     * Gets the value of the picture property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the picture property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getPicture().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Picture }
+     * 
+     * 
+     */
+    public List<Picture> getPicture() {
+        if (picture == null) {
+            picture = new ArrayList<Picture>();
+        }
+        return this.picture;
     }
 
     /**

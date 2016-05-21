@@ -16,13 +16,15 @@ import de.edgesoft.edgeutils.commons.InfoType;
 import de.edgesoft.edgeutils.commons.ext.VersionTypeExt;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.ContactType;
-import de.edgesoft.refereemanager.jaxb.ContentType;
+import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
-import de.edgesoft.refereemanager.jaxb.RefereeManagerType;
-import de.edgesoft.refereemanager.jaxb.RefereeType;
+import de.edgesoft.refereemanager.jaxb.Picture;
+import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jooq.tables.ContactTypes;
 import de.edgesoft.refereemanager.jooq.tables.People;
+import de.edgesoft.refereemanager.jooq.tables.Pictures;
 import de.edgesoft.refereemanager.jooq.tables.Referees;
 import de.edgesoft.refereemanager.jooq.tables.SexTypes;
 import de.edgesoft.refereemanager.utils.ConnectionHelper;
@@ -124,7 +126,7 @@ public class MySQL2XML extends AbstractMainClass {
 		
 		logger.info("initializing conversion.");
 		
-		RefereeManagerType mgrDoc = new RefereeManagerType();
+		RefereeManager mgrDoc = new RefereeManager();
 		
 		mgrDoc.setInfo(new InfoType());
 		mgrDoc.getInfo().setCreated(Calendar.getInstance());
@@ -133,7 +135,7 @@ public class MySQL2XML extends AbstractMainClass {
 		mgrDoc.getInfo().setAppversion(new VersionTypeExt(Constants.APPVERSION));
 		mgrDoc.getInfo().setDocversion(new VersionTypeExt(Constants.DOCVERSION));
 		
-		ContentType theContent = new ContentType();
+		Content theContent = new Content();
 		mgrDoc.setContent(theContent);
 		
 		
@@ -179,18 +181,32 @@ public class MySQL2XML extends AbstractMainClass {
 				.fetch();
 		
 		for (Record record : result) {
-			RefereeType aType = new RefereeType();
-			aType.setId(JAXBHelper.getID(aType, record.getValue(Referees.REFEREES.ID)));
+			Referee aReferee = new Referee();
+			aReferee.setId(JAXBHelper.getID(aReferee, record.getValue(Referees.REFEREES.ID)));
 			if ((record.getValue(Referees.REFEREES.DOCS_PER_LETTER) != null) && (record.getValue(Referees.REFEREES.DOCS_PER_LETTER) != 0)) {
-				aType.setDocsByLetter(true);
+				aReferee.setDocsByLetter(true);
 			}
 			
-			aType.setTitle(record.getValue(People.PEOPLE.TITLE));
-			aType.setFirstName(record.getValue(People.PEOPLE.FIRST_NAME));
-			aType.setName(record.getValue(People.PEOPLE.NAME));
-			aType.setRemark(record.getValue(People.PEOPLE.REMARK));
+			aReferee.setTitle(record.getValue(People.PEOPLE.TITLE));
+			aReferee.setFirstName(record.getValue(People.PEOPLE.FIRST_NAME));
+			aReferee.setName(record.getValue(People.PEOPLE.NAME));
+			aReferee.setRemark(record.getValue(People.PEOPLE.REMARK));
 			
-			theContent.getReferee().add(aType);
+			// 1:n
+			Result<Record> result2 = create.select()
+					.from(Pictures.PICTURES)
+					.where(Pictures.PICTURES.PERSON_ID.eq(record.getValue(People.PEOPLE.ID)))
+					.fetch();
+			
+			for (Record record2 : result2) {
+				Picture aPic = new Picture();
+				aPic.setUrl(record2.getValue(Pictures.PICTURES.URL));
+				aPic.setRemark(record2.getValue(Pictures.PICTURES.REMARK));
+				aReferee.getPicture().add(aPic);
+			}
+			
+			
+			theContent.getReferee().add(aReferee);
 		}
 		
 		

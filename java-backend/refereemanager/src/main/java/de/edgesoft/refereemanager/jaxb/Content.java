@@ -9,17 +9,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ContentType complex type.
+ * <p>Java class for Content complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ContentType">
+ * &lt;complexType name="Content">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="person" type="{}PersonType" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="referee" type="{}RefereeType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="person" type="{}Person" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="referee" type="{}Referee" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sextype" type="{}SexType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contacttype" type="{}ContactType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
@@ -31,16 +31,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ContentType", propOrder = {
+@XmlType(name = "Content", propOrder = {
     "person",
     "referee",
     "sextype",
     "contacttype"
 })
-public class ContentType {
+public class Content {
 
-    protected List<PersonType> person;
-    protected List<RefereeType> referee;
+    protected List<Person> person;
+    protected List<Referee> referee;
     protected List<SexType> sextype;
     protected List<ContactType> contacttype;
 
@@ -62,13 +62,13 @@ public class ContentType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link PersonType }
+     * {@link Person }
      * 
      * 
      */
-    public List<PersonType> getPerson() {
+    public List<Person> getPerson() {
         if (person == null) {
-            person = new ArrayList<PersonType>();
+            person = new ArrayList<Person>();
         }
         return this.person;
     }
@@ -91,13 +91,13 @@ public class ContentType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link RefereeType }
+     * {@link Referee }
      * 
      * 
      */
-    public List<RefereeType> getReferee() {
+    public List<Referee> getReferee() {
         if (referee == null) {
-            referee = new ArrayList<RefereeType>();
+            referee = new ArrayList<Referee>();
         }
         return this.referee;
     }

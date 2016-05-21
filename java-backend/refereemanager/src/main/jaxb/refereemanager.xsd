@@ -36,20 +36,20 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:include schemaLocation="../../../../edgeutils/jaxb/commons.xsd"/>
 
-	<xsd:element name="refereemanager" type="RefereeManagerType"/>
+	<xsd:element name="refereemanager" type="RefereeManager"/>
 
-	<xsd:complexType name="RefereeManagerType">
+	<xsd:complexType name="RefereeManager">
 		<xsd:sequence>
 			<xsd:element name="info" type="InfoType" minOccurs="1" maxOccurs="1" />
-			<xsd:element name="content" type="ContentType" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="content" type="Content" minOccurs="1" maxOccurs="1" />
 		</xsd:sequence>
 		<xsd:attribute ref="xml:base" />
 	</xsd:complexType>
 
-	<xsd:complexType name="ContentType">
+	<xsd:complexType name="Content">
 		<xsd:sequence>
-			<xsd:element name="person" type="PersonType" minOccurs="0" maxOccurs="unbounded" />
-			<xsd:element name="referee" type="RefereeType" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="person" type="Person" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="referee" type="Referee" minOccurs="0" maxOccurs="unbounded" />
 
 			<!-- types -->
 			<xsd:element name="sextype" type="SexType" minOccurs="0" maxOccurs="unbounded" />
@@ -57,15 +57,18 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="PersonType">
+	<xsd:complexType name="Person">
 		<xsd:complexContent>
-			<xsd:extension base="TitledType">
+			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
 					<xsd:element name="first_name" type="xsd:string" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="birthday" type="xsd:date" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="day_of_death" type="xsd:date" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="internal_remark" type="xsd:string" minOccurs="0" maxOccurs="1" />
+
+					<!-- 1:n -->
+					<xsd:element name="picture" type="Picture" minOccurs="0" maxOccurs="unbounded" />
 
 					<!-- references -->
 					<xsd:element name="sextyperef" type="RefType" minOccurs="1" maxOccurs="1" />
@@ -74,9 +77,9 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<xsd:complexType name="RefereeType">
+	<xsd:complexType name="Referee">
 		<xsd:complexContent>
-			<xsd:extension base="PersonType">
+			<xsd:extension base="Person">
 				<xsd:sequence>
 					<xsd:element name="docs_by_letter" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
@@ -84,16 +87,29 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<xsd:complexType name="SexType">
+	<xsd:complexType name="Picture">
 		<xsd:complexContent>
 			<xsd:extension base="TitledType">
+				<xsd:sequence>
+					<xsd:element name="url" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+
+
+	<!-- Types -->
+	<xsd:complexType name="SexType">
+		<xsd:complexContent>
+			<xsd:extension base="TitledIDType">
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 
 	<xsd:complexType name="ContactType">
 		<xsd:complexContent>
-			<xsd:extension base="TitledType">
+			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
 					<xsd:element name="abbreviation" type="xsd:string" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
@@ -101,7 +117,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<xsd:complexType name="TitledType">
+	<!-- Generic types -->
+	<xsd:complexType name="TitledIDType">
 		<xsd:complexContent>
 			<xsd:extension base="IDType">
 				<xsd:sequence>
@@ -110,6 +127,13 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="TitledType">
+		<xsd:sequence>
+			<xsd:element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="remark" type="xsd:string" minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
 	</xsd:complexType>
 
 </xsd:schema>

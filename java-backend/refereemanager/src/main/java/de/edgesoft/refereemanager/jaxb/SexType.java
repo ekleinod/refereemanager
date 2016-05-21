@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="SexType">
  *   &lt;complexContent>
- *     &lt;extension base="{}TitledType">
+ *     &lt;extension base="{}TitledIDType">
  *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SexType")
 public class SexType
-    extends TitledType
+    extends TitledIDType
 {
 
 

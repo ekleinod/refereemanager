@@ -34,11 +34,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RefereeManagerType }
+     * Create an instance of {@link RefereeManager }
      * 
      */
-    public RefereeManagerType createRefereeManagerType() {
-        return new RefereeManagerType();
+    public RefereeManager createRefereeManager() {
+        return new RefereeManager();
     }
 
     /**
@@ -58,19 +58,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ContentType }
+     * Create an instance of {@link Referee }
      * 
      */
-    public ContentType createContentType() {
-        return new ContentType();
-    }
-
-    /**
-     * Create an instance of {@link PersonType }
-     * 
-     */
-    public PersonType createPersonType() {
-        return new PersonType();
+    public Referee createReferee() {
+        return new Referee();
     }
 
     /**
@@ -82,20 +74,44 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RefereeType }
+     * Create an instance of {@link Content }
      * 
      */
-    public RefereeType createRefereeType() {
-        return new RefereeType();
+    public Content createContent() {
+        return new Content();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link RefereeManagerType }{@code >}}
+     * Create an instance of {@link Picture }
+     * 
+     */
+    public Picture createPicture() {
+        return new Picture();
+    }
+
+    /**
+     * Create an instance of {@link TitledIDType }
+     * 
+     */
+    public TitledIDType createTitledIDType() {
+        return new TitledIDType();
+    }
+
+    /**
+     * Create an instance of {@link Person }
+     * 
+     */
+    public Person createPerson() {
+        return new Person();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RefereeManager }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "", name = "refereemanager")
-    public JAXBElement<RefereeManagerType> createRefereemanager(RefereeManagerType value) {
-        return new JAXBElement<RefereeManagerType>(_Refereemanager_QNAME, RefereeManagerType.class, null, value);
+    public JAXBElement<RefereeManager> createRefereemanager(RefereeManager value) {
+        return new JAXBElement<RefereeManager>(_Refereemanager_QNAME, RefereeManager.class, null, value);
     }
 
 }

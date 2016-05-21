@@ -11,17 +11,17 @@ import de.edgesoft.edgeutils.commons.InfoType;
 
 
 /**
- * <p>Java class for RefereeManagerType complex type.
+ * <p>Java class for RefereeManager complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="RefereeManagerType">
+ * &lt;complexType name="RefereeManager">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="info" type="{}InfoType"/>
- *         &lt;element name="content" type="{}ContentType"/>
+ *         &lt;element name="content" type="{}Content"/>
  *       &lt;/sequence>
  *       &lt;attribute ref="{http://www.w3.org/XML/1998/namespace}base"/>
  *     &lt;/restriction>
@@ -32,16 +32,16 @@ import de.edgesoft.edgeutils.commons.InfoType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RefereeManagerType", propOrder = {
+@XmlType(name = "RefereeManager", propOrder = {
     "info",
     "content"
 })
-public class RefereeManagerType {
+public class RefereeManager {
 
     @XmlElement(required = true)
     protected InfoType info;
     @XmlElement(required = true)
-    protected ContentType content;
+    protected Content content;
     @XmlAttribute(name = "base", namespace = "http://www.w3.org/XML/1998/namespace")
     @XmlSchemaType(name = "anyURI")
     protected String base;
@@ -75,10 +75,10 @@ public class RefereeManagerType {
      * 
      * @return
      *     possible object is
-     *     {@link ContentType }
+     *     {@link Content }
      *     
      */
-    public ContentType getContent() {
+    public Content getContent() {
         return content;
     }
 
@@ -87,10 +87,10 @@ public class RefereeManagerType {
      * 
      * @param value
      *     allowed object is
-     *     {@link ContentType }
+     *     {@link Content }
      *     
      */
-    public void setContent(ContentType value) {
+    public void setContent(Content value) {
         this.content = value;
     }
 
