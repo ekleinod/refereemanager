@@ -42,8 +42,8 @@ public class JAXBHelper {
 	 * @param theID id
 	 * @return xml id
 	 */
-	public static String getID(IDType theType, String theID) {
-		return String.format(IDS, theType.getClass().getSimpleName(), theID);
+	public static String getID(Class<? extends IDType> theType, String theID) {
+		return String.format(IDS, theType.getSimpleName(), theID);
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class JAXBHelper {
 	 * @param theID id
 	 * @return xml id
 	 */
-	public static String getID(IDType theType, UInteger theID) {
+	public static String getID(Class<? extends IDType> theType, UInteger theID) {
 		return getID(theType, theID.toString());
 	}
 	

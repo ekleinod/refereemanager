@@ -2,6 +2,9 @@ package de.edgesoft.refereemanager;
 
 import java.text.MessageFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,6 +16,7 @@ import de.edgesoft.edgeutils.EdgeUtilsException;
 import de.edgesoft.edgeutils.Messages;
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.commons.InfoType;
+import de.edgesoft.edgeutils.commons.RefType;
 import de.edgesoft.edgeutils.commons.ext.VersionTypeExt;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.ContactType;
@@ -121,6 +125,7 @@ public class MySQL2XML extends AbstractMainClass {
 		
 		DSLContext create = ConnectionHelper.getContext();
 		Result<Record> result = null;
+		Result<Record> result2 = null;
 		
 		logger.info("connection context created.");
 		
@@ -146,12 +151,14 @@ public class MySQL2XML extends AbstractMainClass {
 				.orderBy(SexTypes.SEX_TYPES.SID.asc())
 				.fetch();
 		
+		Map<String, SexType> mapSexTypes = new HashMap<>();
 		for (Record record : result) {
 			SexType aType = new SexType();
-			aType.setId(JAXBHelper.getID(aType, record.getValue(SexTypes.SEX_TYPES.SID)));
+			aType.setId(JAXBHelper.getID(SexType.class, record.getValue(SexTypes.SEX_TYPES.SID)));
 			aType.setTitle(record.getValue(SexTypes.SEX_TYPES.TITLE));
 			aType.setRemark(record.getValue(SexTypes.SEX_TYPES.REMARK));
 			theContent.getSextype().add(aType);
+			mapSexTypes.put(aType.getId(), aType);
 		}
 		
 		
@@ -164,7 +171,7 @@ public class MySQL2XML extends AbstractMainClass {
 		
 		for (Record record : result) {
 			ContactType aType = new ContactType();
-			aType.setId(JAXBHelper.getID(aType, record.getValue(ContactTypes.CONTACT_TYPES.ID)));
+			aType.setId(JAXBHelper.getID(ContactType.class, record.getValue(ContactTypes.CONTACT_TYPES.ID)));
 			aType.setTitle(record.getValue(ContactTypes.CONTACT_TYPES.TITLE));
 			aType.setAbbreviation(record.getValue(ContactTypes.CONTACT_TYPES.ABBREVIATION));
 			aType.setRemark(record.getValue(ContactTypes.CONTACT_TYPES.REMARK));
@@ -182,7 +189,7 @@ public class MySQL2XML extends AbstractMainClass {
 		
 		for (Record record : result) {
 			Referee aReferee = new Referee();
-			aReferee.setId(JAXBHelper.getID(aReferee, record.getValue(Referees.REFEREES.ID)));
+			aReferee.setId(JAXBHelper.getID(Referee.class, record.getValue(Referees.REFEREES.ID)));
 			if ((record.getValue(Referees.REFEREES.DOCS_PER_LETTER) != null) && (record.getValue(Referees.REFEREES.DOCS_PER_LETTER) != 0)) {
 				aReferee.setDocsByLetter(true);
 			}
@@ -190,10 +197,32 @@ public class MySQL2XML extends AbstractMainClass {
 			aReferee.setTitle(record.getValue(People.PEOPLE.TITLE));
 			aReferee.setFirstName(record.getValue(People.PEOPLE.FIRST_NAME));
 			aReferee.setName(record.getValue(People.PEOPLE.NAME));
+			
+			Calendar calTemp = new GregorianCalendar();
+			if (record.getValue(People.PEOPLE.BIRTHDAY) != null) {
+				calTemp.setTime(record.getValue(People.PEOPLE.BIRTHDAY));
+				aReferee.setBirthday(calTemp);
+			}
+			
+			if (record.getValue(People.PEOPLE.DAYOFDEATH) != null) {
+				calTemp.setTime(record.getValue(People.PEOPLE.DAYOFDEATH));
+				aReferee.setDayOfDeath(calTemp);
+			}
+			
 			aReferee.setRemark(record.getValue(People.PEOPLE.REMARK));
+			aReferee.setInternalRemark(record.getValue(People.PEOPLE.INTERNAL_REMARK));
+			
+			// references
+			result2 = create.select()
+					.from(SexTypes.SEX_TYPES)
+					.where(SexTypes.SEX_TYPES.ID.eq(record.getValue(People.PEOPLE.SEX_TYPE_ID)))
+					.fetch();
+			RefType aRef = new RefType();
+			aRef.setIdref(mapSexTypes.get(JAXBHelper.getID(SexType.class, result2.get(0).getValue(SexTypes.SEX_TYPES.SID))));
+			aReferee.setSextyperef(aRef);
 			
 			// 1:n
-			Result<Record> result2 = create.select()
+			result2 = create.select()
 					.from(Pictures.PICTURES)
 					.where(Pictures.PICTURES.PERSON_ID.eq(record.getValue(People.PEOPLE.ID)))
 					.fetch();
