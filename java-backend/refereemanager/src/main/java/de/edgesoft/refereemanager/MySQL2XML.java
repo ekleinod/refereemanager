@@ -19,6 +19,7 @@ import de.edgesoft.edgeutils.commons.InfoType;
 import de.edgesoft.edgeutils.commons.RefType;
 import de.edgesoft.edgeutils.commons.ext.VersionTypeExt;
 import de.edgesoft.edgeutils.files.JAXBFiles;
+import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
@@ -26,7 +27,9 @@ import de.edgesoft.refereemanager.jaxb.Picture;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.SexType;
+import de.edgesoft.refereemanager.jooq.tables.Addresses;
 import de.edgesoft.refereemanager.jooq.tables.ContactTypes;
+import de.edgesoft.refereemanager.jooq.tables.Contacts;
 import de.edgesoft.refereemanager.jooq.tables.People;
 import de.edgesoft.refereemanager.jooq.tables.Pictures;
 import de.edgesoft.refereemanager.jooq.tables.Referees;
@@ -190,10 +193,11 @@ public class MySQL2XML extends AbstractMainClass {
 		for (Record record : result) {
 			Referee aReferee = new Referee();
 			aReferee.setId(JAXBHelper.getID(Referee.class, record.getValue(Referees.REFEREES.ID)));
-			if ((record.getValue(Referees.REFEREES.DOCS_PER_LETTER) != null) && (record.getValue(Referees.REFEREES.DOCS_PER_LETTER) != 0)) {
-				aReferee.setDocsByLetter(true);
-			}
 			
+			// referee
+			aReferee.setDocsByLetter((record.getValue(Referees.REFEREES.DOCS_PER_LETTER) != null) && (record.getValue(Referees.REFEREES.DOCS_PER_LETTER) != 0));
+			
+			// people
 			aReferee.setTitle(record.getValue(People.PEOPLE.TITLE));
 			aReferee.setFirstName(record.getValue(People.PEOPLE.FIRST_NAME));
 			aReferee.setName(record.getValue(People.PEOPLE.NAME));
@@ -234,6 +238,27 @@ public class MySQL2XML extends AbstractMainClass {
 				aReferee.getPicture().add(aPic);
 			}
 			
+			result2 = create.select()
+					.from(Addresses.ADDRESSES)
+					.join(Contacts.CONTACTS).onKey()
+					.where(Contacts.CONTACTS.PERSON_ID.eq(record.getValue(People.PEOPLE.ID)))
+					.fetch();
+			
+			for (Record record2 : result2) {
+				Address anAddress = new Address();
+				
+				anAddress.setTitle(record2.getValue(Contacts.CONTACTS.TITLE));
+				anAddress.setRemark(record2.getValue(Contacts.CONTACTS.REMARK));
+				anAddress.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) == null) || (record.getValue(Contacts.CONTACTS.IS_PRIMARY) == 1));
+				anAddress.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
+				
+				anAddress.setStreet(record2.getValue(Addresses.ADDRESSES.STREET));
+				anAddress.setNumber(record2.getValue(Addresses.ADDRESSES.NUMBER));
+				anAddress.setZipCode(record2.getValue(Addresses.ADDRESSES.ZIP_CODE));
+				anAddress.setCity(record2.getValue(Addresses.ADDRESSES.CITY));
+				
+				aReferee.getAddress().add(anAddress);
+			}
 			
 			theContent.getReferee().add(aReferee);
 		}

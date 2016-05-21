@@ -30,6 +30,7 @@ import de.edgesoft.edgeutils.commons.RefType;
  *         &lt;element name="day_of_death" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
  *         &lt;element name="internal_remark" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="picture" type="{}Picture" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="address" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sextyperef" type="{}RefType"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -47,6 +48,7 @@ import de.edgesoft.edgeutils.commons.RefType;
     "dayOfDeath",
     "internalRemark",
     "picture",
+    "address",
     "sextyperef"
 })
 @XmlSeeAlso({
@@ -71,6 +73,7 @@ public class Person
     @XmlElement(name = "internal_remark")
     protected String internalRemark;
     protected List<Picture> picture;
+    protected List<Address> address;
     @XmlElement(required = true)
     protected RefType sextyperef;
 
@@ -221,6 +224,35 @@ public class Person
             picture = new ArrayList<Picture>();
         }
         return this.picture;
+    }
+
+    /**
+     * Gets the value of the address property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the address property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getAddress().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Address }
+     * 
+     * 
+     */
+    public List<Address> getAddress() {
+        if (address == null) {
+            address = new ArrayList<Address>();
+        }
+        return this.address;
     }
 
     /**

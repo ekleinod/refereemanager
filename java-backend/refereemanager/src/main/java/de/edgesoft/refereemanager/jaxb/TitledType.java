@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlType;
     "remark"
 })
 @XmlSeeAlso({
+    Contact.class,
     Picture.class
 })
 public class TitledType {

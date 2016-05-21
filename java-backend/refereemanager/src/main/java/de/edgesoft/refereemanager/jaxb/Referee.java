@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;extension base="{}Person">
  *       &lt;sequence>
- *         &lt;element name="docs_by_letter" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="docs_by_letter" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -35,29 +35,21 @@ public class Referee
 {
 
     @XmlElement(name = "docs_by_letter")
-    protected Boolean docsByLetter;
+    protected boolean docsByLetter;
 
     /**
      * Gets the value of the docsByLetter property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
      */
-    public Boolean isDocsByLetter() {
+    public boolean isDocsByLetter() {
         return docsByLetter;
     }
 
     /**
      * Sets the value of the docsByLetter property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
      */
-    public void setDocsByLetter(Boolean value) {
+    public void setDocsByLetter(boolean value) {
         this.docsByLetter = value;
     }
 

@@ -58,6 +58,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Address }
+     * 
+     */
+    public Address createAddress() {
+        return new Address();
+    }
+
+    /**
      * Create an instance of {@link Referee }
      * 
      */
