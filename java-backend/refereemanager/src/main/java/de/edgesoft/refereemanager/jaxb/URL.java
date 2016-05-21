@@ -9,14 +9,14 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Picture complex type.
+ * <p>Java class for URL complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Picture">
+ * &lt;complexType name="URL">
  *   &lt;complexContent>
- *     &lt;extension base="{}TitledType">
+ *     &lt;extension base="{}Contact">
  *       &lt;sequence>
  *         &lt;element name="u_r_l" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
  *       &lt;/sequence>
@@ -28,11 +28,11 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Picture", propOrder = {
+@XmlType(name = "URL", propOrder = {
     "url"
 })
-public class Picture
-    extends TitledType
+public class URL
+    extends Contact
 {
 
     @XmlElement(name = "u_r_l", required = true)

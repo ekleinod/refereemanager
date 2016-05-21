@@ -69,7 +69,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 					<!-- 1:n -->
 					<xsd:element name="picture" type="Picture" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="e_mail" type="EMail" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="address" type="Address" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="phone_number" type="PhoneNumber" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="u_r_l" type="URL" minOccurs="0" maxOccurs="unbounded" />
 
 					<!-- references -->
 					<xsd:element name="sextyperef" type="RefType" minOccurs="1" maxOccurs="1" />
@@ -92,7 +95,17 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledType">
 				<xsd:sequence>
-					<xsd:element name="url" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="u_r_l" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="EMail">
+		<xsd:complexContent>
+			<xsd:extension base="Contact">
+				<xsd:sequence>
+					<xsd:element name="e_mail" type="xsd:string" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -106,6 +119,28 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="number" type="xsd:string" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="zip_code" type="xsd:string" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="PhoneNumber">
+		<xsd:complexContent>
+			<xsd:extension base="Contact">
+				<xsd:sequence>
+					<xsd:element name="country_code" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="area_code" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="number" type="xsd:string" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="URL">
+		<xsd:complexContent>
+			<xsd:extension base="Contact">
+				<xsd:sequence>
+					<xsd:element name="u_r_l" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

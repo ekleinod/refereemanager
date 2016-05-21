@@ -74,6 +74,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link EMail }
+     * 
+     */
+    public EMail createEMail() {
+        return new EMail();
+    }
+
+    /**
+     * Create an instance of {@link URL }
+     * 
+     */
+    public URL createURL() {
+        return new URL();
+    }
+
+    /**
      * Create an instance of {@link TitledType }
      * 
      */
@@ -95,6 +111,14 @@ public class ObjectFactory {
      */
     public Picture createPicture() {
         return new Picture();
+    }
+
+    /**
+     * Create an instance of {@link PhoneNumber }
+     * 
+     */
+    public PhoneNumber createPhoneNumber() {
+        return new PhoneNumber();
     }
 
     /**

@@ -4,21 +4,20 @@ package de.edgesoft.refereemanager.jaxb;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Picture complex type.
+ * <p>Java class for EMail complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Picture">
+ * &lt;complexType name="EMail">
  *   &lt;complexContent>
- *     &lt;extension base="{}TitledType">
+ *     &lt;extension base="{}Contact">
  *       &lt;sequence>
- *         &lt;element name="u_r_l" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
+ *         &lt;element name="e_mail" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -28,39 +27,38 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Picture", propOrder = {
-    "url"
+@XmlType(name = "EMail", propOrder = {
+    "eMail"
 })
-public class Picture
-    extends TitledType
+public class EMail
+    extends Contact
 {
 
-    @XmlElement(name = "u_r_l", required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String url;
+    @XmlElement(name = "e_mail", required = true)
+    protected String eMail;
 
     /**
-     * Gets the value of the url property.
+     * Gets the value of the eMail property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getURL() {
-        return url;
+    public String getEMail() {
+        return eMail;
     }
 
     /**
-     * Sets the value of the url property.
+     * Sets the value of the eMail property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setURL(String value) {
-        this.url = value;
+    public void setEMail(String value) {
+        this.eMail = value;
     }
 
 }

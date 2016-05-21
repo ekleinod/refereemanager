@@ -30,7 +30,10 @@ import de.edgesoft.edgeutils.commons.RefType;
  *         &lt;element name="day_of_death" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
  *         &lt;element name="internal_remark" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="picture" type="{}Picture" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="e_mail" type="{}EMail" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="address" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="phone_number" type="{}PhoneNumber" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sextyperef" type="{}RefType"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -48,7 +51,10 @@ import de.edgesoft.edgeutils.commons.RefType;
     "dayOfDeath",
     "internalRemark",
     "picture",
+    "eMail",
     "address",
+    "phoneNumber",
+    "url",
     "sextyperef"
 })
 @XmlSeeAlso({
@@ -73,7 +79,13 @@ public class Person
     @XmlElement(name = "internal_remark")
     protected String internalRemark;
     protected List<Picture> picture;
+    @XmlElement(name = "e_mail")
+    protected List<EMail> eMail;
     protected List<Address> address;
+    @XmlElement(name = "phone_number")
+    protected List<PhoneNumber> phoneNumber;
+    @XmlElement(name = "u_r_l")
+    protected List<URL> url;
     @XmlElement(required = true)
     protected RefType sextyperef;
 
@@ -227,6 +239,35 @@ public class Person
     }
 
     /**
+     * Gets the value of the eMail property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the eMail property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getEMail().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link EMail }
+     * 
+     * 
+     */
+    public List<EMail> getEMail() {
+        if (eMail == null) {
+            eMail = new ArrayList<EMail>();
+        }
+        return this.eMail;
+    }
+
+    /**
      * Gets the value of the address property.
      * 
      * <p>
@@ -253,6 +294,64 @@ public class Person
             address = new ArrayList<Address>();
         }
         return this.address;
+    }
+
+    /**
+     * Gets the value of the phoneNumber property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the phoneNumber property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getPhoneNumber().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link PhoneNumber }
+     * 
+     * 
+     */
+    public List<PhoneNumber> getPhoneNumber() {
+        if (phoneNumber == null) {
+            phoneNumber = new ArrayList<PhoneNumber>();
+        }
+        return this.phoneNumber;
+    }
+
+    /**
+     * Gets the value of the url property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the url property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getURL().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link URL }
+     * 
+     * 
+     */
+    public List<URL> getURL() {
+        if (url == null) {
+            url = new ArrayList<URL>();
+        }
+        return this.url;
     }
 
     /**

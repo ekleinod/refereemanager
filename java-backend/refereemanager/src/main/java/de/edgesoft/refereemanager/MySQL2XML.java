@@ -22,18 +22,24 @@ import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.Content;
+import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
+import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.jaxb.Picture;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.SexType;
+import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.jooq.tables.Addresses;
 import de.edgesoft.refereemanager.jooq.tables.ContactTypes;
 import de.edgesoft.refereemanager.jooq.tables.Contacts;
+import de.edgesoft.refereemanager.jooq.tables.Emails;
 import de.edgesoft.refereemanager.jooq.tables.People;
+import de.edgesoft.refereemanager.jooq.tables.PhoneNumbers;
 import de.edgesoft.refereemanager.jooq.tables.Pictures;
 import de.edgesoft.refereemanager.jooq.tables.Referees;
 import de.edgesoft.refereemanager.jooq.tables.SexTypes;
+import de.edgesoft.refereemanager.jooq.tables.Urls;
 import de.edgesoft.refereemanager.utils.ConnectionHelper;
 import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.JAXBHelper;
@@ -233,11 +239,36 @@ public class MySQL2XML extends AbstractMainClass {
 			
 			for (Record record2 : result2) {
 				Picture aPic = new Picture();
-				aPic.setUrl(record2.getValue(Pictures.PICTURES.URL));
+				aPic.setURL(record2.getValue(Pictures.PICTURES.URL));
 				aPic.setRemark(record2.getValue(Pictures.PICTURES.REMARK));
 				aReferee.getPicture().add(aPic);
 			}
+
+
+			result2 = create.select()
+					.from(Emails.EMAILS)
+					.join(Contacts.CONTACTS).onKey()
+					.where(Contacts.CONTACTS.PERSON_ID.eq(record.getValue(People.PEOPLE.ID)))
+					.fetch();
 			
+			for (Record record2 : result2) {
+				EMail anEMail = new EMail();
+				
+				anEMail.setTitle(record2.getValue(Contacts.CONTACTS.TITLE));
+				anEMail.setRemark(record2.getValue(Contacts.CONTACTS.REMARK));
+				if (result2.size() > 1) {
+					anEMail.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != null) && (record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != 0));
+				} else {
+					anEMail.setIsPrimary(true);
+				}
+				anEMail.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
+				
+				anEMail.setEMail(record2.getValue(Emails.EMAILS.EMAIL));
+				
+				aReferee.getEMail().add(anEMail);
+			}
+
+
 			result2 = create.select()
 					.from(Addresses.ADDRESSES)
 					.join(Contacts.CONTACTS).onKey()
@@ -249,8 +280,12 @@ public class MySQL2XML extends AbstractMainClass {
 				
 				anAddress.setTitle(record2.getValue(Contacts.CONTACTS.TITLE));
 				anAddress.setRemark(record2.getValue(Contacts.CONTACTS.REMARK));
-				anAddress.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) == null) || (record.getValue(Contacts.CONTACTS.IS_PRIMARY) == 1));
-				anAddress.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
+				if (result2.size() > 1) {
+					anAddress.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != null) && (record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != 0));
+				} else {
+					anAddress.setIsPrimary(true);
+				}
+				anAddress.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
 				
 				anAddress.setStreet(record2.getValue(Addresses.ADDRESSES.STREET));
 				anAddress.setNumber(record2.getValue(Addresses.ADDRESSES.NUMBER));
@@ -259,6 +294,57 @@ public class MySQL2XML extends AbstractMainClass {
 				
 				aReferee.getAddress().add(anAddress);
 			}
+
+
+			result2 = create.select()
+					.from(PhoneNumbers.PHONE_NUMBERS)
+					.join(Contacts.CONTACTS).onKey()
+					.where(Contacts.CONTACTS.PERSON_ID.eq(record.getValue(People.PEOPLE.ID)))
+					.fetch();
+			
+			for (Record record2 : result2) {
+				PhoneNumber aPhoneNumber = new PhoneNumber();
+				
+				aPhoneNumber.setTitle(record2.getValue(Contacts.CONTACTS.TITLE));
+				aPhoneNumber.setRemark(record2.getValue(Contacts.CONTACTS.REMARK));
+				if (result2.size() > 1) {
+					aPhoneNumber.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != null) && (record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != 0));
+				} else {
+					aPhoneNumber.setIsPrimary(true);
+				}
+				aPhoneNumber.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
+				
+				aPhoneNumber.setCountryCode(record2.getValue(PhoneNumbers.PHONE_NUMBERS.COUNTRY_CODE));
+				aPhoneNumber.setAreaCode(record2.getValue(PhoneNumbers.PHONE_NUMBERS.AREA_CODE));
+				aPhoneNumber.setNumber(record2.getValue(PhoneNumbers.PHONE_NUMBERS.NUMBER));
+				
+				aReferee.getPhoneNumber().add(aPhoneNumber);
+			}
+
+
+			result2 = create.select()
+					.from(Urls.URLS)
+					.join(Contacts.CONTACTS).onKey()
+					.where(Contacts.CONTACTS.PERSON_ID.eq(record.getValue(People.PEOPLE.ID)))
+					.fetch();
+			
+			for (Record record2 : result2) {
+				URL anURL = new URL();
+				
+				anURL.setTitle(record2.getValue(Contacts.CONTACTS.TITLE));
+				anURL.setRemark(record2.getValue(Contacts.CONTACTS.REMARK));
+				if (result2.size() > 1) {
+					anURL.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != null) && (record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != 0));
+				} else {
+					anURL.setIsPrimary(true);
+				}
+				anURL.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
+				
+				anURL.setURL(record2.getValue(Urls.URLS.URL));
+				
+				aReferee.getURL().add(anURL);
+			}
+
 			
 			theContent.getReferee().add(aReferee);
 		}

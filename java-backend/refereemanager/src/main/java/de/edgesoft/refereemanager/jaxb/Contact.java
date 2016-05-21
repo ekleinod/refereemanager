@@ -37,7 +37,10 @@ import de.edgesoft.edgeutils.commons.RefType;
     "contacttyperef"
 })
 @XmlSeeAlso({
-    Address.class
+    Address.class,
+    EMail.class,
+    URL.class,
+    PhoneNumber.class
 })
 public abstract class Contact
     extends TitledType
