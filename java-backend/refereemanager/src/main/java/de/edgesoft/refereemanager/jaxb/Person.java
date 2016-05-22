@@ -7,11 +7,11 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import de.edgesoft.edgeutils.commons.RefType;
 
 
 /**
@@ -34,7 +34,7 @@ import de.edgesoft.edgeutils.commons.RefType;
  *         &lt;element name="address" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="phone_number" type="{}PhoneNumber" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="sex_type_ref" type="{}RefType"/>
+ *         &lt;element name="sex_type_ref" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -86,8 +86,10 @@ public class Person
     protected List<PhoneNumber> phoneNumber;
     @XmlElement(name = "u_r_l")
     protected List<URL> url;
-    @XmlElement(name = "sex_type_ref", required = true)
-    protected RefType sexTypeRef;
+    @XmlElement(name = "sex_type_ref", required = true, type = Object.class)
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    protected SexType sexTypeRef;
 
     /**
      * Gets the value of the firstName property.
@@ -359,10 +361,10 @@ public class Person
      * 
      * @return
      *     possible object is
-     *     {@link RefType }
+     *     {@link Object }
      *     
      */
-    public RefType getSexTypeRef() {
+    public SexType getSexTypeRef() {
         return sexTypeRef;
     }
 
@@ -371,10 +373,10 @@ public class Person
      * 
      * @param value
      *     allowed object is
-     *     {@link RefType }
+     *     {@link Object }
      *     
      */
-    public void setSexTypeRef(RefType value) {
+    public void setSexTypeRef(SexType value) {
         this.sexTypeRef = value;
     }
 

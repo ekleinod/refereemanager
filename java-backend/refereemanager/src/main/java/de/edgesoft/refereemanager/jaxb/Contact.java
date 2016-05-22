@@ -4,9 +4,10 @@ package de.edgesoft.refereemanager.jaxb;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import de.edgesoft.edgeutils.commons.RefType;
 
 
 /**
@@ -21,7 +22,7 @@ import de.edgesoft.edgeutils.commons.RefType;
  *       &lt;sequence>
  *         &lt;element name="is_primary" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="editor_only" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="contact_type_ref" type="{}RefType"/>
+ *         &lt;element name="contact_type_ref" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -50,8 +51,10 @@ public abstract class Contact
     protected boolean isPrimary;
     @XmlElement(name = "editor_only")
     protected boolean editorOnly;
-    @XmlElement(name = "contact_type_ref", required = true)
-    protected RefType contactTypeRef;
+    @XmlElement(name = "contact_type_ref", required = true, type = Object.class)
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    protected ContactType contactTypeRef;
 
     /**
      * Gets the value of the isPrimary property.
@@ -90,10 +93,10 @@ public abstract class Contact
      * 
      * @return
      *     possible object is
-     *     {@link RefType }
+     *     {@link Object }
      *     
      */
-    public RefType getContactTypeRef() {
+    public ContactType getContactTypeRef() {
         return contactTypeRef;
     }
 
@@ -102,10 +105,10 @@ public abstract class Contact
      * 
      * @param value
      *     allowed object is
-     *     {@link RefType }
+     *     {@link Object }
      *     
      */
-    public void setContactTypeRef(RefType value) {
+    public void setContactTypeRef(ContactType value) {
         this.contactTypeRef = value;
     }
 

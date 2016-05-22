@@ -17,7 +17,6 @@ import de.edgesoft.edgeutils.EdgeUtilsException;
 import de.edgesoft.edgeutils.Messages;
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.commons.InfoType;
-import de.edgesoft.edgeutils.commons.RefType;
 import de.edgesoft.edgeutils.commons.ext.VersionTypeExt;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.Address;
@@ -230,8 +229,7 @@ public class MySQL2XML extends AbstractMainClass {
 			aReferee.setInternalRemark(record.getValue(People.PEOPLE.INTERNAL_REMARK));
 			
 			// references
-			aReferee.setSexTypeRef(new RefType());
-			aReferee.getSexTypeRef().setIdref(mapSexTypes.get(record.getValue(People.PEOPLE.SEX_TYPE_ID)));
+			aReferee.setSexTypeRef(mapSexTypes.get(record.getValue(People.PEOPLE.SEX_TYPE_ID)));
 			
 			// 1:n
 			result2 = create.select()
@@ -267,8 +265,7 @@ public class MySQL2XML extends AbstractMainClass {
 				
 				aContact.setEMail(record2.getValue(Emails.EMAILS.EMAIL));
 				
-				aContact.setContactTypeRef(new RefType());
-				aContact.getContactTypeRef().setIdref(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
+				aContact.setContactTypeRef(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
 				
 				aReferee.getEMail().add(aContact);
 			}
@@ -297,8 +294,7 @@ public class MySQL2XML extends AbstractMainClass {
 				aContact.setZipCode(record2.getValue(Addresses.ADDRESSES.ZIP_CODE));
 				aContact.setCity(record2.getValue(Addresses.ADDRESSES.CITY));
 				
-				aContact.setContactTypeRef(new RefType());
-				aContact.getContactTypeRef().setIdref(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
+				aContact.setContactTypeRef(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
 				
 				aReferee.getAddress().add(aContact);
 			}
@@ -326,8 +322,7 @@ public class MySQL2XML extends AbstractMainClass {
 				aContact.setAreaCode(record2.getValue(PhoneNumbers.PHONE_NUMBERS.AREA_CODE));
 				aContact.setNumber(record2.getValue(PhoneNumbers.PHONE_NUMBERS.NUMBER));
 				
-				aContact.setContactTypeRef(new RefType());
-				aContact.getContactTypeRef().setIdref(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
+				aContact.setContactTypeRef(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
 				
 				aReferee.getPhoneNumber().add(aContact);
 			}
@@ -353,8 +348,7 @@ public class MySQL2XML extends AbstractMainClass {
 				
 				aContact.setURL(record2.getValue(Urls.URLS.URL));
 				
-				aContact.setContactTypeRef(new RefType());
-				aContact.getContactTypeRef().setIdref(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
+				aContact.setContactTypeRef(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
 				
 				aReferee.getURL().add(aContact);
 			}
