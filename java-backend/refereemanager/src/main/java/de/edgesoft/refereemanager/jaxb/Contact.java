@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="is_primary" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="editor_only" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="contact_type_ref" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
+ *         &lt;element name="contact_type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -35,12 +35,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Contact", propOrder = {
     "isPrimary",
     "editorOnly",
-    "contactTypeRef"
+    "contactType"
 })
 @XmlSeeAlso({
     Address.class,
-    EMail.class,
     URL.class,
+    EMail.class,
     PhoneNumber.class
 })
 public abstract class Contact
@@ -51,10 +51,10 @@ public abstract class Contact
     protected boolean isPrimary;
     @XmlElement(name = "editor_only")
     protected boolean editorOnly;
-    @XmlElement(name = "contact_type_ref", required = true, type = Object.class)
+    @XmlElement(name = "contact_type", required = true, type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
-    protected ContactType contactTypeRef;
+    protected ContactType contactType;
 
     /**
      * Gets the value of the isPrimary property.
@@ -89,27 +89,27 @@ public abstract class Contact
     }
 
     /**
-     * Gets the value of the contactTypeRef property.
+     * Gets the value of the contactType property.
      * 
      * @return
      *     possible object is
      *     {@link Object }
      *     
      */
-    public ContactType getContactTypeRef() {
-        return contactTypeRef;
+    public ContactType getContactType() {
+        return contactType;
     }
 
     /**
-     * Sets the value of the contactTypeRef property.
+     * Sets the value of the contactType property.
      * 
      * @param value
      *     allowed object is
      *     {@link Object }
      *     
      */
-    public void setContactTypeRef(ContactType value) {
-        this.contactTypeRef = value;
+    public void setContactType(ContactType value) {
+        this.contactType = value;
     }
 
 }

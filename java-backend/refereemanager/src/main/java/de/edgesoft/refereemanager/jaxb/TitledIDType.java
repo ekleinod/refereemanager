@@ -34,8 +34,10 @@ import de.edgesoft.edgeutils.commons.IDType;
     "remark"
 })
 @XmlSeeAlso({
-    SexType.class,
     ContactType.class,
+    SexType.class,
+    League.class,
+    RefereeAssignmentType.class,
     Person.class
 })
 public class TitledIDType

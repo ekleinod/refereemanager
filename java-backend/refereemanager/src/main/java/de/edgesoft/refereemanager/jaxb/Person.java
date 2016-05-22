@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="address" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="phone_number" type="{}PhoneNumber" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="sex_type_ref" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
+ *         &lt;element name="sex_type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -55,7 +55,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     "address",
     "phoneNumber",
     "url",
-    "sexTypeRef"
+    "sexType"
 })
 @XmlSeeAlso({
     Referee.class
@@ -86,10 +86,10 @@ public class Person
     protected List<PhoneNumber> phoneNumber;
     @XmlElement(name = "u_r_l")
     protected List<URL> url;
-    @XmlElement(name = "sex_type_ref", required = true, type = Object.class)
+    @XmlElement(name = "sex_type", required = true, type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
-    protected SexType sexTypeRef;
+    protected SexType sexType;
 
     /**
      * Gets the value of the firstName property.
@@ -357,27 +357,27 @@ public class Person
     }
 
     /**
-     * Gets the value of the sexTypeRef property.
+     * Gets the value of the sexType property.
      * 
      * @return
      *     possible object is
      *     {@link Object }
      *     
      */
-    public SexType getSexTypeRef() {
-        return sexTypeRef;
+    public SexType getSexType() {
+        return sexType;
     }
 
     /**
-     * Sets the value of the sexTypeRef property.
+     * Sets the value of the sexType property.
      * 
      * @param value
      *     allowed object is
      *     {@link Object }
      *     
      */
-    public void setSexTypeRef(SexType value) {
-        this.sexTypeRef = value;
+    public void setSexType(SexType value) {
+        this.sexType = value;
     }
 
 }

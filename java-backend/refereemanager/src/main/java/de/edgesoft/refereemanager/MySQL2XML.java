@@ -23,10 +23,12 @@ import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.EMail;
+import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.jaxb.Picture;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.RefereeAssignmentType;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Season;
 import de.edgesoft.refereemanager.jaxb.SexType;
@@ -35,9 +37,12 @@ import de.edgesoft.refereemanager.jooq.tables.Addresses;
 import de.edgesoft.refereemanager.jooq.tables.ContactTypes;
 import de.edgesoft.refereemanager.jooq.tables.Contacts;
 import de.edgesoft.refereemanager.jooq.tables.Emails;
+import de.edgesoft.refereemanager.jooq.tables.LeagueTypes;
+import de.edgesoft.refereemanager.jooq.tables.Leagues;
 import de.edgesoft.refereemanager.jooq.tables.People;
 import de.edgesoft.refereemanager.jooq.tables.PhoneNumbers;
 import de.edgesoft.refereemanager.jooq.tables.Pictures;
+import de.edgesoft.refereemanager.jooq.tables.RefereeAssignmentTypes;
 import de.edgesoft.refereemanager.jooq.tables.Referees;
 import de.edgesoft.refereemanager.jooq.tables.Seasons;
 import de.edgesoft.refereemanager.jooq.tables.SexTypes;
@@ -211,6 +216,27 @@ public class MySQL2XML extends AbstractMainClass {
 		}
 		
 		
+		logger.info("converting referee assignment types.");
+		
+		result = create.select()
+				.from(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES)
+				.orderBy(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.SID.asc())
+				.fetch();
+		
+		Map<UInteger, RefereeAssignmentType> mapRefereeAssignmentTypes = new HashMap<>();
+		for (Record record : result) {
+			RefereeAssignmentType aType = new RefereeAssignmentType();
+			
+			aType.setId(JAXBHelper.getID(RefereeAssignmentType.class, record.getValue(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.SID)));
+			aType.setTitle(record.getValue(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.TITLE));
+			aType.setAbbreviation(record.getValue(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.ABBREVIATION));
+			aType.setRemark(record.getValue(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.REMARK));
+			
+			theContent.getRefereeAssigmentType().add(aType);
+			mapRefereeAssignmentTypes.put(record.getValue(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.ID), aType);
+		}
+		
+		
 		logger.info("converting referees.");
 		
 		result = create.select()
@@ -246,7 +272,7 @@ public class MySQL2XML extends AbstractMainClass {
 			aReferee.setInternalRemark(record.getValue(People.PEOPLE.INTERNAL_REMARK));
 			
 			// references
-			aReferee.setSexTypeRef(mapSexTypes.get(record.getValue(People.PEOPLE.SEX_TYPE_ID)));
+			aReferee.setSexType(mapSexTypes.get(record.getValue(People.PEOPLE.SEX_TYPE_ID)));
 			
 			// 1:n
 			result2 = create.select()
@@ -282,7 +308,7 @@ public class MySQL2XML extends AbstractMainClass {
 				
 				aContact.setEMail(record2.getValue(Emails.EMAILS.EMAIL));
 				
-				aContact.setContactTypeRef(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
+				aContact.setContactType(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
 				
 				aReferee.getEMail().add(aContact);
 			}
@@ -311,7 +337,7 @@ public class MySQL2XML extends AbstractMainClass {
 				aContact.setZipCode(record2.getValue(Addresses.ADDRESSES.ZIP_CODE));
 				aContact.setCity(record2.getValue(Addresses.ADDRESSES.CITY));
 				
-				aContact.setContactTypeRef(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
+				aContact.setContactType(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
 				
 				aReferee.getAddress().add(aContact);
 			}
@@ -339,7 +365,7 @@ public class MySQL2XML extends AbstractMainClass {
 				aContact.setAreaCode(record2.getValue(PhoneNumbers.PHONE_NUMBERS.AREA_CODE));
 				aContact.setNumber(record2.getValue(PhoneNumbers.PHONE_NUMBERS.NUMBER));
 				
-				aContact.setContactTypeRef(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
+				aContact.setContactType(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
 				
 				aReferee.getPhoneNumber().add(aContact);
 			}
@@ -365,13 +391,35 @@ public class MySQL2XML extends AbstractMainClass {
 				
 				aContact.setURL(record2.getValue(Urls.URLS.URL));
 				
-				aContact.setContactTypeRef(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
+				aContact.setContactType(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
 				
 				aReferee.getURL().add(aContact);
 			}
 
 			
 			theContent.getReferee().add(aReferee);
+		}
+		
+		
+		logger.info("converting leagues.");
+		
+		result = create.select()
+				.from(Leagues.LEAGUES)
+				.join(LeagueTypes.LEAGUE_TYPES).onKey()
+				.orderBy(Leagues.LEAGUES.ABBREVIATION.asc())
+				.fetch();
+		
+		for (Record record : result) {
+			League aLeague = new League();
+			
+			aLeague.setTitle(record.getValue(Leagues.LEAGUES.TITLE));
+			aLeague.setAbbreviation(record.getValue(Leagues.LEAGUES.ABBREVIATION));
+			aLeague.setRemark(record.getValue(Leagues.LEAGUES.REMARK));
+			
+			aLeague.setSexType(mapSexTypes.get(record.getValue(LeagueTypes.LEAGUE_TYPES.SEX_TYPE_ID)));
+			
+			theContent.getLeague().add(aLeague);
+						
 		}
 		
 		

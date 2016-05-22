@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.jaxb;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 
@@ -25,6 +26,7 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _Refereemanager_QNAME = new QName("", "refereemanager");
+    private final static QName _LeagueRefereeReportRecipient_QNAME = new QName("", "referee_report_recipient");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.edgesoft.refereemanager.jaxb
@@ -39,14 +41,6 @@ public class ObjectFactory {
      */
     public RefereeManager createRefereeManager() {
         return new RefereeManager();
-    }
-
-    /**
-     * Create an instance of {@link SexType }
-     * 
-     */
-    public SexType createSexType() {
-        return new SexType();
     }
 
     /**
@@ -66,19 +60,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Referee }
+     * Create an instance of {@link RefereeQuantity }
      * 
      */
-    public Referee createReferee() {
-        return new Referee();
-    }
-
-    /**
-     * Create an instance of {@link EMail }
-     * 
-     */
-    public EMail createEMail() {
-        return new EMail();
+    public RefereeQuantity createRefereeQuantity() {
+        return new RefereeQuantity();
     }
 
     /**
@@ -98,27 +84,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Content }
-     * 
-     */
-    public Content createContent() {
-        return new Content();
-    }
-
-    /**
      * Create an instance of {@link Picture }
      * 
      */
     public Picture createPicture() {
         return new Picture();
-    }
-
-    /**
-     * Create an instance of {@link PhoneNumber }
-     * 
-     */
-    public PhoneNumber createPhoneNumber() {
-        return new PhoneNumber();
     }
 
     /**
@@ -138,6 +108,62 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SexType }
+     * 
+     */
+    public SexType createSexType() {
+        return new SexType();
+    }
+
+    /**
+     * Create an instance of {@link League }
+     * 
+     */
+    public League createLeague() {
+        return new League();
+    }
+
+    /**
+     * Create an instance of {@link Referee }
+     * 
+     */
+    public Referee createReferee() {
+        return new Referee();
+    }
+
+    /**
+     * Create an instance of {@link EMail }
+     * 
+     */
+    public EMail createEMail() {
+        return new EMail();
+    }
+
+    /**
+     * Create an instance of {@link Content }
+     * 
+     */
+    public Content createContent() {
+        return new Content();
+    }
+
+    /**
+     * Create an instance of {@link PhoneNumber }
+     * 
+     */
+    public PhoneNumber createPhoneNumber() {
+        return new PhoneNumber();
+    }
+
+    /**
+     * Create an instance of {@link RefereeAssignmentType }
+     * 
+     */
+    public RefereeAssignmentType createRefereeAssignmentType() {
+        return new RefereeAssignmentType();
+    }
+
+    /**
      * Create an instance of {@link Person }
      * 
      */
@@ -152,6 +178,16 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "refereemanager")
     public JAXBElement<RefereeManager> createRefereemanager(RefereeManager value) {
         return new JAXBElement<RefereeManager>(_Refereemanager_QNAME, RefereeManager.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "referee_report_recipient", scope = League.class)
+    @XmlIDREF
+    public JAXBElement<Object> createLeagueRefereeReportRecipient(Object value) {
+        return new JAXBElement<Object>(_LeagueRefereeReportRecipient_QNAME, Object.class, League.class, value);
     }
 
 }

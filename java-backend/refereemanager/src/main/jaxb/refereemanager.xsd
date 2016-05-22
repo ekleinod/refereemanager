@@ -32,11 +32,11 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	jxb:version="2.1">
 
 	<!-- allow xml:base attribute in order to avoid include errors -->
-	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2005/08/xml.xsd"/>
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2005/08/xml.xsd" />
 
-	<xsd:include schemaLocation="../../../../edgeutils/jaxb/commons.xsd"/>
+	<xsd:include schemaLocation="../../../../edgeutils/jaxb/commons.xsd" />
 
-	<xsd:element name="refereemanager" type="RefereeManager"/>
+	<xsd:element name="refereemanager" type="RefereeManager" />
 
 	<xsd:complexType name="RefereeManager">
 		<xsd:sequence>
@@ -51,10 +51,12 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:element name="season" type="Season" minOccurs="1" maxOccurs="1" />
 			<xsd:element name="person" type="Person" minOccurs="0" maxOccurs="unbounded" />
 			<xsd:element name="referee" type="Referee" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="league" type="League" minOccurs="0" maxOccurs="unbounded" />
 
 			<!-- types -->
 			<xsd:element name="sex_type" type="SexType" minOccurs="0" maxOccurs="unbounded" />
 			<xsd:element name="contact_type" type="ContactType" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="referee_assigment_type" type="RefereeAssignmentType" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -86,11 +88,11 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="u_r_l" type="URL" minOccurs="0" maxOccurs="unbounded" />
 
 					<!-- references -->
-					<xsd:element name="sex_type_ref" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+					<xsd:element name="sex_type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
 								<jxb:property>
-									<jxb:baseType name="SexType"/>
+									<jxb:baseType name="SexType" />
 								</jxb:property>
 							</xsd:appinfo>
 						</xsd:annotation>
@@ -171,11 +173,11 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 				<xsd:sequence>
 					<xsd:element name="is_primary" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="editor_only" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="contact_type_ref" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+					<xsd:element name="contact_type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
 								<jxb:property>
-									<jxb:baseType name="ContactType"/>
+									<jxb:baseType name="ContactType" />
 								</jxb:property>
 							</xsd:appinfo>
 						</xsd:annotation>
@@ -183,6 +185,53 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="League">
+		<xsd:complexContent>
+			<xsd:extension base="TitledIDType">
+				<xsd:sequence>
+					<xsd:element name="abbreviation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="referee_report" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="referee_quantity" type="RefereeQuantity" minOccurs="0" maxOccurs="unbounded" />
+
+					<!-- references -->
+					<xsd:element name="sex_type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="SexType" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="referee_report_recipient" type="xsd:IDREF" minOccurs="1" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Person" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="RefereeQuantity">
+		<xsd:sequence>
+			<xsd:element name="quantity" type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="referee_assigment_type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property>
+							<jxb:baseType name="RefereeAssignmentType" />
+						</jxb:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
 	</xsd:complexType>
 
 
@@ -200,6 +249,16 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
 					<xsd:element name="abbreviation" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="RefereeAssignmentType">
+		<xsd:complexContent>
+			<xsd:extension base="TitledIDType">
+				<xsd:sequence>
+					<xsd:element name="abbreviation" type="xsd:string" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
