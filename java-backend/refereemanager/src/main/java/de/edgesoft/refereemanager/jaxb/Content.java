@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="league" type="{}League" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sex_type" type="{}SexType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contact_type" type="{}ContactType" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="referee_assigment_type" type="{}RefereeAssignmentType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="referee_assignment_type" type="{}RefereeAssignmentType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlType;
     "league",
     "sexType",
     "contactType",
-    "refereeAssigmentType"
+    "refereeAssignmentType"
 })
 public class Content {
 
@@ -55,8 +55,8 @@ public class Content {
     protected List<SexType> sexType;
     @XmlElement(name = "contact_type")
     protected List<ContactType> contactType;
-    @XmlElement(name = "referee_assigment_type")
-    protected List<RefereeAssignmentType> refereeAssigmentType;
+    @XmlElement(name = "referee_assignment_type")
+    protected List<RefereeAssignmentType> refereeAssignmentType;
 
     /**
      * Gets the value of the season property.
@@ -228,18 +228,18 @@ public class Content {
     }
 
     /**
-     * Gets the value of the refereeAssigmentType property.
+     * Gets the value of the refereeAssignmentType property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the refereeAssigmentType property.
+     * This is why there is not a <CODE>set</CODE> method for the refereeAssignmentType property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getRefereeAssigmentType().add(newItem);
+     *    getRefereeAssignmentType().add(newItem);
      * </pre>
      * 
      * 
@@ -249,11 +249,11 @@ public class Content {
      * 
      * 
      */
-    public List<RefereeAssignmentType> getRefereeAssigmentType() {
-        if (refereeAssigmentType == null) {
-            refereeAssigmentType = new ArrayList<RefereeAssignmentType>();
+    public List<RefereeAssignmentType> getRefereeAssignmentType() {
+        if (refereeAssignmentType == null) {
+            refereeAssignmentType = new ArrayList<RefereeAssignmentType>();
         }
-        return this.refereeAssigmentType;
+        return this.refereeAssignmentType;
     }
 
 }

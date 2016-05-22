@@ -30,6 +30,7 @@ import de.edgesoft.refereemanager.jaxb.Picture;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeAssignmentType;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
+import de.edgesoft.refereemanager.jaxb.RefereeQuantity;
 import de.edgesoft.refereemanager.jaxb.Season;
 import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jaxb.URL;
@@ -223,7 +224,7 @@ public class MySQL2XML extends AbstractMainClass {
 				.orderBy(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.SID.asc())
 				.fetch();
 		
-		Map<UInteger, RefereeAssignmentType> mapRefereeAssignmentTypes = new HashMap<>();
+		Map<String, RefereeAssignmentType> mapRefereeAssignmentTypes = new HashMap<>();
 		for (Record record : result) {
 			RefereeAssignmentType aType = new RefereeAssignmentType();
 			
@@ -232,8 +233,8 @@ public class MySQL2XML extends AbstractMainClass {
 			aType.setAbbreviation(record.getValue(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.ABBREVIATION));
 			aType.setRemark(record.getValue(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.REMARK));
 			
-			theContent.getRefereeAssigmentType().add(aType);
-			mapRefereeAssignmentTypes.put(record.getValue(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.ID), aType);
+			theContent.getRefereeAssignmentType().add(aType);
+			mapRefereeAssignmentTypes.put(record.getValue(RefereeAssignmentTypes.REFEREE_ASSIGNMENT_TYPES.SID), aType);
 		}
 		
 		
@@ -410,15 +411,40 @@ public class MySQL2XML extends AbstractMainClass {
 				.fetch();
 		
 		for (Record record : result) {
-			League aLeague = new League();
 			
-			aLeague.setTitle(record.getValue(Leagues.LEAGUES.TITLE));
-			aLeague.setAbbreviation(record.getValue(Leagues.LEAGUES.ABBREVIATION));
-			aLeague.setRemark(record.getValue(Leagues.LEAGUES.REMARK));
-			
-			aLeague.setSexType(mapSexTypes.get(record.getValue(LeagueTypes.LEAGUE_TYPES.SEX_TYPE_ID)));
-			
-			theContent.getLeague().add(aLeague);
+			if (record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("1") || 
+					record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("3") || 
+					record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("OL") || 
+					record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("RL")) {
+				
+				League aLeague = new League();
+				
+				aLeague.setTitle(record.getValue(Leagues.LEAGUES.TITLE));
+				aLeague.setAbbreviation(record.getValue(Leagues.LEAGUES.ABBREVIATION));
+				aLeague.setRemark(record.getValue(Leagues.LEAGUES.REMARK));
+				
+				aLeague.setSexType(mapSexTypes.get(record.getValue(LeagueTypes.LEAGUE_TYPES.SEX_TYPE_ID)));
+				
+				RefereeQuantity aQuantity = new RefereeQuantity();
+				aQuantity.setRefereeAssigmentType(mapRefereeAssignmentTypes.get("referee"));
+				aQuantity.setQuantity(1);
+				aLeague.getRefereeQuantity().add(aQuantity);
+				
+				if (record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("1") || record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("3")) {
+					aQuantity = new RefereeQuantity();
+					aQuantity.setRefereeAssigmentType(mapRefereeAssignmentTypes.get("standbyref"));
+					aQuantity.setQuantity(1);
+					aLeague.getRefereeQuantity().add(aQuantity);
+					
+					aQuantity = new RefereeQuantity();
+					aQuantity.setRefereeAssigmentType(mapRefereeAssignmentTypes.get("umpire"));
+					aQuantity.setQuantity(record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("1") ? 3 : 1);
+					aLeague.getRefereeQuantity().add(aQuantity);
+					
+				}
+				
+				theContent.getLeague().add(aLeague);
+			}
 						
 		}
 		
