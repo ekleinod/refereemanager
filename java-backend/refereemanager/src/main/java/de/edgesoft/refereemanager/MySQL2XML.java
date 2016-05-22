@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.types.UInteger;
 
 import de.edgesoft.edgeutils.EdgeUtilsException;
 import de.edgesoft.edgeutils.Messages;
@@ -160,14 +161,16 @@ public class MySQL2XML extends AbstractMainClass {
 				.orderBy(SexTypes.SEX_TYPES.SID.asc())
 				.fetch();
 		
-		Map<String, SexType> mapSexTypes = new HashMap<>();
+		Map<UInteger, SexType> mapSexTypes = new HashMap<>();
 		for (Record record : result) {
 			SexType aType = new SexType();
+			
 			aType.setId(JAXBHelper.getID(SexType.class, record.getValue(SexTypes.SEX_TYPES.SID)));
 			aType.setTitle(record.getValue(SexTypes.SEX_TYPES.TITLE));
 			aType.setRemark(record.getValue(SexTypes.SEX_TYPES.REMARK));
-			theContent.getSextype().add(aType);
-			mapSexTypes.put(aType.getId(), aType);
+			
+			theContent.getSexType().add(aType);
+			mapSexTypes.put(record.getValue(SexTypes.SEX_TYPES.ID), aType);
 		}
 		
 		
@@ -178,13 +181,17 @@ public class MySQL2XML extends AbstractMainClass {
 				.orderBy(ContactTypes.CONTACT_TYPES.TITLE.asc())
 				.fetch();
 		
+		Map<UInteger, ContactType> mapContactTypes = new HashMap<>();
 		for (Record record : result) {
 			ContactType aType = new ContactType();
+			
 			aType.setId(JAXBHelper.getID(ContactType.class, record.getValue(ContactTypes.CONTACT_TYPES.ID)));
 			aType.setTitle(record.getValue(ContactTypes.CONTACT_TYPES.TITLE));
 			aType.setAbbreviation(record.getValue(ContactTypes.CONTACT_TYPES.ABBREVIATION));
 			aType.setRemark(record.getValue(ContactTypes.CONTACT_TYPES.REMARK));
-			theContent.getContacttype().add(aType);
+			
+			theContent.getContactType().add(aType);
+			mapContactTypes.put(record.getValue(ContactTypes.CONTACT_TYPES.ID), aType);
 		}
 		
 		
@@ -223,13 +230,8 @@ public class MySQL2XML extends AbstractMainClass {
 			aReferee.setInternalRemark(record.getValue(People.PEOPLE.INTERNAL_REMARK));
 			
 			// references
-			result2 = create.select()
-					.from(SexTypes.SEX_TYPES)
-					.where(SexTypes.SEX_TYPES.ID.eq(record.getValue(People.PEOPLE.SEX_TYPE_ID)))
-					.fetch();
-			RefType aRef = new RefType();
-			aRef.setIdref(mapSexTypes.get(JAXBHelper.getID(SexType.class, result2.get(0).getValue(SexTypes.SEX_TYPES.SID))));
-			aReferee.setSextyperef(aRef);
+			aReferee.setSexTypeRef(new RefType());
+			aReferee.getSexTypeRef().setIdref(mapSexTypes.get(record.getValue(People.PEOPLE.SEX_TYPE_ID)));
 			
 			// 1:n
 			result2 = create.select()
@@ -252,20 +254,23 @@ public class MySQL2XML extends AbstractMainClass {
 					.fetch();
 			
 			for (Record record2 : result2) {
-				EMail anEMail = new EMail();
+				EMail aContact = new EMail();
 				
-				anEMail.setTitle(record2.getValue(Contacts.CONTACTS.TITLE));
-				anEMail.setRemark(record2.getValue(Contacts.CONTACTS.REMARK));
+				aContact.setTitle(record2.getValue(Contacts.CONTACTS.TITLE));
+				aContact.setRemark(record2.getValue(Contacts.CONTACTS.REMARK));
 				if (result2.size() > 1) {
-					anEMail.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != null) && (record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != 0));
+					aContact.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != null) && (record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != 0));
 				} else {
-					anEMail.setIsPrimary(true);
+					aContact.setIsPrimary(true);
 				}
-				anEMail.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
+				aContact.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
 				
-				anEMail.setEMail(record2.getValue(Emails.EMAILS.EMAIL));
+				aContact.setEMail(record2.getValue(Emails.EMAILS.EMAIL));
 				
-				aReferee.getEMail().add(anEMail);
+				aContact.setContactTypeRef(new RefType());
+				aContact.getContactTypeRef().setIdref(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
+				
+				aReferee.getEMail().add(aContact);
 			}
 
 
@@ -276,23 +281,26 @@ public class MySQL2XML extends AbstractMainClass {
 					.fetch();
 			
 			for (Record record2 : result2) {
-				Address anAddress = new Address();
+				Address aContact = new Address();
 				
-				anAddress.setTitle(record2.getValue(Contacts.CONTACTS.TITLE));
-				anAddress.setRemark(record2.getValue(Contacts.CONTACTS.REMARK));
+				aContact.setTitle(record2.getValue(Contacts.CONTACTS.TITLE));
+				aContact.setRemark(record2.getValue(Contacts.CONTACTS.REMARK));
 				if (result2.size() > 1) {
-					anAddress.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != null) && (record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != 0));
+					aContact.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != null) && (record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != 0));
 				} else {
-					anAddress.setIsPrimary(true);
+					aContact.setIsPrimary(true);
 				}
-				anAddress.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
+				aContact.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
 				
-				anAddress.setStreet(record2.getValue(Addresses.ADDRESSES.STREET));
-				anAddress.setNumber(record2.getValue(Addresses.ADDRESSES.NUMBER));
-				anAddress.setZipCode(record2.getValue(Addresses.ADDRESSES.ZIP_CODE));
-				anAddress.setCity(record2.getValue(Addresses.ADDRESSES.CITY));
+				aContact.setStreet(record2.getValue(Addresses.ADDRESSES.STREET));
+				aContact.setNumber(record2.getValue(Addresses.ADDRESSES.NUMBER));
+				aContact.setZipCode(record2.getValue(Addresses.ADDRESSES.ZIP_CODE));
+				aContact.setCity(record2.getValue(Addresses.ADDRESSES.CITY));
 				
-				aReferee.getAddress().add(anAddress);
+				aContact.setContactTypeRef(new RefType());
+				aContact.getContactTypeRef().setIdref(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
+				
+				aReferee.getAddress().add(aContact);
 			}
 
 
@@ -303,22 +311,25 @@ public class MySQL2XML extends AbstractMainClass {
 					.fetch();
 			
 			for (Record record2 : result2) {
-				PhoneNumber aPhoneNumber = new PhoneNumber();
+				PhoneNumber aContact = new PhoneNumber();
 				
-				aPhoneNumber.setTitle(record2.getValue(Contacts.CONTACTS.TITLE));
-				aPhoneNumber.setRemark(record2.getValue(Contacts.CONTACTS.REMARK));
+				aContact.setTitle(record2.getValue(Contacts.CONTACTS.TITLE));
+				aContact.setRemark(record2.getValue(Contacts.CONTACTS.REMARK));
 				if (result2.size() > 1) {
-					aPhoneNumber.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != null) && (record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != 0));
+					aContact.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != null) && (record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != 0));
 				} else {
-					aPhoneNumber.setIsPrimary(true);
+					aContact.setIsPrimary(true);
 				}
-				aPhoneNumber.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
+				aContact.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
 				
-				aPhoneNumber.setCountryCode(record2.getValue(PhoneNumbers.PHONE_NUMBERS.COUNTRY_CODE));
-				aPhoneNumber.setAreaCode(record2.getValue(PhoneNumbers.PHONE_NUMBERS.AREA_CODE));
-				aPhoneNumber.setNumber(record2.getValue(PhoneNumbers.PHONE_NUMBERS.NUMBER));
+				aContact.setCountryCode(record2.getValue(PhoneNumbers.PHONE_NUMBERS.COUNTRY_CODE));
+				aContact.setAreaCode(record2.getValue(PhoneNumbers.PHONE_NUMBERS.AREA_CODE));
+				aContact.setNumber(record2.getValue(PhoneNumbers.PHONE_NUMBERS.NUMBER));
 				
-				aReferee.getPhoneNumber().add(aPhoneNumber);
+				aContact.setContactTypeRef(new RefType());
+				aContact.getContactTypeRef().setIdref(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
+				
+				aReferee.getPhoneNumber().add(aContact);
 			}
 
 
@@ -329,20 +340,23 @@ public class MySQL2XML extends AbstractMainClass {
 					.fetch();
 			
 			for (Record record2 : result2) {
-				URL anURL = new URL();
+				URL aContact = new URL();
 				
-				anURL.setTitle(record2.getValue(Contacts.CONTACTS.TITLE));
-				anURL.setRemark(record2.getValue(Contacts.CONTACTS.REMARK));
+				aContact.setTitle(record2.getValue(Contacts.CONTACTS.TITLE));
+				aContact.setRemark(record2.getValue(Contacts.CONTACTS.REMARK));
 				if (result2.size() > 1) {
-					anURL.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != null) && (record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != 0));
+					aContact.setIsPrimary((record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != null) && (record2.getValue(Contacts.CONTACTS.IS_PRIMARY) != 0));
 				} else {
-					anURL.setIsPrimary(true);
+					aContact.setIsPrimary(true);
 				}
-				anURL.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
+				aContact.setEditorOnly((record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != null) && (record2.getValue(Contacts.CONTACTS.EDITOR_ONLY) != 0));
 				
-				anURL.setURL(record2.getValue(Urls.URLS.URL));
+				aContact.setURL(record2.getValue(Urls.URLS.URL));
 				
-				aReferee.getURL().add(anURL);
+				aContact.setContactTypeRef(new RefType());
+				aContact.getContactTypeRef().setIdref(mapContactTypes.get(record2.getValue(Contacts.CONTACTS.CONTACT_TYPE_ID)));
+				
+				aReferee.getURL().add(aContact);
 			}
 
 			

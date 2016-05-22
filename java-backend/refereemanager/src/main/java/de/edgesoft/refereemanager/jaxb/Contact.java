@@ -21,7 +21,7 @@ import de.edgesoft.edgeutils.commons.RefType;
  *       &lt;sequence>
  *         &lt;element name="is_primary" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="editor_only" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="contacttyperef" type="{}RefType"/>
+ *         &lt;element name="contact_type_ref" type="{}RefType"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -34,7 +34,7 @@ import de.edgesoft.edgeutils.commons.RefType;
 @XmlType(name = "Contact", propOrder = {
     "isPrimary",
     "editorOnly",
-    "contacttyperef"
+    "contactTypeRef"
 })
 @XmlSeeAlso({
     Address.class,
@@ -50,8 +50,8 @@ public abstract class Contact
     protected boolean isPrimary;
     @XmlElement(name = "editor_only")
     protected boolean editorOnly;
-    @XmlElement(required = true)
-    protected RefType contacttyperef;
+    @XmlElement(name = "contact_type_ref", required = true)
+    protected RefType contactTypeRef;
 
     /**
      * Gets the value of the isPrimary property.
@@ -86,27 +86,27 @@ public abstract class Contact
     }
 
     /**
-     * Gets the value of the contacttyperef property.
+     * Gets the value of the contactTypeRef property.
      * 
      * @return
      *     possible object is
      *     {@link RefType }
      *     
      */
-    public RefType getContacttyperef() {
-        return contacttyperef;
+    public RefType getContactTypeRef() {
+        return contactTypeRef;
     }
 
     /**
-     * Sets the value of the contacttyperef property.
+     * Sets the value of the contactTypeRef property.
      * 
      * @param value
      *     allowed object is
      *     {@link RefType }
      *     
      */
-    public void setContacttyperef(RefType value) {
-        this.contacttyperef = value;
+    public void setContactTypeRef(RefType value) {
+        this.contactTypeRef = value;
     }
 
 }

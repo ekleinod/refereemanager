@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -20,8 +21,8 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="person" type="{}Person" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="referee" type="{}Referee" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="sextype" type="{}SexType" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="contacttype" type="{}ContactType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="sex_type" type="{}SexType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="contact_type" type="{}ContactType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,15 +35,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Content", propOrder = {
     "person",
     "referee",
-    "sextype",
-    "contacttype"
+    "sexType",
+    "contactType"
 })
 public class Content {
 
     protected List<Person> person;
     protected List<Referee> referee;
-    protected List<SexType> sextype;
-    protected List<ContactType> contacttype;
+    @XmlElement(name = "sex_type")
+    protected List<SexType> sexType;
+    @XmlElement(name = "contact_type")
+    protected List<ContactType> contactType;
 
     /**
      * Gets the value of the person property.
@@ -103,18 +106,18 @@ public class Content {
     }
 
     /**
-     * Gets the value of the sextype property.
+     * Gets the value of the sexType property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sextype property.
+     * This is why there is not a <CODE>set</CODE> method for the sexType property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getSextype().add(newItem);
+     *    getSexType().add(newItem);
      * </pre>
      * 
      * 
@@ -124,26 +127,26 @@ public class Content {
      * 
      * 
      */
-    public List<SexType> getSextype() {
-        if (sextype == null) {
-            sextype = new ArrayList<SexType>();
+    public List<SexType> getSexType() {
+        if (sexType == null) {
+            sexType = new ArrayList<SexType>();
         }
-        return this.sextype;
+        return this.sexType;
     }
 
     /**
-     * Gets the value of the contacttype property.
+     * Gets the value of the contactType property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the contacttype property.
+     * This is why there is not a <CODE>set</CODE> method for the contactType property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getContacttype().add(newItem);
+     *    getContactType().add(newItem);
      * </pre>
      * 
      * 
@@ -153,11 +156,11 @@ public class Content {
      * 
      * 
      */
-    public List<ContactType> getContacttype() {
-        if (contacttype == null) {
-            contacttype = new ArrayList<ContactType>();
+    public List<ContactType> getContactType() {
+        if (contactType == null) {
+            contactType = new ArrayList<ContactType>();
         }
-        return this.contacttype;
+        return this.contactType;
     }
 
 }

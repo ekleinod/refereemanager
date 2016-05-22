@@ -34,7 +34,7 @@ import de.edgesoft.edgeutils.commons.RefType;
  *         &lt;element name="address" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="phone_number" type="{}PhoneNumber" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="sextyperef" type="{}RefType"/>
+ *         &lt;element name="sex_type_ref" type="{}RefType"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -55,7 +55,7 @@ import de.edgesoft.edgeutils.commons.RefType;
     "address",
     "phoneNumber",
     "url",
-    "sextyperef"
+    "sexTypeRef"
 })
 @XmlSeeAlso({
     Referee.class
@@ -86,8 +86,8 @@ public class Person
     protected List<PhoneNumber> phoneNumber;
     @XmlElement(name = "u_r_l")
     protected List<URL> url;
-    @XmlElement(required = true)
-    protected RefType sextyperef;
+    @XmlElement(name = "sex_type_ref", required = true)
+    protected RefType sexTypeRef;
 
     /**
      * Gets the value of the firstName property.
@@ -355,27 +355,27 @@ public class Person
     }
 
     /**
-     * Gets the value of the sextyperef property.
+     * Gets the value of the sexTypeRef property.
      * 
      * @return
      *     possible object is
      *     {@link RefType }
      *     
      */
-    public RefType getSextyperef() {
-        return sextyperef;
+    public RefType getSexTypeRef() {
+        return sexTypeRef;
     }
 
     /**
-     * Sets the value of the sextyperef property.
+     * Sets the value of the sexTypeRef property.
      * 
      * @param value
      *     allowed object is
      *     {@link RefType }
      *     
      */
-    public void setSextyperef(RefType value) {
-        this.sextyperef = value;
+    public void setSexTypeRef(RefType value) {
+        this.sexTypeRef = value;
     }
 
 }

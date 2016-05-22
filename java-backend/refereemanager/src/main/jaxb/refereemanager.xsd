@@ -52,8 +52,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:element name="referee" type="Referee" minOccurs="0" maxOccurs="unbounded" />
 
 			<!-- types -->
-			<xsd:element name="sextype" type="SexType" minOccurs="0" maxOccurs="unbounded" />
-			<xsd:element name="contacttype" type="ContactType" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="sex_type" type="SexType" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="contact_type" type="ContactType" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -75,7 +75,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="u_r_l" type="URL" minOccurs="0" maxOccurs="unbounded" />
 
 					<!-- references -->
-					<xsd:element name="sextyperef" type="RefType" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="sex_type_ref" type="RefType" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -152,7 +152,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 				<xsd:sequence>
 					<xsd:element name="is_primary" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="editor_only" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="contacttyperef" type="RefType" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="contact_type_ref" type="RefType" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
