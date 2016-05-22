@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="season" type="{}Season"/>
  *         &lt;element name="person" type="{}Person" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="referee" type="{}Referee" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sex_type" type="{}SexType" maxOccurs="unbounded" minOccurs="0"/>
@@ -33,6 +34,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Content", propOrder = {
+    "season",
     "person",
     "referee",
     "sexType",
@@ -40,12 +42,38 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class Content {
 
+    @XmlElement(required = true)
+    protected Season season;
     protected List<Person> person;
     protected List<Referee> referee;
     @XmlElement(name = "sex_type")
     protected List<SexType> sexType;
     @XmlElement(name = "contact_type")
     protected List<ContactType> contactType;
+
+    /**
+     * Gets the value of the season property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Season }
+     *     
+     */
+    public Season getSeason() {
+        return season;
+    }
+
+    /**
+     * Sets the value of the season property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Season }
+     *     
+     */
+    public void setSeason(Season value) {
+        this.season = value;
+    }
 
     /**
      * Gets the value of the person property.

@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlSeeAlso({
     Picture.class,
-    Contact.class
+    Contact.class,
+    Season.class
 })
 public class TitledType {
 

@@ -28,6 +28,7 @@ import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.jaxb.Picture;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
+import de.edgesoft.refereemanager.jaxb.Season;
 import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.jooq.tables.Addresses;
@@ -38,6 +39,7 @@ import de.edgesoft.refereemanager.jooq.tables.People;
 import de.edgesoft.refereemanager.jooq.tables.PhoneNumbers;
 import de.edgesoft.refereemanager.jooq.tables.Pictures;
 import de.edgesoft.refereemanager.jooq.tables.Referees;
+import de.edgesoft.refereemanager.jooq.tables.Seasons;
 import de.edgesoft.refereemanager.jooq.tables.SexTypes;
 import de.edgesoft.refereemanager.jooq.tables.Urls;
 import de.edgesoft.refereemanager.utils.ConnectionHelper;
@@ -103,6 +105,7 @@ public class MySQL2XML extends AbstractMainClass {
 		setDescription("Converts MySQL data to XML data.");
 		
 		addOption("f", "file", "output file.", true, true);
+		addOption("s", "season", "season of file.", true, true);
 		addOption("h", "help", "display help message", false, false);
 		
 		init(args);
@@ -110,7 +113,7 @@ public class MySQL2XML extends AbstractMainClass {
 		boolean showHelp = true;
 		
 		if (hasOption("f")) {
-			convertMySQL2XML(getOptionValue("f"));
+			convertMySQL2XML(getOptionValue("f"), Integer.valueOf(getOptionValue("s")));
 			showHelp = false;
 		} 
 		
@@ -124,11 +127,12 @@ public class MySQL2XML extends AbstractMainClass {
 	 * Converts data from MySQL to XML.
 	 * 
 	 * @param theXMLFile xml filename
+	 * @param theSeason season
 	 * 
 	 * @version 0.1.0
 	 * @since 0.1.0
 	 */
-	public void convertMySQL2XML(String theXMLFile) {
+	public void convertMySQL2XML(String theXMLFile, Integer theSeason) {
 		
 		logger.info("start conversion.");
 		
@@ -151,6 +155,19 @@ public class MySQL2XML extends AbstractMainClass {
 		
 		Content theContent = new Content();
 		mgrDoc.setContent(theContent);
+		
+		logger.info("converting season.");
+		
+		result = create.select()
+				.from(Seasons.SEASONS)
+				.where(Seasons.SEASONS.YEAR_START.eq(theSeason))
+				.fetch();
+		
+		Season aSeason = new Season();
+		aSeason.setStartYear(result.get(0).getValue(Seasons.SEASONS.YEAR_START));
+		aSeason.setTitle(result.get(0).getValue(Seasons.SEASONS.TITLE));
+		aSeason.setRemark(result.get(0).getValue(Seasons.SEASONS.REMARK));
+		theContent.setSeason(aSeason);
 		
 		
 		logger.info("converting sex types.");

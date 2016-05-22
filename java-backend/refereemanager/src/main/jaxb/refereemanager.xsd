@@ -48,6 +48,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Content">
 		<xsd:sequence>
+			<xsd:element name="season" type="Season" minOccurs="1" maxOccurs="1" />
 			<xsd:element name="person" type="Person" minOccurs="0" maxOccurs="unbounded" />
 			<xsd:element name="referee" type="Referee" minOccurs="0" maxOccurs="unbounded" />
 
@@ -55,6 +56,16 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:element name="sex_type" type="SexType" minOccurs="0" maxOccurs="unbounded" />
 			<xsd:element name="contact_type" type="ContactType" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Season">
+		<xsd:complexContent>
+			<xsd:extension base="TitledType">
+				<xsd:sequence>
+					<xsd:element name="start_year" type="xsd:int" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
 	</xsd:complexType>
 
 	<xsd:complexType name="Person">

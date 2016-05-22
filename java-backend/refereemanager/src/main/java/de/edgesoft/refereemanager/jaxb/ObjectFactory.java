@@ -130,6 +130,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Season }
+     * 
+     */
+    public Season createSeason() {
+        return new Season();
+    }
+
+    /**
      * Create an instance of {@link Person }
      * 
      */
