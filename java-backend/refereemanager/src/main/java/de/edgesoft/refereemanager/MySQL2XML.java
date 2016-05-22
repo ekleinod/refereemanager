@@ -33,6 +33,7 @@ import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.RefereeQuantity;
 import de.edgesoft.refereemanager.jaxb.Season;
 import de.edgesoft.refereemanager.jaxb.SexType;
+import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.jooq.tables.Addresses;
 import de.edgesoft.refereemanager.jooq.tables.ContactTypes;
@@ -48,6 +49,7 @@ import de.edgesoft.refereemanager.jooq.tables.RefereeStatuses;
 import de.edgesoft.refereemanager.jooq.tables.Referees;
 import de.edgesoft.refereemanager.jooq.tables.Seasons;
 import de.edgesoft.refereemanager.jooq.tables.SexTypes;
+import de.edgesoft.refereemanager.jooq.tables.StatusTypes;
 import de.edgesoft.refereemanager.jooq.tables.Urls;
 import de.edgesoft.refereemanager.utils.ConnectionHelper;
 import de.edgesoft.refereemanager.utils.Constants;
@@ -209,13 +211,33 @@ public class MySQL2XML extends AbstractMainClass {
 		for (Record record : result) {
 			ContactType aType = new ContactType();
 			
-			aType.setId(JAXBHelper.getID(ContactType.class, record.getValue(ContactTypes.CONTACT_TYPES.ID)));
+			aType.setId(JAXBHelper.getID(ContactType.class, record.getValue(ContactTypes.CONTACT_TYPES.ABBREVIATION)));
 			aType.setTitle(record.getValue(ContactTypes.CONTACT_TYPES.TITLE));
 			aType.setAbbreviation(record.getValue(ContactTypes.CONTACT_TYPES.ABBREVIATION));
 			aType.setRemark(record.getValue(ContactTypes.CONTACT_TYPES.REMARK));
 			
 			theContent.getContactType().add(aType);
 			mapContactTypes.put(record.getValue(ContactTypes.CONTACT_TYPES.ID), aType);
+		}
+		
+		
+		logger.info("converting status types.");
+		
+		result = create.select()
+				.from(StatusTypes.STATUS_TYPES)
+				.orderBy(StatusTypes.STATUS_TYPES.SID.asc())
+				.fetch();
+		
+		Map<UInteger, StatusType> mapStatusTypes = new HashMap<>();
+		for (Record record : result) {
+			StatusType aType = new StatusType();
+			
+			aType.setId(JAXBHelper.getID(StatusType.class, record.getValue(StatusTypes.STATUS_TYPES.SID)));
+			aType.setTitle(record.getValue(StatusTypes.STATUS_TYPES.TITLE));
+			aType.setRemark(record.getValue(StatusTypes.STATUS_TYPES.REMARK));
+			
+			theContent.getStatusType().add(aType);
+			mapStatusTypes.put(record.getValue(StatusTypes.STATUS_TYPES.ID), aType);
 		}
 		
 		
@@ -278,6 +300,7 @@ public class MySQL2XML extends AbstractMainClass {
 			
 			// references
 			aReferee.setSexType(mapSexTypes.get(record.getValue(People.PEOPLE.SEX_TYPE_ID)));
+			aReferee.setStatus(mapStatusTypes.get(record.getValue(RefereeStatuses.REFEREE_STATUSES.STATUS_TYPE_ID)));
 			
 			// 1:n
 			result2 = create.select()

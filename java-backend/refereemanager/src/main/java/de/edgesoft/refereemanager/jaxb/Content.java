@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="league" type="{}League" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sex_type" type="{}SexType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contact_type" type="{}ContactType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="status_type" type="{}StatusType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="referee_assignment_type" type="{}RefereeAssignmentType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -42,6 +43,7 @@ import javax.xml.bind.annotation.XmlType;
     "league",
     "sexType",
     "contactType",
+    "statusType",
     "refereeAssignmentType"
 })
 public class Content {
@@ -55,6 +57,8 @@ public class Content {
     protected List<SexType> sexType;
     @XmlElement(name = "contact_type")
     protected List<ContactType> contactType;
+    @XmlElement(name = "status_type")
+    protected List<StatusType> statusType;
     @XmlElement(name = "referee_assignment_type")
     protected List<RefereeAssignmentType> refereeAssignmentType;
 
@@ -225,6 +229,35 @@ public class Content {
             contactType = new ArrayList<ContactType>();
         }
         return this.contactType;
+    }
+
+    /**
+     * Gets the value of the statusType property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the statusType property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getStatusType().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link StatusType }
+     * 
+     * 
+     */
+    public List<StatusType> getStatusType() {
+        if (statusType == null) {
+            statusType = new ArrayList<StatusType>();
+        }
+        return this.statusType;
     }
 
     /**

@@ -148,6 +148,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link StatusType }
+     * 
+     */
+    public StatusType createStatusType() {
+        return new StatusType();
+    }
+
+    /**
      * Create an instance of {@link PhoneNumber }
      * 
      */

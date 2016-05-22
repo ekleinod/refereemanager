@@ -37,6 +37,7 @@ import de.edgesoft.edgeutils.commons.IDType;
     ContactType.class,
     SexType.class,
     League.class,
+    StatusType.class,
     RefereeAssignmentType.class,
     Person.class
 })
