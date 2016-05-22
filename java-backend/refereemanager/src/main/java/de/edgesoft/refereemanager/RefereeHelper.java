@@ -3,10 +3,12 @@ package de.edgesoft.refereemanager;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.types.UInteger;
 
 import de.edgesoft.edgeutils.Messages;
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.refereemanager.jooq.tables.People;
+import de.edgesoft.refereemanager.jooq.tables.RefereeStatuses;
 import de.edgesoft.refereemanager.jooq.tables.Referees;
 import de.edgesoft.refereemanager.utils.ConnectionHelper;
 
@@ -102,7 +104,9 @@ public class RefereeHelper extends AbstractMainClass {
 		
 		Result<Record> result = create.select()
 				.from(Referees.REFEREES)
+				.join(RefereeStatuses.REFEREE_STATUSES).onKey()
 				.join(People.PEOPLE).onKey()
+				.where(RefereeStatuses.REFEREE_STATUSES.SEASON_ID.eq(UInteger.valueOf(1)))
 				.fetch();
 		
 		return result;

@@ -44,6 +44,7 @@ import de.edgesoft.refereemanager.jooq.tables.People;
 import de.edgesoft.refereemanager.jooq.tables.PhoneNumbers;
 import de.edgesoft.refereemanager.jooq.tables.Pictures;
 import de.edgesoft.refereemanager.jooq.tables.RefereeAssignmentTypes;
+import de.edgesoft.refereemanager.jooq.tables.RefereeStatuses;
 import de.edgesoft.refereemanager.jooq.tables.Referees;
 import de.edgesoft.refereemanager.jooq.tables.Seasons;
 import de.edgesoft.refereemanager.jooq.tables.SexTypes;
@@ -174,6 +175,7 @@ public class MySQL2XML extends AbstractMainClass {
 		aSeason.setTitle(result.get(0).getValue(Seasons.SEASONS.TITLE));
 		aSeason.setRemark(result.get(0).getValue(Seasons.SEASONS.REMARK));
 		theContent.setSeason(aSeason);
+		UInteger theSeasonUID = result.get(0).getValue(Seasons.SEASONS.ID);
 		
 		
 		logger.info("converting sex types.");
@@ -242,7 +244,9 @@ public class MySQL2XML extends AbstractMainClass {
 		
 		result = create.select()
 				.from(Referees.REFEREES)
+				.join(RefereeStatuses.REFEREE_STATUSES).onKey()
 				.join(People.PEOPLE).onKey()
+				.where(RefereeStatuses.REFEREE_STATUSES.SEASON_ID.eq(theSeasonUID))
 				.orderBy(People.PEOPLE.ID.asc())
 				.fetch();
 		
