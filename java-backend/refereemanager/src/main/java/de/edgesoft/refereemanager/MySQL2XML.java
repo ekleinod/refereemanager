@@ -37,6 +37,8 @@ import de.edgesoft.refereemanager.jaxb.Season;
 import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.URL;
+import de.edgesoft.refereemanager.jaxb.Wish;
+import de.edgesoft.refereemanager.jaxb.WishType;
 import de.edgesoft.refereemanager.jooq.tables.Addresses;
 import de.edgesoft.refereemanager.jooq.tables.Clubs;
 import de.edgesoft.refereemanager.jooq.tables.ContactTypes;
@@ -56,6 +58,8 @@ import de.edgesoft.refereemanager.jooq.tables.Seasons;
 import de.edgesoft.refereemanager.jooq.tables.SexTypes;
 import de.edgesoft.refereemanager.jooq.tables.StatusTypes;
 import de.edgesoft.refereemanager.jooq.tables.Urls;
+import de.edgesoft.refereemanager.jooq.tables.WishTypes;
+import de.edgesoft.refereemanager.jooq.tables.Wishes;
 import de.edgesoft.refereemanager.utils.ConnectionHelper;
 import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.JAXBHelper;
@@ -334,6 +338,7 @@ public class MySQL2XML extends AbstractMainClass {
 				.orderBy(Leagues.LEAGUES.ABBREVIATION.asc())
 				.fetch();
 		
+		Map<UInteger, League> mapLeagues = new HashMap<>();
 		for (Record record : result) {
 			
 			if (record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("1") || 
@@ -343,6 +348,7 @@ public class MySQL2XML extends AbstractMainClass {
 				
 				League aLeague = new League();
 				
+				aLeague.setId(JAXBHelper.getID(League.class, record.getValue(Leagues.LEAGUES.ABBREVIATION)));
 				aLeague.setTitle(record.getValue(Leagues.LEAGUES.TITLE));
 				aLeague.setAbbreviation(record.getValue(Leagues.LEAGUES.ABBREVIATION));
 				aLeague.setRemark(record.getValue(Leagues.LEAGUES.REMARK));
@@ -368,6 +374,7 @@ public class MySQL2XML extends AbstractMainClass {
 				}
 				
 				theContent.getLeague().add(aLeague);
+				mapLeagues.put(record.getValue(Leagues.LEAGUES.ID), aLeague);
 			}
 			
 		}
@@ -554,6 +561,49 @@ public class MySQL2XML extends AbstractMainClass {
 				aClubRelation.setClub(mapClubs.get(record2.getValue(RefereeRelations.REFEREE_RELATIONS.CLUB_ID)));
 				
 				aReferee.getClubRelation().add(aClubRelation);
+			}
+			
+			
+			result2 = create.select()
+					.from(Wishes.WISHES)
+					.join(WishTypes.WISH_TYPES).onKey()
+					.where(Wishes.WISHES.REFEREE_ID.eq(record.getValue(Referees.REFEREES.ID)))
+					.fetch();
+			
+			for (Record record2 : result2) {
+				Wish aWish = new Wish();
+				
+				aWish.setType(WishType.fromValue(record2.getValue(WishTypes.WISH_TYPES.SID)));
+				
+				if (record2.getValue(Wishes.WISHES.SATURDAY) != null) {
+					aWish.setSaturday(record2.getValue(Wishes.WISHES.SATURDAY) == 1);
+				}
+				if (record2.getValue(Wishes.WISHES.SUNDAY) != null) {
+					aWish.setSunday(record2.getValue(Wishes.WISHES.SUNDAY) == 1);
+				}
+				if (record2.getValue(Wishes.WISHES.TOURNAMENT) != null) {
+					aWish.setTournamentOnly(record2.getValue(Wishes.WISHES.TOURNAMENT) == 1);
+				}
+				
+				if (record2.getValue(Wishes.WISHES.CLUB_ID) != null) {
+					aWish.setClub(mapClubs.get(record2.getValue(Wishes.WISHES.CLUB_ID)));
+				}
+				if ((record2.getValue(Wishes.WISHES.LEAGUE_ID) != null) && (mapLeagues.get(record2.getValue(Wishes.WISHES.LEAGUE_ID)) != null)) {
+					aWish.setLeague(mapLeagues.get(record2.getValue(Wishes.WISHES.LEAGUE_ID)));
+				}
+				if (record2.getValue(Wishes.WISHES.SEX_TYPE_ID) != null) {
+					aWish.setSexType(mapSexTypes.get(record2.getValue(Wishes.WISHES.SEX_TYPE_ID)));
+				}
+
+				if ((aWish.isSaturday() != null) ||
+						(aWish.isSunday() != null) ||
+						(aWish.isTournamentOnly() != null) ||
+						(aWish.getClub() != null) ||
+						(aWish.getLeague() != null) ||
+						(aWish.getSexType() != null)) {
+					
+					aReferee.getWish().add(aWish);
+				}
 			}
 			
 			
