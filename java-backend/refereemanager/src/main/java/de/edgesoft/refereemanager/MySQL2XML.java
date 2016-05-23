@@ -168,24 +168,19 @@ public class MySQL2XML extends AbstractMainClass {
 			
 			mgrDoc.setContent(convertSeason(record));
 			
-			
-			logger.info(MessageFormat.format("writing xml file ''{0}''.", theXMLFile));
-			
 			try {
 				StringBuilder sbFilename = new StringBuilder();
 				sbFilename.append(thePath);
 				sbFilename.append(System.getProperty("file.separator"));
-				sbFilename.append((theXMLFile == null) ? theXMLFile : "refereemanager_%s.xml");
+				sbFilename.append(String.format(((theXMLFile == null) ? "refereemanager_%s.xml" : theXMLFile), record.getValue(Seasons.SEASONS.YEAR_START)));
 				
-				JAXBFiles.marshal(new ObjectFactory().createRefereemanager(mgrDoc), 
-						String.format(sbFilename.toString(), record.getValue(Seasons.SEASONS.YEAR_START)), 
-						null);
+				logger.info(MessageFormat.format("writing xml file ''{0}''.", sbFilename.toString()));
+				
+				JAXBFiles.marshal(new ObjectFactory().createRefereemanager(mgrDoc), sbFilename.toString(), null);
 				
 			} catch (EdgeUtilsException e) {
 				logger.error(e);
 			}
-			
-			logger.info("stopped conversion.");
 		}
 		
 		logger.info("stopped conversion.");
