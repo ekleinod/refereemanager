@@ -35,8 +35,10 @@ import de.edgesoft.edgeutils.commons.IDType;
 })
 @XmlSeeAlso({
     ContactType.class,
+    TrainingLevelType.class,
     SexType.class,
     League.class,
+    Club.class,
     StatusType.class,
     RefereeAssignmentType.class,
     Person.class

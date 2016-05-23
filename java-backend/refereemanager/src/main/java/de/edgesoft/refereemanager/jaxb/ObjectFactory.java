@@ -26,6 +26,7 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _Refereemanager_QNAME = new QName("", "refereemanager");
+    private final static QName _ClubContactPerson_QNAME = new QName("", "contact_person");
     private final static QName _LeagueRefereeReportRecipient_QNAME = new QName("", "referee_report_recipient");
 
     /**
@@ -60,6 +61,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link TrainingLevelType }
+     * 
+     */
+    public TrainingLevelType createTrainingLevelType() {
+        return new TrainingLevelType();
+    }
+
+    /**
      * Create an instance of {@link RefereeQuantity }
      * 
      */
@@ -89,6 +98,14 @@ public class ObjectFactory {
      */
     public Picture createPicture() {
         return new Picture();
+    }
+
+    /**
+     * Create an instance of {@link TrainingLevel }
+     * 
+     */
+    public TrainingLevel createTrainingLevel() {
+        return new TrainingLevel();
     }
 
     /**
@@ -140,11 +157,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Wish }
+     * 
+     */
+    public Wish createWish() {
+        return new Wish();
+    }
+
+    /**
      * Create an instance of {@link Content }
      * 
      */
     public Content createContent() {
         return new Content();
+    }
+
+    /**
+     * Create an instance of {@link Club }
+     * 
+     */
+    public Club createClub() {
+        return new Club();
     }
 
     /**
@@ -161,6 +194,14 @@ public class ObjectFactory {
      */
     public PhoneNumber createPhoneNumber() {
         return new PhoneNumber();
+    }
+
+    /**
+     * Create an instance of {@link ClubRelation }
+     * 
+     */
+    public ClubRelation createClubRelation() {
+        return new ClubRelation();
     }
 
     /**
@@ -186,6 +227,16 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "refereemanager")
     public JAXBElement<RefereeManager> createRefereemanager(RefereeManager value) {
         return new JAXBElement<RefereeManager>(_Refereemanager_QNAME, RefereeManager.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "contact_person", scope = Club.class)
+    @XmlIDREF
+    public JAXBElement<Object> createClubContactPerson(Object value) {
+        return new JAXBElement<Object>(_ClubContactPerson_QNAME, Object.class, Club.class, value);
     }
 
     /**

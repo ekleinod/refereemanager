@@ -111,8 +111,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 					<!-- 1:n -->
 					<xsd:element name="training_level" type="TrainingLevel" minOccurs="0" maxOccurs="unbounded" />
-					<xsd:element name="wish_prefer" type="Wish" minOccurs="0" maxOccurs="unbounded" />
-					<xsd:element name="wish_avoid" type="Wish" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="wish" type="Wish" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="club_relation" type="ClubRelation" minOccurs="2" maxOccurs="2" />
 
 					<!-- references -->
 					<xsd:element name="status" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
@@ -120,24 +120,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 							<xsd:appinfo>
 								<jxb:property>
 									<jxb:baseType name="StatusType" />
-								</jxb:property>
-							</xsd:appinfo>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element name="club_member" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
-						<xsd:annotation>
-							<xsd:appinfo>
-								<jxb:property>
-									<jxb:baseType name="Club" />
-								</jxb:property>
-							</xsd:appinfo>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element name="club_referee" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
-						<xsd:annotation>
-							<xsd:appinfo>
-								<jxb:property>
-									<jxb:baseType name="Club" />
 								</jxb:property>
 							</xsd:appinfo>
 						</xsd:annotation>
@@ -254,6 +236,28 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:complexContent>
 	</xsd:complexType>
 
+	<xsd:complexType name="Club">
+		<xsd:complexContent>
+			<xsd:extension base="TitledIDType">
+				<xsd:sequence>
+					<xsd:element name="abbreviation" type="xsd:string" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="address" type="Address" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="u_r_l" type="URL" minOccurs="0" maxOccurs="unbounded" />
+
+					<xsd:element name="contact_person" type="xsd:IDREF" minOccurs="0" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Person" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 	<xsd:complexType name="RefereeQuantity">
 		<xsd:sequence>
 			<xsd:element name="quantity" type="xsd:int" minOccurs="1" maxOccurs="1" />
@@ -286,8 +290,26 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:sequence>
 	</xsd:complexType>
 
+	<xsd:complexType name="ClubRelation">
+		<xsd:sequence>
+			<xsd:element name="type" type="ClubRelationType" minOccurs="1" maxOccurs="1" />
+
+			<xsd:element name="club" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property>
+							<jxb:baseType name="Club" />
+						</jxb:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
 	<xsd:complexType name="Wish">
 		<xsd:sequence>
+			<xsd:element name="type" type="WishType" minOccurs="1" maxOccurs="1" />
+
 			<xsd:element name="saturday" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
 			<xsd:element name="sunday" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
 			<xsd:element name="tournament_only" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
@@ -298,6 +320,24 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:appinfo>
 						<jxb:property>
 							<jxb:baseType name="Club" />
+						</jxb:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="league" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property>
+							<jxb:baseType name="League" />
+						</jxb:property>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="sex_type" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property>
+							<jxb:baseType name="SexType" />
 						</jxb:property>
 					</xsd:appinfo>
 				</xsd:annotation>
@@ -353,6 +393,21 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+
+	<!-- Data types -->
+	<xsd:simpleType name="WishType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="prefer" />
+			<xsd:enumeration value="avoid" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ClubRelationType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="member" />
+			<xsd:enumeration value="referee" />
+		</xsd:restriction>
+	</xsd:simpleType>
 
 	<!-- Generic types -->
 	<xsd:complexType name="TitledIDType">
