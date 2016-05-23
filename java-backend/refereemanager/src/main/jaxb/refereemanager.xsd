@@ -52,6 +52,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:element name="person" type="Person" minOccurs="0" maxOccurs="unbounded" />
 			<xsd:element name="referee" type="Referee" minOccurs="0" maxOccurs="unbounded" />
 			<xsd:element name="league" type="League" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="club" type="Club" minOccurs="0" maxOccurs="unbounded" />
 
 			<!-- types -->
 			<xsd:element name="sex_type" type="SexType" minOccurs="0" maxOccurs="unbounded" />

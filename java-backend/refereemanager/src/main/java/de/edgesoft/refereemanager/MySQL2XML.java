@@ -19,6 +19,7 @@ import de.edgesoft.edgeutils.commons.InfoType;
 import de.edgesoft.edgeutils.commons.ext.VersionTypeExt;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.Address;
+import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.EMail;
@@ -35,6 +36,7 @@ import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.jooq.tables.Addresses;
+import de.edgesoft.refereemanager.jooq.tables.Clubs;
 import de.edgesoft.refereemanager.jooq.tables.ContactTypes;
 import de.edgesoft.refereemanager.jooq.tables.Contacts;
 import de.edgesoft.refereemanager.jooq.tables.Emails;
@@ -297,6 +299,26 @@ public class MySQL2XML extends AbstractMainClass {
 		}
 		
 		
+		logger.info("converting clubs.");
+		
+		result = create.select()
+				.from(Clubs.CLUBS)
+				.orderBy(Clubs.CLUBS.NAME.asc())
+				.fetch();
+		
+		for (Record record : result) {
+			
+			Club aClub = new Club();
+			
+			aClub.setTitle(record.getValue(Clubs.CLUBS.NAME));
+			aClub.setAbbreviation(record.getValue(Clubs.CLUBS.ABBREVIATION));
+			aClub.setRemark(record.getValue(Clubs.CLUBS.REMARK));
+			
+			theContent.getClub().add(aClub);
+			
+		}
+		
+
 		logger.info("converting referees.");
 		
 		result = create.select()
