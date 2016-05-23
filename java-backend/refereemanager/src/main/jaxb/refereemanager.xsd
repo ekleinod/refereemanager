@@ -295,7 +295,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:sequence>
 			<xsd:element name="type" type="ClubRelationType" minOccurs="1" maxOccurs="1" />
 
-			<xsd:element name="club" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+			<xsd:element name="club" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:appinfo>
 						<jxb:property>

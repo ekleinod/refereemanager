@@ -20,6 +20,8 @@ import de.edgesoft.edgeutils.commons.ext.VersionTypeExt;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.Club;
+import de.edgesoft.refereemanager.jaxb.ClubRelation;
+import de.edgesoft.refereemanager.jaxb.ClubRelationType;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.EMail;
@@ -46,6 +48,8 @@ import de.edgesoft.refereemanager.jooq.tables.People;
 import de.edgesoft.refereemanager.jooq.tables.PhoneNumbers;
 import de.edgesoft.refereemanager.jooq.tables.Pictures;
 import de.edgesoft.refereemanager.jooq.tables.RefereeAssignmentTypes;
+import de.edgesoft.refereemanager.jooq.tables.RefereeRelationTypes;
+import de.edgesoft.refereemanager.jooq.tables.RefereeRelations;
 import de.edgesoft.refereemanager.jooq.tables.RefereeStatuses;
 import de.edgesoft.refereemanager.jooq.tables.Referees;
 import de.edgesoft.refereemanager.jooq.tables.Seasons;
@@ -306,15 +310,65 @@ public class MySQL2XML extends AbstractMainClass {
 				.orderBy(Clubs.CLUBS.NAME.asc())
 				.fetch();
 		
+		Map<UInteger, Club> mapClubs = new HashMap<>();
 		for (Record record : result) {
 			
 			Club aClub = new Club();
 			
+			aClub.setId(JAXBHelper.getID(Club.class, record.getValue(Clubs.CLUBS.ID)));
 			aClub.setTitle(record.getValue(Clubs.CLUBS.NAME));
 			aClub.setAbbreviation(record.getValue(Clubs.CLUBS.ABBREVIATION));
 			aClub.setRemark(record.getValue(Clubs.CLUBS.REMARK));
 			
 			theContent.getClub().add(aClub);
+			mapClubs.put(record.getValue(Clubs.CLUBS.ID), aClub);
+			
+		}
+		
+		
+		logger.info("converting leagues.");
+		
+		result = create.select()
+				.from(Leagues.LEAGUES)
+				.join(LeagueTypes.LEAGUE_TYPES).onKey()
+				.orderBy(Leagues.LEAGUES.ABBREVIATION.asc())
+				.fetch();
+		
+		for (Record record : result) {
+			
+			if (record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("1") || 
+					record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("3") || 
+					record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("OL") || 
+					record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("RL")) {
+				
+				League aLeague = new League();
+				
+				aLeague.setTitle(record.getValue(Leagues.LEAGUES.TITLE));
+				aLeague.setAbbreviation(record.getValue(Leagues.LEAGUES.ABBREVIATION));
+				aLeague.setRemark(record.getValue(Leagues.LEAGUES.REMARK));
+				
+				aLeague.setSexType(mapSexTypes.get(record.getValue(LeagueTypes.LEAGUE_TYPES.SEX_TYPE_ID)));
+				
+				RefereeQuantity aQuantity = new RefereeQuantity();
+				aQuantity.setRefereeAssigmentType(mapRefereeAssignmentTypes.get("referee"));
+				aQuantity.setQuantity(1);
+				aLeague.getRefereeQuantity().add(aQuantity);
+				
+				if (record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("1") || record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("3")) {
+					aQuantity = new RefereeQuantity();
+					aQuantity.setRefereeAssigmentType(mapRefereeAssignmentTypes.get("standbyref"));
+					aQuantity.setQuantity(1);
+					aLeague.getRefereeQuantity().add(aQuantity);
+					
+					aQuantity = new RefereeQuantity();
+					aQuantity.setRefereeAssigmentType(mapRefereeAssignmentTypes.get("umpire"));
+					aQuantity.setQuantity(record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("1") ? 3 : 1);
+					aLeague.getRefereeQuantity().add(aQuantity);
+					
+				}
+				
+				theContent.getLeague().add(aLeague);
+			}
 			
 		}
 		
@@ -482,54 +536,28 @@ public class MySQL2XML extends AbstractMainClass {
 			}
 			
 			
-			theContent.getReferee().add(aReferee);
-		}
-		
-		
-		logger.info("converting leagues.");
-		
-		result = create.select()
-				.from(Leagues.LEAGUES)
-				.join(LeagueTypes.LEAGUE_TYPES).onKey()
-				.orderBy(Leagues.LEAGUES.ABBREVIATION.asc())
-				.fetch();
-		
-		for (Record record : result) {
+			result2 = create.select()
+					.from(RefereeRelations.REFEREE_RELATIONS)
+					.join(RefereeRelationTypes.REFEREE_RELATION_TYPES).onKey()
+					.where(RefereeRelations.REFEREE_RELATIONS.REFEREE_ID.eq(record.getValue(Referees.REFEREES.ID)))
+					.and(RefereeRelations.REFEREE_RELATIONS.SEASON_ID.eq(theSeasonUID))
+					.fetch();
 			
-			if (record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("1") || 
-					record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("3") || 
-					record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("OL") || 
-					record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("RL")) {
+			for (Record record2 : result2) {
+				ClubRelation aClubRelation = new ClubRelation();
 				
-				League aLeague = new League();
-				
-				aLeague.setTitle(record.getValue(Leagues.LEAGUES.TITLE));
-				aLeague.setAbbreviation(record.getValue(Leagues.LEAGUES.ABBREVIATION));
-				aLeague.setRemark(record.getValue(Leagues.LEAGUES.REMARK));
-				
-				aLeague.setSexType(mapSexTypes.get(record.getValue(LeagueTypes.LEAGUE_TYPES.SEX_TYPE_ID)));
-				
-				RefereeQuantity aQuantity = new RefereeQuantity();
-				aQuantity.setRefereeAssigmentType(mapRefereeAssignmentTypes.get("referee"));
-				aQuantity.setQuantity(1);
-				aLeague.getRefereeQuantity().add(aQuantity);
-				
-				if (record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("1") || record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("3")) {
-					aQuantity = new RefereeQuantity();
-					aQuantity.setRefereeAssigmentType(mapRefereeAssignmentTypes.get("standbyref"));
-					aQuantity.setQuantity(1);
-					aLeague.getRefereeQuantity().add(aQuantity);
-					
-					aQuantity = new RefereeQuantity();
-					aQuantity.setRefereeAssigmentType(mapRefereeAssignmentTypes.get("umpire"));
-					aQuantity.setQuantity(record.getValue(Leagues.LEAGUES.ABBREVIATION).startsWith("1") ? 3 : 1);
-					aLeague.getRefereeQuantity().add(aQuantity);
-					
+				String sType = record2.getValue(RefereeRelationTypes.REFEREE_RELATION_TYPES.SID);
+				if (sType.equals("reffor")) {
+					sType = "referee";
 				}
+				aClubRelation.setType(ClubRelationType.fromValue(sType));
+				aClubRelation.setClub(mapClubs.get(record2.getValue(RefereeRelations.REFEREE_RELATIONS.CLUB_ID)));
 				
-				theContent.getLeague().add(aLeague);
+				aReferee.getClubRelation().add(aClubRelation);
 			}
 			
+			
+			theContent.getReferee().add(aReferee);
 		}
 		
 		return theContent;
