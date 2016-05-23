@@ -14,7 +14,6 @@ import org.jooq.Result;
 import org.jooq.types.UInteger;
 
 import de.edgesoft.edgeutils.EdgeUtilsException;
-import de.edgesoft.edgeutils.Messages;
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.commons.InfoType;
 import de.edgesoft.edgeutils.commons.ext.VersionTypeExt;
@@ -113,71 +112,112 @@ public class MySQL2XML extends AbstractMainClass {
 		
 		setDescription("Converts MySQL data to XML data.");
 		
-		addOption("f", "file", "output file.", true, true);
-		addOption("s", "season", "season of file.", true, true);
-		addOption("h", "help", "display help message", false, false);
+		addOption("p", "path", "output path.", true, true);
+		addOption("f", "file", "output file name template.", true, false);
+		addOption("s", "season", "season of file.", true, false);
 		
 		init(args);
 		
-		boolean showHelp = true;
-		
-		if (hasOption("f")) {
-			convertMySQL2XML(getOptionValue("f"), Integer.valueOf(getOptionValue("s")));
-			showHelp = false;
-		} 
-		
-		if (showHelp) {
-			Messages.printMessage(getUsage());
-		}
+		convertMySQL2XML(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"));
 		
 	}
 
 	/**
 	 * Converts data from MySQL to XML.
 	 * 
-	 * @param theXMLFile xml filename
-	 * @param theSeason season
+	 * @param thePath output path
+	 * @param theXMLFile xml filename (empty = refereemanager_%s.xml)
+	 * @param theSeason season (empty = all seasons)
 	 * 
 	 * @version 0.1.0
 	 * @since 0.1.0
 	 */
-	public void convertMySQL2XML(String theXMLFile, Integer theSeason) {
+	public void convertMySQL2XML(String thePath, String theXMLFile, String theSeason) {
 		
 		logger.info("start conversion.");
 		
 		DSLContext create = ConnectionHelper.getContext();
-		Result<Record> result = null;
-		Result<Record> result2 = null;
 		
 		logger.info("connection context created.");
 		
 		logger.info("initializing conversion.");
 		
-		RefereeManager mgrDoc = new RefereeManager();
+		Result<Record> result = null;
 		
-		mgrDoc.setInfo(new InfoType());
-		mgrDoc.getInfo().setCreated(Calendar.getInstance());
-		mgrDoc.getInfo().setModified(Calendar.getInstance());
-		mgrDoc.getInfo().setCreator(this.getClass().getCanonicalName());
-		mgrDoc.getInfo().setAppversion(new VersionTypeExt(Constants.APPVERSION));
-		mgrDoc.getInfo().setDocversion(new VersionTypeExt(Constants.DOCVERSION));
+		if (theSeason == null) {
+			result = create.select()
+					.from(Seasons.SEASONS)
+					.fetch();
+		} else {
+			result = create.select()
+					.from(Seasons.SEASONS)
+					.where(Seasons.SEASONS.YEAR_START.eq(Integer.parseInt(theSeason)))
+					.fetch();
+		}
+		
+		for (Record record : result) {
+			RefereeManager mgrDoc = new RefereeManager();
+			
+			mgrDoc.setInfo(new InfoType());
+			mgrDoc.getInfo().setCreated(Calendar.getInstance());
+			mgrDoc.getInfo().setModified(Calendar.getInstance());
+			mgrDoc.getInfo().setCreator(this.getClass().getCanonicalName());
+			mgrDoc.getInfo().setAppversion(new VersionTypeExt(Constants.APPVERSION));
+			mgrDoc.getInfo().setDocversion(new VersionTypeExt(Constants.DOCVERSION));
+			
+			
+			mgrDoc.setContent(convertSeason(record));
+			
+			
+			logger.info(MessageFormat.format("writing xml file ''{0}''.", theXMLFile));
+			
+			try {
+				StringBuilder sbFilename = new StringBuilder();
+				sbFilename.append(thePath);
+				sbFilename.append(System.getProperty("file.separator"));
+				sbFilename.append((theXMLFile == null) ? theXMLFile : "refereemanager_%s.xml");
+				
+				JAXBFiles.marshal(new ObjectFactory().createRefereemanager(mgrDoc), 
+						String.format(sbFilename.toString(), record.getValue(Seasons.SEASONS.YEAR_START)), 
+						null);
+				
+			} catch (EdgeUtilsException e) {
+				logger.error(e);
+			}
+			
+			logger.info("stopped conversion.");
+		}
+		
+		logger.info("stopped conversion.");
+		
+	}
+	
+	/**
+	 * Converts data from MySQL to XML for one season.
+	 * 
+	 * @param theSeasonRecord season
+	 * @return content
+	 * 
+	 * @version 0.1.0
+	 * @since 0.1.0
+	 */
+	private Content convertSeason(Record theSeasonRecord) {
 		
 		Content theContent = new Content();
-		mgrDoc.setContent(theContent);
 		
-		logger.info("converting season.");
+		DSLContext create = ConnectionHelper.getContext();
+		Result<Record> result = null;
+		Result<Record> result2 = null;
 		
-		result = create.select()
-				.from(Seasons.SEASONS)
-				.where(Seasons.SEASONS.YEAR_START.eq(theSeason))
-				.fetch();
+		logger.info(String.format("converting season %s.", theSeasonRecord.getValue(Seasons.SEASONS.YEAR_START)));
 		
 		Season aSeason = new Season();
-		aSeason.setStartYear(result.get(0).getValue(Seasons.SEASONS.YEAR_START));
-		aSeason.setTitle(result.get(0).getValue(Seasons.SEASONS.TITLE));
-		aSeason.setRemark(result.get(0).getValue(Seasons.SEASONS.REMARK));
+		aSeason.setStartYear(theSeasonRecord.getValue(Seasons.SEASONS.YEAR_START));
+		aSeason.setTitle(theSeasonRecord.getValue(Seasons.SEASONS.TITLE));
+		aSeason.setRemark(theSeasonRecord.getValue(Seasons.SEASONS.REMARK));
 		theContent.setSeason(aSeason);
-		UInteger theSeasonUID = result.get(0).getValue(Seasons.SEASONS.ID);
+		
+		UInteger theSeasonUID = theSeasonRecord.getValue(Seasons.SEASONS.ID);
 		
 		
 		logger.info("converting sex types.");
@@ -314,8 +354,8 @@ public class MySQL2XML extends AbstractMainClass {
 				aPic.setRemark(record2.getValue(Pictures.PICTURES.REMARK));
 				aReferee.getPicture().add(aPic);
 			}
-
-
+			
+			
 			result2 = create.select()
 					.from(Emails.EMAILS)
 					.join(Contacts.CONTACTS).onKey()
@@ -340,8 +380,8 @@ public class MySQL2XML extends AbstractMainClass {
 				
 				aReferee.getEMail().add(aContact);
 			}
-
-
+			
+			
 			result2 = create.select()
 					.from(Addresses.ADDRESSES)
 					.join(Contacts.CONTACTS).onKey()
@@ -369,8 +409,8 @@ public class MySQL2XML extends AbstractMainClass {
 				
 				aReferee.getAddress().add(aContact);
 			}
-
-
+			
+			
 			result2 = create.select()
 					.from(PhoneNumbers.PHONE_NUMBERS)
 					.join(Contacts.CONTACTS).onKey()
@@ -397,8 +437,8 @@ public class MySQL2XML extends AbstractMainClass {
 				
 				aReferee.getPhoneNumber().add(aContact);
 			}
-
-
+			
+			
 			result2 = create.select()
 					.from(Urls.URLS)
 					.join(Contacts.CONTACTS).onKey()
@@ -423,7 +463,7 @@ public class MySQL2XML extends AbstractMainClass {
 				
 				aReferee.getURL().add(aContact);
 			}
-
+			
 			
 			theContent.getReferee().add(aReferee);
 		}
@@ -472,19 +512,10 @@ public class MySQL2XML extends AbstractMainClass {
 				
 				theContent.getLeague().add(aLeague);
 			}
-						
+			
 		}
 		
-		
-		logger.info(MessageFormat.format("writing xml file ''{0}''.", theXMLFile));
-		
-		try {
-			JAXBFiles.marshal(new ObjectFactory().createRefereemanager(mgrDoc), theXMLFile, null);
-		} catch (EdgeUtilsException e) {
-			logger.error(e);
-		}
-
-		logger.info("stopped conversion.");
+		return theContent;
 		
 	}
 	
