@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *       &lt;sequence>
  *         &lt;element name="since" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
  *         &lt;element name="update" type="{http://www.w3.org/2001/XMLSchema}date" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="training_level_type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
+ *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "TrainingLevel", propOrder = {
     "since",
     "update",
-    "trainingLevelType"
+    "type"
 })
 public class TrainingLevel {
 
@@ -50,10 +50,10 @@ public class TrainingLevel {
     @XmlJavaTypeAdapter(Adapter2 .class)
     @XmlSchemaType(name = "date")
     protected List<Calendar> update;
-    @XmlElement(name = "training_level_type", required = true, type = Object.class)
+    @XmlElement(required = true, type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
-    protected TrainingLevelType trainingLevelType;
+    protected TrainingLevelType type;
 
     /**
      * Gets the value of the since property.
@@ -109,27 +109,27 @@ public class TrainingLevel {
     }
 
     /**
-     * Gets the value of the trainingLevelType property.
+     * Gets the value of the type property.
      * 
      * @return
      *     possible object is
      *     {@link Object }
      *     
      */
-    public TrainingLevelType getTrainingLevelType() {
-        return trainingLevelType;
+    public TrainingLevelType getType() {
+        return type;
     }
 
     /**
-     * Sets the value of the trainingLevelType property.
+     * Sets the value of the type property.
      * 
      * @param value
      *     allowed object is
      *     {@link Object }
      *     
      */
-    public void setTrainingLevelType(TrainingLevelType value) {
-        this.trainingLevelType = value;
+    public void setType(TrainingLevelType value) {
+        this.type = value;
     }
 
 }

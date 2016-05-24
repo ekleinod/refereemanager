@@ -655,7 +655,7 @@ public class MySQL2XML extends AbstractMainClass {
 				
 				Result<Record> result3 = create.select()
 						.from(TrainingUpdates.TRAINING_UPDATES)
-						.where(TrainingUpdates.TRAINING_UPDATES.TRAINING_LEVEL_ID.eq(record.getValue(TrainingLevels.TRAINING_LEVELS.ID)))
+						.where(TrainingUpdates.TRAINING_UPDATES.TRAINING_LEVEL_ID.eq(record2.getValue(TrainingLevels.TRAINING_LEVELS.ID)))
 						.orderBy(TrainingUpdates.TRAINING_UPDATES.UPDATE.asc())
 						.fetch();
 				

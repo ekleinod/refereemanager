@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="contact_type" type="{}ContactType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="status_type" type="{}StatusType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="referee_assignment_type" type="{}RefereeAssignmentType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="training_level_type" type="{}TrainingLevelType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -46,7 +47,8 @@ import javax.xml.bind.annotation.XmlType;
     "sexType",
     "contactType",
     "statusType",
-    "refereeAssignmentType"
+    "refereeAssignmentType",
+    "trainingLevelType"
 })
 public class Content {
 
@@ -64,6 +66,8 @@ public class Content {
     protected List<StatusType> statusType;
     @XmlElement(name = "referee_assignment_type")
     protected List<RefereeAssignmentType> refereeAssignmentType;
+    @XmlElement(name = "training_level_type")
+    protected List<TrainingLevelType> trainingLevelType;
 
     /**
      * Gets the value of the season property.
@@ -319,6 +323,35 @@ public class Content {
             refereeAssignmentType = new ArrayList<RefereeAssignmentType>();
         }
         return this.refereeAssignmentType;
+    }
+
+    /**
+     * Gets the value of the trainingLevelType property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the trainingLevelType property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getTrainingLevelType().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link TrainingLevelType }
+     * 
+     * 
+     */
+    public List<TrainingLevelType> getTrainingLevelType() {
+        if (trainingLevelType == null) {
+            trainingLevelType = new ArrayList<TrainingLevelType>();
+        }
+        return this.trainingLevelType;
     }
 
 }
