@@ -36,6 +36,8 @@ import de.edgesoft.refereemanager.jaxb.RefereeQuantity;
 import de.edgesoft.refereemanager.jaxb.Season;
 import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jaxb.StatusType;
+import de.edgesoft.refereemanager.jaxb.TrainingLevel;
+import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
 import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.jaxb.Wish;
 import de.edgesoft.refereemanager.jaxb.WishType;
@@ -57,6 +59,9 @@ import de.edgesoft.refereemanager.jooq.tables.Referees;
 import de.edgesoft.refereemanager.jooq.tables.Seasons;
 import de.edgesoft.refereemanager.jooq.tables.SexTypes;
 import de.edgesoft.refereemanager.jooq.tables.StatusTypes;
+import de.edgesoft.refereemanager.jooq.tables.TrainingLevelTypes;
+import de.edgesoft.refereemanager.jooq.tables.TrainingLevels;
+import de.edgesoft.refereemanager.jooq.tables.TrainingUpdates;
 import de.edgesoft.refereemanager.jooq.tables.Urls;
 import de.edgesoft.refereemanager.jooq.tables.WishTypes;
 import de.edgesoft.refereemanager.jooq.tables.Wishes;
@@ -307,6 +312,29 @@ public class MySQL2XML extends AbstractMainClass {
 		}
 		
 		
+		logger.info("converting training level types.");
+		
+		result = create.select()
+				.from(TrainingLevelTypes.TRAINING_LEVEL_TYPES)
+				.orderBy(TrainingLevelTypes.TRAINING_LEVEL_TYPES.RANK.asc())
+				.fetch();
+		
+		Map<UInteger, TrainingLevelType> mapTrainingLevelTypes = new HashMap<>();
+		for (Record record : result) {
+			TrainingLevelType aType = new TrainingLevelType();
+			
+			aType.setId(JAXBHelper.getID(TrainingLevelType.class, record.getValue(TrainingLevelTypes.TRAINING_LEVEL_TYPES.ABBREVIATION)));
+			aType.setTitle(record.getValue(TrainingLevelTypes.TRAINING_LEVEL_TYPES.TITLE));
+			aType.setAbbreviation(record.getValue(TrainingLevelTypes.TRAINING_LEVEL_TYPES.ABBREVIATION));
+			aType.setRank(record.getValue(TrainingLevelTypes.TRAINING_LEVEL_TYPES.RANK).intValue());
+			aType.setUpdateInterval(record.getValue(TrainingLevelTypes.TRAINING_LEVEL_TYPES.UPDATE_INTERVAL).intValue());
+			aType.setRemark(record.getValue(TrainingLevelTypes.TRAINING_LEVEL_TYPES.REMARK));
+			
+			theContent.getTrainingLevelType().add(aType);
+			mapTrainingLevelTypes.put(record.getValue(TrainingLevelTypes.TRAINING_LEVEL_TYPES.ID), aType);
+		}
+		
+		
 		logger.info("converting clubs.");
 		
 		result = create.select()
@@ -402,13 +430,14 @@ public class MySQL2XML extends AbstractMainClass {
 			aReferee.setFirstName(record.getValue(People.PEOPLE.FIRST_NAME));
 			aReferee.setName(record.getValue(People.PEOPLE.NAME));
 			
-			Calendar calTemp = new GregorianCalendar();
 			if (record.getValue(People.PEOPLE.BIRTHDAY) != null) {
+				Calendar calTemp = new GregorianCalendar();
 				calTemp.setTime(record.getValue(People.PEOPLE.BIRTHDAY));
 				aReferee.setBirthday(calTemp);
 			}
 			
 			if (record.getValue(People.PEOPLE.DAYOFDEATH) != null) {
+				Calendar calTemp = new GregorianCalendar();
 				calTemp.setTime(record.getValue(People.PEOPLE.DAYOFDEATH));
 				aReferee.setDayOfDeath(calTemp);
 			}
@@ -604,6 +633,39 @@ public class MySQL2XML extends AbstractMainClass {
 					
 					aReferee.getWish().add(aWish);
 				}
+			}
+			
+			
+			result2 = create.select()
+					.from(TrainingLevels.TRAINING_LEVELS)
+					.where(TrainingLevels.TRAINING_LEVELS.REFEREE_ID.eq(record.getValue(Referees.REFEREES.ID)))
+					.orderBy(TrainingLevels.TRAINING_LEVELS.SINCE.asc())
+					.fetch();
+			
+			for (Record record2 : result2) {
+				TrainingLevel aTrainingLevel = new TrainingLevel();
+				
+				aTrainingLevel.setType(mapTrainingLevelTypes.get(record2.getValue(TrainingLevels.TRAINING_LEVELS.TRAINING_LEVEL_TYPE_ID)));
+				
+				if (record2.getValue(TrainingLevels.TRAINING_LEVELS.SINCE) != null) {
+					Calendar calTemp = new GregorianCalendar();
+					calTemp.setTime(record2.getValue(TrainingLevels.TRAINING_LEVELS.SINCE));
+					aTrainingLevel.setSince(calTemp);
+				}
+				
+				Result<Record> result3 = create.select()
+						.from(TrainingUpdates.TRAINING_UPDATES)
+						.where(TrainingUpdates.TRAINING_UPDATES.TRAINING_LEVEL_ID.eq(record.getValue(TrainingLevels.TRAINING_LEVELS.ID)))
+						.orderBy(TrainingUpdates.TRAINING_UPDATES.UPDATE.asc())
+						.fetch();
+				
+				for (Record record3 : result3) {
+					Calendar calTemp = new GregorianCalendar();
+					calTemp.setTime(record3.getValue(TrainingUpdates.TRAINING_UPDATES.UPDATE));
+					aTrainingLevel.getUpdate().add(calTemp);
+				}
+				
+				aReferee.getTrainingLevel().add(aTrainingLevel);
 			}
 			
 			

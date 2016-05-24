@@ -59,6 +59,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:element name="contact_type" type="ContactType" minOccurs="0" maxOccurs="unbounded" />
 			<xsd:element name="status_type" type="StatusType" minOccurs="0" maxOccurs="unbounded" />
 			<xsd:element name="referee_assignment_type" type="RefereeAssignmentType" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="training_level_type" type="TrainingLevelType" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -279,7 +280,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:element name="since" type="xsd:date" minOccurs="0" maxOccurs="1" />
 			<xsd:element name="update" type="xsd:date" minOccurs="0" maxOccurs="unbounded" />
 
-			<xsd:element name="training_level_type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+			<xsd:element name="type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:appinfo>
 						<jxb:property>
