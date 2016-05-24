@@ -117,7 +117,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<!-- 1:n -->
 					<xsd:element name="training_level" type="TrainingLevel" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="wish" type="Wish" minOccurs="0" maxOccurs="unbounded" />
-					<xsd:element name="club_relation" type="ClubRelation" minOccurs="2" maxOccurs="2" />
+					<xsd:element name="club_relation" type="ClubRelation" minOccurs="1" maxOccurs="2" />
 
 					<!-- references -->
 					<xsd:element name="status" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
@@ -142,6 +142,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="points_written_b" type="xsd:int" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="points_practical" type="xsd:int" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="points_oral" type="xsd:int" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="passed" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -227,7 +228,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
 					<xsd:element name="abbreviation" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="referee_report" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="referee_report" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="referee_quantity" type="RefereeQuantity" minOccurs="0" maxOccurs="unbounded" />
 
 					<!-- references -->
