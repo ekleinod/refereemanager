@@ -20,8 +20,10 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="season" type="{}Season"/>
+ *         &lt;element name="exam" type="{}Exam"/>
  *         &lt;element name="person" type="{}Person" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="referee" type="{}Referee" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="trainee" type="{}Trainee" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="league" type="{}League" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="club" type="{}Club" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sex_type" type="{}SexType" maxOccurs="unbounded" minOccurs="0"/>
@@ -40,8 +42,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Content", propOrder = {
     "season",
+    "exam",
     "person",
     "referee",
+    "trainee",
     "league",
     "club",
     "sexType",
@@ -54,8 +58,11 @@ public class Content {
 
     @XmlElement(required = true)
     protected Season season;
+    @XmlElement(required = true)
+    protected Exam exam;
     protected List<Person> person;
     protected List<Referee> referee;
+    protected List<Trainee> trainee;
     protected List<League> league;
     protected List<Club> club;
     @XmlElement(name = "sex_type")
@@ -91,6 +98,30 @@ public class Content {
      */
     public void setSeason(Season value) {
         this.season = value;
+    }
+
+    /**
+     * Gets the value of the exam property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Exam }
+     *     
+     */
+    public Exam getExam() {
+        return exam;
+    }
+
+    /**
+     * Sets the value of the exam property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Exam }
+     *     
+     */
+    public void setExam(Exam value) {
+        this.exam = value;
     }
 
     /**
@@ -149,6 +180,35 @@ public class Content {
             referee = new ArrayList<Referee>();
         }
         return this.referee;
+    }
+
+    /**
+     * Gets the value of the trainee property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the trainee property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getTrainee().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Trainee }
+     * 
+     * 
+     */
+    public List<Trainee> getTrainee() {
+        if (trainee == null) {
+            trainee = new ArrayList<Trainee>();
+        }
+        return this.trainee;
     }
 
     /**

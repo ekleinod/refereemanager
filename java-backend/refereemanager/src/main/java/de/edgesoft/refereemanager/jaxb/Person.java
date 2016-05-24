@@ -58,6 +58,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     "sexType"
 })
 @XmlSeeAlso({
+    Trainee.class,
     Referee.class
 })
 public class Person

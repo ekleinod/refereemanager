@@ -25,6 +25,7 @@ import de.edgesoft.refereemanager.jaxb.ClubRelationType;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.EMail;
+import de.edgesoft.refereemanager.jaxb.Exam;
 import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
@@ -230,6 +231,16 @@ public class MySQL2XML extends AbstractMainClass {
 		UInteger theSeasonUID = theSeasonRecord.getValue(Seasons.SEASONS.ID);
 		
 		
+		logger.info("converting exam.");
+		
+		Exam anExam = new Exam();
+		anExam.setPoints(60);
+		anExam.setPointsOral(6);
+		anExam.setPointsPractical(12);
+		anExam.setPointsWritten(40);
+		theContent.setExam(anExam);
+		
+
 		logger.info("converting sex types.");
 		
 		result = create.select()
