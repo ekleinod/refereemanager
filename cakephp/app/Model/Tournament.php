@@ -36,10 +36,10 @@ class Tournament extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'name' => array('notempty'),
-		'start' => array('datetime', 'notempty'),
-		'end' => array('datetime', 'notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'name' => array('notblank'),
+		'start' => array('datetime', 'notblank'),
+		'end' => array('datetime', 'notblank'),
 		'announcement_url' => array('url'),
 		'information_url' => array('url'),
 		'club_id' => array('numeric'),

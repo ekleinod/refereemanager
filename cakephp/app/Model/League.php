@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * League Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class League extends AppModel {
@@ -14,13 +14,13 @@ class League extends AppModel {
 	/**
 	 * Declare virtual display field in constructor to be alias-safe.
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$this->virtualFields['display_league'] = sprintf(
-			'CONCAT(%1$s.title, " (", %1$s.abbreviation, ")")',
+		$this->virtualFields['display_title'] = sprintf(
+			'%1$s.title',
 			$this->alias
 		);
 	}
@@ -38,10 +38,10 @@ class League extends AppModel {
 	/**
 	 * Display field
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'display_league';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
@@ -50,10 +50,10 @@ class League extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'title' => array('isUnique', 'notempty'),
-		'abbreviation' => array('isUnique', 'notempty'),
-		'league_type_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'title' => array('isUnique', 'notblank'),
+		'abbreviation' => array('isUnique', 'notblank'),
+		'league__id' => array('notblank', 'numeric'),
 	);
 
 	/**
@@ -62,7 +62,7 @@ class League extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $belongsTo = array('LeagueType');
+	public $belongsTo = array('League');
 
 	/**
 	 * hasMany associations
@@ -70,9 +70,13 @@ class League extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $hasMany = array('LeagueGame',  'LeaguePlannedReferee', 'RefereeRelation', 'RefereeReport', 'TeamSeason');
+	public $hasMany = array('LeagueGame', 'LeaguePlannedReferee', 'RefereeReport', 'TeamSeason', 'League');
 
 	// custom programming
+
+	/** Singleton for fast access. */
+	private $leagues = null;
+	private $leaguelist = null;
 
 	/**
 	 * Returns leagues.
@@ -80,35 +84,47 @@ class League extends AppModel {
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return array of leagues, empty if there are none
+	 * @return array of league s
 	 *
-	 * @version 0.3
-	 * @since 0.3
+	 * @version 0.6
+	 * @since 0.6
 	 */
 	public function getLeagues() {
+		if ($this->leagues == null) {
+			$this->recursive = -1;
+			$this->leagues = array();
+			foreach ($this->find('all') as $league) {
+				$this->leagues[$league['League']['id']] = $league;
+			}
+		}
 
-		$leagues = $this->find('all');
-		usort($leagues, array('League', 'compareTo'));
-
-		return $leagues;
+		return $this->leagues;
 	}
 
 	/**
-	 * Compare two objects.
+	 * Returns league list.
 	 *
-	 * @param a first object
-	 * @param b second object
-	 * @return comparison result
-	 *  @retval <0 a<b
-	 *  @retval 0 a==b
-	 *  @retval >0 a>b
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @version 0.3
-	 * @since 0.3
+	 * @return list of league s
+	 *
+	 * @version 0.6
+	 * @since 0.6
 	 */
-	public static function compareTo($a, $b) {
-		// criterion: title
-		return strcasecmp($a['League']['title'], $b['League']['title']);
+	public function getLeagueList() {
+		if ($this->leaguelist == null) {
+
+			$this->leaguelist = array();
+
+			foreach ($this->getLeagues() as $league) {
+				$this->leaguelist[$league['League']['id']] = $league['League']['title'];
+			}
+
+			asort($this->leaguelist, SORT_LOCALE_STRING);
+		}
+
+		return $this->leaguelist;
 	}
 
 }

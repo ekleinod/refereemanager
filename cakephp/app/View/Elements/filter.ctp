@@ -1,27 +1,32 @@
-<!-- main navigation for big devices -->
 <?php
 	if (isset($season)) {
 ?>
-	<div class="filter">
-		<ol class="currentfilter">
-			<?php if (isset($season)) { ?>
-				<li><label><?php echo __('Saison'); ?></label><?php echo $season['Season']['title_season']; ?></li>
-			<?php } ?>
-		</ol>
-		<?php echo $this->Form->create('Filter'); ?>
-			<fieldset>
-				<legend><?php echo __('Filter'); ?></legend>
-				<ol>
-					<?php
-						if (isset($season)) {
-							echo $this->RefereeForm->getInputField(null, 'select', 'season', __('Saison'), $season['Season']['id'], false, null, 0, true, $seasonarray);
-						}
-					?>
-				</ol>
-				<?php echo $this->Form->button(__('Filtern'), array('type' => 'submit')); ?>
-			</fieldset>
-		<?php echo $this->Form->end(); ?>
-	</div>
+		<!-- filter form -->
+			<div class="row">
+				<div class="col-sm-12">
+					<?php echo $this->Form->create('Filter', array('class' => 'form-horizontal')); ?>
+						<fieldset>
+							<legend><?php echo __('Filter'); ?></legend>
+
+							<?php
+								if (isset($season)) {
+									echo $this->RefereeForm->getInputField(null, 'select', 'season',
+																												 __('Saison'), $season['Season']['id'], sprintf('aktiv: %s', $season['Season']['display_title']), null,
+																												 false, true, 0,
+																												 $seasonlist);
+								}
+							?>
+
+						</fieldset>
+						<div class="form-group">
+							<div class="col-sm-12">
+								<?php echo $this->Form->button(__('Filtern'), array('type' => 'submit', 'class' => 'btn btn-sm btn-default')); ?>
+							</div>
+						</div>
+					<?php echo $this->Form->end(); ?>
+				</div>
+			</div>
+		<!-- /filter form -->
 <?php
 	}
 ?>

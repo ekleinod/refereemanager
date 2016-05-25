@@ -51,11 +51,11 @@ class LeagueGame extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'assignment_id' => array('isUnique', 'notempty', 'numeric'),
-		'game_number' => array('notempty', 'numeric'),
-		'season_id' => array('notempty', 'numeric'),
-		'league_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'assignment_id' => array('isUnique', 'notblank', 'numeric'),
+		'game_number' => array('notblank', 'numeric'),
+		'season_id' => array('notblank', 'numeric'),
+		'league_id' => array('notblank', 'numeric'),
 		'team_venue_id' => array('numeric'),
 	);
 

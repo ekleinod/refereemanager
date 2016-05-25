@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Ant script for jaxb creation.
+
+## Legal stuff
+
+Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+
+This file is part of refereemanager.
+
+refereemanager is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+refereemanager is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
+
+@author Ekkart Kleinod
+@version 0.1.0
+@since 0.1.0
+-->
+
+<project name="refereemanager" default="help" basedir=".">
+
+	<property name="edgeutils:path" value="../../../../edgeutils/jaxb" />
+	<import file="${edgeutils:path}/ant-commons.xml"/>
+
+	<property name="refman:xsd" value="refereemanager.xsd" />
+	<property name="refman:outpath" value="../java/" />
+	<property name="refman:package" value="de.edgesoft.refereemanager.jaxb" />
+	<property name="refman:packagepath" value="${refman:outpath}de/edgesoft/refereemanager/jaxb/" />
+	<property name="refman:bindings" value="${edgeutils:path}/commons.xjb" />
+	<property name="refman:bindings2" value="${edgeutils:path}/commons-reuse.xjb" />
+
+	<target name="model" description="Removes, then generates the refman model classes from xsd.">
+
+		<antcall target="deletemodel">
+			<param name="del:path" value="${refman:packagepath}" />
+		</antcall>
+
+		<antcall target="callxjc">
+			<param name="xjc:outpath" value="${refman:outpath}" />
+			<param name="xjc:package" value="${refman:package}" />
+			<param name="xjc:xsd" value="${refman:xsd}" />
+			<param name="xjc:bindings" value="${refman:bindings}" />
+			<param name="xjc:bindings2" value="${refman:bindings2}" />
+		</antcall>
+
+	</target>
+
+</project>
+

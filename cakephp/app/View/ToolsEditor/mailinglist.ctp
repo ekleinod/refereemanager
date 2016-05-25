@@ -1,36 +1,41 @@
 <?php echo $this->element('filter');	?>
 
-<?php echo $this->Form->create('ToolsEditor'); ?>
-	<?php echo $this->Form->hidden('Filter.season', array('value' => $season['Season']['id'])); ?>
+<div class="row">
+	<div class="col-sm-12">
+		<?php echo $this->Form->create('ToolsEditor', array('class' => 'form-horizontal')); ?>
+		<?php echo $this->Form->hidden('Filter.season', array('value' => $season['Season']['id'])); ?>
 
-	<fieldset>
-		<legend><?php echo __('Liste der E-Mail-Adressen'); ?></legend>
-		<p>Bitte die Liste einfach herauskopieren.</p>
-		<ol>
-			<?php
-				$arrMails = array();
-				$email = '';
-				foreach ($referees as $referee) {
-					$email = $this->People->getPrimaryContact($referee, 'Email');
-					if ($email != null) {
-						$arrMails[] = $this->RefereeFormat->formatContacts(array($email), 'text', 'Email', 'text');
-					}
-				}
+			<fieldset>
+				<legend><?php echo __('Liste der E-Mail-Adressen'); ?></legend>
+				<p>
+					<span class="help-block"><?php echo __('Bitte die Liste einfach herauskopieren.'); ?></span>
+				</p>
 
-				echo $this->RefereeForm->getInputField(null, 'textarea', 'mailinglist', __('Liste (eine Zeile)'), $this->RefereeFormat->formatMultiline($arrMails, $separator), false, __('Liste'));
-				echo $this->RefereeForm->getInputField(null, 'textarea', 'mailinglist', __('Liste (mehrere Zeilen)'), $this->RefereeFormat->formatMultiline($arrMails, $separator . "\n"), false, __('Liste'));
+				<?php
+					echo $this->RefereeForm->getInputField(null, 'textarea', 'mailinglist.oneline',
+																								 __('Liste (eine Zeile)'), $this->RefereeFormat->formatMultiline($emails, $separator), null, null,
+																								 false);
+					echo $this->RefereeForm->getInputField(null, 'textarea', 'mailinglist.multiline',
+																								 __('Liste (mehrere Zeilen)'), $this->RefereeFormat->formatMultiline($emails, "\n"), null, null,
+																								 false);
 
-				echo $this->RefereeForm->getInputField(null, 'text', 'separator', __('Trennzeichen'), $separator, false, __(','));
-			?>
-		</ol>
-	</fieldset>
+					echo $this->RefereeForm->getInputField(null, 'text', 'separator',
+																								 __('Trennzeichen'), $separator, false, null, null,
+																								 false);
+				?>
+			</fieldset>
 
-	<fieldset>
-		<?php echo $this->Form->button(__('Erzeugen'), array('type' => 'submit')); ?>
-		<?php echo $this->Form->button(__('Zurücksetzen'), array('type' => 'reset')); ?>
-	</fieldset>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<?php echo $this->Form->button(__('Listen neu erzeugen'), array('type' => 'submit', 'class' => 'btn btn-sm btn-default')); ?>
+				</div>
+			</div>
 
-<?php echo $this->Form->end(); ?>
+		<?php echo $this->Form->end(); ?>
+	</div>
+</div>
 
-<?php debug($referees); ?>
+<?php
+	//debug($emails);
+?>
 

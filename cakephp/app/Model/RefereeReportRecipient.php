@@ -51,9 +51,9 @@ class RefereeReportRecipient extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'referee_report_id' => array('notempty', 'numeric'),
-		'person_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'referee_report_id' => array('notblank', 'numeric'),
+		'person_id' => array('notblank', 'numeric'),
 	);
 
 	/**

@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * ContactType Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class ContactType extends AppModel {
@@ -22,12 +22,26 @@ class ContactType extends AppModel {
 	public $name = 'ContactType';
 
 	/**
+	 * Declare virtual display field in constructor to be alias-safe.
+	 *
+	 * @version 0.6
+	 * @since 0.4
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['display_title'] = sprintf(
+			'%1$s.title',
+			$this->alias
+		);
+	}
+
+	/**
 	 * Display field
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'title';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
@@ -36,9 +50,9 @@ class ContactType extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'title' => array('isUnique', 'notempty'),
-		'abbreviation' => array('isUnique', 'notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'title' => array('isUnique', 'notblank'),
+		'abbreviation' => array('isUnique', 'notblank'),
 	);
 
 	/**
@@ -52,7 +66,10 @@ class ContactType extends AppModel {
 	// custom programming
 
 	/** Singleton for fast access. */
-	private $contacttypes = null;
+	private $types = null;
+
+	/** Singleton for fast access. */
+	private $typelist = null;
 
 	/**
 	 * Returns contact types.
@@ -62,20 +79,20 @@ class ContactType extends AppModel {
 	 *
 	 * @return array of contact types, empty if there are none
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
-	public function getContactTypes() {
-		if ($this->contacttypes == null) {
+	public function getTypes() {
+		if ($this->types == null) {
 			$this->recursive = -1;
-			$this->contacttypes = array();
-			foreach ($this->find('all') as $contacttype) {
-				$this->contacttypes[$contacttype['ContactType']['id']] = $contacttype;
-			}
-			usort($this->contacttypes, array('ContactType', 'compareTo'));
+			$arrTemp = $this->find('all',
+														 array(
+																	 'order' => 'display_title',
+																	 )
+														 );
 		}
 
-		return $this->contacttypes;
+		return $this->types;
 	}
 
 	/**
@@ -88,11 +105,34 @@ class ContactType extends AppModel {
 	 *  @retval 0 a==b
 	 *  @retval >0 a>b
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
 	public static function compareTo($a, $b) {
-		return strcasecmp($a['ContactType']['title'], $b['ContactType']['title']);
+		return strcasecmp($a['ContactType']['display_title'], $b['ContactType']['display_title']);
+	}
+
+	/**
+	 * Returns contact type list.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return list of contact types
+	 *
+	 * @version 0.6
+	 * @since 0.4
+	 */
+	public function getTypeList() {
+		if ($this->typelist == null) {
+			$this->typelist = $this->find('list',
+																		array(
+																					'order' => 'display_title',
+																					)
+																		);
+		}
+
+		return $this->typelist;
 	}
 
 }

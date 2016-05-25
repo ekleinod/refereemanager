@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * RefereeRelationType Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class RefereeRelationType extends AppModel {
@@ -22,12 +22,26 @@ class RefereeRelationType extends AppModel {
 	public $name = 'RefereeRelationType';
 
 	/**
+	 * Declare virtual display field in constructor to be alias-safe.
+	 *
+	 * @version 0.6
+	 * @since 0.6
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['display_title'] = sprintf(
+			'%1$s.title',
+			$this->alias
+		);
+	}
+
+	/**
 	 * Display field
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'title';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
@@ -36,9 +50,9 @@ class RefereeRelationType extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'sid' => array('isUnique', 'notempty'),
-		'title' => array('isUnique', 'notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'sid' => array('isUnique', 'notblank'),
+		'title' => array('isUnique', 'notblank'),
 	);
 
 	/**
@@ -54,82 +68,62 @@ class RefereeRelationType extends AppModel {
 	/* Relation types. */
 	const SID_MEMBER = 'member';
 	const SID_REFFOR = 'reffor';
-	const SID_PREFER = 'prefer';
-	const SID_NOASSIGNMENT = 'noassignment';
 
 	/** Singleton for fast access. */
-	private $refereerelationtypes = null;
-	private $refereerelationtypessid = null;
-	private $refereerelationtypelist = null;
+	private $types = null;
+	private $typelist = null;
 
 	/**
-	 * Returns referee relation types.
+	 * Returns types.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return array of referee relation types, empty if there are none
+	 * @return array of types, empty if there are none
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
-	public function getRefereeRelationTypes() {
-		if ($this->refereerelationtypes == null) {
+	public function getTypes() {
+		if ($this->types == null) {
 			$this->recursive = -1;
-			$this->refereerelationtypes = array();
-			foreach ($this->find('all') as $refereerelationtype) {
-				$this->refereerelationtypes[$refereerelationtype['RefereeRelationType']['id']] = $refereerelationtype;
+			$arrTemp = $this->find('all',
+														 array(
+																	 'order' => 'title',
+																	 )
+														 );
+
+			// sids for keys (maybe there is a better/faster solution?)
+			$this->types = array();
+			foreach ($arrTemp as $dtaTemp) {
+				$this->types[$dtaTemp['RefereeRelationType']['sid']] = $dtaTemp;
 			}
 		}
 
-		return $this->refereerelationtypes;
+		return $this->types;
 	}
 
 	/**
-	 * Returns referee relation types with sid as index.
+	 * Returns type list.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return array of referee relation types, empty if there are none
+	 * @return list of types
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
-	public function getRefereeRelationTypesSID() {
-		if ($this->refereerelationtypessid == null) {
-			foreach ($this->getRefereeRelationTypes() as $refreltype) {
-				$this->refereerelationtypessid[$refreltype['RefereeRelationType']['sid']] = $refreltype;
-			}
+	public function getTypeList() {
+		if ($this->typelist == null) {
+			$this->typelist = $this->find('list',
+																		array(
+																					'order' => 'title',
+																					)
+																		);
 		}
 
-		return $this->refereerelationtypessid;
-	}
-
-	/**
-	 * Returns referee relation type list.
-	 *
-	 * Method should be static,
-	 * maybe later when I understand how to find things in a static method
-	 *
-	 * @return list of referee relation types
-	 *
-	 * @version 0.3
-	 * @since 0.3
-	 */
-	public function getRefereeRelationTypeList() {
-		if ($this->refereerelationtypelist == null) {
-
-			$this->refereerelationtypelist = array();
-
-			foreach ($this->getRefereeRelationTypes() as $refereerelationtype) {
-				$this->refereerelationtypelist[$refereerelationtype['RefereeRelationType']['id']] = $refereerelationtype['RefereeRelationType']['title'];
-			}
-
-			asort($this->refereerelationtypelist, SORT_LOCALE_STRING);
-		}
-
-		return $this->refereerelationtypelist;
+		return $this->typelist;
 	}
 
 }

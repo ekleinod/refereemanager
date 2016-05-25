@@ -36,8 +36,8 @@ class DatabaseColumn extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'column_name' => array('isUnique', 'notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'column_name' => array('isUnique', 'notblank'),
 	);
 
 	/**

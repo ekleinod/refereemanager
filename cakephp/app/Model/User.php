@@ -52,10 +52,10 @@ class User extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
 		'username' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notblank' => array(
+				'rule' => array('notblank'),
 				'allowEmpty' => false,
 				'required' => true,
 				'message' => 'Der Nutzername (login) muss angegeben werden.',
@@ -76,8 +76,8 @@ class User extends AppModel {
 			),
 		),
 		'password' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notblank' => array(
+				'rule' => array('notblank'),
 				'allowEmpty' => false,
 				'required' => true,
 				'message' => 'Das Passwort muss angegeben werden.',
@@ -87,10 +87,10 @@ class User extends AppModel {
 				'message' => 'Das Passwort muss mindestens 8 und darf höchstens 20 Zeichen lang sein.',
 			),
 		),
-		'user_role_id' => array('notempty', 'numeric'),
+		'user_role_id' => array('notblank', 'numeric'),
 		'person_id' => array('numeric'),
-		'created' => array('datetime', 'notempty'),
-		'modified' => array('datetime', 'notempty'),
+		'created' => array('datetime', 'notblank'),
+		'modified' => array('datetime', 'notblank'),
 	);
 
 	/**

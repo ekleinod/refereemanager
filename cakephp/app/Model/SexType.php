@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * SexType Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class SexType extends AppModel {
@@ -14,12 +14,12 @@ class SexType extends AppModel {
 	/**
 	 * Declare virtual display field in constructor to be alias-safe.
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$this->virtualFields['display_sextype'] = sprintf(
+		$this->virtualFields['display_title'] = sprintf(
 			'%1$s.title',
 			$this->alias
 		);
@@ -38,10 +38,10 @@ class SexType extends AppModel {
 	/**
 	 * Display field.
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'display_sextype';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
@@ -50,9 +50,9 @@ class SexType extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'sid' => array('isUnique', 'notempty'),
-		'title' => array('isUnique', 'notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'sid' => array('isUnique', 'notblank'),
+		'title' => array('isUnique', 'notblank'),
 	);
 
 	/**
@@ -61,57 +61,57 @@ class SexType extends AppModel {
 	 * @version 0.1
 	 * @since 0.1
 	 */
-	public $hasMany = array('LeagueType', 'Person', 'RefereeRelation');
+	public $hasMany = array('LeagueType', 'Person', 'Wish');
 
 	// custom programming
 
-	/* Relation types. */
+	/* Sex types. */
 	const SID_FEMALE = 'female';
 	const SID_MALE = 'male';
 	const SID_OTHER = 'other';
 	const SID_UNKNOWN = 'unknown';
 
 	/** Singletons for fast access. */
-	private $sextypes = null;
-	private $sextypelist = null;
+	private $types = null;
+	private $typelist = null;
 
 	/**
-	 * Returns sex types.
+	 * Returns types.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return array of sex types
+	 * @return array of types
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
-	public function getSexTypes() {
-		if ($this->sextypes == null) {
+	public function getTypes() {
+		if ($this->types == null) {
 			$this->recursive = -1;
-			$this->sextypes = array();
+			$this->types = array();
 			foreach ($this->find('all') as $sextype) {
-				$this->sextypes[$sextype['SexType']['id']] = $sextype;
+				$this->types[$sextype['SexType']['id']] = $sextype;
 			}
 		}
 
-		return $this->sextypes;
+		return $this->types;
 	}
 
 	/**
-	 * Returns sex type.
+	 * Returns type.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @param sid sex type's sid
-	 * @return sex type
+	 * @param sid type's sid
+	 * @return type
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public function getSexType($sid) {
-		foreach ($this->getSexTypes() as $sextype) {
+	public function getType($sid) {
+		foreach ($this->getTypes() as $sextype) {
 			if ($sextype['SexType']['sid'] === $sid) {
 				return $sextype;
 			}
@@ -121,29 +121,29 @@ class SexType extends AppModel {
 	}
 
 	/**
-	 * Returns sex type list.
+	 * Returns type list.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @return list of sex types
+	 * @return list of types
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
-	public function getSexTypeList() {
-		if ($this->sextypelist == null) {
+	public function getTypelist() {
+		if ($this->typelist == null) {
 
-			$this->sextypelist = array();
+			$this->typelist = array();
 
-			foreach ($this->getSexTypes() as $sextype) {
-				$this->sextypelist[$sextype['SexType']['id']] = $sextype['SexType']['display_sextype'];
+			foreach ($this->gettypes() as $sextype) {
+				$this->typelist[$sextype['SexType']['id']] = $sextype['SexType']['display_title'];
 			}
 
-			asort($this->sextypelist, SORT_LOCALE_STRING);
+			asort($this->typelist, SORT_LOCALE_STRING);
 		}
 
-		return $this->sextypelist;
+		return $this->typelist;
 	}
 
 }

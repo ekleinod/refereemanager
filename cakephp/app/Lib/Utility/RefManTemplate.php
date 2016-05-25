@@ -8,7 +8,7 @@
  * @package       Lib.Utility
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.3
  */
 class RefManTemplate {
@@ -17,27 +17,29 @@ class RefManTemplate {
 	private static $zip = null;
 
 	/** Merge file. */
-	private static $merge = null;
+	private static $mergetex = null;
 
-	/** Referee relation types. */
-	private static $refereerelationtypes = null;
+	/** Merge include line. */
+	private static $mergeincludetex = null;
 
-	/** Referee status types. */
-	private static $statustypes = null;
+	/** Keyword for current season. */
+	const KEY_CURRENT = 'current';
 
 	/**
 	 * Returns template text.
 	 *
 	 * @param $id template id
+	 * @param $path template path
 	 * @return template content
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.3
 	 */
-	public static function getTemplate($id) {
-		return file_get_contents(sprintf('%s%s%s',
+	public static function getTemplate($id, $path = null) {
+		return file_get_contents(sprintf('%s%s%s%s',
 																		 WWW_ROOT,
 																		 Configure::read('RefMan.template.path'),
+																		 empty($path) ? '' : Configure::read(sprintf('RefMan.template.%s', $path)),
 																		 Configure::read(sprintf('RefMan.template.%s', $id))));
 	}
 
@@ -144,9 +146,22 @@ class RefManTemplate {
 		$txtReturn = preg_replace($conditions, $replacements, $txtReturn);
 
 		// replace token with value
-		$txtReturn = str_replace(RefManTemplate::getReplaceToken($token), $value, $txtReturn);
+		return RefManTemplate::replaceText($txtReturn, RefManTemplate::getReplaceToken($token), $value);
+	}
 
-		return $txtReturn;
+	/**
+	 * Replaces replacee in text with value.
+	 *
+	 * @param $text text
+	 * @param $replacee text to be replaced
+	 * @param $value value
+	 * @return replaced text
+	 *
+	 * @version 0.6
+	 * @since 0.6
+	 */
+	public static function replaceText($text, $replacee, $value) {
+		return str_replace($replacee, $value, $text);
 	}
 
 	/**
@@ -154,11 +169,11 @@ class RefManTemplate {
 	 *
 	 * @param $text text
 	 * @param $referee referee
-	 * @param $type format type
-	 * @param $export export type
+	 * @param $type format type ('text')
+	 * @param $export export type ('html')
 	 * @return replaced text
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
 	public static function replaceRefereeData($text, $referee, $type, $export) {
@@ -166,46 +181,144 @@ class RefManTemplate {
 
 		$txtReturn = RefManTemplate::replacePersonData($txtReturn, $referee, $type, $export);
 
-		// referee relation types
-		if (empty(RefManTemplate::$refereerelationtypes)) {
-			$model = ClassRegistry::init('RefereeRelationType');
-			$model->recursive = -1;
-			RefManTemplate::$refereerelationtypes = $model->find('all');
-		}
-		foreach (RefManTemplate::$refereerelationtypes as $relationtype) {
-			$sid = $relationtype['RefereeRelationType']['sid'];
-			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('referee:referee_relation_%s', $sid),
-																					 RefManRefereeFormat::formatRelations(RefManPeople::getRelations($referee, $sid), $type, $export));
-		}
+		// current season
+		$modelSeason = ClassRegistry::init('Season');
+		$curSeason = $modelSeason->getSeason(false);
 
-		// training
-		$traininglevel = RefManPeople::getTrainingLevel($referee);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:title',
-																				 (empty($traininglevel) || empty($traininglevel['TrainingLevelType']['title'])) ? '' : $traininglevel['TrainingLevelType']['title']);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:abbreviation',
-																				 (empty($traininglevel) || empty($traininglevel['TrainingLevelType']['abbreviation'])) ? '' : $traininglevel['TrainingLevelType']['abbreviation']);
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:since',
-																				 (empty($traininglevel) || empty($traininglevel['TrainingLevel']['since'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['TrainingLevel']['since'], 'date'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:lasttrainingupdate',
-																				 (empty($traininglevel) || empty($traininglevel['lasttrainingupdate'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['lasttrainingupdate'], 'date'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'traininglevel:nexttrainingupdate',
-																				 (empty($traininglevel) || empty($traininglevel['nexttrainingupdate'])) ? '' : RefManRefereeFormat::formatDate($traininglevel['nexttrainingupdate'], 'year'));
+		// refereerelation
+		$arrRelevantModels = array('Club');
+		if (!empty($referee['RefereeRelation'])) {
+			foreach ($referee['RefereeRelation'] as $refereerelation) {
 
-		// status
-		if (empty(RefManTemplate::$statustypes)) {
-			$model = ClassRegistry::init('StatusType');
-			$model->recursive = -1;
-			$tmp = $model->find('all');
-			RefManTemplate::$statustypes = array();
-			foreach ($tmp as $statustype) {
-				RefManTemplate::$statustypes[$statustype['StatusType']['id']] = $statustype;
+				$partID = 'RefereeRelation';
+				$tmpID = $refereerelation[$partID]['id'];
+
+				if ($refereerelation['Season']['year_start'] == $curSeason['Season']['year_start']) {
+					$txtReturn = RefManTemplate::replaceText($txtReturn,
+																									 sprintf('%s:%s:%s', strtolower($partID), strtolower($refereerelation['RefereeRelationType']['sid']), RefManTemplate::KEY_CURRENT),
+																									 sprintf('%s:%d', strtolower($partID), $tmpID));
+				}
+
+				$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, array($partID => $refereerelation[$partID]), $tmpID);
+
+				foreach ($arrRelevantModels as $relevantModel) {
+					$relevantKey = sprintf('%s_id', Inflector::underscore($relevantModel));
+					if ($refereerelation[$partID][$relevantKey]) {
+						$txtReturn = RefManTemplate::replace($txtReturn,
+																								 sprintf('%s:%d', strtolower($partID), $tmpID),
+																								 RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($relevantModel), $refereerelation[$partID][$relevantKey], 'display_title')));
+
+						$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, array($relevantModel => $refereerelation[$relevantModel]), $refereerelation[$partID][$relevantKey]);
+					}
+				}
 			}
 		}
-		foreach ($referee['RefereeStatus'] as $refereestatus) {
-			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('refereestatus:%s:title', $refereestatus['season_id']),
-																					 RefManTemplate::$statustypes[$refereestatus['status_type_id']]['StatusType']['title']);
-			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('refereestatus:%s:remark', $refereestatus['season_id']),
-																					 (empty($refereestatus['remark'])) ? '' : $refereestatus['remark']);
+		$modelRefRelTypes = ClassRegistry::init('RefereeRelationType');
+		foreach ($modelRefRelTypes->getTypes() as $type) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%s:%s', strtolower('RefereeRelation'), strtolower($type['RefereeRelationType']['sid']), RefManTemplate::KEY_CURRENT),
+																							 '');
+		}
+
+		// wishes
+		$arrRelevantAttributes = array('saturday' => __('Sonnabend'), 'sunday' => __('Sonntag'), 'tournament' => __('Turniere'), 'remark' => 'Anmerkung');
+		$arrRelevantModels = array('Club', 'League', 'SexType');
+		if (!empty($referee['Wish'])) {
+			foreach ($referee['Wish'] as $wish) {
+
+				$partID = 'Wish';
+				$tmpID = $wish[$partID]['id'];
+
+				$txtReturn = RefManTemplate::replace($txtReturn,
+																						 sprintf('%s:%s', strtolower($partID), strtolower($wish['WishType']['sid'])),
+																						 sprintf('%s, %s',
+																										 RefManTemplate::getReplaceToken(sprintf('%s:%d', strtolower($partID), $tmpID)),
+																										 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($partID), strtolower($wish['WishType']['sid'])))));
+
+				$output = ($wish[$partID]['remark']) ? sprintf('%%s (%s)', $wish[$partID]['remark']) : '%s';
+
+				foreach ($arrRelevantModels as $relevantModel) {
+					$relevantKey = sprintf('%s_id', Inflector::underscore($relevantModel));
+					if ($wish[$partID][$relevantKey]) {
+						$txtReturn = RefManTemplate::replace($txtReturn,
+																								 sprintf('%s:%d', strtolower($partID), $tmpID),
+																								 sprintf($output, RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($relevantModel), $wish[$partID][$relevantKey], 'display_title'))));
+
+						$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, array($relevantModel => $wish[$relevantModel]), $wish[$partID][$relevantKey]);
+					}
+				}
+
+				foreach ($arrRelevantAttributes as $relevantAttribute => $relevantOutput) {
+					if ($wish[$partID][$relevantAttribute]) {
+						$output = ($relevantAttribute === 'remark') ? $wish[$partID][$relevantAttribute] : $output;
+						$txtReturn = RefManTemplate::replace($txtReturn,
+																								 sprintf('%s:%d', strtolower($partID), $tmpID),
+																								 sprintf($output, $relevantOutput));
+					}
+				}
+
+				$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, array($partID => $wish[$partID]), $tmpID);
+
+			}
+		}
+		$modelWishTypes = ClassRegistry::init('WishType');
+		foreach ($modelWishTypes->getTypes() as $type) {
+					$txtReturn = RefManTemplate::replaceText($txtReturn,
+																									 sprintf(', %s', RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower('Wish'), strtolower($type['WishType']['sid'])))),
+																									 RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower('Wish'), strtolower($type['WishType']['sid']))));
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%s', strtolower('Wish'), strtolower($type['WishType']['sid'])),
+																							 '');
+		}
+
+		// traininglevel
+		$arrRelevantModels = array('TrainingLevelType');
+		if (!empty($referee['TrainingLevel'])) {
+			$dateFields = array('since', 'update');
+
+			$partID = 'TrainingLevel';
+			$txtReturn = RefManTemplate::replaceText($txtReturn,
+																							 sprintf('%s:%s', strtolower($partID), RefManTemplate::KEY_CURRENT),
+																							 sprintf('%s:%d', strtolower($partID), $referee[$partID][count($referee[$partID]) - 1][$partID]['id']));
+
+			foreach ($referee['TrainingLevel'] as $traininglevel) {
+
+				$partID = 'TrainingLevel';
+				$tmpID = $traininglevel[$partID]['id'];
+
+				foreach ($dateFields as $dateField) {
+					if (array_key_exists($dateField, $traininglevel[$partID])) {
+						$txtReturn = RefManTemplate::replace($txtReturn,
+																								 sprintf('%s:%d:%s', strtolower($partID), $tmpID, $dateField),
+																								 RefManRefereeFormat::formatDate($traininglevel[$partID][$dateField], 'date'));
+					}
+				}
+
+				$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, array($partID => $traininglevel[$partID]), $tmpID);
+
+				$partID = 'TrainingUpdate';
+				foreach ($traininglevel[$partID] as $trainingupdate) {
+					$tmpID = $trainingupdate[$partID]['id'];
+					foreach ($trainingupdate[$partID] as $valueID => $value) {
+						$txtReturn = RefManTemplate::replace($txtReturn,
+																								 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																								 ((in_array(strtolower($valueID), $dateFields)) ? RefManRefereeFormat::formatDate($value, 'date') : $value));
+					}
+				}
+			}
+		}
+
+		// refereestatus
+		if (!empty($referee['RefereeStatus'])) {
+			foreach ($referee['RefereeStatus'] as $refereestatus) {
+				$partID = 'RefereeStatus';
+				$tmpID = $refereestatus[$partID]['id'];
+				foreach ($refereestatus[$partID] as $valueID => $value) {
+					$txtReturn = RefManTemplate::replace($txtReturn,
+																							 sprintf('%s:%d:%s', strtolower($partID), $tmpID, strtolower($valueID)),
+																							 $value);
+				}
+			}
 		}
 
 		// catch all
@@ -230,12 +343,10 @@ class RefManTemplate {
 		$txtReturn = $text;
 
 		// names
-		$txtReturn = RefManTemplate::replace($txtReturn, 'person:fullname',
-																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'fullname'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'person:name_title',
-																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'name_title'));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'person:tablename',
-																				 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, 'tablename'));
+		foreach (array('fullname', 'name_title', 'tablename') as $theToken) {
+			$txtReturn = RefManTemplate::replace($txtReturn, sprintf('person:%s', $theToken),
+																					 (empty($person['Person']['name'])) ? '' : RefManRefereeFormat::formatPerson($person, $theToken));
+		}
 
 		// dates
 		$txtReturn = RefManTemplate::replace($txtReturn, 'person:birthday',
@@ -244,42 +355,13 @@ class RefManTemplate {
 																				 (empty($person['Person']['dayofdeath'])) ? '' : sprintf('†&nbsp;%s', RefManRefereeFormat::formatDate($person['Person']['dayofdeath'], 'date')));
 
 		// contacts
-		$tmpContacts = RefManPeople::getContacts($person, 'Email');
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:emails',
-																				 RefManRefereeFormat::formatContacts($tmpContacts, $type, 'Email', $export));
-		$isPrivate = false;
-		foreach ($tmpContacts as $tmpContact) {
-			$isPrivate |= $tmpContact['info']['editor_only'];
+		if (!empty($person['Contact'])) {
+			foreach ($person['Contact'] as $contactType => $typeContacts) {
+				foreach ($typeContacts as $contactID => $contactDetail) {
+					$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $contactDetail, $contactID);
+				}
+			}
 		}
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:emails:editor_only', $isPrivate);
-
-		$tmpContacts = RefManPeople::getContacts($person, 'PhoneNumber');
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:phonenumbers_national',
-																				 RefManRefereeFormat::formatContacts($tmpContacts, 'national', 'PhoneNumber', $export));
-		$isPrivate = false;
-		foreach ($tmpContacts as $tmpContact) {
-			$isPrivate |= $tmpContact['info']['editor_only'];
-		}
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:phonenumbers:editor_only', $isPrivate);
-
-		$tmpContacts = RefManPeople::getContacts($person, 'Address');
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:addresses_fulladdress',
-																				 RefManRefereeFormat::formatContacts($tmpContacts, 'fulladdress', 'Address', $export));
-		$isPrivate = false;
-		foreach ($tmpContacts as $tmpContact) {
-			$isPrivate |= $tmpContact['info']['editor_only'];
-		}
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:addresses:editor_only', $isPrivate);
-
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:urls',
-																				 RefManRefereeFormat::formatContacts(RefManPeople::getContacts($person, 'Url'), $type, 'Url', $export));
-
-		// primary contact
-		$primaryAddress = RefManPeople::getPrimaryContact($person, 'Address');
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:primary:streetnumber',
-																					RefManRefereeFormat::formatAddress($primaryAddress, 'streetnumber', $type));
-		$txtReturn = RefManTemplate::replace($txtReturn, 'contacts:primary:zipcity',
-																					RefManRefereeFormat::formatAddress($primaryAddress, 'zipcity', $type));
 
 		// catch all
 		$txtReturn = RefManTemplate::replaceSimpleObjectData($txtReturn, $person);
@@ -340,18 +422,22 @@ class RefManTemplate {
 	 * @param $object object
 	 * @return replaced text
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
-	public static function replaceSimpleObjectData($text, $object) {
+	public static function replaceSimpleObjectData($text, $object, $id = null) {
 		$txtReturn = $text;
+
+		$token = (empty($id)) ? '%s:%s' : '%1$s:%3$d:%2$s';
 
 		foreach ($object as $objectkey => $objectentry) {
 			foreach ($objectentry as $entrykey => $entryvalue) {
 				if (!is_array($entryvalue)) {
-					$txtReturn = RefManTemplate::replace($txtReturn,
-																							 sprintf('%s:%s', strtolower($objectkey), strtolower($entrykey)),
-																							 empty($entryvalue) ? '' : $entryvalue);
+					$txtReturn = RefManTemplate::replace(
+																							 $txtReturn,
+																							 sprintf($token, strtolower($objectkey), strtolower($entrykey), $id),
+																							 empty($entryvalue) ? '' : $entryvalue
+																							 );
 				}
 			}
 		}
@@ -393,33 +479,61 @@ class RefManTemplate {
 	 *
 	 * @param $filename filename
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.3
 	 */
 	public static function openZip($filename) {
 		RefManTemplate::$zip = new ZipArchive();
-		$zipfile = sprintf('%s%s.zip', TMP, $filename);
+		$zipfile = sprintf('%s%s', TMP, $filename);
 		if (RefManTemplate::$zip->open($zipfile, ZipArchive::OVERWRITE) !== TRUE) {
 			throw new CakeException(__('Zip-Archiv "%s" konnte nicht angelegt werden.', $zipfile));
 		}
-		RefManTemplate::$merge = RefManTemplate::getTemplate('merge');
+	}
+
+	/**
+	 * Open merge content.
+	 *
+	 * @version 0.4
+	 * @since 0.4
+	 */
+	public static function openMerge() {
+		RefManTemplate::$mergetex = RefManTemplate::getTemplate('merge.tex');
+		RefManTemplate::$mergeincludetex = RefManTemplate::getTemplate('merge.includetex');
 	}
 
 	/**
 	 * Adds file to zip archive.
 	 *
-	 * @param $directory directory
 	 * @param $filename filename
 	 * @param $content content
+	 * @param $directory directory
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.3
 	 */
-	public static function addToZip($directory, $filename, $content) {
-		RefManTemplate::$zip->addFromString(sprintf('%s/%s.mmd', $directory, $filename), $content);
-		RefManTemplate::$merge = str_replace('#includepdf#',
-																				 sprintf("\t\\includepdf{generated/%s.pdf}\n#includepdf#", $filename),
-																				 RefManTemplate::$merge);
+	public static function addToZip($filename, $content, $directory = null) {
+		$outdir = empty($directory) ? '' : sprintf('%s/', $directory);
+		RefManTemplate::$zip->addFromString(sprintf('%s%s', $outdir, $filename), $content);
+	}
+
+	/**
+	 * Adds file to merge content.
+	 *
+	 * @param $filename filename
+	 * @param $directory directory
+	 *
+	 * @version 0.4
+	 * @since 0.4
+	 */
+	public static function addToMerge($filename, $directory = null, $landscape = false) {
+		$outdir = empty($directory) ? '' : sprintf('%s/', $directory);
+		RefManTemplate::$mergetex = RefManTemplate::replace(RefManTemplate::$mergetex,
+																												Configure::read('RefMan.template.merge.includetoken'),
+																												sprintf('%s%s',
+																																sprintf(RefManTemplate::$mergeincludetex,
+																																				$landscape ? 'true' : 'false',
+																																				sprintf('%s%s', $outdir, $filename)),
+																																RefManTemplate::getReplaceToken(Configure::read('RefMan.template.merge.includetoken'))));
 	}
 
 	/**
@@ -427,13 +541,10 @@ class RefManTemplate {
 	 *
 	 * @return filename
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.3
 	 */
 	public static function closeZip() {
-		RefManTemplate::$merge = str_replace('#includepdf#', '', RefManTemplate::$merge);
-		RefManTemplate::$zip->addFromString(Configure::read('RefMan.template.merge'), RefManTemplate::$merge);
-
 		RefManTemplate::$zip->addFile(sprintf('%s%s%s',
 																					WWW_ROOT,
 																					Configure::read('RefMan.template.path'),
@@ -444,6 +555,21 @@ class RefManTemplate {
 		RefManTemplate::$zip->close();
 
 		return $zipfile;
+	}
+
+	/**
+	 * Close merge content.
+	 *
+	 * @param $filename filename
+	 *
+	 * @version 0.4
+	 * @since 0.4
+	 */
+	public static function closeMerge($filename) {
+		RefManTemplate::$mergetex = RefManTemplate::replace(RefManTemplate::$mergetex,
+																												Configure::read('RefMan.template.merge.includetoken'),
+																												'');
+		RefManTemplate::addToZip($filename, RefManTemplate::$mergetex);
 	}
 
 }

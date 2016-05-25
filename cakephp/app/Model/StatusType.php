@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * StatusType Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class StatusType extends AppModel {
@@ -22,12 +22,26 @@ class StatusType extends AppModel {
 	public $name = 'StatusType';
 
 	/**
+	 * Declare virtual display field in constructor to be alias-safe.
+	 *
+	 * @version 0.6
+	 * @since 0.6
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->virtualFields['display_title'] = sprintf(
+			'%1$s.title',
+			$this->alias
+		);
+	}
+
+	/**
 	 * Display field
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'title';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
@@ -36,9 +50,9 @@ class StatusType extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'sid' => array('isUnique', 'notempty'),
-		'title' => array('isUnique', 'notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'sid' => array('isUnique', 'notblank'),
+		'title' => array('isUnique', 'notblank'),
 	);
 
 	/**
@@ -58,23 +72,61 @@ class StatusType extends AppModel {
 	const SID_MAILONLY = 'mailonly';
 	const SID_OTHER = 'other';
 
-	/**
-	 * Compare two objects.
-	 *
-	 * @param a first object
-	 * @param b second object
-	 * @return comparison result
-	 *  @retval <0 a<b
-	 *  @retval 0 a==b
-	 *  @retval >0 a>b
-	 *
-	 * @version 0.3
-	 * @since 0.3
-	 */
-	public static function compareTo($a, $b) {
+	/** Singleton for fast access. */
+	private $types = null;
+	private $typelist = null;
 
-		// only criterion: sid
-		return strcasecmp($a['StatusType']['sid'], $b['StatusType']['sid']);
+	/**
+	 * Returns types.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return array of types, empty if there are none
+	 *
+	 * @version 0.6
+	 * @since 0.6
+	 */
+	public function getTypes() {
+		if ($this->types == null) {
+			$this->recursive = -1;
+			$arrTemp = $this->find('all',
+														 array(
+																	 'order' => 'title',
+																	 )
+														 );
+
+			// sids for keys (maybe there is a better/faster solution?)
+			$this->types = array();
+			foreach ($arrTemp as $dtaTemp) {
+				$this->types[$dtaTemp['StatusType']['sid']] = $dtaTemp;
+			}
+		}
+
+		return $this->types;
+	}
+
+	/**
+	 * Returns type list.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @return list of types
+	 *
+	 * @version 0.6
+	 * @since 0.6
+	 */
+	public function getTypeList() {
+		if ($this->typelist == null) {
+			$this->typelist = $this->find('list',
+																		array(
+																					'order' => 'title',
+																					)
+																		);
+		}
+
+		return $this->typelist;
 	}
 
 }

@@ -36,9 +36,9 @@ class TrainingLevel extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'referee_id' => array('notempty', 'numeric'),
-		'training_level_type_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'referee_id' => array('notblank', 'numeric'),
+		'training_level_type_id' => array('notblank', 'numeric'),
 		'since' => array('date'),
 	);
 

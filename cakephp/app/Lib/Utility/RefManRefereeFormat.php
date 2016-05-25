@@ -10,19 +10,19 @@ App::uses('CakeTime', 'Utility');
  * @package       Lib.Utility
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class RefManRefereeFormat {
 
 	/**
-	 * Format given date/time for SQL.
+	 * Format date/time for SQL.
 	 *
 	 * @param $date date to format
 	 * @param $time time to format
 	 * @return string formatted string
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.1
 	 */
 	public static function sqlFromDateTime($date, $time = null) {
@@ -34,22 +34,22 @@ class RefManRefereeFormat {
 		$sReturn = null;
 
 		if (empty($time)) {
-			$sReturn = CakeTime::format(CakeTime::fromString($date), '%Y-%m-%d');
+			$sReturn = RefManRefereeFormat::formatDate(CakeTime::fromString($date), 'sqldate');
 		} else {
-			$sReturn = CakeTime::format(CakeTime::fromString(sprintf('%s %s', $date, $time)), '%Y-%m-%d %H:%M:%S');
+			$sReturn = RefManRefereeFormat::formatDate(CakeTime::fromString(sprintf('%s %s', $date, $time)), 'sqldatetime');
 		}
 
 		return $sReturn;
 	}
 
 	/**
-	 * Format given date/time according to specified type.
+	 * Format date/time according to specified type.
 	 *
 	 * @param $data data to format
 	 * @param $type format type
 	 * @return string formatted string
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.1
 	 */
 	public static function formatDate($data, $type) {
@@ -87,6 +87,12 @@ class RefManRefereeFormat {
 			case 'medium':
 				$formatted = CakeTime::format($data, '%e. %B %Y');
 				break;
+			case 'sqldate':
+				$formatted = CakeTime::format($data, '%Y-%m-%d');
+				break;
+			case 'sqldatetime':
+				$formatted = CakeTime::format($data, '%Y-%m-%d %H:%M:%S');
+				break;
 			case 'time':
 				$formatted = CakeTime::format($data, '%H:%M');
 				break;
@@ -99,7 +105,7 @@ class RefManRefereeFormat {
 	}
 
 	/**
-	 * Format given person according to specified type.
+	 * Format person according to specified type.
 	 *
 	 * @param $data data to format
 	 * @param $type format type
@@ -144,10 +150,10 @@ class RefManRefereeFormat {
 	 * @param $separator separator character
 	 * @return formatted string
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
-	public static function formatMultiline($data, $separator = '<br />') {
+	public static function formatMultiline($data, $separator) {
 		if (empty($data)) {
 			return '';
 		}
@@ -174,7 +180,7 @@ class RefManRefereeFormat {
 	}
 
 	/**
-	 * Format given contacts.
+	 * Format contacts.
 	 *
 	 * @param $data data to format
 	 * @param $type format type
@@ -214,39 +220,26 @@ class RefManRefereeFormat {
 	}
 
 	/**
-	 * Format given contact.
+	 * Format contact.
 	 *
 	 * @param $data data to format
 	 * @param $type format type
-	 * @param $type contact kind
-	 * @param $export export type
+	 * @param $kind contact kind
 	 * @param $count number of contacts
 	 * @return string formatted string
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
-	private static function formatContact($data, $type, $kind, $export, $count) {
+	public static function formatContact($data, $type, $kind, $count = 1) {
 			$sReturn = '';
 
 			if ($count > 1) {
 				$sReturn .= sprintf('(%s) ', $data['ContactType']['abbreviation']);
 			}
 
-			switch ($kind) {
-				case 'Address':
-					$sReturn .= RefManRefereeFormat::formatAddress($data, $type, $export);
-					break;
-				case 'Email':
-					$sReturn .= RefManRefereeFormat::formatEmail($data, $type, $export);
-					break;
-				case 'PhoneNumber':
-					$sReturn .= RefManRefereeFormat::formatPhoneNumber($data, $type, $export);
-					break;
-				case 'Url':
-					$sReturn .= RefManRefereeFormat::formatUrl($data, $type, $export);
-					break;
-			}
+			$sFormatFunction = sprintf('format%s', $kind);
+			$sReturn .= RefManRefereeFormat::$sFormatFunction($data, $type);
 
 			if (!empty($data['info']['editor_only']) || !empty($data['info']['remark'])) {
 
@@ -259,7 +252,7 @@ class RefManRefereeFormat {
 				}
 				$txtout = RefManRefereeFormat::formatMultiline($txtout, ', ');
 
-				switch ($export) {
+				switch ($type) {
 					case 'html':
 						$sReturn .= sprintf(' <span style="font-size: smaller; font-style: italic;">(%s)</span>', $txtout);
 						break;
@@ -274,7 +267,7 @@ class RefManRefereeFormat {
 	}
 
 	/**
-	 * Format given address according to specified type.
+	 * Format address according to specified type.
 	 *
 	 * @param $data data to format
 	 * @param $type format type
@@ -334,34 +327,25 @@ class RefManRefereeFormat {
 	}
 
 	/**
-	 * Format given email according to specified type.
+	 * Format email.
 	 *
 	 * @param $data data to format
 	 * @param $type format type
-	 * @param $export export type
 	 * @return string formatted string
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	private static function formatEmail($data, $type, $export) {
+	private static function formatEmail($data, $type) {
 
 		$sReturn = '';
 
-		switch ($export) {
+		switch ($type) {
 
-			case 'html':
-				switch ($type) {
-					case 'link':
-						$sReturn .= sprintf('<a href="mailto:%1$s">%1$s</a>', $data['Email']['email']);
-						break;
-					case 'text':
-						$sReturn .= $data['Email']['email'];
-						break;
-				}
+			case 'link':
+				$sReturn .= sprintf('<a href="mailto:%1$s">%1$s</a>', $data['Email']['email']);
 				break;
 
-			case 'excel':
 			case 'text':
 				$sReturn .= $data['Email']['email'];
 				break;
@@ -372,7 +356,7 @@ class RefManRefereeFormat {
 	}
 
 	/**
-	 * Format given phone number according to specified type.
+	 * Format phone number according to specified type.
 	 *
 	 * @param $data data to format
 	 * @param $type format type
@@ -420,7 +404,7 @@ class RefManRefereeFormat {
 	}
 
 	/**
-	 * Format given url according to specified type.
+	 * Format url according to specified type.
 	 *
 	 * @param $data data to format
 	 * @param $type format type
@@ -458,7 +442,7 @@ class RefManRefereeFormat {
 	}
 
 	/**
-	 * Format given relations.
+	 * Format relations.
 	 *
 	 * @param $data data to format
 	 * @param $type format type

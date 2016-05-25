@@ -2,9 +2,8 @@
 
 	$isRefView = isset($isRefView) && $isRefView;
 
-	if (($type === 'excel') || ($type === 'referee_view_zip') || ($type === 'pdf')) {
+	if (($type === 'excel') || ($type === 'person-data') || ($type === 'pdf')) {
 
-		include_once('statustypes.php');
 		include_once('columns.php');
 
 		if ($type === 'excel') {
@@ -59,9 +58,9 @@
 
 		}
 
-		if ($type === 'referee_view_zip') {
-			$tplRefView = RefManTemplate::getTemplate('refereeview');
-			RefManTemplate::openZip(Configure::read('RefMan.template.refereeviewout'));
+		if ($type === 'person-data') {
+			$tplPersonData = RefManTemplate::getTemplate('person-data.template', 'person-data.path');
+			RefManTemplate::openZip(Configure::read('RefMan.template.person-data.output'));
 		}
 
 		if (empty($people)) {
@@ -71,7 +70,7 @@
 			if ($type === 'pdf') {
 				$tcpdf->Write(0, __('Es sind keine Schiedsrichter_innen gespeichert.'));
 			}
-			if ($type === 'referee_view_zip') {
+			if ($type === 'person-data') {
 				echo __('Es sind keine Schiedsrichter_innen gespeichert.');
 			}
 		} else {
@@ -93,11 +92,11 @@
 			// datarows
 			foreach ($people as $person) {
 
-				$tmpStatusStyles = null;
+				$tmpFormat = array();
 				if ($isRefView) {
 					$tmpStatus = $this->People->getRefereeStatus($person, $season);
 					if (($tmpStatus !== null) && (array_key_exists($tmpStatus['status_type_id'], $statustypes))) {
-						$tmpStatusStyles = $statustypes[$tmpStatus['status_type_id']]['outputstyle'];
+						$tmpFormat = Configure::read(sprintf('RefMan.statustypes.%s', $statustypes[$tmpStatus['status_type_id']]['StatusType']['sid']));
 					}
 				}
 
@@ -107,31 +106,32 @@
 					foreach ($columns[$type] as $column) {
 						$datarow[] = array('text' => $this->Template->replaceRefereeData($column['content'], $person, 'text', 'excel'));
 					}
-					$this->PHPExcel->addTableRow($datarow, (($tmpStatusStyles === null) ? array() : $tmpStatusStyles['excel']));
+					$this->PHPExcel->addTableRow($datarow, $tmpFormat);
 				}
 
 				if ($type === 'pdf') {
 					foreach ($columns[$type] as $column) {
 						$datarow[] = array('text' => $this->Template->replaceRefereeData($column['content'], $person, 'text', 'html'));
 					}
-					$pdf_data[] = array('data' => $datarow, 'style' => (($tmpStatusStyles === null) ? '' : $tmpStatusStyles['html']));
+					$pdf_data[] = array('data' => $datarow, 'style' => $this->Html->style($tmpFormat));
 				}
 
-				if ($type === 'referee_view_zip') {
+				if ($type === 'person-data') {
 
-					$txtRefView = $tplRefView;
+					$txtPersonData = $tplPersonData;
 
-					$txtRefView = RefManTemplate::replaceDateTimeData($txtRefView);
-					$txtRefView = RefManTemplate::replaceSeasonData($txtRefView, $season, 'text', 'text');
+					$txtPersonData = RefManTemplate::replaceDateTimeData($txtPersonData);
+					$txtPersonData = RefManTemplate::replaceSeasonData($txtPersonData, $season, 'text', 'text');
 
-					$txtRefView = RefManTemplate::replaceRefereeData($txtRefView, $person, 'text', 'text');
+					$txtPersonData = RefManTemplate::replaceRefereeData($txtPersonData, $person, 'text', 'text');
 
-					RefManTemplate::addToZip('mmd',
-																	 sprintf('%s_%s_%03d',
-																					 RefManTemplate::fileName($person['Person']['name']),
-																					 RefManTemplate::fileName($person['Person']['first_name']),
-																					 $person['Person']['id']),
-																	 $txtRefView);
+					RefManTemplate::addToZip(sprintf('%s.mmd',
+																					 sprintf(Configure::read('RefMan.template.person-data.file'),
+																										RefManTemplate::fileName($person['Person']['name']),
+																										RefManTemplate::fileName($person['Person']['first_name']),
+																										$person['Person']['id'])),
+																	 $txtPersonData,
+																	 'mmd');
 				}
 
 			}
@@ -144,7 +144,7 @@
 				foreach ($statustypes as $thestatustype) {
 					$this->PHPExcel->addTableRow(
 																			 array(array('text' => ($thestatustype['StatusType']['remark']) ? $thestatustype['StatusType']['remark'] : $thestatustype['StatusType']['title'])),
-																			 $thestatustype['outputstyle']['excel']);
+																			 Configure::read(sprintf('RefMan.statustypes.%s', $thestatustype['StatusType']['sid'])));
 				}
 
 				$this->PHPExcel->addTableRow(array());
@@ -167,13 +167,13 @@
 				foreach ($statustypes as $statustype) {
 					$tcpdf->WriteHTML(sprintf('<p style="font-size: %spt; %s">%s</p>',
 																		PDF_FONT_SIZE_DATA,
-																		$statustype['outputstyle']['html'],
+																		$this->Html->style(Configure::read(sprintf('RefMan.statustypes.%s', $statustype['StatusType']['sid']))),
 																		($statustype['StatusType']['remark']) ? h($statustype['StatusType']['remark']) : h($statustype['StatusType']['title'])),
 														true, false, true, false, '');
 				}
 			}
 
-			if ($type === 'referee_view_zip') {
+			if ($type === 'person-data') {
 				$zipfile = RefManTemplate::closeZip();
 				$this->response->file($zipfile);
 				echo $this->response;

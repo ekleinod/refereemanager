@@ -1,12 +1,13 @@
 <?php
 
 App::uses('AppModel', 'Model');
+App::uses('CakeTime', 'View/Helper');
 
 /**
  * Referee Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class Referee extends AppModel {
@@ -14,13 +15,13 @@ class Referee extends AppModel {
 	/**
 	 * Declare virtual display field in constructor to be alias-safe.
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
 		// I can't get this one working with other tables
-		$this->virtualFields['display_referee'] = sprintf(
+		$this->virtualFields['display_title'] = sprintf(
 			'CONCAT(%1$s.id, "-", %1$s.person_id)',
 			$this->alias
 		);
@@ -39,10 +40,10 @@ class Referee extends AppModel {
 	/**
 	 * Display field
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'display_referee';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
@@ -51,8 +52,8 @@ class Referee extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'person_id' => array('isUnique', 'notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'person_id' => array('isUnique', 'notblank', 'numeric'),
 		'docs_per_letter' => array('boolean'),
 	);
 
@@ -67,10 +68,10 @@ class Referee extends AppModel {
 	/**
 	 * hasMany associations
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $hasMany = array('RefereeAssignment', 'RefereeRelation', 'RefereeStatus', 'TrainingLevel');
+	public $hasMany = array('RefereeAssignment', 'RefereeRelation', 'RefereeStatus', 'TrainingLevel', 'Wish');
 
 	// custom programming
 
@@ -81,28 +82,31 @@ class Referee extends AppModel {
 	 * maybe later when I understand how to find things in a static method
 	 *
 	 * @param season season, referees have to be associated with
-	 * @param isEditor is editor?
+	 * @param viewVars view vars
 	 * @return array of referees for given season, empty if there are none
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public function getReferees($season, $isEditor) {
+	public function getReferees($season, $viewVars) {
 
-		$referees = $this->find('all');
-		usort($referees, array('Person', 'compareTo'));
+		$allreferees = $this->find('all',
+														array(
+																	'order' => array('Person.name', 'Person.first_name'),
+																	)
+														);
 
 		$arrReturn = array();
-		foreach ($referees as &$referee) {
+		foreach ($allreferees as &$ref) {
 
 			$useReferee = false;
-			foreach ($referee['RefereeStatus'] as $refereestatus) {
+			foreach ($ref['RefereeStatus'] as $refereestatus) {
 				$useReferee |= ($refereestatus['season_id'] == $season['Season']['id']);
 			}
 
 			if ($useReferee) {
-				$this->fillReferee($referee, $isEditor);
-				$arrReturn[] = $referee;
+				$this->fillReferee($ref, $viewVars);
+				$arrReturn[] = $ref;
 			}
 
 		}
@@ -111,28 +115,59 @@ class Referee extends AppModel {
 	}
 
 	/**
-	 * Returns referee for a given person id.
+	 * Returns referee for a given id.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @param personid person id
-	 * @return referee for given person, null if there is none
+	 * @param id referee id
+	 * @param viewVars view vars
+	 * @return referee for given id, null if there is none
 	 *
-	 * @version 0.3
-	 * @since 0.3
+	 * @version 0.4
+	 * @since 0.4
 	 */
-	public function getRefereeByPersonId($personid) {
+	public function getRefereeById($id, $viewVars) {
 
-		$referee = $this->findByPersonId($personid);
+		$referee = $this->findById($id);
 
 		if (empty($referee)) {
 			return null;
 		}
 
-		$this->fillReferee($referee);
+		$this->fillReferee($referee, $viewVars);
 
 		return $referee;
+	}
+
+	/**
+	 * Returns referee id for a given person id.
+	 *
+	 * Method should be static,
+	 * maybe later when I understand how to find things in a static method
+	 *
+	 * @param personid person id
+	 * @return referee id for given person, null if there is none
+	 *
+	 * @version 0.4
+	 * @since 0.4
+	 */
+	public function getRefereeIdByPersonId($personid) {
+
+		$refereeid = $this->find(
+														 'first',
+														 array(
+																	 'conditions' => array('person_id' => $personid),
+																	 'recursive' => -1,
+																	 'fields' => 'id',
+																	 )
+														 );
+
+		if (empty($refereeid)) {
+			return null;
+		}
+
+		return $refereeid['Referee']['id'];
 	}
 
 	/**
@@ -142,31 +177,132 @@ class Referee extends AppModel {
 	 * maybe later when I understand how to find things in a static method
 	 *
 	 * @param referee referee
-	 * @param isEditor is editor?
+	 * @param viewVars view vars
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public function fillReferee(&$referee, $isEditor) {
+	public function fillReferee(&$referee, $viewVars) {
 
 		// save values from person data except person and referee
 		$person = $this->Person->findById($referee['Referee']['person_id']);
 		foreach ($person as $key => $value) {
-			if ((strcmp($key, 'Person') != 0) &&
-					(strcmp($key, 'Referee') != 0)) {
+			if (($key !== 'Person') &&
+					($key !== 'Referee')) {
 				$referee[$key] = $value;
 			}
 		}
 
-		// remove hidden contacts
-		if (!empty($referee['Contact'])) {
-			$tmpContacts = array();
-			foreach ($referee['Contact'] as $contact) {
-				if (empty($contact['editor_only']) || $isEditor) {
-					$tmpContacts[] = $contact;
+		// remove person data depending on access rights
+		if (!$viewVars['isEditor']) {
+			$referee['Person']['sex_type_id'] = null;
+			$referee['Person']['birthday'] = null;
+			$referee['Person']['dayofdeath'] = null;
+			$referee['Person']['docs_per_letter'] = null;
+			$referee['Person']['remark'] = null;
+			$referee['Person']['internal_remark'] = null;
+		}
+
+		// remove picture depending on access rights
+		if (!$viewVars['isReferee']) {
+			$referee['Picture'] = array();
+		}
+
+		// expand referee relations
+		$referee['RefereeRelation'] = $this->RefereeRelation->findAllByRefereeId($referee['Referee']['id'],
+																																						 array(),
+																																						 array('Season.year_start'));
+		if (!empty($referee['RefereeRelation'])) {
+			if (!$viewVars['isEditor']) {
+				$referee['RefereeRelation'] = array($referee['RefereeRelation'][count($referee['RefereeRelation']) - 1]);
+			}
+		}
+
+		// expand referee status
+		$referee['RefereeStatus'] = $this->RefereeStatus->findAllByRefereeId($referee['Referee']['id'],
+																																				 array(),
+																																				 array('Season.year_start'));
+		if (!empty($referee['RefereeStatus'])) {
+			if (!$viewVars['isEditor']) {
+				$referee['RefereeStatus'] = array($referee['RefereeStatus'][count($referee['RefereeStatus']) - 1]);
+			}
+		}
+
+		// expand wishes
+		if ($viewVars['isEditor']) {
+			$referee['Wish'] = $this->Wish->findAllByRefereeId($referee['Referee']['id']);
+		} else {
+			$referee['Wish'] = array();
+		}
+
+		// expand training level
+		$referee['TrainingLevel'] = $this->TrainingLevel->findAllByRefereeId($referee['Referee']['id'],
+																																				 array(),
+																																				 array('TrainingLevelType.rank'));
+		if (!empty($referee['TrainingLevel'])) {
+			if (!$viewVars['isEditor']) {
+				$referee['TrainingLevel'] = array($referee['TrainingLevel'][count($referee['TrainingLevel']) - 1]);
+			}
+
+			// training updates
+			$modelTrainingUpdate = ClassRegistry::init('TrainingUpdate');
+			foreach($referee['TrainingLevel'] as &$traininglevel) {
+				$traininglevel['TrainingUpdate'] = $modelTrainingUpdate->findAllByTrainingLevelId($traininglevel['TrainingLevel']['id'],
+																																					 null,
+																																					 array('TrainingUpdate.update'),
+																																					 null,
+																																					 1,
+																																					 -1);
+
+				// only last update for anonymous
+				if (!empty($traininglevel['TrainingUpdate']) && !$viewVars['isReferee']) {
+					$traininglevel['TrainingUpdate'] = array($traininglevel['TrainingUpdate'][count($traininglevel['TrainingUpdate']) - 1]);
 				}
 			}
-			$referee['Contact'] = $tmpContacts;
+		}
+
+		// new training level info: highest TrainingLevelType, last update, next update
+		$referee['TrainingLevelInfo'] = array('TrainingLevelType' => null, 'last_update' => null, 'next_update' => null);
+		$tmpLevel = (empty($referee['TrainingLevel'])) ? null : $referee['TrainingLevel'][count($referee['TrainingLevel']) - 1];
+		if (!empty($tmpLevel)) {
+			$referee['TrainingLevelInfo']['TrainingLevelType'] = $tmpLevel['TrainingLevelType'];
+			if ($viewVars['isReferee']) {
+				$tmpUpdate = (empty($tmpLevel['TrainingUpdate'])) ? null : $tmpLevel['TrainingUpdate'][count($tmpLevel['TrainingUpdate']) - 1];
+				$referee['TrainingLevelInfo']['last_update'] = empty($tmpUpdate) ? $tmpLevel['TrainingLevel']['since'] : $tmpUpdate['TrainingUpdate']['update'];
+				if (!empty($referee['TrainingLevelInfo']['last_update'])) {
+					$referee['TrainingLevelInfo']['next_update'] = strftime('%Y-%m-%d',
+																																	strtotime(sprintf('+%d years %s',
+																																										$tmpLevel['TrainingLevelType']['update_interval'],
+																																										$referee['TrainingLevelInfo']['last_update'])));
+				}
+			}
+		}
+
+		// expand and process contacts
+		$arrTemp = $referee['Contact'];
+		$referee['Contact'] = array();
+		if ($viewVars['isReferee']) {
+			$modelContact = ClassRegistry::init('Contact');
+			foreach ($modelContact->getContactKinds() as $cType) {
+				if (($cType !== 'Address') || $viewVars['isEditor']) {
+					$referee['Contact'][$cType] = array();
+				}
+			}
+			foreach ($arrTemp as $tmpValue) {
+				if (empty($tmpValue['editor_only']) || $viewVars['isEditor']) {
+					$cTemp = $modelContact->findById($tmpValue['id']);
+					foreach (array_keys($modelContact->hasOne) as $cType) {
+						if (($cType !== 'Address') || $viewVars['isEditor']) {
+							if (!empty($cTemp[$cType]['id'])) {
+								$referee['Contact'][$cType][$tmpValue['id']] = array();
+								$referee['Contact'][$cType][$tmpValue['id']]['Contact'] = $cTemp['Contact'];
+								$referee['Contact'][$cType][$tmpValue['id']][$cType] = $cTemp[$cType];
+								break;
+							}
+						}
+					}
+				}
+			}
 		}
 
 	}

@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Season Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class Season extends AppModel {
@@ -14,12 +14,12 @@ class Season extends AppModel {
 	/**
 	 * Declare virtual field in constructor to be alias-safe.
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$this->virtualFields['title_season'] = sprintf(
+		$this->virtualFields['display_title'] = sprintf(
 			'IF (%1$s.title IS NULL OR %1$s.title = \'\', CONCAT(%1$s.year_start, "-", %1$s.year_start + 1), %1$s.title)',
 			$this->alias
 		);
@@ -38,10 +38,10 @@ class Season extends AppModel {
 	/**
 	 * Display field
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'title_season';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
@@ -50,8 +50,8 @@ class Season extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'year_start' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'year_start' => array('notblank', 'numeric'),
 		'editor_only' => array('boolean'),
 	);
 
@@ -61,9 +61,12 @@ class Season extends AppModel {
 	 * @version 0.3
 	 * @since 0.1
 	 */
-	public $hasMany = array('LeagueGame', 'LeaguePlannedReferee', 'RefereeReport', 'RefereeStatus', 'TeamSeason');
+	public $hasMany = array('LeagueGame', 'LeaguePlannedReferee', 'RefereeReport', 'RefereeRelation', 'RefereeStatus', 'TeamSeason');
 
 	// custom programming
+
+	/** Singleton for fast access. */
+	private $seasonlist = null;
 
 	/**
 	 * Returns season for given start year.
@@ -71,28 +74,30 @@ class Season extends AppModel {
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
 	 *
-	 * @param year start year of season (null == current season)
 	 * @param isEditor is user editor?
+	 * @param year start year of season (null == current season)
 	 * @return season for given start year, null if not present
 	 *
-	 * @version 0.1
+	 * @version 0.4
 	 * @since 0.1
 	 */
-	public function getSeason($year, $isEditor) {
+	public function getSeason($isEditor, $year = null) {
 
-		$theYear = ($year == null) ? sprintf('%d', ((idate('m') < 8) ? (idate('Y') - 1) : idate('Y'))) : $year;
+		$newSeason = 7;
+
+		$theYear = ($year == null) ? sprintf('%d', ((idate('m') < $newSeason) ? (idate('Y') - 1) : idate('Y'))) : $year;
 
 		$this->recursive = -1;
 		$ssnReturn = $this->findByYearStart($theYear);
 
 		if (($ssnReturn == null) && ($year != null)) {
-			$theYear = sprintf('%d', ((idate('m') < 8) ? (idate('Y') - 1) : idate('Y')));
+			$theYear = sprintf('%d', ((idate('m') < $newSeason) ? (idate('Y') - 1) : idate('Y')));
 			$this->recursive = -1;
 			$ssnReturn = $this->findByYearStart($theYear);
 		}
 
 		if (($ssnReturn != null) && $ssnReturn['Season']['editor_only'] && !$isEditor) {
-			$theYear = sprintf('%d', ((idate('m') < 8) ? (idate('Y') - 1) : idate('Y')));
+			$theYear = sprintf('%d', ((idate('m') < $newSeason) ? (idate('Y') - 1) : idate('Y')));
 			$this->recursive = -1;
 			$ssnReturn = $this->findByYearStart($theYear);
 		}
@@ -113,7 +118,7 @@ class Season extends AppModel {
 	 * @param isEditor is user editor?
 	 * @return array of seasons, empty if there are none
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
 	public function getSeasons($isEditor) {
@@ -134,7 +139,7 @@ class Season extends AppModel {
 	}
 
 	/**
-	 * Returns season lists.
+	 * Returns season list.
 	 *
 	 * Method should be static,
 	 * maybe later when I understand how to find things in a static method
@@ -147,15 +152,20 @@ class Season extends AppModel {
 	 */
 	public function getSeasonList($isEditor) {
 
-		$seasons = array();
-
-		foreach ($this->getSeasons($isEditor) as $season) {
-			$seasons[$season['Season']['id']] = $season['Season']['title_season'];
+		if ($this->seasonlist == null) {
+			$arrConditions = array();
+			if (!$isEditor) {
+				$arrConditions['editor_only'] = false;
+			}
+			$this->seasonlist = $this->find('list',
+																			array(
+																						'conditions' => $arrConditions,
+																						'order' => 'year_start DESC',
+																						)
+																			);
 		}
 
-		arsort($seasons, SORT_LOCALE_STRING);
-
-		return $seasons;
+		return $this->seasonlist;
 	}
 
 	/**

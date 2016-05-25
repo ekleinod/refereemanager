@@ -37,7 +37,13 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_people` (
   `dayofdeath` DATE NULL,
   `remark` TEXT NULL,
   `internal_remark` TEXT NULL,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_rfrmgr_people_rfrmgr_sex_types1`
+    FOREIGN KEY (`sex_type_id`)
+    REFERENCES `rfrmgr_sex_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -56,7 +62,12 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_league_types` (
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `title_UNIQUE` (`title` ASC))
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC),
+  CONSTRAINT `fk_rfrmgr_league_types_rfrmgr_sex_types1`
+    FOREIGN KEY (`sex_type_id`)
+    REFERENCES `rfrmgr_sex_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -75,7 +86,12 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_leagues` (
   `league_type_id` INT UNSIGNED NOT NULL,
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_leagues_rfrmgr_leagues_types1`
+    FOREIGN KEY (`league_type_id`)
+    REFERENCES `rfrmgr_league_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -89,7 +105,7 @@ DROP TABLE IF EXISTS `rfrmgr_seasons` ;
 
 CREATE TABLE IF NOT EXISTS `rfrmgr_seasons` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `year_start` YEAR NOT NULL,
+  `year_start` INT NOT NULL,
   `title` VARCHAR(100) NULL,
   `editor_only` TINYINT(1) NULL,
   `remark` TEXT NULL,
@@ -113,7 +129,17 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_referee_reports` (
   `season_id` INT UNSIGNED NOT NULL,
   `url` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_leagues_people_seasons_rfrmgr_leagues1`
+    FOREIGN KEY (`league_id`)
+    REFERENCES `rfrmgr_leagues` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_leagues_people_seasons_rfrmgr_seasons1`
+    FOREIGN KEY (`season_id`)
+    REFERENCES `rfrmgr_seasons` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -130,7 +156,12 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_referees` (
   `person_id` INT UNSIGNED NOT NULL,
   `docs_per_letter` TINYINT(1) NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_referees_rfrmgr_people`
+    FOREIGN KEY (`person_id`)
+    REFERENCES `rfrmgr_people` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -146,9 +177,6 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_status_types` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `sid` VARCHAR(20) NOT NULL,
   `title` VARCHAR(100) NOT NULL,
-  `style` VARCHAR(10) NULL,
-  `color` VARCHAR(6) NULL,
-  `bgcolor` VARCHAR(6) NULL,
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
@@ -212,7 +240,22 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_contacts` (
   `club_id` INT UNSIGNED NULL,
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_contacts_rfrmgr_contact_kinds1`
+    FOREIGN KEY (`contact_type_id`)
+    REFERENCES `rfrmgr_contact_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_contacts_rfrmgr_people1`
+    FOREIGN KEY (`person_id`)
+    REFERENCES `rfrmgr_people` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_contacts_rfrmgr_clubs1`
+    FOREIGN KEY (`club_id`)
+    REFERENCES `rfrmgr_clubs` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -232,7 +275,12 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_addresses` (
   `zip_code` VARCHAR(100) NULL,
   `city` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_addresses_rfrmgr_contacts1`
+    FOREIGN KEY (`contact_id`)
+    REFERENCES `rfrmgr_contacts` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -251,7 +299,12 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_phone_numbers` (
   `area_code` VARCHAR(10) NOT NULL,
   `number` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_phone_numbers_rfrmgr_contacts1`
+    FOREIGN KEY (`contact_id`)
+    REFERENCES `rfrmgr_contacts` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -268,7 +321,12 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_emails` (
   `contact_id` INT UNSIGNED NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_emails_rfrmgr_contacts1`
+    FOREIGN KEY (`contact_id`)
+    REFERENCES `rfrmgr_contacts` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -312,7 +370,17 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_teams` (
   `name` VARCHAR(100) NULL,
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_teams_rfrmgr_clubs1`
+    FOREIGN KEY (`club_id`)
+    REFERENCES `rfrmgr_clubs` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_teams_rfrmgr_league_types1`
+    FOREIGN KEY (`league_type_id`)
+    REFERENCES `rfrmgr_league_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -348,13 +416,23 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_users` (
   `username` VARCHAR(100) NOT NULL,
   `password` VARCHAR(128) NOT NULL,
   `salt` VARCHAR(128) NOT NULL,
-  `user_role_id` INT NOT NULL,
-  `person_id` INT NULL,
+  `user_role_id` INT UNSIGNED NOT NULL,
+  `person_id` INT UNSIGNED NULL,
   `created` DATETIME NOT NULL,
   `modified` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC),
+  CONSTRAINT `fk_rfrmgr_users_rfrmgr_user_roles1`
+    FOREIGN KEY (`user_role_id`)
+    REFERENCES `rfrmgr_user_roles` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_users_rfrmgr_people1`
+    FOREIGN KEY (`person_id`)
+    REFERENCES `rfrmgr_people` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -407,11 +485,26 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_activity_logs` (
   `row_id` INT NOT NULL,
   `old_value` TEXT NULL,
   `new_value` TEXT NOT NULL,
-  `user_id` INT NOT NULL COMMENT '\n',
+  `user_id` INT UNSIGNED NOT NULL COMMENT '\n',
   `remark` TEXT NULL,
   `created` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_activity_log_rfrmgr_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `rfrmgr_users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_activity_logs_rfrmgr_database_tables1`
+    FOREIGN KEY (`database_table_id`)
+    REFERENCES `rfrmgr_database_tables` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_activity_logs_rfrmgr_database_columns1`
+    FOREIGN KEY (`database_column_id`)
+    REFERENCES `rfrmgr_database_columns` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -509,7 +602,32 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_referee_assignments` (
   `referee_assignment_remark_type_id` INT UNSIGNED NULL,
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_referee_assignments_rfrmgr_assignments1`
+    FOREIGN KEY (`assignment_id`)
+    REFERENCES `rfrmgr_assignments` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referee_assignments_rfrmgr_referee_assignment_roles1`
+    FOREIGN KEY (`referee_assignment_type_id`)
+    REFERENCES `rfrmgr_referee_assignment_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referee_assignments_rfrmgr_referees1`
+    FOREIGN KEY (`referee_id`)
+    REFERENCES `rfrmgr_referees` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referee_assignments_rfrmgr_assignment_status_types1`
+    FOREIGN KEY (`referee_assignment_status_type_id`)
+    REFERENCES `rfrmgr_referee_assignment_status_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referee_assignments_rfrmgr_referee_assignment_remar1`
+    FOREIGN KEY (`referee_assignment_remark_type_id`)
+    REFERENCES `rfrmgr_referee_assignment_remark_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -527,7 +645,22 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_team_seasons` (
   `season_id` INT UNSIGNED NOT NULL,
   `league_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_team_assignments_rfrmgr_teams100`
+    FOREIGN KEY (`team_id`)
+    REFERENCES `rfrmgr_teams` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_team_seasons_rfrmgr_seasons10`
+    FOREIGN KEY (`season_id`)
+    REFERENCES `rfrmgr_seasons` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_teams_seasons_rfrmgr_leagues1`
+    FOREIGN KEY (`league_id`)
+    REFERENCES `rfrmgr_leagues` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -545,7 +678,17 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_team_venues` (
   `contact_id` INT UNSIGNED NOT NULL,
   `number` INT UNSIGNED NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_venues_rfrmgr_team_seasons1`
+    FOREIGN KEY (`team_season_id`)
+    REFERENCES `rfrmgr_team_seasons` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_venues_rfrmgr_contacts1`
+    FOREIGN KEY (`contact_id`)
+    REFERENCES `rfrmgr_contacts` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -565,7 +708,27 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_league_games` (
   `league_id` INT UNSIGNED NOT NULL,
   `team_venue_id` INT UNSIGNED NULL COMMENT 'Only filled if team plays outside their normal location.',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_assignments_rfrmgr_seasons10`
+    FOREIGN KEY (`season_id`)
+    REFERENCES `rfrmgr_seasons` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_assignments_rfrmgr_leagues10`
+    FOREIGN KEY (`league_id`)
+    REFERENCES `rfrmgr_leagues` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_league_game_assignments_rfrmgr_assignments1`
+    FOREIGN KEY (`assignment_id`)
+    REFERENCES `rfrmgr_assignments` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_league_games_rfrmgr_venues1`
+    FOREIGN KEY (`team_venue_id`)
+    REFERENCES `rfrmgr_team_venues` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -605,7 +768,22 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_league_game_teams` (
   `league_game_team_type_id` INT UNSIGNED NOT NULL,
   `team_season_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_league_game_teams_rfrmgr_league_games1`
+    FOREIGN KEY (`league_game_id`)
+    REFERENCES `rfrmgr_league_games` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_league_game_teams_rfrmgr_league_game_team_types1`
+    FOREIGN KEY (`league_game_team_type_id`)
+    REFERENCES `rfrmgr_league_game_team_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_league_game_teams_rfrmgr_team_seasons1`
+    FOREIGN KEY (`team_season_id`)
+    REFERENCES `rfrmgr_team_seasons` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -623,7 +801,22 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_spokespeople` (
   `team_season_id` INT UNSIGNED NULL,
   `club_id` INT UNSIGNED NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_team_seasons_leagues_spokespersons_rfrmgr_people1`
+    FOREIGN KEY (`person_id`)
+    REFERENCES `rfrmgr_people` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_spokespeople_rfrmgr_clubs1`
+    FOREIGN KEY (`club_id`)
+    REFERENCES `rfrmgr_clubs` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_spokespeople_rfrmgr_team_seasons1`
+    FOREIGN KEY (`team_season_id`)
+    REFERENCES `rfrmgr_team_seasons` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -641,7 +834,12 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_pictures` (
   `url` VARCHAR(200) NOT NULL,
   `remark` TEXT NULL,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_frmgr_pictures_rfrmgr_people1`
+    FOREIGN KEY (`person_id`)
+    REFERENCES `rfrmgr_people` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -659,7 +857,17 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_training_levels` (
   `training_level_type_id` INT UNSIGNED NOT NULL,
   `since` DATE NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_referees_training_levels_rfrmgr_referees1`
+    FOREIGN KEY (`referee_id`)
+    REFERENCES `rfrmgr_referees` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referees_training_levels_rfrmgr_training_levels1`
+    FOREIGN KEY (`training_level_type_id`)
+    REFERENCES `rfrmgr_training_level_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -676,7 +884,12 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_training_updates` (
   `training_level_id` INT UNSIGNED NOT NULL,
   `update` DATE NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_training_updates_rfrmgr_referees_training_levels1`
+    FOREIGN KEY (`training_level_id`)
+    REFERENCES `rfrmgr_training_levels` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -700,7 +913,7 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_referee_relation_types` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Possible relations of a referee to a club or league (member, /* comment truncated */ /* prefer, avoid).*/';
+COMMENT = 'Club relations of a referee: member, reffor.';
 
 
 -- -----------------------------------------------------
@@ -712,20 +925,35 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_referee_relations` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `referee_id` INT UNSIGNED NOT NULL,
   `referee_relation_type_id` INT UNSIGNED NOT NULL,
-  `club_id` INT UNSIGNED NULL,
-  `league_id` INT UNSIGNED NULL,
-  `sex_type_id` INT UNSIGNED NULL,
-  `saturday` TINYINT(1) NULL,
-  `sunday` TINYINT(1) NULL,
+  `club_id` INT UNSIGNED NOT NULL,
+  `season_id` INT UNSIGNED NOT NULL,
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_referees_clubs_rfrmgr_club_relations1`
+    FOREIGN KEY (`referee_relation_type_id`)
+    REFERENCES `rfrmgr_referee_relation_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referees_clubs_rfrmgr_clubs1`
+    FOREIGN KEY (`club_id`)
+    REFERENCES `rfrmgr_clubs` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referees_clubs_rfrmgr_referees1`
+    FOREIGN KEY (`referee_id`)
+    REFERENCES `rfrmgr_referees` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referee_relations_rfrmgr_seasons1`
+    FOREIGN KEY (`season_id`)
+    REFERENCES `rfrmgr_seasons` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
-COMMENT = 'Relations between referees and clubs resp. leagues.\nClubs: m /* comment truncated */ /*ember, prefer, avoid.
-Leagues: prefer. avoid.
-Saturday/Sunday: prefer*/';
+COMMENT = 'Relations between referees and clubs: member and/or reffor.';
 
 
 -- -----------------------------------------------------
@@ -740,7 +968,22 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_league_planned_referees` (
   `referee_assignment_type_id` INT UNSIGNED NOT NULL,
   `quantity` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_league_planned_referees_rfrmgr_leagues1`
+    FOREIGN KEY (`league_id`)
+    REFERENCES `rfrmgr_leagues` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_league_planned_referees_rfrmgr_seasons1`
+    FOREIGN KEY (`season_id`)
+    REFERENCES `rfrmgr_seasons` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_league_planned_referees_rfrmgr_assignment_types1`
+    FOREIGN KEY (`referee_assignment_type_id`)
+    REFERENCES `rfrmgr_referee_assignment_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -757,7 +1000,12 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_urls` (
   `contact_id` INT UNSIGNED NOT NULL,
   `url` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_emails_rfrmgr_contacts10`
+    FOREIGN KEY (`contact_id`)
+    REFERENCES `rfrmgr_contacts` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -771,12 +1019,22 @@ DROP TABLE IF EXISTS `rfrmgr_referee_report_recipients` ;
 
 CREATE TABLE IF NOT EXISTS `rfrmgr_referee_report_recipients` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `referee_report_id` INT NOT NULL,
-  `person_id` INT NOT NULL,
+  `referee_report_id` INT UNSIGNED NOT NULL,
+  `person_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   UNIQUE INDEX `title_UNIQUE` (`referee_report_id` ASC),
-  UNIQUE INDEX `person_id_UNIQUE` (`person_id` ASC))
+  UNIQUE INDEX `person_id_UNIQUE` (`person_id` ASC),
+  CONSTRAINT `fk_rfrmgr_referee_report_recipients_rfrmgr_referee_reports1`
+    FOREIGN KEY (`referee_report_id`)
+    REFERENCES `rfrmgr_referee_reports` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referee_report_recipients_rfrmgr_people1`
+    FOREIGN KEY (`person_id`)
+    REFERENCES `rfrmgr_people` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -800,7 +1058,17 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_tournaments` (
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `abbreviation_UNIQUE` (`name` ASC))
+  UNIQUE INDEX `abbreviation_UNIQUE` (`name` ASC),
+  CONSTRAINT `fk_rfrmgr_tournaments_rfrmgr_clubs1`
+    FOREIGN KEY (`club_id`)
+    REFERENCES `rfrmgr_clubs` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_tournaments_rfrmgr_people1`
+    FOREIGN KEY (`person_id`)
+    REFERENCES `rfrmgr_people` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -817,7 +1085,17 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_tournament_games` (
   `assignment_id` INT UNSIGNED NOT NULL,
   `tournament_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_league_game_assignments_rfrmgr_assignments10`
+    FOREIGN KEY (`assignment_id`)
+    REFERENCES `rfrmgr_assignments` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_tournament_games_rfrmgr_tournaments1`
+    FOREIGN KEY (`tournament_id`)
+    REFERENCES `rfrmgr_tournaments` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -836,7 +1114,22 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_referee_statuses` (
   `season_id` INT UNSIGNED NOT NULL,
   `remark` TEXT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_referee_status_rfrmgr_referees1`
+    FOREIGN KEY (`referee_id`)
+    REFERENCES `rfrmgr_referees` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referee_status_rfrmgr_status_types1`
+    FOREIGN KEY (`status_type_id`)
+    REFERENCES `rfrmgr_status_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referee_status_rfrmgr_seasons1`
+    FOREIGN KEY (`season_id`)
+    REFERENCES `rfrmgr_seasons` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -855,7 +1148,12 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_person_preferences` (
   `assignment_notification_interval` INT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `sid_UNIQUE` (`person_id` ASC))
+  UNIQUE INDEX `sid_UNIQUE` (`person_id` ASC),
+  CONSTRAINT `fk_rfrmgr_preferences_rfrmgr_people1`
+    FOREIGN KEY (`person_id`)
+    REFERENCES `rfrmgr_people` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
@@ -872,11 +1170,90 @@ CREATE TABLE IF NOT EXISTS `rfrmgr_tournament_venues` (
   `tournament_id` INT UNSIGNED NOT NULL,
   `contact_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_venues_rfrmgr_contacts10`
+    FOREIGN KEY (`contact_id`)
+    REFERENCES `rfrmgr_contacts` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_team_venues_copy1_rfrmgr_tournaments1`
+    FOREIGN KEY (`tournament_id`)
+    REFERENCES `rfrmgr_tournaments` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci
 COMMENT = 'Venues of tournaments.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_wish_types`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_wish_types` ;
+
+CREATE TABLE IF NOT EXISTS `rfrmgr_wish_types` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `sid` VARCHAR(20) NOT NULL,
+  `title` VARCHAR(100) NOT NULL,
+  `remark` TEXT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC),
+  UNIQUE INDEX `sid_UNIQUE` (`sid` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Wish types of a referee: prefer, avoid.';
+
+
+-- -----------------------------------------------------
+-- Table `rfrmgr_wishes`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rfrmgr_wishes` ;
+
+CREATE TABLE IF NOT EXISTS `rfrmgr_wishes` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `referee_id` INT UNSIGNED NOT NULL,
+  `wish_type_id` INT UNSIGNED NOT NULL,
+  `club_id` INT UNSIGNED NULL,
+  `league_id` INT UNSIGNED NULL,
+  `sex_type_id` INT UNSIGNED NULL,
+  `saturday` TINYINT(1) NULL,
+  `sunday` TINYINT(1) NULL,
+  `tournament` TINYINT(1) NULL,
+  `remark` TEXT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_rfrmgr_referees_clubs_rfrmgr_clubs10`
+    FOREIGN KEY (`club_id`)
+    REFERENCES `rfrmgr_clubs` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referees_clubs_rfrmgr_referees10`
+    FOREIGN KEY (`referee_id`)
+    REFERENCES `rfrmgr_referees` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referees_relations_rfrmgr_leagues10`
+    FOREIGN KEY (`league_id`)
+    REFERENCES `rfrmgr_leagues` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referee_relations_frmgr_sex_types10`
+    FOREIGN KEY (`sex_type_id`)
+    REFERENCES `rfrmgr_sex_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rfrmgr_referee_wishes_rfrmgr_wish_types1`
+    FOREIGN KEY (`wish_type_id`)
+    REFERENCES `rfrmgr_wish_types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci
+COMMENT = 'Referees\' wishes for their assignments.';
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

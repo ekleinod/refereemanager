@@ -36,9 +36,9 @@ class Url extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'contact_id' => array('isUnique', 'notempty', 'numeric'),
-		'url' => array('notempty', 'url'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'contact_id' => array('isUnique', 'notblank', 'numeric'),
+		'url' => array('notblank', 'url'),
 	);
 
 	/**

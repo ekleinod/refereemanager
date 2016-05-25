@@ -51,10 +51,10 @@ class TeamSeason extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'team_id' => array('notempty', 'numeric'),
-		'season_id' => array('notempty', 'numeric'),
-		'league_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'team_id' => array('notblank', 'numeric'),
+		'season_id' => array('notblank', 'numeric'),
+		'league_id' => array('notblank', 'numeric'),
 	);
 
 	/**

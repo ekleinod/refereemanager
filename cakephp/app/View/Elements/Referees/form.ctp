@@ -1,159 +1,507 @@
-<?php echo $this->Form->create('Referee'); ?>
+<div class="row">
+	<div class="col-sm-12">
 
-	<fieldset>
-		<legend><?php echo __('Die Person'); ?></legend>
-		<ol>
-			<?php
+		<?php
+			$tmpForm = $this->Form->create('Referee', array('class' => 'form-horizontal'));
 
-				$tmpA = array('Person', 'title', __('Titel'));
-				$tmpV = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-				echo $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																							 $tmpA[2], $tmpV, false,
-																							 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2], 50, true);
+			// person data
+			$tmpFieldset = $this->Html->tag('legend', __('Personendaten'));
 
-				$tmpA = array('Person', 'first_name', __('Vorname'));
-				$tmpV = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-				echo $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																							 $tmpA[2], $tmpV, false,
-																							 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2]);
+			$tmpA = array('Person', 'title', __('Titel'));
+			$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1])));
+			$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+												 $tmpA[2],
+												 $tmpB,
+												 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+												 false, true);
 
-				$tmpA = array('Person', 'name', __('Nachname'));
-				$tmpV = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-				echo $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																							 $tmpA[2], $tmpV, true,
-																							 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2]);
+			$tmpA = array('Person', 'first_name', __('Vorname'));
+			$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1])));
+			$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+												 $tmpA[2],
+												 $tmpB,
+												 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+												 false, false);
+
+			$tmpA = array('Person', 'name', __('Nachname'));
+			$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1])));
+			$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+												 $tmpA[2],
+												 $tmpB,
+												 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+												 true, false);
+
+			$tmpA = array('Person', 'sex_type_id', __('Geschlecht'));
+			// tmpB is introduced only for this: replacing token before storing the output for selection lists and checkboxes
+			$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))), $referee, 'text', 'html');
+			if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit || $isEditor) {
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													 $tmpA[2],
+													 $tmpB,
+													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													 true, false, 0, $sextypelist);
+			}
+
+			$tmpA = array('Person', 'birthday', __('Geburtstag'), __('tt.mm.yyyy'));
+			$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1])));
+			if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit || $isEditor) {
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													 $tmpA[2],
+													 $tmpB,
+													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													 false, false);
+			}
+
+			$tmpA = array('Person', 'dayofdeath', __('Todestag'), __('tt.mm.yyyy'));
+			$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1])));
+			if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit || $isEditor) {
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													 $tmpA[2],
+													 $tmpB,
+													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													 false, false);
+
+			}
+
+			$tmpA = array('Referee', 'docs_per_letter', __('Dokumentversand'), __('zusätzlich per Brief'));
+			$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1]))), $referee, 'text', 'html');
+			if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit || $isEditor) {
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
+													sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false);
+			}
+
+			$tmpA = array('Person', 'remark', __('Anmerkung'));
+			$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1])));
+			if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit || $isEditor) {
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													 $tmpA[2],
+													 $tmpB,
+													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													 false, false);
+			}
+
+			$tmpA = array('Person', 'internal_remark', __('Interne Anmerkung'));
+			$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1])));
+			if (!empty($referee[$tmpA[0]][$tmpA[1]]) || $isEdit || $isEditor) {
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													 $tmpA[2],
+													 $tmpB,
+													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													 false, false);
+			}
+
+			$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
+
+
+			// picture
+			if (!empty($referee['Picture']) || $isEdit || $isEditor) {
+				$tmpFieldset = $this->Html->tag('legend', __('Bild'));
+
+				$tmpA = array('Picture', 'url', __('Bild'), __('Bild-URL'));
+				$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1])));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													 $tmpA[2],
+													 $tmpB,
+													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													 false, false);
+
+				$tmpA = array('Picture', 'remark', __('Anmerkung'));
+				$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%s', strtolower($tmpA[0]), strtolower($tmpA[1])));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
+													 $tmpA[2],
+													 $tmpB,
+													 null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													 false, false);
+
+				$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
+			}
+
+			// contacts
+			foreach ($referee['Contact'] as $contactKind => $arrContacts) {
+				if ($isEdit) {
+					$arrContacts[0] = array();
+				}
+				foreach ($arrContacts as $contactid => $contact) {
+					$tmpFieldset = $this->Html->tag('legend', __('Kontakt: %s', $contactKind));
+
+					$tmpID = $contactid;
+
+					if ($isEdit) {
+						if ($tmpID == 0) {
+							$tmpA = array('Contact', 'add', __('Neu'));
+						} else {
+							$tmpA = array('Contact', 'delete', __('Löschen'));
+						}
+						$tmpB = 0;
+						$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
+															sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+															$tmpA[2],
+															$tmpB,
+															null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+															false, false);
+					}
+
+					switch ($contactKind) {
+						case 'Address':
+							$tmpA = array('Address', 'street', __('Straße'));
+							$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+							$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text',
+																sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+																$tmpA[2],
+																$tmpB,
+																null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																true, false);
+
+							$tmpA = array('Address', 'number', __('Hausnummer'));
+							$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+							$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text',
+																sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+																$tmpA[2],
+																$tmpB,
+																null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																false, false);
+
+							$tmpA = array('Address', 'zip_code', __('PLZ'));
+							$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+							$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text',
+																sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+																$tmpA[2],
+																$tmpB,
+																null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																false, false);
+
+							$tmpA = array('Address', 'city', __('Stadt'));
+							$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+							$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text',
+																sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+																$tmpA[2],
+																$tmpB,
+																null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																true, false);
+							break;
+
+						case 'Email':
+							$tmpA = array('Email', 'email', __('E-Mail-Adresse'));
+							$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+							$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text',
+																sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+																$tmpA[2],
+																$tmpB,
+																null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																true, false);
+							break;
+
+						case 'PhoneNumber':
+							$tmpA = array('PhoneNumber', 'country_code', __('Ländervorwahl'));
+							$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+							$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text',
+																sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+																$tmpA[2],
+																$tmpB,
+																null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																true, false);
+
+							$tmpA = array('PhoneNumber', 'area_code', __('Vorwahl'));
+							$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+							$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text',
+																sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+																$tmpA[2],
+																$tmpB,
+																null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																true, false);
+
+							$tmpA = array('PhoneNumber', 'number', __('Nummer'));
+							$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+							$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text',
+																sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+																$tmpA[2],
+																$tmpB,
+																null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																true, false);
+							break;
+
+						case 'Url':
+							$tmpA = array('Url', 'url', __('URL'));
+							$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+							$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text',
+																sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+																$tmpA[2],
+																$tmpB,
+																null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+																true, false);
+							break;
+					}
+
+					$tmpA = array('Contact', 'contact_type_id', __('Kontaktart'));
+					$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+														sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+														$tmpA[2],
+														$tmpB,
+														null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+														true, false, 0, $contacttypelist);
+
+					$tmpA = array('Contact', 'title', __('Titel'));
+					$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'text',
+														sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+														$tmpA[2],
+														$tmpB,
+														null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+														false, false);
+
+					$tmpA = array('Contact', 'is_primary', __('Primärkontakt'));
+					$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
+														sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+														$tmpA[2],
+														$tmpB,
+														null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+														false, false);
+
+					$tmpA = array('Contact', 'editor_only', __('Nur für Editoren'));
+					$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
+														sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+														$tmpA[2],
+														$tmpB,
+														null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+														false, false);
+
+					$tmpA = array('Contact', 'remark', __('Anmerkung'));
+					$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea',
+														sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+														$tmpA[2],
+														$tmpB,
+														null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+														false, false);
+
+					$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
+				}
+			}
+
+			// training level and updates
+			foreach ($referee['TrainingLevel'] as $traininglevel) {
+				$tmpFieldset = $this->Html->tag('legend', __('Ausbildung: %s', $traininglevel['TrainingLevelType']['display_title']));
+				$tmpID = $traininglevel['TrainingLevel']['id'];
+
+				$tmpA = array('TrainingLevel', 'training_level_type_id', __('Ausbildungsart'));
+				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false, 0, $trainingleveltypelist);
+
+				$tmpA = array('TrainingLevel', 'since', __('Seit'));
+				$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'date',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false);
+
+				foreach ($traininglevel['TrainingUpdate'] as $trainingupdate) {
+					$tmpID = $trainingupdate['TrainingUpdate']['id'];
+
+					$tmpA = array('TrainingUpdate', 'update', __('Fortbildung'));
+					$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'date',
+														sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+														$tmpA[2],
+														$tmpB,
+														null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+														true, false);
+				}
+
+				$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
+			}
+
+			// referee status
+			foreach ($referee['RefereeStatus'] as $refereestatus) {
+				$tmpFieldset = $this->Html->tag('legend', __('Schiri-Status: Saison %s', $refereestatus['Season']['display_title']));
+				$tmpID = $refereestatus['RefereeStatus']['id'];
+
+				$tmpA = array('RefereeStatus', 'status_type_id', __('Statustyp'));
+				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false, 0, $statustypelist);
+
+				$tmpA = array('RefereeStatus', 'season_id', __('Saison'));
+				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false, 0, $seasonlist);
 
 				if ($isEditor) {
-
-					$tmpA = array('Person', 'sex_type_id', __('Geschlecht'));
-					$tmpV = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? 0 : $referee[$tmpA[0]][$tmpA[1]];
-					echo $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																								 $tmpA[2], $tmpV, true, '', 0, false, $sextypearray);
-
-					$tmpA = array('Person', 'birthday', __('Geburtstag'), __('tt.mm.yyyy'));
-					$tmpV = $this->RefereeFormat->formatDate((empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]], 'date');
-					echo $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																								 $tmpA[2], $tmpV, false,
-																								 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2], 10);
-
-					$tmpA = array('Person', 'dayofdeath', __('Todestag'), __('tt.mm.yyyy'));
-					$tmpV = $this->RefereeFormat->formatDate((empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]], 'date');
-					echo $this->RefereeForm->getInputField($action, 'date', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																								 $tmpA[2], $tmpV, false,
-																								 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2], 10);
-
+					$tmpA = array('RefereeStatus', 'remark', __('Anmerkung'));
+					$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea',
+														sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+														$tmpA[2],
+														$tmpB,
+														null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+														false, false);
 				}
 
-				$tmpA = array('Person', 'remark', __('Anmerkung'));
-				$tmpV = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-				echo $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																							 $tmpA[2], $tmpV, false,
-																							 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2]);
+				$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
+			}
 
-				$tmpA = array('Person', 'internal_remark', __('Interne Anmerkung'));
-				$tmpV = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-				echo $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																							 $tmpA[2], $tmpV, false,
-																							 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2]);
-			?>
-		</ol>
-	</fieldset>
+			// referee relations
+			foreach ($referee['RefereeRelation'] as $refereerelation) {
+				$tmpFieldset = $this->Html->tag('legend', __('Vereinsbeziehung %s: Saison %s', $refereerelation['RefereeRelationType']['display_title'], $refereerelation['Season']['display_title']));
+				$tmpID = $refereerelation['RefereeRelation']['id'];
 
-	<?php if ($isReferee) { ?>
-		<fieldset>
-			<legend><?php echo __('Bild'); ?></legend>
-			<ol>
-				<?php
+				$tmpA = array('RefereeRelation', 'referee_relation_type_id', __('Beziehungstyp'));
+				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false, 0, $refereerelationtypelist);
 
-					$tmpA = array('Picture', 'url', __('Bild'), __('Bild-URL'));
-					$tmpV = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-					echo $this->RefereeForm->getInputField($action, 'text', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																								 $tmpA[2], $tmpV, true,
-																								 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2]);
+				$tmpA = array('RefereeRelation', 'season_id', __('Saison'));
+				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false, 0, $seasonlist);
 
-					$tmpA = array('Picture', 'remark', __('Anmerkung'));
-					$tmpV = (empty($referee[$tmpA[0]]) || empty($referee[$tmpA[0]][$tmpA[1]])) ? '' : $referee[$tmpA[0]][$tmpA[1]];
-					echo $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s', $tmpA[0], $tmpA[1]),
-																								 $tmpA[2], $tmpV, false,
-																								 (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2]);
+				$tmpA = array('RefereeRelation', 'club_id', __('Verein'));
+				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false, 0, $clublist);
 
-				?>
-			</ol>
-		</fieldset>
-	<?php } ?>
-
-	<fieldset>
-		<legend><?php echo __('Vereine und Wünsche'); ?></legend>
-		<ol>
-			<?php
-				foreach ($refereerelationtypes as $sid => $refereerelationtype) {
-					if (($sid == RefereeRelationType::SID_MEMBER) || ($sid == RefereeRelationType::SID_REFFOR) || $isEditor) {
-						$tmpA = array('RefereeRelation', 'id', $refereerelationtype['RefereeRelationType']['title']);
-						$tmpARem = array('RefereeRelation', 'remark', __('.'));
-
-						$count = 0;
-						foreach ($referee['RefereeRelation'] as $refrel) {
-							if ($refrel['referee_relation_type_id'] == $refereerelationtype['RefereeRelationType']['id']) {
-
-								$tmpV = 0;
-								$tmpAr = null;
-
-								if (!empty($refrel['club_id'])) {
-									$tmpV = $refrel['club_id'];
-									$tmpAr = $clubarray;
-								}
-
-								if (!empty($tmpV)) {
-									echo $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s.%d', $tmpA[0], $tmpA[1], $count),
-																												 $tmpA[2], $tmpV, true, '', 0, false, $tmpAr);
-
-									$tmpVRem = (empty($referee[$tmpARem[0]]) || empty($referee[$tmpARem[0]][$tmpARem[1]])) ? '' : $referee[$tmpARem[0]][$tmpARem[1]];
-									echo $this->RefereeForm->getInputField($action, 'textarea', sprintf('%s.%s.%d', $tmpARem[0], $tmpARem[1], $count),
-																												 $tmpARem[2], $tmpVRem, false,
-																												 (count($tmpARem) > 3) ? $tmpARem[3] : $tmpARem[2]);
-								}
-
-								$count++;
-							}
-						}
-
-						if ($count == 0) {
-							$tmpV = 0;
-							$tmpAr = $clubarray;
-							echo $this->RefereeForm->getInputField($action, 'select', sprintf('%s.%s.%d', $tmpA[0], $tmpA[1], $count),
-																										 $tmpA[2], $tmpV, true, '', 0, false, $tmpAr);
-						}
-					}
+				if ($isEditor) {
+					$tmpA = array('RefereeRelation', 'remark', __('Anmerkung'));
+					$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+					$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea',
+														sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+														$tmpA[2],
+														$tmpB,
+														null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+														false, false);
 				}
 
-				/*foreach ($refereerelationtypes as $refereerelationtype) {
-					foreach ($referee['RefereeRelation'] as $refereerelation) {
+				$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
+			}
 
-						if ($refereerelation['referee_relation_type_id'] == $refereerelationtype['id']) {
-							if ($refereerelationtype['is_membership'] == 1) {
-								echo $this->RefereeForm->getInputField($action, 'select', 'RefereeRelation.id', __($refereerelationtype['title']), $refereerelation['club_id'], true, '', 0, false, $clubarray);
-							} else {
-								if ($isEditor) {
-								echo $this->RefereeForm->getInputField($action, 'select', 'RefereeRelation.id', __($refereerelationtype['title']), $refereerelation['club_id'], false, '', 0, false, $clubarray);
-								}
-							}
-						}
+			// wishes
+			foreach ($referee['Wish'] as $wish) {
+				$tmpFieldset = $this->Html->tag('legend', __('Wunsch: %s', $wish['WishType']['display_title']));
+				$tmpID = $wish['Wish']['id'];
 
-					}
-				}*/
+				$tmpA = array('Wish', 'wish_type_id', __('Wunschtyp'));
+				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													true, false, 0, $wishtypelist);
 
-			?>
-		</ol>
-	</fieldset>
+				$tmpA = array('Wish', 'club_id', __('Verein'));
+				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false, 0, $clublist);
 
-	<?php if (($action === 'add') || ($action === 'edit')) { ?>
-		<fieldset>
-			<?php echo $this->Form->button(__('Speichern'), array('type' => 'submit')); ?>
-			<?php echo $this->Form->button(__('Zurücksetzen'), array('type' => 'reset')); ?>
-		</fieldset>
-	<?php } ?>
+				$tmpA = array('Wish', 'league_id', __('Liga'));
+				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false, 0, $leaguelist);
 
-<?php echo $this->Form->end(); ?>
+				$tmpA = array('Wish', 'sex_type_id', __('Geschlecht'));
+				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'select',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false, 0, $sextypelist);
+
+				$tmpA = array('Wish', 'saturday', __('Sonnabend'), __('Nur Sonnabend'));
+				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false);
+
+				$tmpA = array('Wish', 'sunday', __('Sonntag'), __('Nur Sonntag'));
+				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false);
+
+				$tmpA = array('Wish', 'tournament', __('Turniere'), __('Nur Turniere'));
+				$tmpB = RefManTemplate::replaceRefereeData(RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1]))), $referee, 'text', 'html');
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'checkbox',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false);
+
+				$tmpA = array('Wish', 'remark', __('Anmerkung'));
+				$tmpB = RefManTemplate::getReplaceToken(sprintf('%s:%d:%s', strtolower($tmpA[0]), $tmpID, strtolower($tmpA[1])));
+				$tmpFieldset .= $this->RefereeForm->getInputField($action, 'textarea',
+													sprintf('%s.%d.%s', $tmpA[0], $tmpID, $tmpA[1]),
+													$tmpA[2],
+													$tmpB,
+													null, (count($tmpA) > 3) ? $tmpA[3] : $tmpA[2],
+													false, false);
+
+				$tmpForm .= $this->Html->tag('fieldset', $tmpFieldset);
+			}
+
+			// fill referee data and output form
+			echo RefManTemplate::replaceRefereeData($tmpForm, $referee, 'text', 'html');
+		?>
+
+		<?php if (($action === 'add') || ($action === 'edit')) { ?>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<?php echo $this->Form->button(__('Daten speichern'), array('type' => 'submit', 'class' => 'btn btn-sm btn-default')); ?>
+				</div>
+			</div>
+		<?php } ?>
+
+		<?php echo $this->Form->end(); ?>
+	</div>
+</div>
 
 <?php debug($referee); ?>
 
