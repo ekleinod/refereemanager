@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="docs_by_letter" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="training_level" type="{}TrainingLevel" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="wish" type="{}Wish" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="club_relation" type="{}ClubRelation" maxOccurs="2" minOccurs="2"/>
+ *         &lt;element name="club_relation" type="{}ClubRelation" maxOccurs="2"/>
  *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *       &lt;/sequence>
  *     &lt;/extension>

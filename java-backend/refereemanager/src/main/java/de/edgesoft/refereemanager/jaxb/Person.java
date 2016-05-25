@@ -28,7 +28,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="birthday" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
  *         &lt;element name="day_of_death" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
- *         &lt;element name="internal_remark" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="picture" type="{}Picture" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="e_mail" type="{}EMail" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="address" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
@@ -49,7 +48,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     "name",
     "birthday",
     "dayOfDeath",
-    "internalRemark",
     "picture",
     "eMail",
     "address",
@@ -77,8 +75,6 @@ public class Person
     @XmlJavaTypeAdapter(Adapter2 .class)
     @XmlSchemaType(name = "date")
     protected Calendar dayOfDeath;
-    @XmlElement(name = "internal_remark")
-    protected String internalRemark;
     protected List<Picture> picture;
     @XmlElement(name = "e_mail")
     protected List<EMail> eMail;
@@ -186,30 +182,6 @@ public class Person
      */
     public void setDayOfDeath(Calendar value) {
         this.dayOfDeath = value;
-    }
-
-    /**
-     * Gets the value of the internalRemark property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getInternalRemark() {
-        return internalRemark;
-    }
-
-    /**
-     * Sets the value of the internalRemark property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setInternalRemark(String value) {
-        this.internalRemark = value;
     }
 
     /**

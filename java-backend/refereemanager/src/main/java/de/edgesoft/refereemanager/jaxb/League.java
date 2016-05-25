@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
  *         &lt;element name="abbreviation" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="referee_report" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
+ *         &lt;element name="referee_report" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
  *         &lt;element name="referee_quantity" type="{}RefereeQuantity" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sex_type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="referee_report_recipient" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded"/>
@@ -50,7 +50,7 @@ public class League
 
     @XmlElement(required = true)
     protected String abbreviation;
-    @XmlElement(name = "referee_report", required = true)
+    @XmlElement(name = "referee_report")
     @XmlSchemaType(name = "anyURI")
     protected String refereeReport;
     @XmlElement(name = "referee_quantity")

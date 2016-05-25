@@ -454,7 +454,6 @@ public class MySQL2XML extends AbstractMainClass {
 			}
 			
 			aReferee.setRemark(record.getValue(People.PEOPLE.REMARK));
-			aReferee.setInternalRemark(record.getValue(People.PEOPLE.INTERNAL_REMARK));
 			
 			// references
 			aReferee.setSexType(mapSexTypes.get(record.getValue(People.PEOPLE.SEX_TYPE_ID)));

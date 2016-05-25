@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="points_written_b" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="points_practical" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="points_oral" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="passed" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -34,7 +35,8 @@ import javax.xml.bind.annotation.XmlType;
     "pointsWrittenA",
     "pointsWrittenB",
     "pointsPractical",
-    "pointsOral"
+    "pointsOral",
+    "passed"
 })
 public class Trainee
     extends Person
@@ -48,6 +50,7 @@ public class Trainee
     protected Integer pointsPractical;
     @XmlElement(name = "points_oral")
     protected Integer pointsOral;
+    protected Boolean passed;
 
     /**
      * Gets the value of the pointsWrittenA property.
@@ -143,6 +146,30 @@ public class Trainee
      */
     public void setPointsOral(Integer value) {
         this.pointsOral = value;
+    }
+
+    /**
+     * Gets the value of the passed property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isPassed() {
+        return passed;
+    }
+
+    /**
+     * Sets the value of the passed property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setPassed(Boolean value) {
+        this.passed = value;
     }
 
 }
