@@ -35,8 +35,8 @@ import de.edgesoft.refereemanager.utils.ConnectionHelper;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.1.0
- * @since 0.1.0
+ * @version 0.4.0
+ * @since 0.4.0
  */
 public class SeasonHelper extends AbstractMainClass {
 	
@@ -45,8 +45,8 @@ public class SeasonHelper extends AbstractMainClass {
 	 * 
 	 * @param args command line arguments
 	 * 
-	 * @version 0.1.0
-	 * @since 0.1.0
+	 * @version 0.4.0
+	 * @since 0.4.0
 	 */
 	public static void main(String[] args) {
 		new SeasonHelper().executeOperation(args);
@@ -60,8 +60,8 @@ public class SeasonHelper extends AbstractMainClass {
 	 * - call init(args);
 	 * - call operation execution with arguments
 	 * 
-	 * @version 0.1.0
-	 * @since 0.1.0
+	 * @version 0.4.0
+	 * @since 0.4.0
 	 */
 	@Override
 	public void executeOperation(String[] args) {
@@ -98,8 +98,8 @@ public class SeasonHelper extends AbstractMainClass {
 	 * @return list of seasons
 	 *  @retval empty if no seasons exists
 	 * 
-	 * @version 0.1.0
-	 * @since 0.1.0
+	 * @version 0.4.0
+	 * @since 0.4.0
 	 */
 	public Result<Record> getSeasonList() {
 		
@@ -119,8 +119,8 @@ public class SeasonHelper extends AbstractMainClass {
 	 * @return current season
 	 *  @retval null if no current season exists
 	 * 
-	 * @version 0.1.0
-	 * @since 0.1.0
+	 * @version 0.4.0
+	 * @since 0.4.0
 	 */
 	public Record getCurrentSeason() {
 		

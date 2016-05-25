@@ -93,8 +93,8 @@ import de.edgesoft.refereemanager.utils.JAXBHelper;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.1.0
- * @since 0.1.0
+ * @version 0.4.0
+ * @since 0.4.0
  */
 public class MySQL2XML extends AbstractMainClass {
 	
@@ -105,8 +105,8 @@ public class MySQL2XML extends AbstractMainClass {
 	 * 
 	 * @param args command line arguments
 	 * 
-	 * @version 0.1.0
-	 * @since 0.1.0
+	 * @version 0.4.0
+	 * @since 0.4.0
 	 */
 	public static void main(String[] args) {
 		new MySQL2XML().executeOperation(args);
@@ -120,8 +120,8 @@ public class MySQL2XML extends AbstractMainClass {
 	 * - call init(args);
 	 * - call operation execution with arguments
 	 * 
-	 * @version 0.1.0
-	 * @since 0.1.0
+	 * @version 0.4.0
+	 * @since 0.4.0
 	 */
 	@Override
 	public void executeOperation(String[] args) {
@@ -145,8 +145,8 @@ public class MySQL2XML extends AbstractMainClass {
 	 * @param theXMLFile xml filename (null = refereemanager_%s.xml)
 	 * @param theSeason season (null = all seasons)
 	 * 
-	 * @version 0.1.0
-	 * @since 0.1.0
+	 * @version 0.4.0
+	 * @since 0.4.0
 	 */
 	public void convertMySQL2XML(String thePath, String theXMLFile, String theSeason) {
 		
@@ -209,8 +209,8 @@ public class MySQL2XML extends AbstractMainClass {
 	 * @param theSeasonRecord season
 	 * @return content
 	 * 
-	 * @version 0.1.0
-	 * @since 0.1.0
+	 * @version 0.4.0
+	 * @since 0.4.0
 	 */
 	private Content convertSeason(Record theSeasonRecord) {
 		

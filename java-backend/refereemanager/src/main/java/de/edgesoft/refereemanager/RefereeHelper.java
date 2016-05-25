@@ -35,8 +35,8 @@ import de.edgesoft.refereemanager.utils.ConnectionHelper;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.1.0
- * @since 0.1.0
+ * @version 0.4.0
+ * @since 0.4.0
  */
 public class RefereeHelper extends AbstractMainClass {
 	
@@ -45,8 +45,8 @@ public class RefereeHelper extends AbstractMainClass {
 	 * 
 	 * @param args command line arguments
 	 * 
-	 * @version 0.1.0
-	 * @since 0.1.0
+	 * @version 0.4.0
+	 * @since 0.4.0
 	 */
 	public static void main(String[] args) {
 		new RefereeHelper().executeOperation(args);
@@ -60,8 +60,8 @@ public class RefereeHelper extends AbstractMainClass {
 	 * - call init(args);
 	 * - call operation execution with arguments
 	 * 
-	 * @version 0.1.0
-	 * @since 0.1.0
+	 * @version 0.4.0
+	 * @since 0.4.0
 	 */
 	@Override
 	public void executeOperation(String[] args) {
@@ -95,8 +95,8 @@ public class RefereeHelper extends AbstractMainClass {
 	 * @return list of referees
 	 *  @retval empty if no referees exists
 	 * 
-	 * @version 0.1.0
-	 * @since 0.1.0
+	 * @version 0.4.0
+	 * @since 0.4.0
 	 */
 	public Result<Record> getRefereeList(String theSeason) {
 		
