@@ -36,8 +36,8 @@ class RefereeAssignmentRemarkType extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'title' => array('isUnique', 'notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'title' => array('isUnique', 'notblank'),
 	);
 
 	/**

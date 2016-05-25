@@ -36,12 +36,12 @@ class ActivityLog extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'database_table_id' => array('notempty', 'numeric'),
-		'database_column_id' => array('notempty', 'numeric'),
-		'row_id' => array('notempty', 'numeric'),
-		'new_value' => array('notempty'),
-		'user_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'database_table_id' => array('notblank', 'numeric'),
+		'database_column_id' => array('notblank', 'numeric'),
+		'row_id' => array('notblank', 'numeric'),
+		'new_value' => array('notblank'),
+		'user_id' => array('notblank', 'numeric'),
 		'created' => array('datetime'),
 	);
 

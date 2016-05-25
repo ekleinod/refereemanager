@@ -50,10 +50,10 @@ class Address extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'contact_id' => array('isUnique', 'notempty', 'numeric'),
-		'street' => array('notempty'),
-		'city' => array('notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'contact_id' => array('isUnique', 'notblank', 'numeric'),
+		'street' => array('notblank'),
+		'city' => array('notblank'),
 	);
 
 	/**

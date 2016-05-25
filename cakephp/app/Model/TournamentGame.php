@@ -51,9 +51,9 @@ class TournamentGame extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'assignment_id' => array('notempty', 'numeric'),
-		'tournament_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'assignment_id' => array('notblank', 'numeric'),
+		'tournament_id' => array('notblank', 'numeric'),
 	);
 
 	/**

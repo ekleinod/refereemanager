@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * TrainingUpdate Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class TrainingUpdate extends AppModel {
@@ -14,12 +14,12 @@ class TrainingUpdate extends AppModel {
 	/**
 	 * Declare virtual field in constructor to be alias-safe.
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$this->virtualFields['title_training_update'] = sprintf(
+		$this->virtualFields['display_title'] = sprintf(
 			'CONCAT(%1$s.training_level_id, " - ", %1$s.update)',
 			$this->alias
 		);
@@ -38,10 +38,10 @@ class TrainingUpdate extends AppModel {
 	/**
 	 * Display field
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'title_training_update';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
@@ -50,9 +50,9 @@ class TrainingUpdate extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'training_level_id' => array('notempty', 'numeric'),
-		'update' => array('date', 'notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'training_level_id' => array('notblank', 'numeric'),
+		'update' => array('date', 'notblank'),
 	);
 
 	/**

@@ -24,13 +24,13 @@ This means, there are always these three branches:
 
 1. `master` - contains released versions
 2. `develop` - development branch, synchronizing the feature, release, and hotfix branches
-3. `feature-work` - main branch in which I work/develop
+3. `feature/work` - main branch in which I work/develop
 
 Additionally the following branches may be created:
 
-- `feature-*` - for writing a special feature
-- `release-*` - releasing a new version, merging all features between `develop` and `master`
-- `hotfix-*` - hotfixes for fast error correction
+- `feature/*` - for writing a special feature
+- `release/*` - releasing a new version, merging all features between `develop` and `master`
+- `hotfix/*` - hotfixes for fast error correction
 
 ## Versions
 
@@ -40,6 +40,16 @@ Several features are working, see version list below.
 **Important:** the focus of development at the moment is *features*, not safety.
 Therefore, the referee manager is *not* safe for using in the "real" internet.
 Use it in a closed envorinment (local server etc.) only.
+
+### v0.4.0
+
+*Released:* 2016-05-25
+
+- extensive rewrite of database and functions
+- giving up because of complexity of database and PHP
+- switch to NoSQL data (XML) and java backend with simplified PHP frontend or static pages
+- saving progress of PHP and database modeling
+- converter database -> XML
 
 ### v0.3
 

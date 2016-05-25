@@ -1,18 +1,53 @@
-<div class="actions">
+<!-- actions -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="btn-group btn-group-sm">
 
-	<?php if ($isEditor) { ?>
+				<?php
+					echo $this->Html->link(
+																 __('Übersicht'),
+																 array('action' => 'index'),
+																 array(
+																			 'class' => 'btn btn-success',
+																			 'role' => 'button',
+																			 )
+																 );
 
-		<?php echo $this->Html->link(__('Neu'), array('action' => 'add'), array('class' => 'button-link access-editor')); ?>
+					if ($isEditor) {
+						echo $this->Html->link(
+																	 __('Neu'),
+																	 array('action' => 'add'),
+																	 array(
+																				 'class' => 'btn btn-warning',
+																				 'role' => 'button',
+																				 )
+																	 );
 
-		<?php if (isset($id)) { ?>
-			<?php echo $this->Html->link(__('Ansehen'), array('action' => 'view', $id), array('class' => 'button-link access-editor')); ?>
-			<?php echo $this->Html->link(__('Editieren'), array('action' => 'edit', $id), array('class' => 'button-link access-editor')); ?>
-			<?php echo $this->Html->link(__('Löschen'), array('action' => 'delete', $id), array('class' => 'button-link access-admin')); ?>
-		<?php } ?>
+						if (isset($id)) {
+							echo $this->Html->link(
+																		 __('Ändern'),
+																		 array('action' => 'edit', $id),
+																		 array(
+																					 'class' => 'btn btn-warning',
+																					 'role' => 'button',
+																					 )
+																		 );
+							echo $this->Html->link(
+																		 __('Löschen'),
+																		 array('action' => 'delete', $id),
+																		 array(
+																					 'class' => 'btn btn-danger',
+																					 'role' => 'button',
+																					 )
+																		 );
+						}
 
-	<?php } ?>
+					}
 
-	<?php echo $this->Html->link(__('Übersicht'), array('action' => 'index'), array('class' => 'button-link access-editor')); ?>
+				?>
 
-</div>
+			</div>
+		</div>
+	</div>
+<!-- /actions -->
 

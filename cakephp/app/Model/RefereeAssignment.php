@@ -51,10 +51,10 @@ class RefereeAssignment extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'assignment_id' => array('notempty', 'numeric'),
-		'referee_assignment_type_id' => array('notempty', 'numeric'),
-		'referee_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'assignment_id' => array('notblank', 'numeric'),
+		'referee_assignment_type_id' => array('notblank', 'numeric'),
+		'referee_id' => array('notblank', 'numeric'),
 		'referee_assignment_status_type_id' => array('numeric'),
 		'referee_assignment_remark_type_id' => array('numeric'),
 	);

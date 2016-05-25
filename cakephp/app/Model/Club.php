@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Club Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class Club extends AppModel {
@@ -14,12 +14,12 @@ class Club extends AppModel {
 	/**
 	 * Declare virtual display field in constructor to be alias-safe.
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$this->virtualFields['display_club'] = sprintf(
+		$this->virtualFields['display_title'] = sprintf(
 			'IF(%1$s.abbreviation IS NULL OR %1$s.abbreviation = "", %1$s.name, %1$s.abbreviation)',
 			$this->alias
 		);
@@ -38,10 +38,10 @@ class Club extends AppModel {
 	/**
 	 * Display field.
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'display_club';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
@@ -50,14 +50,14 @@ class Club extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'name' => array('notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'name' => array('notblank'),
 	);
 
 	/**
 	 * hasMany associations
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	public $hasMany = array('Contact', 'RefereeRelation', 'Spokesperson', 'Team', 'Tournament');
@@ -100,7 +100,7 @@ class Club extends AppModel {
 	 *
 	 * @return list of clubs
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
 	public function getClubList() {
@@ -109,7 +109,7 @@ class Club extends AppModel {
 			$this->clublist = array();
 
 			foreach ($this->getClubs() as $club) {
-				$this->clublist[$club['Club']['id']] = $club['Club']['display_club'];
+				$this->clublist[$club['Club']['id']] = $club['Club']['display_title'];
 			}
 
 			asort($this->clublist, SORT_LOCALE_STRING);
@@ -128,11 +128,11 @@ class Club extends AppModel {
 	 *  @retval 0 a==b
 	 *  @retval >0 a>b
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.3
 	 */
 	public static function compareTo($a, $b) {
-		return strcasecmp($a['Club']['display_club'], $b['Club']['display_club']);
+		return strcasecmp($a['Club']['display_title'], $b['Club']['display_title']);
 	}
 
 }

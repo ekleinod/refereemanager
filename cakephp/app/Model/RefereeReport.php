@@ -36,10 +36,10 @@ class RefereeReport extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'league_id' => array('notempty', 'numeric'),
-		'season_id' => array('notempty', 'numeric'),
-		'url' => array('notempty', 'url'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'league_id' => array('notblank', 'numeric'),
+		'season_id' => array('notblank', 'numeric'),
+		'url' => array('notblank', 'url'),
 	);
 
 	/**

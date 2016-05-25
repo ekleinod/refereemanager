@@ -36,9 +36,9 @@ class Picture extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'person_id' => array('notempty', 'numeric'),
-		'url' => array('notempty', 'url'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'person_id' => array('notblank', 'numeric'),
+		'url' => array('notblank', 'url'),
 	);
 
 	/**

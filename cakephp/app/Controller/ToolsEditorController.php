@@ -10,7 +10,7 @@ App::uses('RefManTemplate', 'Utility');
  * Tools editor Controller
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class ToolsEditorController extends AppController {
@@ -48,32 +48,43 @@ class ToolsEditorController extends AppController {
 	 *
 	 * @param season season to use (default: null == current season)
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	public function mailinglist($season = null) {
 
+		$this->set('title_for_layout', __('Mailverteiler'));
+
 		$this->setAndGetStandard($season);
 
-		$theSeparator = ',';
+		$theSeparator = ', ';
 		if (!empty($this->request->data) && array_key_exists('ToolsEditor', $this->request->data)) {
 			$theSeparator = $this->request->data['ToolsEditor']['separator'];
 		}
 
 		$this->set('separator', $theSeparator);
 
-		$this->set('title_for_layout', __('Mailverteiler'));
+		// compute array of emails
+		$arrEMails = array();
+		foreach ($this->viewVars['referees'] as $referee) {
+			$tmpEMail = RefManPeople::getPrimaryContact($referee, 'Email');
+			if (!empty($tmpEMail)) {
+				$arrEMails[] = RefManRefereeFormat::formatContact($tmpEMail, 'text', 'Email');
+			}
+		}
+		$this->set('emails', $arrEMails);
+
 	}
 
 	/**
 	 * Message method.
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.1
 	 */
 	public function message() {
 
-		$this->set('title_for_layout', __('Nachricht'));
+		$this->set('title_for_layout', __('Nachricht versenden'));
 
 		$this->setAndGetStandard(null);
 
@@ -94,25 +105,84 @@ class ToolsEditorController extends AppController {
 
 			$sendSingleEmails = $this->request->data['ToolsEditor']['mailkind'] === 's';
 
-			// if attachment: does it exist?
-			$attachmentOK = true;
-			if ($sendEmail && !empty($this->request->data['ToolsEditor']['attachment'])) {
-				$attachment = sprintf('%s%s', TMP, $this->request->data['ToolsEditor']['attachment']);
-				if (!file_exists($attachment)) {
-					$this->Session->setFlash(__('Dateianhang "%s" existiert nicht. Keine Nachrichten wurden versendet.', $attachment));
-					$attachmentOK = false;
+			// referees to send messages to
+			$arrReferees = array();
+			$hasMe = false;
+			if (!$toMeOnly) {
+				foreach ($this->viewVars['referees'] as $ref) {
+					$arrReferees[] = $ref;
+					if ($this->viewVars['userpersonid'] == $ref['Person']['id']) {
+						$hasMe = true;
+					}
 				}
 			}
 
-			if ($attachmentOK) {
+			if (!$hasMe) {
+				$arrReferees[] = $this->Referee->getRefereeById($this->Referee->getRefereeIdByPersonId($this->viewVars['userpersonid']), $this->viewVars);
+			}
+
+			// if attachment: do all of them exist?
+			$attachment = array();
+			$attachfails = array();
+
+			// directly prompted files
+			if (!empty($this->request->data['ToolsEditor']['attachment'])) {
+
+				foreach (explode(';', $this->request->data['ToolsEditor']['attachment']) as $attfile) {
+					$attachment[] = sprintf('%s%s%s', TMP, Configure::read('RefMan.template.attachments.path'), trim($attfile));
+				}
+				foreach ($attachment as $attfile) {
+					if (!file_exists($attfile)) {
+						$attachfails[] = $attfile;
+					}
+				}
+
+			}
+
+			// generated person data
+			if (!empty($this->request->data['ToolsEditor']['person_data'])) {
+				foreach ($arrReferees as $attperson) {
+					$tmpFile = sprintf('%s%s%s.pdf',
+														 TMP,
+														 Configure::read('RefMan.template.person-data.path'),
+														 sprintf(Configure::read('RefMan.template.person-data.file'),
+																		 RefManTemplate::fileName($attperson['Person']['name']),
+																		 RefManTemplate::fileName($attperson['Person']['first_name']),
+																		 $attperson['Person']['id']));
+					if (!file_exists($tmpFile)) {
+						$attachfails[] = $tmpFile;
+					}
+				}
+			}
+
+			// attachment error
+			if (!empty($attachfails)) {
+				$this->Session->setFlash(
+																 __('Dateianhang "%s" existiert nicht. Keine Nachrichten wurden versendet.', implode('; ', $attachfails)),
+																 'flash',
+																 array('class' => 'danger')
+																 );
+			}
+
+			$landscapes = array();
+
+			// landscape files (ignore wrongly stated files)
+			if (!empty($this->request->data['ToolsEditor']['landscape'])) {
+				foreach (explode(';', $this->request->data['ToolsEditor']['landscape']) as $landscapefile) {
+					$landscapes[] = sprintf('%s%s%s', TMP, Configure::read('RefMan.template.attachments.path'), trim($landscapefile));
+				}
+			}
+
+			// no attachment error - proceed
+			if (empty($attachfails)) {
 
 				// read templates
 				$tplEmail = RefManTemplate::getTemplate('email');
-				$tplLetter = RefManTemplate::getTemplate('letter');
+				$tplLetter = RefManTemplate::getTemplate('letter.template');
 
 				// start zip archive for letters
 				if ($sendLetter) {
-					RefManTemplate::openZip(Configure::read('RefMan.template.letterout'));
+					RefManTemplate::openZip(Configure::read('RefMan.template.letter.output'));
 				}
 
 				// fill templates with form values
@@ -129,41 +199,45 @@ class ToolsEditorController extends AppController {
 				$tplLetter = RefManTemplate::replace($tplLetter, 'signature', $this->request->data['ToolsEditor']['signature']);
 
 				$tplLetter = RefManTemplate::replace($tplLetter, 'subject', $this->request->data['ToolsEditor']['subject']);
-				$tplLetter = RefManTemplate::replace($tplLetter, 'date', RefManRefereeFormat::formatDate(time(), 'medium'));
+				$tplLetter = RefManTemplate::replaceDateTimeData($tplLetter);
 
 				$arrEmails = array();
 				$arrLetter = array();
 
-				// referees to send messages to
-				$hasMe = false;
-				if (!$toMeOnly) {
-					foreach ($this->viewVars['referees'] as $ref) {
-						$arrReferees[] = $ref;
-						if ($this->viewVars['userpersonid'] == $ref['Person']['id']) {
-							$hasMe = true;
-						}
-					}
-				}
-
-				if (!$hasMe) {
-					$arrReferees[] = $this->Referee->getRefereeByPersonId($this->viewVars['userpersonid']);
-				}
-
 				// fill templates with person values
+				$skipsend = !empty($this->request->data['ToolsEditor']['skiptill']);
+
 				foreach ($arrReferees as $referee) {
 
+					$persondatafile = sprintf(Configure::read('RefMan.template.person-data.file'),
+																		RefManTemplate::fileName($referee['Person']['name']),
+																		RefManTemplate::fileName($referee['Person']['first_name']),
+																		$referee['Person']['id']);
+
+					// attachments
+					$attarray = $attachment;
+					if (!empty($this->request->data['ToolsEditor']['person_data'])) {
+						$attarray[] = sprintf('%s%s%s.pdf',
+																	TMP,
+																	Configure::read('RefMan.template.person-data.path'),
+																	$persondatafile);
+					}
+
 					$contactEmail = RefManPeople::getPrimaryContact($referee, 'Email');
-					if ($sendEmail && !empty($contactEmail)) {
+
+					if (!$skipsend && $sendEmail && !empty($contactEmail)) {
 
 						$txtEmail = RefManTemplate::replaceRefereeData($tplEmail, $referee, 'text', 'html');
 
 						// send email (set up email config correctly)
 						$Email = new CakeEmail('default');
 						$Email
-								->to($contactEmail['Email']['email'])
+								->to(array(RefManRefereeFormat::formatContact($contactEmail, 'text', 'Email') => RefManRefereeFormat::formatPerson($referee, 'fullname')))
 								->subject($this->request->data['ToolsEditor']['subject']);
-						if (isset($attachment)) {
-							$Email->attachments($attachment);
+
+						// attachments
+						if (!empty($attarray)) {
+							$Email->attachments($attarray);
 						}
 
 						$sendsuccess = true;
@@ -201,23 +275,34 @@ class ToolsEditorController extends AppController {
 					}
 
 					$contactAddress = RefManPeople::getPrimaryContact($referee, 'Address');
-					if ($sendLetter && !empty($contactAddress) &&
-							(empty($contactEmail) || ($referee['Referee']['docs_per_letter'] === true))) {
+					if (!$skipsend && $sendLetter && !empty($contactAddress) &&
+							(empty($contactEmail) || ($referee['Referee']['docs_per_letter'] === true) || $toMeOnly)) {
 
-						$txtLetter = RefManTemplate::replaceRefereeData($tplLetter, $referee, 'text', 'html');
+						RefManTemplate::openMerge();
+
+						// fill letter
+						$txtLetter = $tplLetter;
+						$txtLetter = RefManTemplate::replaceRefereeData($txtLetter, $referee, 'text', 'html');
 						$txtLetter = RefManTemplate::replace($txtLetter, 'streetnumber', RefManRefereeFormat::formatAddress($contactAddress, 'streetnumber', 'text'));
 						$txtLetter = RefManTemplate::replace($txtLetter, 'zipcity', RefManRefereeFormat::formatAddress($contactAddress, 'zipcity', 'text'));
 
 						// store letter
-						RefManTemplate::addToZip('mmd',
-																		 sprintf('%s_%s',
-																						 RefManTemplate::fileName($referee['Person']['name']),
-																						 RefManTemplate::fileName($referee['Person']['first_name'])),
-																		 $txtLetter);
+						RefManTemplate::addToZip(sprintf('letter_%s.mmd', $persondatafile), $txtLetter, 'mmd');
+						RefManTemplate::addToMerge(sprintf('letter_%s.pdf', $persondatafile), 'pdf');
+
+						// attachments
+						foreach ($attarray as $letterattachment) {
+							RefManTemplate::addToMerge($letterattachment, null, in_array($letterattachment, $landscapes));
+						}
 
 						// output for user
 						CakeLog::write('letter', __('Letter generated for %s.', RefManRefereeFormat::formatPerson($referee, 'fullname')));
 						$arrLetter[] = sprintf('%s', RefManRefereeFormat::formatPerson($referee, 'fullname'));
+						RefManTemplate::closeMerge(sprintf('%s.tex', $persondatafile));
+					}
+
+					if ($skipsend && ($referee['Person']['name'] === $this->request->data['ToolsEditor']['skiptill'])) {
+						$skipsend = false;
 					}
 
 				}
@@ -249,7 +334,14 @@ class ToolsEditorController extends AppController {
 																RefManRefereeFormat::formatMultiline($arrLetter, ', '));
 				}
 
-				$this->set('messageresult', $messageresult);
+				$this->Session->setFlash(
+																 RefManRefereeFormat::formatMultiline($messageresult, '</p><p>'),
+																 'flash',
+																 array(
+																			 'class' => 'success',
+																			 'nohtml' => true,
+																			 )
+																 );
 
 			}
 
@@ -262,15 +354,15 @@ class ToolsEditorController extends AppController {
 	 *
 	 * @param season season (default: null == current season)
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	private function setAndGetStandard($season = null) {
 
 		$theSeason = $this->getSeason($season);
-		$this->set('seasonarray', $this->Season->getSeasonList($this->viewVars['isEditor']));
+		$this->set('seasonlist', $this->Season->getSeasonList($this->viewVars['isEditor']));
 
-		$referees = $this->Referee->getReferees($theSeason, $this->viewVars['isEditor']);
+		$referees = $this->Referee->getReferees($theSeason, $this->viewVars);
 		$this->set('referees', $referees);
 
 		$this->set('controller', 'ToolsEditor');

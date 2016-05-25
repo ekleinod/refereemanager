@@ -51,8 +51,8 @@ class Spokesperson extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'person_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'person_id' => array('notblank', 'numeric'),
 		'team_season_id' => array('numeric'),
 		'club_id' => array('numeric'),
 	);

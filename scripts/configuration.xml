@@ -5,7 +5,7 @@
 
 	Even if this is hard to read: use ${file.separator} as file separator instead of "/" or "\" if you want your script to be platform independent.
 
-	(c) 2013-2014 by Ekkart Kleinod
+	(c) 2013-2015 by Ekkart Kleinod
 
 	@author Ekkart Kleinod
 -->
@@ -15,7 +15,7 @@
 	<!-- Git repositories -->
 
 	<!--
-		Path to the directory containing the git repositories.
+		Path to the directory containing the refereemanager (my) git repositories.
 		Declare this path relative to the build.xml or absolute in your file system (relative recommended).
 		Original: "../../" = "..${file.separator}..${file.separator}"
 	-->
@@ -29,27 +29,6 @@
 	<property name="path:git:refereemanager" value="${path:git}refereemanager${file.separator}" />
 
 	<!--
-		Path to your CakePHP git repository.
-		The declaration uses your git path, change if necessary.
-		Original: "<git-path>cakephp/" = "${path:git}cakephp${file.separator}"
-	-->
-	<property name="path:git:cakephp" value="${path:git}cakephp${file.separator}" />
-
-	<!--
-		Path to your phpMyAdmin git repository.
-		The declaration uses your git path, change if necessary.
-		Original: "<git-path>phpmyadmin/" = "${path:git}phpmyadmin${file.separator}"
-	-->
-	<property name="path:git:phpmyadmin" value="${path:git}phpmyadmin${file.separator}" />
-
-	<!--
-		Path to your PHPExcel git repository.
-		The declaration uses your git path, change if necessary.
-		Original: "<git-path>phpexcel/" = "${path:git}phpexcel${file.separator}"
-	-->
-	<property name="path:git:phpexcel" value="${path:git}phpexcel${file.separator}" />
-
-	<!--
 		Path to your PHPExcelHelper git repository.
 		The declaration uses your git path, change if necessary.
 		Original: "<git-path>phpexcelhelper/" = "${path:git}phpexcelhelper${file.separator}"
@@ -57,11 +36,39 @@
 	<property name="path:git:phpexcelhelper" value="${path:git}phpexcelhelper${file.separator}" />
 
 	<!--
+		Path to the directory containing the external git repositories.
+		Declare this path relative to the build.xml or absolute in your file system (relative recommended).
+		Original: "../../../external-git/" = "..${file.separator}..${file.separator}..${file.separator}external-git${file.separator}"
+	-->
+	<property name="path:external-git" value="..${file.separator}..${file.separator}..${file.separator}external-git${file.separator}" />
+
+	<!--
+		Path to your CakePHP git repository.
+		The declaration uses your git path, change if necessary.
+		Original: "<external-git-path>cakephp/" = "${path:external-git}cakephp${file.separator}"
+	-->
+	<property name="path:external-git:cakephp" value="${path:external-git}cakephp${file.separator}" />
+
+	<!--
+		Path to your phpMyAdmin git repository.
+		The declaration uses your git path, change if necessary.
+		Original: "<external-git-path>phpmyadmin/" = "${path:external-git}phpmyadmin${file.separator}"
+	-->
+	<property name="path:external-git:phpmyadmin" value="${path:external-git}phpmyadmin${file.separator}" />
+
+	<!--
+		Path to your PHPExcel git repository.
+		The declaration uses your git path, change if necessary.
+		Original: "<external-git-path>phpexcel/" = "${path:external-git}phpexcel${file.separator}"
+	-->
+	<property name="path:external-git:phpexcel" value="${path:external-git}phpexcel${file.separator}" />
+
+	<!--
 		Path to your TCPDF git repository.
 		The declaration uses your git path, change if necessary.
-		Original: "<git-path>tcpdf/" = "${path:git}tcpdf${file.separator}"
+		Original: "<external-git-path>tcpdf/" = "${path:git}tcpdf${file.separator}"
 	-->
-	<property name="path:git:tcpdf" value="${path:git}tcpdf${file.separator}" />
+	<property name="path:external-git:tcpdf" value="${path:external-git}tcpdf${file.separator}" />
 
 
 

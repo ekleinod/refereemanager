@@ -56,22 +56,83 @@
 					<div id="navbar" class="collapse navbar-collapse">
 						<?php
 						$navarray = array(
-															array('title' => __('Schiedsrichtereinsätze'),
-																		'routing' => array('action' => 'index', 'controller' => 'assignments')
-																		),
-															array('title' => __('Schiedsrichter_innen'),
-																		'routing' => array('action' => 'index', 'controller' => 'referees')
-																		),
-															array('title' => __('Sonstiges'),
-																		'routing' => array('action' => 'index', 'controller' => 'other'),
+															array(
+																		'title' => __('Schiedsrichtereinsätze'),
+																		'routing' => array(
+																											 'action' => 'index',
+																											 'controller' => 'assignments'
+																											 ),
 																		'subnav' => array(
-																											array('title' => __('Clubs'), 'routing' => array('action' => 'index', 'controller' => 'clubs')),
-																											array('title' => __('Liga-Typen'), 'routing' => array('action' => 'index', 'controller' => 'league_types')),
-																											array('title' => __('Ligen'), 'routing' => array('action' => 'index', 'controller' => 'leagues')),
+																											array(
+																														'title' => __('Übersicht'),
+																														'routing' => array('action' => 'index', 'controller' => 'assignments')
+																														),
+																											array('divider' => 'divider', 'role' => 'editor'),
+																											array(
+																														'title' => __('Importieren'),
+																														'role' => 'editor',
+																														'routing' => array('action' => 'import', 'controller' => 'assignments')
+																														),
+																											)
+																		),
+															array(
+																		'title' => __('Schiedsrichter_innen'),
+																		'routing' => array(
+																											 'action' => 'index',
+																											 'controller' => 'referees'
+																											 ),
+																		),
+															array(
+																		'title' => __('Sonstiges'),
+																		'routing' => array(
+																											 'action' => 'index',
+																											 'controller' => 'other'
+																											 ),
+																		'subnav' => array(
+																											array(
+																														'title' => __('Clubs'),
+																														'routing' => array(
+																																							 'action' => 'index',
+																																							 'controller' => 'clubs'
+																																							 )
+																														),
+																											array(
+																														'title' => __('Liga-Typen'),
+																														'routing' => array(
+																																							 'action' => 'index',
+																																							 'controller' => 'league_types'
+																																							 )
+																														),
+																											array(
+																														'title' => __('Ligen'),
+																														'routing' => array(
+																																							 'action' => 'index',
+																																							 'controller' => 'leagues'
+																																							 )
+																														),
 																											array('divider' => 'divider'),
-																											array('title' => __('Personen'), 'role' => 'referee', 'routing' => array('action' => 'index', 'controller' => 'people')),
-																											array('title' => __('Saisons'), 'routing' => array('action' => 'index', 'controller' => 'seasons')),
-																											array('title' => __('Teams'), 'routing' => array('action' => 'index', 'controller' => 'teams')),
+																											array(
+																														'title' => __('Personen'),
+																														'role' => 'referee',
+																														'routing' => array(
+																																							 'action' => 'index',
+																																							 'controller' => 'people'
+																																							 )
+																														),
+																											array(
+																														'title' => __('Saisons'),
+																														'routing' => array(
+																																							 'action' => 'index',
+																																							 'controller' => 'seasons'
+																																							 )
+																														),
+																											array(
+																														'title' => __('Teams'),
+																														'routing' => array(
+																																							 'action' => 'index',
+																																							 'controller' => 'teams'
+																																							 )
+																														),
 																											)
 																		),
 															array('title' => __('Editor-Werkzeuge'),
@@ -79,115 +140,75 @@
 																		'routing' => array('action' => 'index', 'controller' => 'tools_editor'),
 																		'subnav' => array(
 																											array('title' => __('Mailverteiler'), 'routing' => array('action' => 'mailinglist', 'controller' => 'tools_editor')),
-																											array('title' => __('Nachricht'), 'routing' => array('action' => 'message', 'controller' => 'tools_editor')),
+																											array('title' => __('Nachricht versenden'), 'routing' => array('action' => 'message', 'controller' => 'tools_editor')),
 																											)
 																		),
 															);
 							echo $this->element('navigation', array('navarray' => $navarray));
 						?>
-					</div> <!--/.nav-collapse -->
+					</div>
 				</div>
-			</nav> <!-- /navigation -->
+			</nav>
+		<!-- /navigation -->
 
 		<!-- content container -->
 			<div class="container">
 
-			<!-- page header -->
-				<div class="page-header">
-					<h1><?php echo $this->fetch('title'); ?></h1>
-				</div> <!-- /page header -->
+				<!-- page header -->
+					<div class="page-header">
+						<h1><?php echo $this->fetch('title'); ?></h1>
+					</div>
+				<!-- /page header -->
 
-			<!-- alert -->
+				<!-- alert -->
+					<?php
+						$temp = $this->Flash->render('flash');
+						if (!empty($temp)) {
+							echo $temp;
+						}
+					?>
+				<!-- /alert -->
+
+				<!-- content -->
+					<?php echo $this->fetch('content'); ?>
+				<!-- /content -->
+
+			</div>
+		<!-- /content container -->
+
+		<!-- sql dump -->
+			<div class="container">
 				<div class="row">
 					<div class="col-sm-12">
-						<div class="alert alert-danger alert-dismissable">
-							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-							<?php echo $this->Flash->render(); ?>
+						<?php echo $this->element('sql_dump'); ?>
+					</div>
+				</div>
+			</div>
+		<!-- /sql dump -->
+
+		<!-- footer -->
+			<footer class="footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-8">
+							<p class="text-muted">
+								<a href="http://schiri.bettv.de/">Schiedsrichter-Homepage</a>
+							</p>
+						</div>
+						<div class="col-sm-4">
+							<p class="text-muted">
+								<?php if (isset($username)) { ?>
+									Eingeloggt als "<?php echo $username; ?>".
+									<?php echo $this->Html->link(__('Logout'), array('action' => 'logout', 'controller' => 'users'), array('class' => '')); ?>
+								<?php } else { ?>
+									<?php echo $this->Html->link(__('Login'), array('action' => 'login', 'controller' => 'users'), array('class' => '')); ?>
+								<?php } ?>
+							</p>
 						</div>
 					</div>
 				</div>
-
-			</div> <!-- /content container -->
-
-
-
-
-		<div class="page">
-
-
-			<?php if (isset($username)) { ?>
-				<div class="band username">
-					<div class="container">
-						<div class="sixteen columns">
-							<p>
-								Eingeloggt als: "<?php echo $username; ?>"
-								(<?php echo $this->Html->link(__('Logout'), array('action' => 'logout', 'controller' => 'users'), array('class' => '')); ?>)
-							</p>
-						</div><!-- end sixteen -->
-					</div><!-- end container -->
-				</div><!-- end band content -->
-			<?php } ?>
-
-			<div class="band content">
-
-				<div class="container">
-
-					<div class="sixteen columns">
-
-						<article>
-							<div id="flash"><?php echo $this->Session->flash(); ?></div>
-							<div id="content">
-								<h2><?php echo $this->fetch('title'); ?></h2>
-								<?php echo $this->fetch('content'); ?>
-							</div>
-						</article>
-
-					</div><!-- end sixteen -->
-
-				</div><!-- end container -->
-
-			</div><!-- end band content -->
-
-			<div class="band footer">
-
-				<footer class="container">
-
-					<div class="four columns">
-
-						<ul>
-							<li><?php echo $this->Html->link(__('Schiedsrichter-Homepage'), 'http://schiri.bettv.de/'); ?></li>
-						</ul>
-
-					</div><!-- end four -->
-
-					<div class="four columns">
-
-						<ul>
-							<li><?php echo $this->Html->link(__('Login'), array('action' => 'login', 'controller' => 'users'), array('class' => '')); ?></li>
-							<li><?php echo $this->Html->link(__('Logout'), array('action' => 'logout', 'controller' => 'users'), array('class' => '')); ?></li>
-						</ul>
-
-					</div><!-- end four -->
-
-				</footer><!-- end container -->
-
-			</div><!-- end band footer -->
-
-			<div class="band sqldump">
-
-				<footer class="container">
-
-					<div class="sixteen columns">
-
-						<?php echo $this->element('sql_dump'); ?>
-
-					</div><!-- end sixteen -->
-
-				</footer><!-- end container -->
-
-			</div><!-- end band footer -->
-
-		</div><!-- end page -->
+			</footer>
+		<!-- /footer -->
 
 		<?php
 			// load scripts at end of page in order to improve page load speed

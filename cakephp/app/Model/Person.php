@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  * Person Model
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class Person extends AppModel {
@@ -14,12 +14,12 @@ class Person extends AppModel {
 	/**
 	 * Declare virtual field in constructor to be alias-safe.
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$this->virtualFields['title_person'] = sprintf(
+		$this->virtualFields['display_title'] = sprintf(
 			'IF (%1$s.first_name IS NULL OR %1$s.first_name = \'\', %1$s.name, CONCAT(%1$s.name, ", ", %1$s.first_name))',
 			$this->alias
 		);
@@ -38,10 +38,10 @@ class Person extends AppModel {
 	/**
 	 * Display field
 	 *
-	 * @version 0.1
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	public $displayField = 'title_person';
+	public $displayField = 'display_title';
 
 	/**
 	 * Validation rules
@@ -50,9 +50,9 @@ class Person extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'sex_type_id' => array('notempty', 'numeric'),
-		'name' => array('notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'sex_type_id' => array('notblank', 'numeric'),
+		'name' => array('notblank'),
 		'birthday' => array(
 												'rule' => 'date',
 												'allowEmpty' => true,

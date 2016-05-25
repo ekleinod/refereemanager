@@ -36,8 +36,8 @@ class DatabaseTable extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'table_name' => array('isUnique', 'notempty'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'table_name' => array('isUnique', 'notblank'),
 	);
 
 	/**

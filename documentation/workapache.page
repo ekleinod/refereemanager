@@ -6,10 +6,10 @@
 		<credit type="author copyright maintainer">
 			<name>Ekkart Kleinod</name>
 			<email>ekleinod@edgesoft.de</email>
-			<years>2012-2014</years>
+			<years>2012-2015</years>
 		</credit>
 
-		<revision docversion="0.2" date="2014-06-29" status="incomplete" />
+		<revision docversion="0.4" date="2015-12-18" status="incomplete" />
 
 		<link type="guide" xref="setup" />
 		<link type="next" xref="workflow" />
@@ -27,16 +27,18 @@
 		<title>Default directory structure</title>
 		<item><file>&lt;path&gt;/</file>
 			<item><file>apache/</file>
+				<item><file>phpmyadmin/</file></item>
 				<item><file>refereemanager/</file></item>
+			</item>
+			<item><file>external-git/</file>
+				<item><file>cakephp/</file></item>
+				<item><file>tcpdf/</file></item>
+				<item><file>phpexcel/</file></item>
 				<item><file>phpmyadmin/</file></item>
 			</item>
 			<item><file>git/</file>
-				<item><file>refereemanager/</file></item>
-				<item><file>cakephp/</file></item>
-				<item><file>phpexcel/</file></item>
 				<item><file>phpexcelhelper/</file></item>
-				<item><file>tcpdf/</file></item>
-				<item><file>phpmyadmin/</file></item>
+				<item><file>refereemanager/</file></item>
 			</item>
 		</item>
 	</tree>
@@ -622,7 +624,7 @@
 				</p>
 			</item>
 			<item>
-				<p>Copy the content of the file into the sql text boy.</p>
+				<p>Copy the content of the file into the sql text body.</p>
 				<p>You do this by selecting the database <sys>refereemanager</sys> in the left tree view.</p>
 				<p>Now you select <gui style="menuitem">SQL</gui> in the tab row in the main window.</p>
 				<p>Open the sql file in an editor (encoding <sys>utf-8</sys>).</p>

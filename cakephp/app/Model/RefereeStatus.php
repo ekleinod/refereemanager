@@ -36,10 +36,10 @@ class RefereeStatus extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'referee_id' => array('notempty', 'numeric'),
-		'status_type_id' => array('notempty', 'numeric'),
-		'season_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'referee_id' => array('notblank', 'numeric'),
+		'status_type_id' => array('notblank', 'numeric'),
+		'season_id' => array('notblank', 'numeric'),
 	);
 
 	/**

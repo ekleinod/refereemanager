@@ -54,8 +54,15 @@ COMMIT;
 START TRANSACTION;
 INSERT INTO `rfrmgr_referee_relation_types` (`sid`, `title`) VALUES ('member', 'member');
 INSERT INTO `rfrmgr_referee_relation_types` (`sid`, `title`) VALUES ('reffor', 'reffor');
-INSERT INTO `rfrmgr_referee_relation_types` (`sid`, `title`) VALUES ('prefer', 'prefer');
-INSERT INTO `rfrmgr_referee_relation_types` (`sid`, `title`) VALUES ('noassignment', 'noassignment');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `rfrmgr_wish_types`
+-- -----------------------------------------------------
+START TRANSACTION;
+INSERT INTO `rfrmgr_wish_types` (`sid`, `title`) VALUES ('prefer', 'prefer');
+INSERT INTO `rfrmgr_wish_types` (`sid`, `title`) VALUES ('avoid', 'avoid');
 
 COMMIT;
 

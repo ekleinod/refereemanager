@@ -50,11 +50,11 @@ class PhoneNumber extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'contact_id' => array('isUnique', 'notempty', 'numeric'),
-		'country_code' => array('notempty', 'numeric'),
-		'area_code' => array('notempty', 'numeric'),
-		'number' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'contact_id' => array('isUnique', 'notblank', 'numeric'),
+		'country_code' => array('notblank', 'numeric'),
+		'area_code' => array('notblank', 'numeric'),
+		'number' => array('notblank', 'numeric'),
 	);
 
 	/**

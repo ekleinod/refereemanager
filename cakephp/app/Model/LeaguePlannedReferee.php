@@ -36,11 +36,11 @@ class LeaguePlannedReferee extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'league_id' => array('notempty', 'numeric'),
-		'season_id' => array('notempty', 'numeric'),
-		'referee_assignment_type_id' => array('notempty', 'numeric'),
-		'quantity' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'league_id' => array('notblank', 'numeric'),
+		'season_id' => array('notblank', 'numeric'),
+		'referee_assignment_type_id' => array('notblank', 'numeric'),
+		'quantity' => array('notblank', 'numeric'),
 	);
 
 	/**

@@ -3,6 +3,7 @@
 	<?php
 		foreach ($navarray as $mainnav) {
 			if (!array_key_exists('role', $mainnav) ||
+					(array_key_exists('role', $mainnav) && ($mainnav['role'] === 'referee') && $isReferee) ||
 					(array_key_exists('role', $mainnav) && ($mainnav['role'] === 'editor') && $isEditor)) {
 	?>
 				<?php
@@ -14,7 +15,8 @@
 								<?php
 									foreach ($mainnav['subnav'] as $subnav) {
 										if (!array_key_exists('role', $subnav) ||
-												(array_key_exists('role', $subnav) && ($subnav['role'] === 'referee') && $isReferee)) {
+												(array_key_exists('role', $subnav) && ($subnav['role'] === 'referee') && $isReferee) ||
+												(array_key_exists('role', $subnav) && ($subnav['role'] === 'editor') && $isEditor)) {
 								?>
 											<?php
 												if (array_key_exists('divider', $subnav)) {

@@ -51,9 +51,9 @@ class TournamentVenue extends AppModel {
 	 * @since 0.1
 	 */
 	public $validate = array(
-		'id' => array('isUnique', 'notempty', 'numeric'),
-		'tournament_id' => array('notempty', 'numeric'),
-		'contact_id' => array('notempty', 'numeric'),
+		'id' => array('isUnique', 'notblank', 'numeric'),
+		'tournament_id' => array('notblank', 'numeric'),
+		'contact_id' => array('notblank', 'numeric'),
 	);
 
 	/**

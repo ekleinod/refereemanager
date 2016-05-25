@@ -40,8 +40,15 @@ COMMIT;
 START TRANSACTION;
 UPDATE `rfrmgr_referee_relation_types` SET `title`='Mitglied', `remark`='Ist Mitglied des Vereins.' WHERE `sid`='member';
 UPDATE `rfrmgr_referee_relation_types` SET `title`='Schiedst für', `remark`='Schiedsrichter_in schiedst für Verein.' WHERE `sid`='reffor';
-UPDATE `rfrmgr_referee_relation_types` SET `title`='Bevorzugt schiedsen', `remark`='Vereine, die bevorzugt geschiedst werden.' WHERE `sid`='prefer';
-UPDATE `rfrmgr_referee_relation_types` SET `title`='Nicht schiedsen', `remark`='Vereine, die nicht geschiedst werden.' WHERE `sid`='noassignment';
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Daten für die Tabelle `rfrmgr_referee_relation_types`
+-- -----------------------------------------------------
+START TRANSACTION;
+UPDATE `rfrmgr_wish_types` SET `title`='Bevorzugt schiedsen', `remark`='Einsätze, die bevorzugt geschiedst werden.' WHERE `sid`='prefer';
+UPDATE `rfrmgr_wish_types` SET `title`='Nicht schiedsen', `remark`='Einsätze, die nicht geschiedst werden sollen.' WHERE `sid`='avoid';
 
 COMMIT;
 
@@ -60,11 +67,11 @@ COMMIT;
 -- Daten für die Tabelle `rfrmgr_status_types`
 -- -----------------------------------------------------
 START TRANSACTION;
-UPDATE `rfrmgr_status_types` SET `title`='viele', `style`='bold', `color`=NULL, `bgcolor`=NULL, `remark`='Schiedsrichter_in ist an besonders vielen Einsätzen interessiert' WHERE `sid`='many';
-UPDATE `rfrmgr_status_types` SET `title`='normal', `style`=NULL, `color`=NULL, `bgcolor`=NULL, `remark`='Einsätze ohne spezielle Wünsche' WHERE `sid`='normal';
-UPDATE `rfrmgr_status_types` SET `title`='nicht aktiv diese Saison', `style`=NULL, `color`='777777', `bgcolor`=NULL, `remark`='Schiedsrichter_in ist diese Saison nicht aktiv' WHERE `sid`='inactiveseason';
-UPDATE `rfrmgr_status_types` SET `title`='nicht aktiv, erhält SR-E-Mails', `style`='italic', `color`='777777', `bgcolor`=NULL, `remark`='Schiedsrichter_in ist nicht aktiv, erhält aber die SR-E-Mails' WHERE `sid`='mailonly';
-UPDATE `rfrmgr_status_types` SET `title`='anderes', `style`='italic', `color`=NULL, `bgcolor`=NULL, `remark`='Andere Aktivität' WHERE `sid`='other';
+UPDATE `rfrmgr_status_types` SET `title`='viele', `remark`='Schiedsrichter_in ist an besonders vielen Einsätzen interessiert' WHERE `sid`='many';
+UPDATE `rfrmgr_status_types` SET `title`='normal', `remark`='Einsätze ohne spezielle Wünsche' WHERE `sid`='normal';
+UPDATE `rfrmgr_status_types` SET `title`='nicht aktiv diese Saison', `remark`='Schiedsrichter_in ist diese Saison nicht aktiv' WHERE `sid`='inactiveseason';
+UPDATE `rfrmgr_status_types` SET `title`='nicht aktiv, erhält SR-E-Mails', `remark`='Schiedsrichter_in ist nicht aktiv, erhält aber die SR-E-Mails' WHERE `sid`='mailonly';
+UPDATE `rfrmgr_status_types` SET `title`='anderes', `remark`='Andere Aktivität' WHERE `sid`='other';
 
 COMMIT;
 

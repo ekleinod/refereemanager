@@ -2,6 +2,7 @@
 
 App::uses('AppController', 'Controller');
 App::uses('RefManPeople', 'Utility');
+App::uses('RefManReferee', 'Utility');
 App::uses('RefManRefereeFormat', 'Utility');
 App::uses('RefManTemplate', 'Utility');
 
@@ -9,7 +10,7 @@ App::uses('RefManTemplate', 'Utility');
  * Referees Controller
  *
  * @author ekleinod (ekleinod@edgesoft.de)
- * @version 0.3
+ * @version 0.6
  * @since 0.1
  */
 class RefereesController extends AppController {
@@ -18,16 +19,13 @@ class RefereesController extends AppController {
 	public $helpers = array('PHPExcel', 'RefereeFormat', 'RefereeForm');
 
 	/** Models. */
-	public $uses = array('Club', 'ContactType', 'Person', 'Referee', 'RefereeRelationType', 'Season', 'SexType', 'StatusType');
+	public $uses = array('Club', 'ContactType', 'League', 'Person', 'Referee', 'RefereeRelationType', 'Season', 'SexType', 'StatusType', 'TrainingLevelType', 'WishType');
 
 	/**
 	 * Defines actions to perform before the action method is executed.
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
-
-		$this->StatusType->recursive = -1;
-		$this->RefereeRelationType->recursive = -1;
 	}
 
 	/**
@@ -75,7 +73,7 @@ class RefereesController extends AppController {
 	 * @param $id id of referee
 	 * @return void
 	 *
-	 * @version 0.3
+	 * @version 0.4
 	 * @since 0.1
 	 */
 	public function view($id = null) {
@@ -84,11 +82,34 @@ class RefereesController extends AppController {
 		if (!$this->Referee->exists()) {
 			throw new NotFoundException(__('Schiedsrichter_in mit der ID \'%s\' existiert nicht.', $id));
 		}
-		$referee = $this->Referee->read(null, $id);
 
-		$this->setAndGetStandardNewAddView($referee);
-		$this->set('title_for_layout', __('Detailanzeige Schiedsrichter%s %s', ($referee['Person']['sex_type_sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee, 'fullname')));
+		$this->setAndGetStandardNewAddView($id);
+		$this->set('title_for_layout', __('Detailanzeige Schiedsrichter%s %s', ($this->viewVars['referee']['SexType']['sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($this->viewVars['referee'], 'fullname')));
+
 		$this->render('/Generic/view');
+	}
+
+	/**
+	 * Edit method: edit the referee with the given id.
+	 *
+	 * @param $id id of referee
+	 * @return void
+	 *
+	 * @version 0.4
+	 * @since 0.1
+	 */
+	public function edit($id = null) {
+
+		$this->Referee->id = $id;
+		if (!$this->Referee->exists()) {
+			throw new NotFoundException(__('Schiedsrichter_in mit der ID \'%s\' existiert nicht.', $id));
+		}
+
+
+		$this->setAndGetStandardNewAddView($id);
+		$this->set('title_for_layout', __('Schiedsrichter%s %s editieren', ($this->viewVars['referee']['SexType']['sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($this->viewVars['referee'], 'fullname')));
+
+		$this->render('/Generic/edit');
 	}
 
 
@@ -96,28 +117,29 @@ class RefereesController extends AppController {
 	/**
 	 * Set and get standard values for new, add, view.
 	 *
-	 * @param $referee referee
+	 * @param $id referee id
 	 *
-	 * @version 0.3
+	 * @version 0.6
 	 * @since 0.1
 	 */
-	private function setAndGetStandardNewAddView(&$referee) {
+	private function setAndGetStandardNewAddView($id) {
 
 		$this->setAndGetStandard();
 
-		$this->Referee->fillReferee($referee, $this->viewVars['isEditor']);
-
-		$sextypes = $this->SexType->getSexTypes();
-		$referee['Person']['sex_type_sid'] = $sextypes[$referee['Person']['sex_type_id']]['SexType']['sid'];
+		$referee = $this->Referee->getRefereeById($id, $this->viewVars);
 
 		// pass information to view
 		$this->set('referee', $referee);
-		$this->set('sextypes', $sextypes);
-		$this->set('sextypearray', $this->SexType->getSexTypeList());
-		$this->set('contacttypes', $this->ContactType->getContactTypes());
-		$this->set('refereerelationtypes', $this->RefereeRelationType->getRefereeRelationTypesSID());
-		$this->set('refereerelationtypearray', $this->RefereeRelationType->getRefereeRelationTypeList());
-		$this->set('clubarray', $this->Club->getClubList());
+		$this->set('clublist', $this->Club->getClubList());
+		$this->set('contacttypes', $this->ContactType->getTypes());
+		$this->set('contacttypelist', $this->ContactType->getTypeList());
+		$this->set('leaguelist', $this->League->getLeagueList());
+		$this->set('refereerelationtypelist', $this->RefereeRelationType->getTypeList());
+		$this->set('sextypes', $this->SexType->getTypes());
+		$this->set('sextypelist', $this->SexType->getTypeList());
+		$this->set('statustypelist', $this->StatusType->getTypeList());
+		$this->set('trainingleveltypelist', $this->TrainingLevelType->getTrainingLevelTypeList());
+		$this->set('wishtypelist', $this->WishType->getTypeList());
 
 		$this->set('id', $referee['Referee']['id']);
 	}
@@ -135,11 +157,13 @@ class RefereesController extends AppController {
 		$theSeason = $this->getSeason($season);
 		$this->setAndGetStandard();
 
-		$referees = $this->Referee->getReferees($theSeason, $this->viewVars['isEditor']);
+		$referees = $this->Referee->getReferees($theSeason, $this->viewVars);
 		$this->set('people', $referees);
 
-		$this->set('statustypes', $this->getUsedStatusTypes($referees, $theSeason));
-		$this->set('refereerelationtypes', $this->getUsedRefereeRelationTypes($referees));
+//		$this->set('statustypes', $this->getUsedStatusTypes($referees, $theSeason));
+		$this->set('statustypes', $this->StatusType->getTypes());
+		$this->set('refereerelationtypes', $this->RefereeRelationType->getTypes());
+		$this->set('wishtypes', $this->WishType->getTypes());
 
 		$this->set('isRefView', true);
 	}
@@ -152,7 +176,7 @@ class RefereesController extends AppController {
 	 */
 	private function setAndGetStandard() {
 
-		$this->set('seasonarray', $this->Season->getSeasonList($this->viewVars['isEditor']));
+		$this->set('seasonlist', $this->Season->getSeasonList($this->viewVars['isEditor']));
 
 		$this->set('controller', 'Referees');
 	}
@@ -198,67 +222,6 @@ class RefereesController extends AppController {
 		}
 
 		return $statustypes;
-	}
-
-	/**
-	 * Returns used referee relation types of referees.
-	 *
-	 * @param $referees array of referees
-	 * @return used referee relation types
-	 *
-	 * @version 0.3
-	 * @since 0.1
-	 */
-	private function getUsedRefereeRelationTypes($referees) {
-
-		$arrTemp = array();
-		foreach ($referees as $referee) {
-			foreach ($referee['RefereeRelation'] as $relation) {
-				$arrTemp[$relation['referee_relation_type_id']] = true;
-			}
-		}
-
-		$refereerelationtypes = array();
-		foreach ($arrTemp as $id => $dummy) {
-			$tpeTemp = $this->RefereeRelationType->findById($id);
-			$refereerelationtypes[$tpeTemp['RefereeRelationType']['sid']] = $tpeTemp['RefereeRelationType'];
-		}
-
-		return $refereerelationtypes;
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-	/**
-	 * Edit method: edit the referee with the given id.
-	 *
-	 * @param $id id of referee
-	 * @return void
-	 *
-	 * @version 0.1
-	 * @since 0.1
-	 */
-	public function edit($id = null) {
-
-		$this->Referee->id = $id;
-		if (!$this->Referee->exists()) {
-			throw new NotFoundException(__('Schiedsrichter_in mit der ID \'%s\' existiert nicht.', $id));
-		}
-		$referee = $this->Referee->read(null, $id);
-
-		$this->setAndGetStandardNewAddView($referee);
-
-		$this->set('title_for_layout', __('Schiedsrichter%s %s editieren', ($referee['Person']['sex_type_sid'] === 'f') ? 'in' : '', RefManRefereeFormat::formatPerson($referee['Person'], 'fullname')));
-		$this->render('/Generic/edit');
 	}
 
 }
