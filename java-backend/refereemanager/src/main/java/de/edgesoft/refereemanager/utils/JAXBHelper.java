@@ -1,7 +1,5 @@
 package de.edgesoft.refereemanager.utils;
 
-import org.jooq.types.UInteger;
-
 import de.edgesoft.edgeutils.commons.IDType;
 
 /**
@@ -53,7 +51,7 @@ public class JAXBHelper {
 	 * @param theID id
 	 * @return xml id
 	 */
-	public static String getID(Class<? extends IDType> theType, UInteger theID) {
+	public static String getID(Class<? extends IDType> theType, Integer theID) {
 		return getID(theType, theID.toString());
 	}
 	
