@@ -34,8 +34,8 @@ import de.edgesoft.refereemanager.utils.Recipient;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.4.0
- * @since 0.4.0
+ * @version 0.5.0
+ * @since 0.5.0
  */
 public class SendMail extends AbstractMainClass {
 	
@@ -46,8 +46,8 @@ public class SendMail extends AbstractMainClass {
 	 * 
 	 * @param args command line arguments
 	 * 
-	 * @version 0.4.0
-	 * @since 0.4.0
+	 * @version 0.5.0
+	 * @since 0.5.0
 	 */
 	public static void main(String[] args) {
 		new SendMail().executeOperation(args);
@@ -61,8 +61,8 @@ public class SendMail extends AbstractMainClass {
 	 * - call init(args);
 	 * - call operation execution with arguments
 	 * 
-	 * @version 0.4.0
-	 * @since 0.4.0
+	 * @version 0.5.0
+	 * @since 0.5.0
 	 */
 	@Override
 	public void executeOperation(String[] args) {
@@ -92,8 +92,8 @@ public class SendMail extends AbstractMainClass {
 	 * @param theRecipient recipient
 	 * @param isTest is test run?
 	 * 
-	 * @version 0.4.0
-	 * @since 0.4.0
+	 * @version 0.5.0
+	 * @since 0.5.0
 	 */
 	public void sendMail(String thePath, String theXMLFile, String theSeason, String theMailfile, String theRecipient, boolean isTest) {
 		
@@ -136,8 +136,8 @@ public class SendMail extends AbstractMainClass {
 	 * @param theRecipient recipient
 	 * @param isTest is test run?
 	 * 
-	 * @version 0.4.0
-	 * @since 0.4.0
+	 * @version 0.5.0
+	 * @since 0.5.0
 	 */
 	public void sendMail(RefereeManager theData, String theMailSubject, String theMailBody, Recipient theRecipient, boolean isTest) throws RefManException {
 		

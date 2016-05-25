@@ -23,16 +23,16 @@ package de.edgesoft.refereemanager.utils;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.4.0
+ * @version 0.5.0
  * @since 0.4.0
  */
 public class Constants {
 
 	/** Program version. */
-	public static final String APPVERSION = "0.4.0";
+	public static final String APPVERSION = "0.5.0";
 	
 	/** Document version. */
-	public static final String DOCVERSION = "0.4.0";
+	public static final String DOCVERSION = "0.5.0";
 
 }
 

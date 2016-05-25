@@ -25,8 +25,8 @@ package de.edgesoft.refereemanager;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.4.0
- * @since 0.4.0
+ * @version 0.5.0
+ * @since 0.5.0
  */
 public class RefManException extends Exception {
 	
@@ -38,8 +38,8 @@ public class RefManException extends Exception {
 	 * 
 	 * @param theErrorMessage error message
 	 * 
-	 * @version 0.4.0
-	 * @since 0.4.0
+	 * @version 0.5.0
+	 * @since 0.5.0
 	 */
 	public RefManException(String theErrorMessage) {
 		super(theErrorMessage);
