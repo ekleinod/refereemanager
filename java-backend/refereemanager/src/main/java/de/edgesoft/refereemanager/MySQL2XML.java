@@ -129,8 +129,8 @@ public class MySQL2XML extends AbstractMainClass {
 		setDescription("Converts MySQL data to XML data.");
 		
 		addOption("p", "path", "output path.", true, true);
-		addOption("f", "file", "output file name template.", true, false);
-		addOption("s", "season", "season of file.", true, false);
+		addOption("f", "file", "output file name template (empty for refereemanager_%s.xml).", true, false);
+		addOption("s", "season", "season of file (empty for all seasons).", true, false);
 		
 		init(args);
 		
@@ -142,8 +142,8 @@ public class MySQL2XML extends AbstractMainClass {
 	 * Converts data from MySQL to XML.
 	 * 
 	 * @param thePath output path
-	 * @param theXMLFile xml filename (empty = refereemanager_%s.xml)
-	 * @param theSeason season (empty = all seasons)
+	 * @param theXMLFile xml filename (null = refereemanager_%s.xml)
+	 * @param theSeason season (null = all seasons)
 	 * 
 	 * @version 0.1.0
 	 * @since 0.1.0
