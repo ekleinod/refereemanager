@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;extension base="{}Person">
  *       &lt;sequence>
  *         &lt;element name="docs_by_letter" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="revoke_license" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="training_level" type="{}TrainingLevel" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="wish" type="{}Wish" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="club_relation" type="{}ClubRelation" maxOccurs="2"/>
@@ -37,6 +38,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Referee", propOrder = {
     "docsByLetter",
+    "revokeLicense",
     "trainingLevel",
     "wish",
     "clubRelation",
@@ -48,6 +50,8 @@ public class Referee
 
     @XmlElement(name = "docs_by_letter")
     protected boolean docsByLetter;
+    @XmlElement(name = "revoke_license")
+    protected Boolean revokeLicense;
     @XmlElement(name = "training_level")
     protected List<TrainingLevel> trainingLevel;
     protected List<Wish> wish;
@@ -72,6 +76,30 @@ public class Referee
      */
     public void setDocsByLetter(boolean value) {
         this.docsByLetter = value;
+    }
+
+    /**
+     * Gets the value of the revokeLicense property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRevokeLicense() {
+        return revokeLicense;
+    }
+
+    /**
+     * Sets the value of the revokeLicense property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRevokeLicense(Boolean value) {
+        this.revokeLicense = value;
     }
 
     /**
