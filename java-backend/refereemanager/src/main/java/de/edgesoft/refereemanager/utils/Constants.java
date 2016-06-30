@@ -34,6 +34,9 @@ public class Constants {
 	/** Document version. */
 	public static final String DOCVERSION = "0.5.0";
 
+	/** Standard file name pattern for data files. */
+	public static final String DATAFILENAMEPATTERN = "refereemanager_%04d.xml";
+
 }
 
 /* EOF */

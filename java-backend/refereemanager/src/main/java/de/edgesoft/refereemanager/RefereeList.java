@@ -1,6 +1,9 @@
 package de.edgesoft.refereemanager;
 
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.MessageFormat;
+import java.util.List;
 import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,7 +13,8 @@ import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
-import de.edgesoft.refereemanager.utils.Recipient;
+import de.edgesoft.refereemanager.model.SeasonModel;
+import de.edgesoft.refereemanager.utils.Constants;
 
 /**
  * Fill the referee list.
@@ -71,7 +75,7 @@ public class RefereeList extends AbstractMainClass {
 		setDescription("Sends an email to the selected recipients.");
 		
 		addOption("p", "path", "input path of data.", true, true);
-		addOption("f", "file", "input file name template (empty for refereemanager_%s.xml).", true, false);
+		addOption("f", "file", MessageFormat.format("input file name template (empty for {0}).", Constants.DATAFILENAMEPATTERN), true, false);
 		addOption("s", "season", "season (empty for current season).", true, false);
 		addOption("t", "template", "template to fill.", true, true);
 		addOption("o", "output", "output file (empty for template + '.out').", true, false);
@@ -83,10 +87,10 @@ public class RefereeList extends AbstractMainClass {
 	}
 
 	/**
-	 * Generates list of referees.
+	 * Fills list of referees.
 	 * 
-	 * @param thePath output path
-	 * @param theXMLFile xml filename (null = refereemanager_%s.xml)
+	 * @param thePath input path
+	 * @param theXMLFile xml filename (null = {@link Constants#DATAFILENAMEPATTERN})
 	 * @param theSeason season (null = current season)
 	 * @param theTemplatefile template file
 	 * @param theOutputfile output file (null = template + ".out"
@@ -101,50 +105,50 @@ public class RefereeList extends AbstractMainClass {
 		Objects.requireNonNull(thePath, "path must not be null");
 		Objects.requireNonNull(theTemplatefile, "template file must not be null");
 		
-		try {
-			
-			logger.info("read mail text.");
-			
-			StringBuilder sbMailbody = FileAccess.readFile(theTemplatefile);
-			String sSubject = sbMailbody.substring(0, sbMailbody.indexOf(System.lineSeparator()));
-			String sBody = sbMailbody.substring(sbMailbody.indexOf(System.lineSeparator()) + 1);
-			
-			logger.info("read data.");
-			
-			StringBuilder sbFilename = new StringBuilder();
-			sbFilename.append(thePath);
-			sbFilename.append(File.separatorChar);
-			sbFilename.append(String.format(((theXMLFile == null) ? "refereemanager_%s.xml" : theXMLFile), theSeason));
-			
-			RefereeManager mgrData = JAXBFiles.unmarshal(sbFilename.toString(), RefereeManager.class);
-			
-			sendMail(mgrData, sSubject, sBody, Recipient.fromValue((theRecipient == null) ? "me" : theRecipient), isTest);
-			
-		} catch (Exception e) {
-			logger.error(e);
-			e.printStackTrace();
-		}
+		Integer iSeason = (theSeason == null) ? SeasonModel.getCurrentStartYear() : Integer.valueOf(theSeason);
+		
+		Path pathXMLFile = Paths.get(thePath, String.format(((theXMLFile == null) ? Constants.DATAFILENAMEPATTERN : theXMLFile), iSeason));
+		
+		String sOutFile = (theOutputfile == null) ? String.format("%s.out", theTemplatefile) : theOutputfile;
+		
+		listReferees(pathXMLFile, Paths.get(theTemplatefile), Paths.get(sOutFile));
 		
 		logger.info("stop");
 		
 	}
 	
 	/**
-	 * Converts data from MySQL to XML for one season.
-	 *
-	 * @param theData data
-	 * @param theMailSubject mail subject
-	 * @param theMailBody mail body
-	 * @param theRecipient recipient
-	 * @param isTest is test run?
+	 * Fills list of referees.
+	 * 
+	 * @param theXMLPath xml filename with path
+	 * @param theTemplatePath template file
+	 * @param theOutputPath output file
 	 * 
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	public void sendMail(RefereeManager theData, String theMailSubject, String theMailBody, Recipient theRecipient, boolean isTest) throws RefManException {
+	public void listReferees(final Path theXMLPath, final Path theTemplatePath, final Path theOutputPath) {
 		
-		logger.info("Subject: " + theMailSubject);
-		logger.info(theMailBody);
+		Objects.requireNonNull(theXMLPath, "xml file path must not be null");
+		Objects.requireNonNull(theTemplatePath, "template file path must not be null");
+		Objects.requireNonNull(theOutputPath, "output file path must not be null");
+		
+		try {
+			
+			logger.info("read template.");
+			
+			List<String> lstTemplate = FileAccess.readFileInList(theTemplatePath);
+			
+			logger.info("read data.");
+			
+			RefereeManager mgrData = JAXBFiles.unmarshal(theXMLPath.toString(), RefereeManager.class);
+			
+//			sendMail(mgrData, sSubject, sBody, Recipient.fromValue((theRecipient == null) ? "me" : theRecipient), isTest);
+			
+		} catch (Exception e) {
+			logger.error(e);
+			e.printStackTrace();
+		}
 		
 	}
 	
