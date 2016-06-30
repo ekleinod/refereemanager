@@ -2,6 +2,7 @@ package de.edgesoft.refereemanager.model;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Objects;
 
 import de.edgesoft.refereemanager.jaxb.Season;
 
@@ -32,24 +33,41 @@ import de.edgesoft.refereemanager.jaxb.Season;
  * @since 0.5.0
  */
 public class SeasonModel extends Season {
+	
+	/** Start month of a new season. */
+	public static final Month NEWSEASON = Month.JUNE;
 
 	/**
 	 * Returns start year for current season.
 	 * 
 	 * A season runs from june to may. 
 	 * 
+	 * @return start year of current season
+	 * 
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
     public static Integer getCurrentStartYear() {
+    	return getStartYearForDate(LocalDate.now());
+    }
+
+	/**
+	 * Returns start year of a season for a given date.
+	 * 
+	 * A season runs from june to may.
+	 * 
+	 * @param theDate date
+	 * @return start year of season for date
+	 * 
+	 * @version 0.5.0
+	 * @since 0.5.0
+	 */
+    public static Integer getStartYearForDate(final LocalDate theDate) {
     	
-    	LocalDate dteNow = LocalDate.now();
-    	
-    	dteNow = dteNow.minusMonths(-7);
-    	System.out.println(dteNow.getMonth());
-    	
-    	int iReturn = dteNow.getYear();
-    	if (dteNow.getMonth().ordinal() < Month.JUNE.ordinal()) {
+		Objects.requireNonNull(theDate, "date must not be null");
+		
+    	int iReturn = theDate.getYear();
+    	if (theDate.getMonth().ordinal() < NEWSEASON.ordinal()) {
     		iReturn--;
     	}
     	

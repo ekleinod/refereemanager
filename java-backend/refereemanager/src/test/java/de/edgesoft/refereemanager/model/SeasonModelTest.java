@@ -1,15 +1,12 @@
 package de.edgesoft.refereemanager.model;
 
-import java.time.Clock;
-import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.time.temporal.TemporalUnit;
+import java.time.Month;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Unit test for SeasonModel.
@@ -40,19 +37,50 @@ import org.junit.Test;
 public class SeasonModelTest {
 	
 	/**
+	 * Rule for expected exception
+	 */
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+	
+	/**
+	 * Tests read file not found.
+	 */
+	@Test
+	public void testErrorGetStartYearForDateNull() throws Exception {
+
+		exception.expect(NullPointerException.class);
+		exception.expectMessage("date must not be null");
+		SeasonModel.getStartYearForDate(null);
+		
+	}
+	
+	/**
 	 * Tests getCurrentStartYear.
 	 */
-	@SuppressWarnings("static-method")
 	@Test
 	public void testGetCurrentStartYear() {
 		
-		Clock testClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
-		Clock testClock = Clock.offset(testClock, Duration.of(1, mon));
-		Period.ofMonths(1);
-		
 		Integer iTest = SeasonModel.getCurrentStartYear();
 		
-		Assert.assertEquals(Integer.valueOf(LocalDate.now().getYear()), iTest);
+		int iExpected = (LocalDate.now().getMonth().ordinal() < SeasonModel.NEWSEASON.ordinal()) ? LocalDate.now().getYear() - 1 : LocalDate.now().getYear();
+		
+		Assert.assertEquals(Integer.valueOf(iExpected), iTest);
+		
+	}
+
+	/**
+	 * Tests getStartYearForDate.
+	 */
+	@Test
+	public void testGetStartYearForDate() {
+		
+		for (Month theMonth : Month.values()) {
+			
+			Integer iTest = SeasonModel.getStartYearForDate(LocalDate.of(2015, theMonth.getValue(), 01));
+			
+			Assert.assertEquals(Integer.valueOf((theMonth.ordinal() < SeasonModel.NEWSEASON.ordinal()) ? 2014 : 2015), iTest);
+			
+		}
 		
 	}
 
