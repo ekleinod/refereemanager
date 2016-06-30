@@ -1,7 +1,18 @@
-package de.edgesoft.refereemanager;
+package de.edgesoft.refereemanager.model;
+
+import java.time.Clock;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.temporal.TemporalUnit;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
- * Special exception (good coding style, I presume).
+ * Unit test for SeasonModel.
  * 
  * ## Legal stuff
  * 
@@ -26,21 +37,23 @@ package de.edgesoft.refereemanager;
  * @version 0.5.0
  * @since 0.5.0
  */
-public class RefManException extends Exception {
-	
-	/** Default serial id. */
-	private static final long serialVersionUID = 1L;
+public class SeasonModelTest {
 	
 	/**
-	 * Default constructor with message.
-	 * 
-	 * @param theErrorMessage error message
-	 * 
-	 * @version 0.5.0
-	 * @since 0.5.0
+	 * Tests getCurrentStartYear.
 	 */
-	public RefManException(String theErrorMessage) {
-		super(theErrorMessage);
+	@SuppressWarnings("static-method")
+	@Test
+	public void testGetCurrentStartYear() {
+		
+		Clock testClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
+		Clock testClock = Clock.offset(testClock, Duration.of(1, mon));
+		Period.ofMonths(1);
+		
+		Integer iTest = SeasonModel.getCurrentStartYear();
+		
+		Assert.assertEquals(Integer.valueOf(LocalDate.now().getYear()), iTest);
+		
 	}
 
 }

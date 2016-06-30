@@ -1,7 +1,12 @@
-package de.edgesoft.refereemanager;
+package de.edgesoft.refereemanager.model;
+
+import java.time.LocalDate;
+import java.time.Month;
+
+import de.edgesoft.refereemanager.jaxb.Season;
 
 /**
- * Special exception (good coding style, I presume).
+ * Season model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -26,22 +31,30 @@ package de.edgesoft.refereemanager;
  * @version 0.5.0
  * @since 0.5.0
  */
-public class RefManException extends Exception {
-	
-	/** Default serial id. */
-	private static final long serialVersionUID = 1L;
-	
+public class SeasonModel extends Season {
+
 	/**
-	 * Default constructor with message.
+	 * Returns start year for current season.
 	 * 
-	 * @param theErrorMessage error message
+	 * A season runs from june to may. 
 	 * 
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	public RefManException(String theErrorMessage) {
-		super(theErrorMessage);
-	}
+    public static Integer getCurrentStartYear() {
+    	
+    	LocalDate dteNow = LocalDate.now();
+    	
+    	dteNow = dteNow.minusMonths(-7);
+    	System.out.println(dteNow.getMonth());
+    	
+    	int iReturn = dteNow.getYear();
+    	if (dteNow.getMonth().ordinal() < Month.JUNE.ordinal()) {
+    		iReturn--;
+    	}
+    	
+        return Integer.valueOf(iReturn);
+    }
 
 }
 

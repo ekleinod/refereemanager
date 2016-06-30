@@ -1,6 +1,7 @@
 package de.edgesoft.refereemanager;
 
 import java.io.File;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +13,7 @@ import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.utils.Recipient;
 
 /**
- * Send referee mail.
+ * Fill the referee list.
  *
  * ## Legal stuff
  * 
@@ -37,7 +38,7 @@ import de.edgesoft.refereemanager.utils.Recipient;
  * @version 0.5.0
  * @since 0.5.0
  */
-public class SendMail extends AbstractMainClass {
+public class RefereeList extends AbstractMainClass {
 	
 	public final Logger logger = LogManager.getLogger();
 	
@@ -50,7 +51,7 @@ public class SendMail extends AbstractMainClass {
 	 * @since 0.5.0
 	 */
 	public static void main(String[] args) {
-		new SendMail().executeOperation(args);
+		new RefereeList().executeOperation(args);
 	}
 
 	/**
@@ -65,45 +66,46 @@ public class SendMail extends AbstractMainClass {
 	 * @since 0.5.0
 	 */
 	@Override
-	public void executeOperation(String[] args) {
+	public void executeOperation(final String[] args) {
 		
 		setDescription("Sends an email to the selected recipients.");
 		
 		addOption("p", "path", "input path of data.", true, true);
 		addOption("f", "file", "input file name template (empty for refereemanager_%s.xml).", true, false);
-		addOption("s", "season", "season.", true, true);
-		addOption("m", "mailfile", "file name of mail text.", true, true);
-		addOption("r", "recipient", "Recipient of mail (all, referees, trainees, me = default).", true, false);
-		addOption("t", "test", "Test run, log events but do not send emails.", false, false);
+		addOption("s", "season", "season (empty for current season).", true, false);
+		addOption("t", "template", "template to fill.", true, true);
+		addOption("o", "output", "output file (empty for template + '.out').", true, false);
 		
 		init(args);
 		
-		sendMail(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), getOptionValue("m"), getOptionValue("r"), hasOption("t"));
+		listReferees(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), getOptionValue("t"), getOptionValue("o"));
 		
 	}
 
 	/**
-	 * Converts data from MySQL to XML.
+	 * Generates list of referees.
 	 * 
 	 * @param thePath output path
 	 * @param theXMLFile xml filename (null = refereemanager_%s.xml)
-	 * @param theSeason season
-	 * @param theMailfile mail file
-	 * @param theRecipient recipient
-	 * @param isTest is test run?
+	 * @param theSeason season (null = current season)
+	 * @param theTemplatefile template file
+	 * @param theOutputfile output file (null = template + ".out"
 	 * 
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	public void sendMail(String thePath, String theXMLFile, String theSeason, String theMailfile, String theRecipient, boolean isTest) {
+	public void listReferees(final String thePath, final String theXMLFile, final String theSeason, final String theTemplatefile, final String theOutputfile) {
 		
 		logger.info("start.");
+		
+		Objects.requireNonNull(thePath, "path must not be null");
+		Objects.requireNonNull(theTemplatefile, "template file must not be null");
 		
 		try {
 			
 			logger.info("read mail text.");
 			
-			StringBuilder sbMailbody = FileAccess.readFile(theMailfile);
+			StringBuilder sbMailbody = FileAccess.readFile(theTemplatefile);
 			String sSubject = sbMailbody.substring(0, sbMailbody.indexOf(System.lineSeparator()));
 			String sBody = sbMailbody.substring(sbMailbody.indexOf(System.lineSeparator()) + 1);
 			
