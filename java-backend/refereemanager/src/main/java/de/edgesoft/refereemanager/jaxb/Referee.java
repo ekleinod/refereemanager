@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.PersonModel;
 
 
 /**
@@ -45,7 +46,7 @@ import javax.xml.bind.annotation.XmlType;
     "status"
 })
 public class Referee
-    extends Person
+    extends PersonModel
 {
 
     @XmlElement(name = "docs_by_letter")

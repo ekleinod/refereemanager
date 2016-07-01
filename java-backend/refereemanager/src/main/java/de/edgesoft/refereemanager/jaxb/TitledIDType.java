@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import de.edgesoft.edgeutils.commons.IDType;
+import de.edgesoft.refereemanager.model.PersonModel;
 
 
 /**
@@ -41,7 +41,7 @@ import de.edgesoft.edgeutils.commons.IDType;
     Club.class,
     StatusType.class,
     RefereeAssignmentType.class,
-    Person.class
+    PersonModel.class
 })
 public class TitledIDType
     extends IDType

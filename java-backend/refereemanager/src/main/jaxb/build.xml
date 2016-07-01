@@ -23,7 +23,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 @author Ekkart Kleinod
-@version 0.4.0
+@version 0.5.0
 @since 0.4.0
 -->
 
@@ -37,7 +37,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	<property name="refman:package" value="de.edgesoft.refereemanager.jaxb" />
 	<property name="refman:packagepath" value="${refman:outpath}de/edgesoft/refereemanager/jaxb/" />
 	<property name="refman:bindings" value="${edgeutils:path}/commons.xjb" />
-	<property name="refman:bindings2" value="${edgeutils:path}/commons-reuse.xjb" />
+	<property name="refman:bindings2" value="refereemanager.xjb" />
 
 	<target name="model" description="Removes, then generates the refman model classes from xsd.">
 

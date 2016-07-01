@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.PersonModel;
 
 
 /**
@@ -60,6 +61,7 @@ public class Content {
     protected Season season;
     @XmlElement(required = true)
     protected Exam exam;
+    @XmlElement(type = PersonModel.class)
     protected List<Person> person;
     protected List<Referee> referee;
     protected List<Trainee> trainee;
