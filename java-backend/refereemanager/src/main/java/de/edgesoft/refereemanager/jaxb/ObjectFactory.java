@@ -86,14 +86,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RefType }
-     * 
-     */
-    public RefType createRefType() {
-        return new RefType();
-    }
-
-    /**
      * Create an instance of {@link TitledType }
      * 
      */
@@ -118,22 +110,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AdditionalType }
-     * 
-     */
-    public AdditionalType createAdditionalType() {
-        return new AdditionalType();
-    }
-
-    /**
-     * Create an instance of {@link TimestampType }
-     * 
-     */
-    public TimestampType createTimestampType() {
-        return new TimestampType();
-    }
-
-    /**
      * Create an instance of {@link TrainingLevel }
      * 
      */
@@ -155,14 +131,6 @@ public class ObjectFactory {
      */
     public Season createSeason() {
         return new Season();
-    }
-
-    /**
-     * Create an instance of {@link InfoType }
-     * 
-     */
-    public InfoType createInfoType() {
-        return new InfoType();
     }
 
     /**
@@ -203,14 +171,6 @@ public class ObjectFactory {
      */
     public EMail createEMail() {
         return new EMail();
-    }
-
-    /**
-     * Create an instance of {@link VersionType }
-     * 
-     */
-    public VersionType createVersionType() {
-        return new VersionType();
     }
 
     /**

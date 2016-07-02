@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.refereemanager.model.PersonModel;
 
 
