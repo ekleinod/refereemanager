@@ -13,11 +13,9 @@ import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
-import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.OutputType;
-import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.Constants;
+import de.edgesoft.refereemanager.utils.TemplateHelper;
 
 /**
  * Fill the referee list.
@@ -140,19 +138,19 @@ public class RefereeList extends AbstractMainClass {
 			
 			logger.info("read template.");
 			
-			List<String> lstTemplate = FileAccess.readFileInList(theTemplatePath);
+			final List<String> lstTemplate = FileAccess.readFileInList(theTemplatePath);
 			
 			logger.info("read data.");
 			
-			RefereeManager mgrData = JAXBFiles.unmarshal(theXMLPath.toString(), RefereeManager.class);
+			final RefereeManager mgrData = JAXBFiles.unmarshal(theXMLPath.toString(), RefereeManager.class);
 			
-			((ContentModel) mgrData.getContent()).getRefereeStreamSorted()
-					.map(referee -> referee.getFormattedName(OutputType.TABLENAME))
-					.forEach(System.out::println);
+			logger.info("fill template.");
+			
+			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData);
 			
 			logger.info("write referee list.");
 			
-//			FileAccess.writeFile(theOutputPath, lstTemplate);
+			FileAccess.writeFile(theOutputPath, lstFilled);
 			
 			
 		} catch (Exception e) {
