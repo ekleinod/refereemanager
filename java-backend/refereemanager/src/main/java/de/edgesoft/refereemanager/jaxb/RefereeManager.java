@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.edgeutils.commons.InfoType;
+import de.edgesoft.refereemanager.model.ContentModel;
 
 
 /**
@@ -40,8 +41,8 @@ public class RefereeManager {
 
     @XmlElement(required = true)
     protected InfoType info;
-    @XmlElement(required = true)
-    protected Content content;
+    @XmlElement(required = true, type = ContentModel.class)
+    protected ContentModel content;
     @XmlAttribute(name = "base", namespace = "http://www.w3.org/XML/1998/namespace")
     @XmlSchemaType(name = "anyURI")
     protected String base;
@@ -91,7 +92,7 @@ public class RefereeManager {
      *     
      */
     public void setContent(Content value) {
-        this.content = value;
+        this.content = ((ContentModel) value);
     }
 
     /**

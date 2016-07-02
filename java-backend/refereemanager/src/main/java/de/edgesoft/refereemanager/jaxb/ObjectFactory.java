@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
+import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 
 
@@ -186,7 +187,7 @@ public class ObjectFactory {
      * 
      */
     public Content createContent() {
-        return new Content();
+        return new ContentModel();
     }
 
     /**

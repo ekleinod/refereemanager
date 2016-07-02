@@ -13,6 +13,7 @@ import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
+import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.OutputType;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
@@ -145,8 +146,7 @@ public class RefereeList extends AbstractMainClass {
 			
 			RefereeManager mgrData = JAXBFiles.unmarshal(theXMLPath.toString(), RefereeManager.class);
 			
-			mgrData.getContent().getReferee().stream()
-					.sorted(PersonModel.NAME_FIRSTNAME)
+			((ContentModel) mgrData.getContent()).getRefereeStreamSorted()
 					.map(referee -> referee.getFormattedName(OutputType.TABLENAME))
 					.forEach(System.out::println);
 			
