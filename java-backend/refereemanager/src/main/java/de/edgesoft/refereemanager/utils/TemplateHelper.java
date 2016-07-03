@@ -3,8 +3,6 @@ package de.edgesoft.refereemanager.utils;
 import java.util.List;
 
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
-import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.OutputType;
 
 /**
  * Provides methods and properties for templates.
@@ -35,31 +33,40 @@ import de.edgesoft.refereemanager.model.OutputType;
 public class TemplateHelper {
 	
 	/** Keyword for text to replace. */
-	public final String KEY_REPLACE = "generated %s";
+	public static final String KEY_REPLACE = "generated %s";
 	
 	/** Keyword for if. */
-	public final String KEY_IF = "if %s %s";
+	public static final String KEY_IF = "if %1$s %2$s";
 	
 	/** Keyword for end if. */
-	public final String KEY_ENDIF = "endif %s %s";
+	public static final String KEY_ENDIF = "endif %1$s %2$s";
 	
 	/** Keyword for foreach. */
-	public final String KEY_FOREACH = "foreach %s %s";
+	public static final String KEY_FOREACH = "foreach %s %s";
 	
 	/** Keyword for end foreach. */
-	public final String KEY_ENDFOREACH = "endforeach %s %s";
+	public static final String KEY_ENDFOREACH = "endforeach %s %s";
 	
 	/** Condition empty. */
-	public final String CONDITION_EMPTY = "empty";
+	public static final String CONDITION_EMPTY = "empty";
 	
 	/** Condition not empty. */
-	public final String CONDITION_NOTEMPTY = "notempty";
+	public static final String CONDITION_NOTEMPTY = "notempty";
 	
 	/** A token. */
-	public final String TOKEN = "**%s**";
+	public static final String TOKEN = "**%s**";
 	
 	/** Token: replace. */
-	public final String TOKEN_REPLACE = String.format("**%s**", KEY_REPLACE);
+	public static final String TOKEN_REPLACE = String.format(TOKEN, KEY_REPLACE);
+	
+	/** Token: if. */
+	public static final String TOKEN_IF = String.format("%s%%3$s%s", String.format(TOKEN, KEY_IF), String.format(TOKEN, KEY_ENDIF));
+	
+	/** Token: if empty. */
+	public static final String TOKEN_IF_EMPTY = String.format(TOKEN_IF, CONDITION_EMPTY, "%1$s", "%2$s");
+	
+	/** Token: if not empty. */
+	public static final String TOKEN_IF_NOTEMPTY = String.format(TOKEN_IF, CONDITION_NOTEMPTY, "%1$s", "%2$s");
 	
 	/**
 	 * Returns filled template.
@@ -73,9 +80,18 @@ public class TemplateHelper {
 	 */
 	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData) {
 		
-		((ContentModel) theData.getContent()).getRefereeStreamSorted()
-				.map(referee -> referee.getFormattedName(OutputType.TABLENAME))
-				.forEach(System.out::println);
+		System.out.println(TOKEN);
+		System.out.println(TOKEN_REPLACE);
+		System.out.println(TOKEN_IF);
+		System.out.println(TOKEN_IF_EMPTY);
+		System.out.println(TOKEN_IF_NOTEMPTY);
+		
+		System.out.println(String.format(TOKEN_IF_NOTEMPTY, "date", "Hallo"));
+		System.out.println(String.format(TOKEN_IF_EMPTY, "date:title", String.format(TOKEN_REPLACE, "ich")));
+		
+//		((ContentModel) theData.getContent()).getRefereeStreamSorted()
+//				.map(referee -> referee.getFormattedName(OutputType.TABLENAME))
+//				.forEach(System.out::println);
 		
 		return theTemplate;
 	}
