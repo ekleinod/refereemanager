@@ -1,8 +1,15 @@
 package de.edgesoft.refereemanager.utils;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
+import java.util.Objects;
 
+import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
+import de.edgesoft.refereemanager.jaxb.StatusType;
 
 /**
  * Provides methods and properties for templates.
@@ -42,10 +49,10 @@ public class TemplateHelper {
 	public static final String KEY_ENDIF = "endif %1$s %2$s";
 	
 	/** Keyword for foreach. */
-	public static final String KEY_FOREACH = "foreach %s %s";
+	public static final String KEY_FOREACH = "foreach %s";
 	
 	/** Keyword for end foreach. */
-	public static final String KEY_ENDFOREACH = "endforeach %s %s";
+	public static final String KEY_ENDFOREACH = "endforeach %s";
 	
 	/** Condition empty. */
 	public static final String CONDITION_EMPTY = "empty";
@@ -68,8 +75,27 @@ public class TemplateHelper {
 	/** Token: if not empty. */
 	public static final String TOKEN_IF_NOTEMPTY = String.format(TOKEN_IF, CONDITION_NOTEMPTY, "%1$s", "%2$s");
 	
+	/** Token: foreach. */
+	public static final String TOKEN_FOREACH = String.format(TOKEN, KEY_FOREACH);
+	
+	/** Token: endforeach. */
+	public static final String TOKEN_ENDFOREACH = String.format(TOKEN, KEY_ENDFOREACH);
+	
 	/**
 	 * Returns filled template.
+	 * 
+	 * Templates are filled line by line.
+	 * This may be slow, but for now this seems to be the best way to process
+	 * the template without writing a real parser.
+	 * 
+	 * Thus:
+	 * 
+	 * - every replace has to be in one line
+	 * - every if/endif has to be in one line
+	 * - every foreach has to start in one line and to end in one line, every line in between is looped
+	 * 	- loops may not be nested
+	 * 
+	 * @todo whole loop processing
 	 * 
 	 * @param theTemplate template
 	 * @param theData data
@@ -80,20 +106,73 @@ public class TemplateHelper {
 	 */
 	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData) {
 		
-		System.out.println(TOKEN);
-		System.out.println(TOKEN_REPLACE);
-		System.out.println(TOKEN_IF);
-		System.out.println(TOKEN_IF_EMPTY);
-		System.out.println(TOKEN_IF_NOTEMPTY);
+		Objects.requireNonNull(theTemplate, "template must not be null");
+		Objects.requireNonNull(theData, "data must not be null");
 		
-		System.out.println(String.format(TOKEN_IF_NOTEMPTY, "date", "Hallo"));
-		System.out.println(String.format(TOKEN_IF_EMPTY, "date:title", String.format(TOKEN_REPLACE, "ich")));
+		List<String> lstReturn = new ArrayList<>();
+
+		Deque<List<String>> queueLoops = new ArrayDeque<>();
+		List<String> lstLoopKeys = Arrays.asList(Referee.class.getSimpleName().toLowerCase(), StatusType.class.getSimpleName().toLowerCase());
 		
-//		((ContentModel) theData.getContent()).getRefereeStreamSorted()
-//				.map(referee -> referee.getFormattedName(OutputType.TABLENAME))
-//				.forEach(System.out::println);
+		for (String sLine : theTemplate) {
+			
+			
+			boolean processLine = true;
+			
+			// loop ends? Process loop lines.
+			for (String sKey : lstLoopKeys) {
+				if (sLine.startsWith(String.format(TOKEN_ENDFOREACH, sKey))) {
+					List<String> lstLoop = queueLoops.removeFirst();
+					switch (sKey) {
+						case "referee":
+							break;
+					}
+					processLine = false;
+				}
+			}
+			
+			// in loop? Store line
+			if (!queueLoops.isEmpty()) {
+				queueLoops.peekFirst().add(sLine);
+				processLine = false;
+			}
+			
+			// loop started? Ignore line, go into "loop mode".
+			for (String sKey : lstLoopKeys) {
+				if (sLine.startsWith(String.format(TOKEN_FOREACH, sKey))) {
+					queueLoops.addFirst(new ArrayList<>());
+					processLine = false;
+				}
+			}
+			
+			// process line
+			if (processLine) {
+				lstReturn.add(fillLine(sLine, theData));
+			}
+			
+		}
+
+		return lstReturn;
+	}
+	
+	/**
+	 * Returns filled line.
+	 * 
+	 * @param theLine line
+	 * @param theData data
+	 * @return filled line
+	 * 
+	 * @version 0.5.0
+	 * @since 0.5.0
+	 */
+	private static String fillLine(final String theLine, final RefereeManager theData) {
 		
-		return theTemplate;
+		Objects.requireNonNull(theLine, "line must not be null");
+		Objects.requireNonNull(theData, "data must not be null");
+		
+		String sReturn = theLine;
+		
+		return sReturn;
 	}
 	
 }

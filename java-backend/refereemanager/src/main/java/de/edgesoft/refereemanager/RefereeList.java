@@ -6,9 +6,6 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
@@ -44,8 +41,6 @@ import de.edgesoft.refereemanager.utils.TemplateHelper;
  * @since 0.5.0
  */
 public class RefereeList extends AbstractMainClass {
-	
-	public final Logger logger = LogManager.getLogger();
 	
 	/**
 	 * Command line entry point.
@@ -101,7 +96,7 @@ public class RefereeList extends AbstractMainClass {
 	 */
 	public void listReferees(final String thePath, final String theXMLFile, final String theSeason, final String theTemplatefile, final String theOutputfile) {
 		
-		logger.info("start.");
+		Constants.logger.info("start.");
 		
 		Objects.requireNonNull(thePath, "path must not be null");
 		Objects.requireNonNull(theTemplatefile, "template file must not be null");
@@ -114,7 +109,7 @@ public class RefereeList extends AbstractMainClass {
 		
 		listReferees(pathXMLFile, Paths.get(theTemplatefile), Paths.get(sOutFile));
 		
-		logger.info("stop");
+		Constants.logger.info("stop");
 		
 	}
 	
@@ -136,25 +131,28 @@ public class RefereeList extends AbstractMainClass {
 		
 		try {
 			
-			logger.info("read template.");
+			Constants.logger.info("read template.");
 			
 			final List<String> lstTemplate = FileAccess.readFileInList(theTemplatePath);
 			
-			logger.info("read data.");
+			Constants.logger.info("read data.");
 			
 			final RefereeManager mgrData = JAXBFiles.unmarshal(theXMLPath.toString(), RefereeManager.class);
+//			((ContentModel) mgrData.getContent()).getRefereeStreamSorted()
+//					.map(referee -> referee.getFormattedName(OutputType.TABLENAME))
+//					.forEach(Constants.logger::info);
 			
-			logger.info("fill template.");
+			Constants.logger.info("fill template.");
 			
 			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData);
 			
-			logger.info("write referee list.");
+			Constants.logger.info("write referee list.");
 			
 			FileAccess.writeFile(theOutputPath, lstFilled);
 			
 			
 		} catch (Exception e) {
-			logger.error(e);
+			Constants.logger.error(e);
 			e.printStackTrace();
 		}
 		

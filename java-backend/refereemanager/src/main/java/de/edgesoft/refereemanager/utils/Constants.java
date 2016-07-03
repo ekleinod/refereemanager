@@ -1,5 +1,8 @@
 package de.edgesoft.refereemanager.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Provides constants.
  *
@@ -36,7 +39,10 @@ public class Constants {
 
 	/** Standard file name pattern for data files. */
 	public static final String DATAFILENAMEPATTERN = "refereemanager_%04d.xml";
-
+	
+	/** Logger for all classes. */
+	public static final Logger logger = LogManager.getLogger();
+	
 }
 
 /* EOF */
