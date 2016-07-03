@@ -6,10 +6,13 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.StatusType;
+import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.model.ContentModel;
 
 /**
  * Provides methods and properties for templates.
@@ -99,12 +102,13 @@ public class TemplateHelper {
 	 * 
 	 * @param theTemplate template
 	 * @param theData data
+	 * @param theLoopID id of element that is looped at the moment
 	 * @return filled template
 	 * 
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData) {
+	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, final TitledIDType theLoopID) {
 		
 		Objects.requireNonNull(theTemplate, "template must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
@@ -112,20 +116,36 @@ public class TemplateHelper {
 		List<String> lstReturn = new ArrayList<>();
 
 		Deque<List<String>> queueLoops = new ArrayDeque<>();
-		List<String> lstLoopKeys = Arrays.asList(Referee.class.getSimpleName().toLowerCase(), StatusType.class.getSimpleName().toLowerCase());
+		List<Class<? extends TitledIDType>> lstLoopKeys = Arrays.asList(Referee.class, StatusType.class);
 		
 		for (String sLine : theTemplate) {
-			
 			
 			boolean processLine = true;
 			
 			// loop ends? Process loop lines.
-			for (String sKey : lstLoopKeys) {
-				if (sLine.startsWith(String.format(TOKEN_ENDFOREACH, sKey))) {
-					List<String> lstLoop = queueLoops.removeFirst();
-					switch (sKey) {
+			for (final Class<? extends TitledIDType> clsKey : lstLoopKeys) {
+				if (sLine.startsWith(String.format(TOKEN_ENDFOREACH, clsKey.getSimpleName().toLowerCase()))) {
+					
+					final List<String> lstLoopContent = queueLoops.removeFirst();
+					List<String> lstLoopReturn = new ArrayList<>();
+					
+					switch (clsKey.getSimpleName().toLowerCase()) {
 						case "referee":
+							for (final Referee theReferee : ((ContentModel) theData.getContent()).getRefereeStreamSorted().collect(Collectors.toList())) {
+								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theReferee));
+							}
 							break;
+						case "statustype":
+							for (final StatusType theStatusType : ((ContentModel) theData.getContent()).getStatusType().stream().collect(Collectors.toList())) {
+								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType));
+							}
+							break;
+					}
+					
+					if (queueLoops.isEmpty()) {
+						lstReturn.addAll(lstLoopReturn);
+					} else {
+						queueLoops.peekFirst().addAll(lstLoopReturn);
 					}
 					processLine = false;
 				}
@@ -138,8 +158,8 @@ public class TemplateHelper {
 			}
 			
 			// loop started? Ignore line, go into "loop mode".
-			for (String sKey : lstLoopKeys) {
-				if (sLine.startsWith(String.format(TOKEN_FOREACH, sKey))) {
+			for (final Class<? extends TitledIDType> clsKey : lstLoopKeys) {
+				if (sLine.startsWith(String.format(TOKEN_FOREACH, clsKey.getSimpleName().toLowerCase()))) {
 					queueLoops.addFirst(new ArrayList<>());
 					processLine = false;
 				}
