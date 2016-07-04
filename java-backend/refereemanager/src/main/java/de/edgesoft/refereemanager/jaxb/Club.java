@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
 /**
@@ -41,7 +42,7 @@ import javax.xml.bind.annotation.XmlType;
     "contactPerson"
 })
 public class Club
-    extends TitledIDType
+    extends TitledIDTypeModel
 {
 
     protected String abbreviation;

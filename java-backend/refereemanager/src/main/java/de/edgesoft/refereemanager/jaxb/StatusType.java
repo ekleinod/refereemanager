@@ -4,6 +4,7 @@ package de.edgesoft.refereemanager.jaxb;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
 /**
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "StatusType")
 public class StatusType
-    extends TitledIDType
+    extends TitledIDTypeModel
 {
 
 

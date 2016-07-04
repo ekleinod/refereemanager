@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
 /**
@@ -35,7 +36,7 @@ import javax.xml.bind.annotation.XmlType;
     "updateInterval"
 })
 public class TrainingLevelType
-    extends TitledIDType
+    extends TitledIDTypeModel
 {
 
     @XmlElement(required = true)

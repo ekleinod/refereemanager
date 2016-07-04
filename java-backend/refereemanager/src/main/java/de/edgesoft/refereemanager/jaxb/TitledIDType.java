@@ -44,7 +44,7 @@ import de.edgesoft.refereemanager.model.PersonModel;
     RefereeAssignmentType.class,
     PersonModel.class
 })
-public class TitledIDType
+public abstract class TitledIDType
     extends IDType
 {
 

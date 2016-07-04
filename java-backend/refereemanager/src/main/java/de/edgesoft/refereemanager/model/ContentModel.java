@@ -5,6 +5,7 @@ import java.util.stream.Stream;
 
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.StatusType;
 
 /**
  * Content model, additional methods for jaxb model class.
@@ -57,6 +58,18 @@ public class ContentModel extends Content {
 	 */
     public Stream<Referee> getRefereeStreamSorted(final Comparator<? super Referee> theComparator) {
     	return getReferee().stream().sorted(theComparator);
+    }
+
+	/**
+	 * Returns sorted list of status types.
+	 * 
+	 * @return list of status types
+	 * 
+	 * @version 0.5.0
+	 * @since 0.5.0
+	 */
+    public Stream<StatusType> getStatusTypeStreamSorted() {
+    	return getStatusType().stream().sorted(TitledIDTypeModel.TITLE);
     }
 
 }

@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
 /**
@@ -45,7 +46,7 @@ import javax.xml.bind.annotation.XmlType;
     "refereeReportRecipient"
 })
 public class League
-    extends TitledIDType
+    extends TitledIDTypeModel
 {
 
     @XmlElement(required = true)

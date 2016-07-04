@@ -1,5 +1,6 @@
 package de.edgesoft.refereemanager.utils;
 
+import java.time.LocalDate;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import de.edgesoft.edgeutils.commons.InfoType;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.StatusType;
@@ -136,7 +138,7 @@ public class TemplateHelper {
 							}
 							break;
 						case "statustype":
-							for (final StatusType theStatusType : ((ContentModel) theData.getContent()).getStatusType().stream().collect(Collectors.toList())) {
+							for (final StatusType theStatusType : ((ContentModel) theData.getContent()).getStatusTypeStreamSorted().collect(Collectors.toList())) {
 								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType));
 							}
 							break;
@@ -167,7 +169,7 @@ public class TemplateHelper {
 			
 			// process line
 			if (processLine) {
-				lstReturn.add(fillLine(sLine, theData));
+				lstReturn.add(fillLine(sLine, theData, theLoopID));
 			}
 			
 		}
@@ -180,21 +182,58 @@ public class TemplateHelper {
 	 * 
 	 * @param theLine line
 	 * @param theData data
+	 * @param theLoopID id of element that is looped at the moment
 	 * @return filled line
 	 * 
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	private static String fillLine(final String theLine, final RefereeManager theData) {
+	private static String fillLine(final String theLine, final RefereeManager theData, final TitledIDType theLoopID) {
 		
 		Objects.requireNonNull(theLine, "line must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
 		
-		String sReturn = theLine;
+		String sReturn = null;
+		
+		sReturn = fillLine(theLine, theData.getInfo(), theLoopID);
 		
 		return sReturn;
 	}
 	
+	/**
+	 * Returns filled line.
+	 * 
+	 * @param theLine line
+	 * @param theData data
+	 * @return filled line
+	 * 
+	 * @version 0.5.0
+	 * @since 0.5.0
+	 */
+	private static String fillLine(final String theLine, final InfoType theData, final TitledIDType theLoopID) {
+		
+		String sReturn = theLine;
+		
+		sReturn = replaceText(sReturn, String.format(TOKEN_REPLACE, "info:modified"), LocalDate.from(theData.getModified().toInstant()).toString());
+		
+		return sReturn;
+	}
+	
+	/**
+	 * Replaces replacee in text with value.
+	 *
+	 * @param theText text
+	 * @param theReplacee text to be replaced
+	 * @param theValue value
+	 * @return replaced text
+	 *
+	 * @version 0.5.0
+	 * @since 0.5.0
+	 */
+	private static String replaceText(final String theText, final String theReplacee, final String theValue) {
+		return theText.replace(theReplacee, theValue);
+	}
+
 }
 
 /* EOF */

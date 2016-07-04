@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
 /**
@@ -60,7 +61,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     Referee.class
 })
 public class Person
-    extends TitledIDType
+    extends TitledIDTypeModel
 {
 
     @XmlElement(name = "first_name")

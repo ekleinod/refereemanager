@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlType;
     Season.class,
     Contact.class
 })
-public class TitledType {
+public abstract class TitledType {
 
     protected String title;
     protected String remark;
