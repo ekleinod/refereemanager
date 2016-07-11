@@ -1,8 +1,8 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
 
 
 /**
@@ -43,13 +44,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class TrainingLevel {
 
     @XmlElement(type = String.class)
-    @XmlJavaTypeAdapter(Adapter2 .class)
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     @XmlSchemaType(name = "date")
-    protected Calendar since;
+    protected LocalDate since;
     @XmlElement(type = String.class)
-    @XmlJavaTypeAdapter(Adapter2 .class)
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     @XmlSchemaType(name = "date")
-    protected List<Calendar> update;
+    protected List<LocalDate> update;
     @XmlElement(required = true, type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -63,7 +64,7 @@ public class TrainingLevel {
      *     {@link String }
      *     
      */
-    public Calendar getSince() {
+    public LocalDate getSince() {
         return since;
     }
 
@@ -75,7 +76,7 @@ public class TrainingLevel {
      *     {@link String }
      *     
      */
-    public void setSince(Calendar value) {
+    public void setSince(LocalDate value) {
         this.since = value;
     }
 
@@ -101,9 +102,9 @@ public class TrainingLevel {
      * 
      * 
      */
-    public List<Calendar> getUpdate() {
+    public List<LocalDate> getUpdate() {
         if (update == null) {
-            update = new ArrayList<Calendar>();
+            update = new ArrayList<LocalDate>();
         }
         return this.update;
     }

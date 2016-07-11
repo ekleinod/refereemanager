@@ -1,11 +1,13 @@
 package de.edgesoft.refereemanager.utils;
 
-import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -214,7 +216,9 @@ public class TemplateHelper {
 		
 		String sReturn = theLine;
 		
-		sReturn = replaceText(sReturn, String.format(TOKEN_REPLACE, "info:modified"), LocalDate.from(theData.getModified().toInstant()).toString());
+		sReturn = replaceText(sReturn, 
+				String.format(TOKEN_REPLACE, "info:modified"), 
+				theData.getModified().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(Locale.GERMANY)));
 		
 		return sReturn;
 	}
