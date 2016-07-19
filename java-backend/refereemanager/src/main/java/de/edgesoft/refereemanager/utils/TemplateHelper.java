@@ -1,5 +1,10 @@
 package de.edgesoft.refereemanager.utils;
 
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayDeque;
@@ -8,6 +13,8 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -195,13 +202,36 @@ public class TemplateHelper {
 		Objects.requireNonNull(theLine, "line must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
 		
-		String sReturn = null;
+		String sReturn = theLine;
 		
-		sReturn = fillLine(theLine, theData.getInfo(), theLoopID);
+		sReturn = fillLine(sReturn, theData.getInfo(), theLoopID);
+		
+		sReturn = fillLine(sReturn, theData.getContent().getSeason(), theLoopID);
 		
 		return sReturn;
 	}
 	
+//	/**
+//	 * Returns filled line.
+//	 * 
+//	 * @param theLine line
+//	 * @param theData data
+//	 * @return filled line
+//	 * 
+//	 * @version 0.5.0
+//	 * @since 0.5.0
+//	 */
+//	private static String fillLine(final String theLine, final InfoType theData, final TitledIDType theLoopID) {
+//		
+//		String sReturn = theLine;
+//		
+//		sReturn = replaceText(sReturn, 
+//				String.format(TOKEN_REPLACE, "info:modified"), 
+//				theData.getModified().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(Locale.GERMANY)));
+//		
+//		return sReturn;
+//	}
+//	
 	/**
 	 * Returns filled line.
 	 * 
@@ -212,13 +242,47 @@ public class TemplateHelper {
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	private static String fillLine(final String theLine, final InfoType theData, final TitledIDType theLoopID) {
+	private static String fillLine(final String theLine, final Object theData, final TitledIDType theLoopID) {
 		
 		String sReturn = theLine;
 		
-		sReturn = replaceText(sReturn, 
-				String.format(TOKEN_REPLACE, "info:modified"), 
-				theData.getModified().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(Locale.GERMANY)));
+		if (theData != null) {
+			
+			try {
+				
+				Map<String, Method> mapProperties =
+				
+				Arrays.asList(
+						Introspector.getBeanInfo(theData.getClass()).getPropertyDescriptors()
+				)
+						.stream()
+						.filter(pd -> Objects.nonNull(pd.getReadMethod()))
+						.filter(pd -> Objects.nonNull(pd.getWriteMethod()))
+						.collect(
+								Collectors.toMap(
+										PropertyDescriptor::getName,
+										PropertyDescriptor::getReadMethod
+										)
+								);
+				
+				for (Entry<String, Method> theProperty : mapProperties.entrySet()) {
+					Object oResult = theProperty.getValue().invoke(theData);
+					
+//					Constants.logger.info(String.format("%s:%s", theData.getClass().getSimpleName().toLowerCase(), theProperty.getKey().toLowerCase()));
+					
+					if (oResult != null) {
+						sReturn = replaceText(sReturn, 
+								String.format(TOKEN_REPLACE, String.format("%s:%s", theData.getClass().getSimpleName().toLowerCase(), theProperty.getKey().toLowerCase())), 
+								oResult.toString()
+								);
+					}
+				}
+	
+			} catch (IntrospectionException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			
+		}
 		
 		return sReturn;
 	}

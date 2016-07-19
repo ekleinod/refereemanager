@@ -1,18 +1,12 @@
 package de.edgesoft.refereemanager.model;
 
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import de.edgesoft.refereemanager.utils.Constants;
 
 /**
  * Unit test for SeasonModel.
@@ -86,28 +80,6 @@ public class SeasonModelTest {
 
 			Assert.assertEquals(Integer.valueOf((theMonth.ordinal() < SeasonModel.NEWSEASON.ordinal()) ? 2014 : 2015), iTest);
 
-		}
-
-	}
-
-	/**
-	 * Test.
-	 */
-	@Test
-	public void testUnrelated() {
-
-		try {
-
-			Arrays.asList(
-					Introspector.getBeanInfo(SeasonModel.class).getPropertyDescriptors()
-			)
-					.stream()
-					.filter(pd -> Objects.nonNull(pd.getReadMethod()))
-					.filter(pd -> Objects.nonNull(pd.getWriteMethod()))
-					.forEach(Constants.logger::info);
-
-		} catch (IntrospectionException e) {
-			e.printStackTrace();
 		}
 
 	}
