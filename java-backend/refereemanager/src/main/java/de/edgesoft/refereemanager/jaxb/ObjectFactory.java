@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
-import de.edgesoft.edgeutils.commons.InfoType;
+import de.edgesoft.edgeutils.commons.Info;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 
@@ -225,12 +225,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link InfoType }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Info }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "", name = "test")
-    public JAXBElement<InfoType> createTest(InfoType value) {
-        return new JAXBElement<InfoType>(_Test_QNAME, InfoType.class, null, value);
+    public JAXBElement<Info> createTest(Info value) {
+        return new JAXBElement<Info>(_Test_QNAME, Info.class, null, value);
     }
 
     /**

@@ -7,12 +7,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for AdditionalTypeType.
+ * <p>Java class for AdditionalType.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="AdditionalTypeType">
+ * &lt;simpleType name="AdditionalType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *     &lt;enumeration value="pre"/>
  *     &lt;enumeration value="alpha"/>
@@ -22,9 +22,9 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  * 
  */
-@XmlType(name = "AdditionalTypeType")
+@XmlType(name = "AdditionalType")
 @XmlEnum
-public enum AdditionalTypeType {
+public enum AdditionalType {
 
     @XmlEnumValue("pre")
     PRE("pre"),
@@ -34,7 +34,7 @@ public enum AdditionalTypeType {
     BETA("beta");
     private final String value;
 
-    AdditionalTypeType(String v) {
+    AdditionalType(String v) {
         value = v;
     }
 
@@ -42,8 +42,8 @@ public enum AdditionalTypeType {
         return value;
     }
 
-    public static AdditionalTypeType fromValue(String v) {
-        for (AdditionalTypeType c: AdditionalTypeType.values()) {
+    public static AdditionalType fromValue(String v) {
+        for (AdditionalType c: AdditionalType.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

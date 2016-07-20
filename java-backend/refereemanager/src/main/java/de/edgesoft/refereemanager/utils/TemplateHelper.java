@@ -5,6 +5,9 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayDeque;
@@ -18,7 +21,6 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import de.edgesoft.edgeutils.commons.InfoType;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.StatusType;
@@ -268,14 +270,38 @@ public class TemplateHelper {
 				for (Entry<String, Method> theProperty : mapProperties.entrySet()) {
 					Object oResult = theProperty.getValue().invoke(theData);
 					
-//					Constants.logger.info(String.format("%s:%s", theData.getClass().getSimpleName().toLowerCase(), theProperty.getKey().toLowerCase()));
-					
 					if (oResult != null) {
+						
+						String sToken = String.format("%s:%s", theData.getClass().getSimpleName().toLowerCase(), theProperty.getKey().toLowerCase());
+						String sReplacement = oResult.toString();
+						
+						if (theProperty.getValue().getReturnType() == LocalDateTime.class) {
+							
+							for (Class theType : new Class[]{LocalDate.class, LocalTime.class, LocalDateTime.class}) {
+								for (FormatStyle theStyle : FormatStyle.values()) {
+									String sNewToken = String.format("%s:%s:%s:%s", 
+											theData.getClass().getSimpleName().toLowerCase(), 
+											theProperty.getKey().toLowerCase(),
+											theType.getSimpleName().toLowerCase(),
+											theStyle.toString().toLowerCase());
+
+									if (sReturn.contains(sNewToken)) {
+										sToken = sNewToken;
+										sReplacement = ((LocalDateTime) oResult).format(DateTimeFormatter.ofLocalizedDate(theStyle).withLocale(Locale.GERMANY));
+									}
+								}
+							}
+							
+						}
+						
+						Constants.logger.info(sToken);
 						sReturn = replaceText(sReturn, 
-								String.format(TOKEN_REPLACE, String.format("%s:%s", theData.getClass().getSimpleName().toLowerCase(), theProperty.getKey().toLowerCase())), 
-								oResult.toString()
+								String.format(TOKEN_REPLACE, sToken), 
+								sReplacement
 								);
+						
 					}
+					
 				}
 	
 			} catch (IntrospectionException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -299,7 +325,13 @@ public class TemplateHelper {
 	 * @since 0.5.0
 	 */
 	private static String replaceText(final String theText, final String theReplacee, final String theValue) {
-		return theText.replace(theReplacee, theValue);
+		String sReturn = theText;
+		
+		while (sReturn.contains(theReplacee)) {
+			sReturn = sReturn.replace(theReplacee, theValue);
+		}
+		
+		return sReturn;
 	}
 
 }
