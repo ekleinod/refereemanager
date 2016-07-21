@@ -1,3 +1,14 @@
 System.out.println(String.format("-%04d.xml", 23));
 
 System.out.println(java.time.LocalDateTime.now().toString());
+
+java.util.Locale.setDefault(java.util.Locale.ENGLISH);
+System.out.println(java.util.Locale.getDefault());
+try (java.io.FileInputStream stmIn = new java.io.FileInputStream("missing.txt")) {
+	new java.util.Properties().load(stmIn);
+} catch (Exception e) {
+	System.out.println(e.getMessage());
+}
+
+System.out.println(System.getProperty("user.country"));
+System.out.println(System.getProperty("user.language"));
