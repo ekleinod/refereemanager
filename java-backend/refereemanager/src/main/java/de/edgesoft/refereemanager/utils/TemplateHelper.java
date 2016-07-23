@@ -209,6 +209,8 @@ public class TemplateHelper {
 		
 		sReturn = fillLine(sReturn, theData.getContent().getSeason(), theLoopID);
 		
+		sReturn = fillLine(sReturn, theData.getContent().getReferee(), theLoopID);
+		
 		return sReturn;
 	}
 	
@@ -228,77 +230,89 @@ public class TemplateHelper {
 		
 		if (theData != null) {
 			
-			try {
+			// lists: loop, else: fill
+			if (theData instanceof List<?>) {
 				
-				Map<String, Method> mapProperties =
+				for (Object theDataObject : List.class.cast(theData)) {
+					sReturn = fillLine(sReturn, theDataObject, theLoopID);
+				}
 				
-				Arrays.asList(
-						Introspector.getBeanInfo(theData.getClass()).getPropertyDescriptors()
-				)
-						.stream()
-						.filter(pd -> Objects.nonNull(pd.getReadMethod()))
-						.filter(pd -> Objects.nonNull(pd.getWriteMethod()))
-						.collect(
-								Collectors.toMap(
-										PropertyDescriptor::getName,
-										PropertyDescriptor::getReadMethod
-										)
-								);
-				
-				for (Entry<String, Method> theProperty : mapProperties.entrySet()) {
-					Object oResult = theProperty.getValue().invoke(theData);
+			} else {
+			
+			// no list: fill with content
+				try {
 					
-					if (oResult != null) {
+					Map<String, Method> mapProperties =
+					
+					Arrays.asList(
+							Introspector.getBeanInfo(theData.getClass()).getPropertyDescriptors()
+					)
+							.stream()
+							.filter(pd -> Objects.nonNull(pd.getReadMethod()))
+							.filter(pd -> Objects.nonNull(pd.getWriteMethod()))
+							.collect(
+									Collectors.toMap(
+											PropertyDescriptor::getName,
+											PropertyDescriptor::getReadMethod
+											)
+									);
+					
+					for (Entry<String, Method> theProperty : mapProperties.entrySet()) {
+						Object oResult = theProperty.getValue().invoke(theData);
 						
-						String sToken = String.format("%s:%s", theData.getClass().getSimpleName().toLowerCase(), theProperty.getKey().toLowerCase());
-						String sReplacement = oResult.toString();
-						
-						if (theProperty.getValue().getReturnType() == LocalDateTime.class) {
+						if (oResult != null) {
 							
-							for (String theType : new String[]{"date", "time", "datetime"}) {
-								for (FormatStyle theStyle : FormatStyle.values()) {
-									String sNewToken = String.format("%s:%s:%s:%s", 
-											theData.getClass().getSimpleName().toLowerCase(), 
-											theProperty.getKey().toLowerCase(),
-											theType,
-											theStyle.toString().toLowerCase());
-
-									if (sReturn.contains(sNewToken)) {
-										sToken = sNewToken;
-										
-										DateTimeFormatter fmtOutput = 
-												(theType.equals("date")) ?
-														DateTimeFormatter.ofLocalizedDate(theStyle).withLocale(Locale.GERMANY)
-														: (theType.equals("time")) ?
-																DateTimeFormatter.ofLocalizedTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault())
-																: DateTimeFormatter.ofLocalizedDateTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault());
-																
-										if (oResult instanceof LocalDateTime) {
-											sReplacement = ((LocalDateTime) oResult).format(fmtOutput);
+							String sToken = String.format("%s:%s", theData.getClass().getSimpleName().toLowerCase(), theProperty.getKey().toLowerCase());
+							String sReplacement = oResult.toString();
+							
+							if (theProperty.getValue().getReturnType() == LocalDateTime.class) {
+								
+								for (String theType : new String[]{"date", "time", "datetime"}) {
+									for (FormatStyle theStyle : FormatStyle.values()) {
+										String sNewToken = String.format("%s:%s:%s:%s", 
+												theData.getClass().getSimpleName().toLowerCase(), 
+												theProperty.getKey().toLowerCase(),
+												theType,
+												theStyle.toString().toLowerCase());
+	
+										if (sReturn.contains(sNewToken)) {
+											sToken = sNewToken;
+											
+											DateTimeFormatter fmtOutput = 
+													(theType.equals("date")) ?
+															DateTimeFormatter.ofLocalizedDate(theStyle).withLocale(Locale.GERMANY)
+															: (theType.equals("time")) ?
+																	DateTimeFormatter.ofLocalizedTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault())
+																	: DateTimeFormatter.ofLocalizedDateTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault());
+																	
+											if (oResult instanceof LocalDateTime) {
+												sReplacement = ((LocalDateTime) oResult).format(fmtOutput);
+											}
+											
+											sReturn = replaceText(sReturn, 
+													String.format(TOKEN_REPLACE, sToken), 
+													sReplacement
+													);
 										}
-										
-										sReturn = replaceText(sReturn, 
-												String.format(TOKEN_REPLACE, sToken), 
-												sReplacement
-												);
 									}
 								}
+								
+							} else {
+							
+								sReturn = replaceText(sReturn, 
+										String.format(TOKEN_REPLACE, sToken), 
+										sReplacement
+										);
 							}
 							
-						} else {
-						
-							sReturn = replaceText(sReturn, 
-									String.format(TOKEN_REPLACE, sToken), 
-									sReplacement
-									);
 						}
 						
 					}
-					
+		
+				} catch (IntrospectionException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+					e.printStackTrace();
 				}
-	
-			} catch (IntrospectionException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				e.printStackTrace();
+				
 			}
 			
 		}
