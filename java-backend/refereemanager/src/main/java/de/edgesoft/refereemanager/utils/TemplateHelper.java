@@ -212,27 +212,6 @@ public class TemplateHelper {
 		return sReturn;
 	}
 	
-//	/**
-//	 * Returns filled line.
-//	 * 
-//	 * @param theLine line
-//	 * @param theData data
-//	 * @return filled line
-//	 * 
-//	 * @version 0.5.0
-//	 * @since 0.5.0
-//	 */
-//	private static String fillLine(final String theLine, final InfoType theData, final TitledIDType theLoopID) {
-//		
-//		String sReturn = theLine;
-//		
-//		sReturn = replaceText(sReturn, 
-//				String.format(TOKEN_REPLACE, "info:modified"), 
-//				theData.getModified().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(Locale.GERMANY)));
-//		
-//		return sReturn;
-//	}
-//	
 	/**
 	 * Returns filled line.
 	 * 
