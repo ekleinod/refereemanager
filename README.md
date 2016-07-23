@@ -32,6 +32,10 @@ Additionally the following branches may be created:
 - `release/*` - releasing a new version, merging all features between `develop` and `master`
 - `hotfix/*` - hotfixes for fast error correction
 
+## ToDo
+
+- Why is `/refereemanager/src/main/java/de/edgesoft/refereemanager/jaxb/AdditionalType.java` generated? It can be deleted without problems. Strange.
+
 ## Versions
 
 At the moment, there is no stable, productive version available.
