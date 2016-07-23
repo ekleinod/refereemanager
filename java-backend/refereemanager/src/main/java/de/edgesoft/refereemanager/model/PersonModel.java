@@ -1,6 +1,7 @@
 package de.edgesoft.refereemanager.model;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 import de.edgesoft.refereemanager.jaxb.Person;
 
@@ -37,14 +38,41 @@ public class PersonModel extends Person {
 			thenComparing(Comparator.comparing(Person::getFirstName));
 	
 	/**
-	 * Formatted name of person.
+	 * Full name of person.
 	 * 
-	 * @return start year of current season
+	 * @return full name of the person
 	 * 
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-    public String getFormattedName(final OutputType theOutputType) {
+    public String getFullName() {
+    	return getFormattedName(OutputType.FULLNAME);
+    }
+    
+	/**
+	 * Table name of person.
+	 * 
+	 * @return table name of the person
+	 * 
+	 * @version 0.5.0
+	 * @since 0.5.0
+	 */
+    public String getTableName() {
+    	return getFormattedName(OutputType.TABLENAME);
+    }
+    
+	/**
+	 * Formatted name of person.
+	 * 
+	 * @param theOutputType output type
+	 * @return formatted name
+	 * 
+	 * @version 0.5.0
+	 * @since 0.5.0
+	 */
+    private String getFormattedName(final OutputType theOutputType) {
+		Objects.requireNonNull(theOutputType, "output type must not be null");
+		
     	StringBuilder sbReturn = new StringBuilder();
 
     	switch (theOutputType) {

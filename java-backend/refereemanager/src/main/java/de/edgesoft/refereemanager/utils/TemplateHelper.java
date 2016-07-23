@@ -2,7 +2,7 @@ package de.edgesoft.refereemanager.utils;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
+import java.beans.MethodDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
@@ -192,24 +192,30 @@ public class TemplateHelper {
 	 * 
 	 * @param theLine line
 	 * @param theData data
-	 * @param theLoopID id of element that is looped at the moment
+	 * @param theLoopElement element that is looped at the moment
 	 * @return filled line
 	 * 
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	private static String fillLine(final String theLine, final RefereeManager theData, final TitledIDType theLoopID) {
+	private static String fillLine(final String theLine, final RefereeManager theData, final TitledIDType theLoopElement) {
 		
 		Objects.requireNonNull(theLine, "line must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
 		
 		String sReturn = theLine;
 		
-		sReturn = fillLine(sReturn, theData.getInfo(), theLoopID);
+		sReturn = fillLine(sReturn, theData.getInfo(), theLoopElement);
 		
-		sReturn = fillLine(sReturn, theData.getContent().getSeason(), theLoopID);
+		sReturn = fillLine(sReturn, theData.getContent().getSeason(), theLoopElement);
+
+		for (Object theDataObject : theData.getContent().getReferee()) {
+			sReturn = fillLine(sReturn, theDataObject, theLoopElement);
+		}
 		
-		sReturn = fillLine(sReturn, theData.getContent().getReferee(), theLoopID);
+		for (Object theDataObject : theData.getContent().getStatusType()) {
+			sReturn = fillLine(sReturn, theDataObject, theLoopElement);
+		}
 		
 		return sReturn;
 	}
@@ -219,59 +225,50 @@ public class TemplateHelper {
 	 * 
 	 * @param theLine line
 	 * @param theData data
+	 * @param theLoopElement element that is looped at the moment
 	 * @return filled line
 	 * 
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	private static String fillLine(final String theLine, final Object theData, final TitledIDType theLoopID) {
+	private static String fillLine(final String theLine, final Object theData, final TitledIDType theLoopElement) {
 		
 		String sReturn = theLine;
 		
 		if (theData != null) {
 			
-			// lists: loop, else: fill
-			if (theData instanceof List<?>) {
+			try {
 				
-				for (Object theDataObject : List.class.cast(theData)) {
-					sReturn = fillLine(sReturn, theDataObject, theLoopID);
-				}
+				Map<String, Method> mapGetters =
+						Arrays.asList(
+								Introspector.getBeanInfo(theData.getClass()).getMethodDescriptors()
+						)
+								.stream()
+								.filter(md -> md.getName().startsWith("get"))
+								.collect(
+										Collectors.toMap(
+												md -> (md.getName().substring("get".length()).toLowerCase()),
+												MethodDescriptor::getMethod
+												)
+										);
 				
-			} else {
-			
-			// no list: fill with content
-				try {
+				for (Entry<String, Method> theGetter : mapGetters.entrySet()) {
+					Object oResult = theGetter.getValue().invoke(theData);
 					
-					Map<String, Method> mapProperties =
-					
-					Arrays.asList(
-							Introspector.getBeanInfo(theData.getClass()).getPropertyDescriptors()
-					)
-							.stream()
-							.filter(pd -> Objects.nonNull(pd.getReadMethod()))
-							.filter(pd -> Objects.nonNull(pd.getWriteMethod()))
-							.collect(
-									Collectors.toMap(
-											PropertyDescriptor::getName,
-											PropertyDescriptor::getReadMethod
-											)
-									);
-					
-					for (Entry<String, Method> theProperty : mapProperties.entrySet()) {
-						Object oResult = theProperty.getValue().invoke(theData);
+					if (oResult != null) {
 						
-						if (oResult != null) {
-							
-							String sToken = String.format("%s:%s", theData.getClass().getSimpleName().toLowerCase(), theProperty.getKey().toLowerCase());
+						if ((theLoopElement == null) || !theLoopElement.getClass().isInstance(theData) || (theLoopElement == theData)) {
+						
+							String sToken = String.format("%s:%s", theData.getClass().getSimpleName().toLowerCase(), theGetter.getKey());
 							String sReplacement = oResult.toString();
 							
-							if (theProperty.getValue().getReturnType() == LocalDateTime.class) {
+							if (theGetter.getValue().getReturnType() == LocalDateTime.class) {
 								
 								for (String theType : new String[]{"date", "time", "datetime"}) {
 									for (FormatStyle theStyle : FormatStyle.values()) {
 										String sNewToken = String.format("%s:%s:%s:%s", 
 												theData.getClass().getSimpleName().toLowerCase(), 
-												theProperty.getKey().toLowerCase(),
+												theGetter.getKey(),
 												theType,
 												theStyle.toString().toLowerCase());
 	
@@ -308,13 +305,13 @@ public class TemplateHelper {
 						}
 						
 					}
-		
-				} catch (IntrospectionException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					e.printStackTrace();
+					
 				}
-				
+	
+			} catch (IntrospectionException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
 			}
-			
+				
 		}
 		
 		return sReturn;
