@@ -293,8 +293,8 @@ public class TemplateHelper {
 											sReplacement = ((LocalDateTime) oResult).format(fmtOutput);
 										}
 										
-										sReturn = replaceText(sReturn, 
-												String.format(TOKEN_REPLACE, sToken), 
+										sReturn = replaceTextAndConditions(sReturn, 
+												sToken, 
 												sReplacement
 												);
 									}
@@ -303,8 +303,8 @@ public class TemplateHelper {
 							
 						} else {
 						
-							sReturn = replaceText(sReturn, 
-									String.format(TOKEN_REPLACE, sToken), 
+							sReturn = replaceTextAndConditions(sReturn, 
+									sToken, 
 									sReplacement
 									);
 						}
@@ -323,7 +323,7 @@ public class TemplateHelper {
 	}
 	
 	/**
-	 * Replaces replacee in text with value.
+	 * Replaces replacee-tokens in text with value, considers conditions first.
 	 *
 	 * @param theText text
 	 * @param theReplacee text to be replaced
@@ -333,11 +333,14 @@ public class TemplateHelper {
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	private static String replaceText(final String theText, final String theReplacee, final String theValue) {
+	private static String replaceTextAndConditions(final String theText, final String theReplacee, final String theValue) {
 		String sReturn = theText;
 		
-		while (sReturn.contains(theReplacee)) {
-			sReturn = sReturn.replace(theReplacee, theValue);
+		String sToken = String.format(TOKEN_REPLACE, theReplacee);
+		
+		
+		while (sReturn.contains(sToken)) {
+			sReturn = sReturn.replace(sToken, theValue);
 		}
 		
 		return sReturn;
