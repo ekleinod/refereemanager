@@ -20,8 +20,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javax.xml.bind.annotation.XmlType;
-
+import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.StatusType;
@@ -211,11 +210,11 @@ public class TemplateHelper {
 		
 		sReturn = fillLine(sReturn, theData.getContent().getSeason(), theLoopElement, "");
 
-		for (Object theDataObject : theData.getContent().getReferee()) {
+		for (ModelClass theDataObject : theData.getContent().getReferee()) {
 			sReturn = fillLine(sReturn, theDataObject, theLoopElement, "");
 		}
 		
-		for (Object theDataObject : theData.getContent().getStatusType()) {
+		for (ModelClass theDataObject : theData.getContent().getStatusType()) {
 			sReturn = fillLine(sReturn, theDataObject, theLoopElement, "");
 		}
 		
@@ -235,7 +234,7 @@ public class TemplateHelper {
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	private static String fillLine(final String theLine, final Object theData, final TitledIDType theLoopElement, final String theTokenPrefix) {
+	private static String fillLine(final String theLine, final ModelClass theData, final TitledIDType theLoopElement, final String theTokenPrefix) {
 		
 		String sReturn = theLine;
 		
@@ -308,8 +307,8 @@ public class TemplateHelper {
 							
 						} else {
 							
-							if ((oResult != null) && (oResult.getClass().getAnnotation(XmlType.class) != null)) {
-								sReturn = fillLine(sReturn, oResult, theLoopElement, String.format("%s:", sTokenClass));
+							if ((oResult != null) && (oResult instanceof ModelClass)) {
+								sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, String.format("%s:", sTokenClass));
 							}
 							
 						
