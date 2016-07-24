@@ -20,6 +20,8 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import javax.xml.bind.annotation.XmlType;
+
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.StatusType;
@@ -205,16 +207,16 @@ public class TemplateHelper {
 		
 		String sReturn = theLine;
 		
-		sReturn = fillLine(sReturn, theData.getInfo(), theLoopElement);
+		sReturn = fillLine(sReturn, theData.getInfo(), theLoopElement, "");
 		
-		sReturn = fillLine(sReturn, theData.getContent().getSeason(), theLoopElement);
+		sReturn = fillLine(sReturn, theData.getContent().getSeason(), theLoopElement, "");
 
 		for (Object theDataObject : theData.getContent().getReferee()) {
-			sReturn = fillLine(sReturn, theDataObject, theLoopElement);
+			sReturn = fillLine(sReturn, theDataObject, theLoopElement, "");
 		}
 		
 		for (Object theDataObject : theData.getContent().getStatusType()) {
-			sReturn = fillLine(sReturn, theDataObject, theLoopElement);
+			sReturn = fillLine(sReturn, theDataObject, theLoopElement, "");
 		}
 		
 		return sReturn;
@@ -226,12 +228,14 @@ public class TemplateHelper {
 	 * @param theLine line
 	 * @param theData data
 	 * @param theLoopElement element that is looped at the moment
+	 * @param theTokenPrefix token prefix
+	 * 
 	 * @return filled line
 	 * 
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	private static String fillLine(final String theLine, final Object theData, final TitledIDType theLoopElement) {
+	private static String fillLine(final String theLine, final Object theData, final TitledIDType theLoopElement, final String theTokenPrefix) {
 		
 		String sReturn = theLine;
 		
@@ -264,14 +268,15 @@ public class TemplateHelper {
 							sTokenClass = sTokenClass.substring(0, (sTokenClass.length() - "model".length()));
 						}
 
-						String sToken = String.format("%s:%s", sTokenClass, theGetter.getKey());
+						String sToken = String.format("%s%s:%s", theTokenPrefix, sTokenClass, theGetter.getKey());
 						String sReplacement = (oResult == null) ? "" : oResult.toString();
 						
 						if (theGetter.getValue().getReturnType() == LocalDateTime.class) {
 							
 							for (String theType : new String[]{"date", "time", "datetime"}) {
 								for (FormatStyle theStyle : FormatStyle.values()) {
-									String sNewToken = String.format("%s:%s:%s:%s", 
+									String sNewToken = String.format("%s%s:%s:%s:%s",
+											theTokenPrefix,
 											sTokenClass, 
 											theGetter.getKey(),
 											theType,
@@ -302,6 +307,11 @@ public class TemplateHelper {
 							}
 							
 						} else {
+							
+							if ((oResult != null) && (oResult.getClass().getAnnotation(XmlType.class) != null)) {
+								sReturn = fillLine(sReturn, oResult, theLoopElement, String.format("%s:", sTokenClass));
+							}
+							
 						
 							sReturn = replaceTextAndConditions(sReturn, 
 									sToken, 
