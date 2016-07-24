@@ -317,12 +317,13 @@ public class TemplateHelper {
 								}
 								
 								if (oResult instanceof List<?>) {
+									// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!
 									try {
 										for (ModelClass theDataObject : (List<ModelClass>) oResult) {
 											sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix);
 										}
-									} catch (Exception e) {
-										System.out.println(theData.getClass().getSimpleName() + ":" + theGetter.getKey() + ":" + oResult);
+									} catch (ClassCastException e) {
+//										e.printStackTrace();
 									}
 								} else {
 									sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix);
