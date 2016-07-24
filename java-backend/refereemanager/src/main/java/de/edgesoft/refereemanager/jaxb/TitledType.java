@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.SeasonModel;
 
 
 /**
@@ -34,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlSeeAlso({
     Picture.class,
-    Season.class,
+    SeasonModel.class,
     Contact.class
 })
 public abstract class TitledType {

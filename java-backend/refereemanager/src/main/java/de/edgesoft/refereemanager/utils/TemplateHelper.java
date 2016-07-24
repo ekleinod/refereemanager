@@ -245,6 +245,7 @@ public class TemplateHelper {
 						)
 								.stream()
 								.filter(md -> md.getName().startsWith("get"))
+								.filter(md -> (md.getMethod().getParameterCount() == 0))
 								.collect(
 										Collectors.toMap(
 												md -> (md.getName().substring("get".length()).toLowerCase()),
@@ -259,7 +260,13 @@ public class TemplateHelper {
 						
 						if ((theLoopElement == null) || !theLoopElement.getClass().isInstance(theData) || (theLoopElement == theData)) {
 						
-							String sToken = String.format("%s:%s", theData.getClass().getSimpleName().toLowerCase(), theGetter.getKey());
+							// @todo is this too much of a hack?
+							String sTokenClass = theData.getClass().getSimpleName().toLowerCase();
+							if (sTokenClass.endsWith("model")) {
+								sTokenClass = sTokenClass.substring(0, (sTokenClass.length() - "model".length()));
+							}
+
+							String sToken = String.format("%s:%s", sTokenClass, theGetter.getKey());
 							String sReplacement = oResult.toString();
 							
 							if (theGetter.getValue().getReturnType() == LocalDateTime.class) {
@@ -267,7 +274,7 @@ public class TemplateHelper {
 								for (String theType : new String[]{"date", "time", "datetime"}) {
 									for (FormatStyle theStyle : FormatStyle.values()) {
 										String sNewToken = String.format("%s:%s:%s:%s", 
-												theData.getClass().getSimpleName().toLowerCase(), 
+												sTokenClass, 
 												theGetter.getKey(),
 												theType,
 												theStyle.toString().toLowerCase());

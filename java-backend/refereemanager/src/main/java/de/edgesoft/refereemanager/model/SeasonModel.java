@@ -1,5 +1,6 @@
 package de.edgesoft.refereemanager.model;
 
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Objects;
@@ -72,6 +73,22 @@ public class SeasonModel extends Season {
     	}
     	
         return Integer.valueOf(iReturn);
+    }
+
+    /**
+     * Gets the value of the title property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    @Override
+    public String getTitle() {
+    	if (title == null) {
+    		return MessageFormat.format("{0,number,####}-{1,number,####}", getStartYear(), getStartYear() + 1);
+    	}
+        return title;
     }
 
 }

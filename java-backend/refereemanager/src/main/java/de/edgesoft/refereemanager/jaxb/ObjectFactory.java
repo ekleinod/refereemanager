@@ -9,6 +9,7 @@ import javax.xml.namespace.QName;
 import de.edgesoft.edgeutils.commons.Info;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.SeasonModel;
 
 
 /**
@@ -117,7 +118,7 @@ public class ObjectFactory {
      * 
      */
     public Season createSeason() {
-        return new Season();
+        return new SeasonModel();
     }
 
     /**

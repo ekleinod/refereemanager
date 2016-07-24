@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.SeasonModel;
 
 
 /**
@@ -57,8 +58,8 @@ import de.edgesoft.refereemanager.model.PersonModel;
 })
 public class Content {
 
-    @XmlElement(required = true)
-    protected Season season;
+    @XmlElement(required = true, type = SeasonModel.class)
+    protected SeasonModel season;
     @XmlElement(required = true)
     protected Exam exam;
     @XmlElement(type = PersonModel.class)
@@ -99,7 +100,7 @@ public class Content {
      *     
      */
     public void setSeason(Season value) {
-        this.season = value;
+        this.season = ((SeasonModel) value);
     }
 
     /**
