@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.StatusType;
@@ -180,7 +181,7 @@ public class TemplateHelper {
 			
 			// process line
 			if (processLine) {
-				lstReturn.add(fillLine(sLine, theData, theLoopID));
+				lstReturn.add(fillLine(sLine, theData, theLoopID, ""));
 			}
 			
 		}
@@ -307,15 +308,34 @@ public class TemplateHelper {
 							
 						} else {
 							
-							if ((oResult != null) && (oResult instanceof ModelClass)) {
-								sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, String.format("%s:", sTokenClass));
-							}
+							// recursing into subcontent
+							if ((oResult != null) && ((oResult instanceof ModelClass) || (oResult instanceof List<?>))) {
+				
+								String sTokenPrefix = String.format("%s%s:", theTokenPrefix, sTokenClass);
+								if ((theData instanceof RefereeManager) || (theData instanceof Content)) {
+									sTokenPrefix = "";
+								}
+								
+								if (oResult instanceof List<?>) {
+									try {
+										for (ModelClass theDataObject : (List<ModelClass>) oResult) {
+											sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix);
+										}
+									} catch (Exception e) {
+										System.out.println(theData.getClass().getSimpleName() + ":" + theGetter.getKey() + ":" + oResult);
+									}
+								} else {
+									sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix);
+								}
+								
+							} else {
 							
-						
-							sReturn = replaceTextAndConditions(sReturn, 
-									sToken, 
-									sReplacement
-									);
+//								System.out.println(sToken);
+								sReturn = replaceTextAndConditions(sReturn, 
+										sToken, 
+										sReplacement
+										);
+							}
 						}
 						
 					}

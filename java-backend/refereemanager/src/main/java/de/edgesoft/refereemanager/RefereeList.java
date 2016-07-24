@@ -9,6 +9,8 @@ import java.util.Objects;
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
+import de.edgesoft.refereemanager.jaxb.League;
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.Constants;
@@ -144,11 +146,18 @@ public class RefereeList extends AbstractMainClass {
 			
 			Constants.logger.info("fill template.");
 			
-			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null);
+			for (League league : mgrData.getContent().getLeague()) {
+				System.out.println(league);
+				for (Person person : league.getRefereeReportRecipient()) {
+					System.out.println(person);
+				}
+			}
+			
+//			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null);
 			
 			Constants.logger.info("write referee list.");
 			
-			FileAccess.writeFile(theOutputPath, lstFilled);
+//			FileAccess.writeFile(theOutputPath, lstFilled);
 			
 			
 		} catch (Exception e) {
