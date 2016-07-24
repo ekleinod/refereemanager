@@ -13,6 +13,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -97,6 +98,9 @@ public class TemplateHelper {
 	
 	/** Token: endforeach. */
 	public static final String TOKEN_ENDFOREACH = String.format(TOKEN, KEY_ENDFOREACH);
+	
+	/** Map of properties and their getters for a class. */
+	private static Map<Class<? extends ModelClass>, Map<String, Method>> mapGetters = null;
 	
 	/**
 	 * Returns filled template.
@@ -195,39 +199,6 @@ public class TemplateHelper {
 	 * @param theLine line
 	 * @param theData data
 	 * @param theLoopElement element that is looped at the moment
-	 * @return filled line
-	 * 
-	 * @version 0.5.0
-	 * @since 0.5.0
-	 */
-	private static String fillLine(final String theLine, final RefereeManager theData, final TitledIDType theLoopElement) {
-		
-		Objects.requireNonNull(theLine, "line must not be null");
-		Objects.requireNonNull(theData, "data must not be null");
-		
-		String sReturn = theLine;
-		
-		sReturn = fillLine(sReturn, theData.getInfo(), theLoopElement, "");
-		
-		sReturn = fillLine(sReturn, theData.getContent().getSeason(), theLoopElement, "");
-
-		for (ModelClass theDataObject : theData.getContent().getReferee()) {
-			sReturn = fillLine(sReturn, theDataObject, theLoopElement, "");
-		}
-		
-		for (ModelClass theDataObject : theData.getContent().getStatusType()) {
-			sReturn = fillLine(sReturn, theDataObject, theLoopElement, "");
-		}
-		
-		return sReturn;
-	}
-	
-	/**
-	 * Returns filled line.
-	 * 
-	 * @param theLine line
-	 * @param theData data
-	 * @param theLoopElement element that is looped at the moment
 	 * @param theTokenPrefix token prefix
 	 * 
 	 * @return filled line
@@ -237,25 +208,15 @@ public class TemplateHelper {
 	 */
 	private static String fillLine(final String theLine, final ModelClass theData, final TitledIDType theLoopElement, final String theTokenPrefix) {
 		
+		Objects.requireNonNull(theLine, "line must not be null");
+		
 		String sReturn = theLine;
 		
 		if (theData != null) {
 			
 			try {
 				
-				Map<String, Method> mapGetters =
-						Arrays.asList(
-								Introspector.getBeanInfo(theData.getClass()).getMethodDescriptors()
-						)
-								.stream()
-								.filter(md -> md.getName().startsWith("get"))
-								.filter(md -> (md.getMethod().getParameterCount() == 0))
-								.collect(
-										Collectors.toMap(
-												md -> (md.getName().substring("get".length()).toLowerCase()),
-												MethodDescriptor::getMethod
-												)
-										);
+				Map<String, Method> mapGetters = getGetters(theData.getClass());
 				
 				for (Entry<String, Method> theGetter : mapGetters.entrySet()) {
 					Object oResult = theGetter.getValue().invoke(theData);
@@ -331,7 +292,10 @@ public class TemplateHelper {
 								
 							} else {
 							
-//								System.out.println(sToken);
+								if (sToken.startsWith("referee:")) {
+									Constants.logger.info(sToken);
+//									Constants.logger.info(oResult);
+								}
 								sReturn = replaceTextAndConditions(sReturn, 
 										sToken, 
 										sReplacement
@@ -343,7 +307,7 @@ public class TemplateHelper {
 					
 				}
 	
-			} catch (IntrospectionException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				e.printStackTrace();
 			}
 				
@@ -383,6 +347,47 @@ public class TemplateHelper {
 		return sReturn;
 	}
 
+	/**
+	 * Returns the getters of the given class.
+	 * 
+	 * Works with singleton for speed issues.
+	 * 
+	 * @param theClass class to get getters for
+	 * @return map of properties and their getters
+	 *
+	 * @version 0.5.0
+	 * @since 0.5.0
+	 */
+	private static Map<String, Method> getGetters(final Class<? extends ModelClass> theClass) {
+		
+		if (mapGetters == null) {
+			mapGetters = new HashMap<>();
+		}
+		
+		mapGetters.computeIfAbsent(theClass,
+				it -> {
+					try {
+						return Arrays.asList(Introspector.getBeanInfo(theClass, ModelClass.class).getMethodDescriptors())
+								.stream()
+								.filter(md -> (md.getName().startsWith("get") || md.getName().startsWith("is")))
+								.filter(md -> (md.getMethod().getParameterCount() == 0))
+								.collect(
+										Collectors.toMap(
+												md -> (md.getName().startsWith("get") ? md.getName().substring("get".length()).toLowerCase() : md.getName().substring("is".length()).toLowerCase()),
+												MethodDescriptor::getMethod
+												)
+										);
+					} catch (IntrospectionException e) {
+						e.printStackTrace();
+					}
+					return null;
+				}
+				);
+		
+		return mapGetters.get(theClass);
+		
+	}
+	
 }
 
 /* EOF */

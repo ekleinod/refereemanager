@@ -125,9 +125,26 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<!-- 1:n -->
 					<xsd:element name="training_level" type="TrainingLevel" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="wish" type="Wish" minOccurs="0" maxOccurs="unbounded" />
-					<xsd:element name="club_relation" type="ClubRelation" minOccurs="1" maxOccurs="2" />
 
 					<!-- references -->
+					<xsd:element name="member" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Club" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="reffor" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Club" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
 					<xsd:element name="status" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
@@ -323,26 +340,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<xsd:complexType name="ClubRelation">
-		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
-				<xsd:sequence>
-					<xsd:element name="type" type="ClubRelationType" minOccurs="1" maxOccurs="1" />
-
-					<xsd:element name="club" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
-						<xsd:annotation>
-							<xsd:appinfo>
-								<jxb:property>
-									<jxb:baseType name="Club" />
-								</jxb:property>
-							</xsd:appinfo>
-						</xsd:annotation>
-					</xsd:element>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-
 	<xsd:complexType name="Wish">
 		<xsd:complexContent>
 			<xsd:extension base="ModelClass">
@@ -446,13 +443,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="prefer" />
 			<xsd:enumeration value="avoid" />
-		</xsd:restriction>
-	</xsd:simpleType>
-
-	<xsd:simpleType name="ClubRelationType">
-		<xsd:restriction base="xsd:string">
-			<xsd:enumeration value="member" />
-			<xsd:enumeration value="referee" />
 		</xsd:restriction>
 	</xsd:simpleType>
 

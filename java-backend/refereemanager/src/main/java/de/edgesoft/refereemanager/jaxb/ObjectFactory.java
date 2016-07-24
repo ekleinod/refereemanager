@@ -202,14 +202,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ClubRelation }
-     * 
-     */
-    public ClubRelation createClubRelation() {
-        return new ClubRelation();
-    }
-
-    /**
      * Create an instance of {@link RefereeAssignmentType }
      * 
      */
