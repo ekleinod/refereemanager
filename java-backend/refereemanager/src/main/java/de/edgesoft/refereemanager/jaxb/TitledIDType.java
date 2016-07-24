@@ -20,6 +20,7 @@ import de.edgesoft.refereemanager.model.PersonModel;
  *     &lt;extension base="{}IDType">
  *       &lt;sequence>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="shorttitle" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="remark" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -32,6 +33,7 @@ import de.edgesoft.refereemanager.model.PersonModel;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TitledIDType", propOrder = {
     "title",
+    "shorttitle",
     "remark"
 })
 @XmlSeeAlso({
@@ -49,6 +51,7 @@ public abstract class TitledIDType
 {
 
     protected String title;
+    protected String shorttitle;
     protected String remark;
 
     /**
@@ -73,6 +76,30 @@ public abstract class TitledIDType
      */
     public void setTitle(String value) {
         this.title = value;
+    }
+
+    /**
+     * Gets the value of the shorttitle property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getShorttitle() {
+        return shorttitle;
+    }
+
+    /**
+     * Sets the value of the shorttitle property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setShorttitle(String value) {
+        this.shorttitle = value;
     }
 
     /**

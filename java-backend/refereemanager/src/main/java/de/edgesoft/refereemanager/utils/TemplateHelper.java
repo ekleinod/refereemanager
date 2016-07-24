@@ -256,59 +256,57 @@ public class TemplateHelper {
 				for (Entry<String, Method> theGetter : mapGetters.entrySet()) {
 					Object oResult = theGetter.getValue().invoke(theData);
 					
-					if (oResult != null) {
-						
-						if ((theLoopElement == null) || !theLoopElement.getClass().isInstance(theData) || (theLoopElement == theData)) {
-						
-							// @todo is this too much of a hack?
-							String sTokenClass = theData.getClass().getSimpleName().toLowerCase();
-							if (sTokenClass.endsWith("model")) {
-								sTokenClass = sTokenClass.substring(0, (sTokenClass.length() - "model".length()));
-							}
+					if ((theLoopElement == null) || !theLoopElement.getClass().isInstance(theData) || (theLoopElement == theData)) {
+					
+						// @todo is this too much of a hack?
+						String sTokenClass = theData.getClass().getSimpleName().toLowerCase();
+						if (sTokenClass.endsWith("model")) {
+							sTokenClass = sTokenClass.substring(0, (sTokenClass.length() - "model".length()));
+						}
 
-							String sToken = String.format("%s:%s", sTokenClass, theGetter.getKey());
-							String sReplacement = oResult.toString();
+						String sToken = String.format("%s:%s", sTokenClass, theGetter.getKey());
+						String sReplacement = (oResult == null) ? "" : oResult.toString();
+						
+						if (theGetter.getValue().getReturnType() == LocalDateTime.class) {
 							
-							if (theGetter.getValue().getReturnType() == LocalDateTime.class) {
-								
-								for (String theType : new String[]{"date", "time", "datetime"}) {
-									for (FormatStyle theStyle : FormatStyle.values()) {
-										String sNewToken = String.format("%s:%s:%s:%s", 
-												sTokenClass, 
-												theGetter.getKey(),
-												theType,
-												theStyle.toString().toLowerCase());
-	
-										if (sReturn.contains(sNewToken)) {
-											sToken = sNewToken;
-											
-											DateTimeFormatter fmtOutput = 
-													(theType.equals("date")) ?
-															DateTimeFormatter.ofLocalizedDate(theStyle).withLocale(Locale.GERMANY)
-															: (theType.equals("time")) ?
-																	DateTimeFormatter.ofLocalizedTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault())
-																	: DateTimeFormatter.ofLocalizedDateTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault());
-																	
-											if (oResult instanceof LocalDateTime) {
-												sReplacement = ((LocalDateTime) oResult).format(fmtOutput);
-											}
-											
-											sReturn = replaceText(sReturn, 
-													String.format(TOKEN_REPLACE, sToken), 
-													sReplacement
-													);
+							for (String theType : new String[]{"date", "time", "datetime"}) {
+								for (FormatStyle theStyle : FormatStyle.values()) {
+									String sNewToken = String.format("%s:%s:%s:%s", 
+											sTokenClass, 
+											theGetter.getKey(),
+											theType,
+											theStyle.toString().toLowerCase());
+
+									if (sReturn.contains(sNewToken)) {
+										sToken = sNewToken;
+										
+										DateTimeFormatter fmtOutput = 
+												(theType.equals("date")) ?
+														DateTimeFormatter.ofLocalizedDate(theStyle).withLocale(Locale.GERMANY)
+														: (theType.equals("time")) ?
+																DateTimeFormatter.ofLocalizedTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault())
+																: DateTimeFormatter.ofLocalizedDateTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault());
+																
+										if (oResult == null) {
+											sReplacement = "";
+										} else if (oResult instanceof LocalDateTime) {
+											sReplacement = ((LocalDateTime) oResult).format(fmtOutput);
 										}
+										
+										sReturn = replaceText(sReturn, 
+												String.format(TOKEN_REPLACE, sToken), 
+												sReplacement
+												);
 									}
 								}
-								
-							} else {
-							
-								sReturn = replaceText(sReturn, 
-										String.format(TOKEN_REPLACE, sToken), 
-										sReplacement
-										);
 							}
 							
+						} else {
+						
+							sReturn = replaceText(sReturn, 
+									String.format(TOKEN_REPLACE, sToken), 
+									sReplacement
+									);
 						}
 						
 					}

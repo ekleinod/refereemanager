@@ -22,7 +22,6 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="abbreviation" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="address" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contact_person" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded" minOccurs="0"/>
@@ -36,7 +35,6 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Club", propOrder = {
-    "abbreviation",
     "address",
     "url",
     "contactPerson"
@@ -45,36 +43,11 @@ public class Club
     extends TitledIDTypeModel
 {
 
-    protected String abbreviation;
     protected List<Address> address;
     @XmlElement(name = "u_r_l")
     protected List<URL> url;
     @XmlElementRef(name = "contact_person", type = JAXBElement.class, required = false)
     protected List<Person> contactPerson;
-
-    /**
-     * Gets the value of the abbreviation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAbbreviation() {
-        return abbreviation;
-    }
-
-    /**
-     * Sets the value of the abbreviation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAbbreviation(String value) {
-        this.abbreviation = value;
-    }
 
     /**
      * Gets the value of the address property.

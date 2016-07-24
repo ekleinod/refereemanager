@@ -227,7 +227,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="abbreviation" type="xsd:string" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="referee_report" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="referee_quantity" type="RefereeQuantity" minOccurs="0" maxOccurs="unbounded" />
 
@@ -259,7 +258,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="abbreviation" type="xsd:string" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="address" type="Address" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="u_r_l" type="URL" minOccurs="0" maxOccurs="unbounded" />
 
@@ -386,9 +384,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	<xsd:complexType name="ContactType">
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
-				<xsd:sequence>
-					<xsd:element name="abbreviation" type="xsd:string" minOccurs="0" maxOccurs="1" />
-				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -396,9 +391,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	<xsd:complexType name="RefereeAssignmentType">
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
-				<xsd:sequence>
-					<xsd:element name="abbreviation" type="xsd:string" minOccurs="1" maxOccurs="1" />
-				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -414,7 +406,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="abbreviation" type="xsd:string" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="rank" type="xsd:int" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="update_interval" type="xsd:int" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
@@ -443,6 +434,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:extension base="IDType">
 				<xsd:sequence>
 					<xsd:element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="shorttitle" type="xsd:string" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="remark" type="xsd:string" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>

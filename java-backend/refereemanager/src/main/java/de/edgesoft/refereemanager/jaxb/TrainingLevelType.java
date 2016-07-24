@@ -18,7 +18,6 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="abbreviation" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="rank" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="update_interval" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
@@ -31,7 +30,6 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TrainingLevelType", propOrder = {
-    "abbreviation",
     "rank",
     "updateInterval"
 })
@@ -39,35 +37,9 @@ public class TrainingLevelType
     extends TitledIDTypeModel
 {
 
-    @XmlElement(required = true)
-    protected String abbreviation;
     protected int rank;
     @XmlElement(name = "update_interval")
     protected int updateInterval;
-
-    /**
-     * Gets the value of the abbreviation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAbbreviation() {
-        return abbreviation;
-    }
-
-    /**
-     * Sets the value of the abbreviation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAbbreviation(String value) {
-        this.abbreviation = value;
-    }
 
     /**
      * Gets the value of the rank property.
