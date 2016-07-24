@@ -82,13 +82,13 @@ public class TemplateHelper {
 	public static final String TOKEN_REPLACE = String.format(TOKEN, KEY_REPLACE);
 	
 	/** Token: if. */
-	public static final String TOKEN_IF = String.format("%s%%3$s%s", String.format(TOKEN, KEY_IF), String.format(TOKEN, KEY_ENDIF));
+	public static final String TOKEN_IF = String.format("%s(.*)%s", String.format(TOKEN, KEY_IF), String.format(TOKEN, KEY_ENDIF));
 	
 	/** Token: if empty. */
-	public static final String TOKEN_IF_EMPTY = String.format(TOKEN_IF, CONDITION_EMPTY, "%1$s", "%2$s");
+	public static final String TOKEN_IF_EMPTY = String.format(TOKEN_IF, CONDITION_EMPTY, "%1$s");
 	
 	/** Token: if not empty. */
-	public static final String TOKEN_IF_NOTEMPTY = String.format(TOKEN_IF, CONDITION_NOTEMPTY, "%1$s", "%2$s");
+	public static final String TOKEN_IF_NOTEMPTY = String.format(TOKEN_IF, CONDITION_NOTEMPTY, "%1$s");
 	
 	/** Token: foreach. */
 	public static final String TOKEN_FOREACH = String.format(TOKEN, KEY_FOREACH);
@@ -336,9 +336,16 @@ public class TemplateHelper {
 	private static String replaceTextAndConditions(final String theText, final String theReplacee, final String theValue) {
 		String sReturn = theText;
 		
+		
+		// conditions
+		String sCondition = String.format(TOKEN_IF_EMPTY, theReplacee).replace("**", "\\*\\*");
+		sReturn = sReturn.replaceAll(sCondition, theValue.isEmpty() ? "$1" : "");
+		
+		sCondition = String.format(TOKEN_IF_NOTEMPTY, theReplacee).replace("**", "\\*\\*");
+		sReturn = sReturn.replaceAll(sCondition, !theValue.isEmpty() ? "$1" : "");
+		
+		// replace tokens
 		String sToken = String.format(TOKEN_REPLACE, theReplacee);
-		
-		
 		while (sReturn.contains(sToken)) {
 			sReturn = sReturn.replace(sToken, theValue);
 		}
