@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
 
 
@@ -22,13 +23,13 @@ import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
  * <pre>
  * &lt;complexType name="TrainingLevel">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
  *         &lt;element name="since" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
  *         &lt;element name="update" type="{http://www.w3.org/2001/XMLSchema}date" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -41,7 +42,9 @@ import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
     "update",
     "type"
 })
-public class TrainingLevel {
+public class TrainingLevel
+    extends ModelClass
+{
 
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(LocalDateAdapter.class)

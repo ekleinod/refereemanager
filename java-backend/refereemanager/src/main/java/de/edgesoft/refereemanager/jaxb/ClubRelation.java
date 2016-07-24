@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.edgeutils.commons.ModelClass;
 
 
 /**
@@ -17,12 +18,12 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="ClubRelation">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
  *         &lt;element name="type" type="{}ClubRelationType"/>
  *         &lt;element name="club" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -34,7 +35,9 @@ import javax.xml.bind.annotation.XmlType;
     "type",
     "club"
 })
-public class ClubRelation {
+public class ClubRelation
+    extends ModelClass
+{
 
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")

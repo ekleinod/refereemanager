@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.edgeutils.commons.Info;
+import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.refereemanager.model.ContentModel;
 
 
@@ -19,13 +20,13 @@ import de.edgesoft.refereemanager.model.ContentModel;
  * <pre>
  * &lt;complexType name="RefereeManager">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
  *         &lt;element name="info" type="{}Info"/>
  *         &lt;element name="content" type="{}Content"/>
  *       &lt;/sequence>
  *       &lt;attribute ref="{http://www.w3.org/XML/1998/namespace}base"/>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -37,7 +38,9 @@ import de.edgesoft.refereemanager.model.ContentModel;
     "info",
     "content"
 })
-public class RefereeManager {
+public class RefereeManager
+    extends ModelClass
+{
 
     @XmlElement(required = true)
     protected Info info;
