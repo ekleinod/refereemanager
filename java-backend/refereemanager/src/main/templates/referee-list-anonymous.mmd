@@ -30,7 +30,8 @@ latex input:				kleinod-mmd-begin-doc
 \taburowcolors{white .. Linen}
 
 **foreach referee**
--->**generated referee:tablename**<!-- & -->**generated referee:referee_relation_member****if notempty referee:referee_relation_reffor**<!--\newline\textsl{-->**generated referee:referee_relation_reffor**<!--}-->**endif notempty referee:referee_relation_reffor**<!-- & -->**generated traininglevel:abbreviation**<!-- \\
+-->**generated referee:tablename**<!-- & -->**generated referee:clubrelation:member:title**
+**if notempty referee:referee_relation_reffor**<!--\newline\textsl{-->**generated referee:referee_relation_reffor**<!--}-->**endif notempty referee:referee_relation_reffor**<!-- & -->**generated traininglevel:abbreviation**<!-- \\
 **endforeach referee**
 
 \end{longtabu}
