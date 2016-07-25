@@ -225,40 +225,37 @@ public class TemplateHelper {
 				
 				Object oResult = theGetter.getValue().invoke(theData);
 				
-				if (oResult != null) {
-				
-					if ((theLoopElement == null) || !theLoopElement.getClass().isInstance(theData) || (theLoopElement == theData)) {
-						
-						String sTokenClass = getTokenClass(theData);
-						
-						// avoid double mention of class
-						String sTokenPrefix = (theTokenPrefix.indexOf(':') == theTokenPrefix.lastIndexOf(':')) ?
-								String.format("%s%s:%s:", theTokenPrefix, sTokenClass, theGetter.getKey()) :
-									String.format("%s%s:", theTokenPrefix, theGetter.getKey());
-						if ((theData instanceof RefereeManager) || (theData instanceof Content)) {
-							sTokenPrefix = "";
-						}
-						
-						if (oResult instanceof ModelClass) {
-							
-//							Constants.logger.info(sTokenPrefix);
-							sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix);
-							
-						} else {
-							
-							// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!
-							try {
-								for (ModelClass theDataObject : (List<ModelClass>) oResult) {
-									sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix);
-								}
-							} catch (ClassCastException e) {
-//								e.printStackTrace();
-							}
-							
-						}
-							
+				if ((theLoopElement == null) || !theLoopElement.getClass().isInstance(theData) || (theLoopElement == theData)) {
+					
+					String sTokenClass = getTokenClass(theData);
+					
+					// avoid double mention of class
+					String sTokenPrefix = (theTokenPrefix.indexOf(':') == theTokenPrefix.lastIndexOf(':')) ?
+							String.format("%s%s:%s:", theTokenPrefix, sTokenClass, theGetter.getKey()) :
+								String.format("%s%s:", theTokenPrefix, theGetter.getKey());
+					if ((theData instanceof RefereeManager) || (theData instanceof Content)) {
+						sTokenPrefix = "";
 					}
 					
+					if (oResult instanceof ModelClass) {
+						
+						sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix);
+						
+					} 
+						
+					if (oResult instanceof List<?>) {
+							
+						// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!
+						try {
+							for (ModelClass theDataObject : (List<ModelClass>) oResult) {
+								sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix);
+							}
+						} catch (ClassCastException e) {
+//								e.printStackTrace();
+						}
+						
+					}
+							
 				}
 				
 			}
@@ -393,8 +390,17 @@ public class TemplateHelper {
 		String sCondition = String.format(TOKEN_IF_EMPTY, theReplacee).replace("**", "\\*\\*");
 		sReturn = sReturn.replaceAll(sCondition, theValue.isEmpty() ? "$1" : "");
 		
+		// one step up - for empty model classes
+		sCondition = String.format(TOKEN_IF_EMPTY, theReplacee.substring(0, theReplacee.lastIndexOf(':'))).replace("**", "\\*\\*");
+		sReturn = sReturn.replaceAll(sCondition, theValue.isEmpty() ? "$1" : "");
+		
 		sCondition = String.format(TOKEN_IF_NOTEMPTY, theReplacee).replace("**", "\\*\\*");
 		sReturn = sReturn.replaceAll(sCondition, !theValue.isEmpty() ? "$1" : "");
+		
+		// one step up - for empty model classes
+		sCondition = String.format(TOKEN_IF_NOTEMPTY, theReplacee.substring(0, theReplacee.lastIndexOf(':'))).replace("**", "\\*\\*");
+		sReturn = sReturn.replaceAll(sCondition, !theValue.isEmpty() ? "$1" : "");
+
 		
 		// replace tokens
 		String sToken = String.format(TOKEN_REPLACE, theReplacee);

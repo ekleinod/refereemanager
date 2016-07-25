@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.TrainingLevelModel;
 
 
 /**
@@ -55,7 +56,7 @@ public class Referee
     protected boolean docsByLetter;
     @XmlElement(name = "revoke_license")
     protected Boolean revokeLicense;
-    @XmlElement(name = "training_level")
+    @XmlElement(name = "training_level", type = TrainingLevelModel.class)
     protected List<TrainingLevel> trainingLevel;
     protected List<Wish> wish;
     @XmlElement(required = true, type = Object.class)

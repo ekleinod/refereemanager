@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
+import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
@@ -59,7 +60,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 })
 @XmlSeeAlso({
     Trainee.class,
-    Referee.class
+    RefereeModel.class
 })
 public class Person
     extends TitledIDTypeModel

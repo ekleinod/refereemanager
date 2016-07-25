@@ -30,8 +30,7 @@ latex input:				kleinod-mmd-begin-doc
 \taburowcolors{white .. Linen}
 
 **foreach referee**
--->**generated referee:tablename**<!-- & -->**generated referee:member:displaytitle**
-**if notempty referee:referee_relation_reffor**<!--\newline\textsl{-->**generated referee:referee_relation_reffor**<!--}-->**endif notempty referee:referee_relation_reffor**<!-- & -->**generated traininglevel:abbreviation**<!-- \\
+-->**generated referee:tablename**<!-- & -->**generated referee:member:displaytitle****if notempty referee:reffor**<!--\newline\textsl{-->**generated referee:reffor:displaytitle**<!--}-->**endif notempty referee:reffor**<!-- & -->**generated referee:highesttraininglevel:type:shorttitle**<!-- \\
 **endforeach referee**
 
 \end{longtabu}
@@ -42,5 +41,5 @@ latex input:				kleinod-mmd-begin-doc
 **Legende:**
 
 **foreach statustype**
-**if notempty statustype:remark****generated statustype:remark****endif notempty statustype:remark****if empty statustype:remark****generated statustype:title****endif empty statustype:remark**
+- **if notempty statustype:remark****generated statustype:remark****endif notempty statustype:remark****if empty statustype:remark****generated statustype:title****endif empty statustype:remark**
 **endforeach statustype**
