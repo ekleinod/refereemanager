@@ -347,10 +347,10 @@ public class TemplateHelper {
 							
 						} else {
 							
-							if (sToken.startsWith("referee:")) {
-								Constants.logger.info(sToken);
-//								Constants.logger.info(oResult);
-							}
+//							if (sToken.startsWith("referee:")) {
+//								Constants.logger.info(sToken);
+////								Constants.logger.info(oResult);
+//							}
 							
 							if (sReturn.contains(sToken)) {
 								sReturn = replaceTextAndConditions(sReturn, 

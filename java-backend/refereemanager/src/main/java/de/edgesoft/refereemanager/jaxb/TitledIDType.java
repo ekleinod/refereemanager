@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.edgeutils.commons.IDType;
+import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 
 
@@ -41,7 +42,7 @@ import de.edgesoft.refereemanager.model.PersonModel;
     TrainingLevelType.class,
     SexType.class,
     League.class,
-    Club.class,
+    ClubModel.class,
     StatusType.class,
     RefereeAssignmentType.class,
     PersonModel.class

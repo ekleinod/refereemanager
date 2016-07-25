@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 
@@ -70,6 +71,7 @@ public class Content
     protected List<Referee> referee;
     protected List<Trainee> trainee;
     protected List<League> league;
+    @XmlElement(type = ClubModel.class)
     protected List<Club> club;
     @XmlElement(name = "sex_type")
     protected List<SexType> sexType;
