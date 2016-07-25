@@ -218,31 +218,30 @@ public class TemplateHelper {
 		// fill direct data
 		sReturn = fillLineDirectData(sReturn, theData, theLoopElement, theTokenPrefix);
 		
+		// deal with special cases (recursion, loops etc.)
 		try {
 			
-			Map<String, Method> mapGetters = getGetters(theData.getClass());
-			
-			for (Entry<String, Method> theGetter : mapGetters.entrySet()) {
+			for (Entry<String, Method> theGetter : getGetters(theData.getClass()).entrySet()) {
+				
 				Object oResult = theGetter.getValue().invoke(theData);
 				
-				if ((theLoopElement == null) || !theLoopElement.getClass().isInstance(theData) || (theLoopElement == theData)) {
+				if (oResult != null) {
 				
-					String sTokenClass = theData.getClass().getSimpleName().toLowerCase();
-					// @todo is this too much of a hack?
-					// own model classes have suffix "model", remove for clearer template syntax
-					if (sTokenClass.endsWith("model")) {
-						sTokenClass = sTokenClass.substring(0, (sTokenClass.length() - "model".length()));
-					}
-
-					// recursing into subcontent
-					if ((oResult != null) && ((oResult instanceof ModelClass) || (oResult instanceof List<?>))) {
-		
+					if ((theLoopElement == null) || !theLoopElement.getClass().isInstance(theData) || (theLoopElement == theData)) {
+						
+						String sTokenClass = getTokenClass(theData);
+						
 						String sTokenPrefix = String.format("%s%s:", theTokenPrefix, sTokenClass);
 						if ((theData instanceof RefereeManager) || (theData instanceof Content)) {
 							sTokenPrefix = "";
 						}
 						
-						if (oResult instanceof List<?>) {
+						if (oResult instanceof ModelClass) {
+							
+							sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix);
+							
+						} else {
+							
 							// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!
 							try {
 								for (ModelClass theDataObject : (List<ModelClass>) oResult) {
@@ -251,10 +250,9 @@ public class TemplateHelper {
 							} catch (ClassCastException e) {
 //								e.printStackTrace();
 							}
-						} else {
-							sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix);
+							
 						}
-						
+							
 					}
 					
 				}
@@ -292,12 +290,7 @@ public class TemplateHelper {
 			
 			if ((theLoopElement == null) || !theLoopElement.getClass().isInstance(theData) || (theLoopElement == theData)) {
 				
-				String sTokenClass = theData.getClass().getSimpleName().toLowerCase();
-				// @todo is this too much of a hack?
-				// own model classes have suffix "model", remove for clearer template syntax
-				if (sTokenClass.endsWith("model")) {
-					sTokenClass = sTokenClass.substring(0, (sTokenClass.length() - "model".length()));
-				}
+				String sTokenClass = getTokenClass(theData);
 				
 				for (Entry<String, Method> theGetter : getGetters(theData.getClass()).entrySet()) {
 					
@@ -447,6 +440,28 @@ public class TemplateHelper {
 		
 	}
 	
+	/**
+	 * Returns token class as string.
+	 * 
+	 * Own model classes have suffix "model", remove for clearer template syntax.
+	 * 
+	 * @todo is this too much of a hack?
+	 * 
+	 * @param theData data
+	 * 
+	 * @return filled line
+	 * 
+	 * @version 0.5.0
+	 * @since 0.5.0
+	 */
+	private static String getTokenClass(final ModelClass theData) {
+		String sTokenClass = theData.getClass().getSimpleName().toLowerCase();
+		if (sTokenClass.endsWith("model")) {
+			sTokenClass = sTokenClass.substring(0, (sTokenClass.length() - "model".length()));
+		}
+		return sTokenClass;
+	}
+
 }
 
 /* EOF */
