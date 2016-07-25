@@ -12,3 +12,7 @@ try (java.io.FileInputStream stmIn = new java.io.FileInputStream("missing.txt"))
 
 System.out.println(System.getProperty("user.country"));
 System.out.println(System.getProperty("user.language"));
+
+for (java.beans.MethodDescriptor theDescriptor : java.beans.Introspector.getBeanInfo(java.util.ArrayList.class).getMethodDescriptors()) {
+	System.out.println(theDescriptor.getMethod().getDeclaringClass());
+}
