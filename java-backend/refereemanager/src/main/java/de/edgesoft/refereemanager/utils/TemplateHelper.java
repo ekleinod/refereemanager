@@ -231,13 +231,17 @@ public class TemplateHelper {
 						
 						String sTokenClass = getTokenClass(theData);
 						
-						String sTokenPrefix = String.format("%s%s:", theTokenPrefix, sTokenClass);
+						// avoid double mention of class
+						String sTokenPrefix = (theTokenPrefix.indexOf(':') == theTokenPrefix.lastIndexOf(':')) ?
+								String.format("%s%s:%s:", theTokenPrefix, sTokenClass, theGetter.getKey()) :
+									String.format("%s%s:", theTokenPrefix, theGetter.getKey());
 						if ((theData instanceof RefereeManager) || (theData instanceof Content)) {
 							sTokenPrefix = "";
 						}
 						
 						if (oResult instanceof ModelClass) {
 							
+//							Constants.logger.info(sTokenPrefix);
 							sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix);
 							
 						} else {
@@ -298,6 +302,11 @@ public class TemplateHelper {
 					
 					if (!(oResult instanceof ModelClass) && !(oResult instanceof List<?>)) {
 
+						// avoid double mention of class
+						String sToken = (theTokenPrefix.indexOf(':') == theTokenPrefix.lastIndexOf(':')) ?
+								String.format("%s%s:%s", theTokenPrefix, sTokenClass, theGetter.getKey()) :
+									String.format("%s%s", theTokenPrefix, theGetter.getKey());
+						
 						if ((theGetter.getValue().getReturnType() == LocalDateTime.class) ||
 								(theGetter.getValue().getReturnType() == LocalDate.class) ||
 								(theGetter.getValue().getReturnType() == LocalTime.class)) {
@@ -305,10 +314,9 @@ public class TemplateHelper {
 							// own for loop with replace, for there are more than one datetime tokens allowed in one line
 							for (String theType : new String[]{"date", "time", "datetime"}) {
 								for (FormatStyle theStyle : FormatStyle.values()) {
-									String sNewToken = String.format("%s%s:%s:%s:%s",
-											theTokenPrefix,
-											sTokenClass, 
-											theGetter.getKey(),
+									
+									String sNewToken = String.format("%s:%s:%s",
+											sToken, 
 											theType,
 											theStyle.toString().toLowerCase());
 									
@@ -339,12 +347,10 @@ public class TemplateHelper {
 							
 						} else {
 							
-							String sToken = String.format("%s%s:%s", theTokenPrefix, sTokenClass, theGetter.getKey());
-							
-//							if (sToken.startsWith("referee:")) {
-//								Constants.logger.info(sToken);
+							if (sToken.startsWith("referee:")) {
+								Constants.logger.info(sToken);
 //								Constants.logger.info(oResult);
-//							}
+							}
 							
 							if (sReturn.contains(sToken)) {
 								sReturn = replaceTextAndConditions(sReturn, 
