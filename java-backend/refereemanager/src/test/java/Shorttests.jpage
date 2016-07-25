@@ -16,3 +16,6 @@ System.out.println(System.getProperty("user.language"));
 for (java.beans.MethodDescriptor theDescriptor : java.beans.Introspector.getBeanInfo(java.util.ArrayList.class).getMethodDescriptors()) {
 	System.out.println(theDescriptor.getMethod().getDeclaringClass());
 }
+
+System.out.println("user.language" instanceof String);
+System.out.println(null instanceof String);

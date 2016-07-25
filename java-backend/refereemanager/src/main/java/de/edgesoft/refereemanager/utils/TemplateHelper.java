@@ -5,7 +5,9 @@ import java.beans.Introspector;
 import java.beans.MethodDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -209,31 +211,105 @@ public class TemplateHelper {
 	private static String fillLine(final String theLine, final ModelClass theData, final TitledIDType theLoopElement, final String theTokenPrefix) {
 		
 		Objects.requireNonNull(theLine, "line must not be null");
+		Objects.requireNonNull(theData, "data must not be null");
 		
 		String sReturn = theLine;
 		
-		if (theData != null) {
+		// fill direct data
+		sReturn = fillLineDirectData(sReturn, theData, theLoopElement, theTokenPrefix);
+		
+		try {
 			
-			try {
+			Map<String, Method> mapGetters = getGetters(theData.getClass());
+			
+			for (Entry<String, Method> theGetter : mapGetters.entrySet()) {
+				Object oResult = theGetter.getValue().invoke(theData);
 				
-				Map<String, Method> mapGetters = getGetters(theData.getClass());
+				if ((theLoopElement == null) || !theLoopElement.getClass().isInstance(theData) || (theLoopElement == theData)) {
 				
-				for (Entry<String, Method> theGetter : mapGetters.entrySet()) {
+					String sTokenClass = theData.getClass().getSimpleName().toLowerCase();
+					// @todo is this too much of a hack?
+					// own model classes have suffix "model", remove for clearer template syntax
+					if (sTokenClass.endsWith("model")) {
+						sTokenClass = sTokenClass.substring(0, (sTokenClass.length() - "model".length()));
+					}
+
+					// recursing into subcontent
+					if ((oResult != null) && ((oResult instanceof ModelClass) || (oResult instanceof List<?>))) {
+		
+						String sTokenPrefix = String.format("%s%s:", theTokenPrefix, sTokenClass);
+						if ((theData instanceof RefereeManager) || (theData instanceof Content)) {
+							sTokenPrefix = "";
+						}
+						
+						if (oResult instanceof List<?>) {
+							// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!
+							try {
+								for (ModelClass theDataObject : (List<ModelClass>) oResult) {
+									sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix);
+								}
+							} catch (ClassCastException e) {
+//								e.printStackTrace();
+							}
+						} else {
+							sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix);
+						}
+						
+					}
+					
+				}
+				
+			}
+
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
+				
+		return sReturn;
+	}
+	
+	/**
+	 * Fills line with direct data.
+	 * 
+	 * @param theLine line
+	 * @param theData data
+	 * @param theLoopElement element that is looped at the moment
+	 * @param theTokenPrefix token prefix
+	 * 
+	 * @return filled line
+	 * 
+	 * @version 0.5.0
+	 * @since 0.5.0
+	 */
+	private static String fillLineDirectData(final String theLine, final ModelClass theData, final TitledIDType theLoopElement, final String theTokenPrefix) {
+		
+		Objects.requireNonNull(theLine, "line must not be null");
+		Objects.requireNonNull(theData, "data must not be null");
+		
+		String sReturn = theLine;
+		
+		try {
+			
+			if ((theLoopElement == null) || !theLoopElement.getClass().isInstance(theData) || (theLoopElement == theData)) {
+				
+				String sTokenClass = theData.getClass().getSimpleName().toLowerCase();
+				// @todo is this too much of a hack?
+				// own model classes have suffix "model", remove for clearer template syntax
+				if (sTokenClass.endsWith("model")) {
+					sTokenClass = sTokenClass.substring(0, (sTokenClass.length() - "model".length()));
+				}
+				
+				for (Entry<String, Method> theGetter : getGetters(theData.getClass()).entrySet()) {
+					
 					Object oResult = theGetter.getValue().invoke(theData);
 					
-					if ((theLoopElement == null) || !theLoopElement.getClass().isInstance(theData) || (theLoopElement == theData)) {
-					
-						// @todo is this too much of a hack?
-						String sTokenClass = theData.getClass().getSimpleName().toLowerCase();
-						if (sTokenClass.endsWith("model")) {
-							sTokenClass = sTokenClass.substring(0, (sTokenClass.length() - "model".length()));
-						}
+					if (!(oResult instanceof ModelClass) && !(oResult instanceof List<?>)) {
 
-						String sToken = String.format("%s%s:%s", theTokenPrefix, sTokenClass, theGetter.getKey());
-						String sReplacement = (oResult == null) ? "" : oResult.toString();
-						
-						if (theGetter.getValue().getReturnType() == LocalDateTime.class) {
-							
+						if ((theGetter.getValue().getReturnType() == LocalDateTime.class) ||
+								(theGetter.getValue().getReturnType() == LocalDate.class) ||
+								(theGetter.getValue().getReturnType() == LocalTime.class)) {
+
+							// own for loop with replace, for there are more than one datetime tokens allowed in one line
 							for (String theType : new String[]{"date", "time", "datetime"}) {
 								for (FormatStyle theStyle : FormatStyle.values()) {
 									String sNewToken = String.format("%s%s:%s:%s:%s",
@@ -242,10 +318,8 @@ public class TemplateHelper {
 											theGetter.getKey(),
 											theType,
 											theStyle.toString().toLowerCase());
-
+									
 									if (sReturn.contains(sNewToken)) {
-										sToken = sNewToken;
-										
 										DateTimeFormatter fmtOutput = 
 												(theType.equals("date")) ?
 														DateTimeFormatter.ofLocalizedDate(theStyle).withLocale(Locale.GERMANY)
@@ -253,66 +327,51 @@ public class TemplateHelper {
 																DateTimeFormatter.ofLocalizedTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault())
 																: DateTimeFormatter.ofLocalizedDateTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault());
 																
-										if (oResult == null) {
-											sReplacement = "";
-										} else if (oResult instanceof LocalDateTime) {
-											sReplacement = ((LocalDateTime) oResult).format(fmtOutput);
-										}
-										
-										sReturn = replaceTextAndConditions(sReturn, 
-												sToken, 
-												sReplacement
-												);
+																String sReplacement = "";
+																if (oResult instanceof LocalDateTime) {
+																	sReplacement = ((LocalDateTime) oResult).format(fmtOutput);
+																} else if (oResult instanceof LocalDate) {
+																	sReplacement = ((LocalDate) oResult).format(fmtOutput);
+																} else if (oResult instanceof LocalTime) {
+																	sReplacement = ((LocalTime) oResult).format(fmtOutput);
+																}
+																
+																sReturn = replaceTextAndConditions(sReturn, 
+																		sNewToken, 
+																		sReplacement
+																		);
 									}
 								}
 							}
 							
 						} else {
 							
-							// recursing into subcontent
-							if ((oResult != null) && ((oResult instanceof ModelClass) || (oResult instanceof List<?>))) {
-				
-								String sTokenPrefix = String.format("%s%s:", theTokenPrefix, sTokenClass);
-								if ((theData instanceof RefereeManager) || (theData instanceof Content)) {
-									sTokenPrefix = "";
-								}
-								
-								if (oResult instanceof List<?>) {
-									// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!
-									try {
-										for (ModelClass theDataObject : (List<ModelClass>) oResult) {
-											sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix);
-										}
-									} catch (ClassCastException e) {
-//										e.printStackTrace();
-									}
-								} else {
-									sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix);
-								}
-								
-							} else {
+							String sToken = String.format("%s%s:%s", theTokenPrefix, sTokenClass, theGetter.getKey());
 							
-								if (sToken.startsWith("referee:")) {
-									Constants.logger.info(sToken);
-//									Constants.logger.info(oResult);
-								}
+//							if (sToken.startsWith("referee:")) {
+//								Constants.logger.info(sToken);
+//								Constants.logger.info(oResult);
+//							}
+							
+							if (sReturn.contains(sToken)) {
 								sReturn = replaceTextAndConditions(sReturn, 
-										sToken, 
-										sReplacement
+										sToken,
+										(oResult == null) ? "" : oResult.toString()
 										);
 							}
+							
 						}
 						
 					}
 					
 				}
-	
-			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				e.printStackTrace();
-			}
 				
+			}
+
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
 		}
-		
+				
 		return sReturn;
 	}
 	
