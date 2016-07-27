@@ -1,11 +1,12 @@
-package de.edgesoft.refereemanager.utils;
+package de.edgesoft.refereemanager.model;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.Comparator;
+
+import de.edgesoft.refereemanager.jaxb.TitledIDType;
 
 /**
- * Provides constants.
- *
+ * TitledIDType model, additional methods for jaxb model class.
+ * 
  * ## Legal stuff
  * 
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
@@ -27,21 +28,12 @@ import org.apache.logging.log4j.Logger;
  * 
  * @author Ekkart Kleinod
  * @version 0.5.0
- * @since 0.4.0
+ * @since 0.5.0
  */
-public class Constants {
-
-	/** Program version. */
-	public static final String APPVERSION = "0.5.0";
+public class TitledIDTypeModel extends TitledIDType {
 	
-	/** Document version. */
-	public static final String DOCVERSION = "0.5.0";
-
-	/** Standard file name pattern for data files. */
-	public static final String DATAFILENAMEPATTERN = "refereemanager_%04d.xml";
-	
-	/** Logger for all classes. */
-	public static final Logger logger = LogManager.getLogger();
+	/** Comparator. */
+	public static final Comparator<TitledIDType> TITLE = Comparator.comparing(TitledIDType::getTitle);
 	
 }
 

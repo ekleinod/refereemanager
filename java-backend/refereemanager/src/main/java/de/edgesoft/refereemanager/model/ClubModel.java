@@ -1,11 +1,10 @@
-package de.edgesoft.refereemanager.utils;
+package de.edgesoft.refereemanager.model;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import de.edgesoft.refereemanager.jaxb.Club;
 
 /**
- * Provides constants.
- *
+ * Club model, additional methods for jaxb model class.
+ * 
  * ## Legal stuff
  * 
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
@@ -27,22 +26,22 @@ import org.apache.logging.log4j.Logger;
  * 
  * @author Ekkart Kleinod
  * @version 0.5.0
- * @since 0.4.0
+ * @since 0.5.0
  */
-public class Constants {
-
-	/** Program version. */
-	public static final String APPVERSION = "0.5.0";
+public class ClubModel extends Club {
 	
-	/** Document version. */
-	public static final String DOCVERSION = "0.5.0";
-
-	/** Standard file name pattern for data files. */
-	public static final String DATAFILENAMEPATTERN = "refereemanager_%04d.xml";
-	
-	/** Logger for all classes. */
-	public static final Logger logger = LogManager.getLogger();
-	
+	/**
+	 * Display title.
+	 * 
+	 * @return display title
+	 * 
+	 * @version 0.5.0
+	 * @since 0.5.0
+	 */
+    public String getDisplayTitle() {
+    	return (getShorttitle() == null) ? getTitle() : getShorttitle();
+    }
+    
 }
 
 /* EOF */

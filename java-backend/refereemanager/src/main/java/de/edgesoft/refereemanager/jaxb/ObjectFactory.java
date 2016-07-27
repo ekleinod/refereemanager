@@ -6,6 +6,13 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
+import de.edgesoft.edgeutils.commons.Info;
+import de.edgesoft.refereemanager.model.ClubModel;
+import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.RefereeModel;
+import de.edgesoft.refereemanager.model.SeasonModel;
+import de.edgesoft.refereemanager.model.TrainingLevelModel;
 
 
 /**
@@ -25,6 +32,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _Test_QNAME = new QName("", "test");
     private final static QName _Refereemanager_QNAME = new QName("", "refereemanager");
     private final static QName _LeagueRefereeReportRecipient_QNAME = new QName("", "referee_report_recipient");
     private final static QName _ClubContactPerson_QNAME = new QName("", "contact_person");
@@ -85,14 +93,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link TitledType }
-     * 
-     */
-    public TitledType createTitledType() {
-        return new TitledType();
-    }
-
-    /**
      * Create an instance of {@link Trainee }
      * 
      */
@@ -113,15 +113,7 @@ public class ObjectFactory {
      * 
      */
     public TrainingLevel createTrainingLevel() {
-        return new TrainingLevel();
-    }
-
-    /**
-     * Create an instance of {@link TitledIDType }
-     * 
-     */
-    public TitledIDType createTitledIDType() {
-        return new TitledIDType();
+        return new TrainingLevelModel();
     }
 
     /**
@@ -129,7 +121,7 @@ public class ObjectFactory {
      * 
      */
     public Season createSeason() {
-        return new Season();
+        return new SeasonModel();
     }
 
     /**
@@ -161,7 +153,7 @@ public class ObjectFactory {
      * 
      */
     public Referee createReferee() {
-        return new Referee();
+        return new RefereeModel();
     }
 
     /**
@@ -185,7 +177,7 @@ public class ObjectFactory {
      * 
      */
     public Content createContent() {
-        return new Content();
+        return new ContentModel();
     }
 
     /**
@@ -193,7 +185,7 @@ public class ObjectFactory {
      * 
      */
     public Club createClub() {
-        return new Club();
+        return new ClubModel();
     }
 
     /**
@@ -213,14 +205,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ClubRelation }
-     * 
-     */
-    public ClubRelation createClubRelation() {
-        return new ClubRelation();
-    }
-
-    /**
      * Create an instance of {@link RefereeAssignmentType }
      * 
      */
@@ -233,7 +217,16 @@ public class ObjectFactory {
      * 
      */
     public Person createPerson() {
-        return new Person();
+        return new PersonModel();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Info }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "test")
+    public JAXBElement<Info> createTest(Info value) {
+        return new JAXBElement<Info>(_Test_QNAME, Info.class, null, value);
     }
 
     /**

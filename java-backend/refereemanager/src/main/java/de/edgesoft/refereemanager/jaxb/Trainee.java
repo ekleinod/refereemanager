@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.PersonModel;
 
 
 /**
@@ -39,7 +40,7 @@ import javax.xml.bind.annotation.XmlType;
     "passed"
 })
 public class Trainee
-    extends Person
+    extends PersonModel
 {
 
     @XmlElement(name = "points_written_a")

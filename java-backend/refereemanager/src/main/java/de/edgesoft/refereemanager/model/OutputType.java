@@ -1,10 +1,10 @@
-package de.edgesoft.refereemanager.utils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+package de.edgesoft.refereemanager.model;
 
 /**
- * Provides constants.
+ * Output types.
+ * 
+ * For enums I use the coding style of jaxb, so there will be no inconsistencies.
  *
  * ## Legal stuff
  * 
@@ -27,22 +27,32 @@ import org.apache.logging.log4j.Logger;
  * 
  * @author Ekkart Kleinod
  * @version 0.5.0
- * @since 0.4.0
+ * @since 0.5.0
  */
-public class Constants {
+public enum OutputType {
 
-	/** Program version. */
-	public static final String APPVERSION = "0.5.0";
+    FULLNAME,
+    TABLENAME;
 	
-	/** Document version. */
-	public static final String DOCVERSION = "0.5.0";
+    private final String value;
 
-	/** Standard file name pattern for data files. */
-	public static final String DATAFILENAMEPATTERN = "refereemanager_%04d.xml";
-	
-	/** Logger for all classes. */
-	public static final Logger logger = LogManager.getLogger();
-	
+    OutputType() {
+        value = name().toLowerCase();
+    }
+
+    public String value() {
+        return value;
+    }
+
+    public static OutputType fromValue(String v) {
+        for (OutputType c: OutputType.values()) {
+            if (c.value.equals(v)) {
+                return c;
+            }
+        }
+        throw new IllegalArgumentException(v);
+    }
+
 }
 
 /* EOF */

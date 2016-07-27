@@ -1,0 +1,45 @@
+Quotes Language:		german
+Base Header Level:	3
+latex input:				kleinod-mmd-scrartcl
+MyOptions:					author=schiri, font=droid, notitlepage, noauthor
+latex input:				kleinod-mmd-style
+Title:							Verbandsschiedsrichter des BTTV
+MySubTitle:					Saison **generated season:title**
+Date:								Stand: **generated info:modified:date:long**
+latex input:				kleinod-mmd-begin-doc
+
+<!-- \maketitle -->
+
+<!--
+
+{\small
+\tabulinesep=_.5\parskip^.5\parskip
+
+\begin{longtabu}[l]{@{}>{\RaggedRight}p{.3\textwidth}@{\hspace{.01\textwidth}}>{\RaggedRight}p{.54\textwidth}@{\hspace{.01\textwidth}}>{\RaggedRight}p{.14\textwidth}@{}}
+		\toprule
+		\textbf{\footnotesize Name} & \textbf{\footnotesize Mitglied\newline\textsl{Schiedst für}} & \textbf{\footnotesize Ausbildung}\\
+		\midrule
+	\endhead
+		\midrule
+		\multicolumn{3}{@{}r@{}}{\emph{\footnotesize weiter auf der nächsten Seite\dots}}\\
+		\bottomrule
+	\endfoot
+		\bottomrule
+	\endlastfoot
+
+\taburowcolors{white .. Linen}
+
+**foreach referee**
+-->**generated referee:tablename**<!-- & -->**generated referee:member:displaytitle****if notempty referee:reffor**<!--\newline\textsl{-->**generated referee:reffor:displaytitle**<!--}-->**endif notempty referee:reffor**<!-- & -->**generated referee:highesttraininglevel:type:shorttitle**<!-- \\
+**endforeach referee**
+
+\end{longtabu}
+}
+
+-->
+
+**Legende:**
+
+**foreach statustype**
+- **if notempty statustype:remark****generated statustype:remark****endif notempty statustype:remark****if empty statustype:remark****generated statustype:title****endif empty statustype:remark**
+**endforeach statustype**

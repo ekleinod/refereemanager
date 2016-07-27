@@ -23,7 +23,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 @author Ekkart Kleinod
-@version 0.4.0
+@version 0.5.0
 @since 0.4.0
 -->
 
@@ -31,6 +31,43 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 	jxb:version="2.1">
 
+	<!-- bindings for commons -->
+	<jxb:bindings schemaLocation="refereemanager.xsd">
+
+		<!-- implementing classes -->
+		<jxb:bindings node="//xsd:complexType[@name='Club']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.ClubModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='Content']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.ContentModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='Person']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.PersonModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='Referee']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.RefereeModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='Season']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.SeasonModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='TitledIDType']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.TitledIDTypeModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='TitledType']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.TitledTypeModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='TrainingLevel']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.TrainingLevelModel" />
+		</jxb:bindings>
+
+	</jxb:bindings>
 
 </jxb:bindings>
 

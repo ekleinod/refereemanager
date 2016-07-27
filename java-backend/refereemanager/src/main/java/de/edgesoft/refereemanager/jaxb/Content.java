@@ -7,6 +7,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.refereemanager.model.ClubModel;
+import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.RefereeModel;
+import de.edgesoft.refereemanager.model.SeasonModel;
 
 
 /**
@@ -17,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="Content">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
  *         &lt;element name="season" type="{}Season"/>
  *         &lt;element name="exam" type="{}Exam"/>
@@ -32,7 +37,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="referee_assignment_type" type="{}RefereeAssignmentType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="training_level_type" type="{}TrainingLevelType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -54,16 +59,21 @@ import javax.xml.bind.annotation.XmlType;
     "refereeAssignmentType",
     "trainingLevelType"
 })
-public class Content {
+public class Content
+    extends ModelClass
+{
 
-    @XmlElement(required = true)
-    protected Season season;
+    @XmlElement(required = true, type = SeasonModel.class)
+    protected SeasonModel season;
     @XmlElement(required = true)
     protected Exam exam;
+    @XmlElement(type = PersonModel.class)
     protected List<Person> person;
+    @XmlElement(type = RefereeModel.class)
     protected List<Referee> referee;
     protected List<Trainee> trainee;
     protected List<League> league;
+    @XmlElement(type = ClubModel.class)
     protected List<Club> club;
     @XmlElement(name = "sex_type")
     protected List<SexType> sexType;
@@ -97,7 +107,7 @@ public class Content {
      *     
      */
     public void setSeason(Season value) {
-        this.season = value;
+        this.season = ((SeasonModel) value);
     }
 
     /**
