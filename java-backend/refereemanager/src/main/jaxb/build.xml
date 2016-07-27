@@ -23,7 +23,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 @author Ekkart Kleinod
-@version 0.4.0
+@version 0.5.0
 @since 0.4.0
 -->
 
@@ -36,8 +36,9 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	<property name="refman:outpath" value="../java/" />
 	<property name="refman:package" value="de.edgesoft.refereemanager.jaxb" />
 	<property name="refman:packagepath" value="${refman:outpath}de/edgesoft/refereemanager/jaxb/" />
-	<property name="refman:bindings" value="${edgeutils:path}/commons.xjb" />
+	<property name="refman:bindings1" value="${edgeutils:path}/commons.xjb" />
 	<property name="refman:bindings2" value="${edgeutils:path}/commons-reuse.xjb" />
+	<property name="refman:bindings3" value="refereemanager.xjb" />
 
 	<target name="model" description="Removes, then generates the refman model classes from xsd.">
 
@@ -49,8 +50,9 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<param name="xjc:outpath" value="${refman:outpath}" />
 			<param name="xjc:package" value="${refman:package}" />
 			<param name="xjc:xsd" value="${refman:xsd}" />
-			<param name="xjc:bindings" value="${refman:bindings}" />
+			<param name="xjc:bindings1" value="${refman:bindings1}" />
 			<param name="xjc:bindings2" value="${refman:bindings2}" />
+			<param name="xjc:bindings3" value="${refman:bindings3}" />
 		</antcall>
 
 	</target>

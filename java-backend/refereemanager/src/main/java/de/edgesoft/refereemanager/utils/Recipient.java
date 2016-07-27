@@ -1,10 +1,10 @@
+
 package de.edgesoft.refereemanager.utils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 /**
- * Provides constants.
+ * Mail recipients.
+ * 
+ * For enums I use the coding style of jaxb, so there will be no inconsistencies.
  *
  * ## Legal stuff
  * 
@@ -27,22 +27,34 @@ import org.apache.logging.log4j.Logger;
  * 
  * @author Ekkart Kleinod
  * @version 0.5.0
- * @since 0.4.0
+ * @since 0.5.0
  */
-public class Constants {
+public enum Recipient {
 
-	/** Program version. */
-	public static final String APPVERSION = "0.5.0";
+    ALL("all"),
+    REFEREES("referees"),
+    TRAINEES("trainees"),
+    ME("me");
 	
-	/** Document version. */
-	public static final String DOCVERSION = "0.5.0";
+    private final String value;
 
-	/** Standard file name pattern for data files. */
-	public static final String DATAFILENAMEPATTERN = "refereemanager_%04d.xml";
-	
-	/** Logger for all classes. */
-	public static final Logger logger = LogManager.getLogger();
-	
+    Recipient(String v) {
+        value = v;
+    }
+
+    public String value() {
+        return value;
+    }
+
+    public static Recipient fromValue(String v) {
+        for (Recipient c: Recipient.values()) {
+            if (c.value.equals(v)) {
+                return c;
+            }
+        }
+        throw new IllegalArgumentException(v);
+    }
+
 }
 
 /* EOF */

@@ -5,6 +5,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.refereemanager.model.SeasonModel;
 
 
 /**
@@ -15,12 +17,12 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="TitledType">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="remark" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -34,10 +36,12 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlSeeAlso({
     Picture.class,
-    Season.class,
+    SeasonModel.class,
     Contact.class
 })
-public class TitledType {
+public abstract class TitledType
+    extends ModelClass
+{
 
     protected String title;
     protected String remark;

@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.TitledTypeModel;
 
 
 /**
@@ -44,7 +45,7 @@ import javax.xml.bind.annotation.XmlType;
     PhoneNumber.class
 })
 public abstract class Contact
-    extends TitledType
+    extends TitledTypeModel
 {
 
     @XmlElement(name = "is_primary")

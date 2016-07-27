@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.TitledTypeModel;
 
 
 /**
@@ -31,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
     "startYear"
 })
 public class Season
-    extends TitledType
+    extends TitledTypeModel
 {
 
     @XmlElement(name = "start_year")

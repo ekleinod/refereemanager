@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
 /**
@@ -23,7 +24,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="abbreviation" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="referee_report" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
  *         &lt;element name="referee_quantity" type="{}RefereeQuantity" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sex_type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
@@ -38,18 +38,15 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "League", propOrder = {
-    "abbreviation",
     "refereeReport",
     "refereeQuantity",
     "sexType",
     "refereeReportRecipient"
 })
 public class League
-    extends TitledIDType
+    extends TitledIDTypeModel
 {
 
-    @XmlElement(required = true)
-    protected String abbreviation;
     @XmlElement(name = "referee_report")
     @XmlSchemaType(name = "anyURI")
     protected String refereeReport;
@@ -61,30 +58,6 @@ public class League
     protected SexType sexType;
     @XmlElementRef(name = "referee_report_recipient", type = JAXBElement.class)
     protected List<Person> refereeReportRecipient;
-
-    /**
-     * Gets the value of the abbreviation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAbbreviation() {
-        return abbreviation;
-    }
-
-    /**
-     * Sets the value of the abbreviation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAbbreviation(String value) {
-        this.abbreviation = value;
-    }
 
     /**
      * Gets the value of the refereeReport property.

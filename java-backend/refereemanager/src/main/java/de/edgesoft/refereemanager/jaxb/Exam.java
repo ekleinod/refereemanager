@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.edgeutils.commons.ModelClass;
 
 
 /**
@@ -15,14 +16,14 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="Exam">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
  *         &lt;element name="points_written" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="points_practical" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="points_oral" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="points" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -36,7 +37,9 @@ import javax.xml.bind.annotation.XmlType;
     "pointsOral",
     "points"
 })
-public class Exam {
+public class Exam
+    extends ModelClass
+{
 
     @XmlElement(name = "points_written")
     protected int pointsWritten;

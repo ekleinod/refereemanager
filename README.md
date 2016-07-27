@@ -32,6 +32,10 @@ Additionally the following branches may be created:
 - `release/*` - releasing a new version, merging all features between `develop` and `master`
 - `hotfix/*` - hotfixes for fast error correction
 
+## ToDo
+
+- Why is `/refereemanager/src/main/java/de/edgesoft/refereemanager/jaxb/AdditionalType.java` generated? It can be deleted without problems. Strange.
+
 ## Versions
 
 At the moment, there is no stable, productive version available.
@@ -40,6 +44,14 @@ Several features are working, see version list below.
 **Important:** the focus of development at the moment is *features*, not safety.
 Therefore, the referee manager is *not* safe for using in the "real" internet.
 Use it in a closed envorinment (local server etc.) only.
+
+### v0.5.0
+
+*Released:* 2016-07-27
+
+- working java backend
+- export of anonymous referee list in mmd
+- many improvements and changes in data modeling
 
 ### v0.4.0
 

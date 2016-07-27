@@ -7,7 +7,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import de.edgesoft.edgeutils.commons.InfoType;
+import de.edgesoft.edgeutils.commons.Info;
+import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.refereemanager.model.ContentModel;
 
 
 /**
@@ -18,13 +20,13 @@ import de.edgesoft.edgeutils.commons.InfoType;
  * <pre>
  * &lt;complexType name="RefereeManager">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
- *         &lt;element name="info" type="{}InfoType"/>
+ *         &lt;element name="info" type="{}Info"/>
  *         &lt;element name="content" type="{}Content"/>
  *       &lt;/sequence>
  *       &lt;attribute ref="{http://www.w3.org/XML/1998/namespace}base"/>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -36,12 +38,14 @@ import de.edgesoft.edgeutils.commons.InfoType;
     "info",
     "content"
 })
-public class RefereeManager {
+public class RefereeManager
+    extends ModelClass
+{
 
     @XmlElement(required = true)
-    protected InfoType info;
-    @XmlElement(required = true)
-    protected Content content;
+    protected Info info;
+    @XmlElement(required = true, type = ContentModel.class)
+    protected ContentModel content;
     @XmlAttribute(name = "base", namespace = "http://www.w3.org/XML/1998/namespace")
     @XmlSchemaType(name = "anyURI")
     protected String base;
@@ -51,10 +55,10 @@ public class RefereeManager {
      * 
      * @return
      *     possible object is
-     *     {@link InfoType }
+     *     {@link Info }
      *     
      */
-    public InfoType getInfo() {
+    public Info getInfo() {
         return info;
     }
 
@@ -63,10 +67,10 @@ public class RefereeManager {
      * 
      * @param value
      *     allowed object is
-     *     {@link InfoType }
+     *     {@link Info }
      *     
      */
-    public void setInfo(InfoType value) {
+    public void setInfo(Info value) {
         this.info = value;
     }
 
@@ -91,7 +95,7 @@ public class RefereeManager {
      *     
      */
     public void setContent(Content value) {
-        this.content = value;
+        this.content = ((ContentModel) value);
     }
 
     /**

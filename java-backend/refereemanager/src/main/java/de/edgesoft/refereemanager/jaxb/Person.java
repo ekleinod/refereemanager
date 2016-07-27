@@ -1,8 +1,8 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -12,6 +12,9 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
+import de.edgesoft.refereemanager.model.RefereeModel;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
 /**
@@ -57,10 +60,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 })
 @XmlSeeAlso({
     Trainee.class,
-    Referee.class
+    RefereeModel.class
 })
 public class Person
-    extends TitledIDType
+    extends TitledIDTypeModel
 {
 
     @XmlElement(name = "first_name")
@@ -68,13 +71,13 @@ public class Person
     @XmlElement(required = true)
     protected String name;
     @XmlElement(type = String.class)
-    @XmlJavaTypeAdapter(Adapter2 .class)
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     @XmlSchemaType(name = "date")
-    protected Calendar birthday;
+    protected LocalDate birthday;
     @XmlElement(name = "day_of_death", type = String.class)
-    @XmlJavaTypeAdapter(Adapter2 .class)
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     @XmlSchemaType(name = "date")
-    protected Calendar dayOfDeath;
+    protected LocalDate dayOfDeath;
     protected List<Picture> picture;
     @XmlElement(name = "e_mail")
     protected List<EMail> eMail;
@@ -144,7 +147,7 @@ public class Person
      *     {@link String }
      *     
      */
-    public Calendar getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
@@ -156,7 +159,7 @@ public class Person
      *     {@link String }
      *     
      */
-    public void setBirthday(Calendar value) {
+    public void setBirthday(LocalDate value) {
         this.birthday = value;
     }
 
@@ -168,7 +171,7 @@ public class Person
      *     {@link String }
      *     
      */
-    public Calendar getDayOfDeath() {
+    public LocalDate getDayOfDeath() {
         return dayOfDeath;
     }
 
@@ -180,7 +183,7 @@ public class Person
      *     {@link String }
      *     
      */
-    public void setDayOfDeath(Calendar value) {
+    public void setDayOfDeath(LocalDate value) {
         this.dayOfDeath = value;
     }
 

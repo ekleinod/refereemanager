@@ -1,8 +1,8 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
 
 
 /**
@@ -21,13 +23,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <pre>
  * &lt;complexType name="TrainingLevel">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
  *         &lt;element name="since" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
  *         &lt;element name="update" type="{http://www.w3.org/2001/XMLSchema}date" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -40,16 +42,18 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     "update",
     "type"
 })
-public class TrainingLevel {
+public class TrainingLevel
+    extends ModelClass
+{
 
     @XmlElement(type = String.class)
-    @XmlJavaTypeAdapter(Adapter2 .class)
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     @XmlSchemaType(name = "date")
-    protected Calendar since;
+    protected LocalDate since;
     @XmlElement(type = String.class)
-    @XmlJavaTypeAdapter(Adapter2 .class)
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     @XmlSchemaType(name = "date")
-    protected List<Calendar> update;
+    protected List<LocalDate> update;
     @XmlElement(required = true, type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -63,7 +67,7 @@ public class TrainingLevel {
      *     {@link String }
      *     
      */
-    public Calendar getSince() {
+    public LocalDate getSince() {
         return since;
     }
 
@@ -75,7 +79,7 @@ public class TrainingLevel {
      *     {@link String }
      *     
      */
-    public void setSince(Calendar value) {
+    public void setSince(LocalDate value) {
         this.since = value;
     }
 
@@ -101,9 +105,9 @@ public class TrainingLevel {
      * 
      * 
      */
-    public List<Calendar> getUpdate() {
+    public List<LocalDate> getUpdate() {
         if (update == null) {
-            update = new ArrayList<Calendar>();
+            update = new ArrayList<LocalDate>();
         }
         return this.update;
     }
