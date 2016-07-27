@@ -45,6 +45,14 @@ Several features are working, see version list below.
 Therefore, the referee manager is *not* safe for using in the "real" internet.
 Use it in a closed envorinment (local server etc.) only.
 
+### v0.5.0
+
+*Released:* 2016-07-27
+
+- working java backend
+- export of anonymous referee list in mmd
+- many improvements and changes in data modeling
+
 ### v0.4.0
 
 *Released:* 2016-05-25
