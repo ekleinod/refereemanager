@@ -1,0 +1,46 @@
+Quotes Language:		german
+Base Header Level:	3
+latex input:				kleinod-mmd-scrartcl
+MyOptions:					author=schiri, font=droid, notitlepage, noauthor, orientation=landscape, pagestyle=fuss
+latex input:				kleinod-mmd-style
+Title:							Verbandsschiedsrichter des BTTV
+MySubTitle:					Saison **generated season:title**
+Date:								Stand: **generated info:modified:date:long**
+latex input:				kleinod-mmd-begin-doc
+
+<!-- \maketitle -->
+
+<!--
+
+{\footnotesize
+\tabulinesep=_.5\parskip^.5\parskip
+
+\begin{longtabu}[l]{@{}>{\RaggedRight}p{.18\textwidth}@{\hspace{.01\textwidth}}>{\RaggedRight}p{.18\textwidth}@{\hspace{.01\textwidth}}%
+				>{\RaggedRight}p{.05\textwidth}@{\hspace{.01\textwidth}}>{\RaggedRight}p{.18\textwidth}@{\hspace{.01\textwidth}}>{\RaggedRight}p{.18\textwidth}@{\hspace{.01\textwidth}}>{\RaggedRight}p{.18\textwidth}@{}}
+		\toprule
+		\textbf{\scriptsize Name} & \textbf{\scriptsize Mitglied\newline\textsl{Schiedst für}} & \textbf{\scriptsize Ausb.} & \textbf{\scriptsize Adresse} & \textbf{\scriptsize Bevorzugt schiedsen} & \textbf{\scriptsize Nicht schiedsen}\\
+		\midrule
+	\endhead
+		\midrule
+		\multicolumn{6}{@{}r@{}}{\emph{\scriptsize weiter auf der nächsten Seite\dots}}\\
+		\bottomrule
+	\endfoot
+		\bottomrule
+	\endlastfoot
+
+\taburowcolors{white .. Linen}
+
+**foreach referee**
+-->**generated referee:tablename**<!-- & -->**generated referee:member:displaytitle****if notempty referee:reffor**<!--\newline\textsl{-->**generated referee:reffor:displaytitle**<!--}-->**endif notempty referee:reffor**<!-- & -->**generated referee:highesttraininglevel:type:shorttitle**<!-- & -->**generated referee:primaryaddress:displaytitle**<!-- & -->**generated referee:prefer:club:displaytitle**<!-- & -->**generated referee:avoid:club:displaytitle**<!-- \\
+**endforeach referee**
+
+\end{longtabu}
+}
+
+-->
+
+**Legende:**
+
+**foreach statustype**
+- **if notempty statustype:remark****generated statustype:remark****endif notempty statustype:remark****if empty statustype:remark****generated statustype:title****endif empty statustype:remark**
+**endforeach statustype**
