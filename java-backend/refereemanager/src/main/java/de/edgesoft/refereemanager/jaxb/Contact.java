@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.TitledTypeModel;
 
 
@@ -39,7 +40,7 @@ import de.edgesoft.refereemanager.model.TitledTypeModel;
     "contactType"
 })
 @XmlSeeAlso({
-    Address.class,
+    AddressModel.class,
     URL.class,
     EMail.class,
     PhoneNumber.class

@@ -1,11 +1,9 @@
 package de.edgesoft.refereemanager.model;
 
-import java.util.Comparator;
-
-import de.edgesoft.refereemanager.jaxb.TrainingLevel;
+import de.edgesoft.refereemanager.jaxb.Contact;
 
 /**
- * TrainingLevel model, additional methods for jaxb model class.
+ * Contact model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -28,12 +26,11 @@ import de.edgesoft.refereemanager.jaxb.TrainingLevel;
  * 
  * @author Ekkart Kleinod
  * @version 0.6.0
- * @since 0.5.0
+ * @since 0.6.0
  */
-public class TrainingLevelModel extends TrainingLevel {
-	
-	/** Comparator rank. */
-	public static final Comparator<TrainingLevel> RANK = Comparator.comparingInt(tl -> tl.getType().getRank());
+public class ContactModel extends Contact {
+
+	// nothing yet
 	
 }
 

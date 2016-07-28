@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.ContactModel;
 
 
 /**
@@ -35,7 +36,7 @@ import javax.xml.bind.annotation.XmlType;
     "number"
 })
 public class PhoneNumber
-    extends Contact
+    extends ContactModel
 {
 
     @XmlElement(name = "country_code", required = true)

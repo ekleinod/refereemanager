@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
+import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
@@ -81,6 +82,7 @@ public class Person
     protected List<Picture> picture;
     @XmlElement(name = "e_mail")
     protected List<EMail> eMail;
+    @XmlElement(type = AddressModel.class)
     protected List<Address> address;
     @XmlElement(name = "phone_number")
     protected List<PhoneNumber> phoneNumber;

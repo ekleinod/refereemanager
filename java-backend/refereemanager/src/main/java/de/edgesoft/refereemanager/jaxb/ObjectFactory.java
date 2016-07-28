@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 import de.edgesoft.edgeutils.commons.Info;
+import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
@@ -65,7 +66,7 @@ public class ObjectFactory {
      * 
      */
     public Address createAddress() {
-        return new Address();
+        return new AddressModel();
     }
 
     /**

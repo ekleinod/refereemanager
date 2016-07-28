@@ -1,11 +1,11 @@
 package de.edgesoft.refereemanager.model;
 
-import java.util.Comparator;
+import java.text.MessageFormat;
 
-import de.edgesoft.refereemanager.jaxb.TrainingLevel;
+import de.edgesoft.refereemanager.jaxb.Address;
 
 /**
- * TrainingLevel model, additional methods for jaxb model class.
+ * Address model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -28,13 +28,29 @@ import de.edgesoft.refereemanager.jaxb.TrainingLevel;
  * 
  * @author Ekkart Kleinod
  * @version 0.6.0
- * @since 0.5.0
+ * @since 0.6.0
  */
-public class TrainingLevelModel extends TrainingLevel {
+public class AddressModel extends Address {
 	
-	/** Comparator rank. */
-	public static final Comparator<TrainingLevel> RANK = Comparator.comparingInt(tl -> tl.getType().getRank());
-	
+	/**
+	 * Display title.
+	 * 
+	 * @return display title
+	 * 
+	 * @version 0.6.0
+	 * @since 0.6.0
+	 */
+    public String getDisplayTitle() {
+    	
+    	return MessageFormat.format("{0} {1}, {2} {3}",
+    			(getStreet() == null) ? "" : getStreet(),
+    			(getNumber() == null) ? "" : getNumber(),
+    			(getZipCode() == null) ? "" : getZipCode(),
+    			(getCity() == null) ? "" : getCity()
+    			);
+    	
+    }
+    
 }
 
 /* EOF */

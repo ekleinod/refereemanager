@@ -26,7 +26,7 @@ import de.edgesoft.refereemanager.jaxb.TrainingLevel;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.5.0
+ * @version 0.6.0
  * @since 0.5.0
  */
 public class RefereeModel extends Referee {
@@ -36,11 +36,11 @@ public class RefereeModel extends Referee {
 	 * 
 	 * @return highest training level
 	 * 
-	 * @version 0.5.0
+	 * @version 0.6.0
 	 * @since 0.5.0
 	 */
     public TrainingLevel getHighestTrainingLevel() {
-    	return getTrainingLevel().stream().sorted(TrainingLevelModel.RANK.reversed()).findFirst().get();
+    	return getTrainingLevel().stream().sorted(TrainingLevelModel.RANK.reversed()).findFirst().orElse(null);
     }
     
 }
