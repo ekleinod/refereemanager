@@ -40,7 +40,11 @@ public class RefereeModel extends Referee {
 	 * @since 0.5.0
 	 */
     public TrainingLevel getHighestTrainingLevel() {
-    	return getTrainingLevel().stream().sorted(TrainingLevelModel.RANK.reversed()).findFirst().orElse(null);
+    	return getTrainingLevel()
+    			.stream()
+    			.sorted(TrainingLevelModel.RANK.reversed())
+    			.findFirst()
+    			.orElse(null);
     }
     
 }
