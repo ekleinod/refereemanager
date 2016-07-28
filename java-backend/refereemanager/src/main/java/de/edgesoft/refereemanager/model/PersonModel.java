@@ -136,7 +136,7 @@ public class PersonModel extends Person {
     public Address getPrimaryAddress() {
     	return getAddress()
     			.stream()
-    			.filter(address -> address.isIsPrimary())
+    			.filter(ContactModel.ISPRIMARY())
     			.findFirst()
     			.orElse(null);
     }

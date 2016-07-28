@@ -1,5 +1,7 @@
 package de.edgesoft.refereemanager.model;
 
+import java.util.function.Predicate;
+
 import de.edgesoft.refereemanager.jaxb.Contact;
 
 /**
@@ -30,7 +32,17 @@ import de.edgesoft.refereemanager.jaxb.Contact;
  */
 public class ContactModel extends Contact {
 
-	// nothing yet
+	/**
+	 * Filter predicate for primary contacts.
+	 * 
+	 * @return filter predicate primary contacts
+	 * 
+	 * @version 0.6.0
+	 * @since 0.6.0
+	 */
+	public static Predicate<Contact> ISPRIMARY() {
+		return contact -> contact.isIsPrimary();
+	}
 	
 }
 
