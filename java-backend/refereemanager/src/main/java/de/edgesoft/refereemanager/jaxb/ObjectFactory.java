@@ -36,8 +36,8 @@ public class ObjectFactory {
 
     private final static QName _Test_QNAME = new QName("", "test");
     private final static QName _Refereemanager_QNAME = new QName("", "refereemanager");
-    private final static QName _ClubContactPerson_QNAME = new QName("", "contact_person");
     private final static QName _LeagueRefereeReportRecipient_QNAME = new QName("", "referee_report_recipient");
+    private final static QName _ClubContactPerson_QNAME = new QName("", "contact_person");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.edgesoft.refereemanager.jaxb
@@ -244,20 +244,20 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "contact_person", scope = Club.class)
+    @XmlElementDecl(namespace = "", name = "referee_report_recipient", scope = League.class)
     @XmlIDREF
-    public JAXBElement<Object> createClubContactPerson(Object value) {
-        return new JAXBElement<Object>(_ClubContactPerson_QNAME, Object.class, Club.class, value);
+    public JAXBElement<Object> createLeagueRefereeReportRecipient(Object value) {
+        return new JAXBElement<Object>(_LeagueRefereeReportRecipient_QNAME, Object.class, League.class, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "referee_report_recipient", scope = League.class)
+    @XmlElementDecl(namespace = "", name = "contact_person", scope = Club.class)
     @XmlIDREF
-    public JAXBElement<Object> createLeagueRefereeReportRecipient(Object value) {
-        return new JAXBElement<Object>(_LeagueRefereeReportRecipient_QNAME, Object.class, League.class, value);
+    public JAXBElement<Object> createClubContactPerson(Object value) {
+        return new JAXBElement<Object>(_ClubContactPerson_QNAME, Object.class, Club.class, value);
     }
 
 }
