@@ -28,9 +28,8 @@ latex input:				kleinod-mmd-begin-doc
 		\bottomrule
 	\endlastfoot
 
-\taburowcolors{white .. Linen}
-
 **foreach referee**
+**if even referee**\rowcolor{white}**endif even referee****if odd referee**\rowcolor{Linen}**endif odd referee**
 -->**generated referee:tablename**<!-- &
 -->**generated referee:member:displaytitle****if notempty referee:reffor**<!--\newline\textsl{-->**generated referee:reffor:displaytitle**<!--}-->**endif notempty referee:reffor**<!-- &
 -->**generated referee:highesttraininglevel:type:shorttitle**<!-- &
@@ -38,6 +37,7 @@ latex input:				kleinod-mmd-begin-doc
 -->**foreach referee:prefer:****generated referee:prefer:displaytitle****endforeach referee:prefer:**<!-- &
 -->**foreach referee:avoid:****generated referee:avoid:displaytitle****endforeach referee:avoid:**<!--
 \\
+**if notempty referee:remark****if even referee**\rowcolor{white}**endif even referee****if odd referee**\rowcolor{Linen}**endif odd referee**&\multicolumn{5}{@{}>{\RaggedRight}p{.81\textwidth}@{}}{-->***generated referee:remark***<!--}\\**endif notempty referee:remark**
 **endforeach referee**
 
 \end{longtabu}

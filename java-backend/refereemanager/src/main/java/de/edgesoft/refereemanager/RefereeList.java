@@ -144,7 +144,7 @@ public class RefereeList extends AbstractMainClass {
 			
 			Constants.logger.info("fill template.");
 			
-			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null);
+			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null, 0);
 			
 			Constants.logger.info("write referee list.");
 			

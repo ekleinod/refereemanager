@@ -56,7 +56,7 @@ import de.edgesoft.refereemanager.model.ContentModel;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.5.0
+ * @version 0.6.0
  * @since 0.5.0
  */
 public class TemplateHelper {
@@ -82,6 +82,12 @@ public class TemplateHelper {
 	/** Condition not empty. */
 	public static final String CONDITION_NOTEMPTY = "notempty";
 	
+	/** Condition even. */
+	public static final String CONDITION_EVEN = "even";
+	
+	/** Condition odd. */
+	public static final String CONDITION_ODD = "odd";
+	
 	/** A token. */
 	public static final String TOKEN = "**%s**";
 	
@@ -96,6 +102,12 @@ public class TemplateHelper {
 	
 	/** Token: if not empty. */
 	public static final String TOKEN_IF_NOTEMPTY = String.format(TOKEN_IF, CONDITION_NOTEMPTY, "%1$s");
+	
+	/** Token: if even. */
+	public static final String TOKEN_IF_EVEN = String.format(TOKEN_IF, CONDITION_EVEN, "%1$s");
+	
+	/** Token: if odd. */
+	public static final String TOKEN_IF_ODD = String.format(TOKEN_IF, CONDITION_ODD, "%1$s");
 	
 	/** Token: foreach. */
 	public static final String TOKEN_FOREACH = String.format(TOKEN, KEY_FOREACH);
@@ -124,13 +136,13 @@ public class TemplateHelper {
 	 * 
 	 * @param theTemplate template
 	 * @param theData data
-	 * @param theLoopID id of element that is looped at the moment
+	 * @param theLoopElement element that is looped at the moment
 	 * @return filled template
 	 * 
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, final TitledIDType theLoopID) {
+	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, final TitledIDType theLoopElement, final int theLoopCount) {
 		
 		Objects.requireNonNull(theTemplate, "template must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
@@ -150,16 +162,17 @@ public class TemplateHelper {
 					
 					final List<String> lstLoopContent = queueLoops.removeFirst();
 					List<String> lstLoopReturn = new ArrayList<>();
+					int iLoop = 1;
 					
 					switch (clsKey.getSimpleName().toLowerCase()) {
 						case "referee":
 							for (final Referee theReferee : ((ContentModel) theData.getContent()).getRefereeStreamSorted().collect(Collectors.toList())) {
-								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theReferee));
+								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theReferee, iLoop++));
 							}
 							break;
 						case "statustype":
 							for (final StatusType theStatusType : ((ContentModel) theData.getContent()).getStatusTypeStreamSorted().collect(Collectors.toList())) {
-								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType));
+								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType, iLoop++));
 							}
 							break;
 					}
@@ -189,7 +202,14 @@ public class TemplateHelper {
 			
 			// process line
 			if (processLine) {
-				lstReturn.add(fillLine(sLine, theData, theLoopID, ""));
+				String sTempLine = sLine;
+				
+				if (theLoopElement != null) {
+					sTempLine = replaceCondition(TOKEN_IF_EVEN, sTempLine, getTokenClass(theLoopElement), (theLoopCount % 2 == 0));
+					sTempLine = replaceCondition(TOKEN_IF_ODD, sTempLine, getTokenClass(theLoopElement), (theLoopCount % 2 == 1));
+				}
+				
+				lstReturn.add(fillLine(sTempLine, theData, theLoopElement, ""));
 			}
 			
 		}
@@ -412,45 +432,6 @@ public class TemplateHelper {
 	}
 	
 	/**
-	 * Replaces replacee-tokens in text with value, considers conditions first.
-	 *
-	 * @param theText text
-	 * @param theReplacee text to be replaced
-	 * @param theValue value
-	 * @return replaced text
-	 *
-	 * @version 0.5.0
-	 * @since 0.5.0
-	 */
-	private static String replaceTextAndConditions(final String theText, final String theReplacee, final String theValue) {
-		String sReturn = theText;
-		
-		// conditions
-		String sCondition = String.format(TOKEN_IF_EMPTY, theReplacee).replace("**", "\\*\\*");
-		sReturn = sReturn.replaceAll(sCondition, theValue.isEmpty() ? "$1" : "");
-		
-		// one step up - for empty model classes
-		sCondition = String.format(TOKEN_IF_EMPTY, theReplacee.substring(0, theReplacee.lastIndexOf(':'))).replace("**", "\\*\\*");
-		sReturn = sReturn.replaceAll(sCondition, theValue.isEmpty() ? "$1" : "");
-		
-		sCondition = String.format(TOKEN_IF_NOTEMPTY, theReplacee).replace("**", "\\*\\*");
-		sReturn = sReturn.replaceAll(sCondition, !theValue.isEmpty() ? "$1" : "");
-		
-		// one step up - for empty model classes
-		sCondition = String.format(TOKEN_IF_NOTEMPTY, theReplacee.substring(0, theReplacee.lastIndexOf(':'))).replace("**", "\\*\\*");
-		sReturn = sReturn.replaceAll(sCondition, !theValue.isEmpty() ? "$1" : "");
-
-		
-		// replace tokens
-		String sToken = String.format(TOKEN_REPLACE, theReplacee);
-		while (sReturn.contains(sToken)) {
-			sReturn = sReturn.replace(sToken, theValue);
-		}
-		
-		return sReturn;
-	}
-
-	/**
 	 * Returns the getters of the given class.
 	 * 
 	 * Works with singleton for speed issues.
@@ -511,6 +492,62 @@ public class TemplateHelper {
 			sTokenClass = sTokenClass.substring(0, (sTokenClass.length() - "model".length()));
 		}
 		return sTokenClass;
+	}
+
+	/**
+	 * Replaces replacee-tokens in text with value, considers conditions first.
+	 *
+	 * @param theText text
+	 * @param theReplacee text to be replaced
+	 * @param theValue value
+	 * 
+	 * @return replaced text
+	 *
+	 * @version 0.6.0
+	 * @since 0.5.0
+	 */
+	private static String replaceTextAndConditions(final String theText, final String theReplacee, final String theValue) {
+		String sReturn = theText;
+		
+		// conditions
+		sReturn = replaceCondition(TOKEN_IF_EMPTY, sReturn, theReplacee, theValue.isEmpty());
+		sReturn = replaceCondition(TOKEN_IF_NOTEMPTY, sReturn, theReplacee, !theValue.isEmpty());
+		
+		// replace tokens
+		String sToken = String.format(TOKEN_REPLACE, theReplacee);
+		while (sReturn.contains(sToken)) {
+			sReturn = sReturn.replace(sToken, theValue);
+		}
+		
+		return sReturn;
+	}
+
+	/**
+	 * Replaces a condition.
+	 *
+	 * @param theToken token
+	 * @param theText text
+	 * @param theTokenID token id to be processed
+	 * @param isFulfilled is condition fulfilled?
+	 * 
+	 * @return replaced text
+	 *
+	 * @version 0.6.0
+	 * @since 0.6.0
+	 */
+	private static String replaceCondition(final String theToken, final String theText, final String theTokenID, final boolean isFulfilled) {
+		String sReturn = theText;
+		
+		String sCondition = String.format(theToken, theTokenID).replace("**", "\\*\\*");
+		sReturn = sReturn.replaceAll(sCondition, isFulfilled ? "$1" : "");
+		
+		// one step up - for empty model classes
+		if (theTokenID.contains(":")) {
+			sCondition = String.format(theToken, theTokenID.substring(0, theTokenID.lastIndexOf(':'))).replace("**", "\\*\\*");
+			sReturn = sReturn.replaceAll(sCondition, isFulfilled ? "$1" : "");
+		}
+		
+		return sReturn;
 	}
 
 }
