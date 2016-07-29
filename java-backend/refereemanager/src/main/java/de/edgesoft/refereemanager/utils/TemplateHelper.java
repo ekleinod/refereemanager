@@ -5,6 +5,7 @@ import java.beans.Introspector;
 import java.beans.MethodDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -21,6 +22,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
@@ -211,7 +213,7 @@ public class TemplateHelper {
 	private static String fillLine(final String theLine, final ModelClass theData, final TitledIDType theLoopElement, final String theTokenPrefix) {
 		
 		Objects.requireNonNull(theLine, "line must not be null");
-		Objects.requireNonNull(theData, "data must not be null");
+		Objects.requireNonNull(theData, MessageFormat.format("data must not be null: {0}", theTokenPrefix));
 		
 		String sReturn = theLine;
 		
@@ -237,21 +239,59 @@ public class TemplateHelper {
 						sTokenPrefix = "";
 					}
 					
-					if (oResult instanceof ModelClass) {
+					if ((oResult != null) && ModelClass.class.isAssignableFrom(theGetter.getValue().getReturnType())) {
 						
 						sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix);
 						
 					} 
 						
-					if (oResult instanceof List<?>) {
+					if (List.class.isAssignableFrom(theGetter.getValue().getReturnType())) {
+						
+						if (sTokenPrefix.isEmpty()) {
 							
-						// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!
-						try {
-							for (ModelClass theDataObject : (List<ModelClass>) oResult) {
-								sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix);
+							// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!
+							try {
+								for (ModelClass theDataObject : (List<ModelClass>) oResult) {
+									sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix);
+								}
+							} catch (ClassCastException e) {
+//									Constants.logger.error(sTokenPrefix);
+//									e.printStackTrace();
 							}
-						} catch (ClassCastException e) {
-//								e.printStackTrace();
+							
+						} else {
+
+							String sCondition = String.format("%s(.*)%s", 
+									String.format(TOKEN_FOREACH, sTokenPrefix), 
+									String.format(TOKEN_ENDFOREACH, sTokenPrefix))
+									.replace("**", "\\*\\*");
+							
+							// there is no "contains" for regular expressions
+							if (Pattern.compile(sCondition).matcher(sReturn).find()) {
+								
+								if (((List<ModelClass>) oResult).isEmpty()) {
+									
+									sReturn = sReturn.replaceAll(sCondition, "");
+									
+								} else {
+									
+									String sLoopLine = sReturn.replaceAll(String.format("(.*)%s(.*)", sCondition), "$2");
+									StringBuilder sbLine = new StringBuilder();
+									boolean isMore = false;
+									
+									for (ModelClass theDataObject : (List<ModelClass>) oResult) {
+										if (isMore) {
+											sbLine.append("; ");
+										}
+										sbLine.append(fillLine(sLoopLine, theDataObject, theLoopElement, sTokenPrefix));
+										isMore = true;
+									}
+									
+									sReturn = sReturn.replaceAll(sCondition, sbLine.toString());
+								}
+								
+							}
+							
 						}
 						
 					}
@@ -384,7 +424,6 @@ public class TemplateHelper {
 	 */
 	private static String replaceTextAndConditions(final String theText, final String theReplacee, final String theValue) {
 		String sReturn = theText;
-		
 		
 		// conditions
 		String sCondition = String.format(TOKEN_IF_EMPTY, theReplacee).replace("**", "\\*\\*");

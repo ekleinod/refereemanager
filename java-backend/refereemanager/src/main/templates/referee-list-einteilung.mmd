@@ -31,7 +31,13 @@ latex input:				kleinod-mmd-begin-doc
 \taburowcolors{white .. Linen}
 
 **foreach referee**
--->**generated referee:tablename**<!-- & -->**generated referee:member:displaytitle****if notempty referee:reffor**<!--\newline\textsl{-->**generated referee:reffor:displaytitle**<!--}-->**endif notempty referee:reffor**<!-- & -->**generated referee:highesttraininglevel:type:shorttitle**<!-- & -->**if notempty referee:primaryaddress****generated referee:primaryaddress:displaytitle****endif notempty referee:primaryaddress**<!-- & -->**generated referee:prefer:club:displaytitle**<!-- & -->**generated referee:avoid:club:displaytitle**<!-- \\
+-->**generated referee:tablename**<!-- &
+-->**generated referee:member:displaytitle****if notempty referee:reffor**<!--\newline\textsl{-->**generated referee:reffor:displaytitle**<!--}-->**endif notempty referee:reffor**<!-- &
+-->**generated referee:highesttraininglevel:type:shorttitle**<!-- &
+-->**if notempty referee:primaryaddress****generated referee:primaryaddress:displaytitle****endif notempty referee:primaryaddress**<!-- &
+-->**foreach referee:prefer:****generated referee:prefer:displaytitle****endforeach referee:prefer:**<!-- &
+-->**generated referee:avoid:club:displaytitle**<!--
+\\
 **endforeach referee**
 
 \end{longtabu}

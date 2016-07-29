@@ -75,6 +75,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<jxb:class implClass="de.edgesoft.refereemanager.model.TrainingLevelModel" />
 		</jxb:bindings>
 
+		<jxb:bindings node="//xsd:complexType[@name='Wish']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.WishModel" />
+		</jxb:bindings>
+
 	</jxb:bindings>
 
 </jxb:bindings>

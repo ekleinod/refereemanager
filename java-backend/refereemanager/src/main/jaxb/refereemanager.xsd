@@ -124,7 +124,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 					<!-- 1:n -->
 					<xsd:element name="training_level" type="TrainingLevel" minOccurs="0" maxOccurs="unbounded" />
-					<xsd:element name="wish" type="Wish" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="prefer" type="Wish" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="avoid" type="Wish" minOccurs="0" maxOccurs="unbounded" />
 
 					<!-- references -->
 					<xsd:element name="member" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
@@ -344,8 +345,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="ModelClass">
 				<xsd:sequence>
-					<xsd:element name="type" type="WishType" minOccurs="1" maxOccurs="1" />
-
 					<xsd:element name="saturday" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="sunday" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="tournament_only" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
@@ -438,14 +437,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<!-- Data types -->
-	<xsd:simpleType name="WishType">
-		<xsd:restriction base="xsd:string">
-			<xsd:enumeration value="prefer" />
-			<xsd:enumeration value="avoid" />
-		</xsd:restriction>
-	</xsd:simpleType>
-
 	<!-- Generic types -->
 	<xsd:complexType name="TitledIDType" abstract="true">
 		<xsd:complexContent>
@@ -464,6 +455,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:extension base="ModelClass">
 				<xsd:sequence>
 					<xsd:element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="shorttitle" type="xsd:string" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="remark" type="xsd:string" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>

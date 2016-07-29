@@ -27,7 +27,7 @@ import de.edgesoft.refereemanager.jaxb.TitledIDType;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.5.0
+ * @version 0.6.0
  * @since 0.5.0
  */
 public class TitledIDTypeModel extends TitledIDType {
@@ -35,6 +35,18 @@ public class TitledIDTypeModel extends TitledIDType {
 	/** Comparator. */
 	public static final Comparator<TitledIDType> TITLE = Comparator.comparing(TitledIDType::getTitle);
 	
+	/**
+	 * Display title.
+	 * 
+	 * @return display title
+	 * 
+	 * @version 0.6.0
+	 * @since 0.6.0
+	 */
+    public String getDisplayTitle() {
+    	return (getShorttitle() == null) ? getTitle() : getShorttitle();
+    }
+    
 }
 
 /* EOF */
