@@ -3,7 +3,7 @@ Base Header Level:	3
 latex input:				kleinod-mmd-scrartcl
 MyOptions:					author=schiri, font=droid, notitlepage, noauthor, orientation=landscape, pagestyle=fuss
 latex input:				kleinod-mmd-style
-Title:							Verbandsschiedsrichter des BTTV
+Title:							Aktive Verbandsschiedsrichter des BTTV
 MySubTitle:					Saison **generated season:title**
 Date:								Stand: **generated info:modified:date:long**
 latex input:				kleinod-mmd-begin-doc
@@ -37,7 +37,7 @@ latex input:				kleinod-mmd-begin-doc
 -->**foreach referee:prefer:****generated referee:prefer:displaytitle****endforeach referee:prefer:**<!-- &
 -->**foreach referee:avoid:****generated referee:avoid:displaytitle****endforeach referee:avoid:**<!--
 \\
-**if notempty referee:remark****if even referee**\rowcolor{white}**endif even referee****if odd referee**\rowcolor{Linen}**endif odd referee**&\multicolumn{5}{@{}>{\RaggedRight}p{.81\textwidth}@{}}{-->***generated referee:remark***<!--}\\**endif notempty referee:remark**
+**if notempty referee:remark****if even referee**\rowcolor{white}**endif even referee****if odd referee**\rowcolor{Linen}**endif odd referee**&&&&\multicolumn{2}{@{}>{\RaggedRight}p{.37\textwidth}@{}}{-->***generated referee:remark***<!--}\\**endif notempty referee:remark**
 **endforeach referee**
 
 \end{longtabu}

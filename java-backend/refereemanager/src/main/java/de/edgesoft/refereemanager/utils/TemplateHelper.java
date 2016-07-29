@@ -24,6 +24,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.refereemanager.jaxb.Content;
@@ -137,12 +138,14 @@ public class TemplateHelper {
 	 * @param theTemplate template
 	 * @param theData data
 	 * @param theLoopElement element that is looped at the moment
+	 * @param theStatus status (all (default), activeonly)
+	 * 
 	 * @return filled template
 	 * 
-	 * @version 0.5.0
+	 * @version 0.6.0
 	 * @since 0.5.0
 	 */
-	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, final TitledIDType theLoopElement, final int theLoopCount) {
+	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, final TitledIDType theLoopElement, final int theLoopCount, final String theStatus) {
 		
 		Objects.requireNonNull(theTemplate, "template must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
@@ -166,13 +169,17 @@ public class TemplateHelper {
 					
 					switch (clsKey.getSimpleName().toLowerCase()) {
 						case "referee":
-							for (final Referee theReferee : ((ContentModel) theData.getContent()).getRefereeStreamSorted().collect(Collectors.toList())) {
-								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theReferee, iLoop++));
+							Stream<Referee> stmRefs = ((ContentModel) theData.getContent()).getRefereeStreamSorted();
+							if (theStatus.equals("activeonly")) {
+								stmRefs = stmRefs.filter(ref -> ref.getStatus().isActive());
+							}
+							for (final Referee theReferee : stmRefs.collect(Collectors.toList())) {
+								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theReferee, iLoop++, theStatus));
 							}
 							break;
 						case "statustype":
 							for (final StatusType theStatusType : ((ContentModel) theData.getContent()).getStatusTypeStreamSorted().collect(Collectors.toList())) {
-								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType, iLoop++));
+								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType, iLoop++, theStatus));
 							}
 							break;
 					}
