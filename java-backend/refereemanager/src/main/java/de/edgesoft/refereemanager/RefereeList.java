@@ -10,6 +10,7 @@ import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
+import de.edgesoft.refereemanager.model.ArgumentStatusType;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.TemplateHelper;
@@ -75,7 +76,7 @@ public class RefereeList extends AbstractMainClass {
 		addOption("s", "season", "season (empty for current season).", true, false);
 		addOption("t", "template", "template to fill.", true, true);
 		addOption("o", "output", "output file (empty for template + '.out').", true, false);
-		addOption("a", "status", "status (all (default), activeonly).", true, false);
+		addOption("a", "status", "status (all (default), active, inactive).", true, false);
 		
 		init(args);
 		
@@ -109,9 +110,14 @@ public class RefereeList extends AbstractMainClass {
 		
 		String sOutFile = (theOutputfile == null) ? String.format("%s.out", theTemplatefile) : theOutputfile;
 		
-		String sStatus = (theStatus == null) ? "all" : theStatus;
+		ArgumentStatusType argStatus = ArgumentStatusType.ALL;
+		try {
+			argStatus = ArgumentStatusType.fromValue(theStatus);
+		} catch (IllegalArgumentException e) {
+			// do nothing, remains "all"
+		}
 		
-		listReferees(pathXMLFile, Paths.get(theTemplatefile), Paths.get(sOutFile), sStatus);
+		listReferees(pathXMLFile, Paths.get(theTemplatefile), Paths.get(sOutFile), argStatus);
 		
 		Constants.logger.info("stop");
 		
@@ -123,12 +129,12 @@ public class RefereeList extends AbstractMainClass {
 	 * @param theXMLPath xml filename with path
 	 * @param theTemplatePath template file
 	 * @param theOutputPath output file
-	 * @param theStatus status (all (default), activeonly)
+	 * @param theStatus status (all (default), active, inactive)
 	 * 
 	 * @version 0.6.0
 	 * @since 0.5.0
 	 */
-	public void listReferees(final Path theXMLPath, final Path theTemplatePath, final Path theOutputPath, final String theStatus) {
+	public void listReferees(final Path theXMLPath, final Path theTemplatePath, final Path theOutputPath, final ArgumentStatusType theStatus) {
 		
 		Objects.requireNonNull(theXMLPath, "xml file path must not be null");
 		Objects.requireNonNull(theTemplatePath, "template file path must not be null");

@@ -2,11 +2,10 @@ package de.edgesoft.refereemanager.model;
 
 import java.util.function.Predicate;
 
-import de.edgesoft.refereemanager.jaxb.Referee;
-import de.edgesoft.refereemanager.jaxb.TrainingLevel;
+import de.edgesoft.refereemanager.jaxb.StatusType;
 
 /**
- * Referee model, additional methods for jaxb model class.
+ * StatusType model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -29,35 +28,19 @@ import de.edgesoft.refereemanager.jaxb.TrainingLevel;
  * 
  * @author Ekkart Kleinod
  * @version 0.6.0
- * @since 0.5.0
+ * @since 0.6.0
  */
-public class RefereeModel extends Referee {
-	
+public class StatusTypeModel extends StatusType {
+
 	/** Filter predicate for all status types. */
-	public static Predicate<Referee> ALL = ref -> true;
+	public static Predicate<StatusType> ALL = type -> true;
 	
 	/** Filter predicate for active status types. */
-	public static Predicate<Referee> ACTIVE = ref -> ref.getStatus().isActive();
+	public static Predicate<StatusType> ACTIVE = StatusType::isActive;
 	
 	/** Filter predicate for inactive status types. */
-	public static Predicate<Referee> INACTIVE = ref -> !ref.getStatus().isActive();
+	public static Predicate<StatusType> INACTIVE = type -> !type.isActive();
 	
-	/**
-	 * Highest training level.
-	 * 
-	 * @return highest training level
-	 * 
-	 * @version 0.6.0
-	 * @since 0.5.0
-	 */
-    public TrainingLevel getHighestTrainingLevel() {
-    	return getTrainingLevel()
-    			.stream()
-    			.sorted(TrainingLevelModel.RANK.reversed())
-    			.findFirst()
-    			.orElse(null);
-    }
-    
 }
 
 /* EOF */

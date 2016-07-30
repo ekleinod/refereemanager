@@ -13,6 +13,7 @@ import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
+import de.edgesoft.refereemanager.model.StatusTypeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
 import de.edgesoft.refereemanager.model.WishModel;
 
@@ -195,7 +196,7 @@ public class ObjectFactory {
      * 
      */
     public StatusType createStatusType() {
-        return new StatusType();
+        return new StatusTypeModel();
     }
 
     /**

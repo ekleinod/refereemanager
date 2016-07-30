@@ -63,6 +63,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<jxb:class implClass="de.edgesoft.refereemanager.model.SeasonModel" />
 		</jxb:bindings>
 
+		<jxb:bindings node="//xsd:complexType[@name='StatusType']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.StatusTypeModel" />
+		</jxb:bindings>
+
 		<jxb:bindings node="//xsd:complexType[@name='TitledIDType']">
 			<jxb:class implClass="de.edgesoft.refereemanager.model.TitledIDTypeModel" />
 		</jxb:bindings>

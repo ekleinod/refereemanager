@@ -24,7 +24,6 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.refereemanager.jaxb.Content;
@@ -32,6 +31,7 @@ import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.model.ArgumentStatusType;
 import de.edgesoft.refereemanager.model.ContentModel;
 
 /**
@@ -138,17 +138,19 @@ public class TemplateHelper {
 	 * @param theTemplate template
 	 * @param theData data
 	 * @param theLoopElement element that is looped at the moment
-	 * @param theStatus status (all (default), activeonly)
+	 * @param theLoopCount loop count
+	 * @param theStatus status (all (default), active, inactive)
 	 * 
 	 * @return filled template
 	 * 
 	 * @version 0.6.0
 	 * @since 0.5.0
 	 */
-	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, final TitledIDType theLoopElement, final int theLoopCount, final String theStatus) {
+	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, final TitledIDType theLoopElement, final int theLoopCount, final ArgumentStatusType theStatus) {
 		
 		Objects.requireNonNull(theTemplate, "template must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
+		Objects.requireNonNull(theStatus, "status must not be null");
 		
 		List<String> lstReturn = new ArrayList<>();
 
@@ -169,16 +171,12 @@ public class TemplateHelper {
 					
 					switch (clsKey.getSimpleName().toLowerCase()) {
 						case "referee":
-							Stream<Referee> stmRefs = ((ContentModel) theData.getContent()).getRefereeStreamSorted();
-							if (theStatus.equals("activeonly")) {
-								stmRefs = stmRefs.filter(ref -> ref.getStatus().isActive());
-							}
-							for (final Referee theReferee : stmRefs.collect(Collectors.toList())) {
+							for (final Referee theReferee : ((ContentModel) theData.getContent()).getRefereeStreamSorted().filter(theStatus.ref_filter()).collect(Collectors.toList())) {
 								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theReferee, iLoop++, theStatus));
 							}
 							break;
 						case "statustype":
-							for (final StatusType theStatusType : ((ContentModel) theData.getContent()).getStatusTypeStreamSorted().collect(Collectors.toList())) {
+							for (final StatusType theStatusType : ((ContentModel) theData.getContent()).getStatusTypeStreamSorted().filter(theStatus.status_filter()).collect(Collectors.toList())) {
 								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType, iLoop++, theStatus));
 							}
 							break;
