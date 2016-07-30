@@ -32,17 +32,8 @@ import de.edgesoft.refereemanager.jaxb.Contact;
  */
 public class ContactModel extends Contact {
 
-	/**
-	 * Filter predicate for primary contacts.
-	 * 
-	 * @return filter predicate primary contacts
-	 * 
-	 * @version 0.6.0
-	 * @since 0.6.0
-	 */
-	public static Predicate<Contact> ISPRIMARY() {
-		return contact -> contact.isIsPrimary();
-	}
+	/** Filter predicate for primary contacts. */
+	public static Predicate<Contact> ISPRIMARY = Contact::isIsPrimary;
 	
 }
 
