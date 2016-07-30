@@ -14,6 +14,8 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
 import de.edgesoft.refereemanager.model.AddressModel;
+import de.edgesoft.refereemanager.model.EMailModel;
+import de.edgesoft.refereemanager.model.PhoneNumberModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
@@ -80,11 +82,11 @@ public class Person
     @XmlSchemaType(name = "date")
     protected LocalDate dayOfDeath;
     protected List<Picture> picture;
-    @XmlElement(name = "e_mail")
+    @XmlElement(name = "e_mail", type = EMailModel.class)
     protected List<EMail> eMail;
     @XmlElement(type = AddressModel.class)
     protected List<Address> address;
-    @XmlElement(name = "phone_number")
+    @XmlElement(name = "phone_number", type = PhoneNumberModel.class)
     protected List<PhoneNumber> phoneNumber;
     @XmlElement(name = "u_r_l")
     protected List<URL> url;

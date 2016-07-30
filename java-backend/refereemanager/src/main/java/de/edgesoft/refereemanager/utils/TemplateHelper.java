@@ -272,6 +272,10 @@ public class TemplateHelper {
 						
 					if (List.class.isAssignableFrom(theGetter.getValue().getReturnType())) {
 						
+//						if (sTokenPrefix.startsWith("referee:")) {
+//							System.out.println(sTokenPrefix);
+//						}
+						
 						if (sTokenPrefix.isEmpty()) {
 							
 							// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!

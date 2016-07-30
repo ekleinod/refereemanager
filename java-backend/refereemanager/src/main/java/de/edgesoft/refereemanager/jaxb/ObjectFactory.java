@@ -10,7 +10,9 @@ import de.edgesoft.edgeutils.commons.Info;
 import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.PhoneNumberModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
@@ -164,7 +166,7 @@ public class ObjectFactory {
      * 
      */
     public EMail createEMail() {
-        return new EMail();
+        return new EMailModel();
     }
 
     /**
@@ -204,7 +206,7 @@ public class ObjectFactory {
      * 
      */
     public PhoneNumber createPhoneNumber() {
-        return new PhoneNumber();
+        return new PhoneNumberModel();
     }
 
     /**

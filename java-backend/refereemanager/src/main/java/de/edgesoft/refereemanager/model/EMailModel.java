@@ -1,11 +1,11 @@
-package de.edgesoft.refereemanager.utils;
+package de.edgesoft.refereemanager.model;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import de.edgesoft.refereemanager.jaxb.EMail;
+import de.edgesoft.refereemanager.utils.Constants;
 
 /**
- * Provides constants.
- *
+ * EMail model, additional methods for jaxb model class.
+ * 
  * ## Legal stuff
  * 
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
@@ -27,28 +27,34 @@ import org.apache.logging.log4j.Logger;
  * 
  * @author Ekkart Kleinod
  * @version 0.6.0
- * @since 0.4.0
+ * @since 0.6.0
  */
-public class Constants {
-
-	/** Program version. */
-	public static final String APPVERSION = "0.6.0";
+public class EMailModel extends EMail {
 	
-	/** Document version. */
-	public static final String DOCVERSION = "0.6.0";
-
-	/** Standard file name pattern for data files. */
-	public static final String DATAFILENAMEPATTERN = "refereemanager_%04d.xml";
-	
-	/** Standard country code. */
-	public static final String COUNTRY_CODE = "49";
-	
-	/** Standard contact type. */
-	public static final String CONTACT_PRIVATE = "ContactType.p";
-	
-	/** Logger for all classes. */
-	public static final Logger logger = LogManager.getLogger();
-	
+	/**
+	 * Display title.
+	 * 
+	 * @return display title
+	 * 
+	 * @version 0.6.0
+	 * @since 0.6.0
+	 */
+    public String getDisplayTitle() {
+    	
+    	StringBuilder sbReturn = new StringBuilder();
+    	
+		sbReturn.append(getEMail());
+    	
+    	if ((getContactType() != null) && !getContactType().getId().equals(Constants.CONTACT_PRIVATE)) {
+    		sbReturn.append(" (");
+    		sbReturn.append(getContactType().getShorttitle());
+    		sbReturn.append(")");
+    	}
+    	
+    	return sbReturn.toString();
+    	
+    }
+    
 }
 
 /* EOF */
