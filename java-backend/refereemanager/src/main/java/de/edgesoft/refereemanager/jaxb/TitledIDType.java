@@ -9,6 +9,7 @@ import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
+import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 
 
 /**
@@ -40,7 +41,7 @@ import de.edgesoft.refereemanager.model.StatusTypeModel;
 })
 @XmlSeeAlso({
     ContactType.class,
-    TrainingLevelType.class,
+    TrainingLevelTypeModel.class,
     SexType.class,
     League.class,
     ClubModel.class,

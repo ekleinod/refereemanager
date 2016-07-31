@@ -1,10 +1,11 @@
-package de.edgesoft.refereemanager.model;
 
-import de.edgesoft.refereemanager.jaxb.Content;
+package de.edgesoft.refereemanager.utils;
 
 /**
- * Content model, additional methods for jaxb model class.
+ * DB operations of console arguments.
  * 
+ * For enums I use the coding style of jaxb, so there will be no inconsistencies.
+ *
  * ## Legal stuff
  * 
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
@@ -26,11 +27,30 @@ import de.edgesoft.refereemanager.jaxb.Content;
  * 
  * @author Ekkart Kleinod
  * @version 0.7.0
- * @since 0.5.0
+ * @since 0.7.0
  */
-public class ContentModel extends Content {
+public enum ArgumentDBOperation {
+
+    SORT;
 	
-	// emoty for now
+    private final String value;
+
+    ArgumentDBOperation() {
+        value = name().toLowerCase();
+    }
+
+    public String value() {
+        return value;
+    }
+
+    public static ArgumentDBOperation fromValue(String v) {
+        for (ArgumentDBOperation c: ArgumentDBOperation.values()) {
+            if (c.value.equals(v)) {
+                return c;
+            }
+        }
+        throw new IllegalArgumentException(v);
+    }
 
 }
 

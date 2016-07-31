@@ -1,5 +1,6 @@
 package de.edgesoft.refereemanager.model;
 
+import java.text.Collator;
 import java.util.Comparator;
 
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
@@ -27,13 +28,27 @@ import de.edgesoft.refereemanager.jaxb.TitledIDType;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.6.0
+ * @version 0.7.0
  * @since 0.5.0
  */
 public class TitledIDTypeModel extends TitledIDType {
 	
-	/** Comparator. */
-	public static final Comparator<TitledIDType> TITLE = Comparator.comparing(TitledIDType::getTitle);
+	/** Comparator title. */
+	public static final Comparator<TitledIDType> TITLE = Comparator.comparing(TitledIDType::getTitle, Collator.getInstance());
+	
+	/** 
+	 * Comparator shorttitle. 
+	 *
+	 * @todo not sorted with collator
+	 */
+	public static final Comparator<TitledIDType> SHORTTITLE = Comparator.comparing(TitledIDType::getShorttitle, Comparator.nullsFirst(String::compareTo));
+	
+	/** 
+	 * Comparator shorttitle then title. 
+	 *
+	 * @todo does not work with shorttitle == null
+	 */
+	public static final Comparator<TitledIDType> SHORTTITLE_TITLE = SHORTTITLE.thenComparing(TITLE);
 	
 	/**
 	 * Display title.
