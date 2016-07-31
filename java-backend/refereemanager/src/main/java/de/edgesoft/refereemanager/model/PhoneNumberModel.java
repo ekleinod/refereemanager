@@ -1,11 +1,10 @@
 package de.edgesoft.refereemanager.model;
 
-import java.util.Comparator;
-
-import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.jaxb.PhoneNumber;
+import de.edgesoft.refereemanager.utils.Constants;
 
 /**
- * TitledIDType model, additional methods for jaxb model class.
+ * PhoneNumber model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -28,12 +27,9 @@ import de.edgesoft.refereemanager.jaxb.TitledIDType;
  * 
  * @author Ekkart Kleinod
  * @version 0.6.0
- * @since 0.5.0
+ * @since 0.6.0
  */
-public class TitledIDTypeModel extends TitledIDType {
-	
-	/** Comparator. */
-	public static final Comparator<TitledIDType> TITLE = Comparator.comparing(TitledIDType::getTitle);
+public class PhoneNumberModel extends PhoneNumber {
 	
 	/**
 	 * Display title.
@@ -44,7 +40,31 @@ public class TitledIDTypeModel extends TitledIDType {
 	 * @since 0.6.0
 	 */
     public String getDisplayTitle() {
-    	return (getShorttitle() == null) ? getTitle() : getShorttitle();
+    	
+    	StringBuilder sbReturn = new StringBuilder();
+    	
+    	if ((getCountryCode() != null) && !getCountryCode().equals(Constants.COUNTRY_CODE)) {
+    		sbReturn.append("+");
+    		sbReturn.append(getCountryCode());
+    		sbReturn.append(" ");
+    	}
+    	
+    	if (getAreaCode() != null) {
+    		sbReturn.append("0");
+    		sbReturn.append(getAreaCode());
+    		sbReturn.append(" ");
+    	}
+    	
+		sbReturn.append(getNumber());
+    	
+    	if ((getContactType() != null) && !getContactType().getId().equals(Constants.CONTACT_PRIVATE)) {
+    		sbReturn.append(" (");
+    		sbReturn.append(getContactType().getShorttitle());
+    		sbReturn.append(")");
+    	}
+    	
+    	return sbReturn.toString();
+    	
     }
     
 }

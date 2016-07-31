@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.model;
 import java.util.Comparator;
 import java.util.Objects;
 
+import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.Person;
 
 /**
@@ -124,6 +125,22 @@ public class PersonModel extends Person {
     	return sbReturn.toString();
     }
 
+	/**
+	 * Primary address.
+	 * 
+	 * @return primary address
+	 * 
+	 * @version 0.6.0
+	 * @since 0.6.0
+	 */
+    public Address getPrimaryAddress() {
+    	return getAddress()
+    			.stream()
+    			.filter(ContactModel.ISPRIMARY)
+    			.findFirst()
+    			.orElse(null);
+    }
+    
 }
 
 /* EOF */

@@ -5,6 +5,7 @@ import java.beans.Introspector;
 import java.beans.MethodDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -21,6 +22,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
@@ -29,6 +31,7 @@ import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.model.ArgumentStatusType;
 import de.edgesoft.refereemanager.model.ContentModel;
 
 /**
@@ -54,7 +57,7 @@ import de.edgesoft.refereemanager.model.ContentModel;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.5.0
+ * @version 0.6.0
  * @since 0.5.0
  */
 public class TemplateHelper {
@@ -62,23 +65,32 @@ public class TemplateHelper {
 	/** Keyword for text to replace. */
 	public static final String KEY_REPLACE = "generated %s";
 	
+	/** Keyword for end of somethind. */
+	public static final String KEY_END = "end %s";
+	
 	/** Keyword for if. */
 	public static final String KEY_IF = "if %1$s %2$s";
 	
-	/** Keyword for end if. */
-	public static final String KEY_ENDIF = "endif %1$s %2$s";
-	
 	/** Keyword for foreach. */
-	public static final String KEY_FOREACH = "foreach %s";
+	public static final String KEY_FOREACH = "foreach %1$s";
 	
 	/** Keyword for end foreach. */
-	public static final String KEY_ENDFOREACH = "endforeach %s";
+	public static final String KEY_ENDFOREACH = String.format(KEY_END, KEY_FOREACH);
+	
+	/** Keyword for separator. */
+	public static final String KEY_SEPARATOR = "separator";
 	
 	/** Condition empty. */
 	public static final String CONDITION_EMPTY = "empty";
 	
 	/** Condition not empty. */
 	public static final String CONDITION_NOTEMPTY = "notempty";
+	
+	/** Condition even. */
+	public static final String CONDITION_EVEN = "even";
+	
+	/** Condition odd. */
+	public static final String CONDITION_ODD = "odd";
 	
 	/** A token. */
 	public static final String TOKEN = "**%s**";
@@ -87,7 +99,7 @@ public class TemplateHelper {
 	public static final String TOKEN_REPLACE = String.format(TOKEN, KEY_REPLACE);
 	
 	/** Token: if. */
-	public static final String TOKEN_IF = String.format("%s(.*)%s", String.format(TOKEN, KEY_IF), String.format(TOKEN, KEY_ENDIF));
+	public static final String TOKEN_IF = String.format("%s(.*)%s", String.format(TOKEN, KEY_IF), String.format(TOKEN, String.format(KEY_END, KEY_IF)));
 	
 	/** Token: if empty. */
 	public static final String TOKEN_IF_EMPTY = String.format(TOKEN_IF, CONDITION_EMPTY, "%1$s");
@@ -95,11 +107,23 @@ public class TemplateHelper {
 	/** Token: if not empty. */
 	public static final String TOKEN_IF_NOTEMPTY = String.format(TOKEN_IF, CONDITION_NOTEMPTY, "%1$s");
 	
+	/** Token: if even. */
+	public static final String TOKEN_IF_EVEN = String.format(TOKEN_IF, CONDITION_EVEN, "%1$s");
+	
+	/** Token: if odd. */
+	public static final String TOKEN_IF_ODD = String.format(TOKEN_IF, CONDITION_ODD, "%1$s");
+	
 	/** Token: foreach. */
 	public static final String TOKEN_FOREACH = String.format(TOKEN, KEY_FOREACH);
 	
 	/** Token: endforeach. */
 	public static final String TOKEN_ENDFOREACH = String.format(TOKEN, KEY_ENDFOREACH);
+	
+	/** Token: foreach-line. */
+	public static final String TOKEN_FOREACH_LINE = String.format("%s(.*)%s", String.format(TOKEN, KEY_FOREACH), String.format(TOKEN, KEY_ENDFOREACH));
+	
+	/** Token: separator. */
+	public static final String TOKEN_SEPARATOR = String.format("%s(.*)%s", String.format(TOKEN, KEY_SEPARATOR), String.format(TOKEN, String.format(KEY_END, KEY_SEPARATOR)));
 	
 	/** Map of properties and their getters for a class. */
 	private static Map<Class<? extends ModelClass>, Map<String, Method>> mapGetters = null;
@@ -122,16 +146,20 @@ public class TemplateHelper {
 	 * 
 	 * @param theTemplate template
 	 * @param theData data
-	 * @param theLoopID id of element that is looped at the moment
+	 * @param theLoopElement element that is looped at the moment
+	 * @param theLoopCount loop count
+	 * @param theStatus status (all (default), active, inactive)
+	 * 
 	 * @return filled template
 	 * 
-	 * @version 0.5.0
+	 * @version 0.6.0
 	 * @since 0.5.0
 	 */
-	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, final TitledIDType theLoopID) {
+	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, final TitledIDType theLoopElement, final int theLoopCount, final ArgumentStatusType theStatus) {
 		
 		Objects.requireNonNull(theTemplate, "template must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
+		Objects.requireNonNull(theStatus, "status must not be null");
 		
 		List<String> lstReturn = new ArrayList<>();
 
@@ -148,16 +176,17 @@ public class TemplateHelper {
 					
 					final List<String> lstLoopContent = queueLoops.removeFirst();
 					List<String> lstLoopReturn = new ArrayList<>();
+					int iLoop = 1;
 					
 					switch (clsKey.getSimpleName().toLowerCase()) {
 						case "referee":
-							for (final Referee theReferee : ((ContentModel) theData.getContent()).getRefereeStreamSorted().collect(Collectors.toList())) {
-								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theReferee));
+							for (final Referee theReferee : ((ContentModel) theData.getContent()).getRefereeStreamSorted().filter(theStatus.ref_filter()).collect(Collectors.toList())) {
+								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theReferee, iLoop++, theStatus));
 							}
 							break;
 						case "statustype":
-							for (final StatusType theStatusType : ((ContentModel) theData.getContent()).getStatusTypeStreamSorted().collect(Collectors.toList())) {
-								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType));
+							for (final StatusType theStatusType : ((ContentModel) theData.getContent()).getStatusTypeStreamSorted().filter(theStatus.status_filter()).collect(Collectors.toList())) {
+								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType, iLoop++, theStatus));
 							}
 							break;
 					}
@@ -187,7 +216,14 @@ public class TemplateHelper {
 			
 			// process line
 			if (processLine) {
-				lstReturn.add(fillLine(sLine, theData, theLoopID, ""));
+				String sTempLine = sLine;
+				
+				if (theLoopElement != null) {
+					sTempLine = replaceCondition(TOKEN_IF_EVEN, sTempLine, getTokenClass(theLoopElement), (theLoopCount % 2 == 0));
+					sTempLine = replaceCondition(TOKEN_IF_ODD, sTempLine, getTokenClass(theLoopElement), (theLoopCount % 2 == 1));
+				}
+				
+				lstReturn.add(fillLine(sTempLine, theData, theLoopElement, ""));
 			}
 			
 		}
@@ -211,7 +247,7 @@ public class TemplateHelper {
 	private static String fillLine(final String theLine, final ModelClass theData, final TitledIDType theLoopElement, final String theTokenPrefix) {
 		
 		Objects.requireNonNull(theLine, "line must not be null");
-		Objects.requireNonNull(theData, "data must not be null");
+		Objects.requireNonNull(theData, MessageFormat.format("data must not be null: {0}", theTokenPrefix));
 		
 		String sReturn = theLine;
 		
@@ -237,21 +273,64 @@ public class TemplateHelper {
 						sTokenPrefix = "";
 					}
 					
-					if (oResult instanceof ModelClass) {
+					if ((oResult != null) && ModelClass.class.isAssignableFrom(theGetter.getValue().getReturnType())) {
 						
 						sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix);
 						
 					} 
 						
-					if (oResult instanceof List<?>) {
+					if (List.class.isAssignableFrom(theGetter.getValue().getReturnType())) {
+						
+//						if (sTokenPrefix.startsWith("referee:")) {
+//							System.out.println(sTokenPrefix);
+//						}
+						
+						if (sTokenPrefix.isEmpty()) {
 							
-						// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!
-						try {
-							for (ModelClass theDataObject : (List<ModelClass>) oResult) {
-								sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix);
+							// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!
+							try {
+								for (ModelClass theDataObject : (List<ModelClass>) oResult) {
+									sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix);
+								}
+							} catch (ClassCastException e) {
+//									Constants.logger.error(sTokenPrefix);
+//									e.printStackTrace();
 							}
-						} catch (ClassCastException e) {
-//								e.printStackTrace();
+							
+						} else {
+
+							String sCondition = String.format(TOKEN_FOREACH_LINE, sTokenPrefix).replace("**", "\\*\\*");
+							
+							// there is no "contains" for regular expressions
+							if (Pattern.compile(sCondition).matcher(sReturn).find()) {
+								
+								if (((List<ModelClass>) oResult).isEmpty()) {
+									
+									sReturn = sReturn.replaceAll(sCondition, "");
+									
+								} else {
+									
+									String sLoopLine = sReturn.replaceAll(String.format("(.*)%s(.*)", sCondition), "$2");
+									
+									String sSeparator = sLoopLine.replaceAll(String.format("(.*)%s(.*)", TOKEN_SEPARATOR.replace("**", "\\*\\*")), "$2");
+									sLoopLine = sLoopLine.replaceAll(TOKEN_SEPARATOR.replace("**", "\\*\\*"), "");
+									
+									StringBuilder sbLine = new StringBuilder();
+									boolean isMore = false;
+									
+									for (ModelClass theDataObject : (List<ModelClass>) oResult) {
+										if (isMore) {
+											sbLine.append(sSeparator);
+										}
+										sbLine.append(fillLine(sLoopLine, theDataObject, theLoopElement, sTokenPrefix));
+										isMore = true;
+									}
+									
+									sReturn = sReturn.replaceAll(sCondition, sbLine.toString());
+								}
+								
+							}
+							
 						}
 						
 					}
@@ -372,46 +451,6 @@ public class TemplateHelper {
 	}
 	
 	/**
-	 * Replaces replacee-tokens in text with value, considers conditions first.
-	 *
-	 * @param theText text
-	 * @param theReplacee text to be replaced
-	 * @param theValue value
-	 * @return replaced text
-	 *
-	 * @version 0.5.0
-	 * @since 0.5.0
-	 */
-	private static String replaceTextAndConditions(final String theText, final String theReplacee, final String theValue) {
-		String sReturn = theText;
-		
-		
-		// conditions
-		String sCondition = String.format(TOKEN_IF_EMPTY, theReplacee).replace("**", "\\*\\*");
-		sReturn = sReturn.replaceAll(sCondition, theValue.isEmpty() ? "$1" : "");
-		
-		// one step up - for empty model classes
-		sCondition = String.format(TOKEN_IF_EMPTY, theReplacee.substring(0, theReplacee.lastIndexOf(':'))).replace("**", "\\*\\*");
-		sReturn = sReturn.replaceAll(sCondition, theValue.isEmpty() ? "$1" : "");
-		
-		sCondition = String.format(TOKEN_IF_NOTEMPTY, theReplacee).replace("**", "\\*\\*");
-		sReturn = sReturn.replaceAll(sCondition, !theValue.isEmpty() ? "$1" : "");
-		
-		// one step up - for empty model classes
-		sCondition = String.format(TOKEN_IF_NOTEMPTY, theReplacee.substring(0, theReplacee.lastIndexOf(':'))).replace("**", "\\*\\*");
-		sReturn = sReturn.replaceAll(sCondition, !theValue.isEmpty() ? "$1" : "");
-
-		
-		// replace tokens
-		String sToken = String.format(TOKEN_REPLACE, theReplacee);
-		while (sReturn.contains(sToken)) {
-			sReturn = sReturn.replace(sToken, theValue);
-		}
-		
-		return sReturn;
-	}
-
-	/**
 	 * Returns the getters of the given class.
 	 * 
 	 * Works with singleton for speed issues.
@@ -472,6 +511,62 @@ public class TemplateHelper {
 			sTokenClass = sTokenClass.substring(0, (sTokenClass.length() - "model".length()));
 		}
 		return sTokenClass;
+	}
+
+	/**
+	 * Replaces replacee-tokens in text with value, considers conditions first.
+	 *
+	 * @param theText text
+	 * @param theReplacee text to be replaced
+	 * @param theValue value
+	 * 
+	 * @return replaced text
+	 *
+	 * @version 0.6.0
+	 * @since 0.5.0
+	 */
+	private static String replaceTextAndConditions(final String theText, final String theReplacee, final String theValue) {
+		String sReturn = theText;
+		
+		// conditions
+		sReturn = replaceCondition(TOKEN_IF_EMPTY, sReturn, theReplacee, theValue.isEmpty());
+		sReturn = replaceCondition(TOKEN_IF_NOTEMPTY, sReturn, theReplacee, !theValue.isEmpty());
+		
+		// replace tokens
+		String sToken = String.format(TOKEN_REPLACE, theReplacee);
+		while (sReturn.contains(sToken)) {
+			sReturn = sReturn.replace(sToken, theValue);
+		}
+		
+		return sReturn;
+	}
+
+	/**
+	 * Replaces a condition.
+	 *
+	 * @param theToken token
+	 * @param theText text
+	 * @param theTokenID token id to be processed
+	 * @param isFulfilled is condition fulfilled?
+	 * 
+	 * @return replaced text
+	 *
+	 * @version 0.6.0
+	 * @since 0.6.0
+	 */
+	private static String replaceCondition(final String theToken, final String theText, final String theTokenID, final boolean isFulfilled) {
+		String sReturn = theText;
+		
+		String sCondition = String.format(theToken, theTokenID).replace("**", "\\*\\*");
+		sReturn = sReturn.replaceAll(sCondition, isFulfilled ? "$1" : "");
+		
+		// one step up - for empty model classes
+		if (theTokenID.contains(":")) {
+			sCondition = String.format(theToken, theTokenID.substring(0, theTokenID.lastIndexOf(':'))).replace("**", "\\*\\*");
+			sReturn = sReturn.replaceAll(sCondition, isFulfilled ? "$1" : "");
+		}
+		
+		return sReturn;
 	}
 
 }

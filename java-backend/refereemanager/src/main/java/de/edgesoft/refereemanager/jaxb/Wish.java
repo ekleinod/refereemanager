@@ -20,7 +20,6 @@ import de.edgesoft.edgeutils.commons.ModelClass;
  *   &lt;complexContent>
  *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
- *         &lt;element name="type" type="{}WishType"/>
  *         &lt;element name="saturday" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="sunday" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="tournament_only" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
@@ -38,7 +37,6 @@ import de.edgesoft.edgeutils.commons.ModelClass;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Wish", propOrder = {
-    "type",
     "saturday",
     "sunday",
     "tournamentOnly",
@@ -51,9 +49,6 @@ public class Wish
     extends ModelClass
 {
 
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "string")
-    protected WishType type;
     protected Boolean saturday;
     protected Boolean sunday;
     @XmlElement(name = "tournament_only")
@@ -72,30 +67,6 @@ public class Wish
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected SexType sexType;
-
-    /**
-     * Gets the value of the type property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link WishType }
-     *     
-     */
-    public WishType getType() {
-        return type;
-    }
-
-    /**
-     * Sets the value of the type property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link WishType }
-     *     
-     */
-    public void setType(WishType value) {
-        this.type = value;
-    }
 
     /**
      * Gets the value of the saturday property.

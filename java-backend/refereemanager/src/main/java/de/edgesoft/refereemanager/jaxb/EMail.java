@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.ContactModel;
 
 
 /**
@@ -31,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
     "eMail"
 })
 public class EMail
-    extends Contact
+    extends ContactModel
 {
 
     @XmlElement(name = "e_mail", required = true)

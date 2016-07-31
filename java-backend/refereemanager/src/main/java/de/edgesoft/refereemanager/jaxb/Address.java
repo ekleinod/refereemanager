@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.ContactModel;
 
 
 /**
@@ -37,7 +38,7 @@ import javax.xml.bind.annotation.XmlType;
     "city"
 })
 public class Address
-    extends Contact
+    extends ContactModel
 {
 
     @XmlElement(required = true)

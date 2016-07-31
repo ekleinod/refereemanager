@@ -1,9 +1,10 @@
 package de.edgesoft.refereemanager.model;
 
-import de.edgesoft.refereemanager.jaxb.Club;
+import de.edgesoft.refereemanager.jaxb.EMail;
+import de.edgesoft.refereemanager.utils.Constants;
 
 /**
- * Club model, additional methods for jaxb model class.
+ * EMail model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -26,12 +27,34 @@ import de.edgesoft.refereemanager.jaxb.Club;
  * 
  * @author Ekkart Kleinod
  * @version 0.6.0
- * @since 0.5.0
+ * @since 0.6.0
  */
-public class ClubModel extends Club {
+public class EMailModel extends EMail {
 	
-	// empty for now
-	
+	/**
+	 * Display title.
+	 * 
+	 * @return display title
+	 * 
+	 * @version 0.6.0
+	 * @since 0.6.0
+	 */
+    public String getDisplayTitle() {
+    	
+    	StringBuilder sbReturn = new StringBuilder();
+    	
+		sbReturn.append(getEMail());
+    	
+    	if ((getContactType() != null) && !getContactType().getId().equals(Constants.CONTACT_PRIVATE)) {
+    		sbReturn.append(" (");
+    		sbReturn.append(getContactType().getShorttitle());
+    		sbReturn.append(")");
+    	}
+    	
+    	return sbReturn.toString();
+    	
+    }
+    
 }
 
 /* EOF */

@@ -26,19 +26,25 @@ import org.apache.logging.log4j.Logger;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.5.0
+ * @version 0.6.0
  * @since 0.4.0
  */
 public class Constants {
 
 	/** Program version. */
-	public static final String APPVERSION = "0.5.0";
+	public static final String APPVERSION = "0.6.0";
 	
 	/** Document version. */
-	public static final String DOCVERSION = "0.5.0";
+	public static final String DOCVERSION = "0.6.0";
 
 	/** Standard file name pattern for data files. */
 	public static final String DATAFILENAMEPATTERN = "refereemanager_%04d.xml";
+	
+	/** Standard country code. */
+	public static final String COUNTRY_CODE = "49";
+	
+	/** Standard contact type. */
+	public static final String CONTACT_PRIVATE = "ContactType.p";
 	
 	/** Logger for all classes. */
 	public static final Logger logger = LogManager.getLogger();
