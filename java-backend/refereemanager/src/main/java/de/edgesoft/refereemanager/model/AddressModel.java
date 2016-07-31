@@ -1,9 +1,11 @@
 package de.edgesoft.refereemanager.model;
 
-import de.edgesoft.refereemanager.jaxb.Club;
+import java.text.MessageFormat;
+
+import de.edgesoft.refereemanager.jaxb.Address;
 
 /**
- * Club model, additional methods for jaxb model class.
+ * Address model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -26,12 +28,29 @@ import de.edgesoft.refereemanager.jaxb.Club;
  * 
  * @author Ekkart Kleinod
  * @version 0.6.0
- * @since 0.5.0
+ * @since 0.6.0
  */
-public class ClubModel extends Club {
+public class AddressModel extends Address {
 	
-	// empty for now
-	
+	/**
+	 * Display title.
+	 * 
+	 * @return display title
+	 * 
+	 * @version 0.6.0
+	 * @since 0.6.0
+	 */
+    public String getDisplayTitle() {
+    	
+    	return MessageFormat.format("{0} {1}, {2} {3}",
+    			(getStreet() == null) ? "" : getStreet(),
+    			(getNumber() == null) ? "" : getNumber(),
+    			(getZipCode() == null) ? "" : getZipCode(),
+    			(getCity() == null) ? "" : getCity()
+    			);
+    	
+    }
+    
 }
 
 /* EOF */

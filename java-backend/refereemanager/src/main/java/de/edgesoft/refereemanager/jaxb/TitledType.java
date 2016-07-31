@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.refereemanager.model.ContactModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 
 
@@ -20,6 +21,7 @@ import de.edgesoft.refereemanager.model.SeasonModel;
  *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="shorttitle" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="remark" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -32,18 +34,20 @@ import de.edgesoft.refereemanager.model.SeasonModel;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TitledType", propOrder = {
     "title",
+    "shorttitle",
     "remark"
 })
 @XmlSeeAlso({
     Picture.class,
     SeasonModel.class,
-    Contact.class
+    ContactModel.class
 })
 public abstract class TitledType
     extends ModelClass
 {
 
     protected String title;
+    protected String shorttitle;
     protected String remark;
 
     /**
@@ -68,6 +72,30 @@ public abstract class TitledType
      */
     public void setTitle(String value) {
         this.title = value;
+    }
+
+    /**
+     * Gets the value of the shorttitle property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getShorttitle() {
+        return shorttitle;
+    }
+
+    /**
+     * Sets the value of the shorttitle property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setShorttitle(String value) {
+        this.shorttitle = value;
     }
 
     /**

@@ -5,7 +5,7 @@ import java.util.Comparator;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 
 /**
- * TitledIDType model, additional methods for jaxb model class.
+ * TrainingLevel model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -27,7 +27,7 @@ import de.edgesoft.refereemanager.jaxb.TrainingLevel;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.5.0
+ * @version 0.6.0
  * @since 0.5.0
  */
 public class TrainingLevelModel extends TrainingLevel {

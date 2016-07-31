@@ -7,12 +7,17 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 import de.edgesoft.edgeutils.commons.Info;
+import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.PhoneNumberModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
+import de.edgesoft.refereemanager.model.StatusTypeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
+import de.edgesoft.refereemanager.model.WishModel;
 
 
 /**
@@ -65,7 +70,7 @@ public class ObjectFactory {
      * 
      */
     public Address createAddress() {
-        return new Address();
+        return new AddressModel();
     }
 
     /**
@@ -161,7 +166,7 @@ public class ObjectFactory {
      * 
      */
     public EMail createEMail() {
-        return new EMail();
+        return new EMailModel();
     }
 
     /**
@@ -169,7 +174,7 @@ public class ObjectFactory {
      * 
      */
     public Wish createWish() {
-        return new Wish();
+        return new WishModel();
     }
 
     /**
@@ -193,7 +198,7 @@ public class ObjectFactory {
      * 
      */
     public StatusType createStatusType() {
-        return new StatusType();
+        return new StatusTypeModel();
     }
 
     /**
@@ -201,7 +206,7 @@ public class ObjectFactory {
      * 
      */
     public PhoneNumber createPhoneNumber() {
-        return new PhoneNumber();
+        return new PhoneNumberModel();
     }
 
     /**

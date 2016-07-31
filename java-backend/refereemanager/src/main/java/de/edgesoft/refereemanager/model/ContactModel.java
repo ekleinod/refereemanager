@@ -1,9 +1,11 @@
 package de.edgesoft.refereemanager.model;
 
-import de.edgesoft.refereemanager.jaxb.Club;
+import java.util.function.Predicate;
+
+import de.edgesoft.refereemanager.jaxb.Contact;
 
 /**
- * Club model, additional methods for jaxb model class.
+ * Contact model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -26,11 +28,12 @@ import de.edgesoft.refereemanager.jaxb.Club;
  * 
  * @author Ekkart Kleinod
  * @version 0.6.0
- * @since 0.5.0
+ * @since 0.6.0
  */
-public class ClubModel extends Club {
-	
-	// empty for now
+public class ContactModel extends Contact {
+
+	/** Filter predicate for primary contacts. */
+	public static Predicate<Contact> ISPRIMARY = Contact::isIsPrimary;
 	
 }
 

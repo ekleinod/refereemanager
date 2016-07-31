@@ -12,6 +12,7 @@ import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
+import de.edgesoft.refereemanager.model.StatusTypeModel;
 
 
 /**
@@ -79,7 +80,7 @@ public class Content
     protected List<SexType> sexType;
     @XmlElement(name = "contact_type")
     protected List<ContactType> contactType;
-    @XmlElement(name = "status_type")
+    @XmlElement(name = "status_type", type = StatusTypeModel.class)
     protected List<StatusType> statusType;
     @XmlElement(name = "referee_assignment_type")
     protected List<RefereeAssignmentType> refereeAssignmentType;

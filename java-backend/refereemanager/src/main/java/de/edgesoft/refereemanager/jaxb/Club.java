@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
@@ -43,6 +44,7 @@ public class Club
     extends TitledIDTypeModel
 {
 
+    @XmlElement(type = AddressModel.class)
     protected List<Address> address;
     @XmlElement(name = "u_r_l")
     protected List<URL> url;

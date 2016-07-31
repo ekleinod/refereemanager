@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
+import de.edgesoft.refereemanager.model.WishModel;
 
 
 /**
@@ -26,7 +27,8 @@ import de.edgesoft.refereemanager.model.TrainingLevelModel;
  *         &lt;element name="docs_by_letter" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="revoke_license" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="training_level" type="{}TrainingLevel" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="wish" type="{}Wish" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="prefer" type="{}Wish" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="avoid" type="{}Wish" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="member" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="reffor" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
@@ -43,7 +45,8 @@ import de.edgesoft.refereemanager.model.TrainingLevelModel;
     "docsByLetter",
     "revokeLicense",
     "trainingLevel",
-    "wish",
+    "prefer",
+    "avoid",
     "member",
     "reffor",
     "status"
@@ -58,7 +61,10 @@ public class Referee
     protected Boolean revokeLicense;
     @XmlElement(name = "training_level", type = TrainingLevelModel.class)
     protected List<TrainingLevel> trainingLevel;
-    protected List<Wish> wish;
+    @XmlElement(type = WishModel.class)
+    protected List<Wish> prefer;
+    @XmlElement(type = WishModel.class)
+    protected List<Wish> avoid;
     @XmlElement(required = true, type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -142,18 +148,18 @@ public class Referee
     }
 
     /**
-     * Gets the value of the wish property.
+     * Gets the value of the prefer property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the wish property.
+     * This is why there is not a <CODE>set</CODE> method for the prefer property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getWish().add(newItem);
+     *    getPrefer().add(newItem);
      * </pre>
      * 
      * 
@@ -163,11 +169,40 @@ public class Referee
      * 
      * 
      */
-    public List<Wish> getWish() {
-        if (wish == null) {
-            wish = new ArrayList<Wish>();
+    public List<Wish> getPrefer() {
+        if (prefer == null) {
+            prefer = new ArrayList<Wish>();
         }
-        return this.wish;
+        return this.prefer;
+    }
+
+    /**
+     * Gets the value of the avoid property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the avoid property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getAvoid().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Wish }
+     * 
+     * 
+     */
+    public List<Wish> getAvoid() {
+        if (avoid == null) {
+            avoid = new ArrayList<Wish>();
+        }
+        return this.avoid;
     }
 
     /**

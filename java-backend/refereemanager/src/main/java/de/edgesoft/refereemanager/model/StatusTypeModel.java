@@ -1,9 +1,11 @@
 package de.edgesoft.refereemanager.model;
 
-import de.edgesoft.refereemanager.jaxb.Club;
+import java.util.function.Predicate;
+
+import de.edgesoft.refereemanager.jaxb.StatusType;
 
 /**
- * Club model, additional methods for jaxb model class.
+ * StatusType model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -26,11 +28,18 @@ import de.edgesoft.refereemanager.jaxb.Club;
  * 
  * @author Ekkart Kleinod
  * @version 0.6.0
- * @since 0.5.0
+ * @since 0.6.0
  */
-public class ClubModel extends Club {
+public class StatusTypeModel extends StatusType {
+
+	/** Filter predicate for all status types. */
+	public static Predicate<StatusType> ALL = type -> true;
 	
-	// empty for now
+	/** Filter predicate for active status types. */
+	public static Predicate<StatusType> ACTIVE = StatusType::isActive;
+	
+	/** Filter predicate for inactive status types. */
+	public static Predicate<StatusType> INACTIVE = type -> !type.isActive();
 	
 }
 

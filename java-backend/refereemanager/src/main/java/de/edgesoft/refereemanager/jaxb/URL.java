@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.refereemanager.model.ContactModel;
 
 
 /**
@@ -32,7 +33,7 @@ import javax.xml.bind.annotation.XmlType;
     "url"
 })
 public class URL
-    extends Contact
+    extends ContactModel
 {
 
     @XmlElement(name = "u_r_l", required = true)
