@@ -122,6 +122,9 @@ public class TemplateHelper {
 	/** Token: foreach-line. */
 	public static final String TOKEN_FOREACH_LINE = String.format("%s(.*)%s", String.format(TOKEN, KEY_FOREACH), String.format(TOKEN, KEY_ENDFOREACH));
 	
+	/** Token: separator. */
+	public static final String TOKEN_SEPARATOR = String.format("%s(.*)%s", String.format(TOKEN, KEY_SEPARATOR), String.format(TOKEN, String.format(KEY_END, KEY_SEPARATOR)));
+	
 	/** Map of properties and their getters for a class. */
 	private static Map<Class<? extends ModelClass>, Map<String, Method>> mapGetters = null;
 	
@@ -296,8 +299,7 @@ public class TemplateHelper {
 							
 						} else {
 
-							String sCondition = String.format(TOKEN_FOREACH_LINE, sTokenPrefix)
-									.replace("**", "\\*\\*");
+							String sCondition = String.format(TOKEN_FOREACH_LINE, sTokenPrefix).replace("**", "\\*\\*");
 							
 							// there is no "contains" for regular expressions
 							if (Pattern.compile(sCondition).matcher(sReturn).find()) {
@@ -309,12 +311,16 @@ public class TemplateHelper {
 								} else {
 									
 									String sLoopLine = sReturn.replaceAll(String.format("(.*)%s(.*)", sCondition), "$2");
+									
+									String sSeparator = sLoopLine.replaceAll(String.format("(.*)%s(.*)", TOKEN_SEPARATOR.replace("**", "\\*\\*")), "$2");
+									sLoopLine = sLoopLine.replaceAll(TOKEN_SEPARATOR.replace("**", "\\*\\*"), "");
+									
 									StringBuilder sbLine = new StringBuilder();
 									boolean isMore = false;
 									
 									for (ModelClass theDataObject : (List<ModelClass>) oResult) {
 										if (isMore) {
-											sbLine.append("; ");
+											sbLine.append(sSeparator);
 										}
 										sbLine.append(fillLine(sLoopLine, theDataObject, theLoopElement, sTokenPrefix));
 										isMore = true;
