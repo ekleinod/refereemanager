@@ -45,6 +45,13 @@ Several features are working, see version list below.
 Therefore, the referee manager is *not* safe for using in the "real" internet.
 Use it in a closed envorinment (local server etc.) only.
 
+### v0.6.0
+
+*Released:* 2016-07-31
+
+- export of contact and disposition list in mmd
+- first draft of template language
+
 ### v0.5.0
 
 *Released:* 2016-07-27
