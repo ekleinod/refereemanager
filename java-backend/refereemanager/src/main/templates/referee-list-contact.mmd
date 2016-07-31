@@ -29,16 +29,16 @@ latex input:				kleinod-mmd-begin-doc
 	\endlastfoot
 
 **foreach referee**
-**if even referee**\rowcolor{white}**endif even referee****if odd referee**\rowcolor{Linen}**endif odd referee**
+**if even referee**\rowcolor{white}**end if even referee****if odd referee**\rowcolor{Linen}**end if odd referee**
 -->**generated referee:status:mmdmarkupstart****generated referee:tablename****generated referee:status:mmdmarkupend**<!-- &
 -->
-**foreach referee:phonenumber:****generated referee:status:mmdmarkupstart****generated referee:phonenumber:displaytitle****generated referee:status:mmdmarkupend**<!--\\newline-->**endforeach referee:phonenumber:**
-**foreach referee:email:****generated referee:status:mmdmarkupstart****generated referee:email:displaytitle****generated referee:status:mmdmarkupend**<!--\\newline-->**endforeach referee:email:**
+**foreach referee:phonenumber:****generated referee:status:mmdmarkupstart****generated referee:phonenumber:displaytitle****generated referee:status:mmdmarkupend**<!--\\newline-->**end foreach referee:phonenumber:**
+**foreach referee:email:****generated referee:status:mmdmarkupstart****generated referee:email:displaytitle****generated referee:status:mmdmarkupend**<!--\\newline-->**end foreach referee:email:**
 <!-- &
--->**generated referee:status:mmdmarkupstart****generated referee:member:displaytitle****generated referee:status:mmdmarkupend****if notempty referee:reffor**<!--\newline\textsl{-->**generated referee:status:mmdmarkupstart****generated referee:reffor:displaytitle****generated referee:status:mmdmarkupend**<!--}-->**endif notempty referee:reffor**<!-- &
+-->**generated referee:status:mmdmarkupstart****generated referee:member:displaytitle****generated referee:status:mmdmarkupend****if notempty referee:reffor**<!--\newline\textsl{-->**generated referee:status:mmdmarkupstart****generated referee:reffor:displaytitle****generated referee:status:mmdmarkupend**<!--}-->**end if notempty referee:reffor**<!-- &
 -->**generated referee:status:mmdmarkupstart****generated referee:highesttraininglevel:type:shorttitle****generated referee:status:mmdmarkupend**<!--
 \\
-**endforeach referee**
+**end foreach referee**
 
 \end{longtabu}
 
@@ -47,5 +47,5 @@ latex input:				kleinod-mmd-begin-doc
 **Legende:**
 
 **foreach statustype**
-- **generated statustype:mmdmarkupstart****if notempty statustype:remark****generated statustype:remark****endif notempty statustype:remark****if empty statustype:remark****generated statustype:title****endif empty statustype:remark****generated statustype:mmdmarkupend**
-**endforeach statustype**
+- **generated statustype:mmdmarkupstart****if notempty statustype:remark****generated statustype:remark****end if notempty statustype:remark****if empty statustype:remark****generated statustype:title****end if empty statustype:remark****generated statustype:mmdmarkupend**
+**end foreach statustype**

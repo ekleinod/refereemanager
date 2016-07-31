@@ -65,17 +65,20 @@ public class TemplateHelper {
 	/** Keyword for text to replace. */
 	public static final String KEY_REPLACE = "generated %s";
 	
+	/** Keyword for end of somethind. */
+	public static final String KEY_END = "end %s";
+	
 	/** Keyword for if. */
 	public static final String KEY_IF = "if %1$s %2$s";
 	
-	/** Keyword for end if. */
-	public static final String KEY_ENDIF = "endif %1$s %2$s";
-	
 	/** Keyword for foreach. */
-	public static final String KEY_FOREACH = "foreach %s";
+	public static final String KEY_FOREACH = "foreach %1$s";
 	
 	/** Keyword for end foreach. */
-	public static final String KEY_ENDFOREACH = "endforeach %s";
+	public static final String KEY_ENDFOREACH = String.format(KEY_END, KEY_FOREACH);
+	
+	/** Keyword for separator. */
+	public static final String KEY_SEPARATOR = "separator";
 	
 	/** Condition empty. */
 	public static final String CONDITION_EMPTY = "empty";
@@ -96,7 +99,7 @@ public class TemplateHelper {
 	public static final String TOKEN_REPLACE = String.format(TOKEN, KEY_REPLACE);
 	
 	/** Token: if. */
-	public static final String TOKEN_IF = String.format("%s(.*)%s", String.format(TOKEN, KEY_IF), String.format(TOKEN, KEY_ENDIF));
+	public static final String TOKEN_IF = String.format("%s(.*)%s", String.format(TOKEN, KEY_IF), String.format(TOKEN, String.format(KEY_END, KEY_IF)));
 	
 	/** Token: if empty. */
 	public static final String TOKEN_IF_EMPTY = String.format(TOKEN_IF, CONDITION_EMPTY, "%1$s");
@@ -115,6 +118,9 @@ public class TemplateHelper {
 	
 	/** Token: endforeach. */
 	public static final String TOKEN_ENDFOREACH = String.format(TOKEN, KEY_ENDFOREACH);
+	
+	/** Token: foreach-line. */
+	public static final String TOKEN_FOREACH_LINE = String.format("%s(.*)%s", String.format(TOKEN, KEY_FOREACH), String.format(TOKEN, KEY_ENDFOREACH));
 	
 	/** Map of properties and their getters for a class. */
 	private static Map<Class<? extends ModelClass>, Map<String, Method>> mapGetters = null;
@@ -290,9 +296,7 @@ public class TemplateHelper {
 							
 						} else {
 
-							String sCondition = String.format("%s(.*)%s", 
-									String.format(TOKEN_FOREACH, sTokenPrefix), 
-									String.format(TOKEN_ENDFOREACH, sTokenPrefix))
+							String sCondition = String.format(TOKEN_FOREACH_LINE, sTokenPrefix)
 									.replace("**", "\\*\\*");
 							
 							// there is no "contains" for regular expressions
