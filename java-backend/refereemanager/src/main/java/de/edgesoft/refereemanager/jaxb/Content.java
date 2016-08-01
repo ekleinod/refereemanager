@@ -13,6 +13,7 @@ import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
+import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 
 
 /**
@@ -84,7 +85,7 @@ public class Content
     protected List<StatusType> statusType;
     @XmlElement(name = "referee_assignment_type")
     protected List<RefereeAssignmentType> refereeAssignmentType;
-    @XmlElement(name = "training_level_type")
+    @XmlElement(name = "training_level_type", type = TrainingLevelTypeModel.class)
     protected List<TrainingLevelType> trainingLevelType;
 
     /**

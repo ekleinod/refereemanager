@@ -1,11 +1,13 @@
-
 package de.edgesoft.refereemanager.model;
 
+import java.util.Comparator;
+
+import de.edgesoft.refereemanager.jaxb.TrainingLevel;
+import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
+
 /**
- * Output types.
+ * TrainingLevelType model, additional methods for jaxb model class.
  * 
- * For enums I use the coding style of jaxb, so there will be no inconsistencies.
- *
  * ## Legal stuff
  * 
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
@@ -26,33 +28,14 @@ package de.edgesoft.refereemanager.model;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.5.0
- * @since 0.5.0
+ * @version 0.7.0
+ * @since 0.7.0
  */
-public enum OutputType {
-
-    FULLNAME,
-    TABLENAME;
+public class TrainingLevelTypeModel extends TrainingLevelType {
 	
-    private final String value;
-
-    OutputType() {
-        value = name().toLowerCase();
-    }
-
-    public String value() {
-        return value;
-    }
-
-    public static OutputType fromValue(String v) {
-        for (OutputType c: OutputType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
-
+	/** Comparator rank. */
+	public static final Comparator<TrainingLevelType> RANK = Comparator.comparingInt(TrainingLevelType::getRank);
+	
 }
 
 /* EOF */

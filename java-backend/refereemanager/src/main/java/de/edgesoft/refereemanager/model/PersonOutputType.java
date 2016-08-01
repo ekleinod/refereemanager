@@ -1,13 +1,8 @@
 
 package de.edgesoft.refereemanager.model;
 
-import java.util.function.Predicate;
-
-import de.edgesoft.refereemanager.jaxb.Referee;
-import de.edgesoft.refereemanager.jaxb.StatusType;
-
 /**
- * Status types of console arguments.
+ * Output types.
  * 
  * For enums I use the coding style of jaxb, so there will be no inconsistencies.
  *
@@ -31,39 +26,26 @@ import de.edgesoft.refereemanager.jaxb.StatusType;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.6.0
- * @since 0.6.0
+ * @version 0.7.0
+ * @since 0.5.0
  */
-public enum ArgumentStatusType {
+public enum PersonOutputType {
 
-    ALL(RefereeModel.ALL, StatusTypeModel.ALL),
-    ACTIVE(RefereeModel.ACTIVE, StatusTypeModel.ACTIVE),
-    INACTIVE(RefereeModel.INACTIVE, StatusTypeModel.INACTIVE);
+    FULLNAME,
+    TABLENAME;
 	
     private final String value;
-    private final Predicate<Referee> ref_filter;
-    private final Predicate<StatusType> status_filter;
 
-    ArgumentStatusType(final Predicate<Referee> theRefFilter, final Predicate<StatusType> theStatusFilter) {
+    PersonOutputType() {
         value = name().toLowerCase();
-        ref_filter = theRefFilter;
-        status_filter = theStatusFilter;
-    }
-
-    public Predicate<Referee> ref_filter() {
-        return ref_filter;
-    }
-
-    public Predicate<StatusType> status_filter() {
-        return status_filter;
     }
 
     public String value() {
         return value;
     }
 
-    public static ArgumentStatusType fromValue(String v) {
-        for (ArgumentStatusType c: ArgumentStatusType.values()) {
+    public static PersonOutputType fromValue(String v) {
+        for (PersonOutputType c: PersonOutputType.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

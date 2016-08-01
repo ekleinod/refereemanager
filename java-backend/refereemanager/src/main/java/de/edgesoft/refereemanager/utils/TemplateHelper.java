@@ -31,8 +31,9 @@ import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
-import de.edgesoft.refereemanager.model.ArgumentStatusType;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 /**
  * Provides methods and properties for templates.
@@ -180,12 +181,18 @@ public class TemplateHelper {
 					
 					switch (clsKey.getSimpleName().toLowerCase()) {
 						case "referee":
-							for (final Referee theReferee : ((ContentModel) theData.getContent()).getRefereeStreamSorted().filter(theStatus.ref_filter()).collect(Collectors.toList())) {
+							for (final Referee theReferee : ((ContentModel) theData.getContent()).getReferee().stream()
+									.sorted(PersonModel.NAME_FIRSTNAME)
+									.filter(theStatus.ref_filter())
+									.collect(Collectors.toList())) {
 								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theReferee, iLoop++, theStatus));
 							}
 							break;
 						case "statustype":
-							for (final StatusType theStatusType : ((ContentModel) theData.getContent()).getStatusTypeStreamSorted().filter(theStatus.status_filter()).collect(Collectors.toList())) {
+							for (final StatusType theStatusType : ((ContentModel) theData.getContent()).getStatusType().stream()
+									.sorted(TitledIDTypeModel.TITLE)
+									.filter(theStatus.status_filter())
+									.collect(Collectors.toList())) {
 								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType, iLoop++, theStatus));
 							}
 							break;
