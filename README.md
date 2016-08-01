@@ -45,6 +45,12 @@ Several features are working, see version list below.
 Therefore, the referee manager is *not* safe for using in the "real" internet.
 Use it in a closed envorinment (local server etc.) only.
 
+### v0.7.0
+
+*Released:* 2016-08-01
+
+- database operations: sort and remove unused clubs
+
 ### v0.6.0
 
 *Released:* 2016-07-31
