@@ -1,6 +1,12 @@
 package de.edgesoft.refereemanager.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.jaxb.Content;
+import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.Wish;
 
 /**
  * Content model, additional methods for jaxb model class.
@@ -30,7 +36,65 @@ import de.edgesoft.refereemanager.jaxb.Content;
  */
 public class ContentModel extends Content {
 	
-	// emoty for now
+	/**
+	 * Returns all referenced (used) clubs.
+	 * 
+	 * @return referenced clubs (empty if there are none)
+	 * 
+	 * @version 0.7.0
+	 * @since 0.7.0
+	 */
+	public Set<Club> getReferencedClubs() {
+
+		Set<Club> setReturn = new HashSet<>();
+		
+		for (Referee theReferee : getReferee()) {
+			
+			for (Wish theWish : theReferee.getPrefer()) {
+				if (theWish.getClub() != null) {
+					setReturn.add(theWish.getClub());
+				}
+			}
+			
+			for (Wish theWish : theReferee.getAvoid()) {
+				if (theWish.getClub() != null) {
+					setReturn.add(theWish.getClub());
+				}
+			}
+			
+			if (theReferee.getMember() != null) {
+				setReturn.add(theReferee.getMember());
+			}
+			
+			if (theReferee.getReffor() != null) {
+				setReturn.add(theReferee.getReffor());
+			}
+			
+		}
+		
+		return setReturn;
+		
+	}
+		
+	/**
+	 * Returns all non-referenced (unused) clubs.
+	 * 
+	 * @return non-referenced clubs (empty if there are none)
+	 * 
+	 * @version 0.7.0
+	 * @since 0.7.0
+	 */
+	public Set<Club> getNonReferencedClubs() {
+
+		Set<Club> setReturn = new HashSet<>();
+		
+		setReturn.addAll(getClub());
+		setReturn.removeAll(getReferencedClubs());
+		
+		return setReturn;
+		
+	}
+		
 
 }
 

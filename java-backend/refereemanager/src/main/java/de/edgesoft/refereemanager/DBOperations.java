@@ -143,6 +143,9 @@ public class DBOperations extends AbstractMainClass {
 			
 			// do something
 			switch (theDBOperation) {
+				case REMOVECLUBS:
+					de.edgesoft.refereemanager.utils.DBOperations.removeClubs(mgrData);
+					break;
 				case SORT:
 					de.edgesoft.refereemanager.utils.DBOperations.sortDB(mgrData);
 					break;

@@ -102,8 +102,35 @@ public class DBOperations {
 		theDB.getContent().getTrainingLevelType().clear();
 		theDB.getContent().getTrainingLevelType().addAll(lstTrainingLevelType);
 		
+		Constants.logger.info("sorted database");
+		
 	}
 	
+	/**
+	 * Removes unused clubs.
+	 * 
+	 * @param theDB database
+	 * 
+	 * @version 0.7.0
+	 * @since 0.7.0
+	 */
+	public static void removeClubs(final RefereeManager theDB) {
+		
+		Objects.requireNonNull(theDB, "database must not be null");
+		
+		ContentModel theContent = ((ContentModel) theDB.getContent());
+		
+		int iBefore = theContent.getClub().size();
+		
+		theContent.getClub().removeAll(theContent.getNonReferencedClubs());
+		
+		int iAfter = theContent.getClub().size();
+		
+		Constants.logger.info(String.format("Removed %d of %d clubs, %d clubs remaining.", iBefore - iAfter, iBefore, iAfter));
+		
+		
+	}
+		
 }
 
 /* EOF */
