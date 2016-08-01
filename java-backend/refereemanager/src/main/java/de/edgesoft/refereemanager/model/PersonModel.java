@@ -1,5 +1,6 @@
 package de.edgesoft.refereemanager.model;
 
+import java.text.Collator;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -29,14 +30,14 @@ import de.edgesoft.refereemanager.jaxb.Person;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.5.0
+ * @version 0.7.0
  * @since 0.5.0
  */
 public class PersonModel extends Person {
 	
 	/** Comparator for people. */
-	public static final Comparator<Person> NAME_FIRSTNAME = Comparator.comparing(Person::getName).
-			thenComparing(Comparator.comparing(Person::getFirstName));
+	public static final Comparator<Person> NAME_FIRSTNAME = Comparator.comparing(Person::getName, Collator.getInstance()).
+			thenComparing(Comparator.comparing(Person::getFirstName, Collator.getInstance()));
 	
 	/**
 	 * Full name of person.
@@ -47,7 +48,7 @@ public class PersonModel extends Person {
 	 * @since 0.5.0
 	 */
     public String getFullName() {
-    	return getFormattedName(OutputType.FULLNAME);
+    	return getFormattedName(PersonOutputType.FULLNAME);
     }
     
 	/**
@@ -59,7 +60,7 @@ public class PersonModel extends Person {
 	 * @since 0.5.0
 	 */
     public String getTableName() {
-    	return getFormattedName(OutputType.TABLENAME);
+    	return getFormattedName(PersonOutputType.TABLENAME);
     }
     
 	/**
@@ -71,7 +72,7 @@ public class PersonModel extends Person {
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-    private String getFormattedName(final OutputType theOutputType) {
+    private String getFormattedName(final PersonOutputType theOutputType) {
 		Objects.requireNonNull(theOutputType, "output type must not be null");
 		
     	StringBuilder sbReturn = new StringBuilder();

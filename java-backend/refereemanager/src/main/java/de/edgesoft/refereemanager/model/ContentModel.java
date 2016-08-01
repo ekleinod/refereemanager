@@ -1,11 +1,12 @@
 package de.edgesoft.refereemanager.model;
 
-import java.util.Comparator;
-import java.util.stream.Stream;
+import java.util.HashSet;
+import java.util.Set;
 
+import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.Referee;
-import de.edgesoft.refereemanager.jaxb.StatusType;
+import de.edgesoft.refereemanager.jaxb.Wish;
 
 /**
  * Content model, additional methods for jaxb model class.
@@ -30,47 +31,70 @@ import de.edgesoft.refereemanager.jaxb.StatusType;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.5.0
+ * @version 0.7.0
  * @since 0.5.0
  */
 public class ContentModel extends Content {
 	
 	/**
-	 * Returns list of sorted referees.
+	 * Returns all referenced (used) clubs.
 	 * 
-	 * @return list of referees
+	 * @return referenced clubs (empty if there are none)
 	 * 
-	 * @version 0.5.0
-	 * @since 0.5.0
+	 * @version 0.7.0
+	 * @since 0.7.0
 	 */
-    public Stream<Referee> getRefereeStreamSorted() {
-    	return getRefereeStreamSorted(PersonModel.NAME_FIRSTNAME);
-    }
+	public Set<Club> getReferencedClubs() {
 
+		Set<Club> setReturn = new HashSet<>();
+		
+		for (Referee theReferee : getReferee()) {
+			
+			for (Wish theWish : theReferee.getPrefer()) {
+				if (theWish.getClub() != null) {
+					setReturn.add(theWish.getClub());
+				}
+			}
+			
+			for (Wish theWish : theReferee.getAvoid()) {
+				if (theWish.getClub() != null) {
+					setReturn.add(theWish.getClub());
+				}
+			}
+			
+			if (theReferee.getMember() != null) {
+				setReturn.add(theReferee.getMember());
+			}
+			
+			if (theReferee.getReffor() != null) {
+				setReturn.add(theReferee.getReffor());
+			}
+			
+		}
+		
+		return setReturn;
+		
+	}
+		
 	/**
-	 * Returns list of referees sorted by criterion as stream.
+	 * Returns all non-referenced (unused) clubs.
 	 * 
-	 * @param theComparator comparator
-	 * @return list of referees
+	 * @return non-referenced clubs (empty if there are none)
 	 * 
-	 * @version 0.5.0
-	 * @since 0.5.0
+	 * @version 0.7.0
+	 * @since 0.7.0
 	 */
-    public Stream<Referee> getRefereeStreamSorted(final Comparator<? super Referee> theComparator) {
-    	return getReferee().stream().sorted(theComparator);
-    }
+	public Set<Club> getNonReferencedClubs() {
 
-	/**
-	 * Returns sorted list of status types.
-	 * 
-	 * @return list of status types
-	 * 
-	 * @version 0.5.0
-	 * @since 0.5.0
-	 */
-    public Stream<StatusType> getStatusTypeStreamSorted() {
-    	return getStatusType().stream().sorted(TitledIDTypeModel.TITLE);
-    }
+		Set<Club> setReturn = new HashSet<>();
+		
+		setReturn.addAll(getClub());
+		setReturn.removeAll(getReferencedClubs());
+		
+		return setReturn;
+		
+	}
+		
 
 }
 
