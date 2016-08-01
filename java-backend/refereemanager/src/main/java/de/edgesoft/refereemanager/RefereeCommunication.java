@@ -11,12 +11,12 @@ import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.model.SeasonModel;
-import de.edgesoft.refereemanager.utils.ArgumentStatusType;
+import de.edgesoft.refereemanager.utils.ArgumentCommunicationAction;
+import de.edgesoft.refereemanager.utils.ArgumentCommunicationRecipient;
 import de.edgesoft.refereemanager.utils.Constants;
-import de.edgesoft.refereemanager.utils.TemplateHelper;
 
 /**
- * Fill the referee list.
+ * Referee communication.
  *
  * ## Legal stuff
  * 
@@ -39,20 +39,20 @@ import de.edgesoft.refereemanager.utils.TemplateHelper;
  * 
  * @author Ekkart Kleinod
  * @version 0.8.0
- * @since 0.5.0
+ * @since 0.8.0
  */
-public class RefereeList extends AbstractMainClass {
+public class RefereeCommunication extends AbstractMainClass {
 	
 	/**
 	 * Command line entry point.
 	 * 
 	 * @param args command line arguments
 	 * 
-	 * @version 0.5.0
-	 * @since 0.5.0
+	 * @version 0.8.0
+	 * @since 0.8.0
 	 */
 	public static void main(String[] args) {
-		new RefereeList().executeOperation(args);
+		new RefereeCommunication().executeOperation(args);
 	}
 
 	/**
@@ -63,8 +63,8 @@ public class RefereeList extends AbstractMainClass {
 	 * - call init(args);
 	 * - call operation execution with arguments
 	 * 
-	 * @version 0.6.0
-	 * @since 0.5.0
+	 * @version 0.8.0
+	 * @since 0.8.0
 	 */
 	@Override
 	public void executeOperation(final String[] args) {
@@ -74,90 +74,104 @@ public class RefereeList extends AbstractMainClass {
 		addOption("p", "path", "input path of data.", true, true);
 		addOption("f", "file", MessageFormat.format("input file name template (empty for {0}).", Constants.DATAFILENAMEPATTERN), true, false);
 		addOption("s", "season", "season (empty for current season).", true, false);
-		addOption("t", "template", "template to fill.", true, true);
-		addOption("o", "output", "output file (empty for template + '.out').", true, false);
-		addOption("a", "status", "status (all (default), active, inactive).", true, false);
+		addOption("t", "text", "text to communicate.", true, true);
+		addOption("o", "outputpath", "output path.", true, false);
+		addOption("a", "action", "action (mail (default), letter).", true, false);
+		addOption("r", "recipient", "recipient (me (default), all, mailonly, letteronly, trainees).", true, false);
 		
 		init(args);
 		
-		listReferees(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), getOptionValue("t"), getOptionValue("o"), getOptionValue("a"));
+		refereeCommunication(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), 
+				getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), getOptionValue("r"));
 		
 	}
 
 	/**
-	 * Fills list of referees.
+	 * Referee communication.
 	 * 
 	 * @param theDBPath input path
-	 * @param theDBFile db filename (null = {@link Constants#DATAFILENAMEPATTERN})
+	 * @param theDBFile database filename (null = {@link Constants#DATAFILENAMEPATTERN})
 	 * @param theSeason season (null = current season)
-	 * @param theTemplatefile template file
-	 * @param theOutputfile output file (null = template + ".out")
-	 * @param theStatus status (all (default), activeonly)
+	 * @param theTextfile text file
+	 * @param theOutputpath output path
+	 * @param theAction action (mail (default), letter)
+	 * @param theRecipient recipient (me (default), all, mailonly, letteronly, trainees)
 	 * 
 	 * @version 0.8.0
-	 * @since 0.5.0
+	 * @since 0.8.0
 	 */
-	public void listReferees(final String theDBPath, final String theDBFile, final String theSeason, final String theTemplatefile, final String theOutputfile, final String theStatus) {
+	public void refereeCommunication(final String theDBPath, final String theDBFile, final String theSeason, 
+			final String theTextfile, final String theOutputpath, final String theAction, final String theRecipient) {
 		
 		Constants.logger.info("start.");
 		
 		Objects.requireNonNull(theDBPath, "database path must not be null");
-		Objects.requireNonNull(theTemplatefile, "template file must not be null");
+		Objects.requireNonNull(theTextfile, "text file must not be null");
 		
 		Integer iSeason = (theSeason == null) ? SeasonModel.getCurrentStartYear() : Integer.valueOf(theSeason);
 		
 		Path pathDBFile = Paths.get(theDBPath, String.format(((theDBFile == null) ? Constants.DATAFILENAMEPATTERN : theDBFile), iSeason));
 		
-		String sOutFile = (theOutputfile == null) ? String.format("%s.out", theTemplatefile) : theOutputfile;
-		
-		ArgumentStatusType argStatus = ArgumentStatusType.ALL;
+		ArgumentCommunicationAction argAction = ArgumentCommunicationAction.MAIL;
 		try {
-			argStatus = ArgumentStatusType.fromValue(theStatus);
+			argAction = ArgumentCommunicationAction.fromValue(theAction);
+		} catch (IllegalArgumentException e) {
+			// do nothing, remains "mail"
+		}
+		
+		ArgumentCommunicationRecipient argRecipient = ArgumentCommunicationRecipient.ME;
+		try {
+			argRecipient = ArgumentCommunicationRecipient.fromValue(theRecipient);
 		} catch (IllegalArgumentException e) {
 			// do nothing, remains "all"
 		}
 		
-		listReferees(pathDBFile, Paths.get(theTemplatefile), Paths.get(sOutFile), argStatus);
+		refereeCommunication(pathDBFile, Paths.get(theTextfile), theOutputpath, argAction, argRecipient);
 		
 		Constants.logger.info("stop");
 		
 	}
 	
 	/**
-	 * Fills list of referees.
+	 * Referee communication.
 	 * 
 	 * @param theDBPath database filename with path
-	 * @param theTemplatePath template file
-	 * @param theOutputPath output file
-	 * @param theStatus status
+	 * @param theTextPath text file
+	 * @param theOutputPath output path
+	 * @param theAction action
+	 * @param theRecipient recipient
 	 * 
 	 * @version 0.8.0
-	 * @since 0.5.0
+	 * @since 0.8.0
 	 */
-	public void listReferees(final Path theDBPath, final Path theTemplatePath, final Path theOutputPath, final ArgumentStatusType theStatus) {
+	public void refereeCommunication(final Path theDBPath, final Path theTextPath, final String theOutputPath, final ArgumentCommunicationAction theAction, final ArgumentCommunicationRecipient theRecipient) {
 		
 		Objects.requireNonNull(theDBPath, "database file path must not be null");
-		Objects.requireNonNull(theTemplatePath, "template file path must not be null");
-		Objects.requireNonNull(theOutputPath, "output file path must not be null");
-		Objects.requireNonNull(theStatus, "status must not be null");
+		Objects.requireNonNull(theTextPath, "text file path must not be null");
+		Objects.requireNonNull(theAction, "action must not be null");
+		Objects.requireNonNull(theRecipient, "recipient must not be null");
 		
 		try {
 			
-			Constants.logger.info("read template.");
+			Constants.logger.info("read text.");
 			
-			final List<String> lstTemplate = FileAccess.readFileInList(theTemplatePath);
+			final List<String> lstText = FileAccess.readFileInList(theTextPath);
 			
 			Constants.logger.info("read data.");
 			
 			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
 			
-			Constants.logger.info("fill template.");
-			
-			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null, 0, theStatus);
-			
-			Constants.logger.info("write referee list.");
-			
-			FileAccess.writeFile(theOutputPath, lstFilled);
+			switch (theAction) {
+				case LETTER:
+					Constants.logger.info("fill text.");
+					Constants.logger.info(String.format("save letter for '%s' in '%s'."));
+					break;
+				case MAIL:
+					Constants.logger.info("fill text.");
+					Constants.logger.info(String.format("send mail to '%s'."));
+					Constants.logger.info(String.format("mail sent to '%s'."));
+					break;
+			}
 			
 			
 		} catch (Exception e) {

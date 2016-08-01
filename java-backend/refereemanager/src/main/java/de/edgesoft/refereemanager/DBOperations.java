@@ -38,7 +38,7 @@ import de.edgesoft.refereemanager.utils.Constants;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.7.0
+ * @version 0.8.0
  * @since 0.7.0
  */
 public class DBOperations extends AbstractMainClass {
@@ -86,31 +86,31 @@ public class DBOperations extends AbstractMainClass {
 	/**
 	 * Executes database operation.
 	 * 
-	 * @param thePath input path
-	 * @param theXMLFile xml filename (null = {@link Constants#DATAFILENAMEPATTERN})
+	 * @param theDBPath input path
+	 * @param theDBFile db filename (null = {@link Constants#DATAFILENAMEPATTERN})
 	 * @param theSeason season (null = current season)
 	 * @param theOutputfile output file (null = template + ".db.xml")
 	 * @param theDBOperation database operation
 	 * 
-	 * @version 0.7.0
+	 * @version 0.8.0
 	 * @since 0.7.0
 	 */
-	public void dbOperation(final String thePath, final String theXMLFile, final String theSeason, final String theOutputfile, final String theDBOperation) {
+	public void dbOperation(final String theDBPath, final String theDBFile, final String theSeason, final String theOutputfile, final String theDBOperation) {
 		
 		Constants.logger.info("start.");
 		
-		Objects.requireNonNull(thePath, "path must not be null");
-		Objects.requireNonNull(theDBOperation, "db operation must not be null");
+		Objects.requireNonNull(theDBPath, "database path must not be null");
+		Objects.requireNonNull(theDBOperation, "database  operation must not be null");
 		
 		Integer iSeason = (theSeason == null) ? SeasonModel.getCurrentStartYear() : Integer.valueOf(theSeason);
 		
-		Path pathXMLFile = Paths.get(thePath, String.format(((theXMLFile == null) ? Constants.DATAFILENAMEPATTERN : theXMLFile), iSeason));
+		Path pathDBFile = Paths.get(theDBPath, String.format(((theDBFile == null) ? Constants.DATAFILENAMEPATTERN : theDBFile), iSeason));
 		
-		String sOutFile = (theOutputfile == null) ? String.format("%s.db.xml", pathXMLFile) : theOutputfile;
+		String sOutFile = (theOutputfile == null) ? String.format("%s.db.xml", pathDBFile) : theOutputfile;
 		
 		ArgumentDBOperation argDBOperation = ArgumentDBOperation.fromValue(theDBOperation);
 		
-		dbOperation(pathXMLFile, Paths.get(sOutFile), argDBOperation);
+		dbOperation(pathDBFile, Paths.get(sOutFile), argDBOperation);
 		
 		Constants.logger.info("stop");
 		
@@ -119,25 +119,25 @@ public class DBOperations extends AbstractMainClass {
 	/**
 	 * Executes database operation.
 	 * 
-	 * @param theXMLPath xml filename with path
+	 * @param theDBPath database filename with path
 	 * @param theTemplatePath template file
 	 * @param theOutputPath output file
 	 * @param theDBOperation database operation
 	 * 
-	 * @version 0.7.0
+	 * @version 0.8.0
 	 * @since 0.7.0
 	 */
-	public void dbOperation(final Path theXMLPath, final Path theOutputPath, final ArgumentDBOperation theDBOperation) {
+	public void dbOperation(final Path theDBPath, final Path theOutputPath, final ArgumentDBOperation theDBOperation) {
 		
-		Objects.requireNonNull(theXMLPath, "xml file path must not be null");
+		Objects.requireNonNull(theDBPath, "database file path must not be null");
 		Objects.requireNonNull(theOutputPath, "output file path must not be null");
 		Objects.requireNonNull(theDBOperation, "db operation must not be null");
 		
 		try {
 			
-			Constants.logger.info(String.format("read database '%s'.", theXMLPath.toString()));
+			Constants.logger.info(String.format("read database '%s'.", theDBPath.toString()));
 			
-			final RefereeManager mgrData = JAXBFiles.unmarshal(theXMLPath.toString(), RefereeManager.class);
+			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
 			
 			Constants.logger.info(String.format("execute operation '%s'.", theDBOperation.value()));
 			
