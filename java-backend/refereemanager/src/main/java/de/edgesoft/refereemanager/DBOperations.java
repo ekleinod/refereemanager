@@ -146,6 +146,8 @@ public class DBOperations extends AbstractMainClass {
 				case REMOVECLUBS:
 					de.edgesoft.refereemanager.utils.DBOperations.removeClubs(mgrData);
 					break;
+				case SAVE:
+					break;
 				case SORT:
 					de.edgesoft.refereemanager.utils.DBOperations.sortDB(mgrData);
 					break;
