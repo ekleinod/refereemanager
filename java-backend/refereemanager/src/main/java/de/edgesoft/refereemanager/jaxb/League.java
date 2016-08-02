@@ -24,6 +24,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
+ *         &lt;element name="results" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
  *         &lt;element name="referee_report" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
  *         &lt;element name="referee_quantity" type="{}RefereeQuantity" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sex_type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
@@ -38,6 +39,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "League", propOrder = {
+    "results",
     "refereeReport",
     "refereeQuantity",
     "sexType",
@@ -47,6 +49,8 @@ public class League
     extends TitledIDTypeModel
 {
 
+    @XmlSchemaType(name = "anyURI")
+    protected String results;
     @XmlElement(name = "referee_report")
     @XmlSchemaType(name = "anyURI")
     protected String refereeReport;
@@ -58,6 +62,30 @@ public class League
     protected SexType sexType;
     @XmlElementRef(name = "referee_report_recipient", type = JAXBElement.class)
     protected List<Person> refereeReportRecipient;
+
+    /**
+     * Gets the value of the results property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getResults() {
+        return results;
+    }
+
+    /**
+     * Sets the value of the results property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setResults(String value) {
+        this.results = value;
+    }
 
     /**
      * Gets the value of the refereeReport property.

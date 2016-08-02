@@ -42,6 +42,7 @@ public class ObjectFactory {
     private final static QName _Refereemanager_QNAME = new QName("", "refereemanager");
     private final static QName _ClubContactPerson_QNAME = new QName("", "contact_person");
     private final static QName _LeagueRefereeReportRecipient_QNAME = new QName("", "referee_report_recipient");
+    private final static QName _TeamLeague_QNAME = new QName("", "league");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.edgesoft.refereemanager.jaxb
@@ -120,6 +121,14 @@ public class ObjectFactory {
      */
     public TrainingLevel createTrainingLevel() {
         return new TrainingLevelModel();
+    }
+
+    /**
+     * Create an instance of {@link Team }
+     * 
+     */
+    public Team createTeam() {
+        return new Team();
     }
 
     /**
@@ -262,6 +271,16 @@ public class ObjectFactory {
     @XmlIDREF
     public JAXBElement<Object> createLeagueRefereeReportRecipient(Object value) {
         return new JAXBElement<Object>(_LeagueRefereeReportRecipient_QNAME, Object.class, League.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "league", scope = Team.class)
+    @XmlIDREF
+    public JAXBElement<Object> createTeamLeague(Object value) {
+        return new JAXBElement<Object>(_TeamLeague_QNAME, Object.class, Team.class, value);
     }
 
 }

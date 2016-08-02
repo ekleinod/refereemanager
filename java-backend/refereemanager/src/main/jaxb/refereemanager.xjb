@@ -79,10 +79,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<jxb:class implClass="de.edgesoft.refereemanager.model.TitledIDTypeModel" />
 		</jxb:bindings>
 
-		<jxb:bindings node="//xsd:complexType[@name='TitledType']">
-			<jxb:class implClass="de.edgesoft.refereemanager.model.TitledTypeModel" />
-		</jxb:bindings>
-
 		<jxb:bindings node="//xsd:complexType[@name='TrainingLevel']">
 			<jxb:class implClass="de.edgesoft.refereemanager.model.TrainingLevelModel" />
 		</jxb:bindings>

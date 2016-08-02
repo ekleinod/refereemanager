@@ -23,7 +23,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 @author Ekkart Kleinod
-@version 0.4.0
+@version 0.8.0
 @since 0.4.0
 -->
 
@@ -34,7 +34,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	<!-- allow xml:base attribute in order to avoid include errors -->
 	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2005/08/xml.xsd" />
 
-	<xsd:include schemaLocation="commons.xsd" />
+	<xsd:include schemaLocation="../../../../edgeutils/jaxb/commons.xsd" />
 
 	<xsd:element name="refereemanager" type="RefereeManager" />
 

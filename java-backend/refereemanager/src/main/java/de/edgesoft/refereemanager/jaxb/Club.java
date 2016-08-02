@@ -23,7 +23,8 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="address" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="filename" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="venue" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contact_person" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
@@ -36,7 +37,8 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Club", propOrder = {
-    "address",
+    "filename",
+    "venue",
     "url",
     "contactPerson"
 })
@@ -44,26 +46,51 @@ public class Club
     extends TitledIDTypeModel
 {
 
+    protected String filename;
     @XmlElement(type = AddressModel.class)
-    protected List<Address> address;
+    protected List<Address> venue;
     @XmlElement(name = "u_r_l")
     protected List<URL> url;
     @XmlElementRef(name = "contact_person", type = JAXBElement.class, required = false)
     protected List<Person> contactPerson;
 
     /**
-     * Gets the value of the address property.
+     * Gets the value of the filename property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFilename() {
+        return filename;
+    }
+
+    /**
+     * Sets the value of the filename property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFilename(String value) {
+        this.filename = value;
+    }
+
+    /**
+     * Gets the value of the venue property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the address property.
+     * This is why there is not a <CODE>set</CODE> method for the venue property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getAddress().add(newItem);
+     *    getVenue().add(newItem);
      * </pre>
      * 
      * 
@@ -73,11 +100,11 @@ public class Club
      * 
      * 
      */
-    public List<Address> getAddress() {
-        if (address == null) {
-            address = new ArrayList<Address>();
+    public List<Address> getVenue() {
+        if (venue == null) {
+            venue = new ArrayList<Address>();
         }
-        return this.address;
+        return this.venue;
     }
 
     /**
