@@ -13,6 +13,7 @@ import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.ArgumentCommunicationAction;
 import de.edgesoft.refereemanager.utils.ArgumentCommunicationRecipient;
+import de.edgesoft.refereemanager.utils.CommunicationHelper;
 import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.PrefKey;
 
@@ -78,12 +79,13 @@ public class RefereeCommunication extends AbstractMainClass {
 		addOption("t", "text", "text to communicate.", true, true);
 		addOption("o", "outputpath", "output path.", true, false);
 		addOption("a", "action", "action (mail (default), letter).", true, false);
-		addOption("r", "recipient", "recipient (me (default), all, mailonly, letteronly, trainees).", true, false);
+		addOption("r", "recipient", "recipient (me (default), all, mailonly, letteronly).", true, false);
+		addOption("n", "trainees", "Send to trainees instead of referees.", false, false);
 		
 		init(args);
 		
 		refereeCommunication(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), 
-				getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), getOptionValue("r"));
+				getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), getOptionValue("r"), hasOption("n"));
 		
 	}
 
@@ -96,13 +98,14 @@ public class RefereeCommunication extends AbstractMainClass {
 	 * @param theTextfile text file
 	 * @param theOutputpath output path
 	 * @param theAction action (mail (default), letter)
-	 * @param theRecipient recipient (me (default), all, mailonly, letteronly, trainees)
+	 * @param theRecipient recipient (me (default), all, mailonly, letteronly)
+	 * @param toTrainees send to trainees instead of referees
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
 	public void refereeCommunication(final String theDBPath, final String theDBFile, final String theSeason, 
-			final String theTextfile, final String theOutputpath, final String theAction, final String theRecipient) {
+			final String theTextfile, final String theOutputpath, final String theAction, final String theRecipient, final boolean toTrainees) {
 		
 		Constants.logger.info("start.");
 		
@@ -127,7 +130,7 @@ public class RefereeCommunication extends AbstractMainClass {
 			// do nothing, remains "all"
 		}
 		
-		refereeCommunication(pathDBFile, Paths.get(theTextfile), theOutputpath, argAction, argRecipient);
+		refereeCommunication(pathDBFile, Paths.get(theTextfile), theOutputpath, argAction, argRecipient, toTrainees);
 		
 		Constants.logger.info("stop");
 		
@@ -141,11 +144,13 @@ public class RefereeCommunication extends AbstractMainClass {
 	 * @param theOutputPath output path
 	 * @param theAction action
 	 * @param theRecipient recipient
+	 * @param toTrainees send to trainees instead of referees
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-	public void refereeCommunication(final Path theDBPath, final Path theTextPath, final String theOutputPath, final ArgumentCommunicationAction theAction, final ArgumentCommunicationRecipient theRecipient) {
+	public void refereeCommunication(final Path theDBPath, final Path theTextPath, final String theOutputPath,
+			final ArgumentCommunicationAction theAction, final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees) {
 		
 		Objects.requireNonNull(theDBPath, "database file path must not be null");
 		Objects.requireNonNull(theTextPath, "text file path must not be null");
@@ -154,23 +159,24 @@ public class RefereeCommunication extends AbstractMainClass {
 		
 		try {
 			
-			Constants.logger.info("read text.");
+			Constants.logger.info(String.format("read text from '%s'.", theTextPath.toString()));
 			
 			final List<String> lstText = FileAccess.readFileInList(theTextPath);
 			
-			Constants.logger.info("read data.");
+			Constants.logger.info(String.format("read database '%s'.", theDBPath.toString()));
 			
 			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
+			
+			Constants.logger.info(String.format("execute action '%s'.", theAction.value()));
 			
 			switch (theAction) {
 				case LETTER:
 					Constants.logger.info("fill text.");
 					Constants.logger.info(String.format("save letter for '%s' in '%s'."));
 					break;
+					
 				case MAIL:
-					Constants.logger.info("fill text.");
-					Constants.logger.info(String.format("send mail to '%s'."));
-					Constants.logger.info(String.format("mail sent to '%s'."));
+					CommunicationHelper.sendMail(lstText, mgrData, theRecipient, toTrainees);
 					break;
 			}
 			

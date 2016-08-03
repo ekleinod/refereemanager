@@ -2,9 +2,9 @@ package de.edgesoft.refereemanager.model;
 
 import java.text.Collator;
 import java.util.Comparator;
-import java.util.Objects;
 
 import de.edgesoft.refereemanager.jaxb.Address;
+import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Person;
 
 /**
@@ -30,7 +30,7 @@ import de.edgesoft.refereemanager.jaxb.Person;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.7.0
+ * @version 0.8.0
  * @since 0.5.0
  */
 public class PersonModel extends Person {
@@ -44,11 +44,31 @@ public class PersonModel extends Person {
 	 * 
 	 * @return full name of the person
 	 * 
-	 * @version 0.5.0
+	 * @version 0.8.0
 	 * @since 0.5.0
 	 */
     public String getFullName() {
-    	return getFormattedName(PersonOutputType.FULLNAME);
+    	StringBuilder sbReturn = new StringBuilder();
+
+		if ((getTitle() != null) && !getTitle().isEmpty()) {
+			sbReturn.append(getTitle());
+		}
+		
+		if ((getFirstName() != null) && !getFirstName().isEmpty()) {
+			if (sbReturn.length() > 0) {
+				sbReturn.append(" ");
+			}
+			sbReturn.append(getFirstName());
+		}
+		
+		if ((getName() != null) && !getName().isEmpty()) {
+			if (sbReturn.length() > 0) {
+				sbReturn.append(" ");
+			}
+			sbReturn.append(getName());
+		}
+
+		return sbReturn.toString();
     }
     
 	/**
@@ -56,76 +76,58 @@ public class PersonModel extends Person {
 	 * 
 	 * @return table name of the person
 	 * 
-	 * @version 0.5.0
+	 * @version 0.8.0
 	 * @since 0.5.0
 	 */
     public String getTableName() {
-    	return getFormattedName(PersonOutputType.TABLENAME);
+    	StringBuilder sbReturn = new StringBuilder();
+
+		if ((getName() != null) && !getName().isEmpty()) {
+			sbReturn.append(getName());
+		}
+		
+		if ((getTitle() != null) && !getTitle().isEmpty()) {
+			if (sbReturn.length() > 0) {
+				sbReturn.append(", ");
+			}
+			sbReturn.append(getTitle());
+		}
+		
+		if ((getFirstName() != null) && !getFirstName().isEmpty()) {
+			if (sbReturn.length() > 0) {
+				sbReturn.append(", ");
+			}
+			sbReturn.append(getFirstName());
+		}
+
+		return sbReturn.toString();
     }
     
 	/**
-	 * Formatted name of person.
+	 * Filename name of person.
 	 * 
-	 * @param theOutputType output type
-	 * @return formatted name
+	 * @return filename name of the person
 	 * 
-	 * @version 0.5.0
-	 * @since 0.5.0
+	 * @version 0.8.0
+	 * @since 0.8.0
 	 */
-    private String getFormattedName(final PersonOutputType theOutputType) {
-		Objects.requireNonNull(theOutputType, "output type must not be null");
-		
+    public String getFileNameName() {
     	StringBuilder sbReturn = new StringBuilder();
 
-    	switch (theOutputType) {
-    		case FULLNAME:
-    			
-				if ((getTitle() != null) && !getTitle().isEmpty()) {
-					sbReturn.append(getTitle());
-				}
-				
-				if ((getFirstName() != null) && !getFirstName().isEmpty()) {
-					if (sbReturn.length() > 0) {
-						sbReturn.append(" ");
-					}
-					sbReturn.append(getFirstName());
-				}
-				
-				if ((getName() != null) && !getName().isEmpty()) {
-					if (sbReturn.length() > 0) {
-						sbReturn.append(" ");
-					}
-					sbReturn.append(getName());
-				}
-				
-    			break;
-    		
-			case TABLENAME:
-				
-				if ((getName() != null) && !getName().isEmpty()) {
-					sbReturn.append(getName());
-				}
-				
-				if ((getTitle() != null) && !getTitle().isEmpty()) {
-					if (sbReturn.length() > 0) {
-						sbReturn.append(", ");
-					}
-					sbReturn.append(getTitle());
-				}
-				
-				if ((getFirstName() != null) && !getFirstName().isEmpty()) {
-					if (sbReturn.length() > 0) {
-						sbReturn.append(", ");
-					}
-					sbReturn.append(getFirstName());
-				}
-				
-				break;
+		if ((getName() != null) && !getName().isEmpty()) {
+			sbReturn.append(getName().toLowerCase());
 		}
-    	
-    	return sbReturn.toString();
-    }
+		
+		if ((getFirstName() != null) && !getFirstName().isEmpty()) {
+			if (sbReturn.length() > 0) {
+				sbReturn.append("_");
+			}
+			sbReturn.append(getFirstName().toLowerCase());
+		}
 
+		return sbReturn.toString();
+    }
+    
 	/**
 	 * Primary address.
 	 * 
@@ -136,6 +138,22 @@ public class PersonModel extends Person {
 	 */
     public Address getPrimaryAddress() {
     	return getAddress()
+    			.stream()
+    			.filter(ContactModel.ISPRIMARY)
+    			.findFirst()
+    			.orElse(null);
+    }
+    
+	/**
+	 * Primary email.
+	 * 
+	 * @return primary email
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+    public EMail getPrimaryEMail() {
+    	return getEMail()
     			.stream()
     			.filter(ContactModel.ISPRIMARY)
     			.findFirst()

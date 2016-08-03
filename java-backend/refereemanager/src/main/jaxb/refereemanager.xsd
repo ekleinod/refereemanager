@@ -163,7 +163,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Trainee">
 		<xsd:complexContent>
-			<xsd:extension base="Person">
+			<xsd:extension base="Referee">
 				<xsd:sequence>
 					<xsd:element name="points_written_a" type="xsd:int" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="points_written_b" type="xsd:int" minOccurs="0" maxOccurs="1" />

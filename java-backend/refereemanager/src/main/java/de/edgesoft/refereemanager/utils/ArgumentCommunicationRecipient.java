@@ -34,8 +34,7 @@ public enum ArgumentCommunicationRecipient {
 	ALL,
 	LETTERONLY,
 	MAILONLY,
-	ME,
-	TRAINEES;
+	ME;
 	
     private final String value;
 

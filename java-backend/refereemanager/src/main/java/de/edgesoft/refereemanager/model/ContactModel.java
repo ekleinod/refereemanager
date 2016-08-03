@@ -27,13 +27,13 @@ import de.edgesoft.refereemanager.jaxb.Contact;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.6.0
+ * @version 0.8.0
  * @since 0.6.0
  */
 public class ContactModel extends Contact {
 
 	/** Filter predicate for primary contacts. */
-	public static Predicate<Contact> ISPRIMARY = Contact::isIsPrimary;
+	public static Predicate<Contact> ISPRIMARY = (contact -> (contact.isIsPrimary() == null) || contact.isIsPrimary());
 	
 }
 

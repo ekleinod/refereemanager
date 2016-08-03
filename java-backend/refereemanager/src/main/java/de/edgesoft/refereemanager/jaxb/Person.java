@@ -62,7 +62,6 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
     "sexType"
 })
 @XmlSeeAlso({
-    Trainee.class,
     RefereeModel.class
 })
 public class Person
