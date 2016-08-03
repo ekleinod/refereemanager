@@ -14,6 +14,7 @@ import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.ArgumentCommunicationAction;
 import de.edgesoft.refereemanager.utils.ArgumentCommunicationRecipient;
 import de.edgesoft.refereemanager.utils.Constants;
+import de.edgesoft.refereemanager.utils.PrefKey;
 
 /**
  * Referee communication.
@@ -69,10 +70,10 @@ public class RefereeCommunication extends AbstractMainClass {
 	@Override
 	public void executeOperation(final String[] args) {
 		
-		setDescription("Sends an email to the selected recipients.");
+		setDescription("Communication operations.");
 		
 		addOption("p", "path", "input path of data.", true, true);
-		addOption("f", "file", MessageFormat.format("input file name template (empty for {0}).", Constants.DATAFILENAMEPATTERN), true, false);
+		addOption("f", "file", MessageFormat.format("input file name template (empty for {0}).", Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE)), true, false);
 		addOption("s", "season", "season (empty for current season).", true, false);
 		addOption("t", "text", "text to communicate.", true, true);
 		addOption("o", "outputpath", "output path.", true, false);
@@ -110,7 +111,7 @@ public class RefereeCommunication extends AbstractMainClass {
 		
 		Integer iSeason = (theSeason == null) ? SeasonModel.getCurrentStartYear() : Integer.valueOf(theSeason);
 		
-		Path pathDBFile = Paths.get(theDBPath, String.format(((theDBFile == null) ? Constants.DATAFILENAMEPATTERN : theDBFile), iSeason));
+		Path pathDBFile = Paths.get(theDBPath, String.format(((theDBFile == null) ? Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE) : theDBFile), iSeason));
 		
 		ArgumentCommunicationAction argAction = ArgumentCommunicationAction.MAIL;
 		try {

@@ -13,6 +13,7 @@ import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.ArgumentStatusType;
 import de.edgesoft.refereemanager.utils.Constants;
+import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.TemplateHelper;
 
 /**
@@ -63,16 +64,16 @@ public class RefereeList extends AbstractMainClass {
 	 * - call init(args);
 	 * - call operation execution with arguments
 	 * 
-	 * @version 0.6.0
+	 * @version 0.8.0
 	 * @since 0.5.0
 	 */
 	@Override
 	public void executeOperation(final String[] args) {
 		
-		setDescription("Sends an email to the selected recipients.");
+		setDescription("Generates referee lists.");
 		
 		addOption("p", "path", "input path of data.", true, true);
-		addOption("f", "file", MessageFormat.format("input file name template (empty for {0}).", Constants.DATAFILENAMEPATTERN), true, false);
+		addOption("f", "file", MessageFormat.format("input file name template (empty for {0}).", Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE)), true, false);
 		addOption("s", "season", "season (empty for current season).", true, false);
 		addOption("t", "template", "template to fill.", true, true);
 		addOption("o", "output", "output file (empty for template + '.out').", true, false);
@@ -106,7 +107,7 @@ public class RefereeList extends AbstractMainClass {
 		
 		Integer iSeason = (theSeason == null) ? SeasonModel.getCurrentStartYear() : Integer.valueOf(theSeason);
 		
-		Path pathDBFile = Paths.get(theDBPath, String.format(((theDBFile == null) ? Constants.DATAFILENAMEPATTERN : theDBFile), iSeason));
+		Path pathDBFile = Paths.get(theDBPath, String.format(((theDBFile == null) ? Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE) : theDBFile), iSeason));
 		
 		String sOutFile = (theOutputfile == null) ? String.format("%s.out", theTemplatefile) : theOutputfile;
 		
@@ -143,11 +144,11 @@ public class RefereeList extends AbstractMainClass {
 		
 		try {
 			
-			Constants.logger.info("read template.");
+			Constants.logger.info(String.format("read template '%s'.", theTemplatePath.toString()));
 			
 			final List<String> lstTemplate = FileAccess.readFileInList(theTemplatePath);
 			
-			Constants.logger.info("read data.");
+			Constants.logger.info(String.format("read database '%s'.", theDBPath.toString()));
 			
 			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
 			
@@ -155,7 +156,7 @@ public class RefereeList extends AbstractMainClass {
 			
 			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null, 0, theStatus);
 			
-			Constants.logger.info("write referee list.");
+			Constants.logger.info(String.format("write referee list to '%s'.", theOutputPath.toString()));
 			
 			FileAccess.writeFile(theOutputPath, lstFilled);
 			
