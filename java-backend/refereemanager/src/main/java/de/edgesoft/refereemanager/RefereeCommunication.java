@@ -176,7 +176,7 @@ public class RefereeCommunication extends AbstractMainClass {
 					break;
 					
 				case MAIL:
-					CommunicationHelper.sendMail(lstText, mgrData, theRecipient, toTrainees);
+					CommunicationHelper.sendMail(lstText.get(0), lstText.subList(1, lstText.size()), mgrData, theRecipient, toTrainees);
 					break;
 			}
 			
