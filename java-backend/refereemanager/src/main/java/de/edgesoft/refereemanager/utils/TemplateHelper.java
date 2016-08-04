@@ -58,7 +58,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.6.0
+ * @version 0.8.0
  * @since 0.5.0
  */
 public class TemplateHelper {
@@ -150,13 +150,15 @@ public class TemplateHelper {
 	 * @param theLoopElement element that is looped at the moment
 	 * @param theLoopCount loop count
 	 * @param theStatus status (all (default), active, inactive)
+	 * @param isEditor use editor only data?
 	 * 
 	 * @return filled template
 	 * 
-	 * @version 0.6.0
+	 * @version 0.8.0
 	 * @since 0.5.0
 	 */
-	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, final TitledIDType theLoopElement, final int theLoopCount, final ArgumentStatusType theStatus) {
+	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, 
+			final TitledIDType theLoopElement, final int theLoopCount, final ArgumentStatusType theStatus, final boolean isEditor) {
 		
 		Objects.requireNonNull(theTemplate, "template must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
@@ -185,7 +187,7 @@ public class TemplateHelper {
 									.sorted(PersonModel.NAME_FIRSTNAME)
 									.filter(theStatus.ref_filter())
 									.collect(Collectors.toList())) {
-								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theReferee, iLoop++, theStatus));
+								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theReferee, iLoop++, theStatus, isEditor));
 							}
 							break;
 						case "statustype":
@@ -193,7 +195,7 @@ public class TemplateHelper {
 									.sorted(TitledIDTypeModel.TITLE)
 									.filter(theStatus.status_filter())
 									.collect(Collectors.toList())) {
-								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType, iLoop++, theStatus));
+								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType, iLoop++, theStatus, isEditor));
 							}
 							break;
 					}
@@ -230,7 +232,7 @@ public class TemplateHelper {
 					sTempLine = replaceCondition(TOKEN_IF_ODD, sTempLine, getTokenClass(theLoopElement), (theLoopCount % 2 == 1));
 				}
 				
-				lstReturn.add(fillLine(sTempLine, theData, theLoopElement, ""));
+				lstReturn.add(fillLine(sTempLine, theData, theLoopElement, "", isEditor));
 			}
 			
 		}
@@ -245,13 +247,14 @@ public class TemplateHelper {
 	 * @param theData data
 	 * @param theLoopElement element that is looped at the moment
 	 * @param theTokenPrefix token prefix
+	 * @param isEditor use editor only data?
 	 * 
 	 * @return filled line
 	 * 
-	 * @version 0.5.0
+	 * @version 0.8.0
 	 * @since 0.5.0
 	 */
-	private static String fillLine(final String theLine, final ModelClass theData, final TitledIDType theLoopElement, final String theTokenPrefix) {
+	private static String fillLine(final String theLine, final ModelClass theData, final TitledIDType theLoopElement, final String theTokenPrefix, final boolean isEditor) {
 		
 		Objects.requireNonNull(theLine, "line must not be null");
 		Objects.requireNonNull(theData, MessageFormat.format("data must not be null: {0}", theTokenPrefix));
@@ -282,7 +285,7 @@ public class TemplateHelper {
 					
 					if ((oResult != null) && ModelClass.class.isAssignableFrom(theGetter.getValue().getReturnType())) {
 						
-						sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix);
+						sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix, isEditor);
 						
 					} 
 						
@@ -297,7 +300,7 @@ public class TemplateHelper {
 							// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!
 							try {
 								for (ModelClass theDataObject : (List<ModelClass>) oResult) {
-									sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix);
+									sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix, isEditor);
 								}
 							} catch (ClassCastException e) {
 //									Constants.logger.error(sTokenPrefix);
@@ -329,7 +332,7 @@ public class TemplateHelper {
 										if (isMore) {
 											sbLine.append(sSeparator);
 										}
-										sbLine.append(fillLine(sLoopLine, theDataObject, theLoopElement, sTokenPrefix));
+										sbLine.append(fillLine(sLoopLine, theDataObject, theLoopElement, sTokenPrefix, isEditor));
 										isMore = true;
 									}
 									
@@ -431,8 +434,8 @@ public class TemplateHelper {
 						} else {
 							
 //							if (sToken.startsWith("referee:")) {
-//								Constants.logger.info(sToken);
-////								Constants.logger.info(oResult);
+//								Constants.logger.debug(sToken);
+////								Constants.logger.debug(oResult);
 //							}
 							
 							if (sReturn.contains(sToken)) {

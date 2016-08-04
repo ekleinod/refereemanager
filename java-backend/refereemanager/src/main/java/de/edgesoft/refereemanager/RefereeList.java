@@ -78,10 +78,11 @@ public class RefereeList extends AbstractMainClass {
 		addOption("t", "template", "template to fill.", true, true);
 		addOption("o", "output", "output file (empty for template + '.out').", true, false);
 		addOption("a", "status", "status (all (default), active, inactive).", true, false);
+		addOption("e", "editor", "use data too, that is editor only.", false, false);
 		
 		init(args);
 		
-		listReferees(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), getOptionValue("t"), getOptionValue("o"), getOptionValue("a"));
+		listReferees(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), hasOption("e"));
 		
 	}
 
@@ -94,11 +95,13 @@ public class RefereeList extends AbstractMainClass {
 	 * @param theTemplatefile template file
 	 * @param theOutputfile output file (null = template + ".out")
 	 * @param theStatus status (all (default), activeonly)
+	 * @param isEditor use editor only data?
 	 * 
 	 * @version 0.8.0
 	 * @since 0.5.0
 	 */
-	public void listReferees(final String theDBPath, final String theDBFile, final String theSeason, final String theTemplatefile, final String theOutputfile, final String theStatus) {
+	public void listReferees(final String theDBPath, final String theDBFile, final String theSeason, 
+			final String theTemplatefile, final String theOutputfile, final String theStatus, final boolean isEditor) {
 		
 		Constants.logger.debug("start.");
 		
@@ -118,7 +121,7 @@ public class RefereeList extends AbstractMainClass {
 			// do nothing, remains "all"
 		}
 		
-		listReferees(pathDBFile, Paths.get(theTemplatefile), Paths.get(sOutFile), argStatus);
+		listReferees(pathDBFile, Paths.get(theTemplatefile), Paths.get(sOutFile), argStatus, isEditor);
 		
 		Constants.logger.debug("stop");
 		
@@ -131,11 +134,12 @@ public class RefereeList extends AbstractMainClass {
 	 * @param theTemplatePath template file
 	 * @param theOutputPath output file
 	 * @param theStatus status
+	 * @param isEditor use editor only data?
 	 * 
 	 * @version 0.8.0
 	 * @since 0.5.0
 	 */
-	public void listReferees(final Path theDBPath, final Path theTemplatePath, final Path theOutputPath, final ArgumentStatusType theStatus) {
+	public void listReferees(final Path theDBPath, final Path theTemplatePath, final Path theOutputPath, final ArgumentStatusType theStatus, final boolean isEditor) {
 		
 		Objects.requireNonNull(theDBPath, "database file path must not be null");
 		Objects.requireNonNull(theTemplatePath, "template file path must not be null");
@@ -154,7 +158,7 @@ public class RefereeList extends AbstractMainClass {
 			
 			Constants.logger.debug("fill template.");
 			
-			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null, 0, theStatus);
+			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null, 0, theStatus, isEditor);
 			
 			Constants.logger.debug(String.format("write referee list to '%s'.", theOutputPath.toString()));
 			
