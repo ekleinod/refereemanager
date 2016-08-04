@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -81,11 +82,12 @@ public class RefereeCommunication extends AbstractMainClass {
 		addOption("a", "action", "action (mail (default), letter).", true, false);
 		addOption("r", "recipient", "recipient (me (default), all, mailonly, letteronly).", true, false);
 		addOption("n", "trainees", "Send to trainees instead of referees.", false, false);
+		addOption("c", "attachments", "List of attachments, comma separated.", true, false);
 		
 		init(args);
 		
 		refereeCommunication(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), 
-				getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), getOptionValue("r"), hasOption("n"));
+				getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), getOptionValue("r"), hasOption("n"), getOptionValue("c"));
 		
 	}
 
@@ -100,12 +102,13 @@ public class RefereeCommunication extends AbstractMainClass {
 	 * @param theAction action (mail (default), letter)
 	 * @param theRecipient recipient (me (default), all, mailonly, letteronly)
 	 * @param toTrainees send to trainees instead of referees
+	 * @param theAttachments file Attachments
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
 	public void refereeCommunication(final String theDBPath, final String theDBFile, final String theSeason, 
-			final String theTextfile, final String theOutputpath, final String theAction, final String theRecipient, final boolean toTrainees) {
+			final String theTextfile, final String theOutputpath, final String theAction, final String theRecipient, final boolean toTrainees, final String theAttachments) {
 		
 		Constants.logger.debug("start.");
 		
@@ -130,7 +133,15 @@ public class RefereeCommunication extends AbstractMainClass {
 			// do nothing, remains "all"
 		}
 		
-		refereeCommunication(pathDBFile, Paths.get(theTextfile), theOutputpath, argAction, argRecipient, toTrainees);
+		List<Path> lstPaths = new ArrayList<>();
+		if (theAttachments != null) {
+			String[] arrAttachmentNames = theAttachments.split(",");
+			for (String filename : arrAttachmentNames) {
+				lstPaths.add(Paths.get(filename.trim()));
+			}
+		}
+		
+		refereeCommunication(pathDBFile, Paths.get(theTextfile), theOutputpath, argAction, argRecipient, toTrainees, lstPaths.toArray(new Path[0]));
 		
 		Constants.logger.debug("stop");
 		
@@ -145,12 +156,13 @@ public class RefereeCommunication extends AbstractMainClass {
 	 * @param theAction action
 	 * @param theRecipient recipient
 	 * @param toTrainees send to trainees instead of referees
+	 * @param theAttachments file Attachments
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
 	public void refereeCommunication(final Path theDBPath, final Path theTextPath, final String theOutputPath,
-			final ArgumentCommunicationAction theAction, final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees) {
+			final ArgumentCommunicationAction theAction, final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final Path... theAttachments) {
 		
 		Objects.requireNonNull(theDBPath, "database file path must not be null");
 		Objects.requireNonNull(theTextPath, "text file path must not be null");
@@ -176,7 +188,7 @@ public class RefereeCommunication extends AbstractMainClass {
 					break;
 					
 				case MAIL:
-					CommunicationHelper.sendMail(lstText.get(0), lstText.subList(1, lstText.size()), mgrData, theRecipient, toTrainees);
+					CommunicationHelper.sendMail(lstText.get(0), lstText.subList(1, lstText.size()), mgrData, theRecipient, toTrainees, theAttachments);
 					break;
 			}
 			

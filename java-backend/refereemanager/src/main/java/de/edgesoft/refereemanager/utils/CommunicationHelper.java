@@ -1,6 +1,7 @@
 package de.edgesoft.refereemanager.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -9,8 +10,11 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.Address;
 import javax.mail.Authenticator;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
@@ -19,7 +23,9 @@ import javax.mail.SendFailedException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import de.edgesoft.refereemanager.Prefs;
 import de.edgesoft.refereemanager.jaxb.EMail;
@@ -71,11 +77,13 @@ public class CommunicationHelper {
 	 * @param theData data
 	 * @param theRecipient recipient
 	 * @param toTrainees send to trainees instead of referees
+	 * @param theAttachments file Attachments
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-	public static void sendMail(final String theSubject, final List<String> theText, final RefereeManager theData, final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees) {
+	public static void sendMail(final String theSubject, final List<String> theText, final RefereeManager theData, 
+			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final Path... theAttachments) {
 		
 		Objects.requireNonNull(theText, "text must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
@@ -138,8 +146,24 @@ public class CommunicationHelper {
 			
 			msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM), Prefs.get(PrefKey.EMAIL_FROMNAME)));
 			msgMail.setSubject(theSubject);
-			msgMail.setText(toText(theText));
 			msgMail.setSentDate(new Date());
+
+			MimeMultipart msgContent = new MimeMultipart();
+			
+			MimeBodyPart text = new MimeBodyPart();
+			text.setText(toText(theText));
+			msgContent.addBodyPart(text);
+			
+			msgMail.setContent(msgContent);
+			
+			if (theAttachments != null) {
+				for (Path attachment : theAttachments) {
+					BodyPart bpAttachment = new MimeBodyPart();
+					bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
+					bpAttachment.setFileName(attachment.getFileName().toString());
+					msgContent.addBodyPart(bpAttachment);
+				}
+			}
 			
 			for (Address address : lstRecipients) {
 				try {
