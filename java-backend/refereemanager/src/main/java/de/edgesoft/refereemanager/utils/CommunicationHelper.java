@@ -1,6 +1,7 @@
 package de.edgesoft.refereemanager.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,7 +110,7 @@ public class CommunicationHelper {
 						break;
 					case ME:
 						if ((theEMail != null) && (theEMail.getEMail().equals(Prefs.get(PrefKey.MY_EMAIL)))) {
-							lstRecipients.add(new InternetAddress(theEMail.getEMail(), theReferee.getFullName()));
+							lstRecipients.add(new InternetAddress(theEMail.getEMail(), theReferee.getFullName(), StandardCharsets.UTF_8.name()));
 						}
 						break;
 					case LETTERONLY:
@@ -120,14 +121,15 @@ public class CommunicationHelper {
 			}
 			
 		}
-		
-		try {
-			lstRecipients.add(new InternetAddress("wrong@ekkart.de", "Wrong"));
-			lstRecipients.add(new InternetAddress("wrong", "Wrong again"));
-			lstRecipients.add(new InternetAddress("ekleinod@edgesoft.de", "Correct"));
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
+
+//		// debug addresses
+//		try {
+//			lstRecipients.add(new InternetAddress("wrong@ekkart.de", "Wrong"));
+//			lstRecipients.add(new InternetAddress("wrong", "Wrong again"));
+//			lstRecipients.add(new InternetAddress("ekleinod@edgesoft.de", "Correct"));
+//		} catch (UnsupportedEncodingException e1) {
+//			e1.printStackTrace();
+//		}
 		
 		// send email
 		Properties mailProps = new Properties();
@@ -144,7 +146,7 @@ public class CommunicationHelper {
 		try {
 			Message msgMail = new MimeMessage(session);
 			
-			msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM), Prefs.get(PrefKey.EMAIL_FROMNAME)));
+			msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM), Prefs.get(PrefKey.EMAIL_FROMNAME), StandardCharsets.UTF_8.name()));
 			msgMail.setSubject(theSubject);
 			msgMail.setSentDate(new Date());
 

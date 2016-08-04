@@ -3,6 +3,8 @@ package de.edgesoft.refereemanager.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.edgesoft.refereemanager.Prefs;
+
 /**
  * Provides constants.
  *
@@ -38,7 +40,7 @@ public class Constants {
 	public static final String DOCVERSION = "0.6.0";
 
 	/** Logger for all classes. */
-	public static final Logger logger = LogManager.getLogger();
+	public static final Logger logger = LogManager.getLogger(Prefs.class.getPackage().getName());
 	
 }
 

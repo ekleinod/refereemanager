@@ -8,7 +8,7 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="de.edgesoft.refereemanager.RefereeCommunication"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--path ../../../../rani/schiri/refereemanager --text /home/ekleinod/working/rani/schiri/2016-2017/Nachrichten/2016-08_Einsatzplan.mmd --action mail --recipient me --attachments &quot;/home/ekleinod/working/rani/schiri/2016-2017/2016-2017_BeTTV_Einsatzplan.pdf, /home/ekleinod/working/rani/schiri/2016-2017/2016-2017_BeTTV_VSR.pdf&quot;"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--path ../../../../rani/schiri/refereemanager --text /home/ekleinod/working/rani/schiri/2016-2017/Nachrichten/2016-08_Einsatzplan.mmd --action mail --recipient all --attachments &quot;/home/ekleinod/working/rani/schiri/2016-2017/2016-2017_BeTTV_Einsatzplan.pdf, /home/ekleinod/working/rani/schiri/2016-2017/2016-2017_BeTTV_VSR.pdf&quot;"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="refereemanager"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 </launchConfiguration>
