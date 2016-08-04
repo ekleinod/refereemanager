@@ -100,7 +100,7 @@ public class RefereeList extends AbstractMainClass {
 	 */
 	public void listReferees(final String theDBPath, final String theDBFile, final String theSeason, final String theTemplatefile, final String theOutputfile, final String theStatus) {
 		
-		Constants.logger.info("start.");
+		Constants.logger.debug("start.");
 		
 		Objects.requireNonNull(theDBPath, "database path must not be null");
 		Objects.requireNonNull(theTemplatefile, "template file must not be null");
@@ -120,7 +120,7 @@ public class RefereeList extends AbstractMainClass {
 		
 		listReferees(pathDBFile, Paths.get(theTemplatefile), Paths.get(sOutFile), argStatus);
 		
-		Constants.logger.info("stop");
+		Constants.logger.debug("stop");
 		
 	}
 	
@@ -144,19 +144,19 @@ public class RefereeList extends AbstractMainClass {
 		
 		try {
 			
-			Constants.logger.info(String.format("read template '%s'.", theTemplatePath.toString()));
+			Constants.logger.debug(String.format("read template '%s'.", theTemplatePath.toString()));
 			
 			final List<String> lstTemplate = FileAccess.readFileInList(theTemplatePath);
 			
-			Constants.logger.info(String.format("read database '%s'.", theDBPath.toString()));
+			Constants.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
 			
 			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
 			
-			Constants.logger.info("fill template.");
+			Constants.logger.debug("fill template.");
 			
 			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null, 0, theStatus);
 			
-			Constants.logger.info(String.format("write referee list to '%s'.", theOutputPath.toString()));
+			Constants.logger.debug(String.format("write referee list to '%s'.", theOutputPath.toString()));
 			
 			FileAccess.writeFile(theOutputPath, lstFilled);
 			

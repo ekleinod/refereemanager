@@ -98,7 +98,7 @@ public class DBOperations extends AbstractMainClass {
 	 */
 	public void dbOperation(final String theDBPath, final String theDBFile, final String theSeason, final String theOutputfile, final String theDBOperation) {
 		
-		Constants.logger.info("start.");
+		Constants.logger.debug("start.");
 		
 		Objects.requireNonNull(theDBPath, "database path must not be null");
 		Objects.requireNonNull(theDBOperation, "database  operation must not be null");
@@ -113,7 +113,7 @@ public class DBOperations extends AbstractMainClass {
 		
 		dbOperation(pathDBFile, Paths.get(sOutFile), argDBOperation);
 		
-		Constants.logger.info("stop");
+		Constants.logger.debug("stop");
 		
 	}
 	
@@ -136,11 +136,11 @@ public class DBOperations extends AbstractMainClass {
 		
 		try {
 			
-			Constants.logger.info(String.format("read database '%s'.", theDBPath.toString()));
+			Constants.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
 			
 			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
 			
-			Constants.logger.info(String.format("execute operation '%s'.", theDBOperation.value()));
+			Constants.logger.debug(String.format("execute operation '%s'.", theDBOperation.value()));
 			
 			// do something
 			switch (theDBOperation) {
@@ -160,7 +160,7 @@ public class DBOperations extends AbstractMainClass {
 			mgrData.getInfo().setAppversion(new VersionExt(Constants.APPVERSION));
 			mgrData.getInfo().setCreator(this.getClass().getName());
 			
-			Constants.logger.info(String.format("write database '%s'.", theOutputPath.toString()));
+			Constants.logger.debug(String.format("write database '%s'.", theOutputPath.toString()));
 			
 			JAXBFiles.marshal(new ObjectFactory().createRefereemanager(mgrData), theOutputPath.toString(), "../../../git/refereemanager/java-backend/refereemanager/src/main/jaxb/refereemanager.xsd");
 			

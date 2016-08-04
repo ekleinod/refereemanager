@@ -10,9 +10,11 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 
 import javax.mail.Address;
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.SendFailedException;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -56,6 +58,13 @@ public class CommunicationHelper {
 	
 	/**
 	 * Sends mails.
+	 * 
+	 * If there are multiple recipients, {@link Transport#send(Message, String, String)} sends
+	 * all mails in a transaction, meaning if one fails, all fail.
+	 * 
+	 * Thus, every mail is sent individually.
+	 * Maybe I'm doing something wrong there, in that case the code could be
+	 * changes to including all recipients as BCC.
 	 * 
 	 * @param theSubject subject
 	 * @param theText text
@@ -104,38 +113,52 @@ public class CommunicationHelper {
 			
 		}
 		
+		try {
+			lstRecipients.add(new InternetAddress("wrong@ekkart.de", "Wrong"));
+			lstRecipients.add(new InternetAddress("wrong", "Wrong again"));
+			lstRecipients.add(new InternetAddress("ekleinod@edgesoft.de", "Correct"));
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		
 		// send email
 		Properties mailProps = new Properties();
 		mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.EMAIL_SMTP_HOST));
+		mailProps.setProperty("mail.smtp.auth", "true");
 		
-		Session session = Session.getInstance(mailProps);
+		Session session = Session.getInstance(mailProps, new Authenticator() {
+		      @Override protected PasswordAuthentication getPasswordAuthentication() {
+		          return new PasswordAuthentication(Prefs.get(PrefKey.EMAIL_SMTP_USERNAME), Prefs.get(PrefKey.EMAIL_SMTP_PASSWORD));
+		        }
+		      });
 		
-		Message msgMail = new MimeMessage(session);
 		
 		try {
+			Message msgMail = new MimeMessage(session);
 			
 			msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM), Prefs.get(PrefKey.EMAIL_FROMNAME)));
-			msgMail.setRecipient(RecipientType.TO, new InternetAddress(Prefs.get(PrefKey.EMAIL_TO), Prefs.get(PrefKey.EMAIL_TONAME)));
-			
 			msgMail.setSubject(theSubject);
 			msgMail.setText(toText(theText));
 			msgMail.setSentDate(new Date());
 			
-			msgMail.setRecipients(RecipientType.BCC, lstRecipients.toArray(new Address[]{}));
-
-			Transport.send(msgMail, Prefs.get(PrefKey.EMAIL_SMTP_USERNAME), Prefs.get(PrefKey.EMAIL_SMTP_PASSWORD));
-			lstRecipients.stream().forEach(adr -> Constants.logger.info(String.format("sent mail to '%s'.", adr.toString())));
+			for (Address address : lstRecipients) {
+				try {
+					msgMail.setRecipient(RecipientType.TO, address);
+					Transport.send(msgMail);
+					Constants.logger.info(String.format("sent mail to '%s'.", address.toString()));
+				} catch (SendFailedException e) {
+					if (e.getInvalidAddresses() != null) {
+						Arrays.asList(e.getInvalidAddresses()).forEach(adr -> Constants.logger.error(String.format("invalid address, not sent: '%s'.", adr.toString())));
+					}
+					if (e.getValidUnsentAddresses() != null) {
+						Arrays.asList(e.getValidUnsentAddresses()).forEach(adr -> Constants.logger.error(String.format("valid address, but not sent: '%s'.", adr.toString())));
+					}
+					if (e.getValidSentAddresses() != null) {
+						Arrays.asList(e.getValidSentAddresses()).forEach(adr -> Constants.logger.error(String.format("valid address, sent email: '%s'.", adr.toString())));
+					}
+				}
+			}
 			
-		} catch (SendFailedException e) {
-			if (e.getInvalidAddresses() != null) {
-				Arrays.asList(e.getInvalidAddresses()).forEach(adr -> Constants.logger.info(String.format("invalid address: '%s'.", adr.toString())));
-			}
-			if (e.getValidUnsentAddresses() != null) {
-				Arrays.asList(e.getValidUnsentAddresses()).forEach(adr -> Constants.logger.info(String.format("valid address, but not sent: '%s'.", adr.toString())));
-			}
-			if (e.getValidSentAddresses() != null) {
-				Arrays.asList(e.getValidSentAddresses()).forEach(adr -> Constants.logger.info(String.format("valid address, sent email: '%s'.", adr.toString())));
-			}
 		} catch (MessagingException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

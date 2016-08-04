@@ -107,7 +107,7 @@ public class RefereeCommunication extends AbstractMainClass {
 	public void refereeCommunication(final String theDBPath, final String theDBFile, final String theSeason, 
 			final String theTextfile, final String theOutputpath, final String theAction, final String theRecipient, final boolean toTrainees) {
 		
-		Constants.logger.info("start.");
+		Constants.logger.debug("start.");
 		
 		Objects.requireNonNull(theDBPath, "database path must not be null");
 		Objects.requireNonNull(theTextfile, "text file must not be null");
@@ -132,7 +132,7 @@ public class RefereeCommunication extends AbstractMainClass {
 		
 		refereeCommunication(pathDBFile, Paths.get(theTextfile), theOutputpath, argAction, argRecipient, toTrainees);
 		
-		Constants.logger.info("stop");
+		Constants.logger.debug("stop");
 		
 	}
 	
@@ -159,20 +159,20 @@ public class RefereeCommunication extends AbstractMainClass {
 		
 		try {
 			
-			Constants.logger.info(String.format("read text from '%s'.", theTextPath.toString()));
+			Constants.logger.debug(String.format("read text from '%s'.", theTextPath.toString()));
 			
 			final List<String> lstText = FileAccess.readFileInList(theTextPath);
 			
-			Constants.logger.info(String.format("read database '%s'.", theDBPath.toString()));
+			Constants.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
 			
 			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
 			
-			Constants.logger.info(String.format("execute action '%s'.", theAction.value()));
+			Constants.logger.debug(String.format("execute action '%s'.", theAction.value()));
 			
 			switch (theAction) {
 				case LETTER:
-					Constants.logger.info("fill text.");
-					Constants.logger.info(String.format("save letter for '%s' in '%s'."));
+					Constants.logger.debug("fill text.");
+					Constants.logger.debug(String.format("save letter for '%s' in '%s'."));
 					break;
 					
 				case MAIL:
