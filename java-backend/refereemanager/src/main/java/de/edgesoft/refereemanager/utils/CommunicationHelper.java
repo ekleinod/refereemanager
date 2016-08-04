@@ -3,6 +3,9 @@ package de.edgesoft.refereemanager.utils;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -78,17 +81,23 @@ public class CommunicationHelper {
 	 * @param theData data
 	 * @param theRecipient recipient
 	 * @param toTrainees send to trainees instead of referees
+	 * @param isTest is test?
 	 * @param theAttachments file Attachments
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
 	public static void sendMail(final String theSubject, final List<String> theText, final RefereeManager theData, 
-			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final Path... theAttachments) {
+			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest, final Path... theAttachments) {
 		
 		Objects.requireNonNull(theText, "text must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
 		Objects.requireNonNull(theRecipient, "recipient must not be null");
+		
+		if (isTest) {
+			Constants.logger.info("Testmode: no mails are sent!.");
+		}
+		Constants.logger.info(String.format("Sending mails to '%s', trainees: %s.", theRecipient.value(), toTrainees));
 		
 		List<Address> lstRecipients = new ArrayList<>();
 
@@ -164,13 +173,21 @@ public class CommunicationHelper {
 					bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
 					bpAttachment.setFileName(attachment.getFileName().toString());
 					msgContent.addBodyPart(bpAttachment);
+					
+					Constants.logger.info(String.format("Adding attachment '%s'.", bpAttachment.getFileName()));
 				}
 			}
+			
+			LocalTime tmeStart = LocalTime.now();
 			
 			for (Address address : lstRecipients) {
 				try {
 					msgMail.setRecipient(RecipientType.TO, address);
-					Transport.send(msgMail);
+					
+					if (!isTest) {
+						Transport.send(msgMail);
+					}
+					
 					Constants.logger.info(String.format("sent mail to '%s'.", address.toString()));
 				} catch (SendFailedException e) {
 					if (e.getInvalidAddresses() != null) {
@@ -184,6 +201,10 @@ public class CommunicationHelper {
 					}
 				}
 			}
+			
+			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
+			Constants.logger.info(String.format("Sending time: %s.", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+			
 			
 		} catch (MessagingException | UnsupportedEncodingException e) {
 			e.printStackTrace();
