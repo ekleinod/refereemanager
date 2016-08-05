@@ -34,10 +34,10 @@ import de.edgesoft.refereemanager.Prefs;
 public class Constants {
 
 	/** Program version. */
-	public static final String APPVERSION = "0.6.0";
+	public static final String APPVERSION = "0.8.0";
 	
 	/** Document version. */
-	public static final String DOCVERSION = "0.6.0";
+	public static final String DOCVERSION = "0.8.0";
 
 	/** Logger for all classes. */
 	public static final Logger logger = LogManager.getLogger(Prefs.class.getPackage().getName());
