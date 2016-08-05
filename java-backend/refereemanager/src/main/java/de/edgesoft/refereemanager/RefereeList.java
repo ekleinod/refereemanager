@@ -10,6 +10,7 @@ import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
+import de.edgesoft.refereemanager.model.ContactModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.ArgumentStatusType;
 import de.edgesoft.refereemanager.utils.Constants;
@@ -78,11 +79,13 @@ public class RefereeList extends AbstractMainClass {
 		addOption("t", "template", "template to fill.", true, true);
 		addOption("o", "output", "output file (empty for template + '.out').", true, false);
 		addOption("a", "status", "status (all (default), active, inactive).", true, false);
-		addOption("e", "editor", "use data too, that is editor only.", false, false);
+		addOption("e", "editor", "also use data that is editor only.", false, false);
+		addOption("i", "privateonly", "use only private contacts.", false, false);
 		
 		init(args);
 		
-		listReferees(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), hasOption("e"));
+		listReferees(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), 
+				getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), hasOption("e"), hasOption("i"));
 		
 	}
 
@@ -96,12 +99,13 @@ public class RefereeList extends AbstractMainClass {
 	 * @param theOutputfile output file (null = template + ".out")
 	 * @param theStatus status (all (default), activeonly)
 	 * @param isEditor use editor only data?
+	 * @param isPrivateOnly use only private contacts?
 	 * 
 	 * @version 0.8.0
 	 * @since 0.5.0
 	 */
 	public void listReferees(final String theDBPath, final String theDBFile, final String theSeason, 
-			final String theTemplatefile, final String theOutputfile, final String theStatus, final boolean isEditor) {
+			final String theTemplatefile, final String theOutputfile, final String theStatus, final boolean isEditor, final boolean isPrivateOnly) {
 		
 		Constants.logger.debug("start.");
 		
@@ -121,7 +125,7 @@ public class RefereeList extends AbstractMainClass {
 			// do nothing, remains "all"
 		}
 		
-		listReferees(pathDBFile, Paths.get(theTemplatefile), Paths.get(sOutFile), argStatus, isEditor);
+		listReferees(pathDBFile, Paths.get(theTemplatefile), Paths.get(sOutFile), argStatus, isEditor, isPrivateOnly);
 		
 		Constants.logger.debug("stop");
 		
@@ -135,11 +139,13 @@ public class RefereeList extends AbstractMainClass {
 	 * @param theOutputPath output file
 	 * @param theStatus status
 	 * @param isEditor use editor only data?
+	 * @param isPrivateOnly use only private contacts?
 	 * 
 	 * @version 0.8.0
 	 * @since 0.5.0
 	 */
-	public void listReferees(final Path theDBPath, final Path theTemplatePath, final Path theOutputPath, final ArgumentStatusType theStatus, final boolean isEditor) {
+	public void listReferees(final Path theDBPath, final Path theTemplatePath, final Path theOutputPath, 
+			final ArgumentStatusType theStatus, final boolean isEditor, final boolean isPrivateOnly) {
 		
 		Objects.requireNonNull(theDBPath, "database file path must not be null");
 		Objects.requireNonNull(theTemplatePath, "template file path must not be null");
@@ -158,6 +164,7 @@ public class RefereeList extends AbstractMainClass {
 			
 			Constants.logger.debug("fill template.");
 			
+			ContactModel.isPrivateOnly = isPrivateOnly;
 			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null, 0, theStatus, isEditor);
 			
 			Constants.logger.debug(String.format("write referee list to '%s'.", theOutputPath.toString()));

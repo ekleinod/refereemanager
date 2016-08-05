@@ -2,7 +2,9 @@ package de.edgesoft.refereemanager.model;
 
 import java.util.function.Predicate;
 
+import de.edgesoft.refereemanager.Prefs;
 import de.edgesoft.refereemanager.jaxb.Contact;
+import de.edgesoft.refereemanager.utils.PrefKey;
 
 /**
  * Contact model, additional methods for jaxb model class.
@@ -33,8 +35,35 @@ import de.edgesoft.refereemanager.jaxb.Contact;
 public class ContactModel extends Contact {
 
 	/** Filter predicate for primary contacts. */
-	public static Predicate<Contact> ISPRIMARY = (contact -> (contact.isIsPrimary() == null) || contact.isIsPrimary());
+	public static final Predicate<Contact> ISPRIMARY = (contact -> (contact.isIsPrimary() == null) || contact.isIsPrimary());
 	
+	/** 
+	 * Use private data only?
+	 * 
+	 * This was introduced, because it is far too difficult to provide
+	 * the getter methods with a parameter.
+	 * 
+	 * @todo check if there is a better way of implementing this
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static boolean isPrivateOnly = false;
+	
+	/**
+	 * Is contact private?
+	 * 
+	 * @return is contact private
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+    public boolean isPrivate() {
+    	
+    	return (getContactType() == null) || ((getContactType() != null) && getContactType().getId().equals(Prefs.get(PrefKey.CONTACT_PRIVATE)));
+    	
+    }
+    
 }
 
 /* EOF */

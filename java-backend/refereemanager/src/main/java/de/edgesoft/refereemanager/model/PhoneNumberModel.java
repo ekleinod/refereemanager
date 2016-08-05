@@ -42,6 +42,10 @@ public class PhoneNumberModel extends PhoneNumber {
 	 */
     public String getDisplayTitle() {
     	
+    	if (isPrivateOnly && !isPrivate()) {
+			return null;
+    	}
+    	
     	StringBuilder sbReturn = new StringBuilder();
     	
     	if ((getCountryCode() != null) && !getCountryCode().equals(Prefs.get(PrefKey.COUNTRY_CODE))) {
@@ -58,7 +62,7 @@ public class PhoneNumberModel extends PhoneNumber {
     	
 		sbReturn.append(getNumber());
     	
-    	if ((getContactType() != null) && !getContactType().getId().equals(Prefs.get(PrefKey.CONTACT_PRIVATE))) {
+    	if (!isPrivate()) {
     		sbReturn.append(" (");
     		sbReturn.append(getContactType().getShorttitle());
     		sbReturn.append(")");

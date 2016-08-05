@@ -37,10 +37,14 @@ public class AddressModel extends Address {
 	 * 
 	 * @return display title
 	 * 
-	 * @version 0.6.0
+	 * @version 0.8.0
 	 * @since 0.6.0
 	 */
     public String getDisplayTitle() {
+    	
+    	if (isPrivateOnly && !isPrivate()) {
+			return null;
+    	}
     	
     	return MessageFormat.format("{0} {1}, {2} {3}",
     			(getStreet() == null) ? "" : getStreet(),
