@@ -34,6 +34,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.Prefs;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Referee;
@@ -160,7 +161,7 @@ public class CommunicationHelper {
 			
 			msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM), Prefs.get(PrefKey.EMAIL_FROMNAME), StandardCharsets.UTF_8.name()));
 			msgMail.setSubject(mapContent.get(TemplateVariable.SUBJECT).get(0));
-			msgMail.setSentDate(Date.from(LocalDateTime.parse(mapContent.get(TemplateVariable.DATE).get(0)).atZone(ZoneId.systemDefault()).toInstant()));
+			msgMail.setSentDate(DateTimeUtils.toDate(LocalDateTime.parse(mapContent.get(TemplateVariable.DATE).get(0))));
 
 			MimeMultipart msgContent = new MimeMultipart();
 			
