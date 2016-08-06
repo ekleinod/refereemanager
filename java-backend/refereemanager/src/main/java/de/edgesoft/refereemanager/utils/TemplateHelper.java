@@ -583,7 +583,7 @@ public class TemplateHelper {
 	}
 
 	/**
-	 * Extracts communication information from text.
+	 * Extracts message parts from text.
 	 * 
 	 * First lines define variables and their content, an empty line starts body.
 	 *
@@ -594,7 +594,7 @@ public class TemplateHelper {
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-	public static Map<TemplateVariable, List<String>> extractInformation(final List<String> theText) {
+	public static Map<TemplateVariable, List<String>> extractMessageParts(final List<String> theText) {
 		Map<TemplateVariable, List<String>> mapReturn = new HashMap<>();
 
 		for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {

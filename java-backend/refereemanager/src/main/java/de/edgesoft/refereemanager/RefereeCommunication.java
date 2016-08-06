@@ -3,7 +3,6 @@ package de.edgesoft.refereemanager;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +16,6 @@ import de.edgesoft.refereemanager.utils.ArgumentCommunicationRecipient;
 import de.edgesoft.refereemanager.utils.CommunicationHelper;
 import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.PrefKey;
-import de.edgesoft.refereemanager.utils.TemplateHelper;
 
 /**
  * Referee communication.
@@ -83,13 +81,12 @@ public class RefereeCommunication extends AbstractMainClass {
 		addOption("a", "action", "action (mail (default), letter).", true, false);
 		addOption("r", "recipient", "recipient (me (default), all, mailonly, letteronly).", true, false);
 		addOption("n", "trainees", "Send to trainees instead of referees.", false, false);
-		addOption("c", "attachments", "List of attachments, comma separated.", true, false);
 		addOption("e", "test", "test, don't send anything.", false, false);
 		
 		init(args);
 		
 		refereeCommunication(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), 
-				getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), getOptionValue("r"), hasOption("n"), hasOption("e"), getOptionValue("c"));
+				getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), getOptionValue("r"), hasOption("n"), hasOption("e"));
 		
 	}
 
@@ -105,14 +102,13 @@ public class RefereeCommunication extends AbstractMainClass {
 	 * @param theRecipient recipient (me (default), all, mailonly, letteronly)
 	 * @param toTrainees send to trainees instead of referees
 	 * @param isTest is test?
-	 * @param theAttachments file Attachments
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
 	public void refereeCommunication(final String theDBPath, final String theDBFile, final String theSeason, 
 			final String theTextfile, final String theOutputpath, final String theAction, final String theRecipient, 
-			final boolean toTrainees, final boolean isTest, final String theAttachments) {
+			final boolean toTrainees, final boolean isTest) {
 		
 		Constants.logger.debug("start.");
 		
@@ -137,15 +133,7 @@ public class RefereeCommunication extends AbstractMainClass {
 			// do nothing, remains "all"
 		}
 		
-		List<Path> lstPaths = new ArrayList<>();
-		if (theAttachments != null) {
-			String[] arrAttachmentNames = theAttachments.split(",");
-			for (String filename : arrAttachmentNames) {
-				lstPaths.add(Paths.get(filename.trim()));
-			}
-		}
-		
-		refereeCommunication(pathDBFile, Paths.get(theTextfile), theOutputpath, argAction, argRecipient, toTrainees, isTest, lstPaths.toArray(new Path[0]));
+		refereeCommunication(pathDBFile, Paths.get(theTextfile), theOutputpath, argAction, argRecipient, toTrainees, isTest);
 		
 		Constants.logger.debug("stop");
 		
@@ -161,14 +149,13 @@ public class RefereeCommunication extends AbstractMainClass {
 	 * @param theRecipient recipient
 	 * @param toTrainees send to trainees instead of referees
 	 * @param isTest is test?
-	 * @param theAttachments file Attachments
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
 	public void refereeCommunication(final Path theDBPath, final Path theTextPath, final String theOutputPath,
 			final ArgumentCommunicationAction theAction, final ArgumentCommunicationRecipient theRecipient, 
-			final boolean toTrainees, final boolean isTest, final Path... theAttachments) {
+			final boolean toTrainees, final boolean isTest) {
 		
 		Objects.requireNonNull(theDBPath, "database file path must not be null");
 		Objects.requireNonNull(theTextPath, "text file path must not be null");
@@ -194,8 +181,7 @@ public class RefereeCommunication extends AbstractMainClass {
 					break;
 					
 				case MAIL:
-					TemplateHelper.extractInformation(lstText);
-					CommunicationHelper.sendMail(lstText.get(0), lstText.subList(1, lstText.size()), mgrData, theRecipient, toTrainees, isTest, theAttachments);
+					CommunicationHelper.sendMail(lstText, mgrData, theRecipient, toTrainees, isTest);
 					break;
 			}
 			

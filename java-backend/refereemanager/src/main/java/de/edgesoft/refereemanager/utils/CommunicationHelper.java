@@ -4,12 +4,15 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -76,19 +79,17 @@ public class CommunicationHelper {
 	 * Maybe I'm doing something wrong there, in that case the code could be
 	 * changes to including all recipients as BCC.
 	 * 
-	 * @param theSubject subject
 	 * @param theText text
 	 * @param theData data
 	 * @param theRecipient recipient
 	 * @param toTrainees send to trainees instead of referees
 	 * @param isTest is test?
-	 * @param theAttachments file Attachments
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-	public static void sendMail(final String theSubject, final List<String> theText, final RefereeManager theData, 
-			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest, final Path... theAttachments) {
+	public static void sendMail(final List<String> theText, final RefereeManager theData, 
+			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest) {
 		
 		Objects.requireNonNull(theText, "text must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
@@ -98,6 +99,8 @@ public class CommunicationHelper {
 			Constants.logger.info("Testmode: no mails are sent!.");
 		}
 		Constants.logger.info(String.format("Sending mails to '%s', trainees: %s.", theRecipient.value(), toTrainees));
+		
+		Map<TemplateVariable, List<String>> mapContent = TemplateHelper.extractMessageParts(theText);
 		
 		List<Address> lstRecipients = new ArrayList<>();
 
@@ -156,8 +159,8 @@ public class CommunicationHelper {
 			Message msgMail = new MimeMessage(session);
 			
 			msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM), Prefs.get(PrefKey.EMAIL_FROMNAME), StandardCharsets.UTF_8.name()));
-			msgMail.setSubject(theSubject);
-			msgMail.setSentDate(new Date());
+			msgMail.setSubject(mapContent.get(TemplateVariable.SUBJECT).get(0));
+			msgMail.setSentDate(Date.from(LocalDateTime.parse(mapContent.get(TemplateVariable.DATE).get(0)).atZone(ZoneId.systemDefault()).toInstant()));
 
 			MimeMultipart msgContent = new MimeMultipart();
 			
