@@ -17,6 +17,7 @@ import de.edgesoft.refereemanager.utils.ArgumentCommunicationRecipient;
 import de.edgesoft.refereemanager.utils.CommunicationHelper;
 import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.PrefKey;
+import de.edgesoft.refereemanager.utils.TemplateHelper;
 
 /**
  * Referee communication.
@@ -193,6 +194,7 @@ public class RefereeCommunication extends AbstractMainClass {
 					break;
 					
 				case MAIL:
+					TemplateHelper.extractInformation(lstText);
 					CommunicationHelper.sendMail(lstText.get(0), lstText.subList(1, lstText.size()), mgrData, theRecipient, toTrainees, isTest, theAttachments);
 					break;
 			}

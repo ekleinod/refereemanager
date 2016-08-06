@@ -126,6 +126,9 @@ public class TemplateHelper {
 	/** Token: separator. */
 	public static final String TOKEN_SEPARATOR = String.format("%s(.*)%s", String.format(TOKEN, KEY_SEPARATOR), String.format(TOKEN, String.format(KEY_END, KEY_SEPARATOR)));
 	
+	/** A template variable token. */
+	public static final String VARIABLE_TOKEN = "%s:";
+	
 	/** Map of properties and their getters for a class. */
 	private static Map<Class<? extends ModelClass>, Map<String, Method>> mapGetters = null;
 	
@@ -577,6 +580,64 @@ public class TemplateHelper {
 		}
 		
 		return sReturn;
+	}
+
+	/**
+	 * Extracts communication information from text.
+	 * 
+	 * First lines define variables and their content, an empty line starts body.
+	 *
+	 * @param theText text
+	 * 
+	 * @return replaced text
+	 *
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static Map<TemplateVariable, List<String>> extractInformation(final List<String> theText) {
+		Map<TemplateVariable, List<String>> mapReturn = new HashMap<>();
+
+		for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
+			mapReturn.put(theTemplateVariable, new ArrayList<>());
+		}
+		
+		boolean isBody = false;
+		for (String theLine : theText) {
+			
+			if (isBody) {
+				
+				mapReturn.computeIfPresent(TemplateVariable.BODY, (templatevar, list) -> {
+					list.add(theLine.trim());
+					return list;
+				});
+				
+			} else {
+				
+				for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
+					String sVarToken = String.format(VARIABLE_TOKEN, theTemplateVariable.value());
+					if (theLine.trim().startsWith(sVarToken)) {
+						mapReturn.computeIfPresent(theTemplateVariable, (templatevar, list) -> {
+							list.add(theLine.trim().substring(sVarToken.length()).trim());
+							return list;
+						});
+					}
+				}
+				
+			}
+			
+			if (theLine.isEmpty()) {
+				isBody = true;
+			}
+		}
+		
+		if (mapReturn.get(TemplateVariable.DATE).isEmpty()) {
+			mapReturn.computeIfPresent(TemplateVariable.DATE, (templatevar, list) -> {
+				list.add(LocalDateTime.now().toString());
+				return list;
+			});
+		}
+		
+		return mapReturn;
 	}
 
 }
