@@ -111,7 +111,7 @@ public class PersonModel extends Person {
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-    public String getFileNameName() {
+    public String getFileName() {
     	StringBuilder sbReturn = new StringBuilder();
 
 		if ((getName() != null) && !getName().isEmpty()) {

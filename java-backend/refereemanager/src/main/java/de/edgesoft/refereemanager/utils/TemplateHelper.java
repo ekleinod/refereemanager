@@ -640,6 +640,84 @@ public class TemplateHelper {
 		return mapReturn;
 	}
 
+	/**
+	 * Fills message parts with values.
+	 * 
+	 * @param theMessageParts the message parts
+	 * @param theReferee referee
+	 * @param theDB whole database for referee-independent data (such as season etc.)
+	 * 
+	 * @return filled message parts
+	 *
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static Map<TemplateVariable, List<String>> fillMessageParts(final Map<TemplateVariable, List<String>> theMessageParts, final Referee theReferee, final RefereeManager theDB) {
+		Map<TemplateVariable, List<String>> mapReturn = new HashMap<>();
+
+		for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
+			
+			List<String> lstFilled = new ArrayList<>();
+			
+			for (String theLine : theMessageParts.get(theTemplateVariable)) {
+				lstFilled.add(fillLine(theLine, theDB, theReferee, "", true));
+			}
+			
+			mapReturn.put(theTemplateVariable, lstFilled);
+		}
+		
+		return mapReturn;
+	}
+
+	/**
+	 * Converts list of strings to string.
+
+	 * @todo shorter with lambdas?
+	 * 
+	 * @param theText text as list of strings
+	 * 
+	 * @return text as string
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static String toText(final List<String> theText) {
+		StringBuilder sbReturn = new StringBuilder();
+		for (String theLine : theText) {
+			sbReturn.append(theLine);
+			sbReturn.append(System.lineSeparator());
+		}
+		return sbReturn.toString();
+	}
+		
+	/**
+	 * Fills document template with content.
+	 * 
+	 * @todo shorter with lambdas?
+	 * 
+	 * @param theTemplate template text
+	 * @param theMessageParts the message parts
+	 * 
+	 * @return filled template
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static List<String> fillDocumentTemplate(final List<String> theTemplate, final Map<TemplateVariable, List<String>> theMessageParts) {
+		List<String> lstReturn = new ArrayList<>();
+		
+		for (String theLine : theTemplate) {
+			
+			for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
+				theLine = replaceTextAndConditions(theLine, theTemplateVariable.value(), toText(theMessageParts.get(theTemplateVariable)));
+			}
+			lstReturn.add(theLine);
+			
+		}
+		
+		return lstReturn;
+	}
+		
 }
 
 /* EOF */

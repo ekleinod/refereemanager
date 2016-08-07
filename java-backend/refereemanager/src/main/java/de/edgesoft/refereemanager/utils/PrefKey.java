@@ -45,7 +45,10 @@ public enum PrefKey {
 	FILENAME_PATTERN_DATABASE,
 	
 	MY_EMAIL,
-	MY_NAME
+	MY_NAME,
+	
+	TEMPLATE_EMAIL,
+	TEMPLATE_LETTER
 	;
 	
     private final String value;

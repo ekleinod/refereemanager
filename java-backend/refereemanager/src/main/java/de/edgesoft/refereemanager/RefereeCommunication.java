@@ -181,7 +181,10 @@ public class RefereeCommunication extends AbstractMainClass {
 					break;
 					
 				case MAIL:
-					CommunicationHelper.sendMail(lstText, mgrData, theRecipient, toTrainees, isTest);
+					Constants.logger.debug(String.format("read mail template from '%s'.", Prefs.get(PrefKey.TEMPLATE_EMAIL)));
+					final List<String> lstTemplate = FileAccess.readFileInList(Paths.get(Prefs.get(PrefKey.TEMPLATE_EMAIL)));
+					
+					CommunicationHelper.sendMail(lstText, lstTemplate, mgrData, theRecipient, toTrainees, isTest);
 					break;
 			}
 			

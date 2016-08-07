@@ -1,16 +1,15 @@
 package de.edgesoft.refereemanager.utils;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -81,6 +79,7 @@ public class CommunicationHelper {
 	 * changes to including all recipients as BCC.
 	 * 
 	 * @param theText text
+	 * @param theTemplate template text
 	 * @param theData data
 	 * @param theRecipient recipient
 	 * @param toTrainees send to trainees instead of referees
@@ -89,7 +88,7 @@ public class CommunicationHelper {
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-	public static void sendMail(final List<String> theText, final RefereeManager theData, 
+	public static void sendMail(final List<String> theText, final List<String> theTemplate, final RefereeManager theData, 
 			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest) {
 		
 		Objects.requireNonNull(theText, "text must not be null");
@@ -101,49 +100,33 @@ public class CommunicationHelper {
 		}
 		Constants.logger.info(String.format("Sending mails to '%s', trainees: %s.", theRecipient.value(), toTrainees));
 		
-		Map<TemplateVariable, List<String>> mapContent = TemplateHelper.extractMessageParts(theText);
-		
-		List<Address> lstRecipients = new ArrayList<>();
-
 		// compute referees to send email to
 		final List<? extends Referee> lstAll = (toTrainees) ? ((ContentModel) theData.getContent()).getTrainee() : ((ContentModel) theData.getContent()).getReferee();
+		List<Referee> lstRecipients = new ArrayList<>();
 		for (final Referee theReferee : lstAll.stream()
 				.sorted(PersonModel.NAME_FIRSTNAME)
 				.collect(Collectors.toList())) {
 			
 			EMail theEMail = theReferee.getPrimaryEMail();
 			
-			try {
-				switch (theRecipient) {
-					case ALL:
-					case MAILONLY:
-						if (theEMail != null) {
-							lstRecipients.add(new InternetAddress(theEMail.getEMail(), theReferee.getFullName()));
-						}
-						break;
-					case ME:
-						if ((theEMail != null) && (theEMail.getEMail().equals(Prefs.get(PrefKey.MY_EMAIL)))) {
-							lstRecipients.add(new InternetAddress(theEMail.getEMail(), theReferee.getFullName(), StandardCharsets.UTF_8.name()));
-						}
-						break;
-					case LETTERONLY:
-						break;
-				}
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+			switch (theRecipient) {
+				case ALL:
+				case MAILONLY:
+					if (theEMail != null) {
+						lstRecipients.add(theReferee);
+					}
+					break;
+				case ME:
+					if ((theEMail != null) && (theEMail.getEMail().equals(Prefs.get(PrefKey.MY_EMAIL)))) {
+						lstRecipients.add(theReferee);
+					}
+					break;
+				case LETTERONLY:
+					break;
 			}
 			
 		}
 
-//		// debug addresses
-//		try {
-//			lstRecipients.add(new InternetAddress("wrong@ekkart.de", "Wrong"));
-//			lstRecipients.add(new InternetAddress("wrong", "Wrong again"));
-//			lstRecipients.add(new InternetAddress("ekleinod@edgesoft.de", "Correct"));
-//		} catch (UnsupportedEncodingException e1) {
-//			e1.printStackTrace();
-//		}
-		
 		// send email
 		Properties mailProps = new Properties();
 		mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.EMAIL_SMTP_HOST));
@@ -155,44 +138,66 @@ public class CommunicationHelper {
 		        }
 		      });
 		
-		
 		try {
-			Message msgMail = new MimeMessage(session);
-			
-			msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM), Prefs.get(PrefKey.EMAIL_FROMNAME), StandardCharsets.UTF_8.name()));
-			msgMail.setSubject(mapContent.get(TemplateVariable.SUBJECT).get(0));
-			msgMail.setSentDate(DateTimeUtils.toDate(LocalDateTime.parse(mapContent.get(TemplateVariable.DATE).get(0))));
+			Map<TemplateVariable, List<String>> mapContent = TemplateHelper.extractMessageParts(theText);
 
-			MimeMultipart msgContent = new MimeMultipart();
-			
-			MimeBodyPart text = new MimeBodyPart();
-			text.setText(toText(theText));
-			msgContent.addBodyPart(text);
-			
-			msgMail.setContent(msgContent);
-			
-			if (theAttachments != null) {
-				for (Path attachment : theAttachments) {
-					BodyPart bpAttachment = new MimeBodyPart();
-					bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
-					bpAttachment.setFileName(attachment.getFileName().toString());
-					msgContent.addBodyPart(bpAttachment);
-					
-					Constants.logger.info(String.format("Adding attachment '%s'.", bpAttachment.getFileName()));
-				}
-			}
-			
 			LocalTime tmeStart = LocalTime.now();
 			
-			for (Address address : lstRecipients) {
+			for (Referee theReferee : lstRecipients) {
+				
+				Map<TemplateVariable, List<String>> mapFilledContent = TemplateHelper.fillMessageParts(mapContent, theReferee, theData);
+
+				Message msgMail = new MimeMessage(session);
+				
+				msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM), Prefs.get(PrefKey.EMAIL_FROMNAME), StandardCharsets.UTF_8.name()));
+				
+				msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.fromString(mapFilledContent.get(TemplateVariable.DATE).get(0))));
+				msgMail.setSubject(mapFilledContent.get(TemplateVariable.SUBJECT).get(0));
+
+				Constants.logger.debug(String.format("Setting sent date '%s'.", msgMail.getSentDate()));
+				Constants.logger.debug(String.format("Setting subject '%s'.", msgMail.getSubject()));
+				
 				try {
-					msgMail.setRecipient(RecipientType.TO, address);
+					
+					EMail theEMail = theReferee.getPrimaryEMail();
+					msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail(), theReferee.getFullName(), StandardCharsets.UTF_8.name()));
+					
+					MimeMultipart msgContent = new MimeMultipart();
+					
+					MimeBodyPart text = new MimeBodyPart();
+					text.setText(TemplateHelper.toText(TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent)));
+					msgContent.addBodyPart(text);
+
+					try {
+						Constants.logger.debug(String.format("Adding body '%s'.", (String) text.getContent()));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					msgMail.setContent(msgContent);
+					
+					if (mapFilledContent.get(TemplateVariable.ATTACHMENT) != null) {
+						for (String attFilename : mapFilledContent.get(TemplateVariable.ATTACHMENT)) {
+							Path attachment = Paths.get(attFilename);
+							
+							BodyPart bpAttachment = new MimeBodyPart();
+							bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
+							bpAttachment.setFileName(attachment.getFileName().toString());
+							
+							msgContent.addBodyPart(bpAttachment);
+							
+							Constants.logger.info(String.format("Adding attachment '%s'.", bpAttachment.getFileName()));
+						}
+					}
 					
 					if (!isTest) {
 						Transport.send(msgMail);
 					}
 					
-					Constants.logger.info(String.format("sent mail to '%s'.", address.toString()));
+					Arrays.asList(msgMail.getRecipients(RecipientType.TO))
+							.stream()
+							.forEach(adr -> Constants.logger.info(String.format("sent mail to '%s'.", adr.toString())));
+					
 				} catch (SendFailedException e) {
 					if (e.getInvalidAddresses() != null) {
 						Arrays.asList(e.getInvalidAddresses()).forEach(adr -> Constants.logger.error(String.format("invalid address, not sent: '%s'.", adr.toString())));
@@ -217,25 +222,6 @@ public class CommunicationHelper {
 		
 	}
 	
-	/**
-	 * Converts list of strings to string.
-	 * 
-	 * @param theText text
-	 * 
-	 * @todo shorter with lambdas?
-	 * 
-	 * @version 0.8.0
-	 * @since 0.8.0
-	 */
-	private static String toText(final List<String> theText) {
-		StringBuilder sbReturn = new StringBuilder();
-		for (String theLine : theText) {
-			sbReturn.append(theLine);
-			sbReturn.append(System.lineSeparator());
-		}
-		return sbReturn.toString();
-	}
-		
 }
 
 /* EOF */
