@@ -1,23 +1,23 @@
-Quotes Language:		german
-Base Header Level:	3
-latex input:				kleinod-mmd-scrartcl
-MyOptions:					author=schiri, font=droid, notitlepage
-latex input:				kleinod-mmd-style
-Title:							Übersicht der gespeicherten Daten 
-MySubtitle:					Saison **generated season:title_season**
-Date:								**generated date:medium**
-latex input:				kleinod-mmd-begin-doc
+subject: Übersicht der gespeicherten Daten
+subtitle: Saison **generated season:title**
+opening: Hi **generated referee:firstname**,
+closing: Danke, Gruß,
+signature: Ekkart.
+attachment: daten/**generated referee:filename**.pdf
 
 <!-- \maketitle -->
 
-Hallo **generated person:first_name**,
+Hallo **generated referee:firstname**,
 
-dies ist der jährliche Auszug der über Dich beim Verbandsschiedsrichterausschuss für die Saison **generated season:title_season** gespeicherten Daten.
+dies ist der jährliche Auszug der über Dich beim Verbandsschiedsrichterausschuss für die Saison **generated season:title** gespeicherten Daten.
 Du erhältst den Auszug aus drei Gründen:
 
 1. Damit Du weißt, welche Daten gespeichert sind, wofür sie verwendet werden und wer die Daten sieht.
 2. Damit Du kontrollieren kannst, ob die Daten korrekt sind und eventuelle Änderungen mitteilen kannst.
 3. Damit Du der Verwendung bestimmter Daten widersprechen kannst, falls Du das möchtest.
+
+Noch ein kurzer Hinweis zu den Kontaktinformationen: ich hätte gerne zwei Möglichkeiten, mit Dir Kontakt aufzunehmen, bevorzugt per E-Mail und Telefon.
+Die dritte Möglichkeit ist daher optional.
 
 # Öffentliche Informationen
 
@@ -28,9 +28,9 @@ Nutzungsbeispiel: Einsatzplan.
 <!--
 \begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
 	\toprule
-	-->Name<!-- & -->**generated person:tablename**<!-- \\
-	-->Ausbildung<!-- & -->**generated traininglevel:title** (**generated traininglevel:abbreviation**)<!-- \\
-	-->Einsatzhäufigkeit<!-- & -->**generated refereestatus:**generated season:id**:title**<!-- \\
+	-->Name<!-- & -->**generated referee:tablename**<!-- \\
+	-->Ausbildung<!-- & -->**generated referee:highesttraininglevel:type:title** (**generated referee:highesttraininglevel:type:shorttitle**)<!-- \\
+	-->Einsatzhäufigkeit<!-- & -->**generated referee:status:title**<!-- \\
 	\bottomrule
 \end{longtabu}
 -->
@@ -64,14 +64,14 @@ Nutzungsbeispiel: Verwaltung der Einsätze.
 	**ifnotempty referee:docs_per_letter**-->Alle Infos per Brief<!-- & -->ja**ifnotempty contacts:emails** *Bitte prüfen, ob die Zusendung per E-Mail nicht doch ausreicht.* **endnotempty contacts:emails**<!-- \\**endnotempty referee:docs_per_letter**
 	-->Adresse<!-- & -->**ifempty contacts:addresses_fulladdress**---**endempty contacts:addresses_fulladdress****generated contacts:addresses_fulladdress**<!-- \\
 	-->URL<!-- & -->**ifempty contacts:urls**---**endempty contacts:urls****generated contacts:urls**<!-- \\
-	-->Geburtstag<!-- & -->**ifempty person:birthday**---**endempty person:birthday****generated person:birthday**<!-- \\
+	-->Geburtstag<!-- & -->**ifempty referee:birthday**---**endempty referee:birthday****generated referee:birthday**<!-- \\
 	-->Geschlecht<!-- & -->**generated sextype:title**<!-- \\
 	-->Bevorzugt schiedsen<!-- & -->**ifempty referee:referee_relation_prefer**---**endempty referee:referee_relation_prefer****generated referee:referee_relation_prefer**<!-- \\
 	-->Nicht schiedsen<!-- & -->**ifempty referee:referee_relation_noassignment**---**endempty referee:referee_relation_noassignment****generated referee:referee_relation_noassignment**<!-- \\
 	-->**generated traininglevel:abbreviation** seit<!-- & -->**ifempty traininglevel:since**---**endempty traininglevel:since****generated traininglevel:since**<!-- \\
 	-->Letzte Fortbildung<!-- & -->**ifempty traininglevel:lasttrainingupdate**---**endempty traininglevel:lasttrainingupdate****generated traininglevel:lasttrainingupdate**<!-- \\
 	-->Nächste Fortbildung<!-- & -->**ifempty traininglevel:nexttrainingupdate**---**endempty traininglevel:nexttrainingupdate****generated traininglevel:nexttrainingupdate**<!-- \\
-	-->Anmerkung<!-- & -->**generated person:remark** **generated refereestatus:**generated season:id**:remark**<!-- \\
+	-->Anmerkung<!-- & -->**generated referee:remark** **generated refereestatus:**generated season:id**:remark**<!-- \\
 	\bottomrule
 \end{longtabu}
 -->
