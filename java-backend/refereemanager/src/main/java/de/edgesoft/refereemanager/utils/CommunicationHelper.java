@@ -33,7 +33,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.refereemanager.Prefs;
+import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
@@ -92,6 +94,7 @@ public class CommunicationHelper {
 			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest) {
 		
 		Objects.requireNonNull(theText, "text must not be null");
+		Objects.requireNonNull(theTemplate, "template must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
 		Objects.requireNonNull(theRecipient, "recipient must not be null");
 		
@@ -117,7 +120,7 @@ public class CommunicationHelper {
 					}
 					break;
 				case ME:
-					if ((theEMail != null) && (theEMail.getEMail().equals(Prefs.get(PrefKey.MY_EMAIL)))) {
+					if (theReferee.getDisplayTitle().equals(Prefs.get(PrefKey.MY_NAME))) {
 						lstRecipients.add(theReferee);
 					}
 					break;
@@ -165,14 +168,11 @@ public class CommunicationHelper {
 					MimeMultipart msgContent = new MimeMultipart();
 					
 					MimeBodyPart text = new MimeBodyPart();
-					text.setText(TemplateHelper.toText(TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent)));
+					String sText = TemplateHelper.toText(TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent));
+					text.setText(sText);
 					msgContent.addBodyPart(text);
 
-					try {
-						Constants.logger.debug(String.format("Adding body '%s'.", (String) text.getContent()));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					Constants.logger.debug(String.format("Adding body '%s'.", sText));
 					
 					msgMail.setContent(msgContent);
 					
@@ -231,141 +231,93 @@ public class CommunicationHelper {
 	 * @param theRecipient recipient
 	 * @param toTrainees send to trainees instead of referees
 	 * @param isTest is test?
+	 * @param theOutputPath output path
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
 	public static void createLetters(final List<String> theText, final List<String> theTemplate, final RefereeManager theData, 
-			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest) {
+			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest, final String theOutputPath) {
 		
 		Objects.requireNonNull(theText, "text must not be null");
+		Objects.requireNonNull(theTemplate, "template must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
 		Objects.requireNonNull(theRecipient, "recipient must not be null");
 		
 		if (isTest) {
 			Constants.logger.info("Testmode: no letters are stored!.");
 		}
-		Constants.logger.info(String.format("Sending mails to '%s', trainees: %s.", theRecipient.value(), toTrainees));
+		Constants.logger.info(String.format("Sending letters to '%s', trainees: %s.", theRecipient.value(), toTrainees));
 		
-		// compute referees to send email to
+		// compute referees to send letters to
 		final List<? extends Referee> lstAll = (toTrainees) ? ((ContentModel) theData.getContent()).getTrainee() : ((ContentModel) theData.getContent()).getReferee();
 		List<Referee> lstRecipients = new ArrayList<>();
 		for (final Referee theReferee : lstAll.stream()
 				.sorted(PersonModel.NAME_FIRSTNAME)
 				.collect(Collectors.toList())) {
 			
-			EMail theEMail = theReferee.getPrimaryEMail();
+			Address theAddress = theReferee.getPrimaryAddress();
 			
 			switch (theRecipient) {
 				case ALL:
-				case MAILONLY:
-					if (theEMail != null) {
-						lstRecipients.add(theReferee);
-					}
-					break;
-				case ME:
-					if ((theEMail != null) && (theEMail.getEMail().equals(Prefs.get(PrefKey.MY_EMAIL)))) {
+					if (theAddress != null) {
 						lstRecipients.add(theReferee);
 					}
 					break;
 				case LETTERONLY:
+					if ((theAddress != null) && (theReferee.isDocsByLetter())) {
+						lstRecipients.add(theReferee);
+					}
+					break;
+				case ME:
+					if (theReferee.getFullName().equals(Prefs.get(PrefKey.MY_NAME))) {
+						lstRecipients.add(theReferee);
+					}
+					break;
+				case MAILONLY:
 					break;
 			}
 			
 		}
 
-		// send email
-		Properties mailProps = new Properties();
-		mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.EMAIL_SMTP_HOST));
-		mailProps.setProperty("mail.smtp.auth", "true");
-		
-		Session session = Session.getInstance(mailProps, new Authenticator() {
-		      @Override protected PasswordAuthentication getPasswordAuthentication() {
-		          return new PasswordAuthentication(Prefs.get(PrefKey.EMAIL_SMTP_USERNAME), Prefs.get(PrefKey.EMAIL_SMTP_PASSWORD));
-		        }
-		      });
-		
-		try {
-			Map<TemplateVariable, List<String>> mapContent = TemplateHelper.extractMessageParts(theText);
+		// create letter
+		Map<TemplateVariable, List<String>> mapContent = TemplateHelper.extractMessageParts(theText);
 
-			LocalTime tmeStart = LocalTime.now();
+		LocalTime tmeStart = LocalTime.now();
+		
+		for (Referee theReferee : lstRecipients) {
 			
-			for (Referee theReferee : lstRecipients) {
-				
-				Map<TemplateVariable, List<String>> mapFilledContent = TemplateHelper.fillMessageParts(mapContent, theReferee, theData);
+			Map<TemplateVariable, List<String>> mapFilledContent = TemplateHelper.fillMessageParts(mapContent, theReferee, theData);
 
-				Message msgMail = new MimeMessage(session);
+			try {
 				
-				msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM), Prefs.get(PrefKey.EMAIL_FROMNAME), StandardCharsets.UTF_8.name()));
+				List<String> lstText = TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent);
+				Constants.logger.debug(String.format("Letter text: '%s'.", TemplateHelper.toText(lstText)));
 				
-				msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.fromString(mapFilledContent.get(TemplateVariable.DATE).get(0))));
-				msgMail.setSubject(mapFilledContent.get(TemplateVariable.SUBJECT).get(0));
-
-				Constants.logger.debug(String.format("Setting sent date '%s'.", msgMail.getSentDate()));
-				Constants.logger.debug(String.format("Setting subject '%s'.", msgMail.getSubject()));
-				
-				try {
-					
-					EMail theEMail = theReferee.getPrimaryEMail();
-					msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail(), theReferee.getFullName(), StandardCharsets.UTF_8.name()));
-					
-					MimeMultipart msgContent = new MimeMultipart();
-					
-					MimeBodyPart text = new MimeBodyPart();
-					text.setText(TemplateHelper.toText(TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent)));
-					msgContent.addBodyPart(text);
-
-					try {
-						Constants.logger.debug(String.format("Adding body '%s'.", (String) text.getContent()));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					
-					msgMail.setContent(msgContent);
-					
-					if (mapFilledContent.get(TemplateVariable.ATTACHMENT) != null) {
-						for (String attFilename : mapFilledContent.get(TemplateVariable.ATTACHMENT)) {
-							Path attachment = Paths.get(attFilename);
-							
-							BodyPart bpAttachment = new MimeBodyPart();
-							bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
-							bpAttachment.setFileName(attachment.getFileName().toString());
-							
-							msgContent.addBodyPart(bpAttachment);
-							
-							Constants.logger.info(String.format("Adding attachment '%s'.", bpAttachment.getFileName()));
-						}
-					}
-					
-					if (!isTest) {
-						Transport.send(msgMail);
-					}
-					
-					Arrays.asList(msgMail.getRecipients(RecipientType.TO))
-							.stream()
-							.forEach(adr -> Constants.logger.info(String.format("sent mail to '%s'.", adr.toString())));
-					
-				} catch (SendFailedException e) {
-					if (e.getInvalidAddresses() != null) {
-						Arrays.asList(e.getInvalidAddresses()).forEach(adr -> Constants.logger.error(String.format("invalid address, not sent: '%s'.", adr.toString())));
-					}
-					if (e.getValidUnsentAddresses() != null) {
-						Arrays.asList(e.getValidUnsentAddresses()).forEach(adr -> Constants.logger.error(String.format("valid address, but not sent: '%s'.", adr.toString())));
-					}
-					if (e.getValidSentAddresses() != null) {
-						Arrays.asList(e.getValidSentAddresses()).forEach(adr -> Constants.logger.error(String.format("valid address, sent email: '%s'.", adr.toString())));
+				if (mapFilledContent.get(TemplateVariable.ATTACHMENT) != null) {
+					for (String attFilename : mapFilledContent.get(TemplateVariable.ATTACHMENT)) {
+						Path attachment = Paths.get(attFilename);
+						
+//						BodyPart bpAttachment = new MimeBodyPart();
+//						bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
+//						bpAttachment.setFileName(attachment.getFileName().toString());
+//						
+//						Constants.logger.info(String.format("Adding attachment '%s'.", bpAttachment.getFileName()));
 					}
 				}
+				
+				if (!isTest) {
+					FileAccess.writeFile(Paths.get(theOutputPath, theReferee.getFileName()), lstText);
+					Constants.logger.info(String.format("writing letter to '%s'.", Paths.get(theOutputPath, theReferee.getFileName()).toString()));
+				}
+				
+			} catch (IOException e) {
+				Constants.logger.error(String.format("error while writing: '%s'.", e.getMessage()));
 			}
-			
-			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
-			Constants.logger.info(String.format("Sending time: %s.", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
-			
-			
-		} catch (MessagingException | UnsupportedEncodingException e) {
-			e.printStackTrace();
 		}
 		
+		Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
+		Constants.logger.info(String.format("Sending time: %s.", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
 		
 	}
 	

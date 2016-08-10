@@ -51,7 +51,8 @@ public enum PrefKey {
 	PATH_TEMPLATES,
 	
 	TEMPLATE_EMAIL,
-	TEMPLATE_LETTER
+	TEMPLATE_LETTER,
+	TEMPLATE_REFEREE_DATA
 	;
 	
     private final String value;

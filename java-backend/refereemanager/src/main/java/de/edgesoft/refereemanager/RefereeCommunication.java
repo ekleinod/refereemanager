@@ -179,7 +179,7 @@ public class RefereeCommunication extends AbstractMainClass {
 					Constants.logger.debug(String.format("read letter template from '%s/%s'.", Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_LETTER)));
 					final List<String> lstLetterTemplate = FileAccess.readFileInList(Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_LETTER)));
 					
-					CommunicationHelper.createLetters(lstText, lstLetterTemplate, mgrData, theRecipient, toTrainees, isTest);
+					CommunicationHelper.createLetters(lstText, lstLetterTemplate, mgrData, theRecipient, toTrainees, isTest, theOutputPath);
 					break;
 					
 				case MAIL:
