@@ -73,8 +73,8 @@ public class RefereeCommunication extends AbstractMainClass {
 		
 		setDescription("Communication operations.");
 		
-		addOption("p", "path", "input path of data.", true, true);
-		addOption("f", "file", MessageFormat.format("input file name template (empty for {0}).", Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE)), true, false);
+		addOption("p", "path", MessageFormat.format("database path (default: {0}).", Prefs.get(PrefKey.PATH_DATABASE)), true, false);
+		addOption("d", "database", MessageFormat.format("database file name pattern (default: {0}).", Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE)), true, false);
 		addOption("s", "season", "season (empty for current season).", true, false);
 		addOption("t", "text", "text to communicate.", true, true);
 		addOption("o", "outputpath", "output path.", true, false);
@@ -85,7 +85,7 @@ public class RefereeCommunication extends AbstractMainClass {
 		
 		init(args);
 		
-		refereeCommunication(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), 
+		refereeCommunication(getOptionValue("p"), getOptionValue("d"), getOptionValue("s"), 
 				getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), getOptionValue("r"), hasOption("n"), hasOption("e"));
 		
 	}
@@ -112,12 +112,12 @@ public class RefereeCommunication extends AbstractMainClass {
 		
 		Constants.logger.debug("start.");
 		
-		Objects.requireNonNull(theDBPath, "database path must not be null");
 		Objects.requireNonNull(theTextfile, "text file must not be null");
 		
 		Integer iSeason = (theSeason == null) ? SeasonModel.getCurrentStartYear() : Integer.valueOf(theSeason);
 		
-		Path pathDBFile = Paths.get(theDBPath, String.format(((theDBFile == null) ? Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE) : theDBFile), iSeason));
+		Path pathDBFile = Paths.get((theDBPath == null) ? Prefs.get(PrefKey.PATH_DATABASE) : theDBPath,
+				String.format(((theDBFile == null) ? Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE) : theDBFile), iSeason));
 		
 		ArgumentCommunicationAction argAction = ArgumentCommunicationAction.MAIL;
 		try {
@@ -176,15 +176,17 @@ public class RefereeCommunication extends AbstractMainClass {
 			
 			switch (theAction) {
 				case LETTER:
-					Constants.logger.debug("fill text.");
-					Constants.logger.debug(String.format("save letter for '%s' in '%s'."));
+					Constants.logger.debug(String.format("read letter template from '%s/%s'.", Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_LETTER)));
+					final List<String> lstLetterTemplate = FileAccess.readFileInList(Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_LETTER)));
+					
+					CommunicationHelper.createLetters(lstText, lstLetterTemplate, mgrData, theRecipient, toTrainees, isTest);
 					break;
 					
 				case MAIL:
-					Constants.logger.debug(String.format("read mail template from '%s'.", Prefs.get(PrefKey.TEMPLATE_EMAIL)));
-					final List<String> lstTemplate = FileAccess.readFileInList(Paths.get(Prefs.get(PrefKey.TEMPLATE_EMAIL)));
+					Constants.logger.debug(String.format("read mail template from '%s/%s'.", Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_EMAIL)));
+					final List<String> lstMailTemplate = FileAccess.readFileInList(Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_EMAIL)));
 					
-					CommunicationHelper.sendMail(lstText, lstTemplate, mgrData, theRecipient, toTrainees, isTest);
+					CommunicationHelper.sendMail(lstText, lstMailTemplate, mgrData, theRecipient, toTrainees, isTest);
 					break;
 			}
 			

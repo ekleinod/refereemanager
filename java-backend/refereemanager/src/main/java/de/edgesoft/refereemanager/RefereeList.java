@@ -73,8 +73,8 @@ public class RefereeList extends AbstractMainClass {
 		
 		setDescription("Generates referee lists.");
 		
-		addOption("p", "path", "input path of data.", true, true);
-		addOption("f", "file", MessageFormat.format("input file name template (empty for {0}).", Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE)), true, false);
+		addOption("p", "path", MessageFormat.format("input path of data (default: {0}).", Prefs.get(PrefKey.PATH_DATABASE)), true, false);
+		addOption("d", "database", MessageFormat.format("database file name pattern (default: {0}).", Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE)), true, false);
 		addOption("s", "season", "season (empty for current season).", true, false);
 		addOption("t", "template", "template to fill.", true, true);
 		addOption("o", "output", "output file (empty for template + '.out').", true, false);
@@ -84,7 +84,7 @@ public class RefereeList extends AbstractMainClass {
 		
 		init(args);
 		
-		listReferees(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), 
+		listReferees(getOptionValue("p"), getOptionValue("d"), getOptionValue("s"), 
 				getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), hasOption("e"), hasOption("i"));
 		
 	}
@@ -109,12 +109,12 @@ public class RefereeList extends AbstractMainClass {
 		
 		Constants.logger.debug("start.");
 		
-		Objects.requireNonNull(theDBPath, "database path must not be null");
 		Objects.requireNonNull(theTemplatefile, "template file must not be null");
 		
 		Integer iSeason = (theSeason == null) ? SeasonModel.getCurrentStartYear() : Integer.valueOf(theSeason);
 		
-		Path pathDBFile = Paths.get(theDBPath, String.format(((theDBFile == null) ? Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE) : theDBFile), iSeason));
+		Path pathDBFile = Paths.get((theDBPath == null) ? Prefs.get(PrefKey.PATH_DATABASE) : theDBPath,
+				String.format(((theDBFile == null) ? Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE) : theDBFile), iSeason));
 		
 		String sOutFile = (theOutputfile == null) ? String.format("%s.out", theTemplatefile) : theOutputfile;
 		

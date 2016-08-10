@@ -99,7 +99,7 @@ public class PrefOperations extends AbstractMainClass {
 			
 			try (InputStream stmIn = new FileInputStream(theFile)) {
 				Prefs.importPrefs(stmIn);
-			} catch (IOException | InvalidPreferencesFormatException e) {
+			} catch (IOException | InvalidPreferencesFormatException | BackingStoreException e) {
 				e.printStackTrace();
 			}
 		}

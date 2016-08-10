@@ -72,15 +72,15 @@ public class DBOperations extends AbstractMainClass {
 		
 		setDescription("Database operations.");
 		
-		addOption("p", "path", "input path of data.", true, true);
-		addOption("f", "file", MessageFormat.format("input file name template (empty for {0}).", Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE)), true, false);
+		addOption("p", "path", MessageFormat.format("input path of data (default: {0}).", Prefs.get(PrefKey.PATH_DATABASE)), true, false);
+		addOption("d", "database", MessageFormat.format("database file name pattern (default: {0}).", Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE)), true, false);
 		addOption("s", "season", "season (empty for current season).", true, false);
 		addOption("o", "output", "output file (empty for database file + '.db.xml').", true, false);
-		addOption("d", "dboperation", "database operation (sort).", true, true);
+		addOption("r", "dboperation", "database operation (sort).", true, true);
 		
 		init(args);
 		
-		dbOperation(getOptionValue("p"), getOptionValue("f"), getOptionValue("s"), getOptionValue("o"), getOptionValue("d"));
+		dbOperation(getOptionValue("p"), getOptionValue("d"), getOptionValue("s"), getOptionValue("o"), getOptionValue("r"));
 		
 	}
 
@@ -100,12 +100,12 @@ public class DBOperations extends AbstractMainClass {
 		
 		Constants.logger.debug("start.");
 		
-		Objects.requireNonNull(theDBPath, "database path must not be null");
 		Objects.requireNonNull(theDBOperation, "database  operation must not be null");
 		
 		Integer iSeason = (theSeason == null) ? SeasonModel.getCurrentStartYear() : Integer.valueOf(theSeason);
-		
-		Path pathDBFile = Paths.get(theDBPath, String.format(((theDBFile == null) ? Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE) : theDBFile), iSeason));
+
+		Path pathDBFile = Paths.get((theDBPath == null) ? Prefs.get(PrefKey.PATH_DATABASE) : theDBPath,
+				String.format(((theDBFile == null) ? Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE) : theDBFile), iSeason));
 		
 		String sOutFile = (theOutputfile == null) ? String.format("%s.db.xml", pathDBFile) : theOutputfile;
 		

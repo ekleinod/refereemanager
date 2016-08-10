@@ -222,6 +222,153 @@ public class CommunicationHelper {
 		
 	}
 	
+	/**
+	 * Creates letters.
+	 * 
+	 * @param theText text
+	 * @param theTemplate template text
+	 * @param theData data
+	 * @param theRecipient recipient
+	 * @param toTrainees send to trainees instead of referees
+	 * @param isTest is test?
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static void createLetters(final List<String> theText, final List<String> theTemplate, final RefereeManager theData, 
+			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest) {
+		
+		Objects.requireNonNull(theText, "text must not be null");
+		Objects.requireNonNull(theData, "data must not be null");
+		Objects.requireNonNull(theRecipient, "recipient must not be null");
+		
+		if (isTest) {
+			Constants.logger.info("Testmode: no letters are stored!.");
+		}
+		Constants.logger.info(String.format("Sending mails to '%s', trainees: %s.", theRecipient.value(), toTrainees));
+		
+		// compute referees to send email to
+		final List<? extends Referee> lstAll = (toTrainees) ? ((ContentModel) theData.getContent()).getTrainee() : ((ContentModel) theData.getContent()).getReferee();
+		List<Referee> lstRecipients = new ArrayList<>();
+		for (final Referee theReferee : lstAll.stream()
+				.sorted(PersonModel.NAME_FIRSTNAME)
+				.collect(Collectors.toList())) {
+			
+			EMail theEMail = theReferee.getPrimaryEMail();
+			
+			switch (theRecipient) {
+				case ALL:
+				case MAILONLY:
+					if (theEMail != null) {
+						lstRecipients.add(theReferee);
+					}
+					break;
+				case ME:
+					if ((theEMail != null) && (theEMail.getEMail().equals(Prefs.get(PrefKey.MY_EMAIL)))) {
+						lstRecipients.add(theReferee);
+					}
+					break;
+				case LETTERONLY:
+					break;
+			}
+			
+		}
+
+		// send email
+		Properties mailProps = new Properties();
+		mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.EMAIL_SMTP_HOST));
+		mailProps.setProperty("mail.smtp.auth", "true");
+		
+		Session session = Session.getInstance(mailProps, new Authenticator() {
+		      @Override protected PasswordAuthentication getPasswordAuthentication() {
+		          return new PasswordAuthentication(Prefs.get(PrefKey.EMAIL_SMTP_USERNAME), Prefs.get(PrefKey.EMAIL_SMTP_PASSWORD));
+		        }
+		      });
+		
+		try {
+			Map<TemplateVariable, List<String>> mapContent = TemplateHelper.extractMessageParts(theText);
+
+			LocalTime tmeStart = LocalTime.now();
+			
+			for (Referee theReferee : lstRecipients) {
+				
+				Map<TemplateVariable, List<String>> mapFilledContent = TemplateHelper.fillMessageParts(mapContent, theReferee, theData);
+
+				Message msgMail = new MimeMessage(session);
+				
+				msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM), Prefs.get(PrefKey.EMAIL_FROMNAME), StandardCharsets.UTF_8.name()));
+				
+				msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.fromString(mapFilledContent.get(TemplateVariable.DATE).get(0))));
+				msgMail.setSubject(mapFilledContent.get(TemplateVariable.SUBJECT).get(0));
+
+				Constants.logger.debug(String.format("Setting sent date '%s'.", msgMail.getSentDate()));
+				Constants.logger.debug(String.format("Setting subject '%s'.", msgMail.getSubject()));
+				
+				try {
+					
+					EMail theEMail = theReferee.getPrimaryEMail();
+					msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail(), theReferee.getFullName(), StandardCharsets.UTF_8.name()));
+					
+					MimeMultipart msgContent = new MimeMultipart();
+					
+					MimeBodyPart text = new MimeBodyPart();
+					text.setText(TemplateHelper.toText(TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent)));
+					msgContent.addBodyPart(text);
+
+					try {
+						Constants.logger.debug(String.format("Adding body '%s'.", (String) text.getContent()));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					msgMail.setContent(msgContent);
+					
+					if (mapFilledContent.get(TemplateVariable.ATTACHMENT) != null) {
+						for (String attFilename : mapFilledContent.get(TemplateVariable.ATTACHMENT)) {
+							Path attachment = Paths.get(attFilename);
+							
+							BodyPart bpAttachment = new MimeBodyPart();
+							bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
+							bpAttachment.setFileName(attachment.getFileName().toString());
+							
+							msgContent.addBodyPart(bpAttachment);
+							
+							Constants.logger.info(String.format("Adding attachment '%s'.", bpAttachment.getFileName()));
+						}
+					}
+					
+					if (!isTest) {
+						Transport.send(msgMail);
+					}
+					
+					Arrays.asList(msgMail.getRecipients(RecipientType.TO))
+							.stream()
+							.forEach(adr -> Constants.logger.info(String.format("sent mail to '%s'.", adr.toString())));
+					
+				} catch (SendFailedException e) {
+					if (e.getInvalidAddresses() != null) {
+						Arrays.asList(e.getInvalidAddresses()).forEach(adr -> Constants.logger.error(String.format("invalid address, not sent: '%s'.", adr.toString())));
+					}
+					if (e.getValidUnsentAddresses() != null) {
+						Arrays.asList(e.getValidUnsentAddresses()).forEach(adr -> Constants.logger.error(String.format("valid address, but not sent: '%s'.", adr.toString())));
+					}
+					if (e.getValidSentAddresses() != null) {
+						Arrays.asList(e.getValidSentAddresses()).forEach(adr -> Constants.logger.error(String.format("valid address, sent email: '%s'.", adr.toString())));
+					}
+				}
+			}
+			
+			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
+			Constants.logger.info(String.format("Sending time: %s.", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+			
+			
+		} catch (MessagingException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 }
 
 /* EOF */

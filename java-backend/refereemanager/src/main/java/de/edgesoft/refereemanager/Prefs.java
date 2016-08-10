@@ -71,8 +71,17 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), "ContactType.p");
 			case COUNTRY_CODE:
 				return getPreferences().get(theKey.value(), "49");
+				
 			case FILENAME_PATTERN_DATABASE:
 				return getPreferences().get(theKey.value(), "refereemanager_%04d.xml");
+				
+			case PATH_TEMPLATES:
+				return getPreferences().get(theKey.value(), "src/main/templates/");
+				
+			case TEMPLATE_EMAIL:
+				return getPreferences().get(theKey.value(), "email/email.mmd");
+			case TEMPLATE_LETTER:
+				return getPreferences().get(theKey.value(), "letter/letter.mmd");
 				
 			default:
 				return getPreferences().get(theKey.value(), "");
@@ -115,11 +124,13 @@ public class Prefs {
 	 * 
 	 * @throws IOException 
 	 * @throws InvalidPreferencesFormatException 
+	 * @throws BackingStoreException 
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-	public static void importPrefs(final InputStream theStream) throws IOException, InvalidPreferencesFormatException {
+	public static void importPrefs(final InputStream theStream) throws IOException, InvalidPreferencesFormatException, BackingStoreException {
+		getPreferences().clear();
 		Preferences.importPreferences(theStream);
 	}
 
