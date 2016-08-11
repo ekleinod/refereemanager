@@ -125,7 +125,7 @@ public class RefereeList extends AbstractMainClass {
 			// do nothing, remains "all"
 		}
 		
-		listReferees(pathDBFile, Paths.get(theTemplatefile), Paths.get(sOutFile), argStatus, isEditor, isPrivateOnly);
+		listReferees(pathDBFile, Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), theTemplatefile), Paths.get(sOutFile), argStatus, isEditor, isPrivateOnly);
 		
 		Constants.logger.debug("stop");
 		

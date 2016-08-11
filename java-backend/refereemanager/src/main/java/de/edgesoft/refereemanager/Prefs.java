@@ -74,6 +74,8 @@ public class Prefs {
 				
 			case FILENAME_PATTERN_DATABASE:
 				return getPreferences().get(theKey.value(), "refereemanager_%04d.xml");
+			case FILENAME_PATTERN_REFEREE_DATA:
+				return getPreferences().get(theKey.value(), "%s.mmd");
 				
 			case PATH_TEMPLATES:
 				return getPreferences().get(theKey.value(), "src/main/templates/");

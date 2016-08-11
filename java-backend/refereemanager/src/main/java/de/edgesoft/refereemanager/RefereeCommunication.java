@@ -119,6 +119,8 @@ public class RefereeCommunication extends AbstractMainClass {
 		Path pathDBFile = Paths.get((theDBPath == null) ? Prefs.get(PrefKey.PATH_DATABASE) : theDBPath,
 				String.format(((theDBFile == null) ? Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE) : theDBFile), iSeason));
 		
+		String sOutput = (theOutputpath == null) ? Prefs.get(PrefKey.PATH_OUTPUT) : theOutputpath;
+		
 		ArgumentCommunicationAction argAction = ArgumentCommunicationAction.MAIL;
 		try {
 			argAction = ArgumentCommunicationAction.fromValue(theAction);
@@ -133,7 +135,7 @@ public class RefereeCommunication extends AbstractMainClass {
 			// do nothing, remains "all"
 		}
 		
-		refereeCommunication(pathDBFile, Paths.get(theTextfile), theOutputpath, argAction, argRecipient, toTrainees, isTest);
+		refereeCommunication(pathDBFile, Paths.get(theTextfile), sOutput, argAction, argRecipient, toTrainees, isTest);
 		
 		Constants.logger.debug("stop");
 		

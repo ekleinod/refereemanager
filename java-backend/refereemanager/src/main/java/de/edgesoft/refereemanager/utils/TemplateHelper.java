@@ -400,39 +400,7 @@ public class TemplateHelper {
 								(theGetter.getValue().getReturnType() == LocalDate.class) ||
 								(theGetter.getValue().getReturnType() == LocalTime.class)) {
 
-							// own for loop with replace, for there are more than one datetime tokens allowed in one line
-							for (String theType : new String[]{"date", "time", "datetime"}) {
-								for (FormatStyle theStyle : FormatStyle.values()) {
-									
-									String sNewToken = String.format("%s:%s:%s",
-											sToken, 
-											theType,
-											theStyle.toString().toLowerCase());
-									
-									if (sReturn.contains(sNewToken)) {
-										DateTimeFormatter fmtOutput = 
-												(theType.equals("date")) ?
-														DateTimeFormatter.ofLocalizedDate(theStyle).withLocale(Locale.GERMANY)
-														: (theType.equals("time")) ?
-																DateTimeFormatter.ofLocalizedTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault())
-																: DateTimeFormatter.ofLocalizedDateTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault());
-																
-																String sReplacement = "";
-																if (oResult instanceof LocalDateTime) {
-																	sReplacement = ((LocalDateTime) oResult).format(fmtOutput);
-																} else if (oResult instanceof LocalDate) {
-																	sReplacement = ((LocalDate) oResult).format(fmtOutput);
-																} else if (oResult instanceof LocalTime) {
-																	sReplacement = ((LocalTime) oResult).format(fmtOutput);
-																}
-																
-																sReturn = replaceTextAndConditions(sReturn, 
-																		sNewToken, 
-																		sReplacement
-																		);
-									}
-								}
-							}
+							sReturn = fillLineDateTimeData(sReturn, sToken, oResult);
 							
 						} else {
 							
@@ -458,6 +426,63 @@ public class TemplateHelper {
 
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
+		}
+				
+		return sReturn;
+	}
+	
+	/**
+	 * Fills line with datetime data.
+	 * 
+	 * @param theLine line
+	 * @param theData data
+	 * @param theLoopElement element that is looped at the moment
+	 * @param theTokenPrefix token prefix
+	 * 
+	 * @return filled line
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	private static String fillLineDateTimeData(final String theLine, final String theToken, final Object theDateTime) {
+		
+		Objects.requireNonNull(theLine, "line must not be null");
+		Objects.requireNonNull(theToken, "token must not be null");
+		
+		String sReturn = theLine;
+		
+		// own for loop with replace, for there are more than one datetime tokens allowed in one line
+		for (String theType : new String[]{"date", "time", "datetime"}) {
+			for (FormatStyle theStyle : FormatStyle.values()) {
+				
+				String sNewToken = String.format("%s:%s:%s",
+						theToken, 
+						theType,
+						theStyle.toString().toLowerCase());
+				
+				if (sReturn.contains(sNewToken)) {
+					DateTimeFormatter fmtOutput = 
+							(theType.equals("date")) ?
+									DateTimeFormatter.ofLocalizedDate(theStyle).withLocale(Locale.GERMANY)
+									: (theType.equals("time")) ?
+											DateTimeFormatter.ofLocalizedTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault())
+											: DateTimeFormatter.ofLocalizedDateTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault());
+											
+											String sReplacement = "";
+											if (theDateTime instanceof LocalDateTime) {
+												sReplacement = ((LocalDateTime) theDateTime).format(fmtOutput);
+											} else if (theDateTime instanceof LocalDate) {
+												sReplacement = ((LocalDate) theDateTime).format(fmtOutput);
+											} else if (theDateTime instanceof LocalTime) {
+												sReplacement = ((LocalTime) theDateTime).format(fmtOutput);
+											}
+											
+											sReturn = replaceTextAndConditions(sReturn, 
+													sNewToken, 
+													sReplacement
+													);
+				}
+			}
 		}
 				
 		return sReturn;
@@ -656,17 +681,32 @@ public class TemplateHelper {
 		Map<TemplateVariable, List<String>> mapReturn = new HashMap<>();
 
 		for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
-			
-			List<String> lstFilled = new ArrayList<>();
-			
-			for (String theLine : theMessageParts.get(theTemplateVariable)) {
-				lstFilled.add(fillLine(theLine, theDB, theReferee, "", true));
-			}
-			
-			mapReturn.put(theTemplateVariable, lstFilled);
+			mapReturn.put(theTemplateVariable, fillText(theMessageParts.get(theTemplateVariable), theReferee, theDB));
 		}
 		
 		return mapReturn;
+	}
+
+	/**
+	 * Fills text.
+	 * 
+	 * @param theText the text
+	 * @param theReferee referee
+	 * @param theDB whole database for referee-independent data (such as season etc.)
+	 * 
+	 * @return filled text
+	 *
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static List<String> fillText(final List<String> theText, final Referee theReferee, final RefereeManager theDB) {
+		List<String> lstReturn = new ArrayList<>();
+		
+		for (String theLine : theText) {
+			lstReturn.add(fillLine(theLine, theDB, theReferee, "", true));
+		}
+			
+		return lstReturn;
 	}
 
 	/**

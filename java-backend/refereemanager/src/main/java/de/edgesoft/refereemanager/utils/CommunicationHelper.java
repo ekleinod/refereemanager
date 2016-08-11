@@ -168,7 +168,7 @@ public class CommunicationHelper {
 					MimeMultipart msgContent = new MimeMultipart();
 					
 					MimeBodyPart text = new MimeBodyPart();
-					String sText = TemplateHelper.toText(TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent));
+					String sText = TemplateHelper.toText(TemplateHelper.fillText(TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent), theReferee, theData));
 					text.setText(sText);
 					msgContent.addBodyPart(text);
 
@@ -247,7 +247,7 @@ public class CommunicationHelper {
 		if (isTest) {
 			Constants.logger.info("Testmode: no letters are stored!.");
 		}
-		Constants.logger.info(String.format("Sending letters to '%s', trainees: %s.", theRecipient.value(), toTrainees));
+		Constants.logger.info(String.format("Writing letters to '%s', trainees: %s.", theRecipient.value(), toTrainees));
 		
 		// compute referees to send letters to
 		final List<? extends Referee> lstAll = (toTrainees) ? ((ContentModel) theData.getContent()).getTrainee() : ((ContentModel) theData.getContent()).getReferee();
@@ -290,9 +290,9 @@ public class CommunicationHelper {
 			Map<TemplateVariable, List<String>> mapFilledContent = TemplateHelper.fillMessageParts(mapContent, theReferee, theData);
 
 			try {
-				
-				List<String> lstText = TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent);
-				Constants.logger.debug(String.format("Letter text: '%s'.", TemplateHelper.toText(lstText)));
+
+				// body is filled twice with this construct, but some variables are needed as is
+				List<String> lstText = TemplateHelper.fillText(TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent), theReferee, theData);
 				
 				if (mapFilledContent.get(TemplateVariable.ATTACHMENT) != null) {
 					for (String attFilename : mapFilledContent.get(TemplateVariable.ATTACHMENT)) {
@@ -306,10 +306,11 @@ public class CommunicationHelper {
 					}
 				}
 				
+				Path pathOut = Paths.get(theOutputPath, String.format(Prefs.get(PrefKey.FILENAME_PATTERN_REFEREE_DATA), theReferee.getFileName()));
 				if (!isTest) {
-					FileAccess.writeFile(Paths.get(theOutputPath, theReferee.getFileName()), lstText);
-					Constants.logger.info(String.format("writing letter to '%s'.", Paths.get(theOutputPath, theReferee.getFileName()).toString()));
+					FileAccess.writeFile(pathOut, lstText);
 				}
+				Constants.logger.info(String.format("writing letter to '%s'.", pathOut.toString()));
 				
 			} catch (IOException e) {
 				Constants.logger.error(String.format("error while writing: '%s'.", e.getMessage()));
@@ -317,7 +318,7 @@ public class CommunicationHelper {
 		}
 		
 		Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
-		Constants.logger.info(String.format("Sending time: %s.", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+		Constants.logger.info(String.format("Writing time: %s.", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
 		
 	}
 	
