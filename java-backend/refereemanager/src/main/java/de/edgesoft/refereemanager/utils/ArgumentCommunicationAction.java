@@ -31,6 +31,7 @@ package de.edgesoft.refereemanager.utils;
  */
 public enum ArgumentCommunicationAction {
 
+	DOCUMENT,
 	LETTER,
     MAIL;
 	

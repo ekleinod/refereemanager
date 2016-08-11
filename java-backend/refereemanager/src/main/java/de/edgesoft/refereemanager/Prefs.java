@@ -80,6 +80,8 @@ public class Prefs {
 			case PATH_TEMPLATES:
 				return getPreferences().get(theKey.value(), "src/main/templates/");
 				
+			case TEMPLATE_DOCUMENT:
+				return getPreferences().get(theKey.value(), "document/document.mmd");
 			case TEMPLATE_EMAIL:
 				return getPreferences().get(theKey.value(), "email/email.mmd");
 			case TEMPLATE_LETTER:

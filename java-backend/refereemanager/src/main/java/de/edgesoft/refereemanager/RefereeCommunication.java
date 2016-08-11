@@ -176,19 +176,32 @@ public class RefereeCommunication extends AbstractMainClass {
 			
 			Constants.logger.debug(String.format("execute action '%s'.", theAction.value()));
 			
+			Path pathTemplate = null;
+			List<String> lstTemplate = null;
+			
 			switch (theAction) {
-				case LETTER:
-					Constants.logger.debug(String.format("read letter template from '%s/%s'.", Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_LETTER)));
-					final List<String> lstLetterTemplate = FileAccess.readFileInList(Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_LETTER)));
+				case DOCUMENT:
+					pathTemplate = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_DOCUMENT));
+					Constants.logger.debug(String.format("read document template from '%s'.", pathTemplate.toString()));
+					lstTemplate = FileAccess.readFileInList(pathTemplate);
 					
-					CommunicationHelper.createLetters(lstText, lstLetterTemplate, mgrData, theRecipient, toTrainees, isTest, theOutputPath);
+					CommunicationHelper.createLetters(lstText, lstTemplate, mgrData, theRecipient, toTrainees, isTest, theOutputPath);
+					break;
+					
+				case LETTER:
+					pathTemplate = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_LETTER));
+					Constants.logger.debug(String.format("read letter template from '%s'.", pathTemplate.toString()));
+					lstTemplate = FileAccess.readFileInList(pathTemplate);
+					
+					CommunicationHelper.createLetters(lstText, lstTemplate, mgrData, theRecipient, toTrainees, isTest, theOutputPath);
 					break;
 					
 				case MAIL:
-					Constants.logger.debug(String.format("read mail template from '%s/%s'.", Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_EMAIL)));
-					final List<String> lstMailTemplate = FileAccess.readFileInList(Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_EMAIL)));
-					
-					CommunicationHelper.sendMail(lstText, lstMailTemplate, mgrData, theRecipient, toTrainees, isTest);
+					pathTemplate = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_EMAIL));
+					Constants.logger.debug(String.format("read email template from '%s'.", pathTemplate.toString()));
+					lstTemplate = FileAccess.readFileInList(pathTemplate);
+
+					CommunicationHelper.sendMail(lstText, lstTemplate, mgrData, theRecipient, toTrainees, isTest);
 					break;
 			}
 			

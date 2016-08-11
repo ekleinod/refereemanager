@@ -288,14 +288,14 @@ public class CommunicationHelper {
 		for (Referee theReferee : lstRecipients) {
 			
 			Map<TemplateVariable, List<String>> mapFilledContent = TemplateHelper.fillMessageParts(mapContent, theReferee, theData);
-
+			
 			try {
 
 				// body is filled twice with this construct, but some variables are needed as is
 				List<String> lstText = TemplateHelper.fillText(TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent), theReferee, theData);
 				
 				Path pathOut = Paths.get(theOutputPath, 
-						((mapFilledContent.get(TemplateVariable.FILENAME) == null) && !mapFilledContent.get(TemplateVariable.FILENAME).isEmpty()) ?
+						((mapFilledContent.get(TemplateVariable.FILENAME) == null) || mapFilledContent.get(TemplateVariable.FILENAME).isEmpty()) ?
 								String.format(Prefs.get(PrefKey.FILENAME_PATTERN_REFEREE_DATA), theReferee.getFileName()) :
 								mapFilledContent.get(TemplateVariable.FILENAME).get(0));
 								
