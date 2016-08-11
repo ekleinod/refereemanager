@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
@@ -723,9 +724,13 @@ public class TemplateHelper {
 	 */
 	public static String toText(final List<String> theText) {
 		StringBuilder sbReturn = new StringBuilder();
+		boolean isFurther = false;
 		for (String theLine : theText) {
+			if (isFurther) {
+				sbReturn.append(System.lineSeparator());
+			}
 			sbReturn.append(theLine);
-			sbReturn.append(System.lineSeparator());
+			isFurther = true;
 		}
 		return sbReturn.toString();
 	}
@@ -750,6 +755,9 @@ public class TemplateHelper {
 			
 			for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
 				theLine = replaceTextAndConditions(theLine, theTemplateVariable.value(), toText(theMessageParts.get(theTemplateVariable)));
+				if (theTemplateVariable == TemplateVariable.DATE) {
+					theLine = fillLineDateTimeData(theLine, "", DateTimeUtils.fromString(toText(theMessageParts.get(theTemplateVariable))));
+				}
 			}
 			lstReturn.add(theLine);
 			
