@@ -87,6 +87,9 @@ public class Prefs {
 			case TEMPLATE_REFEREE_DATA:
 				return getPreferences().get(theKey.value(), "referee-data/referee-data.mmd");
 				
+			case TEMPLATE_VARIABLE_SEPARATOR:
+				return getPreferences().get(theKey.value(), "::");
+				
 			default:
 				return getPreferences().get(theKey.value(), "");
 		}

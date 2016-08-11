@@ -40,6 +40,19 @@ public class PersonModel extends Person {
 			thenComparing(Comparator.comparing(Person::getFirstName, Collator.getInstance()));
 	
 	/**
+	 * Display title.
+	 * 
+	 * @return display title
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	@Override
+    public String getDisplayTitle() {
+    	return getFullName();
+    }
+    
+	/**
 	 * Full name of person.
 	 * 
 	 * @return full name of the person

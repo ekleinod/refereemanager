@@ -54,7 +54,9 @@ public enum PrefKey {
 	
 	TEMPLATE_EMAIL,
 	TEMPLATE_LETTER,
-	TEMPLATE_REFEREE_DATA
+	TEMPLATE_REFEREE_DATA,
+	
+	TEMPLATE_VARIABLE_SEPARATOR
 	;
 	
     private final String value;

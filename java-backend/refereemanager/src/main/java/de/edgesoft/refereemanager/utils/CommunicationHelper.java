@@ -177,8 +177,8 @@ public class CommunicationHelper {
 					msgMail.setContent(msgContent);
 					
 					if (mapFilledContent.get(TemplateVariable.ATTACHMENT) != null) {
-						for (String attFilename : mapFilledContent.get(TemplateVariable.ATTACHMENT)) {
-							Path attachment = Paths.get(attFilename);
+						for (String sAttachment : mapFilledContent.get(TemplateVariable.ATTACHMENT)) {
+							Path attachment = Paths.get(TemplateHelper.extractAttachmentFilename(sAttachment));
 							
 							BodyPart bpAttachment = new MimeBodyPart();
 							bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
@@ -266,9 +266,7 @@ public class CommunicationHelper {
 					break;
 				case LETTERONLY:
 					if ((theAddress != null) && (theReferee.isDocsByLetter() || theReferee.getEMail().isEmpty())) {
-						if (theReferee.getName().equalsIgnoreCase("balzer")) {
-							lstRecipients.add(theReferee);
-						}
+						lstRecipients.add(theReferee);
 					}
 					break;
 				case ME:
@@ -296,19 +294,11 @@ public class CommunicationHelper {
 				// body is filled twice with this construct, but some variables are needed as is
 				List<String> lstText = TemplateHelper.fillText(TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent), theReferee, theData);
 				
-				if (mapFilledContent.get(TemplateVariable.ATTACHMENT) != null) {
-					for (String attFilename : mapFilledContent.get(TemplateVariable.ATTACHMENT)) {
-						Path attachment = Paths.get(attFilename);
-						
-//						BodyPart bpAttachment = new MimeBodyPart();
-//						bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
-//						bpAttachment.setFileName(attachment.getFileName().toString());
-//						
-//						Constants.logger.info(String.format("Adding attachment '%s'.", bpAttachment.getFileName()));
-					}
-				}
-				
-				Path pathOut = Paths.get(theOutputPath, String.format(Prefs.get(PrefKey.FILENAME_PATTERN_REFEREE_DATA), theReferee.getFileName()));
+				Path pathOut = Paths.get(theOutputPath, 
+						((mapFilledContent.get(TemplateVariable.FILENAME) == null) && !mapFilledContent.get(TemplateVariable.FILENAME).isEmpty()) ?
+								String.format(Prefs.get(PrefKey.FILENAME_PATTERN_REFEREE_DATA), theReferee.getFileName()) :
+								mapFilledContent.get(TemplateVariable.FILENAME).get(0));
+								
 				if (!isTest) {
 					FileAccess.writeFile(pathOut, lstText);
 				}

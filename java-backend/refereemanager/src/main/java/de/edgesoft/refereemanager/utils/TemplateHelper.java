@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.refereemanager.Prefs;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
@@ -675,6 +676,23 @@ public class TemplateHelper {
 				return list;
 			});
 		}
+
+		if (mapReturn.containsKey(TemplateVariable.ATTACHMENT)) {
+			mapReturn.computeIfPresent(TemplateVariable.ATTACHMENTS, (templatevar, list) -> {
+				StringBuilder sbAttachments = new StringBuilder();
+				boolean isFurther = false;
+				for (String sAttachment : mapReturn.get(TemplateVariable.ATTACHMENT)) {
+					if (isFurther) {
+						sbAttachments.append(", ");
+					}
+					sbAttachments.append(TemplateHelper.extractAttachmentTitle(sAttachment));
+					isFurther = true;
+				}
+				list.add(sbAttachments.toString());
+				return list;
+			});
+		}
+
 		
 		return mapReturn;
 	}
@@ -779,6 +797,42 @@ public class TemplateHelper {
 		return lstReturn;
 	}
 		
+	/**
+	 * Extracts filename from template attachment.
+	 * 
+	 * @param theAttachment attachment text
+	 * 
+	 * @return filename
+	 *
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static String extractAttachmentFilename(final String theAttachment) {
+		Objects.requireNonNull(theAttachment, "attachment must not be null");
+		
+		String[] arrAttachmentParts = theAttachment.split(Prefs.get(PrefKey.TEMPLATE_VARIABLE_SEPARATOR));
+
+		return (arrAttachmentParts.length == 1) ? arrAttachmentParts[0].trim() : arrAttachmentParts[1].trim();
+	}
+
+	/**
+	 * Extracts title from template attachment.
+	 * 
+	 * @param theAttachment attachment text
+	 * 
+	 * @return title
+	 *
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static String extractAttachmentTitle(final String theAttachment) {
+		Objects.requireNonNull(theAttachment, "attachment must not be null");
+		
+		String[] arrAttachmentParts = theAttachment.split(Prefs.get(PrefKey.TEMPLATE_VARIABLE_SEPARATOR));
+		
+		return arrAttachmentParts[0].trim();
+	}
+
 }
 
 /* EOF */
