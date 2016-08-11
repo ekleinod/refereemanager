@@ -343,10 +343,12 @@ public class TemplateHelper {
 									sReturn = sReturn.replaceAll(sCondition, sbLine.toString());
 								}
 								
-							} else {
-								if (((List<ModelClass>) oResult).isEmpty()) {
-									sReturn = replaceTextAndConditions(sReturn, sTokenPrefix, "");
-								}
+							}
+
+							// fill conditions for lists manually
+							if (sReturn.contains(sTokenPrefix)) {
+								sReturn = replaceCondition(TOKEN_IF_EMPTY, sReturn, sTokenPrefix, ((List<ModelClass>) oResult).isEmpty());
+								sReturn = replaceCondition(TOKEN_IF_NOTEMPTY, sReturn, sTokenPrefix, !((List<ModelClass>) oResult).isEmpty());
 							}
 							
 						}
