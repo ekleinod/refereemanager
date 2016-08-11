@@ -44,7 +44,7 @@ Nutzungsbeispiel: Kontakttabelle der Schiedsrichter.
 <!--
 \begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
 	\toprule
-	-->E-Mail<!-- & -->**if empty referee:email:**---**end if empty referee:email:****foreach referee:email:****separator**, **end separator****generated referee:status:mmdmarkupstart****generated referee:email:displaytitle****generated referee:status:mmdmarkupend****end foreach referee:email:**
+	-->E-Mail<!-- & -->**if empty referee:email:**---**end if empty referee:email:****foreach referee:email:****separator**, **end separator****generated referee:email:displaytitle****if notempty referee:email:editoronly**a**end if notempty referee:email:editoronly****end foreach referee:email:**
 	**ifnotempty contacts:emails:editor_only** ("privat" = nur für VSRA sichtbar, nicht für andere Schiedsrichter)**endnotempty contacts:emails:editor_only**<!-- \\
 	-->Telefon<!-- & -->**ifempty contacts:phonenumbers_national**---**endempty contacts:phonenumbers_national****generated contacts:phonenumbers_national****ifnotempty contacts:phonenumbers:editor_only** ("privat" = nur für VSRA sichtbar, nicht für andere Schiedsrichter)**endnotempty contacts:phonenumbers:editor_only**<!-- \\
 	-->Mitglied bei<!-- & -->**generated referee:referee_relation_member**<!-- \\

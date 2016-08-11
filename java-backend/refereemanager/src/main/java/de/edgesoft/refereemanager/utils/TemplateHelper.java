@@ -417,10 +417,17 @@ public class TemplateHelper {
 //							}
 							
 							if (sReturn.contains(sToken)) {
-								sReturn = replaceTextAndConditions(sReturn, 
-										sToken,
-										(oResult == null) ? "" : oResult.toString()
-										);
+								
+								String sValue = "";
+								if (oResult != null) {
+									if (oResult instanceof Boolean) {
+										sValue = ((Boolean) oResult) ? "true" : "";
+									} else {
+										sValue = oResult.toString();
+									}
+								}
+								
+								sReturn = replaceTextAndConditions(sReturn, sToken, sValue);
 							}
 							
 						}
