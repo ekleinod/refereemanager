@@ -295,10 +295,6 @@ public class TemplateHelper {
 						
 					if (List.class.isAssignableFrom(theGetter.getValue().getReturnType())) {
 						
-//						if (sTokenPrefix.startsWith("referee:")) {
-//							System.out.println(sTokenPrefix);
-//						}
-						
 						if (sTokenPrefix.isEmpty()) {
 							
 							// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!
@@ -315,6 +311,10 @@ public class TemplateHelper {
 
 							String sCondition = String.format(TOKEN_FOREACH_LINE, sTokenPrefix).replace("**", "\\*\\*");
 							
+//							if (sTokenPrefix.startsWith("referee:email")) {
+//								System.out.println(sTokenPrefix);
+//							}
+//							
 							// there is no "contains" for regular expressions
 							if (Pattern.compile(sCondition).matcher(sReturn).find()) {
 								
@@ -343,6 +343,10 @@ public class TemplateHelper {
 									sReturn = sReturn.replaceAll(sCondition, sbLine.toString());
 								}
 								
+							} else {
+								if (((List<ModelClass>) oResult).isEmpty()) {
+									sReturn = replaceTextAndConditions(sReturn, sTokenPrefix, "");
+								}
 							}
 							
 						}

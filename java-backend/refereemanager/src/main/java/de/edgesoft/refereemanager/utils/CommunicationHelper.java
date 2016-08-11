@@ -266,7 +266,9 @@ public class CommunicationHelper {
 					break;
 				case LETTERONLY:
 					if ((theAddress != null) && (theReferee.isDocsByLetter() || theReferee.getEMail().isEmpty())) {
-						lstRecipients.add(theReferee);
+						if (theReferee.getName().equalsIgnoreCase("balzer")) {
+							lstRecipients.add(theReferee);
+						}
 					}
 					break;
 				case ME:
