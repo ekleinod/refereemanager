@@ -58,6 +58,18 @@ public class RefereeModel extends Referee {
     			.orElse(null);
     }
     
+    /**
+     * Does referee receive docs by letter?.
+     * 
+     * Considers property and lack of email address.
+     * 
+     * @return receive docs by letter?
+     */
+    @Override
+    public boolean isDocsByLetter() {
+        return docsByLetter || getEMail().isEmpty();
+    }
+
 }
 
 /* EOF */

@@ -12,6 +12,7 @@ import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.PhoneNumberModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
+import de.edgesoft.refereemanager.model.URLModel;
 
 
 /**
@@ -43,7 +44,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 })
 @XmlSeeAlso({
     AddressModel.class,
-    URL.class,
+    URLModel.class,
     EMailModel.class,
     PhoneNumberModel.class
 })

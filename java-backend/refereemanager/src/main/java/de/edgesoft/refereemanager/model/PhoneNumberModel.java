@@ -40,6 +40,7 @@ public class PhoneNumberModel extends PhoneNumber {
 	 * @version 0.8.0
 	 * @since 0.6.0
 	 */
+	@Override
     public String getDisplayTitle() {
     	
     	if (isPrivateOnly && !isPrivate()) {

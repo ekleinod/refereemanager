@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
+import de.edgesoft.refereemanager.model.URLModel;
 
 
 /**
@@ -49,7 +50,7 @@ public class Club
     protected String filename;
     @XmlElement(type = AddressModel.class)
     protected List<Address> venue;
-    @XmlElement(name = "u_r_l")
+    @XmlElement(name = "u_r_l", type = URLModel.class)
     protected List<URL> url;
     @XmlElementRef(name = "contact_person", type = JAXBElement.class, required = false)
     protected List<Person> contactPerson;

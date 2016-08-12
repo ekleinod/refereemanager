@@ -1,11 +1,9 @@
 package de.edgesoft.refereemanager.model;
 
-import java.text.MessageFormat;
-
-import de.edgesoft.refereemanager.jaxb.Address;
+import de.edgesoft.refereemanager.jaxb.URL;
 
 /**
- * Address model, additional methods for jaxb model class.
+ * URL model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -27,10 +25,10 @@ import de.edgesoft.refereemanager.jaxb.Address;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.6.0
- * @since 0.6.0
+ * @version 0.8.0
+ * @since 0.8.0
  */
-public class AddressModel extends Address {
+public class URLModel extends URL {
 	
 	/**
 	 * Display title.
@@ -47,12 +45,7 @@ public class AddressModel extends Address {
 			return null;
     	}
     	
-    	return MessageFormat.format("{0} {1}, {2} {3}",
-    			(getStreet() == null) ? "" : getStreet(),
-    			(getNumber() == null) ? "" : getNumber(),
-    			(getZipCode() == null) ? "" : getZipCode(),
-    			(getCity() == null) ? "" : getCity()
-    			);
+    	return getURL();
     	
     }
     

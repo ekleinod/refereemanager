@@ -20,7 +20,7 @@ Diese Informationen sind für jedermann sichtbar.
 Nutzungsbeispiel: Einsatzplan.
 
 <!--
-\begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
+\begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}\savetabu{tablayout}
 	\toprule
 	-->Name<!-- & -->**generated referee:tablename**<!-- \\
 	-->Ausbildung<!-- & -->**generated referee:highesttraininglevel:type:title** (**generated referee:highesttraininglevel:type:shorttitle**)<!-- \\
@@ -36,12 +36,12 @@ Diese Informationen sind nur für andere Schiedsrichter nach Login und den DTTB 
 Nutzungsbeispiel: Kontakttabelle der Schiedsrichter.
 
 <!--
-\begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
+\begin{longtabu}{\preamble{tablayout}}
 	\toprule
-	-->E-Mail<!-- & -->**if empty referee:email:**---**end if empty referee:email:****foreach referee:email:****separator**, **end separator****generated referee:email:displaytitle****if notempty referee:email:editoronly** (privat = nur für VSRA sichtbar, nicht für andere Schiedsrichter)**end if notempty referee:email:editoronly****end foreach referee:email:**<!-- \\
-	-->Telefon<!-- & -->**if empty referee:phonenumber:**---**end if empty referee:phonenumber:****foreach referee:phonenumber:****separator**, **end separator****generated referee:phonenumber:displaytitle****if notempty referee:phonenumber:editoronly** (privat = nur für VSRA sichtbar, nicht für andere Schiedsrichter)**end if notempty referee:phonenumber:editoronly****end foreach referee:phonenumber:**<!-- \\
-	-->Mitglied bei<!-- & -->**generated referee:referee_relation_member**<!-- \\
-	**ifnotempty referee:referee_relation_reffor**-->Schiedst für<!-- & -->**generated referee:referee_relation_reffor**<!-- \\**endnotempty referee:referee_relation_reffor**
+	-->E-Mail<!-- & -->**if empty referee:email:**---**end if empty referee:email:****foreach referee:email:****separator**; **end separator****generated referee:email:displaytitle****if notempty referee:email:editoronly** (privat = nur für VSRA sichtbar, nicht für andere Schiedsrichter)**end if notempty referee:email:editoronly****end foreach referee:email:**<!-- \\
+	-->Telefon<!-- & -->**if empty referee:phonenumber:**---**end if empty referee:phonenumber:****foreach referee:phonenumber:****separator**; **end separator****generated referee:phonenumber:displaytitle****if notempty referee:phonenumber:editoronly** (privat = nur für VSRA sichtbar, nicht für andere Schiedsrichter)**end if notempty referee:phonenumber:editoronly****end foreach referee:phonenumber:**<!-- \\
+	-->Mitglied bei<!-- & -->**generated referee:member:displaytitle**<!-- \\
+	**if notempty referee:reffor**-->Schiedst für<!-- & -->**generated referee:reffor:displaytitle**<!--\\**end if notempty referee:reffor**
 	\bottomrule
 \end{longtabu}
 -->
@@ -53,12 +53,12 @@ Diese Informationen sind nur für den Verbandsschiedsrichterausschuss sichtbar.
 Nutzungsbeispiel: Verwaltung der Einsätze.
 
 <!--
-\begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}
+\begin{longtabu}{\preamble{tablayout}}
 	\toprule
-	**ifnotempty referee:docs_per_letter**-->Alle Infos per Brief<!-- & -->ja**ifnotempty contacts:emails** *Bitte prüfen, ob die Zusendung per E-Mail nicht doch ausreicht.* **endnotempty contacts:emails**<!-- \\**endnotempty referee:docs_per_letter**
-	-->Adresse<!-- & -->**ifempty contacts:addresses_fulladdress**---**endempty contacts:addresses_fulladdress****generated contacts:addresses_fulladdress**<!-- \\
-	-->URL<!-- & -->**ifempty contacts:urls**---**endempty contacts:urls****generated contacts:urls**<!-- \\
-	-->Geburtstag<!-- & -->**ifempty referee:birthday**---**endempty referee:birthday****generated referee:birthday**<!-- \\
+	**if notempty referee:docsbyletter**-->Alle Infos per Brief<!-- & -->ja**if notempty referee:email:***, bitte prüfe, ob die Zusendung per E-Mail nicht doch ausreicht, wegen Papiersparen und so.***end if notempty referee:email:**<!-- \\**end if notempty referee:docsbyletter**
+	-->Adresse<!-- & -->**if empty referee:address:**---**end if empty referee:address:****foreach referee:address:****separator**; **end separator****generated referee:address:displaytitle****if notempty referee:address:editoronly** (privat = nur für VSRA sichtbar, nicht für andere Schiedsrichter)**end if notempty referee:address:editoronly****end foreach referee:address:**<!-- \\
+	-->URL<!-- & -->**if empty referee:url:**---**end if empty referee:url:****foreach referee:url:****separator**; **end separator****generated referee:url:displaytitle****end foreach referee:url:**<!-- \\
+	-->Geburtstag<!-- & -->**if empty referee:birthday**---**end if empty referee:birthday****generated referee:birthday**<!-- \\
 	-->Geschlecht<!-- & -->**generated sextype:title**<!-- \\
 	-->Bevorzugt schiedsen<!-- & -->**ifempty referee:referee_relation_prefer**---**endempty referee:referee_relation_prefer****generated referee:referee_relation_prefer**<!-- \\
 	-->Nicht schiedsen<!-- & -->**ifempty referee:referee_relation_noassignment**---**endempty referee:referee_relation_noassignment****generated referee:referee_relation_noassignment**<!-- \\

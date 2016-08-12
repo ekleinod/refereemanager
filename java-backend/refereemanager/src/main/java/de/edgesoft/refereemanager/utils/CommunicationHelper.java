@@ -265,12 +265,13 @@ public class CommunicationHelper {
 					}
 					break;
 				case LETTERONLY:
-					if ((theAddress != null) && (theReferee.isDocsByLetter() || theReferee.getEMail().isEmpty())) {
+					if ((theAddress != null) && theReferee.isDocsByLetter()) {
 						lstRecipients.add(theReferee);
 					}
 					break;
 				case ME:
 					if (theReferee.getFullName().equals(Prefs.get(PrefKey.MY_NAME))) {
+//					if (theReferee.getFullName().equals("Uwe Jendritzki")) {
 						lstRecipients.add(theReferee);
 					}
 					break;

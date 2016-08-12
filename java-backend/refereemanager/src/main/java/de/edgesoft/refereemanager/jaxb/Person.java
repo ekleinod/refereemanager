@@ -18,6 +18,7 @@ import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.PhoneNumberModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
+import de.edgesoft.refereemanager.model.URLModel;
 
 
 /**
@@ -87,7 +88,7 @@ public class Person
     protected List<Address> address;
     @XmlElement(name = "phone_number", type = PhoneNumberModel.class)
     protected List<PhoneNumber> phoneNumber;
-    @XmlElement(name = "u_r_l")
+    @XmlElement(name = "u_r_l", type = URLModel.class)
     protected List<URL> url;
     @XmlElement(name = "sex_type", type = Object.class)
     @XmlIDREF
