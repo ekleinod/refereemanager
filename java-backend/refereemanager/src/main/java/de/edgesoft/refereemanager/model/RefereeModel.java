@@ -1,5 +1,7 @@
 package de.edgesoft.refereemanager.model;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import de.edgesoft.refereemanager.jaxb.Referee;
@@ -56,6 +58,54 @@ public class RefereeModel extends Referee {
     			.sorted(TrainingLevelModel.RANK.reversed())
     			.findFirst()
     			.orElse(null);
+    }
+    
+	/**
+	 * Last training update.
+	 * 
+	 * @return last training update
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+    public LocalDate getLastTrainingUpdate() {
+    	
+    	TrainingLevel highestTrainingLevel = getHighestTrainingLevel();
+    	
+    	if (highestTrainingLevel == null) {
+    		return null;
+    	}
+    	
+    	LocalDate dteReturn = highestTrainingLevel.getUpdate()
+    			.stream()
+    			.sorted(Comparator.reverseOrder())
+    			.findFirst()
+    			.orElse(null);
+    	
+    	if (dteReturn == null) {
+    		return highestTrainingLevel.getSince();
+    	}
+    			
+    	return dteReturn;
+    }
+    
+	/**
+	 * Next training update.
+	 * 
+	 * @return next training update
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+    public LocalDate getNextTrainingUpdate() {
+    	
+    	LocalDate lastTrainingUpdate = getLastTrainingUpdate();
+    	
+    	if (lastTrainingUpdate == null) {
+    		return null;
+    	}
+
+    	return lastTrainingUpdate.plusYears(getHighestTrainingLevel().getType().getUpdateInterval());
     }
     
     /**

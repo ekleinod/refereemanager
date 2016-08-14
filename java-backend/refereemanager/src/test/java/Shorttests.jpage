@@ -19,3 +19,9 @@ for (java.beans.MethodDescriptor theDescriptor : java.beans.Introspector.getBean
 
 System.out.println("user.language" instanceof String);
 System.out.println(null instanceof String);
+
+System.out.println(java.time.format.DateTimeFormatter.ofLocalizedDate(java.time.format.FormatStyle.MEDIUM).toString());
+
+System.out.println(java.time.format.DateTimeFormatter.ofPattern("cccc: d. MMMM uuuu").withLocale(java.util.Locale.GERMANY).format(java.time.LocalDate.now()));
+
+System.out.println(java.util.Locale.forLanguageTag(java.util.Locale.GERMANY.toLanguageTag()));

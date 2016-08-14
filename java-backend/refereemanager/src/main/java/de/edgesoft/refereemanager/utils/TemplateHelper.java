@@ -9,9 +9,7 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -462,36 +460,27 @@ public class TemplateHelper {
 		String sReturn = theLine;
 		
 		// own for loop with replace, for there are more than one datetime tokens allowed in one line
-		for (String theType : new String[]{"date", "time", "datetime"}) {
-			for (FormatStyle theStyle : FormatStyle.values()) {
-				
-				String sNewToken = String.format("%s:%s:%s",
-						theToken, 
-						theType,
-						theStyle.toString().toLowerCase());
-				
-				if (sReturn.contains(sNewToken)) {
-					DateTimeFormatter fmtOutput = 
-							(theType.equals("date")) ?
-									DateTimeFormatter.ofLocalizedDate(theStyle).withLocale(Locale.GERMANY)
-									: (theType.equals("time")) ?
-											DateTimeFormatter.ofLocalizedTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault())
-											: DateTimeFormatter.ofLocalizedDateTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault());
-											
-											String sReplacement = "";
-											if (theDateTime instanceof LocalDateTime) {
-												sReplacement = ((LocalDateTime) theDateTime).format(fmtOutput);
-											} else if (theDateTime instanceof LocalDate) {
-												sReplacement = ((LocalDate) theDateTime).format(fmtOutput);
-											} else if (theDateTime instanceof LocalTime) {
-												sReplacement = ((LocalTime) theDateTime).format(fmtOutput);
-											}
-											
-											sReturn = replaceTextAndConditions(sReturn, 
-													sNewToken, 
-													sReplacement
-													);
+		for (DateTimeFormat theFormat : DateTimeFormat.values()) {
+			String sNewToken = String.format("%s:%s",
+					theToken, 
+					theFormat.value());
+			
+			if (sReturn.contains(sNewToken)) {
+				DateTimeFormatter fmtOutput = DateTimeFormatter.ofPattern(Prefs.get(theFormat), Locale.forLanguageTag(Prefs.get(PrefKey.LOCALE)));
+										
+				String sReplacement = "";
+				if (theDateTime instanceof LocalDateTime) {
+					sReplacement = ((LocalDateTime) theDateTime).format(fmtOutput);
+				} else if (theDateTime instanceof LocalDate) {
+					sReplacement = ((LocalDate) theDateTime).format(fmtOutput);
+				} else if (theDateTime instanceof LocalTime) {
+					sReplacement = ((LocalTime) theDateTime).format(fmtOutput);
 				}
+				
+				sReturn = replaceTextAndConditions(sReturn, 
+						sNewToken, 
+						sReplacement
+						);
 			}
 		}
 				

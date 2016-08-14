@@ -3,10 +3,12 @@ package de.edgesoft.refereemanager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Locale;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 import java.util.prefs.Preferences;
 
+import de.edgesoft.refereemanager.utils.DateTimeFormat;
 import de.edgesoft.refereemanager.utils.PrefKey;
 
 /**
@@ -77,6 +79,9 @@ public class Prefs {
 			case FILENAME_PATTERN_REFEREE_DATA:
 				return getPreferences().get(theKey.value(), "%s.mmd");
 				
+			case LOCALE:
+				return getPreferences().get(theKey.value(), Locale.GERMANY.toLanguageTag());
+				
 			case PATH_TEMPLATES:
 				return getPreferences().get(theKey.value(), "src/main/templates/");
 				
@@ -99,6 +104,34 @@ public class Prefs {
 	}
 
 	/**
+	 * Get preference for date/time format.
+	 * 
+	 * @param theKey date time format
+	 * @return preference value
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static String get(final DateTimeFormat theKey) {
+		
+		switch (theKey) {
+			case DATELONG:
+				return getPreferences().get(theKey.value(), "d. MMMM yyyy");
+			case DATEMEDIUM:
+				return getPreferences().get(theKey.value(), "dd.MM.yyyy");
+			case DATEYEAR:
+				return getPreferences().get(theKey.value(), "yyyy");
+				
+			case DATETIMELONG:
+				return getPreferences().get(theKey.value(), "ccc: d. MMM yyyy, hh:mm:ss");
+				
+			default:
+				return getPreferences().get(theKey.value(), "'unknown format'");
+		}
+		
+	}
+
+	/**
 	 * Set preference value for key.
 	 * 
 	 * @param theKey preference key
@@ -108,7 +141,20 @@ public class Prefs {
 	 * @since 0.8.0
 	 */
 	public static void put(final PrefKey theKey, final String theValue) {
-		getPreferences().put(theKey.value(), theValue);
+		put(theKey.value(), theValue);
+	}
+
+	/**
+	 * Set preference value for text key.
+	 * 
+	 * @param theKey text key
+	 * @param theValue value
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static void put(final String theKey, final String theValue) {
+		getPreferences().put(theKey, theValue);
 	}
 
 	/**

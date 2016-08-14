@@ -271,9 +271,11 @@ public class CommunicationHelper {
 					break;
 				case ME:
 					if (theReferee.getFullName().equals(Prefs.get(PrefKey.MY_NAME))) {
-//					if (theReferee.getFullName().equals("")) {
 						lstRecipients.add(theReferee);
 					}
+//					if (theReferee.getFullName().equals("")) {
+//						lstRecipients.add(theReferee);
+//					}
 					break;
 				case MAILONLY:
 					break;

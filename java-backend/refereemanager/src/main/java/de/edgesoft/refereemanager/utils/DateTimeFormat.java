@@ -2,7 +2,7 @@
 package de.edgesoft.refereemanager.utils;
 
 /**
- * Preference keys.
+ * Date and time formats.
  * 
  * For enums I use the coding style of jaxb, so there will be no inconsistencies.
  *
@@ -29,42 +29,18 @@ package de.edgesoft.refereemanager.utils;
  * @version 0.8.0
  * @since 0.8.0
  */
-public enum PrefKey {
+public enum DateTimeFormat {
 
-	COUNTRY_CODE,
-	CONTACT_PRIVATE,
-	
-	EMAIL_FROM,
-	EMAIL_FROMNAME,
-	EMAIL_TO,
-	EMAIL_TONAME,
-	EMAIL_SMTP_HOST,
-	EMAIL_SMTP_USERNAME,
-	EMAIL_SMTP_PASSWORD,
-	
-	FILENAME_PATTERN_DATABASE,
-	FILENAME_PATTERN_REFEREE_DATA,
-	
-	LOCALE,
-	
-	MY_EMAIL,
-	MY_NAME,
-	
-	PATH_DATABASE,
-	PATH_OUTPUT,
-	PATH_TEMPLATES,
-	
-	TEMPLATE_DOCUMENT,
-	TEMPLATE_EMAIL,
-	TEMPLATE_LETTER,
-	TEMPLATE_REFEREE_DATA,
-	
-	TEMPLATE_VARIABLE_SEPARATOR
+	DATELONG,
+	DATEMEDIUM,
+	DATEYEAR,
+
+	DATETIMELONG,
 	;
 	
     private final String value;
 
-    PrefKey() {
+    DateTimeFormat() {
         value = name().toLowerCase();
     }
 
@@ -72,8 +48,8 @@ public enum PrefKey {
         return value;
     }
 
-    public static PrefKey fromValue(String v) {
-        for (PrefKey c: PrefKey.values()) {
+    public static DateTimeFormat fromValue(String v) {
+        for (DateTimeFormat c: DateTimeFormat.values()) {
             if (c.value.equals(v)) {
                 return c;
             }
