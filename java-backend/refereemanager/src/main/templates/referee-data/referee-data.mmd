@@ -58,7 +58,7 @@ Nutzungsbeispiel: Verwaltung der Einsätze.
 	**if notempty referee:docsbyletter**-->Alle Infos per Brief<!-- & -->ja**if notempty referee:email:***, bitte prüfe, ob die Zusendung per E-Mail nicht doch ausreicht, wegen Papiersparen und so.***end if notempty referee:email:**<!-- \\**end if notempty referee:docsbyletter**
 	-->Adresse<!-- & -->**if empty referee:address:**---**end if empty referee:address:****foreach referee:address:****separator**; **end separator****generated referee:address:displaytitle****if notempty referee:address:editoronly** (privat = nur für VSRA sichtbar, nicht für andere Schiedsrichter)**end if notempty referee:address:editoronly****end foreach referee:address:**<!-- \\
 	-->URL<!-- & -->**if empty referee:url:**---**end if empty referee:url:****foreach referee:url:****separator**; **end separator****generated referee:url:displaytitle****end foreach referee:url:**<!-- \\
-	-->Geburtstag<!-- & -->**if empty referee:birthday**---**end if empty referee:birthday****generated referee:birthday**<!-- \\
+	-->Geburtstag<!-- & -->**if empty referee:birthday**---**end if empty referee:birthday****if notempty referee:birthday****generated referee:birthday:date:long****end if notempty referee:birthday**<!-- \\
 	-->Geschlecht<!-- & -->**generated sextype:title**<!-- \\
 	-->Bevorzugt schiedsen<!-- & -->**ifempty referee:referee_relation_prefer**---**endempty referee:referee_relation_prefer****generated referee:referee_relation_prefer**<!-- \\
 	-->Nicht schiedsen<!-- & -->**ifempty referee:referee_relation_noassignment**---**endempty referee:referee_relation_noassignment****generated referee:referee_relation_noassignment**<!-- \\

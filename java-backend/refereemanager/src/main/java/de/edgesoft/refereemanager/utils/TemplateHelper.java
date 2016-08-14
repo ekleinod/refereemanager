@@ -403,34 +403,29 @@ public class TemplateHelper {
 						String sToken = (theTokenPrefix.indexOf(':') == theTokenPrefix.lastIndexOf(':')) ?
 								String.format("%s%s:%s", theTokenPrefix, sTokenClass, theGetter.getKey()) :
 									String.format("%s%s", theTokenPrefix, theGetter.getKey());
-						
+
+						// special date formats
 						if ((theGetter.getValue().getReturnType() == LocalDateTime.class) ||
 								(theGetter.getValue().getReturnType() == LocalDate.class) ||
 								(theGetter.getValue().getReturnType() == LocalTime.class)) {
 
 							sReturn = fillLineDateTimeData(sReturn, sToken, oResult);
 							
-						} else {
+						} 
+						
+						// rest and empty dates
+						if (sReturn.contains(sToken)) {
 							
-//							if (sToken.startsWith("referee:")) {
-//								Constants.logger.debug(sToken);
-////								Constants.logger.debug(oResult);
-//							}
-							
-							if (sReturn.contains(sToken)) {
-								
-								String sValue = "";
-								if (oResult != null) {
-									if (oResult instanceof Boolean) {
-										sValue = ((Boolean) oResult) ? "true" : "";
-									} else {
-										sValue = oResult.toString();
-									}
+							String sValue = "";
+							if (oResult != null) {
+								if (oResult instanceof Boolean) {
+									sValue = ((Boolean) oResult) ? "true" : "";
+								} else {
+									sValue = oResult.toString();
 								}
-								
-								sReturn = replaceTextAndConditions(sReturn, sToken, sValue);
 							}
 							
+							sReturn = replaceTextAndConditions(sReturn, sToken, sValue);
 						}
 						
 					}
