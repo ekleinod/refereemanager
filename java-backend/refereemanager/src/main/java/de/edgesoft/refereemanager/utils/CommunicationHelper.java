@@ -271,7 +271,7 @@ public class CommunicationHelper {
 					break;
 				case ME:
 					if (theReferee.getFullName().equals(Prefs.get(PrefKey.MY_NAME))) {
-//					if (theReferee.getFullName().equals("Uwe Jendritzki")) {
+//					if (theReferee.getFullName().equals("")) {
 						lstRecipients.add(theReferee);
 					}
 					break;

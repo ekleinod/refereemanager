@@ -413,7 +413,7 @@ public class TemplateHelper {
 							
 						} 
 						
-						// rest and empty dates
+						// other data and empty dates
 						if (sReturn.contains(sToken)) {
 							
 							String sValue = "";

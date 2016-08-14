@@ -59,9 +59,13 @@ Nutzungsbeispiel: Verwaltung der Einsätze.
 	-->Adresse<!-- & -->**if empty referee:address:**---**end if empty referee:address:****foreach referee:address:****separator**; **end separator****generated referee:address:displaytitle****if notempty referee:address:editoronly** (privat = nur für VSRA sichtbar, nicht für andere Schiedsrichter)**end if notempty referee:address:editoronly****end foreach referee:address:**<!-- \\
 	-->URL<!-- & -->**if empty referee:url:**---**end if empty referee:url:****foreach referee:url:****separator**; **end separator****generated referee:url:displaytitle****end foreach referee:url:**<!-- \\
 	-->Geburtstag<!-- & -->**if empty referee:birthday**---**end if empty referee:birthday****if notempty referee:birthday****generated referee:birthday:date:long****end if notempty referee:birthday**<!-- \\
-	-->Geschlecht<!-- & -->**generated sextype:title**<!-- \\
-	-->Bevorzugt schiedsen<!-- & -->**ifempty referee:referee_relation_prefer**---**endempty referee:referee_relation_prefer****generated referee:referee_relation_prefer**<!-- \\
-	-->Nicht schiedsen<!-- & -->**ifempty referee:referee_relation_noassignment**---**endempty referee:referee_relation_noassignment****generated referee:referee_relation_noassignment**<!-- \\
+	-->Geschlecht<!-- & -->**generated referee:sextype:title**<!-- \\
+
+	-->Bevorzugt schiedsen<!-- & -->**if empty referee:prefer:**---**end if empty referee:prefer:****foreach referee:prefer:****separator**; **end separator****generated referee:prefer:displaytitle****end foreach referee:prefer:**<!-- \\
+	-->Nicht schiedsen<!-- & -->**if empty referee:avoid:**---**end if empty referee:avoid:****foreach referee:avoid:****separator**; **end separator****generated referee:avoid:displaytitle****end foreach referee:avoid:**<!-- \\
+
+	**if notempty referee:traininglevel:**-->**foreach referee:traininglevel:****separator**<!--\\ -->**end separator****generated referee:traininglevel:type:shorttitle****end foreach referee:traininglevel:**<!--\\**end if notempty referee:traininglevel:**
+
 	-->**generated traininglevel:abbreviation** seit<!-- & -->**ifempty traininglevel:since**---**endempty traininglevel:since****generated traininglevel:since**<!-- \\
 	-->Letzte Fortbildung<!-- & -->**ifempty traininglevel:lasttrainingupdate**---**endempty traininglevel:lasttrainingupdate****generated traininglevel:lasttrainingupdate**<!-- \\
 	-->Nächste Fortbildung<!-- & -->**ifempty traininglevel:nexttrainingupdate**---**endempty traininglevel:nexttrainingupdate****generated traininglevel:nexttrainingupdate**<!-- \\
