@@ -1,0 +1,12 @@
+\documentclass{scrartcl}
+
+\usepackage{pdfpages}
+
+\begin{document}
+	\includepdfset{pages=-}
+
+	\includepdf{message_**generated referee:filename**}
+	**foreach attachment**\includepdf[landscape=**generated attachment:landscape**]{**generated attachment:filename**} **end foreach attachment**
+
+\end{document}
+

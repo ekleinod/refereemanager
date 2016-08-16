@@ -796,7 +796,7 @@ public class TemplateHelper {
 		
 		String[] arrAttachmentParts = theAttachment.split(Prefs.get(PrefKey.TEMPLATE_VARIABLE_SEPARATOR));
 
-		return (arrAttachmentParts.length == 1) ? arrAttachmentParts[0].trim() : arrAttachmentParts[1].trim();
+		return (arrAttachmentParts.length > 1) ? arrAttachmentParts[1].trim() : arrAttachmentParts[0].trim();
 	}
 
 	/**
@@ -815,6 +815,49 @@ public class TemplateHelper {
 		String[] arrAttachmentParts = theAttachment.split(Prefs.get(PrefKey.TEMPLATE_VARIABLE_SEPARATOR));
 		
 		return arrAttachmentParts[0].trim();
+	}
+
+	/**
+	 * Extracts landscape from template attachment.
+	 * 
+	 * @param theAttachment attachment text
+	 * 
+	 * @return landscape
+	 *
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static String extractAttachmentLandscape(final String theAttachment) {
+		Objects.requireNonNull(theAttachment, "attachment must not be null");
+		
+		String[] arrAttachmentParts = theAttachment.split(Prefs.get(PrefKey.TEMPLATE_VARIABLE_SEPARATOR));
+
+		return (arrAttachmentParts.length > 2) ? arrAttachmentParts[2].trim() : "false";
+	}
+
+	/**
+	 * Fills merge template.
+	 * 
+	 * @param theText the text
+	 * @param theData the data
+	 * 
+	 * @return filled template
+	 *
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static List<String> fillMergeTemplate(final List<String> theText, final Map<String, List<Map<String, String>>> theData) {
+		List<String> lstReturn = new ArrayList<>();
+		
+		for (String theLine : theText) {
+			String sFilledLine = theLine;
+			for (Entry<String, List<Map<String, String>>> theEntry : theData.entrySet()) {
+				replaceTextAndConditions(sFilledLine, String.format("%s:%s", theEntry.getKey());
+			}
+			lstReturn.add(sFilledLine);
+		}
+			
+		return lstReturn;
 	}
 
 }

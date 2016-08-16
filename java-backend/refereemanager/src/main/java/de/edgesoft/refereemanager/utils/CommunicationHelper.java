@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -231,6 +232,7 @@ public class CommunicationHelper {
 	 * 
 	 * @param theText text
 	 * @param theTemplate template text
+	 * @param theAction action
 	 * @param theData data
 	 * @param theRecipient recipient
 	 * @param toTrainees send to trainees instead of referees
@@ -241,8 +243,9 @@ public class CommunicationHelper {
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-	public static void createLetters(final List<String> theText, final List<String> theTemplate, final RefereeManager theData, 
-			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest, final String theOutputPath, final String theFromRecipient) {
+	public static void createLetters(final List<String> theText, final List<String> theTemplate, final RefereeManager theData,
+			final ArgumentCommunicationAction theAction, final ArgumentCommunicationRecipient theRecipient, 
+			final boolean toTrainees, final boolean isTest, final String theOutputPath, final String theFromRecipient) {
 		
 		Objects.requireNonNull(theText, "text must not be null");
 		Objects.requireNonNull(theTemplate, "template must not be null");
@@ -253,6 +256,31 @@ public class CommunicationHelper {
 			Constants.logger.info("Testmode: no letters are stored!.");
 		}
 		Constants.logger.info(String.format("Writing letters to '%s', trainees: %s.", theRecipient.value(), toTrainees));
+		
+		// merge files
+		List<String> lstMergeRef = null;
+		List<String> lstMergeRefs = null;
+		if (theAction == ArgumentCommunicationAction.LETTER) {
+			
+			Path pathMergeRef = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_MERGE_REFEREE));
+			Constants.logger.debug(String.format("read merge template from '%s'.", pathMergeRef.toString()));
+			try {
+				lstMergeRef = FileAccess.readFileInList(pathMergeRef);
+			} catch (Exception e) {
+				Constants.logger.error(e);
+				e.printStackTrace();
+			}
+			
+			Path pathMergeRefs = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_MERGE_REFEREES));
+			Constants.logger.debug(String.format("read merge template from '%s'.", pathMergeRef.toString()));
+			try {
+				lstMergeRefs = FileAccess.readFileInList(pathMergeRefs);
+			} catch (Exception e) {
+				Constants.logger.error(e);
+				e.printStackTrace();
+			}
+		}
+
 		
 		// compute referees to send letters to
 		final List<? extends Referee> lstAll = (toTrainees) ? ((ContentModel) theData.getContent()).getTrainee() : ((ContentModel) theData.getContent()).getReferee();
@@ -272,7 +300,9 @@ public class CommunicationHelper {
 				
 				switch (theRecipient) {
 					case ALL:
-						lstRecipients.add(theReferee);
+						if ((theAction == ArgumentCommunicationAction.DOCUMENT) || (theAddress != null)) {
+							lstRecipients.add(theReferee);
+						}
 						break;
 					case LETTERONLY:
 						if ((theAddress != null) && theReferee.isDocsByLetter()) {
@@ -299,9 +329,34 @@ public class CommunicationHelper {
 
 		LocalTime tmeStart = LocalTime.now();
 		
+		// merge data
+		Map<String, List<Map<String, String>>> mapRefData = new HashMap<>();
+		
 		for (Referee theReferee : lstRecipients) {
 			
 			Map<TemplateVariable, List<String>> mapFilledContent = TemplateHelper.fillMessageParts(mapContent, theReferee, theData);
+
+			// merge data
+			mapRefData.computeIfAbsent("referee", it -> new ArrayList<>());
+			mapRefData.computeIfPresent("referee", (key, list) -> {
+				Map<String, String> mapTemp = new HashMap<>();
+				mapTemp.put("filename", theReferee.getFileName());
+				list.add(mapTemp);
+				return list;
+			});
+			
+			mapRefData.put("attachment", new ArrayList<>());
+			if (mapFilledContent.get(TemplateVariable.ATTACHMENT) != null) {
+				for (String sAttachment : mapFilledContent.get(TemplateVariable.ATTACHMENT)) {
+					mapRefData.computeIfPresent("attachment", (key, list) -> {
+						Map<String, String> mapTemp = new HashMap<>();
+						mapTemp.put("filename", TemplateHelper.extractAttachmentFilename(sAttachment));
+						mapTemp.put("landscape", TemplateHelper.extractAttachmentLandscape(sAttachment));
+						list.add(mapTemp);
+						return list;
+					});
+				}
+			}
 			
 			try {
 

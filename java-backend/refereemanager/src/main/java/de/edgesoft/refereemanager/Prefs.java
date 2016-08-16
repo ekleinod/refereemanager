@@ -91,6 +91,10 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), "email/email.mmd");
 			case TEMPLATE_LETTER:
 				return getPreferences().get(theKey.value(), "letter/letter.mmd");
+			case TEMPLATE_MERGE_REFEREE:
+				return getPreferences().get(theKey.value(), "letter/merge_referee.tex");
+			case TEMPLATE_MERGE_REFEREES:
+				return getPreferences().get(theKey.value(), "letter/merge_referees.tex");
 			case TEMPLATE_REFEREE_DATA:
 				return getPreferences().get(theKey.value(), "referee-data/referee-data.mmd");
 				
