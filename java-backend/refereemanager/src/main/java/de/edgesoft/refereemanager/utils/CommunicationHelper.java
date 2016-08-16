@@ -157,9 +157,6 @@ public class CommunicationHelper {
 				msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.fromString(mapFilledContent.get(TemplateVariable.DATE).get(0))));
 				msgMail.setSubject(mapFilledContent.get(TemplateVariable.SUBJECT).get(0));
 
-				Constants.logger.debug(String.format("Setting sent date '%s'.", msgMail.getSentDate()));
-				Constants.logger.debug(String.format("Setting subject '%s'.", msgMail.getSubject()));
-				
 				try {
 					
 					EMail theEMail = theReferee.getPrimaryEMail();
@@ -172,8 +169,6 @@ public class CommunicationHelper {
 					text.setText(sText);
 					msgContent.addBodyPart(text);
 
-					Constants.logger.debug(String.format("Adding body '%s'.", sText));
-					
 					msgMail.setContent(msgContent);
 					
 					if (mapFilledContent.get(TemplateVariable.ATTACHMENT) != null) {
