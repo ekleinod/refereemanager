@@ -10,7 +10,7 @@ digraph refereedata {
 	start2 -> wmtr;
 
 	setr -> stop1;
-	cmmpn -> stop2;
+	cmmpan -> stop2;
 
 	crds [label="create referee data sheets", fillcolor="5"];
 	crdsm [label="name_firstname.mmd"];
@@ -47,23 +47,41 @@ digraph refereedata {
 	crmm -> crmp [label=" build.xml, static"];
 	crmp -> crmpn;
 
-	cmmp [label="create merged message as pdf", fillcolor="3"];
+	cmmp [label="create merged message (referee) as pdf", fillcolor="3"];
 	cmmpn [label="merge_name_firstname.pdf"];
 	crmpn -> cmmp;
 	cmtt -> cmmp [label=" build.xml, static"];
 	cmmp -> cmmpn;
+
+	cmta [label="create merge tex (1 for all referees)", fillcolor="5"];
+	cmtat [label="merge_all.tex"];
+	setra -> cmta;
+	cmta -> cmtat;
+
+	cmmpa [label="create merged message (all) as pdf", fillcolor="3"];
+	cmmpan [label="merge_all.pdf"];
+	cmmpn -> cmmpa;
+	cmtat -> cmmpa [label=" build.xml, static"];
+	cmmpa -> cmmpan;
 
 	{
 		rank="same";
 		setr;
 		crm;
 		cmt;
+		cmta;
 	}
 
 	{
 		rank="same";
 		crmpn;
 		cmtt;
+	}
+
+	{
+		rank="same";
+		cmmpn;
+		cmtat;
 	}
 
 }
