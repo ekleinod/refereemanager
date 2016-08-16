@@ -82,11 +82,12 @@ public class RefereeCommunication extends AbstractMainClass {
 		addOption("r", "recipient", "recipient (me (default), all, mailonly, letteronly).", true, false);
 		addOption("n", "trainees", "Send to trainees instead of referees.", false, false);
 		addOption("e", "test", "test, don't send anything.", false, false);
+		addOption("f", "from", "start from this referee (including this).", true, false);
 		
 		init(args);
 		
 		refereeCommunication(getOptionValue("p"), getOptionValue("d"), getOptionValue("s"), 
-				getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), getOptionValue("r"), hasOption("n"), hasOption("e"));
+				getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), getOptionValue("r"), hasOption("n"), hasOption("e"), getOptionValue("f"));
 		
 	}
 
@@ -102,13 +103,14 @@ public class RefereeCommunication extends AbstractMainClass {
 	 * @param theRecipient recipient (me (default), all, mailonly, letteronly)
 	 * @param toTrainees send to trainees instead of referees
 	 * @param isTest is test?
+	 * @param theFromRecipient start processing from which recipient (including this)
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
 	public void refereeCommunication(final String theDBPath, final String theDBFile, final String theSeason, 
 			final String theTextfile, final String theOutputpath, final String theAction, final String theRecipient, 
-			final boolean toTrainees, final boolean isTest) {
+			final boolean toTrainees, final boolean isTest, final String theFromRecipient) {
 		
 		Constants.logger.debug("start.");
 		
@@ -135,7 +137,7 @@ public class RefereeCommunication extends AbstractMainClass {
 			// do nothing, remains "all"
 		}
 		
-		refereeCommunication(pathDBFile, Paths.get(theTextfile), sOutput, argAction, argRecipient, toTrainees, isTest);
+		refereeCommunication(pathDBFile, Paths.get(theTextfile), sOutput, argAction, argRecipient, toTrainees, isTest, theFromRecipient);
 		
 		Constants.logger.debug("stop");
 		
@@ -151,13 +153,14 @@ public class RefereeCommunication extends AbstractMainClass {
 	 * @param theRecipient recipient
 	 * @param toTrainees send to trainees instead of referees
 	 * @param isTest is test?
+	 * @param theFromRecipient start processing from which recipient (including this)
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
 	public void refereeCommunication(final Path theDBPath, final Path theTextPath, final String theOutputPath,
 			final ArgumentCommunicationAction theAction, final ArgumentCommunicationRecipient theRecipient, 
-			final boolean toTrainees, final boolean isTest) {
+			final boolean toTrainees, final boolean isTest, final String theFromRecipient) {
 		
 		Objects.requireNonNull(theDBPath, "database file path must not be null");
 		Objects.requireNonNull(theTextPath, "text file path must not be null");
@@ -185,7 +188,7 @@ public class RefereeCommunication extends AbstractMainClass {
 					Constants.logger.debug(String.format("read document template from '%s'.", pathTemplate.toString()));
 					lstTemplate = FileAccess.readFileInList(pathTemplate);
 					
-					CommunicationHelper.createLetters(lstText, lstTemplate, mgrData, theRecipient, toTrainees, isTest, theOutputPath);
+					CommunicationHelper.createLetters(lstText, lstTemplate, mgrData, theRecipient, toTrainees, isTest, theOutputPath, theFromRecipient);
 					break;
 					
 				case LETTER:
@@ -193,7 +196,7 @@ public class RefereeCommunication extends AbstractMainClass {
 					Constants.logger.debug(String.format("read letter template from '%s'.", pathTemplate.toString()));
 					lstTemplate = FileAccess.readFileInList(pathTemplate);
 					
-					CommunicationHelper.createLetters(lstText, lstTemplate, mgrData, theRecipient, toTrainees, isTest, theOutputPath);
+					CommunicationHelper.createLetters(lstText, lstTemplate, mgrData, theRecipient, toTrainees, isTest, theOutputPath, theFromRecipient);
 					break;
 					
 				case MAIL:
@@ -201,7 +204,7 @@ public class RefereeCommunication extends AbstractMainClass {
 					Constants.logger.debug(String.format("read email template from '%s'.", pathTemplate.toString()));
 					lstTemplate = FileAccess.readFileInList(pathTemplate);
 
-					CommunicationHelper.sendMail(lstText, lstTemplate, mgrData, theRecipient, toTrainees, isTest);
+					CommunicationHelper.sendMail(lstText, lstTemplate, mgrData, theRecipient, toTrainees, isTest, theFromRecipient);
 					break;
 			}
 			

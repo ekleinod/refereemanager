@@ -86,12 +86,13 @@ public class CommunicationHelper {
 	 * @param theRecipient recipient
 	 * @param toTrainees send to trainees instead of referees
 	 * @param isTest is test?
+	 * @param theFromRecipient start processing from which recipient (including this)
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
 	public static void sendMail(final List<String> theText, final List<String> theTemplate, final RefereeManager theData, 
-			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest) {
+			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest, final String theFromRecipient) {
 		
 		Objects.requireNonNull(theText, "text must not be null");
 		Objects.requireNonNull(theTemplate, "template must not be null");
@@ -106,26 +107,34 @@ public class CommunicationHelper {
 		// compute referees to send email to
 		final List<? extends Referee> lstAll = (toTrainees) ? ((ContentModel) theData.getContent()).getTrainee() : ((ContentModel) theData.getContent()).getReferee();
 		List<Referee> lstRecipients = new ArrayList<>();
+		boolean processReferees = (theFromRecipient == null) ? true : false;
 		for (final Referee theReferee : lstAll.stream()
 				.sorted(PersonModel.NAME_FIRSTNAME)
 				.collect(Collectors.toList())) {
 			
-			EMail theEMail = theReferee.getPrimaryEMail();
+			if ((theFromRecipient != null) && (theFromRecipient.equals(theReferee.getDisplayTitle()))) {
+				processReferees = true;
+			}
 			
-			switch (theRecipient) {
-				case ALL:
-				case MAILONLY:
-					if (theEMail != null) {
-						lstRecipients.add(theReferee);
-					}
-					break;
-				case ME:
-					if (theReferee.getDisplayTitle().equals(Prefs.get(PrefKey.MY_NAME))) {
-						lstRecipients.add(theReferee);
-					}
-					break;
-				case LETTERONLY:
-					break;
+			if (processReferees) {
+			
+				EMail theEMail = theReferee.getPrimaryEMail();
+				
+				switch (theRecipient) {
+					case ALL:
+					case MAILONLY:
+						if (theEMail != null) {
+							lstRecipients.add(theReferee);
+						}
+						break;
+					case ME:
+						if (theReferee.getDisplayTitle().equals(Prefs.get(PrefKey.MY_NAME))) {
+							lstRecipients.add(theReferee);
+						}
+						break;
+					case LETTERONLY:
+						break;
+				}
 			}
 			
 		}
@@ -227,12 +236,13 @@ public class CommunicationHelper {
 	 * @param toTrainees send to trainees instead of referees
 	 * @param isTest is test?
 	 * @param theOutputPath output path
+	 * @param theFromRecipient start processing from which recipient (including this)
 	 * 
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
 	public static void createLetters(final List<String> theText, final List<String> theTemplate, final RefereeManager theData, 
-			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest, final String theOutputPath) {
+			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest, final String theOutputPath, final String theFromRecipient) {
 		
 		Objects.requireNonNull(theText, "text must not be null");
 		Objects.requireNonNull(theTemplate, "template must not be null");
@@ -247,33 +257,39 @@ public class CommunicationHelper {
 		// compute referees to send letters to
 		final List<? extends Referee> lstAll = (toTrainees) ? ((ContentModel) theData.getContent()).getTrainee() : ((ContentModel) theData.getContent()).getReferee();
 		List<Referee> lstRecipients = new ArrayList<>();
+		boolean processReferees = (theFromRecipient == null) ? true : false;
 		for (final Referee theReferee : lstAll.stream()
 				.sorted(PersonModel.NAME_FIRSTNAME)
 				.collect(Collectors.toList())) {
 			
-			Address theAddress = theReferee.getPrimaryAddress();
+			if ((theFromRecipient != null) && (theFromRecipient.equals(theReferee.getDisplayTitle()))) {
+				processReferees = true;
+			}
 			
-			switch (theRecipient) {
-				case ALL:
-					if (theAddress != null) {
+			if (processReferees) {
+			
+				Address theAddress = theReferee.getPrimaryAddress();
+				
+				switch (theRecipient) {
+					case ALL:
 						lstRecipients.add(theReferee);
-					}
-					break;
-				case LETTERONLY:
-					if ((theAddress != null) && theReferee.isDocsByLetter()) {
-						lstRecipients.add(theReferee);
-					}
-					break;
-				case ME:
-					if (theReferee.getFullName().equals(Prefs.get(PrefKey.MY_NAME))) {
-						lstRecipients.add(theReferee);
-					}
-//					if (theReferee.getFullName().equals("")) {
-//						lstRecipients.add(theReferee);
-//					}
-					break;
-				case MAILONLY:
-					break;
+						break;
+					case LETTERONLY:
+						if ((theAddress != null) && theReferee.isDocsByLetter()) {
+							lstRecipients.add(theReferee);
+						}
+						break;
+					case ME:
+						if (theReferee.getFullName().equals(Prefs.get(PrefKey.MY_NAME))) {
+							lstRecipients.add(theReferee);
+						}
+//						if (theReferee.getFullName().equals("")) {
+//							lstRecipients.add(theReferee);
+//						}
+						break;
+					case MAILONLY:
+						break;
+				}
 			}
 			
 		}
