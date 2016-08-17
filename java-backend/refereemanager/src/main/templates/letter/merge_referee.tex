@@ -5,8 +5,8 @@
 \begin{document}
 	\includepdfset{pages=-}
 
-	\includepdf{message_**generated referee:filename**}
-	**foreach attachment**\includepdf[landscape=**generated attachment:landscape**]{**generated attachment:filename**} **end foreach attachment**
+	\includepdf{message_**generated referee:filename**.pdf}
+	**foreach documentdata:attachment:****separator** **end separator**\\includepdf**if notempty documentdata:attachment:landscape**[landscape=true]**end if notempty documentdata:attachment:landscape**{**generated documentdata:attachment:filename**}**end foreach documentdata:attachment:**
 
 \end{document}
 

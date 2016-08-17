@@ -78,6 +78,10 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), "refereemanager_%04d.xml");
 			case FILENAME_PATTERN_REFEREE_DATA:
 				return getPreferences().get(theKey.value(), "%s.mmd");
+			case FILENAME_PATTERN_REFEREE_MERGE:
+				return getPreferences().get(theKey.value(), "merge_%s.tex");
+			case FILENAME_PATTERN_REFEREES_MERGE:
+				return getPreferences().get(theKey.value(), "merge_all.tex");
 				
 			case LOCALE:
 				return getPreferences().get(theKey.value(), Locale.GERMANY.toLanguageTag());

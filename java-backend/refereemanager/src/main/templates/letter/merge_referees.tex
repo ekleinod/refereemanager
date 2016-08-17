@@ -5,7 +5,9 @@
 \begin{document}
 	\includepdfset{pages=-}
 
-	**foreach referee**\includepdf{merge_**generated referee:filename**}**end foreach referee**
+**foreach referee**
+	\includepdf{merge_**generated referee:filename**.pdf}
+**end foreach referee**
 
 \end{document}
 
