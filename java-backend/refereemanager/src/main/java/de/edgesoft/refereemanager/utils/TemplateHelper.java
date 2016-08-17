@@ -34,6 +34,8 @@ import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
+import de.edgesoft.refereemanager.model.template.Attachment;
+import de.edgesoft.refereemanager.model.template.DocumentData;
 
 /**
  * Provides methods and properties for templates.
@@ -161,7 +163,7 @@ public class TemplateHelper {
 	 * @since 0.5.0
 	 */
 	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, 
-			final TitledIDType theLoopElement, final int theLoopCount, final ArgumentStatusType theStatus, final boolean isEditor) {
+			final ModelClass theLoopElement, final int theLoopCount, final ArgumentStatusType theStatus, final boolean isEditor) {
 		
 		Objects.requireNonNull(theTemplate, "template must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
@@ -244,6 +246,28 @@ public class TemplateHelper {
 	}
 	
 	/**
+	 * Fills text.
+	 * 
+	 * @param theText the text
+	 * @param theModelElement model element
+	 * @param theDB database for model element independent data (such as season etc.)
+	 * 
+	 * @return filled text
+	 *
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static List<String> fillText(final List<String> theText, final ModelClass theModelElement, final ModelClass theDB) {
+		List<String> lstReturn = new ArrayList<>();
+		
+		for (String theLine : theText) {
+			lstReturn.add(fillLine(theLine, theDB, theModelElement, "", true));
+		}
+			
+		return lstReturn;
+	}
+
+	/**
 	 * Returns filled line.
 	 * 
 	 * @param theLine line
@@ -257,7 +281,7 @@ public class TemplateHelper {
 	 * @version 0.8.0
 	 * @since 0.5.0
 	 */
-	private static String fillLine(final String theLine, final ModelClass theData, final TitledIDType theLoopElement, final String theTokenPrefix, final boolean isEditor) {
+	private static String fillLine(final String theLine, final ModelClass theData, final ModelClass theLoopElement, final String theTokenPrefix, final boolean isEditor) {
 		
 		Objects.requireNonNull(theLine, "line must not be null");
 		Objects.requireNonNull(theData, MessageFormat.format("data must not be null: {0}", theTokenPrefix));
@@ -378,7 +402,7 @@ public class TemplateHelper {
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	private static String fillLineDirectData(final String theLine, final ModelClass theData, final TitledIDType theLoopElement, final String theTokenPrefix) {
+	private static String fillLineDirectData(final String theLine, final ModelClass theData, final ModelClass theLoopElement, final String theTokenPrefix) {
 		
 		Objects.requireNonNull(theLine, "line must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
@@ -443,9 +467,8 @@ public class TemplateHelper {
 	 * Fills line with datetime data.
 	 * 
 	 * @param theLine line
-	 * @param theData data
-	 * @param theLoopElement element that is looped at the moment
-	 * @param theTokenPrefix token prefix
+	 * @param theToken token
+	 * @param theDateTime datetime
 	 * 
 	 * @return filled line
 	 * 
@@ -613,38 +636,60 @@ public class TemplateHelper {
 	 *
 	 * @param theText text
 	 * 
-	 * @return replaced text
+	 * @return document data
 	 *
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-	public static Map<TemplateVariable, List<String>> extractMessageParts(final List<String> theText) {
-		Map<TemplateVariable, List<String>> mapReturn = new HashMap<>();
+	public static DocumentData extractMessageParts(final List<String> theText) {
+		DocumentData docReturn = new DocumentData();
 
-		for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
-			mapReturn.put(theTemplateVariable, new ArrayList<>());
-		}
-		
+		List<String> lstBody = new ArrayList<>();
 		boolean isBody = false;
 		for (String theLine : theText) {
 			
 			if (isBody) {
 				
-				mapReturn.computeIfPresent(TemplateVariable.BODY, (templatevar, list) -> {
-					list.add(theLine.trim());
-					return list;
-				});
+				lstBody.add(theLine.trim());
 				
 			} else {
 				
 				for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
+					
 					String sVarToken = String.format(VARIABLE_TOKEN, theTemplateVariable.value());
 					if (theLine.trim().startsWith(sVarToken)) {
-						mapReturn.computeIfPresent(theTemplateVariable, (templatevar, list) -> {
-							list.add(theLine.trim().substring(sVarToken.length()).trim());
-							return list;
-						});
+						
+						String theLineContent = theLine.trim().substring(sVarToken.length()).trim();
+						
+						switch (theTemplateVariable) {
+							case ATTACHMENT:
+								docReturn.getAttachment().add(TemplateHelper.createAttachment(theLineContent));
+								break;
+							case CLOSING:
+								docReturn.setClosing(theLineContent);
+								break;
+							case DATE:
+								docReturn.setDate(DateTimeUtils.fromString(theLineContent));
+								break;
+							case FILENAME:
+								docReturn.setFilename(theLineContent);
+								break;
+							case OPENING:
+								docReturn.setOpening(theLineContent);
+								break;
+							case SIGNATURE:
+								docReturn.setSignature(theLineContent);
+								break;
+							case SUBJECT:
+								docReturn.setSubject(theLineContent);
+								break;
+							case SUBTITLE:
+								docReturn.setSubtitle(theLineContent);
+								break;
+							
+						}
 					}
+					
 				}
 				
 			}
@@ -654,80 +699,14 @@ public class TemplateHelper {
 			}
 		}
 		
-		if (mapReturn.get(TemplateVariable.DATE).isEmpty()) {
-			mapReturn.computeIfPresent(TemplateVariable.DATE, (templatevar, list) -> {
-				list.add(LocalDateTime.now().toString());
-				return list;
-			});
-		}
-
-		if (mapReturn.containsKey(TemplateVariable.ATTACHMENT)) {
-			mapReturn.computeIfPresent(TemplateVariable.ATTACHMENTS, (templatevar, list) -> {
-				StringBuilder sbAttachments = new StringBuilder();
-				boolean isFurther = false;
-				for (String sAttachment : mapReturn.get(TemplateVariable.ATTACHMENT)) {
-					if (isFurther) {
-						sbAttachments.append(", ");
-					}
-					sbAttachments.append(TemplateHelper.extractAttachmentTitle(sAttachment));
-					isFurther = true;
-				}
-				list.add(sbAttachments.toString());
-				return list;
-			});
-		}
-
+		docReturn.setBody(toText(lstBody));
 		
-		return mapReturn;
-	}
-
-	/**
-	 * Fills message parts with values.
-	 * 
-	 * @param theMessageParts the message parts
-	 * @param theReferee referee
-	 * @param theDB whole database for referee-independent data (such as season etc.)
-	 * 
-	 * @return filled message parts
-	 *
-	 * @version 0.8.0
-	 * @since 0.8.0
-	 */
-	public static Map<TemplateVariable, List<String>> fillMessageParts(final Map<TemplateVariable, List<String>> theMessageParts, final Referee theReferee, final RefereeManager theDB) {
-		Map<TemplateVariable, List<String>> mapReturn = new HashMap<>();
-
-		for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
-			mapReturn.put(theTemplateVariable, fillText(theMessageParts.get(theTemplateVariable), theReferee, theDB));
-		}
-		
-		return mapReturn;
-	}
-
-	/**
-	 * Fills text.
-	 * 
-	 * @param theText the text
-	 * @param theReferee referee
-	 * @param theDB whole database for referee-independent data (such as season etc.)
-	 * 
-	 * @return filled text
-	 *
-	 * @version 0.8.0
-	 * @since 0.8.0
-	 */
-	public static List<String> fillText(final List<String> theText, final Referee theReferee, final RefereeManager theDB) {
-		List<String> lstReturn = new ArrayList<>();
-		
-		for (String theLine : theText) {
-			lstReturn.add(fillLine(theLine, theDB, theReferee, "", true));
-		}
-			
-		return lstReturn;
+		return docReturn;
 	}
 
 	/**
 	 * Converts list of strings to string.
-
+	 * 
 	 * @todo shorter with lambdas?
 	 * 
 	 * @param theText text as list of strings
@@ -751,113 +730,33 @@ public class TemplateHelper {
 	}
 		
 	/**
-	 * Fills document template with content.
+	 * Creates attachment from attachment line.
 	 * 
-	 * @todo shorter with lambdas?
+	 * @param theLine attachment line
 	 * 
-	 * @param theTemplate template text
-	 * @param theMessageParts the message parts
-	 * 
-	 * @return filled template
-	 * 
+	 * @return attachment
+	 *
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-	public static List<String> fillDocumentTemplate(final List<String> theTemplate, final Map<TemplateVariable, List<String>> theMessageParts) {
-		List<String> lstReturn = new ArrayList<>();
+	public static Attachment createAttachment(final String theLine) {
+		Objects.requireNonNull(theLine, "attachment line must not be null");
 		
-		for (String theLine : theTemplate) {
-			
-			for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
-				theLine = replaceTextAndConditions(theLine, theTemplateVariable.value(), toText(theMessageParts.get(theTemplateVariable)));
-				if (theTemplateVariable == TemplateVariable.DATE) {
-					theLine = fillLineDateTimeData(theLine, "", DateTimeUtils.fromString(toText(theMessageParts.get(theTemplateVariable))));
-				}
-			}
-			lstReturn.add(theLine);
-			
+		String[] arrAttachmentParts = theLine.split(Prefs.get(PrefKey.TEMPLATE_VARIABLE_SEPARATOR));
+		
+		Attachment attReturn = new Attachment();
+		
+		attReturn.setFilename(arrAttachmentParts[0].trim());
+		
+		if (arrAttachmentParts.length > 1) {
+			attReturn.setTitle(arrAttachmentParts[1].trim());
 		}
 		
-		return lstReturn;
-	}
-		
-	/**
-	 * Extracts filename from template attachment.
-	 * 
-	 * @param theAttachment attachment text
-	 * 
-	 * @return filename
-	 *
-	 * @version 0.8.0
-	 * @since 0.8.0
-	 */
-	public static String extractAttachmentFilename(final String theAttachment) {
-		Objects.requireNonNull(theAttachment, "attachment must not be null");
-		
-		String[] arrAttachmentParts = theAttachment.split(Prefs.get(PrefKey.TEMPLATE_VARIABLE_SEPARATOR));
-
-		return (arrAttachmentParts.length > 1) ? arrAttachmentParts[1].trim() : arrAttachmentParts[0].trim();
-	}
-
-	/**
-	 * Extracts title from template attachment.
-	 * 
-	 * @param theAttachment attachment text
-	 * 
-	 * @return title
-	 *
-	 * @version 0.8.0
-	 * @since 0.8.0
-	 */
-	public static String extractAttachmentTitle(final String theAttachment) {
-		Objects.requireNonNull(theAttachment, "attachment must not be null");
-		
-		String[] arrAttachmentParts = theAttachment.split(Prefs.get(PrefKey.TEMPLATE_VARIABLE_SEPARATOR));
-		
-		return arrAttachmentParts[0].trim();
-	}
-
-	/**
-	 * Extracts landscape from template attachment.
-	 * 
-	 * @param theAttachment attachment text
-	 * 
-	 * @return landscape
-	 *
-	 * @version 0.8.0
-	 * @since 0.8.0
-	 */
-	public static String extractAttachmentLandscape(final String theAttachment) {
-		Objects.requireNonNull(theAttachment, "attachment must not be null");
-		
-		String[] arrAttachmentParts = theAttachment.split(Prefs.get(PrefKey.TEMPLATE_VARIABLE_SEPARATOR));
-
-		return (arrAttachmentParts.length > 2) ? arrAttachmentParts[2].trim() : "false";
-	}
-
-	/**
-	 * Fills merge template.
-	 * 
-	 * @param theText the text
-	 * @param theData the data
-	 * 
-	 * @return filled template
-	 *
-	 * @version 0.8.0
-	 * @since 0.8.0
-	 */
-	public static List<String> fillMergeTemplate(final List<String> theText, final Map<String, List<Map<String, String>>> theData) {
-		List<String> lstReturn = new ArrayList<>();
-		
-		for (String theLine : theText) {
-			String sFilledLine = theLine;
-			for (Entry<String, List<Map<String, String>>> theEntry : theData.entrySet()) {
-				replaceTextAndConditions(sFilledLine, String.format("%s:%s", theEntry.getKey());
-			}
-			lstReturn.add(sFilledLine);
+		if (arrAttachmentParts.length > 2) {
+			attReturn.setLandscape(Boolean.valueOf(arrAttachmentParts[2].trim()));
 		}
-			
-		return lstReturn;
+		
+		return attReturn;
 	}
 
 }

@@ -1,7 +1,7 @@
 
 package de.edgesoft.refereemanager.model.template;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,9 +50,10 @@ public class DocumentData extends ModelClass {
     private String subtitle;
     private String signature;
     private String opening;
+    private String closing;
     private String filename;
-    private List<String> body;
-    private LocalDate date;
+    private String body;
+    private LocalDateTime date;
     private List<Attachment> attachment;
 
     /**
@@ -88,7 +89,7 @@ public class DocumentData extends ModelClass {
      * @param value
      */
 	public void setSubtitle(String value) {
-		this.subtitle = value;
+		subtitle = value;
 	}
 
     /**
@@ -106,7 +107,7 @@ public class DocumentData extends ModelClass {
      * @param value
      */
 	public void setSignature(String value) {
-		this.signature = value;
+		signature = value;
 	}
 
     /**
@@ -124,7 +125,25 @@ public class DocumentData extends ModelClass {
      * @param value
      */
 	public void setOpening(String value) {
-		this.opening = value;
+		opening = value;
+	}
+
+    /**
+     * Gets the value of the property.
+     *
+     * @return property value
+     */
+	public String getClosing() {
+		return closing;
+	}
+
+    /**
+     * Sets the value of the property.
+     *
+     * @param value
+     */
+	public void setClosing(String value) {
+		closing = value;
 	}
 
     /**
@@ -142,7 +161,7 @@ public class DocumentData extends ModelClass {
      * @param value
      */
 	public void setFilename(String value) {
-		this.filename = value;
+		filename = value;
 	}
 
     /**
@@ -150,7 +169,7 @@ public class DocumentData extends ModelClass {
      *
      * @return property value
      */
-	public List<String> getBody() {
+	public String getBody() {
 		return body;
 	}
 
@@ -159,8 +178,8 @@ public class DocumentData extends ModelClass {
      *
      * @param value
      */
-	public void setBody(List<String> value) {
-		this.body = value;
+	public void setBody(String value) {
+		body = value;
 	}
 
     /**
@@ -168,8 +187,8 @@ public class DocumentData extends ModelClass {
      *
      * @return property value
      */
-	public LocalDate getDate() {
-		return date;
+	public LocalDateTime getDate() {
+		return (date == null) ? LocalDateTime.now() : date;
 	}
 
     /**
@@ -177,8 +196,8 @@ public class DocumentData extends ModelClass {
      *
      * @param value
      */
-	public void setDate(LocalDate value) {
-		this.date = value;
+	public void setDate(LocalDateTime value) {
+		date = value;
 	}
 
     /**

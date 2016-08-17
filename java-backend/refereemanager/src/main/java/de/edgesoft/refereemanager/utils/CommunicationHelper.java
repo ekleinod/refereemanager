@@ -1,6 +1,5 @@
 package de.edgesoft.refereemanager.utils;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -10,9 +9,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -34,14 +31,14 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
-import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.refereemanager.Prefs;
-import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.template.Attachment;
+import de.edgesoft.refereemanager.model.template.DocumentData;
 
 /**
  * Provides methods and properties for communication.
@@ -152,20 +149,18 @@ public class CommunicationHelper {
 		      });
 		
 		try {
-			Map<TemplateVariable, List<String>> mapContent = TemplateHelper.extractMessageParts(theText);
 
 			LocalTime tmeStart = LocalTime.now();
 			
 			for (Referee theReferee : lstRecipients) {
 				
-				Map<TemplateVariable, List<String>> mapFilledContent = TemplateHelper.fillMessageParts(mapContent, theReferee, theData);
-
 				Message msgMail = new MimeMessage(session);
-				
 				msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM), Prefs.get(PrefKey.EMAIL_FROMNAME), StandardCharsets.UTF_8.name()));
 				
-				msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.fromString(mapFilledContent.get(TemplateVariable.DATE).get(0))));
-				msgMail.setSubject(mapFilledContent.get(TemplateVariable.SUBJECT).get(0));
+				DocumentData docData = TemplateHelper.extractMessageParts(TemplateHelper.fillText(theText, theReferee, theData));
+				
+				msgMail.setSentDate(DateTimeUtils.toDate(docData.getDate()));
+				msgMail.setSubject(docData.getSubject());
 
 				try {
 					
@@ -175,24 +170,22 @@ public class CommunicationHelper {
 					MimeMultipart msgContent = new MimeMultipart();
 					
 					MimeBodyPart text = new MimeBodyPart();
-					String sText = TemplateHelper.toText(TemplateHelper.fillText(TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent), theReferee, theData));
+					String sText = TemplateHelper.toText(TemplateHelper.fillText(theTemplate, docData, docData));
 					text.setText(sText);
 					msgContent.addBodyPart(text);
 
 					msgMail.setContent(msgContent);
 					
-					if (mapFilledContent.get(TemplateVariable.ATTACHMENT) != null) {
-						for (String sAttachment : mapFilledContent.get(TemplateVariable.ATTACHMENT)) {
-							Path attachment = Paths.get(TemplateHelper.extractAttachmentFilename(sAttachment));
-							
-							BodyPart bpAttachment = new MimeBodyPart();
-							bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
-							bpAttachment.setFileName(attachment.getFileName().toString());
-							
-							msgContent.addBodyPart(bpAttachment);
-							
-							Constants.logger.info(String.format("Adding attachment '%s'.", bpAttachment.getFileName()));
-						}
+					for (Attachment theAttachment : docData.getAttachment()) {
+						Path attachment = Paths.get(theAttachment.getFilename());
+						
+						BodyPart bpAttachment = new MimeBodyPart();
+						bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
+						bpAttachment.setFileName(attachment.getFileName().toString());
+						
+						msgContent.addBodyPart(bpAttachment);
+						
+						Constants.logger.info(String.format("Adding attachment '%s'.", bpAttachment.getFileName()));
 					}
 					
 					if (!isTest) {
@@ -247,139 +240,139 @@ public class CommunicationHelper {
 			final ArgumentCommunicationAction theAction, final ArgumentCommunicationRecipient theRecipient, 
 			final boolean toTrainees, final boolean isTest, final String theOutputPath, final String theFromRecipient) {
 		
-		Objects.requireNonNull(theText, "text must not be null");
-		Objects.requireNonNull(theTemplate, "template must not be null");
-		Objects.requireNonNull(theData, "data must not be null");
-		Objects.requireNonNull(theRecipient, "recipient must not be null");
-		
-		if (isTest) {
-			Constants.logger.info("Testmode: no letters are stored!.");
-		}
-		Constants.logger.info(String.format("Writing letters to '%s', trainees: %s.", theRecipient.value(), toTrainees));
-		
-		// merge files
-		List<String> lstMergeRef = null;
-		List<String> lstMergeRefs = null;
-		if (theAction == ArgumentCommunicationAction.LETTER) {
-			
-			Path pathMergeRef = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_MERGE_REFEREE));
-			Constants.logger.debug(String.format("read merge template from '%s'.", pathMergeRef.toString()));
-			try {
-				lstMergeRef = FileAccess.readFileInList(pathMergeRef);
-			} catch (Exception e) {
-				Constants.logger.error(e);
-				e.printStackTrace();
-			}
-			
-			Path pathMergeRefs = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_MERGE_REFEREES));
-			Constants.logger.debug(String.format("read merge template from '%s'.", pathMergeRef.toString()));
-			try {
-				lstMergeRefs = FileAccess.readFileInList(pathMergeRefs);
-			} catch (Exception e) {
-				Constants.logger.error(e);
-				e.printStackTrace();
-			}
-		}
-
-		
-		// compute referees to send letters to
-		final List<? extends Referee> lstAll = (toTrainees) ? ((ContentModel) theData.getContent()).getTrainee() : ((ContentModel) theData.getContent()).getReferee();
-		List<Referee> lstRecipients = new ArrayList<>();
-		boolean processReferees = (theFromRecipient == null) ? true : false;
-		for (final Referee theReferee : lstAll.stream()
-				.sorted(PersonModel.NAME_FIRSTNAME)
-				.collect(Collectors.toList())) {
-			
-			if ((theFromRecipient != null) && (theFromRecipient.equals(theReferee.getDisplayTitle()))) {
-				processReferees = true;
-			}
-			
-			if (processReferees) {
-			
-				Address theAddress = theReferee.getPrimaryAddress();
-				
-				switch (theRecipient) {
-					case ALL:
-						if ((theAction == ArgumentCommunicationAction.DOCUMENT) || (theAddress != null)) {
-							lstRecipients.add(theReferee);
-						}
-						break;
-					case LETTERONLY:
-						if ((theAddress != null) && theReferee.isDocsByLetter()) {
-							lstRecipients.add(theReferee);
-						}
-						break;
-					case ME:
-						if (theReferee.getFullName().equals(Prefs.get(PrefKey.MY_NAME))) {
-							lstRecipients.add(theReferee);
-						}
-//						if (theReferee.getFullName().equals("")) {
+//		Objects.requireNonNull(theText, "text must not be null");
+//		Objects.requireNonNull(theTemplate, "template must not be null");
+//		Objects.requireNonNull(theData, "data must not be null");
+//		Objects.requireNonNull(theRecipient, "recipient must not be null");
+//		
+//		if (isTest) {
+//			Constants.logger.info("Testmode: no letters are stored!.");
+//		}
+//		Constants.logger.info(String.format("Writing letters to '%s', trainees: %s.", theRecipient.value(), toTrainees));
+//		
+//		// merge files
+//		List<String> lstMergeRef = null;
+//		List<String> lstMergeRefs = null;
+//		if (theAction == ArgumentCommunicationAction.LETTER) {
+//			
+//			Path pathMergeRef = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_MERGE_REFEREE));
+//			Constants.logger.debug(String.format("read merge template from '%s'.", pathMergeRef.toString()));
+//			try {
+//				lstMergeRef = FileAccess.readFileInList(pathMergeRef);
+//			} catch (Exception e) {
+//				Constants.logger.error(e);
+//				e.printStackTrace();
+//			}
+//			
+//			Path pathMergeRefs = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_MERGE_REFEREES));
+//			Constants.logger.debug(String.format("read merge template from '%s'.", pathMergeRef.toString()));
+//			try {
+//				lstMergeRefs = FileAccess.readFileInList(pathMergeRefs);
+//			} catch (Exception e) {
+//				Constants.logger.error(e);
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		
+//		// compute referees to send letters to
+//		final List<? extends Referee> lstAll = (toTrainees) ? ((ContentModel) theData.getContent()).getTrainee() : ((ContentModel) theData.getContent()).getReferee();
+//		List<Referee> lstRecipients = new ArrayList<>();
+//		boolean processReferees = (theFromRecipient == null) ? true : false;
+//		for (final Referee theReferee : lstAll.stream()
+//				.sorted(PersonModel.NAME_FIRSTNAME)
+//				.collect(Collectors.toList())) {
+//			
+//			if ((theFromRecipient != null) && (theFromRecipient.equals(theReferee.getDisplayTitle()))) {
+//				processReferees = true;
+//			}
+//			
+//			if (processReferees) {
+//			
+//				Address theAddress = theReferee.getPrimaryAddress();
+//				
+//				switch (theRecipient) {
+//					case ALL:
+//						if ((theAction == ArgumentCommunicationAction.DOCUMENT) || (theAddress != null)) {
 //							lstRecipients.add(theReferee);
 //						}
-						break;
-					case MAILONLY:
-						break;
-				}
-			}
-			
-		}
-
-		// create letter
-		Map<TemplateVariable, List<String>> mapContent = TemplateHelper.extractMessageParts(theText);
-
-		LocalTime tmeStart = LocalTime.now();
-		
-		// merge data
-		Map<String, List<Map<String, String>>> mapRefData = new HashMap<>();
-		
-		for (Referee theReferee : lstRecipients) {
-			
-			Map<TemplateVariable, List<String>> mapFilledContent = TemplateHelper.fillMessageParts(mapContent, theReferee, theData);
-
-			// merge data
-			mapRefData.computeIfAbsent("referee", it -> new ArrayList<>());
-			mapRefData.computeIfPresent("referee", (key, list) -> {
-				Map<String, String> mapTemp = new HashMap<>();
-				mapTemp.put("filename", theReferee.getFileName());
-				list.add(mapTemp);
-				return list;
-			});
-			
-			mapRefData.put("attachment", new ArrayList<>());
-			if (mapFilledContent.get(TemplateVariable.ATTACHMENT) != null) {
-				for (String sAttachment : mapFilledContent.get(TemplateVariable.ATTACHMENT)) {
-					mapRefData.computeIfPresent("attachment", (key, list) -> {
-						Map<String, String> mapTemp = new HashMap<>();
-						mapTemp.put("filename", TemplateHelper.extractAttachmentFilename(sAttachment));
-						mapTemp.put("landscape", TemplateHelper.extractAttachmentLandscape(sAttachment));
-						list.add(mapTemp);
-						return list;
-					});
-				}
-			}
-			
-			try {
-
-				// body is filled twice with this construct, but some variables are needed as is
-				List<String> lstText = TemplateHelper.fillText(TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent), theReferee, theData);
-				
-				Path pathOut = Paths.get(theOutputPath, 
-						((mapFilledContent.get(TemplateVariable.FILENAME) == null) || mapFilledContent.get(TemplateVariable.FILENAME).isEmpty()) ?
-								String.format(Prefs.get(PrefKey.FILENAME_PATTERN_REFEREE_DATA), theReferee.getFileName()) :
-								mapFilledContent.get(TemplateVariable.FILENAME).get(0));
-								
-				if (!isTest) {
-					FileAccess.writeFile(pathOut, lstText);
-				}
-				Constants.logger.info(String.format("writing letter to '%s'.", pathOut.toString()));
-				
-			} catch (IOException e) {
-				Constants.logger.error(String.format("error while writing: '%s'.", e.getMessage()));
-			}
-		}
-		
-		Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
-		Constants.logger.info(String.format("Writing time: %s.", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+//						break;
+//					case LETTERONLY:
+//						if ((theAddress != null) && theReferee.isDocsByLetter()) {
+//							lstRecipients.add(theReferee);
+//						}
+//						break;
+//					case ME:
+//						if (theReferee.getFullName().equals(Prefs.get(PrefKey.MY_NAME))) {
+//							lstRecipients.add(theReferee);
+//						}
+////						if (theReferee.getFullName().equals("")) {
+////							lstRecipients.add(theReferee);
+////						}
+//						break;
+//					case MAILONLY:
+//						break;
+//				}
+//			}
+//			
+//		}
+//
+//		// create letter
+//		Map<TemplateVariable, List<String>> mapContent = TemplateHelper.extractMessageParts(theText);
+//
+//		LocalTime tmeStart = LocalTime.now();
+//		
+//		// merge data
+//		Map<String, List<Map<String, String>>> mapRefData = new HashMap<>();
+//		
+//		for (Referee theReferee : lstRecipients) {
+//			
+//			Map<TemplateVariable, List<String>> mapFilledContent = TemplateHelper.fillMessageParts(mapContent, theReferee, theData);
+//
+//			// merge data
+//			mapRefData.computeIfAbsent("referee", it -> new ArrayList<>());
+//			mapRefData.computeIfPresent("referee", (key, list) -> {
+//				Map<String, String> mapTemp = new HashMap<>();
+//				mapTemp.put("filename", theReferee.getFileName());
+//				list.add(mapTemp);
+//				return list;
+//			});
+//			
+//			mapRefData.put("attachment", new ArrayList<>());
+//			if (mapFilledContent.get(TemplateVariable.ATTACHMENT) != null) {
+//				for (String sAttachment : mapFilledContent.get(TemplateVariable.ATTACHMENT)) {
+//					mapRefData.computeIfPresent("attachment", (key, list) -> {
+//						Map<String, String> mapTemp = new HashMap<>();
+//						mapTemp.put("filename", TemplateHelper.extractAttachmentFilename(sAttachment));
+//						mapTemp.put("landscape", TemplateHelper.extractAttachmentLandscape(sAttachment));
+//						list.add(mapTemp);
+//						return list;
+//					});
+//				}
+//			}
+//			
+//			try {
+//
+//				// body is filled twice with this construct, but some variables are needed as is
+//				List<String> lstText = TemplateHelper.fillText(TemplateHelper.fillDocumentTemplate(theTemplate, mapFilledContent), theReferee, theData);
+//				
+//				Path pathOut = Paths.get(theOutputPath, 
+//						((mapFilledContent.get(TemplateVariable.FILENAME) == null) || mapFilledContent.get(TemplateVariable.FILENAME).isEmpty()) ?
+//								String.format(Prefs.get(PrefKey.FILENAME_PATTERN_REFEREE_DATA), theReferee.getFileName()) :
+//								mapFilledContent.get(TemplateVariable.FILENAME).get(0));
+//								
+//				if (!isTest) {
+//					FileAccess.writeFile(pathOut, lstText);
+//				}
+//				Constants.logger.info(String.format("writing letter to '%s'.", pathOut.toString()));
+//				
+//			} catch (IOException e) {
+//				Constants.logger.error(String.format("error while writing: '%s'.", e.getMessage()));
+//			}
+//		}
+//		
+//		Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
+//		Constants.logger.info(String.format("Writing time: %s.", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
 		
 	}
 	

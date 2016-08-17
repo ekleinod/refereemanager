@@ -32,8 +32,6 @@ package de.edgesoft.refereemanager.utils;
 public enum TemplateVariable {
 
 	ATTACHMENT,
-	ATTACHMENTS,
-	BODY,
 	CLOSING,
 	DATE,
 	FILENAME,
