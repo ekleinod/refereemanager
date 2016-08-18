@@ -6,7 +6,6 @@ import java.util.function.Predicate;
 
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
-import de.edgesoft.refereemanager.model.template.DocumentData;
 
 /**
  * Referee model, additional methods for jaxb model class.
@@ -35,9 +34,6 @@ import de.edgesoft.refereemanager.model.template.DocumentData;
  * @since 0.5.0
  */
 public class RefereeModel extends Referee {
-
-	/** Document data (for template output only). */
-    private DocumentData documentdata;
 
 	/** Filter predicate for all status types. */
 	public static Predicate<Referee> ALL = ref -> true;
@@ -125,30 +121,6 @@ public class RefereeModel extends Referee {
     @Override
     public boolean isDocsByLetter() {
         return docsByLetter || getEMail().isEmpty();
-    }
-
-    /**
-     * Gets the value of the documentdata property.
-     *
-     * @return documentdata
-	 *
-	 * @version 0.8.0
-	 * @since 0.8.0
-     */
-    public DocumentData getDocumentData() {
-        return documentdata;
-    }
-
-    /**
-     * Sets the value of the documentdata property.
-     *
-     * @param value documentdata
-	 *
-	 * @version 0.8.0
-	 * @since 0.8.0
-     */
-    public void setDocumentData(DocumentData value) {
-        documentdata = value;
     }
 
 }
