@@ -5,10 +5,10 @@
 \begin{document}
 	\includepdfset{pages=-}
 
-	% if needed, set: [pages={-,{}}]
-
 	\includepdf{message_**generated referee:filename**.pdf}
-	**foreach documentdata:attachment:****separator** **end separator**\\includepdf**if notempty documentdata:attachment:landscape**[landscape=true]**end if notempty documentdata:attachment:landscape**{**generated documentdata:attachment:filename**}**end foreach documentdata:attachment:**
+	\ifthispageodd{}{\mbox{}\newpage}
+
+	**foreach documentdata:attachment:****separator**\\ifthispageodd{}{\\mbox{}\\newpage} **end separator**\\includepdf**if notempty documentdata:attachment:landscape**[landscape=true]**end if notempty documentdata:attachment:landscape**{**generated documentdata:attachment:filename**}**end foreach documentdata:attachment:**
 
 \end{document}
 

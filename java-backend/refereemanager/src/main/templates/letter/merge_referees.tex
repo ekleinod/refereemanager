@@ -9,6 +9,7 @@
 
 **foreach referee**
 	\includepdf{merge_**generated referee:filename**.pdf}
+	\ifthispageodd{}{\mbox{}\newpage}
 **end foreach referee**
 
 \end{document}
