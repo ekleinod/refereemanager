@@ -290,7 +290,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="venue" type="Address" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="u_r_l" type="URL" minOccurs="0" maxOccurs="unbounded" />
 
-					<xsd:element name="contact_person" type="xsd:IDREF" minOccurs="0" maxOccurs="unbounded">
+					<xsd:element name="contact_person" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
 								<jxb:property>
@@ -325,6 +325,15 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 							<xsd:appinfo>
 								<jxb:property>
 									<jxb:baseType name="League" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="contact_person" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Person" />
 								</jxb:property>
 							</xsd:appinfo>
 						</xsd:annotation>
