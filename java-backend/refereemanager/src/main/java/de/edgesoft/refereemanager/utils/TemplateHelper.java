@@ -9,9 +9,7 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +24,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.refereemanager.Prefs;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
@@ -34,6 +34,8 @@ import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
+import de.edgesoft.refereemanager.model.template.Attachment;
+import de.edgesoft.refereemanager.model.template.DocumentData;
 
 /**
  * Provides methods and properties for templates.
@@ -58,7 +60,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.6.0
+ * @version 0.8.0
  * @since 0.5.0
  */
 public class TemplateHelper {
@@ -126,6 +128,9 @@ public class TemplateHelper {
 	/** Token: separator. */
 	public static final String TOKEN_SEPARATOR = String.format("%s(.*)%s", String.format(TOKEN, KEY_SEPARATOR), String.format(TOKEN, String.format(KEY_END, KEY_SEPARATOR)));
 	
+	/** A template variable token. */
+	public static final String VARIABLE_TOKEN = "%s:";
+	
 	/** Map of properties and their getters for a class. */
 	private static Map<Class<? extends ModelClass>, Map<String, Method>> mapGetters = null;
 	
@@ -150,13 +155,15 @@ public class TemplateHelper {
 	 * @param theLoopElement element that is looped at the moment
 	 * @param theLoopCount loop count
 	 * @param theStatus status (all (default), active, inactive)
+	 * @param isEditor use editor only data?
 	 * 
 	 * @return filled template
 	 * 
-	 * @version 0.6.0
+	 * @version 0.8.0
 	 * @since 0.5.0
 	 */
-	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, final TitledIDType theLoopElement, final int theLoopCount, final ArgumentStatusType theStatus) {
+	public static List<String> fillTemplate(final List<String> theTemplate, final RefereeManager theData, 
+			final ModelClass theLoopElement, final int theLoopCount, final ArgumentStatusType theStatus, final boolean isEditor) {
 		
 		Objects.requireNonNull(theTemplate, "template must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
@@ -185,7 +192,7 @@ public class TemplateHelper {
 									.sorted(PersonModel.NAME_FIRSTNAME)
 									.filter(theStatus.ref_filter())
 									.collect(Collectors.toList())) {
-								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theReferee, iLoop++, theStatus));
+								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theReferee, iLoop++, theStatus, isEditor));
 							}
 							break;
 						case "statustype":
@@ -193,7 +200,7 @@ public class TemplateHelper {
 									.sorted(TitledIDTypeModel.TITLE)
 									.filter(theStatus.status_filter())
 									.collect(Collectors.toList())) {
-								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType, iLoop++, theStatus));
+								lstLoopReturn.addAll(fillTemplate(lstLoopContent, theData, theStatusType, iLoop++, theStatus, isEditor));
 							}
 							break;
 					}
@@ -230,7 +237,7 @@ public class TemplateHelper {
 					sTempLine = replaceCondition(TOKEN_IF_ODD, sTempLine, getTokenClass(theLoopElement), (theLoopCount % 2 == 1));
 				}
 				
-				lstReturn.add(fillLine(sTempLine, theData, theLoopElement, ""));
+				lstReturn.add(fillLine(sTempLine, theData, theLoopElement, "", isEditor));
 			}
 			
 		}
@@ -239,19 +246,42 @@ public class TemplateHelper {
 	}
 	
 	/**
+	 * Fills text.
+	 * 
+	 * @param theText the text
+	 * @param theModelElement model element
+	 * @param theDB database for model element independent data (such as season etc.)
+	 * 
+	 * @return filled text
+	 *
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static List<String> fillText(final List<String> theText, final ModelClass theModelElement, final ModelClass theDB) {
+		List<String> lstReturn = new ArrayList<>();
+		
+		for (String theLine : theText) {
+			lstReturn.add(fillLine(theLine, theDB, theModelElement, "", true));
+		}
+			
+		return lstReturn;
+	}
+
+	/**
 	 * Returns filled line.
 	 * 
 	 * @param theLine line
 	 * @param theData data
 	 * @param theLoopElement element that is looped at the moment
 	 * @param theTokenPrefix token prefix
+	 * @param isEditor use editor only data?
 	 * 
 	 * @return filled line
 	 * 
-	 * @version 0.5.0
+	 * @version 0.8.0
 	 * @since 0.5.0
 	 */
-	private static String fillLine(final String theLine, final ModelClass theData, final TitledIDType theLoopElement, final String theTokenPrefix) {
+	private static String fillLine(final String theLine, final ModelClass theData, final ModelClass theLoopElement, final String theTokenPrefix, final boolean isEditor) {
 		
 		Objects.requireNonNull(theLine, "line must not be null");
 		Objects.requireNonNull(theData, MessageFormat.format("data must not be null: {0}", theTokenPrefix));
@@ -282,22 +312,18 @@ public class TemplateHelper {
 					
 					if ((oResult != null) && ModelClass.class.isAssignableFrom(theGetter.getValue().getReturnType())) {
 						
-						sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix);
+						sReturn = fillLine(sReturn, (ModelClass) oResult, theLoopElement, sTokenPrefix, isEditor);
 						
 					} 
 						
 					if (List.class.isAssignableFrom(theGetter.getValue().getReturnType())) {
-						
-//						if (sTokenPrefix.startsWith("referee:")) {
-//							System.out.println(sTokenPrefix);
-//						}
 						
 						if (sTokenPrefix.isEmpty()) {
 							
 							// @todo solve this hack, it is needed, because the lists of idrefs contain jaxbelements!
 							try {
 								for (ModelClass theDataObject : (List<ModelClass>) oResult) {
-									sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix);
+									sReturn = fillLine(sReturn, theDataObject, theLoopElement, sTokenPrefix, isEditor);
 								}
 							} catch (ClassCastException e) {
 //									Constants.logger.error(sTokenPrefix);
@@ -308,6 +334,10 @@ public class TemplateHelper {
 
 							String sCondition = String.format(TOKEN_FOREACH_LINE, sTokenPrefix).replace("**", "\\*\\*");
 							
+//							if (sTokenPrefix.startsWith("referee:email")) {
+//								System.out.println(sTokenPrefix);
+//							}
+//							
 							// there is no "contains" for regular expressions
 							if (Pattern.compile(sCondition).matcher(sReturn).find()) {
 								
@@ -329,13 +359,19 @@ public class TemplateHelper {
 										if (isMore) {
 											sbLine.append(sSeparator);
 										}
-										sbLine.append(fillLine(sLoopLine, theDataObject, theLoopElement, sTokenPrefix));
+										sbLine.append(fillLine(sLoopLine, theDataObject, theLoopElement, sTokenPrefix, isEditor));
 										isMore = true;
 									}
 									
 									sReturn = sReturn.replaceAll(sCondition, sbLine.toString());
 								}
 								
+							}
+
+							// fill conditions for lists manually
+							if (sReturn.contains(sTokenPrefix)) {
+								sReturn = replaceCondition(TOKEN_IF_EMPTY, sReturn, sTokenPrefix, ((List<ModelClass>) oResult).isEmpty());
+								sReturn = replaceCondition(TOKEN_IF_NOTEMPTY, sReturn, sTokenPrefix, !((List<ModelClass>) oResult).isEmpty());
 							}
 							
 						}
@@ -366,7 +402,7 @@ public class TemplateHelper {
 	 * @version 0.5.0
 	 * @since 0.5.0
 	 */
-	private static String fillLineDirectData(final String theLine, final ModelClass theData, final TitledIDType theLoopElement, final String theTokenPrefix) {
+	private static String fillLineDirectData(final String theLine, final ModelClass theData, final ModelClass theLoopElement, final String theTokenPrefix) {
 		
 		Objects.requireNonNull(theLine, "line must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
@@ -389,59 +425,29 @@ public class TemplateHelper {
 						String sToken = (theTokenPrefix.indexOf(':') == theTokenPrefix.lastIndexOf(':')) ?
 								String.format("%s%s:%s", theTokenPrefix, sTokenClass, theGetter.getKey()) :
 									String.format("%s%s", theTokenPrefix, theGetter.getKey());
-						
+
+						// special date formats
 						if ((theGetter.getValue().getReturnType() == LocalDateTime.class) ||
 								(theGetter.getValue().getReturnType() == LocalDate.class) ||
 								(theGetter.getValue().getReturnType() == LocalTime.class)) {
 
-							// own for loop with replace, for there are more than one datetime tokens allowed in one line
-							for (String theType : new String[]{"date", "time", "datetime"}) {
-								for (FormatStyle theStyle : FormatStyle.values()) {
-									
-									String sNewToken = String.format("%s:%s:%s",
-											sToken, 
-											theType,
-											theStyle.toString().toLowerCase());
-									
-									if (sReturn.contains(sNewToken)) {
-										DateTimeFormatter fmtOutput = 
-												(theType.equals("date")) ?
-														DateTimeFormatter.ofLocalizedDate(theStyle).withLocale(Locale.GERMANY)
-														: (theType.equals("time")) ?
-																DateTimeFormatter.ofLocalizedTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault())
-																: DateTimeFormatter.ofLocalizedDateTime(theStyle).withLocale(Locale.GERMANY).withZone(ZoneId.systemDefault());
-																
-																String sReplacement = "";
-																if (oResult instanceof LocalDateTime) {
-																	sReplacement = ((LocalDateTime) oResult).format(fmtOutput);
-																} else if (oResult instanceof LocalDate) {
-																	sReplacement = ((LocalDate) oResult).format(fmtOutput);
-																} else if (oResult instanceof LocalTime) {
-																	sReplacement = ((LocalTime) oResult).format(fmtOutput);
-																}
-																
-																sReturn = replaceTextAndConditions(sReturn, 
-																		sNewToken, 
-																		sReplacement
-																		);
-									}
+							sReturn = fillLineDateTimeData(sReturn, sToken, oResult);
+							
+						} 
+						
+						// other data and empty dates
+						if (sReturn.contains(sToken)) {
+							
+							String sValue = "";
+							if (oResult != null) {
+								if (oResult instanceof Boolean) {
+									sValue = ((Boolean) oResult) ? "true" : "";
+								} else {
+									sValue = oResult.toString();
 								}
 							}
 							
-						} else {
-							
-//							if (sToken.startsWith("referee:")) {
-//								Constants.logger.info(sToken);
-////								Constants.logger.info(oResult);
-//							}
-							
-							if (sReturn.contains(sToken)) {
-								sReturn = replaceTextAndConditions(sReturn, 
-										sToken,
-										(oResult == null) ? "" : oResult.toString()
-										);
-							}
-							
+							sReturn = replaceTextAndConditions(sReturn, sToken, sValue);
 						}
 						
 					}
@@ -452,6 +458,53 @@ public class TemplateHelper {
 
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
+		}
+				
+		return sReturn;
+	}
+	
+	/**
+	 * Fills line with datetime data.
+	 * 
+	 * @param theLine line
+	 * @param theToken token
+	 * @param theDateTime datetime
+	 * 
+	 * @return filled line
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	private static String fillLineDateTimeData(final String theLine, final String theToken, final Object theDateTime) {
+		
+		Objects.requireNonNull(theLine, "line must not be null");
+		Objects.requireNonNull(theToken, "token must not be null");
+		
+		String sReturn = theLine;
+		
+		// own for loop with replace, for there are more than one datetime tokens allowed in one line
+		for (DateTimeFormat theFormat : DateTimeFormat.values()) {
+			String sNewToken = String.format("%s:%s",
+					theToken, 
+					theFormat.value());
+			
+			if (sReturn.contains(sNewToken)) {
+				DateTimeFormatter fmtOutput = DateTimeFormatter.ofPattern(Prefs.get(theFormat), Locale.forLanguageTag(Prefs.get(PrefKey.LOCALE)));
+										
+				String sReplacement = "";
+				if (theDateTime instanceof LocalDateTime) {
+					sReplacement = ((LocalDateTime) theDateTime).format(fmtOutput);
+				} else if (theDateTime instanceof LocalDate) {
+					sReplacement = ((LocalDate) theDateTime).format(fmtOutput);
+				} else if (theDateTime instanceof LocalTime) {
+					sReplacement = ((LocalTime) theDateTime).format(fmtOutput);
+				}
+				
+				sReturn = replaceTextAndConditions(sReturn, 
+						sNewToken, 
+						sReplacement
+						);
+			}
 		}
 				
 		return sReturn;
@@ -574,6 +627,136 @@ public class TemplateHelper {
 		}
 		
 		return sReturn;
+	}
+
+	/**
+	 * Extracts message parts from text.
+	 * 
+	 * First lines define variables and their content, an empty line starts body.
+	 *
+	 * @param theText text
+	 * 
+	 * @return document data
+	 *
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static DocumentData extractMessageParts(final List<String> theText) {
+		DocumentData docReturn = new DocumentData();
+
+		List<String> lstBody = new ArrayList<>();
+		boolean isBody = false;
+		for (String theLine : theText) {
+			
+			if (isBody) {
+				
+				lstBody.add(theLine.trim());
+				
+			} else {
+				
+				for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
+					
+					String sVarToken = String.format(VARIABLE_TOKEN, theTemplateVariable.value());
+					if (theLine.trim().startsWith(sVarToken)) {
+						
+						String theLineContent = theLine.trim().substring(sVarToken.length()).trim();
+						
+						switch (theTemplateVariable) {
+							case ATTACHMENT:
+								docReturn.getAttachment().add(TemplateHelper.createAttachment(theLineContent));
+								break;
+							case CLOSING:
+								docReturn.setClosing(theLineContent);
+								break;
+							case DATE:
+								docReturn.setDate(DateTimeUtils.fromString(theLineContent));
+								break;
+							case FILENAME:
+								docReturn.setFilename(theLineContent);
+								break;
+							case OPENING:
+								docReturn.setOpening(theLineContent);
+								break;
+							case SIGNATURE:
+								docReturn.setSignature(theLineContent);
+								break;
+							case SUBJECT:
+								docReturn.setSubject(theLineContent);
+								break;
+							case SUBTITLE:
+								docReturn.setSubtitle(theLineContent);
+								break;
+							
+						}
+					}
+					
+				}
+				
+			}
+			
+			if (theLine.isEmpty()) {
+				isBody = true;
+			}
+		}
+		
+		docReturn.setBody(toText(lstBody));
+		
+		return docReturn;
+	}
+
+	/**
+	 * Converts list of strings to string.
+	 * 
+	 * @todo shorter with lambdas?
+	 * 
+	 * @param theText text as list of strings
+	 * 
+	 * @return text as string
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static String toText(final List<String> theText) {
+		StringBuilder sbReturn = new StringBuilder();
+		boolean isFurther = false;
+		for (String theLine : theText) {
+			if (isFurther) {
+				sbReturn.append(System.lineSeparator());
+			}
+			sbReturn.append(theLine);
+			isFurther = true;
+		}
+		return sbReturn.toString();
+	}
+		
+	/**
+	 * Creates attachment from attachment line.
+	 * 
+	 * @param theLine attachment line
+	 * 
+	 * @return attachment
+	 *
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static Attachment createAttachment(final String theLine) {
+		Objects.requireNonNull(theLine, "attachment line must not be null");
+		
+		String[] arrAttachmentParts = theLine.split(Prefs.get(PrefKey.TEMPLATE_VARIABLE_SEPARATOR));
+		
+		Attachment attReturn = new Attachment();
+		
+		attReturn.setFilename(arrAttachmentParts[0].trim());
+		
+		if (arrAttachmentParts.length > 1) {
+			attReturn.setTitle(arrAttachmentParts[1].trim());
+		}
+		
+		if (arrAttachmentParts.length > 2) {
+			attReturn.setLandscape(Boolean.valueOf(arrAttachmentParts[2].trim()));
+		}
+		
+		return attReturn;
 	}
 
 }

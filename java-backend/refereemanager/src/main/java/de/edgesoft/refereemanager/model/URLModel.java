@@ -1,11 +1,10 @@
-
 package de.edgesoft.refereemanager.model;
 
+import de.edgesoft.refereemanager.jaxb.URL;
+
 /**
- * Output types.
+ * URL model, additional methods for jaxb model class.
  * 
- * For enums I use the coding style of jaxb, so there will be no inconsistencies.
- *
  * ## Legal stuff
  * 
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
@@ -26,33 +25,30 @@ package de.edgesoft.refereemanager.model;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.7.0
- * @since 0.5.0
+ * @version 0.8.0
+ * @since 0.8.0
  */
-public enum PersonOutputType {
-
-    FULLNAME,
-    TABLENAME;
+public class URLModel extends URL {
 	
-    private final String value;
-
-    PersonOutputType() {
-        value = name().toLowerCase();
+	/**
+	 * Display title.
+	 * 
+	 * @return display title
+	 * 
+	 * @version 0.8.0
+	 * @since 0.6.0
+	 */
+	@Override
+    public String getDisplayTitle() {
+    	
+    	if (isPrivateOnly && !isPrivate()) {
+			return null;
+    	}
+    	
+    	return getURL();
+    	
     }
-
-    public String value() {
-        return value;
-    }
-
-    public static PersonOutputType fromValue(String v) {
-        for (PersonOutputType c: PersonOutputType.values()) {
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
-    }
-
+    
 }
 
 /* EOF */

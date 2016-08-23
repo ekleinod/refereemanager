@@ -1,7 +1,8 @@
 package de.edgesoft.refereemanager.model;
 
+import de.edgesoft.refereemanager.Prefs;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
-import de.edgesoft.refereemanager.utils.Constants;
+import de.edgesoft.refereemanager.utils.PrefKey;
 
 /**
  * PhoneNumber model, additional methods for jaxb model class.
@@ -26,7 +27,7 @@ import de.edgesoft.refereemanager.utils.Constants;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.6.0
+ * @version 0.8.0
  * @since 0.6.0
  */
 public class PhoneNumberModel extends PhoneNumber {
@@ -36,14 +37,19 @@ public class PhoneNumberModel extends PhoneNumber {
 	 * 
 	 * @return display title
 	 * 
-	 * @version 0.6.0
+	 * @version 0.8.0
 	 * @since 0.6.0
 	 */
+	@Override
     public String getDisplayTitle() {
+    	
+    	if (isPrivateOnly && !isPrivate()) {
+			return null;
+    	}
     	
     	StringBuilder sbReturn = new StringBuilder();
     	
-    	if ((getCountryCode() != null) && !getCountryCode().equals(Constants.COUNTRY_CODE)) {
+    	if ((getCountryCode() != null) && !getCountryCode().equals(Prefs.get(PrefKey.COUNTRY_CODE))) {
     		sbReturn.append("+");
     		sbReturn.append(getCountryCode());
     		sbReturn.append(" ");
@@ -57,7 +63,7 @@ public class PhoneNumberModel extends PhoneNumber {
     	
 		sbReturn.append(getNumber());
     	
-    	if ((getContactType() != null) && !getContactType().getId().equals(Constants.CONTACT_PRIVATE)) {
+    	if (!isPrivate()) {
     		sbReturn.append(" (");
     		sbReturn.append(getContactType().getShorttitle());
     		sbReturn.append(")");

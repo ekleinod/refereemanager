@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import de.edgesoft.refereemanager.model.TitledTypeModel;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
 /**
@@ -17,7 +17,7 @@ import de.edgesoft.refereemanager.model.TitledTypeModel;
  * <pre>
  * &lt;complexType name="Picture">
  *   &lt;complexContent>
- *     &lt;extension base="{}TitledType">
+ *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
  *         &lt;element name="u_r_l" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
  *       &lt;/sequence>
@@ -33,7 +33,7 @@ import de.edgesoft.refereemanager.model.TitledTypeModel;
     "url"
 })
 public class Picture
-    extends TitledTypeModel
+    extends TitledIDTypeModel
 {
 
     @XmlElement(name = "u_r_l", required = true)

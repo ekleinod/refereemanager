@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
@@ -50,6 +51,9 @@ import de.edgesoft.refereemanager.model.WishModel;
     "member",
     "reffor",
     "status"
+})
+@XmlSeeAlso({
+    Trainee.class
 })
 public class Referee
     extends PersonModel

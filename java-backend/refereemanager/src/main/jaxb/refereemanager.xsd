@@ -23,7 +23,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 @author Ekkart Kleinod
-@version 0.4.0
+@version 0.8.0
 @since 0.4.0
 -->
 
@@ -62,6 +62,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="trainee" type="Trainee" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="league" type="League" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="club" type="Club" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="team" type="Team" minOccurs="0" maxOccurs="unbounded" />
 
 					<!-- types -->
 					<xsd:element name="sex_type" type="SexType" minOccurs="0" maxOccurs="unbounded" />
@@ -76,7 +77,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Season">
 		<xsd:complexContent>
-			<xsd:extension base="TitledType">
+			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
 					<xsd:element name="start_year" type="xsd:int" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
@@ -101,7 +102,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="u_r_l" type="URL" minOccurs="0" maxOccurs="unbounded" />
 
 					<!-- references -->
-					<xsd:element name="sex_type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+					<xsd:element name="sex_type" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
 								<jxb:property>
@@ -162,7 +163,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Trainee">
 		<xsd:complexContent>
-			<xsd:extension base="Person">
+			<xsd:extension base="Referee">
 				<xsd:sequence>
 					<xsd:element name="points_written_a" type="xsd:int" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="points_written_b" type="xsd:int" minOccurs="0" maxOccurs="1" />
@@ -176,7 +177,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Picture">
 		<xsd:complexContent>
-			<xsd:extension base="TitledType">
+			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
 					<xsd:element name="u_r_l" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
@@ -231,11 +232,11 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Contact" abstract="true">
 		<xsd:complexContent>
-			<xsd:extension base="TitledType">
+			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="is_primary" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="editor_only" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="contact_type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+					<xsd:element name="is_primary" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="editor_only" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="contact_type" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
 								<jxb:property>
@@ -253,6 +254,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
+					<xsd:element name="results" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="referee_report" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="referee_quantity" type="RefereeQuantity" minOccurs="0" maxOccurs="unbounded" />
 
@@ -284,10 +286,50 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="address" type="Address" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="filename" type="xsd:string" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="venue" type="Address" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="u_r_l" type="URL" minOccurs="0" maxOccurs="unbounded" />
 
-					<xsd:element name="contact_person" type="xsd:IDREF" minOccurs="0" maxOccurs="unbounded">
+					<xsd:element name="contact_person" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Person" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="Team">
+		<xsd:complexContent>
+			<xsd:extension base="TitledIDType">
+				<xsd:sequence>
+					<xsd:element name="number" type="xsd:int" minOccurs="0" maxOccurs="1" />
+
+					<!-- references -->
+					<xsd:element name="club" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Club" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="league" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="League" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="contact_person" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
 								<jxb:property>
@@ -446,18 +488,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	<xsd:complexType name="TitledIDType" abstract="true">
 		<xsd:complexContent>
 			<xsd:extension base="IDType">
-				<xsd:sequence>
-					<xsd:element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="shorttitle" type="xsd:string" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="remark" type="xsd:string" minOccurs="0" maxOccurs="1" />
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-
-	<xsd:complexType name="TitledType" abstract="true">
-		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
 				<xsd:sequence>
 					<xsd:element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="shorttitle" type="xsd:string" minOccurs="0" maxOccurs="1" />

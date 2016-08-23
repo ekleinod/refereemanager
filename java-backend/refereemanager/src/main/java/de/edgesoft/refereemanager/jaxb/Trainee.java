@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.RefereeModel;
 
 
 /**
@@ -16,7 +16,7 @@ import de.edgesoft.refereemanager.model.PersonModel;
  * <pre>
  * &lt;complexType name="Trainee">
  *   &lt;complexContent>
- *     &lt;extension base="{}Person">
+ *     &lt;extension base="{}Referee">
  *       &lt;sequence>
  *         &lt;element name="points_written_a" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="points_written_b" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
@@ -40,7 +40,7 @@ import de.edgesoft.refereemanager.model.PersonModel;
     "passed"
 })
 public class Trainee
-    extends PersonModel
+    extends RefereeModel
 {
 
     @XmlElement(name = "points_written_a")

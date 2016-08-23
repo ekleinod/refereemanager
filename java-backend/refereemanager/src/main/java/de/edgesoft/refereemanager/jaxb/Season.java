@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import de.edgesoft.refereemanager.model.TitledTypeModel;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
 /**
@@ -16,7 +16,7 @@ import de.edgesoft.refereemanager.model.TitledTypeModel;
  * <pre>
  * &lt;complexType name="Season">
  *   &lt;complexContent>
- *     &lt;extension base="{}TitledType">
+ *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
  *         &lt;element name="start_year" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
@@ -32,7 +32,7 @@ import de.edgesoft.refereemanager.model.TitledTypeModel;
     "startYear"
 })
 public class Season
-    extends TitledTypeModel
+    extends TitledIDTypeModel
 {
 
     @XmlElement(name = "start_year")

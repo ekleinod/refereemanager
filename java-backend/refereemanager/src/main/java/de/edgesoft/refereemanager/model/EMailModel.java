@@ -1,7 +1,6 @@
 package de.edgesoft.refereemanager.model;
 
 import de.edgesoft.refereemanager.jaxb.EMail;
-import de.edgesoft.refereemanager.utils.Constants;
 
 /**
  * EMail model, additional methods for jaxb model class.
@@ -26,7 +25,7 @@ import de.edgesoft.refereemanager.utils.Constants;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.6.0
+ * @version 0.8.0
  * @since 0.6.0
  */
 public class EMailModel extends EMail {
@@ -36,16 +35,21 @@ public class EMailModel extends EMail {
 	 * 
 	 * @return display title
 	 * 
-	 * @version 0.6.0
+	 * @version 0.8.0
 	 * @since 0.6.0
 	 */
+	@Override
     public String getDisplayTitle() {
+    	
+    	if (isPrivateOnly && !isPrivate()) {
+			return null;
+    	}
     	
     	StringBuilder sbReturn = new StringBuilder();
     	
 		sbReturn.append(getEMail());
     	
-    	if ((getContactType() != null) && !getContactType().getId().equals(Constants.CONTACT_PRIVATE)) {
+    	if (!isPrivate()) {
     		sbReturn.append(" (");
     		sbReturn.append(getContactType().getShorttitle());
     		sbReturn.append(")");

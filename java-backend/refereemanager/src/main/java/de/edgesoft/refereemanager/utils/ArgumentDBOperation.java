@@ -32,6 +32,7 @@ package de.edgesoft.refereemanager.utils;
 public enum ArgumentDBOperation {
 
     REMOVECLUBS,
+    SAVE,
     SORT;
 	
     private final String value;

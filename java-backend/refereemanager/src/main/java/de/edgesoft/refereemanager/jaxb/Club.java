@@ -3,14 +3,15 @@ package de.edgesoft.refereemanager.jaxb;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
+import de.edgesoft.refereemanager.model.URLModel;
 
 
 /**
@@ -23,9 +24,10 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="address" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="filename" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="venue" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="contact_person" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="contact_person" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -36,7 +38,8 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Club", propOrder = {
-    "address",
+    "filename",
+    "venue",
     "url",
     "contactPerson"
 })
@@ -44,26 +47,53 @@ public class Club
     extends TitledIDTypeModel
 {
 
+    protected String filename;
     @XmlElement(type = AddressModel.class)
-    protected List<Address> address;
-    @XmlElement(name = "u_r_l")
+    protected List<Address> venue;
+    @XmlElement(name = "u_r_l", type = URLModel.class)
     protected List<URL> url;
-    @XmlElementRef(name = "contact_person", type = JAXBElement.class, required = false)
-    protected List<Person> contactPerson;
+    @XmlElement(name = "contact_person", type = Object.class)
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    protected Person contactPerson;
 
     /**
-     * Gets the value of the address property.
+     * Gets the value of the filename property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFilename() {
+        return filename;
+    }
+
+    /**
+     * Sets the value of the filename property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFilename(String value) {
+        this.filename = value;
+    }
+
+    /**
+     * Gets the value of the venue property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the address property.
+     * This is why there is not a <CODE>set</CODE> method for the venue property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getAddress().add(newItem);
+     *    getVenue().add(newItem);
      * </pre>
      * 
      * 
@@ -73,11 +103,11 @@ public class Club
      * 
      * 
      */
-    public List<Address> getAddress() {
-        if (address == null) {
-            address = new ArrayList<Address>();
+    public List<Address> getVenue() {
+        if (venue == null) {
+            venue = new ArrayList<Address>();
         }
-        return this.address;
+        return this.venue;
     }
 
     /**
@@ -112,30 +142,25 @@ public class Club
     /**
      * Gets the value of the contactPerson property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the contactPerson property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getContactPerson().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link Object }
+     *     
      */
-    public List<Person> getContactPerson() {
-        if (contactPerson == null) {
-            contactPerson = new ArrayList<Person>();
-        }
-        return this.contactPerson;
+    public Person getContactPerson() {
+        return contactPerson;
+    }
+
+    /**
+     * Sets the value of the contactPerson property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Object }
+     *     
+     */
+    public void setContactPerson(Person value) {
+        this.contactPerson = value;
     }
 
 }

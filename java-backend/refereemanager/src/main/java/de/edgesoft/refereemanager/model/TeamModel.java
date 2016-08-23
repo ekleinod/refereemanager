@@ -1,11 +1,12 @@
 package de.edgesoft.refereemanager.model;
 
+import java.text.Collator;
 import java.util.Comparator;
 
-import de.edgesoft.refereemanager.jaxb.TitledType;
+import de.edgesoft.refereemanager.jaxb.Team;
 
 /**
- * TitledIDType model, additional methods for jaxb model class.
+ * Team model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -27,24 +28,38 @@ import de.edgesoft.refereemanager.jaxb.TitledType;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.6.0
- * @since 0.5.0
+ * @version 0.8.0
+ * @since 0.8.0
  */
-public class TitledTypeModel extends TitledType {
+public class TeamModel extends Team {
 	
-	/** Comparator. */
-	public static final Comparator<TitledType> TITLE = Comparator.comparing(TitledType::getTitle);
+	/** 
+	 * Comparator by league for teams. 
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static final Comparator<Team> LEAGUE = Comparator.comparing(team -> team.getLeague().getShorttitle(), Collator.getInstance());
+	
+	/** 
+	 * Comparator by league hen club for teams. 
+	 * 
+	 * @version 0.8.0
+	 * @since 0.8.0
+	 */
+	public static final Comparator<Team> LEAGUE_CLUB = LEAGUE.thenComparing(Comparator.comparing(team -> team.getClub().getShorttitle(), Collator.getInstance()));
 	
 	/**
 	 * Display title.
 	 * 
 	 * @return display title
 	 * 
-	 * @version 0.6.0
-	 * @since 0.6.0
+	 * @version 0.8.0
+	 * @since 0.8.0
 	 */
+	@Override
     public String getDisplayTitle() {
-    	return (getShorttitle() == null) ? getTitle() : getShorttitle();
+    	return getId();
     }
     
 }

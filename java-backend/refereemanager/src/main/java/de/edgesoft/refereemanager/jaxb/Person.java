@@ -18,6 +18,7 @@ import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.PhoneNumberModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
+import de.edgesoft.refereemanager.model.URLModel;
 
 
 /**
@@ -39,7 +40,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *         &lt;element name="address" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="phone_number" type="{}PhoneNumber" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="sex_type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
+ *         &lt;element name="sex_type" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -62,7 +63,6 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
     "sexType"
 })
 @XmlSeeAlso({
-    Trainee.class,
     RefereeModel.class
 })
 public class Person
@@ -88,9 +88,9 @@ public class Person
     protected List<Address> address;
     @XmlElement(name = "phone_number", type = PhoneNumberModel.class)
     protected List<PhoneNumber> phoneNumber;
-    @XmlElement(name = "u_r_l")
+    @XmlElement(name = "u_r_l", type = URLModel.class)
     protected List<URL> url;
-    @XmlElement(name = "sex_type", required = true, type = Object.class)
+    @XmlElement(name = "sex_type", type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected SexType sexType;
