@@ -27,6 +27,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *         &lt;element name="number" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="club" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="league" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded"/>
+ *         &lt;element name="contact_person" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -39,7 +40,8 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 @XmlType(name = "Team", propOrder = {
     "number",
     "club",
-    "league"
+    "league",
+    "contactPerson"
 })
 public class Team
     extends TitledIDTypeModel
@@ -52,6 +54,10 @@ public class Team
     protected Club club;
     @XmlElementRef(name = "league", type = JAXBElement.class)
     protected List<League> league;
+    @XmlElement(name = "contact_person", type = Object.class)
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    protected Person contactPerson;
 
     /**
      * Gets the value of the number property.
@@ -128,6 +134,30 @@ public class Team
             league = new ArrayList<League>();
         }
         return this.league;
+    }
+
+    /**
+     * Gets the value of the contactPerson property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Object }
+     *     
+     */
+    public Person getContactPerson() {
+        return contactPerson;
+    }
+
+    /**
+     * Sets the value of the contactPerson property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Object }
+     *     
+     */
+    public void setContactPerson(Person value) {
+        this.contactPerson = value;
     }
 
 }
