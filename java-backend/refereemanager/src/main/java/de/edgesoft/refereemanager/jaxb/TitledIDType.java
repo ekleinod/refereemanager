@@ -11,6 +11,7 @@ import de.edgesoft.refereemanager.model.ContactModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
+import de.edgesoft.refereemanager.model.TeamModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 
 
@@ -45,7 +46,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
     ContactType.class,
     TrainingLevelTypeModel.class,
     Picture.class,
-    Team.class,
+    TeamModel.class,
     SeasonModel.class,
     SexType.class,
     League.class,

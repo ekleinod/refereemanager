@@ -1,13 +1,9 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
@@ -26,7 +22,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *       &lt;sequence>
  *         &lt;element name="number" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="club" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
- *         &lt;element name="league" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded"/>
+ *         &lt;element name="league" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="contact_person" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -52,8 +48,10 @@ public class Team
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected Club club;
-    @XmlElementRef(name = "league", type = JAXBElement.class)
-    protected List<League> league;
+    @XmlElement(required = true, type = Object.class)
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    protected League league;
     @XmlElement(name = "contact_person", type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -110,30 +108,25 @@ public class Team
     /**
      * Gets the value of the league property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the league property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getLeague().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link Object }
+     *     
      */
-    public List<League> getLeague() {
-        if (league == null) {
-            league = new ArrayList<League>();
-        }
-        return this.league;
+    public League getLeague() {
+        return league;
+    }
+
+    /**
+     * Sets the value of the league property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Object }
+     *     
+     */
+    public void setLeague(League value) {
+        this.league = value;
     }
 
     /**

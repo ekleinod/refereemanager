@@ -13,6 +13,7 @@ import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
+import de.edgesoft.refereemanager.model.TeamModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 
 
@@ -79,6 +80,7 @@ public class Content
     protected List<League> league;
     @XmlElement(type = ClubModel.class)
     protected List<Club> club;
+    @XmlElement(type = TeamModel.class)
     protected List<Team> team;
     @XmlElement(name = "sex_type")
     protected List<SexType> sexType;
