@@ -45,6 +45,14 @@ Several features are working, see version list below.
 Therefore, the referee manager is *not* safe for using in the "real" internet.
 Use it in a closed envorinment (local server etc.) only.
 
+### v0.8.0
+
+*Released:* 2016-08-23
+
+- improvement of database operations
+- refined template helper functions and template language
+- referee communication by mail and letter
+
 ### v0.7.0
 
 *Released:* 2016-08-01
