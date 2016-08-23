@@ -13,6 +13,7 @@ import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
+import de.edgesoft.refereemanager.model.TeamModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 
 
@@ -33,6 +34,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
  *         &lt;element name="trainee" type="{}Trainee" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="league" type="{}League" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="club" type="{}Club" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="team" type="{}Team" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sex_type" type="{}SexType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contact_type" type="{}ContactType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="status_type" type="{}StatusType" maxOccurs="unbounded" minOccurs="0"/>
@@ -55,6 +57,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
     "trainee",
     "league",
     "club",
+    "team",
     "sexType",
     "contactType",
     "statusType",
@@ -77,6 +80,8 @@ public class Content
     protected List<League> league;
     @XmlElement(type = ClubModel.class)
     protected List<Club> club;
+    @XmlElement(type = TeamModel.class)
+    protected List<Team> team;
     @XmlElement(name = "sex_type")
     protected List<SexType> sexType;
     @XmlElement(name = "contact_type")
@@ -279,6 +284,35 @@ public class Content
             club = new ArrayList<Club>();
         }
         return this.club;
+    }
+
+    /**
+     * Gets the value of the team property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the team property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getTeam().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Team }
+     * 
+     * 
+     */
+    public List<Team> getTeam() {
+        if (team == null) {
+            team = new ArrayList<Team>();
+        }
+        return this.team;
     }
 
     /**

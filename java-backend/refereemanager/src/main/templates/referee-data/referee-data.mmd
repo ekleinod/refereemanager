@@ -1,0 +1,74 @@
+subject: Übersicht der gespeicherten Daten
+subtitle: Saison **generated season:title**
+
+Hallo **generated referee:firstname**,
+
+dies ist der jährliche Auszug der über Dich beim Verbandsschiedsrichterausschuss für die Saison **generated season:title** gespeicherten Daten.
+Du erhältst den Auszug aus drei Gründen:
+
+1. Damit Du weißt, welche Daten gespeichert sind, wofür sie verwendet werden und wer die Daten sieht.
+2. Damit Du kontrollieren kannst, ob die Daten korrekt sind und eventuelle Änderungen mitteilen kannst.
+3. Damit Du der Verwendung bestimmter Daten widersprechen kannst, falls Du das möchtest.
+
+Noch ein kurzer Hinweis zu den Kontaktinformationen: ich hätte gerne zwei Möglichkeiten, mit Dir Kontakt aufzunehmen, bevorzugt per E-Mail und Telefon.
+Die dritte Möglichkeit ist daher optional.
+
+# Öffentliche Informationen
+
+Diese Informationen sind für jedermann sichtbar.
+
+Nutzungsbeispiel: Einsatzplan.
+
+<!--
+\begin{longtabu}[l]{@{}>{\small\sffamily\bfseries}p{.28\textwidth}@{\hspace{.02\textwidth}}p{.7\textwidth}@{}}\savetabu{tablayout}
+	\toprule
+	-->Name<!-- & -->**generated referee:tablename**<!-- \\
+	-->Ausbildung<!-- & -->**generated referee:highesttraininglevel:type:title** (**generated referee:highesttraininglevel:type:shorttitle**)<!-- \\
+	-->Einsatzhäufigkeit<!-- & -->**generated referee:status:title**<!-- \\
+	\bottomrule
+\end{longtabu}
+-->
+
+# Informationen für andere Schiedsrichter
+
+Diese Informationen sind nur für andere Schiedsrichter nach Login und den DTTB sichtbar.
+
+Nutzungsbeispiel: Kontakttabelle der Schiedsrichter.
+
+<!--
+\begin{longtabu}{\preamble{tablayout}}
+	\toprule
+	-->E-Mail<!-- & -->**if empty referee:email:**---**end if empty referee:email:****foreach referee:email:****separator**; **end separator****generated referee:email:displaytitle****if notempty referee:email:editoronly** (privat = nur für VSRA sichtbar, nicht für andere Schiedsrichter)**end if notempty referee:email:editoronly****end foreach referee:email:**<!-- \\
+	-->Telefon<!-- & -->**if empty referee:phonenumber:**---**end if empty referee:phonenumber:****foreach referee:phonenumber:****separator**; **end separator****generated referee:phonenumber:displaytitle****if notempty referee:phonenumber:editoronly** (privat = nur für VSRA sichtbar, nicht für andere Schiedsrichter)**end if notempty referee:phonenumber:editoronly****end foreach referee:phonenumber:**<!-- \\
+	-->Mitglied bei<!-- & -->**generated referee:member:displaytitle**<!-- \\
+	**if notempty referee:reffor**-->Schiedst für<!-- & -->**generated referee:reffor:displaytitle**<!--\\**end if notempty referee:reffor**
+	\bottomrule
+\end{longtabu}
+-->
+
+# Informationen für VSRA
+
+Diese Informationen sind nur für den Verbandsschiedsrichterausschuss sichtbar.
+
+Nutzungsbeispiel: Verwaltung der Einsätze.
+
+<!--
+\begin{longtabu}{\preamble{tablayout}}
+	\toprule
+	**if notempty referee:docsbyletter**-->Alle Infos per Brief<!-- & -->ja**if notempty referee:email:***, bitte prüfe, ob die Zusendung per E-Mail nicht doch ausreicht, wegen Papiersparen und so.***end if notempty referee:email:**<!-- \\**end if notempty referee:docsbyletter**
+	-->Adresse<!-- & -->**if empty referee:address:**---**end if empty referee:address:****foreach referee:address:****separator**; **end separator****generated referee:address:displaytitle****if notempty referee:address:editoronly** (privat = nur für VSRA sichtbar, nicht für andere Schiedsrichter)**end if notempty referee:address:editoronly****end foreach referee:address:**<!-- \\
+	-->URL<!-- & -->**if empty referee:url:**---**end if empty referee:url:****foreach referee:url:****separator**; **end separator****generated referee:url:displaytitle****end foreach referee:url:**<!-- \\
+	-->Geburtstag<!-- & -->**if empty referee:birthday**---**end if empty referee:birthday****if notempty referee:birthday****generated referee:birthday:datelong****end if notempty referee:birthday**<!-- \\
+	-->Geschlecht<!-- & -->**generated referee:sextype:title**<!-- \\
+
+	-->Bevorzugt schiedsen<!-- & -->**if empty referee:prefer:**---**end if empty referee:prefer:****foreach referee:prefer:****separator**; **end separator****generated referee:prefer:displaytitle****end foreach referee:prefer:**<!-- \\
+	-->Nicht schiedsen<!-- & -->**if empty referee:avoid:**---**end if empty referee:avoid:****foreach referee:avoid:****separator**; **end separator****generated referee:avoid:displaytitle****end foreach referee:avoid:**<!-- \\
+
+	**if notempty referee:traininglevel:**-->**foreach referee:traininglevel:****separator**<!--\\\\ -->**end separator****generated referee:traininglevel:type:shorttitle**<!-- & -->seit: **if empty referee:traininglevel:since**unbekannt**end if empty referee:traininglevel:since****generated referee:traininglevel:since:datemedium****end foreach referee:traininglevel:**<!--\\**end if notempty referee:traininglevel:**
+
+	-->Letzte Fortbildung<!-- & -->**if empty referee:lasttrainingupdate**---**end if empty referee:lasttrainingupdate****generated referee:lasttrainingupdate:datemedium**<!-- \\
+	-->Nächste Fortbildung<!-- & -->**if empty referee:nexttrainingupdate**---**end if empty referee:nexttrainingupdate****generated referee:nexttrainingupdate:dateyear**<!-- \\
+	**if notempty referee:remark**-->Anmerkung<!-- & -->**generated referee:remark**<!-- \\**end if notempty referee:remark**
+	\bottomrule
+\end{longtabu}
+-->

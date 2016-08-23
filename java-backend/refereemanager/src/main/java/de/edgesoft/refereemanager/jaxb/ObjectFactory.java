@@ -16,8 +16,10 @@ import de.edgesoft.refereemanager.model.PhoneNumberModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
+import de.edgesoft.refereemanager.model.TeamModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
+import de.edgesoft.refereemanager.model.URLModel;
 import de.edgesoft.refereemanager.model.WishModel;
 
 
@@ -40,7 +42,6 @@ public class ObjectFactory {
 
     private final static QName _Test_QNAME = new QName("", "test");
     private final static QName _Refereemanager_QNAME = new QName("", "refereemanager");
-    private final static QName _ClubContactPerson_QNAME = new QName("", "contact_person");
     private final static QName _LeagueRefereeReportRecipient_QNAME = new QName("", "referee_report_recipient");
 
     /**
@@ -95,7 +96,7 @@ public class ObjectFactory {
      * 
      */
     public URL createURL() {
-        return new URL();
+        return new URLModel();
     }
 
     /**
@@ -120,6 +121,14 @@ public class ObjectFactory {
      */
     public TrainingLevel createTrainingLevel() {
         return new TrainingLevelModel();
+    }
+
+    /**
+     * Create an instance of {@link Team }
+     * 
+     */
+    public Team createTeam() {
+        return new TeamModel();
     }
 
     /**
@@ -242,16 +251,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "refereemanager")
     public JAXBElement<RefereeManager> createRefereemanager(RefereeManager value) {
         return new JAXBElement<RefereeManager>(_Refereemanager_QNAME, RefereeManager.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "contact_person", scope = Club.class)
-    @XmlIDREF
-    public JAXBElement<Object> createClubContactPerson(Object value) {
-        return new JAXBElement<Object>(_ClubContactPerson_QNAME, Object.class, Club.class, value);
     }
 
     /**

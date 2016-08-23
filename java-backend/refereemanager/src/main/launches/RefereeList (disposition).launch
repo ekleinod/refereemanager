@@ -8,7 +8,7 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="de.edgesoft.refereemanager.RefereeList"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--path ../../../../rani/schiri/refereemanager --template src/main/templates/referee-list-disposition.mmd --output ../../../../rani/schiri/refereemanager/VSR-Liste_Einteilung.mmd --status active"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--template lists/referee-list-disposition.mmd --output ../../../../rani/schiri/refereemanager/VSR-Liste_Einteilung.mmd --status active"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="refereemanager"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 </launchConfiguration>

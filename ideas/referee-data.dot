@@ -1,0 +1,88 @@
+digraph refereedata {
+	graph [rankdir="TB"];
+	node [shape="box", style="filled", colorscheme="ylorbr9", fillcolor="1", fontname="Helvetica", fontsize="10"];
+	edge [fontname="Helvetica", fontsize="10"];
+
+	start1, start2 [label="", shape="circle", colorscheme="X11", fillcolor="lawngreen"];
+	stop1, stop2 [label="", shape="circle", colorscheme="X11", fillcolor="firebrick"];
+
+	start1 -> crds;
+	start2 -> wmtr;
+
+	setr -> stop1;
+	cmmpan -> stop2;
+
+	crds [label="create referee data sheets", fillcolor="5"];
+	crdsm [label="name_firstname.mmd"];
+	crds -> crdsm;
+
+	crdsp [label="convert referee data sheets to pdf", fillcolor="3"];
+	crdspn [label="name_firstname.pdf"];
+	crdsm -> crdsp [label=" build.xml, static"];
+	crdsp -> crdspn;
+
+	wmtr [label="write message to referees"];
+	wmtrm [label="message.mmd"];
+	wmtr -> wmtrm;
+
+	setra [label="attach referee data sheets and other attachments in mmd"];
+	wmtrm -> setra;
+
+	setr [label="send email to referees", fillcolor="5"];
+	setra -> setr;
+	crdspn -> setr;
+
+	crm [label="create referee messages", fillcolor="5"];
+	crmm [label="message_name_firstname.mmd"];
+	setra -> crm;
+	crm -> crmm;
+
+	cmt [label="create merge tex (1 for each referee)", fillcolor="5"];
+	cmtt [label="merge_name_firstname.tex"];
+	setra -> cmt [label=" check odd/even pages"];
+	cmt -> cmtt;
+
+	crmp [label="convert referee message to pdf", fillcolor="3"];
+	crmpn [label="message_name_firstname.pdf"];
+	crmm -> crmp [label=" build.xml, static"];
+	crmp -> crmpn;
+
+	cmmp [label="create merged message (referee) as pdf", fillcolor="3"];
+	cmmpn [label="merge_name_firstname.pdf"];
+	crmpn -> cmmp;
+	cmtt -> cmmp [label=" build.xml, static"];
+	cmmp -> cmmpn;
+
+	cmta [label="create merge tex (1 for all referees)", fillcolor="5"];
+	cmtat [label="merge_all.tex"];
+	setra -> cmta;
+	cmta -> cmtat;
+
+	cmmpa [label="create merged message (all) as pdf", fillcolor="3"];
+	cmmpan [label="merge_all.pdf"];
+	cmmpn -> cmmpa;
+	cmtat -> cmmpa [label=" build.xml, static"];
+	cmmpa -> cmmpan;
+
+	{
+		rank="same";
+		setr;
+		crm;
+		cmt;
+		cmta;
+	}
+
+	{
+		rank="same";
+		crmpn;
+		cmtt;
+	}
+
+	{
+		rank="same";
+		cmmpn;
+		cmtat;
+	}
+
+}
+

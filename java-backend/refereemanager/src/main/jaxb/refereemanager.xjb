@@ -75,12 +75,12 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<jxb:class implClass="de.edgesoft.refereemanager.model.StatusTypeModel" />
 		</jxb:bindings>
 
-		<jxb:bindings node="//xsd:complexType[@name='TitledIDType']">
-			<jxb:class implClass="de.edgesoft.refereemanager.model.TitledIDTypeModel" />
+		<jxb:bindings node="//xsd:complexType[@name='Team']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.TeamModel" />
 		</jxb:bindings>
 
-		<jxb:bindings node="//xsd:complexType[@name='TitledType']">
-			<jxb:class implClass="de.edgesoft.refereemanager.model.TitledTypeModel" />
+		<jxb:bindings node="//xsd:complexType[@name='TitledIDType']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.TitledIDTypeModel" />
 		</jxb:bindings>
 
 		<jxb:bindings node="//xsd:complexType[@name='TrainingLevel']">
@@ -89,6 +89,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 		<jxb:bindings node="//xsd:complexType[@name='TrainingLevelType']">
 			<jxb:class implClass="de.edgesoft.refereemanager.model.TrainingLevelTypeModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='URL']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.URLModel" />
 		</jxb:bindings>
 
 		<jxb:bindings node="//xsd:complexType[@name='Wish']">
