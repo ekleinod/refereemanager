@@ -171,7 +171,6 @@ public class RefereeList extends AbstractMainClass {
 			
 			FileAccess.writeFile(theOutputPath, lstFilled);
 			
-			
 		} catch (Exception e) {
 			Constants.logger.error(e);
 			e.printStackTrace();

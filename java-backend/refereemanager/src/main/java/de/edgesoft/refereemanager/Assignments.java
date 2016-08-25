@@ -3,21 +3,21 @@ package de.edgesoft.refereemanager;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
-import de.edgesoft.edgeutils.commons.ext.VersionExt;
+import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
-import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.model.SeasonModel;
-import de.edgesoft.refereemanager.utils.ArgumentDBOperation;
+import de.edgesoft.refereemanager.utils.ArgumentStatusType;
 import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.PrefKey;
+import de.edgesoft.refereemanager.utils.TemplateHelper;
 
 /**
- * Database operations.
+ * Assignment operations.
  *
  * ## Legal stuff
  * 
@@ -40,20 +40,20 @@ import de.edgesoft.refereemanager.utils.PrefKey;
  * 
  * @author Ekkart Kleinod
  * @version 0.8.0
- * @since 0.7.0
+ * @since 0.8.0
  */
-public class DBOperations extends AbstractMainClass {
+public class Assignments extends AbstractMainClass {
 	
 	/**
 	 * Command line entry point.
 	 * 
 	 * @param args command line arguments
 	 * 
-	 * @version 0.7.0
-	 * @since 0.7.0
+	 * @version 0.8.0
+	 * @since 0.8.0
 	 */
 	public static void main(String[] args) {
-		new DBOperations().executeOperation(args);
+		new Assignments().executeOperation(args);
 	}
 
 	/**
@@ -65,22 +65,22 @@ public class DBOperations extends AbstractMainClass {
 	 * - call operation execution with arguments
 	 * 
 	 * @version 0.8.0
-	 * @since 0.7.0
+	 * @since 0.8.0
 	 */
 	@Override
 	public void executeOperation(final String[] args) {
 		
-		setDescription("Database operations.");
+		setDescription("Assignments operations.");
 		
 		addOption("p", "path", MessageFormat.format("input path of data (default: {0}).", Prefs.get(PrefKey.PATH_DATABASE)), true, false);
 		addOption("d", "database", MessageFormat.format("database file name pattern (default: {0}).", Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE)), true, false);
 		addOption("s", "season", "season (empty for current season).", true, false);
-		addOption("o", "output", "output file (empty for database file + '.db.xml').", true, false);
-		addOption("r", "dboperation", "database operation (removeclubs, save, sort).", true, true);
+		addOption("t", "template", "template to fill.", true, true);
+		addOption("o", "output", "output file or path.", true, true);
 		
 		init(args);
 		
-		dbOperation(getOptionValue("p"), getOptionValue("d"), getOptionValue("s"), getOptionValue("o"), getOptionValue("r"));
+		dbOperation(getOptionValue("p"), getOptionValue("d"), getOptionValue("s"), getOptionValue("t"), getOptionValue("o"));
 		
 	}
 
@@ -90,28 +90,27 @@ public class DBOperations extends AbstractMainClass {
 	 * @param theDBPath input path
 	 * @param theDBFile db filename (null = {@link Constants#DATAFILENAMEPATTERN})
 	 * @param theSeason season (null = current season)
-	 * @param theOutputfile output file (null = database + ".db.xml")
-	 * @param theDBOperation database operation
+	 * @param theTemplatefile template file
+	 * @param theOutputfile output file
 	 * 
 	 * @version 0.8.0
-	 * @since 0.7.0
+	 * @since 0.8.0
 	 */
-	public void dbOperation(final String theDBPath, final String theDBFile, final String theSeason, final String theOutputfile, final String theDBOperation) {
+	public void dbOperation(final String theDBPath, final String theDBFile, final String theSeason, final String theTemplatefile, final String theOutputfile) {
 		
 		Constants.logger.debug("start.");
 		
-		Objects.requireNonNull(theDBOperation, "database  operation must not be null");
+		Objects.requireNonNull(theTemplatefile, "template file must not be null");
+		Objects.requireNonNull(theOutputfile, "output file/path must not be null");
 		
 		Integer iSeason = (theSeason == null) ? SeasonModel.getCurrentStartYear() : Integer.valueOf(theSeason);
 
 		Path pathDBFile = Paths.get((theDBPath == null) ? Prefs.get(PrefKey.PATH_DATABASE) : theDBPath,
 				String.format(((theDBFile == null) ? Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE) : theDBFile), iSeason));
 		
-		Path sOutFile = Paths.get((theOutputfile == null) ? String.format("%s.db.xml", pathDBFile) : theOutputfile);
+		Path pathOut = Paths.get(theOutputfile);
 		
-		ArgumentDBOperation argDBOperation = ArgumentDBOperation.fromValue(theDBOperation);
-		
-		dbOperation(pathDBFile, sOutFile, argDBOperation);
+		dbOperation(pathDBFile, Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), theTemplatefile), pathOut);
 		
 		Constants.logger.debug("stop");
 		
@@ -121,47 +120,36 @@ public class DBOperations extends AbstractMainClass {
 	 * Executes database operation.
 	 * 
 	 * @param theDBPath database filename with path
+	 * @param theTemplatePath template file
 	 * @param theOutputPath output file
 	 * @param theDBOperation database operation
 	 * 
 	 * @version 0.8.0
-	 * @since 0.7.0
+	 * @since 0.8.0
 	 */
-	public void dbOperation(final Path theDBPath, final Path theOutputPath, final ArgumentDBOperation theDBOperation) {
+	public void dbOperation(final Path theDBPath, final Path theTemplatePath, final Path theOutputPath) {
 		
 		Objects.requireNonNull(theDBPath, "database file path must not be null");
+		Objects.requireNonNull(theTemplatePath, "template file path must not be null");
 		Objects.requireNonNull(theOutputPath, "output file path must not be null");
-		Objects.requireNonNull(theDBOperation, "db operation must not be null");
 		
 		try {
+			
+			Constants.logger.debug(String.format("read template '%s'.", theTemplatePath.toString()));
+			
+			final List<String> lstTemplate = FileAccess.readFileInList(theTemplatePath);
 			
 			Constants.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
 			
 			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
 			
-			Constants.logger.debug(String.format("execute operation '%s'.", theDBOperation.value()));
+			Constants.logger.debug("fill template.");
 			
-			// do something
-			switch (theDBOperation) {
-				case REMOVECLUBS:
-					de.edgesoft.refereemanager.utils.DBOperations.removeClubs(mgrData);
-					break;
-				case SAVE:
-					break;
-				case SORT:
-					de.edgesoft.refereemanager.utils.DBOperations.sortDB(mgrData);
-					break;
-			}
+			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null, 0, ArgumentStatusType.ALL, true);
 			
-			// update info block
-			mgrData.getInfo().setModified(LocalDateTime.now());
-			mgrData.getInfo().setDocversion(new VersionExt(Constants.DOCVERSION));
-			mgrData.getInfo().setAppversion(new VersionExt(Constants.APPVERSION));
-			mgrData.getInfo().setCreator(this.getClass().getName());
+			Constants.logger.debug(String.format("write assignment output to '%s'.", theOutputPath.toString()));
 			
-			Constants.logger.debug(String.format("write database '%s'.", theOutputPath.toString()));
-			
-			JAXBFiles.marshal(new ObjectFactory().createRefereemanager(mgrData), theOutputPath.toString(), "../../../git/refereemanager/java-backend/refereemanager/src/main/jaxb/refereemanager.xsd");
+			FileAccess.writeFile(theOutputPath, lstFilled);
 			
 		} catch (Exception e) {
 			Constants.logger.error(e);
