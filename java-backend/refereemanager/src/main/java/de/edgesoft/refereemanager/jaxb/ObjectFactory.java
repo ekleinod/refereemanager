@@ -11,6 +11,7 @@ import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.EMailModel;
+import de.edgesoft.refereemanager.model.LeagueModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.PhoneNumberModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
@@ -160,7 +161,7 @@ public class ObjectFactory {
      * 
      */
     public League createLeague() {
-        return new League();
+        return new LeagueModel();
     }
 
     /**

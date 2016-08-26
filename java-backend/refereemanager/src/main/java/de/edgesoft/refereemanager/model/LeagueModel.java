@@ -1,11 +1,9 @@
 package de.edgesoft.refereemanager.model;
 
-import java.text.MessageFormat;
-
-import de.edgesoft.refereemanager.jaxb.Team;
+import de.edgesoft.refereemanager.jaxb.League;
 
 /**
- * Team model, additional methods for jaxb model class.
+ * Person model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -28,53 +26,25 @@ import de.edgesoft.refereemanager.jaxb.Team;
  * 
  * @author Ekkart Kleinod
  * @version 0.9.0
- * @since 0.8.0
+ * @since 0.9.0
  */
-public class TeamModel extends Team {
+public class LeagueModel extends League {
 	
 	/**
-	 * Display title.
+	 * Returns all used leagues, i.e. leagues with assignments.
 	 * 
-	 * @return display title
+	 * @todo rewrite to look for assignments
 	 * 
-	 * @version 0.9.0
-	 * @since 0.8.0
-	 */
-	@Override
-    public String getDisplayTitle() {
-		
-		if (getClub() == null) {
-			return getId();
-		}
-		
-		if (getNumber() == null) {
-			return getClub().getDisplayTitle();
-		}
-		
-		return MessageFormat.format("{0} {1}", getClub().getDisplayTitle(), getNumber());
-    }
-    
-	/**
-	 * Filename.
-	 * 
-	 * @return filename
+	 * @return used leagues (empty if there are none)
 	 * 
 	 * @version 0.9.0
 	 * @since 0.9.0
 	 */
-    public String getFilename() {
+	@Override
+	public Boolean isNational() {
+		return (super.isNational() == null) ? Boolean.FALSE : super.isNational();
+	}
 		
-		if (getClub() == null) {
-			return getId();
-		}
-		
-		if (getNumber() == null) {
-			return getClub().getFilename();
-		}
-		
-		return String.format("%s%d", getClub().getFilename(), getNumber());
-    }
-    
 }
 
 /* EOF */

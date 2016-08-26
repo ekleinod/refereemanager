@@ -254,9 +254,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="results" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="referee_report" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="referee_quantity" type="RefereeQuantity" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="national" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="results" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="referee_report" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="referee_quantity" type="RefereeQuantity" minOccurs="1" maxOccurs="unbounded" />
 
 					<!-- references -->
 					<xsd:element name="sex_type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
@@ -286,6 +287,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
+					<xsd:element name="local" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="filename" type="xsd:string" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="venue" type="Address" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="u_r_l" type="URL" minOccurs="0" maxOccurs="unbounded" />

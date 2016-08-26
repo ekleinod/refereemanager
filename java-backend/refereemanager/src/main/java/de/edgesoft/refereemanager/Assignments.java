@@ -3,21 +3,28 @@ package de.edgesoft.refereemanager;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
+import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
+import de.edgesoft.refereemanager.jaxb.Team;
+import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
-import de.edgesoft.refereemanager.utils.ArgumentStatusType;
 import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.TemplateHelper;
 
 /**
  * Assignment operations.
+ * 
+ * This is just hacked, because of lack of time.
+ * Thus, the code is cluttered with view information.
+ * Beware :)
  *
  * ## Legal stuff
  * 
@@ -39,8 +46,8 @@ import de.edgesoft.refereemanager.utils.TemplateHelper;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.8.0
- * @since 0.8.0
+ * @version 0.9.0
+ * @since 0.9.0
  */
 public class Assignments extends AbstractMainClass {
 	
@@ -49,8 +56,8 @@ public class Assignments extends AbstractMainClass {
 	 * 
 	 * @param args command line arguments
 	 * 
-	 * @version 0.8.0
-	 * @since 0.8.0
+	 * @version 0.9.0
+	 * @since 0.9.0
 	 */
 	public static void main(String[] args) {
 		new Assignments().executeOperation(args);
@@ -64,8 +71,8 @@ public class Assignments extends AbstractMainClass {
 	 * - call init(args);
 	 * - call operation execution with arguments
 	 * 
-	 * @version 0.8.0
-	 * @since 0.8.0
+	 * @version 0.9.0
+	 * @since 0.9.0
 	 */
 	@Override
 	public void executeOperation(final String[] args) {
@@ -80,12 +87,12 @@ public class Assignments extends AbstractMainClass {
 		
 		init(args);
 		
-		dbOperation(getOptionValue("p"), getOptionValue("d"), getOptionValue("s"), getOptionValue("t"), getOptionValue("o"));
+		assignmentOperation(getOptionValue("p"), getOptionValue("d"), getOptionValue("s"), getOptionValue("t"), getOptionValue("o"));
 		
 	}
 
 	/**
-	 * Executes database operation.
+	 * Executes assignment operation.
 	 * 
 	 * @param theDBPath input path
 	 * @param theDBFile db filename (null = {@link Constants#DATAFILENAMEPATTERN})
@@ -93,10 +100,10 @@ public class Assignments extends AbstractMainClass {
 	 * @param theTemplatefile template file
 	 * @param theOutputfile output file
 	 * 
-	 * @version 0.8.0
-	 * @since 0.8.0
+	 * @version 0.9.0
+	 * @since 0.9.0
 	 */
-	public void dbOperation(final String theDBPath, final String theDBFile, final String theSeason, final String theTemplatefile, final String theOutputfile) {
+	public void assignmentOperation(final String theDBPath, final String theDBFile, final String theSeason, final String theTemplatefile, final String theOutputfile) {
 		
 		Constants.logger.debug("start.");
 		
@@ -117,15 +124,15 @@ public class Assignments extends AbstractMainClass {
 	}
 	
 	/**
-	 * Executes database operation.
+	 * Executes assignment operation.
 	 * 
 	 * @param theDBPath database filename with path
 	 * @param theTemplatePath template file
 	 * @param theOutputPath output file
 	 * @param theDBOperation database operation
 	 * 
-	 * @version 0.8.0
-	 * @since 0.8.0
+	 * @version 0.9.0
+	 * @since 0.9.0
 	 */
 	public void dbOperation(final Path theDBPath, final Path theTemplatePath, final Path theOutputPath) {
 		
@@ -144,9 +151,28 @@ public class Assignments extends AbstractMainClass {
 			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
 			
 			Constants.logger.debug("fill template.");
+
+			// start hack
+			List<String> lstContent = new ArrayList<>();
 			
-			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null, 0, ArgumentStatusType.ALL, true);
+			for (League league : ((ContentModel) mgrData.getContent()).getUsedLeagues()) {
+				lstContent.add(TemplateHelper.replaceTextAndConditions("<!--\\league{-->**generated league:displaytitle**<!--}-->", "league:displaytitle", league.getDisplayTitle()));
+				lstContent.add("");
+				
+				for (Team team : ((ContentModel) mgrData.getContent()).getLocalHomeTeams(league)) {
+					lstContent.add(TemplateHelper.replaceTextAndConditions("<!--\\club{-->**generated team:displaytitle**<!--}-->", "team:displaytitle", team.getDisplayTitle()));
+					lstContent.add("");
+				}
+			}
 			
+			List<String> lstFilled = new ArrayList<>();
+			
+			for (String theLine : lstTemplate) {
+				lstFilled.add(TemplateHelper.replaceTextAndConditions(theLine, "content", TemplateHelper.toText(lstContent)));
+			}
+//			lstFilled = TemplateHelper.fillTemplate(lstFilled, mgrData, null, 0, ArgumentStatusType.ALL, true);
+			
+			// end hack
 			Constants.logger.debug(String.format("write assignment output to '%s'.", theOutputPath.toString()));
 			
 			FileAccess.writeFile(theOutputPath, lstFilled);

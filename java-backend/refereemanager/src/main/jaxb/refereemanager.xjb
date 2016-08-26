@@ -55,6 +55,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<jxb:class implClass="de.edgesoft.refereemanager.model.EMailModel" />
 		</jxb:bindings>
 
+		<jxb:bindings node="//xsd:complexType[@name='League']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.LeagueModel" />
+		</jxb:bindings>
+
 		<jxb:bindings node="//xsd:complexType[@name='Person']">
 			<jxb:class implClass="de.edgesoft.refereemanager.model.PersonModel" />
 		</jxb:bindings>

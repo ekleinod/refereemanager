@@ -18,7 +18,6 @@ import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
-import de.edgesoft.refereemanager.model.TeamModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 
@@ -76,15 +75,15 @@ public class DBOperations {
 		theDB.getContent().getTrainee().clear();
 		theDB.getContent().getTrainee().addAll(lstTrainee);
 		
-		List<League> lstLeague = theContent.getLeague().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).collect(Collectors.toList());
+		List<League> lstLeague = theContent.getLeague().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
 		theDB.getContent().getLeague().clear();
 		theDB.getContent().getLeague().addAll(lstLeague);
 		
-		List<Club> lstClub = theContent.getClub().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).collect(Collectors.toList());
+		List<Club> lstClub = theContent.getClub().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
 		theDB.getContent().getClub().clear();
 		theDB.getContent().getClub().addAll(lstClub);
 		
-		List<Team> lstTeam = theContent.getTeam().stream().sorted(TeamModel.LEAGUE).collect(Collectors.toList());
+		List<Team> lstTeam = theContent.getTeam().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
 		theDB.getContent().getTeam().clear();
 		theDB.getContent().getTeam().addAll(lstTeam);
 		
@@ -100,7 +99,7 @@ public class DBOperations {
 		theDB.getContent().getStatusType().clear();
 		theDB.getContent().getStatusType().addAll(lstStatusType);
 		
-		List<RefereeAssignmentType> lstRefereeAssignmentType = theContent.getRefereeAssignmentType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).collect(Collectors.toList());
+		List<RefereeAssignmentType> lstRefereeAssignmentType = theContent.getRefereeAssignmentType().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
 		theDB.getContent().getRefereeAssignmentType().clear();
 		theDB.getContent().getRefereeAssignmentType().addAll(lstRefereeAssignmentType);
 		

@@ -25,13 +25,26 @@ import de.edgesoft.refereemanager.jaxb.Club;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.6.0
+ * @version 0.9.0
  * @since 0.5.0
  */
 public class ClubModel extends Club {
 	
-	// empty for now
-	
+	/**
+	 * Returns all used leagues, i.e. leagues with assignments.
+	 * 
+	 * @todo rewrite to look for assignments
+	 * 
+	 * @return used leagues (empty if there are none)
+	 * 
+	 * @version 0.9.0
+	 * @since 0.9.0
+	 */
+	@Override
+	public Boolean isLocal() {
+		return (super.isLocal() == null) ? Boolean.FALSE : super.isLocal();
+	}
+		
 }
 
 /* EOF */

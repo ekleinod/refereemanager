@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.refereemanager.model.ClubModel;
+import de.edgesoft.refereemanager.model.LeagueModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
@@ -77,6 +78,7 @@ public class Content
     @XmlElement(type = RefereeModel.class)
     protected List<Referee> referee;
     protected List<Trainee> trainee;
+    @XmlElement(type = LeagueModel.class)
     protected List<League> league;
     @XmlElement(type = ClubModel.class)
     protected List<Club> club;

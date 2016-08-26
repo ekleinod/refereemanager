@@ -24,6 +24,7 @@ import de.edgesoft.refereemanager.model.URLModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
+ *         &lt;element name="local" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="filename" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="venue" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
@@ -38,6 +39,7 @@ import de.edgesoft.refereemanager.model.URLModel;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Club", propOrder = {
+    "local",
     "filename",
     "venue",
     "url",
@@ -47,6 +49,7 @@ public class Club
     extends TitledIDTypeModel
 {
 
+    protected Boolean local;
     protected String filename;
     @XmlElement(type = AddressModel.class)
     protected List<Address> venue;
@@ -56,6 +59,30 @@ public class Club
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected Person contactPerson;
+
+    /**
+     * Gets the value of the local property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isLocal() {
+        return local;
+    }
+
+    /**
+     * Sets the value of the local property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setLocal(Boolean value) {
+        this.local = value;
+    }
 
     /**
      * Gets the value of the filename property.

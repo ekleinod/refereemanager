@@ -585,7 +585,7 @@ public class TemplateHelper {
 	 * @version 0.6.0
 	 * @since 0.5.0
 	 */
-	private static String replaceTextAndConditions(final String theText, final String theReplacee, final String theValue) {
+	public static String replaceTextAndConditions(final String theText, final String theReplacee, final String theValue) {
 		String sReturn = theText;
 		
 		// conditions
