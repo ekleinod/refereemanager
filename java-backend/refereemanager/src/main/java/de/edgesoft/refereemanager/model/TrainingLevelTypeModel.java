@@ -2,7 +2,6 @@ package de.edgesoft.refereemanager.model;
 
 import java.util.Comparator;
 
-import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
 
 /**
@@ -28,12 +27,17 @@ import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.7.0
+ * @version 0.9.0
  * @since 0.7.0
  */
 public class TrainingLevelTypeModel extends TrainingLevelType {
 	
-	/** Comparator rank. */
+	/** 
+	 * Comparator rank. 
+	 * 
+	 * @version 0.7.0
+	 * @since 0.7.0
+	 */
 	public static final Comparator<TrainingLevelType> RANK = Comparator.comparingInt(TrainingLevelType::getRank);
 	
 }

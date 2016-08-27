@@ -17,6 +17,7 @@ import de.edgesoft.refereemanager.jaxb.Team;
 import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.LeagueModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
@@ -44,7 +45,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.8.0
+ * @version 0.9.0
  * @since 0.7.0
  */
 public class DBOperations {
@@ -54,7 +55,7 @@ public class DBOperations {
 	 * 
 	 * @param theDB database
 	 * 
-	 * @version 0.8.0
+	 * @version 0.9.0
 	 * @since 0.7.0
 	 */
 	public static void sortDB(final RefereeManager theDB) {
@@ -75,7 +76,7 @@ public class DBOperations {
 		theDB.getContent().getTrainee().clear();
 		theDB.getContent().getTrainee().addAll(lstTrainee);
 		
-		List<League> lstLeague = theContent.getLeague().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
+		List<League> lstLeague = theContent.getLeague().stream().sorted(LeagueModel.RANK_DISPLAYTITLE).collect(Collectors.toList());
 		theDB.getContent().getLeague().clear();
 		theDB.getContent().getLeague().addAll(lstLeague);
 		

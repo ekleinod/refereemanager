@@ -24,6 +24,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
+ *         &lt;element name="rank" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="national" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="results" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
  *         &lt;element name="referee_report" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
@@ -40,6 +41,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "League", propOrder = {
+    "rank",
     "national",
     "results",
     "refereeReport",
@@ -51,6 +53,7 @@ public class League
     extends TitledIDTypeModel
 {
 
+    protected int rank;
     protected Boolean national;
     @XmlElement(required = true)
     @XmlSchemaType(name = "anyURI")
@@ -66,6 +69,22 @@ public class League
     protected SexType sexType;
     @XmlElementRef(name = "referee_report_recipient", type = JAXBElement.class)
     protected List<Person> refereeReportRecipient;
+
+    /**
+     * Gets the value of the rank property.
+     * 
+     */
+    public int getRank() {
+        return rank;
+    }
+
+    /**
+     * Sets the value of the rank property.
+     * 
+     */
+    public void setRank(int value) {
+        this.rank = value;
+    }
 
     /**
      * Gets the value of the national property.

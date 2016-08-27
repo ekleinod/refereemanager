@@ -1,5 +1,8 @@
 package de.edgesoft.refereemanager.model;
 
+import java.text.Collator;
+import java.util.Comparator;
+
 import de.edgesoft.refereemanager.jaxb.League;
 
 /**
@@ -29,6 +32,15 @@ import de.edgesoft.refereemanager.jaxb.League;
  * @since 0.9.0
  */
 public class LeagueModel extends League {
+	
+	/** 
+	 * Comparator rank. 
+	 * 
+	 * @version 0.9.0
+	 * @since 0.9.0
+	 */
+	public static final Comparator<League> RANK_DISPLAYTITLE = Comparator.comparingInt(League::getRank).
+			thenComparing(Comparator.comparing(League::getDisplayTitle, Collator.getInstance()));
 	
 	/**
 	 * Returns all used leagues, i.e. leagues with assignments.
