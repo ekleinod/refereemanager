@@ -168,19 +168,17 @@ public class Assignments extends AbstractMainClass {
 					lstContent.add(String.format("<!--\\club{-->%s<!--}-->", team.getDisplayTitle()));
 					lstContent.add("");
 					
-					lstContent.add("<!--\\begin{clubdata}-->");
 					PersonModel person = (PersonModel) team.getContactPerson();
 					if (person != null) {
-						lstContent.add("<!--\\clubdataheading{-->Kontakt<!--}-->");
-						lstContent.add(String.format("<!--\\>-->%s<!--\\\\-->", person.getDisplayTitle()));
+						lstContent.add("Kontakt");
+						lstContent.add(String.format(": %s", person.getDisplayTitle()));
 						
 						for (PhoneNumber phone : person.getPhoneNumber()) {
-							lstContent.add(String.format("<!--\\>-->%s<!--\\\\-->", phone.getDisplayTitle()));
+							lstContent.add(String.format(": %s", phone.getDisplayTitle()));
 						}
 						for (EMail email : person.getEMail()) {
-							lstContent.add(String.format("<!--\\>\\href{-->mailto:%1$s<!--}{-->%1$s<!--}\\\\-->", email.getDisplayTitle()));
+							lstContent.add(String.format(": <!--\\href{-->mailto:%1$s<!--}{-->%1$s<!--}-->", email.getDisplayTitle()));
 						}
-						lstContent.add("<!--\\\\-->");
 						lstContent.add("");
 					}
 					
@@ -192,15 +190,11 @@ public class Assignments extends AbstractMainClass {
 						if (team.getVenue().size() > 1) {
 							sVenue = String.format("Spiellokal %d: ", venuecount);
 						}
-						lstContent.add(String.format("<!--\\clubdataheading{-->%s%s<!--}-->", sVenue, venue.getTitle()));
+						lstContent.add(String.format("%s%s", sVenue, venue.getTitle()));
 						
-						lstContent.add(String.format("<!--\\>-->%s<!--\\\\-->", venue.getDisplayTitle()));
-						lstContent.add("<!--\\\\-->");
+						lstContent.add(String.format(": %s", venue.getDisplayTitle()));
 						lstContent.add("");
 					}
-					
-					lstContent.add("<!--\\end{clubdata}-->");
-					lstContent.add("");
 					
 				}
 			}
