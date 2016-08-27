@@ -1,8 +1,11 @@
 package de.edgesoft.refereemanager.model;
 
 import java.text.MessageFormat;
+import java.util.List;
 
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Team;
+import de.edgesoft.refereemanager.jaxb.Venue;
 
 /**
  * Team model, additional methods for jaxb model class.
@@ -73,6 +76,48 @@ public class TeamModel extends Team {
 		}
 		
 		return String.format("%s%d", getClub().getFilename(), getNumber());
+    }
+    
+	/**
+	 * Return contact person.
+	 * 
+	 * @return contact person
+	 * 
+	 * @version 0.9.0
+	 * @since 0.9.0
+	 */
+    @Override
+    public Person getContactPerson() {
+    	
+		if (super.getContactPerson() != null) {
+			return super.getContactPerson();
+		}
+		
+		if ((getClub() != null) && (getClub().getContactPerson() != null)) {
+			return getClub().getContactPerson();
+		}
+		
+		return null;
+		
+    }
+    
+	/**
+	 * Return venues.
+	 * 
+	 * @return venues
+	 * 
+	 * @version 0.9.0
+	 * @since 0.9.0
+	 */
+    @Override
+    public List<Venue> getVenue() {
+    	
+		if (super.getVenue().isEmpty() && (getClub() != null) && (!getClub().getVenue().isEmpty())) {
+			return getClub().getVenue();
+		}
+		
+		return super.getVenue();
+		
     }
     
 }

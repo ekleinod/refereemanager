@@ -9,7 +9,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.model.URLModel;
 
@@ -26,7 +25,7 @@ import de.edgesoft.refereemanager.model.URLModel;
  *       &lt;sequence>
  *         &lt;element name="local" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="filename" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="venue" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="venue" type="{}Venue" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contact_person" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
@@ -51,8 +50,7 @@ public class Club
 
     protected Boolean local;
     protected String filename;
-    @XmlElement(type = AddressModel.class)
-    protected List<Address> venue;
+    protected List<Venue> venue;
     @XmlElement(name = "u_r_l", type = URLModel.class)
     protected List<URL> url;
     @XmlElement(name = "contact_person", type = Object.class)
@@ -126,13 +124,13 @@ public class Club
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Address }
+     * {@link Venue }
      * 
      * 
      */
-    public List<Address> getVenue() {
+    public List<Venue> getVenue() {
         if (venue == null) {
-            venue = new ArrayList<Address>();
+            venue = new ArrayList<Venue>();
         }
         return this.venue;
     }

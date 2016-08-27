@@ -10,11 +10,16 @@ import java.util.Objects;
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
+import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.League;
+import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Team;
+import de.edgesoft.refereemanager.jaxb.Venue;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
+import de.edgesoft.refereemanager.utils.ArgumentStatusType;
 import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.TemplateHelper;
@@ -156,12 +161,47 @@ public class Assignments extends AbstractMainClass {
 			List<String> lstContent = new ArrayList<>();
 			
 			for (League league : ((ContentModel) mgrData.getContent()).getUsedLeagues()) {
-				lstContent.add(TemplateHelper.replaceTextAndConditions("<!--\\league{-->**generated league:displaytitle**<!--}-->", "league:displaytitle", league.getDisplayTitle()));
+				lstContent.add(String.format("<!--\\league{-->%s<!--}-->", league.getDisplayTitle()));
 				lstContent.add("");
 				
 				for (Team team : ((ContentModel) mgrData.getContent()).getLocalHomeTeams(league)) {
-					lstContent.add(TemplateHelper.replaceTextAndConditions("<!--\\club{-->**generated team:displaytitle**<!--}-->", "team:displaytitle", team.getDisplayTitle()));
+					lstContent.add(String.format("<!--\\club{-->%s<!--}-->", team.getDisplayTitle()));
 					lstContent.add("");
+					
+					lstContent.add("<!--\\begin{clubdata}-->");
+					PersonModel person = (PersonModel) team.getContactPerson();
+					if (person != null) {
+						lstContent.add("<!--\\clubdataheading{-->Kontakt<!--}-->");
+						lstContent.add(String.format("<!--\\>-->%s<!--\\\\-->", person.getDisplayTitle()));
+						
+						for (PhoneNumber phone : person.getPhoneNumber()) {
+							lstContent.add(String.format("<!--\\>-->%s<!--\\\\-->", phone.getDisplayTitle()));
+						}
+						for (EMail email : person.getEMail()) {
+							lstContent.add(String.format("<!--\\>\\href{-->mailto:%1$s<!--}{-->%1$s<!--}\\\\-->", email.getDisplayTitle()));
+						}
+						lstContent.add("<!--\\\\-->");
+						lstContent.add("");
+					}
+					
+					int venuecount = 0;
+					for (Venue venue : team.getVenue()) {
+						
+						venuecount++;
+						String sVenue = "";
+						if (team.getVenue().size() > 1) {
+							sVenue = String.format("Spiellokal %d: ", venuecount);
+						}
+						lstContent.add(String.format("<!--\\clubdataheading{-->%s%s<!--}-->", sVenue, venue.getTitle()));
+						
+						lstContent.add(String.format("<!--\\>-->%s<!--\\\\-->", venue.getDisplayTitle()));
+						lstContent.add("<!--\\\\-->");
+						lstContent.add("");
+					}
+					
+					lstContent.add("<!--\\end{clubdata}-->");
+					lstContent.add("");
+					
 				}
 			}
 			
@@ -170,7 +210,7 @@ public class Assignments extends AbstractMainClass {
 			for (String theLine : lstTemplate) {
 				lstFilled.add(TemplateHelper.replaceTextAndConditions(theLine, "content", TemplateHelper.toText(lstContent)));
 			}
-//			lstFilled = TemplateHelper.fillTemplate(lstFilled, mgrData, null, 0, ArgumentStatusType.ALL, true);
+			lstFilled = TemplateHelper.fillTemplate(lstFilled, mgrData, null, 0, ArgumentStatusType.ALL, true);
 			
 			// end hack
 			Constants.logger.debug(String.format("write assignment output to '%s'.", theOutputPath.toString()));

@@ -114,7 +114,7 @@ public class ContentModel extends Content {
 
 		List<League> lstReturn = new ArrayList<>();
 		
-		for (League theLeague : getLeague().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList())) {
+		for (League theLeague : getLeague().stream().sorted(LeagueModel.RANK_DISPLAYTITLE).collect(Collectors.toList())) {
 			
 			if (theLeague.isNational()) {
 				lstReturn.add(theLeague);
@@ -140,7 +140,7 @@ public class ContentModel extends Content {
 
 		List<Team> lstReturn = new ArrayList<>();
 		
-		for (Team theTeam : getTeam()) {
+		for (Team theTeam : getTeam().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList())) {
 			if ((theTeam.getLeague() != null) && (theTeam.getLeague() == theLeague)) {
 				if ((theTeam.getClub() != null) && (theTeam.getClub().isLocal())) {
 					lstReturn.add(theTeam);

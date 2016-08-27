@@ -43,6 +43,7 @@ public class ObjectFactory {
 
     private final static QName _Test_QNAME = new QName("", "test");
     private final static QName _Refereemanager_QNAME = new QName("", "refereemanager");
+    private final static QName _TeamVenue_QNAME = new QName("", "venue");
     private final static QName _LeagueRefereeReportRecipient_QNAME = new QName("", "referee_report_recipient");
 
     /**
@@ -165,6 +166,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Venue }
+     * 
+     */
+    public Venue createVenue() {
+        return new Venue();
+    }
+
+    /**
      * Create an instance of {@link Referee }
      * 
      */
@@ -252,6 +261,16 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "refereemanager")
     public JAXBElement<RefereeManager> createRefereemanager(RefereeManager value) {
         return new JAXBElement<RefereeManager>(_Refereemanager_QNAME, RefereeManager.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "venue", scope = Team.class)
+    @XmlIDREF
+    public JAXBElement<Object> createTeamVenue(Object value) {
+        return new JAXBElement<Object>(_TeamVenue_QNAME, Object.class, Team.class, value);
     }
 
     /**
