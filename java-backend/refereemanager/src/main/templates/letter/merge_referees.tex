@@ -1,15 +1,13 @@
-\documentclass{scrartcl}
+\documentclass[twoside]{scrartcl}
 
 \usepackage{pdfpages}
 
 \begin{document}
 	\includepdfset{pages=-}
 
-	% if needed, set: [pages={-,{}}]
-
 **foreach referee**
 	\includepdf{merge_**generated referee:filename**.pdf}
-	\ifthispageodd{}{\mbox{}\newpage}
+	\cleardoublepage
 **end foreach referee**
 
 \end{document}
