@@ -10,12 +10,9 @@ import java.util.Objects;
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
-import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.League;
-import de.edgesoft.refereemanager.jaxb.PhoneNumber;
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
-import de.edgesoft.refereemanager.jaxb.Team;
-import de.edgesoft.refereemanager.jaxb.Venue;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
@@ -122,7 +119,7 @@ public class Assignments extends AbstractMainClass {
 		
 		Path pathOut = Paths.get(theOutputfile);
 		
-		dbOperation(pathDBFile, Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), theTemplatefile), pathOut);
+		assignmentOperation(pathDBFile, Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), theTemplatefile), pathOut);
 		
 		Constants.logger.debug("stop");
 		
@@ -139,7 +136,7 @@ public class Assignments extends AbstractMainClass {
 	 * @version 0.9.0
 	 * @since 0.9.0
 	 */
-	public void dbOperation(final Path theDBPath, final Path theTemplatePath, final Path theOutputPath) {
+	public void assignmentOperation(final Path theDBPath, final Path theTemplatePath, final Path theOutputPath) {
 		
 		Objects.requireNonNull(theDBPath, "database file path must not be null");
 		Objects.requireNonNull(theTemplatePath, "template file path must not be null");
@@ -157,46 +154,63 @@ public class Assignments extends AbstractMainClass {
 			
 			Constants.logger.debug("fill template.");
 
-			// start hack
+			// start hack (venue list)
+//			List<String> lstContent = new ArrayList<>();
+//			
+//			for (League league : ((ContentModel) mgrData.getContent()).getUsedLeagues()) {
+//				lstContent.add(String.format("<!--\\league{-->%s<!--}-->", league.getDisplayTitle()));
+//				lstContent.add("");
+//				
+//				for (Team team : ((ContentModel) mgrData.getContent()).getLocalHomeTeams(league)) {
+//					lstContent.add(String.format("<!--\\club{-->%s<!--}-->", team.getDisplayTitle()));
+//					lstContent.add("");
+//					
+//					PersonModel person = (PersonModel) team.getContactPerson();
+//					if (person != null) {
+//						lstContent.add("Kontakt");
+//						lstContent.add(String.format(": %s", person.getDisplayTitle()));
+//						
+//						for (PhoneNumber phone : person.getPhoneNumber()) {
+//							lstContent.add(String.format(": %s", phone.getDisplayTitle()));
+//						}
+//						for (EMail email : person.getEMail()) {
+//							lstContent.add(String.format(": <!--\\href{-->mailto:%1$s<!--}{-->%1$s<!--}-->", email.getDisplayTitle()));
+//						}
+//						lstContent.add("");
+//					}
+//					
+//					int venuecount = 0;
+//					for (Venue venue : team.getVenue()) {
+//						
+//						venuecount++;
+//						String sVenue = "";
+//						if (team.getVenue().size() > 1) {
+//							sVenue = String.format("Spiellokal %d: ", venuecount);
+//						}
+//						lstContent.add(String.format("%s%s", sVenue, venue.getTitle()));
+//						
+//						lstContent.add(String.format(": %s", venue.getDisplayTitle()));
+//						lstContent.add("");
+//					}
+//					
+//				}
+//			}
+			
+			// start hack (recipients yaml)
 			List<String> lstContent = new ArrayList<>();
 			
 			for (League league : ((ContentModel) mgrData.getContent()).getUsedLeagues()) {
-				lstContent.add(String.format("<!--\\league{-->%s<!--}-->", league.getDisplayTitle()));
-				lstContent.add("");
+				lstContent.add("-");
+				lstContent.add(String.format("  title: \"%s\"", league.getDisplayTitle()));
+				lstContent.add("  recipients:");
 				
-				for (Team team : ((ContentModel) mgrData.getContent()).getLocalHomeTeams(league)) {
-					lstContent.add(String.format("<!--\\club{-->%s<!--}-->", team.getDisplayTitle()));
-					lstContent.add("");
-					
-					PersonModel person = (PersonModel) team.getContactPerson();
-					if (person != null) {
-						lstContent.add("Kontakt");
-						lstContent.add(String.format(": %s", person.getDisplayTitle()));
-						
-						for (PhoneNumber phone : person.getPhoneNumber()) {
-							lstContent.add(String.format(": %s", phone.getDisplayTitle()));
-						}
-						for (EMail email : person.getEMail()) {
-							lstContent.add(String.format(": <!--\\href{-->mailto:%1$s<!--}{-->%1$s<!--}-->", email.getDisplayTitle()));
-						}
-						lstContent.add("");
-					}
-					
-					int venuecount = 0;
-					for (Venue venue : team.getVenue()) {
-						
-						venuecount++;
-						String sVenue = "";
-						if (team.getVenue().size() > 1) {
-							sVenue = String.format("Spiellokal %d: ", venuecount);
-						}
-						lstContent.add(String.format("%s%s", sVenue, venue.getTitle()));
-						
-						lstContent.add(String.format(": %s", venue.getDisplayTitle()));
-						lstContent.add("");
-					}
-					
+				for (Person person : league.getRefereeReportRecipient()) {
+					lstContent.add("    -");
+					lstContent.add(String.format("      name: \"%s\"", person.getDisplayTitle()));
+					lstContent.add(String.format("      mail: \"%s\"", ((PersonModel) person).getPrimaryEMail().getEMail()));
 				}
+				
+				lstContent.add("");
 			}
 			
 			List<String> lstFilled = new ArrayList<>();
