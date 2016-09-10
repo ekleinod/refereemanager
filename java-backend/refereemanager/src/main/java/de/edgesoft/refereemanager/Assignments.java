@@ -201,7 +201,7 @@ public class Assignments extends AbstractMainClass {
 			
 			for (League league : ((ContentModel) mgrData.getContent()).getUsedLeagues()) {
 				lstContent.add("-");
-				lstContent.add(String.format("  title: \"%s\"", league.getDisplayTitle()));
+				lstContent.add(String.format("  title: \"%s\"", league.getTitle()));
 				lstContent.add("  recipients:");
 				
 				for (Person person : league.getRefereeReportRecipient()) {

@@ -1,9 +1,14 @@
 package de.edgesoft.refereemanager.model;
 
 import java.text.Collator;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
+
+import javax.xml.bind.JAXBElement;
 
 import de.edgesoft.refereemanager.jaxb.League;
+import de.edgesoft.refereemanager.jaxb.Person;
 
 /**
  * Person model, additional methods for jaxb model class.
@@ -56,7 +61,29 @@ public class LeagueModel extends League {
 	public Boolean isNational() {
 		return (super.isNational() == null) ? Boolean.FALSE : super.isNational();
 	}
+
+    /**
+     * Gets the value of the refereeReportRecipient property.
+     * 
+     * For some reason, the generated code is correct but there is a list of {@link JAXBElement} in
+     * the refereeReportRecipient property.
+     * 
+     * Until the issue is solved, this method converts this to the correct list of {@link Person}
+     * 
+	 * @version 0.9.0
+	 * @since 0.9.0
+     */
+	@Override
+    public List<Person> getRefereeReportRecipient() {
+		List<Person> lstReturn = new ArrayList<>();
 		
+		for (Object personObject : super.getRefereeReportRecipient()) {
+			lstReturn.add(((JAXBElement<Person>) personObject).getValue());
+		}
+		
+		return lstReturn;
+    }
+
 }
 
 /* EOF */
