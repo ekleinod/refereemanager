@@ -10,6 +10,7 @@ import de.edgesoft.edgeutils.commons.Info;
 import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.DateModel;
 import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.LeagueModel;
 import de.edgesoft.refereemanager.model.PersonModel;
@@ -99,6 +100,14 @@ public class ObjectFactory {
      */
     public URL createURL() {
         return new URLModel();
+    }
+
+    /**
+     * Create an instance of {@link OtherDate }
+     * 
+     */
+    public OtherDate createOtherDate() {
+        return new OtherDate();
     }
 
     /**
@@ -195,6 +204,14 @@ public class ObjectFactory {
      */
     public Wish createWish() {
         return new WishModel();
+    }
+
+    /**
+     * Create an instance of {@link Date }
+     * 
+     */
+    public Date createDate() {
+        return new DateModel();
     }
 
     /**

@@ -1,13 +1,12 @@
-package de.edgesoft.refereemanager.utils;
+package de.edgesoft.refereemanager.model;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.Comparator;
 
-import de.edgesoft.refereemanager.Prefs;
+import de.edgesoft.refereemanager.jaxb.Date;
 
 /**
- * Provides constants.
- *
+ * Date model, additional methods for jaxb model class.
+ * 
  * ## Legal stuff
  * 
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
@@ -29,18 +28,17 @@ import de.edgesoft.refereemanager.Prefs;
  * 
  * @author Ekkart Kleinod
  * @version 0.9.0
- * @since 0.4.0
+ * @since 0.9.0
  */
-public class Constants {
-
-	/** Program version. */
-	public static final String APPVERSION = "0.9.0";
+public class DateModel extends Date {
 	
-	/** Document version. */
-	public static final String DOCVERSION = "0.9.0";
-
-	/** Logger for all classes. */
-	public static final Logger logger = LogManager.getLogger(Prefs.class.getPackage().getName());
+	/** 
+	 * Comparator start date/time. 
+	 * 
+	 * @version 0.9.0
+	 * @since 0.9.0
+	 */
+	public static final Comparator<Date> RANK_START = Comparator.comparing(Date::getStart);
 	
 }
 

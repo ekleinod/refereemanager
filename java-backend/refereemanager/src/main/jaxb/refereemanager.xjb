@@ -23,7 +23,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 @author Ekkart Kleinod
-@version 0.6.0
+@version 0.9.0
 @since 0.4.0
 -->
 
@@ -49,6 +49,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 		<jxb:bindings node="//xsd:complexType[@name='Content']">
 			<jxb:class implClass="de.edgesoft.refereemanager.model.ContentModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='Date']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.DateModel" />
 		</jxb:bindings>
 
 		<jxb:bindings node="//xsd:complexType[@name='EMail']">
