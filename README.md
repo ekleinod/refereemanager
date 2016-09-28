@@ -105,3 +105,10 @@ Use it in a closed envorinment (local server etc.) only.
 - no special functionality
 - saving the code before introducing the new branching model
 
+## To Do
+
+- UI
+- assignments
+	- other (meetings etc.)
+	- league games
+	- tournaments
