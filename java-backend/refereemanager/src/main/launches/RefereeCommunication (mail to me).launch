@@ -8,7 +8,7 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="de.edgesoft.refereemanager.RefereeCommunication"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--text ../../../../rani/schiri/2016-2017/Nachrichten/2016-08_Saisonstart.mmd --action mail --recipient me --test"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--text ../../../../rani/schiri/2016-2017/Nachrichten/2016-10_Trauermitteilung.mmd --action mail --recipient me --test"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="refereemanager"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 </launchConfiguration>
