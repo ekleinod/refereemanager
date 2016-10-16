@@ -7,6 +7,7 @@ import java.util.Objects;
 import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
+import de.edgesoft.refereemanager.jaxb.Venue;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 
@@ -63,6 +64,55 @@ public class WebsiteHelper {
 				lstContent.add("    -");
 				lstContent.add(String.format("      name: \"%s\"", person.getDisplayTitle()));
 				lstContent.add(String.format("      mail: \"%s\"", ((PersonModel) person).getPrimaryEMail().getEMail()));
+			}
+			
+			lstContent.add("");
+		}
+		
+		List<String> lstReturn = new ArrayList<>();
+		
+		for (String theLine : theTemplate) {
+			lstReturn.add(TemplateHelper.replaceTextAndConditions(theLine, "content", TemplateHelper.toText(lstContent)));
+		}
+		lstReturn = TemplateHelper.fillTemplate(lstReturn, theData, null, 0, ArgumentStatusType.ALL, true);
+		
+		return lstReturn;
+		
+	}
+	
+	/**
+	 * Fills venues.
+	 * 
+	 * @param theTemplate template
+	 * @param theData data
+	 * 
+	 * @version 0.9.0
+	 * @since 0.9.0
+	 */
+	public static List<String> fillVenues(final List<String> theTemplate, final RefereeManager theData) {
+		
+		Objects.requireNonNull(theTemplate, "template must not be null");
+		Objects.requireNonNull(theData, "data must not be null");
+		
+		List<String> lstContent = new ArrayList<>();
+		
+		for (Venue venue : ((ContentModel) theData.getContent()).getVenue()) {
+			lstContent.add(String.format("%s:", venue.getId()));
+			lstContent.add("  -");
+			lstContent.add(String.format("    title: \"%s\"", venue.getTitle()));
+			
+			lstContent.add(String.format("    street: \"%s %s\"", venue.getStreet(), venue.getNumber()));
+			lstContent.add(String.format("    city: \"%s %s\"", venue.getZipCode(), venue.getCity()));
+			
+			if ((venue.getRemark() != null) && !venue.getRemark().isEmpty()) {
+				lstContent.add("    description");
+				lstContent.add(String.format("      %s", venue.getRemark()));
+			}
+			
+			if ((venue.getLatitude() != null)) {
+				lstContent.add("    osm:");
+				lstContent.add(String.format("      latitude: %s", venue.getLatitude()));
+				lstContent.add(String.format("      longitude: %s", venue.getLongitude()));
 			}
 			
 			lstContent.add("");
