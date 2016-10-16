@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import de.edgesoft.refereemanager.jaxb.League;
+import de.edgesoft.refereemanager.jaxb.OtherDate;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Venue;
@@ -115,6 +116,52 @@ public class WebsiteHelper {
 				lstContent.add("    osm:");
 				lstContent.add(String.format("      latitude: %s", venue.getLatitude()));
 				lstContent.add(String.format("      longitude: %s", venue.getLongitude()));
+			}
+
+			lstContent.add("");
+		}
+
+		List<String> lstReturn = new ArrayList<>();
+
+		for (String theLine : theTemplate) {
+			lstReturn.add(TemplateHelper.replaceTextAndConditions(theLine, "content", TemplateHelper.toText(lstContent)));
+		}
+		lstReturn = TemplateHelper.fillTemplate(lstReturn, theData, null, 0, ArgumentStatusType.ALL, true);
+
+		return lstReturn;
+
+	}
+
+	/**
+	 * Fills events.
+	 *
+	 * @param theTemplate template
+	 * @param theData data
+	 *
+	 * @version 0.9.0
+	 * @since 0.9.0
+	 */
+	public static List<String> fillEvents(final List<String> theTemplate, final RefereeManager theData) {
+
+		Objects.requireNonNull(theTemplate, "template must not be null");
+		Objects.requireNonNull(theData, "data must not be null");
+
+		List<String> lstContent = new ArrayList<>();
+
+		for (OtherDate event : ((ContentModel) theData.getContent()).getOtherdate()) {
+			lstContent.add("-");
+			lstContent.add(String.format("  title: \"%s\"", event.getTitle()));
+
+			lstContent.add(String.format("  date: %s", event.getStart()));
+			lstContent.add(String.format("  start: \"%s\"", event.getStart()));
+			lstContent.add(String.format("  end: \"%s\"", event.getEnd()));
+
+			if ((event.getRemark() != null) && !event.getRemark().isEmpty()) {
+				lstContent.add(String.format("  description: \"%s\"", event.getRemark()));
+			}
+
+			if (event.getVenue() != null) {
+				lstContent.add(String.format("  venue: \"%s\"", event.getVenue().getId()));
 			}
 
 			lstContent.add("");
