@@ -16,6 +16,10 @@ import de.edgesoft.refereemanager.model.AddressModel;
  * &lt;complexType name="Venue">
  *   &lt;complexContent>
  *     &lt;extension base="{}Address">
+ *       &lt;sequence>
+ *         &lt;element name="latitude" type="{http://www.w3.org/2001/XMLSchema}double"/>
+ *         &lt;element name="longitude" type="{http://www.w3.org/2001/XMLSchema}double"/>
+ *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -24,10 +28,47 @@ import de.edgesoft.refereemanager.model.AddressModel;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Venue")
+@XmlType(name = "Venue", propOrder = {
+    "latitude",
+    "longitude"
+})
 public class Venue
     extends AddressModel
 {
 
+    protected double latitude;
+    protected double longitude;
+
+    /**
+     * Gets the value of the latitude property.
+     * 
+     */
+    public double getLatitude() {
+        return latitude;
+    }
+
+    /**
+     * Sets the value of the latitude property.
+     * 
+     */
+    public void setLatitude(double value) {
+        this.latitude = value;
+    }
+
+    /**
+     * Gets the value of the longitude property.
+     * 
+     */
+    public double getLongitude() {
+        return longitude;
+    }
+
+    /**
+     * Sets the value of the longitude property.
+     * 
+     */
+    public void setLongitude(double value) {
+        this.longitude = value;
+    }
 
 }

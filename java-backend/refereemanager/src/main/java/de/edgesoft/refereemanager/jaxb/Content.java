@@ -36,6 +36,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
  *         &lt;element name="league" type="{}League" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="club" type="{}Club" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="team" type="{}Team" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="tournament" type="{}Tournament" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="otherdate" type="{}OtherDate" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="venue" type="{}Venue" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sex_type" type="{}SexType" maxOccurs="unbounded" minOccurs="0"/>
@@ -61,6 +62,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
     "league",
     "club",
     "team",
+    "tournament",
     "otherdate",
     "venue",
     "sexType",
@@ -88,6 +90,7 @@ public class Content
     protected List<Club> club;
     @XmlElement(type = TeamModel.class)
     protected List<Team> team;
+    protected List<Tournament> tournament;
     protected List<OtherDate> otherdate;
     protected List<Venue> venue;
     @XmlElement(name = "sex_type")
@@ -321,6 +324,35 @@ public class Content
             team = new ArrayList<Team>();
         }
         return this.team;
+    }
+
+    /**
+     * Gets the value of the tournament property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the tournament property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getTournament().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Tournament }
+     * 
+     * 
+     */
+    public List<Tournament> getTournament() {
+        if (tournament == null) {
+            tournament = new ArrayList<Tournament>();
+        }
+        return this.tournament;
     }
 
     /**

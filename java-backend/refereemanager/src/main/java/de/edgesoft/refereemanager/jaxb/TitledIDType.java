@@ -52,12 +52,12 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
     SeasonModel.class,
     SexType.class,
     LeagueModel.class,
-    DateModel.class,
     ClubModel.class,
     StatusTypeModel.class,
     ContactModel.class,
     RefereeAssignmentType.class,
-    PersonModel.class
+    PersonModel.class,
+    DateModel.class
 })
 public abstract class TitledIDType
     extends IDType

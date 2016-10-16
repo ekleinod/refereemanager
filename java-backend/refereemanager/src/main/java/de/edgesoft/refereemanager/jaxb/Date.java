@@ -42,7 +42,8 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
     "venue"
 })
 @XmlSeeAlso({
-    OtherDate.class
+    OtherDate.class,
+    Tournament.class
 })
 public class Date
     extends TitledIDTypeModel
