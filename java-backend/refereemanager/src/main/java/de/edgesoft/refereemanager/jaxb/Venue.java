@@ -17,8 +17,8 @@ import de.edgesoft.refereemanager.model.AddressModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}Address">
  *       &lt;sequence>
- *         &lt;element name="latitude" type="{http://www.w3.org/2001/XMLSchema}double"/>
- *         &lt;element name="longitude" type="{http://www.w3.org/2001/XMLSchema}double"/>
+ *         &lt;element name="latitude" type="{http://www.w3.org/2001/XMLSchema}double" minOccurs="0"/>
+ *         &lt;element name="longitude" type="{http://www.w3.org/2001/XMLSchema}double" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -36,38 +36,54 @@ public class Venue
     extends AddressModel
 {
 
-    protected double latitude;
-    protected double longitude;
+    protected Double latitude;
+    protected Double longitude;
 
     /**
      * Gets the value of the latitude property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Double }
+     *     
      */
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
     /**
      * Sets the value of the latitude property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Double }
+     *     
      */
-    public void setLatitude(double value) {
+    public void setLatitude(Double value) {
         this.latitude = value;
     }
 
     /**
      * Gets the value of the longitude property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Double }
+     *     
      */
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
     /**
      * Sets the value of the longitude property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Double }
+     *     
      */
-    public void setLongitude(double value) {
+    public void setLongitude(Double value) {
         this.longitude = value;
     }
 
