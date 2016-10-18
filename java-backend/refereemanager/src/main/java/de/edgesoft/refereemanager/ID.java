@@ -12,11 +12,11 @@ import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.Constants;
+import de.edgesoft.refereemanager.utils.IDHelper;
 import de.edgesoft.refereemanager.utils.PrefKey;
-import de.edgesoft.refereemanager.utils.WebsiteHelper;
 
 /**
- * Website operations.
+ * ID document operations.
  *
  * This is just hacked, because of lack of time.
  * Thus, the code is cluttered with view information.
@@ -45,7 +45,7 @@ import de.edgesoft.refereemanager.utils.WebsiteHelper;
  * @version 0.9.0
  * @since 0.9.0
  */
-public class Website extends AbstractMainClass {
+public class ID extends AbstractMainClass {
 
 	/**
 	 * Command line entry point.
@@ -56,7 +56,7 @@ public class Website extends AbstractMainClass {
 	 * @since 0.9.0
 	 */
 	public static void main(String[] args) {
-		new Website().executeOperation(args);
+		new ID().executeOperation(args);
 	}
 
 	/**
@@ -79,11 +79,12 @@ public class Website extends AbstractMainClass {
 		addOption("d", "database", MessageFormat.format("database file name pattern (default: {0}).", Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE)), true, false);
 		addOption("s", "season", "season (empty for current season).", true, false);
 		addOption("t", "template", "template path.", true, true);
-		addOption("o", "output", "output path.", true, true);
+		addOption("o", "output", "output path (relative to template path).", true, true);
+		addOption("i", "images", "image path (relative to template path).", true, true);
 
 		init(args);
 
-		websiteOperation(getOptionValue("p"), getOptionValue("d"), getOptionValue("s"), getOptionValue("t"), getOptionValue("o"));
+		idOperation(getOptionValue("p"), getOptionValue("d"), getOptionValue("s"), getOptionValue("t"), getOptionValue("o"), getOptionValue("i"));
 
 	}
 
@@ -95,16 +96,19 @@ public class Website extends AbstractMainClass {
 	 * @param theSeason season (null = current season)
 	 * @param theTemplatepath template path
 	 * @param theOutputpath output path
+	 * @param theImagepath image path
 	 *
 	 * @version 0.9.0
 	 * @since 0.9.0
 	 */
-	public void websiteOperation(final String theDBPath, final String theDBFile, final String theSeason, final String theTemplatepath, final String theOutputpath) {
+	public void idOperation(final String theDBPath, final String theDBFile, final String theSeason, 
+			final String theTemplatepath, final String theOutputpath, final String theImagepath) {
 
 		Constants.logger.debug("start.");
 
 		Objects.requireNonNull(theTemplatepath, "template path must not be null");
 		Objects.requireNonNull(theOutputpath, "output path must not be null");
+		Objects.requireNonNull(theImagepath, "image path must not be null");
 
 		Integer iSeason = (theSeason == null) ? SeasonModel.getCurrentStartYear() : Integer.valueOf(theSeason);
 
@@ -113,9 +117,11 @@ public class Website extends AbstractMainClass {
 
 		Path pathTemplate = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), theTemplatepath);
 
-		Path pathOut = Paths.get(theOutputpath);
+		Path pathOut = Paths.get(pathTemplate.toString(), theOutputpath);
 
-		websiteOperation(pathDBFile, pathTemplate, pathOut);
+		Path pathImage = Paths.get(pathTemplate.toString(), theImagepath);
+
+		idOperation(pathDBFile, pathTemplate, pathOut, pathImage);
 
 		Constants.logger.debug("stop");
 
@@ -127,15 +133,17 @@ public class Website extends AbstractMainClass {
 	 * @param theDBPath database filename with path
 	 * @param theTemplatePath template path
 	 * @param theOutputPath output path
+	 * @param theImagePath image path
 	 *
 	 * @version 0.9.0
 	 * @since 0.9.0
 	 */
-	public void websiteOperation(final Path theDBPath, final Path theTemplatePath, final Path theOutputPath) {
+	public void idOperation(final Path theDBPath, final Path theTemplatePath, final Path theOutputPath, final Path theImagePath) {
 
 		Objects.requireNonNull(theDBPath, "database file path must not be null");
 		Objects.requireNonNull(theTemplatePath, "template path must not be null");
-		Objects.requireNonNull(theOutputPath, "output file path must not be null");
+		Objects.requireNonNull(theOutputPath, "output path must not be null");
+		Objects.requireNonNull(theImagePath, "image path must not be null");
 
 		try {
 
@@ -143,35 +151,36 @@ public class Website extends AbstractMainClass {
 
 			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
 
-			String sFile = "osr-recipients.yml";
+			String sFile = "id-single.svg";
 			Path pathTemplate = Paths.get(theTemplatePath.toString(), sFile);
 			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
-			List<String> lstTemplate = FileAccess.readFileInList(pathTemplate);
-			Constants.logger.debug("fill template.");
-			List<String> lstFilled = WebsiteHelper.fillOSRRecipients(lstTemplate, mgrData);
-			Path pathOut = Paths.get(theOutputPath.toString(), sFile);
-			Constants.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
-			FileAccess.writeFile(pathOut, lstFilled);
-
-			sFile = "venues.yml";
+			List<String> lstTemplateSingle = FileAccess.readFileInList(pathTemplate);
+			
+			sFile = "id-a4.svg";
 			pathTemplate = Paths.get(theTemplatePath.toString(), sFile);
 			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
-			lstTemplate = FileAccess.readFileInList(pathTemplate);
-			Constants.logger.debug("fill template.");
-			lstFilled = WebsiteHelper.fillVenues(lstTemplate, mgrData);
-			pathOut = Paths.get(theOutputPath.toString(), sFile);
-			Constants.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
-			FileAccess.writeFile(pathOut, lstFilled);
-
-			sFile = "events.yml";
+			List<String> lstTemplateA4 = FileAccess.readFileInList(pathTemplate);
+			
+			sFile = "valid.svg";
 			pathTemplate = Paths.get(theTemplatePath.toString(), sFile);
 			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
-			lstTemplate = FileAccess.readFileInList(pathTemplate);
+			List<String> lstTemplateValid = FileAccess.readFileInList(pathTemplate);
+			
+//			sFile = "valid-a4.svg";
+			pathTemplate = Paths.get(theTemplatePath.toString(), sFile);
+			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
+			List<String> lstTemplateValidA4 = FileAccess.readFileInList(pathTemplate);
+			
 			Constants.logger.debug("fill template.");
-			lstFilled = WebsiteHelper.fillEvents(lstTemplate, mgrData);
-			pathOut = Paths.get(theOutputPath.toString(), sFile);
-			Constants.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
-			FileAccess.writeFile(pathOut, lstFilled);
+			List<List<String>> lstFilled = IDHelper.fillIDs(lstTemplateSingle, lstTemplateA4, lstTemplateValid, lstTemplateValidA4, mgrData, theImagePath);
+
+			int iFileCount = 0;
+			for (List<String> fileContent : lstFilled) {
+				iFileCount++;
+				Path pathOut = Paths.get(theOutputPath.toString(), String.format("ids-%2d.svg", iFileCount));
+				Constants.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
+//				FileAccess.writeFile(pathOut, fileContent);
+			}
 
 		} catch (Exception e) {
 			Constants.logger.error(e);
