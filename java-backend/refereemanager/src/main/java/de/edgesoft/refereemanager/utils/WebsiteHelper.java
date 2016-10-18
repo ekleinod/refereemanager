@@ -1,9 +1,11 @@
 package de.edgesoft.refereemanager.utils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.OtherDate;
 import de.edgesoft.refereemanager.jaxb.Person;
@@ -152,9 +154,16 @@ public class WebsiteHelper {
 			lstContent.add("-");
 			lstContent.add(String.format("  title: \"%s\"", event.getTitle()));
 
-			lstContent.add(String.format("  date: %s", event.getStart()));
-			lstContent.add(String.format("  start: \"%s\"", event.getStart()));
-			lstContent.add(String.format("  end: \"%s\"", event.getEnd()));
+			lstContent.add(String.format("  date: %s", DateTimeUtils.formatAsDate(event.getStart())));
+			
+			LocalDateTime tmeTemp = event.getStart();
+			if ((tmeTemp != null) && (tmeTemp.getHour() != 0)) {
+				lstContent.add(String.format("  start: \"%s\"", DateTimeUtils.formatAsTime(tmeTemp)));
+			}
+			tmeTemp = event.getEnd();
+			if ((tmeTemp != null) && (tmeTemp.getHour() != 0)) {
+				lstContent.add(String.format("  end: \"%s\"", DateTimeUtils.formatAsTime(tmeTemp)));
+			}
 
 			if ((event.getRemark() != null) && !event.getRemark().isEmpty()) {
 				lstContent.add(String.format("  description: \"%s\"", event.getRemark()));
