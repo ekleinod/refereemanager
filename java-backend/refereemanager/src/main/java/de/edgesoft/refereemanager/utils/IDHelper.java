@@ -1,14 +1,21 @@
 package de.edgesoft.refereemanager.utils;
 
+import java.io.File;
 import java.nio.file.Path;
+import java.text.MessageFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import de.edgesoft.refereemanager.Prefs;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
+import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.RefereeModel;
 
 /**
  * Provides methods and properties for IDs.
@@ -40,6 +47,8 @@ public class IDHelper {
 
 	/**
 	 * Fills ID template.
+	 * 
+	 * @todo filling needs work, see comment
 	 *
 	 * @param theTemplate template
 	 * @param theData data
@@ -57,42 +66,74 @@ public class IDHelper {
 		Objects.requireNonNull(theValidA4Template, "valid a4 template must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
 		
-		List<List<String>> lstSingleSVGs = new ArrayList<>();
+		Constants.logger.debug(MessageFormat.format("{0} referees", theData.getContent().getReferee().size()));
 		
-		// loop through referees
+		// fill all single svg templates
+		List<List<String>> lstSingleSVGs = new ArrayList<>();
 		for (final Referee theReferee : theData.getContent().getReferee().stream()
 				.sorted(PersonModel.NAME_FIRSTNAME)
 				.collect(Collectors.toList())) {
 			
-			if (!theReferee.getFirstName().equals("Metin")) continue;
-			
-			Constants.logger.debug(theReferee.getDisplayTitle());
-			
-			List<String> lstSingle = TemplateHelper.fillText(theSingleTemplate, theReferee, theData);
-			lstSingle = TemplateHelper.fillTextAndConditions(lstSingle, "imagepath", theImagePath.toAbsolutePath().normalize().toString());
-			
-			lstSingleSVGs.add(lstSingle);
-			
-			break;
-			
-//			List<String> lstSingle = new ArrayList<>();
-//			for (String theLine : theSingleTemplate) {
-//				
-//				String sFilledLine = TemplateHelper.replaceTextAndConditions(theLine, "VSR-filename", 
-//						Paths.get(theImagePath.toString(), String.format("%s.jpg", theReferee.getFileName())).toAbsolutePath().toString());
-//				
-//				sFilledLine = TemplateHelper.replaceTextAndConditions(sFilledLine, "VSR-since", theReferee.getId());
-//				sFilledLine = TemplateHelper.replaceTextAndConditions(sFilledLine, "VSR-Name", theReferee.getFullName());
-//				
-//				lstSingle.add(sFilledLine);
-//			}
+			File fleImage = new File(theImagePath.toString(), String.format("%s.jpg", theReferee.getFileName()));
+			if (fleImage.exists()) {
+				
+				Constants.logger.debug(theReferee.getDisplayTitle());
+				
+				List<String> lstSingle = theSingleTemplate;
+				
+				// originally this line was
+				// lstSingle = TemplateHelper.fillText(lstSingle, theReferee, theData);
+				// but this is extremely slow, thus I fill data directly, change this back when filling is optimized
+				lstSingle = TemplateHelper.fillTextAndConditions(lstSingle, "referee:fullname", theReferee.getFullName());
+				lstSingle = TemplateHelper.fillTextAndConditions(lstSingle, "referee:filename", theReferee.getFileName());
+				
+				TrainingLevel lvlLocal = ((RefereeModel) theReferee).getLocalTrainingLevel();
+				boolean missesDate = (lvlLocal == null) || (lvlLocal.getSince() == null);
+				lstSingle = TemplateHelper.fillTextAndConditions(lstSingle, "referee:localtraininglevel:since:datemedium",
+						missesDate ? "---" :
+							lvlLocal.getSince().format(DateTimeFormatter.ofPattern(Prefs.get(DateTimeFormat.DATEMEDIUM), Locale.forLanguageTag(Prefs.get(PrefKey.LOCALE)))));
+				if (missesDate) {
+					Constants.logger.error(MessageFormat.format("Missing date for {0}", theReferee.getDisplayTitle()));
+				}
+				
+				// this is correct
+				lstSingle = TemplateHelper.fillTextAndConditions(lstSingle, "imagepath", theImagePath.toAbsolutePath().normalize().toString());
+				
+				lstSingleSVGs.add(lstSingle);
+				
+			}
 			
 		}
-
-		List<List<String>> lstReturn = new ArrayList<>(lstSingleSVGs);
 		
-//		lstReturn.add(lstSingleSVGs);
+		Constants.logger.debug(MessageFormat.format("{0} referee ids", lstSingleSVGs.size()));
+		
+		// fill A4 templates with 5 single svgs each
+		List<List<String>> lstReturn = new ArrayList<>();
+		List<String> lstA4 = null;
+		int i = 0;
+		for (List<String> lstSingle : lstSingleSVGs) {
+			if (i == 0) {
+				lstA4 = theA4Template;
+			}
+			
+			lstA4 = TemplateHelper.fillTextAndConditions(lstA4, String.format("id-single-%d", i), TemplateHelper.toText(lstSingle));
+			
+			if (i == 4) {
+				lstReturn.add(lstA4);
+			}
+			i = (i + 1) % 5;
+		}
+		
+		// fill missing slots if needed
+		if (i > 0) {
+			for (int j = i; j < 5; j++) {
+				lstA4 = TemplateHelper.fillTextAndConditions(lstA4, String.format("id-single-%d", j), "");
+			}
+			lstReturn.add(lstA4);
+		}
 
+		Constants.logger.debug(MessageFormat.format("{0} sheets", lstReturn.size()));
+		
 		return lstReturn;
 
 	}
