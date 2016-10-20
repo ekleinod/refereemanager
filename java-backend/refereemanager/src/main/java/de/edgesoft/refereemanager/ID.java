@@ -177,9 +177,9 @@ public class ID extends AbstractMainClass {
 			int iFileCount = 0;
 			for (List<String> fileContent : lstFilled) {
 				iFileCount++;
-				Path pathOut = Paths.get(theOutputPath.toString(), String.format("ids-%2d.svg", iFileCount));
+				Path pathOut = Paths.get(theOutputPath.toString(), String.format("ids-%02d.svg", iFileCount));
 				Constants.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
-//				FileAccess.writeFile(pathOut, fileContent);
+				FileAccess.writeFile(pathOut, fileContent);
 			}
 
 		} catch (Exception e) {

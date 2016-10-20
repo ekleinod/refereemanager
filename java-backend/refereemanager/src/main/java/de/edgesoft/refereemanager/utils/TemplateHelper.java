@@ -630,6 +630,28 @@ public class TemplateHelper {
 	}
 
 	/**
+	 * Fills text and conditions but only with one text.
+	 * 
+	 * @param theText the text
+	 * @param theReplacee text to be replaced
+	 * @param theValue value
+	 * 
+	 * @return filled text
+	 *
+	 * @version 0.9.0
+	 * @since 0.9.0
+	 */
+	public static List<String> fillTextAndConditions(final List<String> theText, final String theReplacee, final String theValue) {
+		List<String> lstReturn = new ArrayList<>();
+		
+		for (String theLine : theText) {
+			lstReturn.add(replaceTextAndConditions(theLine, theReplacee, theValue));
+		}
+			
+		return lstReturn;
+	}
+
+	/**
 	 * Extracts message parts from text.
 	 * 
 	 * First lines define variables and their content, an empty line starts body.

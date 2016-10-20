@@ -26,7 +26,7 @@ package de.edgesoft.refereemanager.utils;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.8.0
+ * @version 0.9.0
  * @since 0.8.0
  */
 public enum PrefKey {
@@ -46,6 +46,8 @@ public enum PrefKey {
 	FILENAME_PATTERN_REFEREE_DATA,
 	FILENAME_PATTERN_REFEREE_MERGE,
 	FILENAME_PATTERN_REFEREES_MERGE,
+	
+	LOCAL_TRAININGLEVEL,
 	
 	LOCALE,
 	
