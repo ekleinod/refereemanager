@@ -158,7 +158,17 @@ public class Website extends AbstractMainClass {
 			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
 			lstTemplate = FileAccess.readFileInList(pathTemplate);
 			Constants.logger.debug("fill template.");
-			lstFilled = WebsiteHelper.fillVenues(lstTemplate, mgrData);
+			lstFilled = WebsiteHelper.fillVenues(lstTemplate, mgrData, true);
+			pathOut = Paths.get(theOutputPath.toString(), sFile);
+			Constants.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
+			FileAccess.writeFile(pathOut, lstFilled);
+
+			sFile = "venues_pages.yml";
+			pathTemplate = Paths.get(theTemplatePath.toString(), sFile);
+			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
+			lstTemplate = FileAccess.readFileInList(pathTemplate);
+			Constants.logger.debug("fill template.");
+			lstFilled = WebsiteHelper.fillVenues(lstTemplate, mgrData, false);
 			pathOut = Paths.get(theOutputPath.toString(), sFile);
 			Constants.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
 			FileAccess.writeFile(pathOut, lstFilled);

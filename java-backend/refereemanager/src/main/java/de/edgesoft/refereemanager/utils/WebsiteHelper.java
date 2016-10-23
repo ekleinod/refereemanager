@@ -92,7 +92,7 @@ public class WebsiteHelper {
 	 * @version 0.9.0
 	 * @since 0.9.0
 	 */
-	public static List<String> fillVenues(final List<String> theTemplate, final RefereeManager theData) {
+	public static List<String> fillVenues(final List<String> theTemplate, final RefereeManager theData, final boolean useID) {
 
 		Objects.requireNonNull(theTemplate, "template must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
@@ -100,24 +100,27 @@ public class WebsiteHelper {
 		List<String> lstContent = new ArrayList<>();
 
 		for (Venue venue : ((ContentModel) theData.getContent()).getVenue()) {
-			lstContent.add(String.format("%s:", venue.getId()));
-			lstContent.add("  -");
-			lstContent.add(String.format("    title: \"%s\"", venue.getTitle()));
+			if (useID) {
+				lstContent.add(String.format("%s:", venue.getId()));
+			}
+			String sIndent = (useID) ? "  " : "";
+			lstContent.add(String.format("%s-", sIndent));
+			lstContent.add(String.format("%s  title: \"%s\"", sIndent, venue.getTitle()));
 
-			lstContent.add(String.format("    street: \"%s %s\"", venue.getStreet(), venue.getNumber()));
-			lstContent.add(String.format("    city: \"%s %s\"", venue.getZipCode(), venue.getCity()));
+			lstContent.add(String.format("%s  street: \"%s %s\"", sIndent, venue.getStreet(), venue.getNumber()));
+			lstContent.add(String.format("%s  city: \"%s %s\"", sIndent, venue.getZipCode(), venue.getCity()));
 
 			if ((venue.getRemark() != null) && !venue.getRemark().isEmpty()) {
-				lstContent.add("    description: >");
+				lstContent.add(String.format("%s  details: >", sIndent));
 				for (String sRemarkLine : venue.getRemark().split("\n")) {
-					lstContent.add(String.format("      %s", sRemarkLine));
+					lstContent.add(String.format("%s    %s", sIndent, sRemarkLine));
 				}
 			}
 
 			if ((venue.getLatitude() != null)) {
-				lstContent.add("    osm:");
-				lstContent.add(String.format("      latitude: %s", venue.getLatitude()));
-				lstContent.add(String.format("      longitude: %s", venue.getLongitude()));
+				lstContent.add(String.format("%s  osm:", sIndent));
+				lstContent.add(String.format("%s    latitude: %s", sIndent, venue.getLatitude()));
+				lstContent.add(String.format("%s    longitude: %s", sIndent, venue.getLongitude()));
 			}
 
 			lstContent.add("");
@@ -155,7 +158,7 @@ public class WebsiteHelper {
 			lstContent.add(String.format("  title: \"%s\"", event.getTitle()));
 
 			lstContent.add(String.format("  date: %s", DateTimeUtils.formatAsDate(event.getStart())));
-			
+
 			LocalDateTime tmeTemp = event.getStart();
 			if ((tmeTemp != null) && (tmeTemp.getHour() != 0)) {
 				lstContent.add(String.format("  start: \"%s\"", DateTimeUtils.formatAsTime(tmeTemp)));
