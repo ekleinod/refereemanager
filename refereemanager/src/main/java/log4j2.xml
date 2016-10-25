@@ -10,9 +10,9 @@
     <Console name="STDOUT" target="SYSTEM_OUT">
       <PatternLayout pattern="${logpattern}" />
     </Console>
-    <File name="FILE" fileName="${logfilename}">
+    <!-- File name="FILE" fileName="${logfilename}">
       <PatternLayout pattern="${logpattern}" />
-    </File>
+    </File> -->
   </Appenders>
   
   <Loggers>

@@ -9,9 +9,7 @@ import java.util.Objects;
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
-import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.model.SeasonModel;
-import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.IDHelper;
 import de.edgesoft.refereemanager.utils.PrefKey;
 
@@ -92,7 +90,7 @@ public class ID extends AbstractMainClass {
 	 * Executes website operation.
 	 *
 	 * @param theDBPath input path
-	 * @param theDBFile db filename (null = {@link Constants#DATAFILENAMEPATTERN})
+	 * @param theDBFile db filename (null = {@link RefereeManager#DATAFILENAMEPATTERN})
 	 * @param theSeason season (null = current season)
 	 * @param theTemplatepath template path
 	 * @param theOutputpath output path
@@ -104,7 +102,7 @@ public class ID extends AbstractMainClass {
 	public void idOperation(final String theDBPath, final String theDBFile, final String theSeason, 
 			final String theTemplatepath, final String theOutputpath, final String theImagepath) {
 
-		Constants.logger.debug("start.");
+		RefereeManager.logger.debug("start.");
 
 		Objects.requireNonNull(theTemplatepath, "template path must not be null");
 		Objects.requireNonNull(theOutputpath, "output path must not be null");
@@ -123,7 +121,7 @@ public class ID extends AbstractMainClass {
 
 		idOperation(pathDBFile, pathTemplate, pathOut, pathImage);
 
-		Constants.logger.debug("stop");
+		RefereeManager.logger.debug("stop");
 
 	}
 
@@ -147,43 +145,43 @@ public class ID extends AbstractMainClass {
 
 		try {
 
-			Constants.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
+			RefereeManager.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
 
-			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
+			final de.edgesoft.refereemanager.jaxb.RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), de.edgesoft.refereemanager.jaxb.RefereeManager.class);
 
 			String sFile = "id-single.svg";
 			Path pathTemplate = Paths.get(theTemplatePath.toString(), sFile);
-			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
+			RefereeManager.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
 			List<String> lstTemplateSingle = FileAccess.readFileInList(pathTemplate);
 			
 			sFile = "id-a4.svg";
 			pathTemplate = Paths.get(theTemplatePath.toString(), sFile);
-			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
+			RefereeManager.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
 			List<String> lstTemplateA4 = FileAccess.readFileInList(pathTemplate);
 			
 			sFile = "valid.svg";
 			pathTemplate = Paths.get(theTemplatePath.toString(), sFile);
-			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
+			RefereeManager.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
 			List<String> lstTemplateValid = FileAccess.readFileInList(pathTemplate);
 			
 //			sFile = "valid-a4.svg";
 			pathTemplate = Paths.get(theTemplatePath.toString(), sFile);
-			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
+			RefereeManager.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
 			List<String> lstTemplateValidA4 = FileAccess.readFileInList(pathTemplate);
 			
-			Constants.logger.debug("fill template.");
+			RefereeManager.logger.debug("fill template.");
 			List<List<String>> lstFilled = IDHelper.fillIDs(lstTemplateSingle, lstTemplateA4, lstTemplateValid, lstTemplateValidA4, mgrData, theImagePath);
 
 			int iFileCount = 0;
 			for (List<String> fileContent : lstFilled) {
 				iFileCount++;
 				Path pathOut = Paths.get(theOutputPath.toString(), String.format("ids-%02d.svg", iFileCount));
-				Constants.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
+				RefereeManager.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
 				FileAccess.writeFile(pathOut, fileContent);
 			}
 
 		} catch (Exception e) {
-			Constants.logger.error(e);
+			RefereeManager.logger.error(e);
 			e.printStackTrace();
 		}
 

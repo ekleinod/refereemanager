@@ -7,13 +7,10 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
-import de.edgesoft.edgeutils.commons.ext.VersionExt;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
-import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.ArgumentDBOperation;
-import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.PrefKey;
 
 /**
@@ -88,7 +85,7 @@ public class DBOperations extends AbstractMainClass {
 	 * Executes database operation.
 	 * 
 	 * @param theDBPath input path
-	 * @param theDBFile db filename (null = {@link Constants#DATAFILENAMEPATTERN})
+	 * @param theDBFile db filename (null = {@link RefereeManager#DATAFILENAMEPATTERN})
 	 * @param theSeason season (null = current season)
 	 * @param theOutputfile output file (null = database + ".db.xml")
 	 * @param theDBOperation database operation
@@ -98,7 +95,7 @@ public class DBOperations extends AbstractMainClass {
 	 */
 	public void dbOperation(final String theDBPath, final String theDBFile, final String theSeason, final String theOutputfile, final String theDBOperation) {
 		
-		Constants.logger.debug("start.");
+		RefereeManager.logger.debug("start.");
 		
 		Objects.requireNonNull(theDBOperation, "database  operation must not be null");
 		
@@ -113,7 +110,7 @@ public class DBOperations extends AbstractMainClass {
 		
 		dbOperation(pathDBFile, sOutFile, argDBOperation);
 		
-		Constants.logger.debug("stop");
+		RefereeManager.logger.debug("stop");
 		
 	}
 	
@@ -135,11 +132,11 @@ public class DBOperations extends AbstractMainClass {
 		
 		try {
 			
-			Constants.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
+			RefereeManager.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
 			
-			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
+			final de.edgesoft.refereemanager.jaxb.RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), de.edgesoft.refereemanager.jaxb.RefereeManager.class);
 			
-			Constants.logger.debug(String.format("execute operation '%s'.", theDBOperation.value()));
+			RefereeManager.logger.debug(String.format("execute operation '%s'.", theDBOperation.value()));
 			
 			// do something
 			switch (theDBOperation) {
@@ -155,16 +152,16 @@ public class DBOperations extends AbstractMainClass {
 			
 			// update info block
 			mgrData.getInfo().setModified(LocalDateTime.now());
-			mgrData.getInfo().setDocversion(new VersionExt(Constants.DOCVERSION));
-			mgrData.getInfo().setAppversion(new VersionExt(Constants.APPVERSION));
+			mgrData.getInfo().setDocversion(RefereeManager.VERSION);
+			mgrData.getInfo().setAppversion(RefereeManager.VERSION);
 			mgrData.getInfo().setCreator(this.getClass().getName());
 			
-			Constants.logger.debug(String.format("write database '%s'.", theOutputPath.toString()));
+			RefereeManager.logger.debug(String.format("write database '%s'.", theOutputPath.toString()));
 			
 			JAXBFiles.marshal(new ObjectFactory().createRefereemanager(mgrData), theOutputPath.toString(), "../../../git/refereemanager/java-backend/refereemanager/src/main/jaxb/refereemanager.xsd");
 			
 		} catch (Exception e) {
-			Constants.logger.error(e);
+			RefereeManager.logger.error(e);
 			e.printStackTrace();
 		}
 		

@@ -13,14 +13,12 @@ import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
-import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Team;
 import de.edgesoft.refereemanager.jaxb.Venue;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.ArgumentStatusType;
-import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.TemplateHelper;
 
@@ -100,7 +98,7 @@ public class Assignments extends AbstractMainClass {
 	 * Executes assignment operation.
 	 * 
 	 * @param theDBPath input path
-	 * @param theDBFile db filename (null = {@link Constants#DATAFILENAMEPATTERN})
+	 * @param theDBFile db filename (null = {@link RefereeManager#DATAFILENAMEPATTERN})
 	 * @param theSeason season (null = current season)
 	 * @param theTemplatefile template file
 	 * @param theOutputfile output file
@@ -110,7 +108,7 @@ public class Assignments extends AbstractMainClass {
 	 */
 	public void assignmentOperation(final String theDBPath, final String theDBFile, final String theSeason, final String theTemplatefile, final String theOutputfile) {
 		
-		Constants.logger.debug("start.");
+		RefereeManager.logger.debug("start.");
 		
 		Objects.requireNonNull(theTemplatefile, "template file must not be null");
 		Objects.requireNonNull(theOutputfile, "output file/path must not be null");
@@ -124,7 +122,7 @@ public class Assignments extends AbstractMainClass {
 		
 		assignmentOperation(pathDBFile, Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), theTemplatefile), pathOut);
 		
-		Constants.logger.debug("stop");
+		RefereeManager.logger.debug("stop");
 		
 	}
 	
@@ -147,15 +145,15 @@ public class Assignments extends AbstractMainClass {
 		
 		try {
 			
-			Constants.logger.debug(String.format("read template '%s'.", theTemplatePath.toString()));
+			RefereeManager.logger.debug(String.format("read template '%s'.", theTemplatePath.toString()));
 			
 			final List<String> lstTemplate = FileAccess.readFileInList(theTemplatePath);
 			
-			Constants.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
+			RefereeManager.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
 			
-			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
+			final de.edgesoft.refereemanager.jaxb.RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), de.edgesoft.refereemanager.jaxb.RefereeManager.class);
 			
-			Constants.logger.debug("fill template.");
+			RefereeManager.logger.debug("fill template.");
 
 			// start hack (venue list)
 			List<String> lstContent = new ArrayList<>();
@@ -207,12 +205,12 @@ public class Assignments extends AbstractMainClass {
 			lstFilled = TemplateHelper.fillTemplate(lstFilled, mgrData, null, 0, ArgumentStatusType.ALL, true);
 			
 			// end hack
-			Constants.logger.debug(String.format("write assignment output to '%s'.", theOutputPath.toString()));
+			RefereeManager.logger.debug(String.format("write assignment output to '%s'.", theOutputPath.toString()));
 			
 			FileAccess.writeFile(theOutputPath, lstFilled);
 			
 		} catch (Exception e) {
-			Constants.logger.error(e);
+			RefereeManager.logger.error(e);
 			e.printStackTrace();
 		}
 		

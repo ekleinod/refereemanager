@@ -11,8 +11,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import de.edgesoft.refereemanager.Prefs;
+import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Referee;
-import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
@@ -58,7 +58,7 @@ public class IDHelper {
 	 */
 	public static List<List<String>> fillIDs(final List<String> theSingleTemplate, final List<String> theA4Template, 
 			final List<String> theValidTemplate, final List<String> theValidA4Template, 
-			final RefereeManager theData, final Path theImagePath) {
+			final de.edgesoft.refereemanager.jaxb.RefereeManager theData, final Path theImagePath) {
 
 		Objects.requireNonNull(theSingleTemplate, "single template must not be null");
 		Objects.requireNonNull(theA4Template, "a4 template must not be null");
@@ -66,7 +66,7 @@ public class IDHelper {
 		Objects.requireNonNull(theValidA4Template, "valid a4 template must not be null");
 		Objects.requireNonNull(theData, "data must not be null");
 		
-		Constants.logger.debug(MessageFormat.format("{0} referees", theData.getContent().getReferee().size()));
+		RefereeManager.logger.debug(MessageFormat.format("{0} referees", theData.getContent().getReferee().size()));
 		
 		// fill all single svg templates
 		List<List<String>> lstSingleSVGs = new ArrayList<>();
@@ -77,7 +77,7 @@ public class IDHelper {
 			File fleImage = new File(theImagePath.toString(), String.format("%s.jpg", theReferee.getFileName()));
 			if (fleImage.exists()) {
 				
-				Constants.logger.debug(theReferee.getDisplayTitle());
+				RefereeManager.logger.debug(theReferee.getDisplayTitle());
 				
 				List<String> lstSingle = theSingleTemplate;
 				
@@ -93,7 +93,7 @@ public class IDHelper {
 						missesDate ? "---" :
 							lvlLocal.getSince().format(DateTimeFormatter.ofPattern(Prefs.get(DateTimeFormat.DATEMEDIUM), Locale.forLanguageTag(Prefs.get(PrefKey.LOCALE)))));
 				if (missesDate) {
-					Constants.logger.error(MessageFormat.format("Missing date for {0}", theReferee.getDisplayTitle()));
+					RefereeManager.logger.error(MessageFormat.format("Missing date for {0}", theReferee.getDisplayTitle()));
 				}
 				
 				// this is correct
@@ -105,7 +105,7 @@ public class IDHelper {
 			
 		}
 		
-		Constants.logger.debug(MessageFormat.format("{0} referee ids", lstSingleSVGs.size()));
+		RefereeManager.logger.debug(MessageFormat.format("{0} referee ids", lstSingleSVGs.size()));
 		
 		// fill A4 templates with 5 single svgs each
 		List<List<String>> lstReturn = new ArrayList<>();
@@ -132,7 +132,7 @@ public class IDHelper {
 			lstReturn.add(lstA4);
 		}
 
-		Constants.logger.debug(MessageFormat.format("{0} sheets", lstReturn.size()));
+		RefereeManager.logger.debug(MessageFormat.format("{0} sheets", lstReturn.size()));
 		
 		return lstReturn;
 

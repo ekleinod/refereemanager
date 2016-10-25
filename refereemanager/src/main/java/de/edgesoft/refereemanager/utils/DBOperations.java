@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.League;
@@ -11,7 +12,6 @@ import de.edgesoft.refereemanager.jaxb.OtherDate;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeAssignmentType;
-import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.Team;
@@ -61,7 +61,7 @@ public class DBOperations {
 	 * @version 0.9.0
 	 * @since 0.7.0
 	 */
-	public static void sortDB(final RefereeManager theDB) {
+	public static void sortDB(final de.edgesoft.refereemanager.jaxb.RefereeManager theDB) {
 		
 		Objects.requireNonNull(theDB, "database must not be null");
 		
@@ -119,7 +119,7 @@ public class DBOperations {
 		theDB.getContent().getTrainingLevelType().clear();
 		theDB.getContent().getTrainingLevelType().addAll(lstTrainingLevelType);
 		
-		Constants.logger.info("sorted database");
+		RefereeManager.logger.info("sorted database");
 		
 	}
 	
@@ -131,7 +131,7 @@ public class DBOperations {
 	 * @version 0.7.0
 	 * @since 0.7.0
 	 */
-	public static void removeClubs(final RefereeManager theDB) {
+	public static void removeClubs(final de.edgesoft.refereemanager.jaxb.RefereeManager theDB) {
 		
 		Objects.requireNonNull(theDB, "database must not be null");
 		
@@ -143,7 +143,7 @@ public class DBOperations {
 		
 		int iAfter = theContent.getClub().size();
 		
-		Constants.logger.info(String.format("Removed %d of %d clubs, %d clubs remaining.", iBefore - iAfter, iBefore, iAfter));
+		RefereeManager.logger.info(String.format("Removed %d of %d clubs, %d clubs remaining.", iBefore - iAfter, iBefore, iAfter));
 		
 		
 	}

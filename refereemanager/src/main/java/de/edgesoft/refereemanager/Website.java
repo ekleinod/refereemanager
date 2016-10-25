@@ -9,9 +9,7 @@ import java.util.Objects;
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
-import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.model.SeasonModel;
-import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.WebsiteHelper;
 
@@ -91,7 +89,7 @@ public class Website extends AbstractMainClass {
 	 * Executes website operation.
 	 *
 	 * @param theDBPath input path
-	 * @param theDBFile db filename (null = {@link Constants#DATAFILENAMEPATTERN})
+	 * @param theDBFile db filename (null = {@link RefereeManager#DATAFILENAMEPATTERN})
 	 * @param theSeason season (null = current season)
 	 * @param theTemplatepath template path
 	 * @param theOutputpath output path
@@ -101,7 +99,7 @@ public class Website extends AbstractMainClass {
 	 */
 	public void websiteOperation(final String theDBPath, final String theDBFile, final String theSeason, final String theTemplatepath, final String theOutputpath) {
 
-		Constants.logger.debug("start.");
+		RefereeManager.logger.debug("start.");
 
 		Objects.requireNonNull(theTemplatepath, "template path must not be null");
 		Objects.requireNonNull(theOutputpath, "output path must not be null");
@@ -117,7 +115,7 @@ public class Website extends AbstractMainClass {
 
 		websiteOperation(pathDBFile, pathTemplate, pathOut);
 
-		Constants.logger.debug("stop");
+		RefereeManager.logger.debug("stop");
 
 	}
 
@@ -139,52 +137,52 @@ public class Website extends AbstractMainClass {
 
 		try {
 
-			Constants.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
+			RefereeManager.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
 
-			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
+			final de.edgesoft.refereemanager.jaxb.RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), de.edgesoft.refereemanager.jaxb.RefereeManager.class);
 
 			String sFile = "osr-recipients.yml";
 			Path pathTemplate = Paths.get(theTemplatePath.toString(), sFile);
-			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
+			RefereeManager.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
 			List<String> lstTemplate = FileAccess.readFileInList(pathTemplate);
-			Constants.logger.debug("fill template.");
+			RefereeManager.logger.debug("fill template.");
 			List<String> lstFilled = WebsiteHelper.fillOSRRecipients(lstTemplate, mgrData);
 			Path pathOut = Paths.get(theOutputPath.toString(), sFile);
-			Constants.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
+			RefereeManager.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
 			FileAccess.writeFile(pathOut, lstFilled);
 
 			sFile = "venues.yml";
 			pathTemplate = Paths.get(theTemplatePath.toString(), sFile);
-			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
+			RefereeManager.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
 			lstTemplate = FileAccess.readFileInList(pathTemplate);
-			Constants.logger.debug("fill template.");
+			RefereeManager.logger.debug("fill template.");
 			lstFilled = WebsiteHelper.fillVenues(lstTemplate, mgrData, true);
 			pathOut = Paths.get(theOutputPath.toString(), sFile);
-			Constants.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
+			RefereeManager.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
 			FileAccess.writeFile(pathOut, lstFilled);
 
 			sFile = "venues_pages.yml";
 			pathTemplate = Paths.get(theTemplatePath.toString(), sFile);
-			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
+			RefereeManager.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
 			lstTemplate = FileAccess.readFileInList(pathTemplate);
-			Constants.logger.debug("fill template.");
+			RefereeManager.logger.debug("fill template.");
 			lstFilled = WebsiteHelper.fillVenues(lstTemplate, mgrData, false);
 			pathOut = Paths.get(theOutputPath.toString(), sFile);
-			Constants.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
+			RefereeManager.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
 			FileAccess.writeFile(pathOut, lstFilled);
 
 			sFile = "events.yml";
 			pathTemplate = Paths.get(theTemplatePath.toString(), sFile);
-			Constants.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
+			RefereeManager.logger.debug(String.format("read template '%s'.", pathTemplate.toString()));
 			lstTemplate = FileAccess.readFileInList(pathTemplate);
-			Constants.logger.debug("fill template.");
+			RefereeManager.logger.debug("fill template.");
 			lstFilled = WebsiteHelper.fillEvents(lstTemplate, mgrData);
 			pathOut = Paths.get(theOutputPath.toString(), sFile);
-			Constants.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
+			RefereeManager.logger.debug(String.format("write output to '%s'.", pathOut.toString()));
 			FileAccess.writeFile(pathOut, lstFilled);
 
 		} catch (Exception e) {
-			Constants.logger.error(e);
+			RefereeManager.logger.error(e);
 			e.printStackTrace();
 		}
 

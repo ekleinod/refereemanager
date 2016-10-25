@@ -10,7 +10,6 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
-import de.edgesoft.refereemanager.utils.Constants;
 
 /**
  * Preferences operations.
@@ -90,12 +89,12 @@ public class PrefOperations extends AbstractMainClass {
 	 */
 	public void prefOperation(final String theFile, final boolean isImport, final boolean isExport) {
 		
-		Constants.logger.info("start.");
+		RefereeManager.logger.info("start.");
 		
 		Objects.requireNonNull(theFile, "filename must not be null");
 		
 		if (isImport) {
-			Constants.logger.info(String.format("importing from '%s'.", theFile));
+			RefereeManager.logger.info(String.format("importing from '%s'.", theFile));
 			
 			try (InputStream stmIn = new FileInputStream(theFile)) {
 				Prefs.importPrefs(stmIn);
@@ -105,7 +104,7 @@ public class PrefOperations extends AbstractMainClass {
 		}
 		
 		if (isExport) {
-			Constants.logger.info(String.format("exporting to '%s'.", theFile));
+			RefereeManager.logger.info(String.format("exporting to '%s'.", theFile));
 			
 			try (OutputStream stmOut = new FileOutputStream(theFile)) {
 				Prefs.exportPrefs(stmOut);
@@ -114,7 +113,7 @@ public class PrefOperations extends AbstractMainClass {
 			}
 		}
 		
-		Constants.logger.info("stop");
+		RefereeManager.logger.info("stop");
 		
 	}
 	

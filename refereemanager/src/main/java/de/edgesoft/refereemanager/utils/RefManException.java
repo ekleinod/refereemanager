@@ -1,13 +1,8 @@
 package de.edgesoft.refereemanager.utils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import de.edgesoft.refereemanager.Prefs;
-
 /**
- * Provides constants.
- *
+ * Special exception (good coding style, I presume).
+ * 
  * ## Legal stuff
  * 
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
@@ -28,20 +23,26 @@ import de.edgesoft.refereemanager.Prefs;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.9.0
- * @since 0.4.0
+ * @version 0.5.0
+ * @since 0.5.0
  */
-public class Constants {
-
-	/** Program version. */
-	public static final String APPVERSION = "0.9.0";
+public class RefManException extends Exception {
 	
-	/** Document version. */
-	public static final String DOCVERSION = "0.9.0";
-
-	/** Logger for all classes. */
-	public static final Logger logger = LogManager.getLogger(Prefs.class.getPackage().getName());
+	/** Default serial id. */
+	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Default constructor with message.
+	 * 
+	 * @param theErrorMessage error message
+	 * 
+	 * @version 0.5.0
+	 * @since 0.5.0
+	 */
+	public RefManException(String theErrorMessage) {
+		super(theErrorMessage);
+	}
+
 }
 
 /* EOF */

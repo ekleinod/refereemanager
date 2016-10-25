@@ -9,12 +9,10 @@ import java.util.Objects;
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
-import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.ArgumentCommunicationAction;
 import de.edgesoft.refereemanager.utils.ArgumentCommunicationRecipient;
 import de.edgesoft.refereemanager.utils.CommunicationHelper;
-import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.PrefKey;
 
 /**
@@ -95,7 +93,7 @@ public class RefereeCommunication extends AbstractMainClass {
 	 * Referee communication.
 	 * 
 	 * @param theDBPath input path
-	 * @param theDBFile database filename (null = {@link Constants#DATAFILENAMEPATTERN})
+	 * @param theDBFile database filename (null = {@link RefereeManager#DATAFILENAMEPATTERN})
 	 * @param theSeason season (null = current season)
 	 * @param theTextfile text file
 	 * @param theOutputpath output path
@@ -112,7 +110,7 @@ public class RefereeCommunication extends AbstractMainClass {
 			final String theTextfile, final String theOutputpath, final String theAction, final String theRecipient, 
 			final boolean toTrainees, final boolean isTest, final String theFromRecipient) {
 		
-		Constants.logger.debug("start.");
+		RefereeManager.logger.debug("start.");
 		
 		Objects.requireNonNull(theTextfile, "text file must not be null");
 		
@@ -139,7 +137,7 @@ public class RefereeCommunication extends AbstractMainClass {
 		
 		refereeCommunication(pathDBFile, Paths.get(theTextfile), sOutput, argAction, argRecipient, toTrainees, isTest, theFromRecipient);
 		
-		Constants.logger.debug("stop");
+		RefereeManager.logger.debug("stop");
 		
 	}
 	
@@ -169,15 +167,15 @@ public class RefereeCommunication extends AbstractMainClass {
 		
 		try {
 			
-			Constants.logger.debug(String.format("read text from '%s'.", theTextPath.toString()));
+			RefereeManager.logger.debug(String.format("read text from '%s'.", theTextPath.toString()));
 			
 			final List<String> lstText = FileAccess.readFileInList(theTextPath);
 			
-			Constants.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
+			RefereeManager.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
 			
-			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
+			final de.edgesoft.refereemanager.jaxb.RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), de.edgesoft.refereemanager.jaxb.RefereeManager.class);
 			
-			Constants.logger.debug(String.format("execute action '%s'.", theAction.value()));
+			RefereeManager.logger.debug(String.format("execute action '%s'.", theAction.value()));
 			
 			Path pathTemplate = null;
 			List<String> lstTemplate = null;
@@ -185,7 +183,7 @@ public class RefereeCommunication extends AbstractMainClass {
 			switch (theAction) {
 				case DOCUMENT:
 					pathTemplate = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_DOCUMENT));
-					Constants.logger.debug(String.format("read document template from '%s'.", pathTemplate.toString()));
+					RefereeManager.logger.debug(String.format("read document template from '%s'.", pathTemplate.toString()));
 					lstTemplate = FileAccess.readFileInList(pathTemplate);
 					
 					CommunicationHelper.createLetters(lstText, lstTemplate, mgrData, theAction, theRecipient, toTrainees, isTest, theOutputPath, theFromRecipient);
@@ -193,7 +191,7 @@ public class RefereeCommunication extends AbstractMainClass {
 					
 				case LETTER:
 					pathTemplate = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_LETTER));
-					Constants.logger.debug(String.format("read letter template from '%s'.", pathTemplate.toString()));
+					RefereeManager.logger.debug(String.format("read letter template from '%s'.", pathTemplate.toString()));
 					lstTemplate = FileAccess.readFileInList(pathTemplate);
 					
 					CommunicationHelper.createLetters(lstText, lstTemplate, mgrData, theAction, theRecipient, toTrainees, isTest, theOutputPath, theFromRecipient);
@@ -201,7 +199,7 @@ public class RefereeCommunication extends AbstractMainClass {
 					
 				case MAIL:
 					pathTemplate = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_EMAIL));
-					Constants.logger.debug(String.format("read email template from '%s'.", pathTemplate.toString()));
+					RefereeManager.logger.debug(String.format("read email template from '%s'.", pathTemplate.toString()));
 					lstTemplate = FileAccess.readFileInList(pathTemplate);
 
 					CommunicationHelper.sendMail(lstText, lstTemplate, mgrData, theRecipient, toTrainees, isTest, theFromRecipient);
@@ -210,7 +208,7 @@ public class RefereeCommunication extends AbstractMainClass {
 			
 			
 		} catch (Exception e) {
-			Constants.logger.error(e);
+			RefereeManager.logger.error(e);
 			e.printStackTrace();
 		}
 		

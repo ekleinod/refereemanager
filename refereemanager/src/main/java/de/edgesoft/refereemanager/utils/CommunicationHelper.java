@@ -34,10 +34,10 @@ import javax.mail.internet.MimeMultipart;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.refereemanager.Prefs;
+import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Referee;
-import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.template.Attachment;
@@ -92,7 +92,7 @@ public class CommunicationHelper {
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-	public static void sendMail(final List<String> theText, final List<String> theTemplate, final RefereeManager theData, 
+	public static void sendMail(final List<String> theText, final List<String> theTemplate, final de.edgesoft.refereemanager.jaxb.RefereeManager theData, 
 			final ArgumentCommunicationRecipient theRecipient, final boolean toTrainees, final boolean isTest, final String theFromRecipient) {
 		
 		Objects.requireNonNull(theText, "text must not be null");
@@ -101,9 +101,9 @@ public class CommunicationHelper {
 		Objects.requireNonNull(theRecipient, "recipient must not be null");
 		
 		if (isTest) {
-			Constants.logger.info("Testmode: no mails are sent!.");
+			RefereeManager.logger.info("Testmode: no mails are sent!.");
 		}
-		Constants.logger.info(String.format("Sending mails to '%s', trainees: %s.", theRecipient.value(), toTrainees));
+		RefereeManager.logger.info(String.format("Sending mails to '%s', trainees: %s.", theRecipient.value(), toTrainees));
 		
 		// compute referees to send email to
 		final List<? extends Referee> lstAll = (toTrainees) ? ((ContentModel) theData.getContent()).getTrainee() : ((ContentModel) theData.getContent()).getReferee();
@@ -188,7 +188,7 @@ public class CommunicationHelper {
 						
 						msgContent.addBodyPart(bpAttachment);
 						
-						Constants.logger.info(String.format("Adding attachment '%s'.", bpAttachment.getFileName()));
+						RefereeManager.logger.info(String.format("Adding attachment '%s'.", bpAttachment.getFileName()));
 					}
 					
 					if (!isTest) {
@@ -197,23 +197,23 @@ public class CommunicationHelper {
 					
 					Arrays.asList(msgMail.getRecipients(RecipientType.TO))
 							.stream()
-							.forEach(adr -> Constants.logger.info(String.format("sent mail to '%s'.", adr.toString())));
+							.forEach(adr -> RefereeManager.logger.info(String.format("sent mail to '%s'.", adr.toString())));
 					
 				} catch (SendFailedException e) {
 					if (e.getInvalidAddresses() != null) {
-						Arrays.asList(e.getInvalidAddresses()).forEach(adr -> Constants.logger.error(String.format("invalid address, not sent: '%s'.", adr.toString())));
+						Arrays.asList(e.getInvalidAddresses()).forEach(adr -> RefereeManager.logger.error(String.format("invalid address, not sent: '%s'.", adr.toString())));
 					}
 					if (e.getValidUnsentAddresses() != null) {
-						Arrays.asList(e.getValidUnsentAddresses()).forEach(adr -> Constants.logger.error(String.format("valid address, but not sent: '%s'.", adr.toString())));
+						Arrays.asList(e.getValidUnsentAddresses()).forEach(adr -> RefereeManager.logger.error(String.format("valid address, but not sent: '%s'.", adr.toString())));
 					}
 					if (e.getValidSentAddresses() != null) {
-						Arrays.asList(e.getValidSentAddresses()).forEach(adr -> Constants.logger.error(String.format("valid address, sent email: '%s'.", adr.toString())));
+						Arrays.asList(e.getValidSentAddresses()).forEach(adr -> RefereeManager.logger.error(String.format("valid address, sent email: '%s'.", adr.toString())));
 					}
 				}
 			}
 			
 			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
-			Constants.logger.info(String.format("Sending time: %s.", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+			RefereeManager.logger.info(String.format("Sending time: %s.", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
 			
 			
 		} catch (MessagingException | UnsupportedEncodingException e) {
@@ -239,7 +239,7 @@ public class CommunicationHelper {
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-	public static void createLetters(final List<String> theText, final List<String> theTemplate, final RefereeManager theData,
+	public static void createLetters(final List<String> theText, final List<String> theTemplate, final de.edgesoft.refereemanager.jaxb.RefereeManager theData,
 			final ArgumentCommunicationAction theAction, final ArgumentCommunicationRecipient theRecipient, 
 			final boolean toTrainees, final boolean isTest, final String theOutputPath, final String theFromRecipient) {
 		
@@ -249,35 +249,35 @@ public class CommunicationHelper {
 		Objects.requireNonNull(theRecipient, "recipient must not be null");
 		
 		if (isTest) {
-			Constants.logger.info("Testmode: no letters are stored!.");
+			RefereeManager.logger.info("Testmode: no letters are stored!.");
 		}
-		Constants.logger.info(String.format("Writing letters to '%s', trainees: %s.", theRecipient.value(), toTrainees));
+		RefereeManager.logger.info(String.format("Writing letters to '%s', trainees: %s.", theRecipient.value(), toTrainees));
 		
 		// merge files
 		List<String> lstMergeRef = null;
 		List<String> lstMergeRefs = null;
-		RefereeManager mgrRefs = null;
+		de.edgesoft.refereemanager.jaxb.RefereeManager mgrRefs = null;
 		if (theAction == ArgumentCommunicationAction.LETTER) {
 			
 			Path pathTemp = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_MERGE_REFEREE));
-			Constants.logger.debug(String.format("read merge template from '%s'.", pathTemp.toString()));
+			RefereeManager.logger.debug(String.format("read merge template from '%s'.", pathTemp.toString()));
 			try {
 				lstMergeRef = FileAccess.readFileInList(pathTemp);
 			} catch (Exception e) {
-				Constants.logger.error(e);
+				RefereeManager.logger.error(e);
 				e.printStackTrace();
 			}
 			
 			pathTemp = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_MERGE_REFEREES));
-			Constants.logger.debug(String.format("read merge template from '%s'.", pathTemp.toString()));
+			RefereeManager.logger.debug(String.format("read merge template from '%s'.", pathTemp.toString()));
 			try {
 				lstMergeRefs = FileAccess.readFileInList(pathTemp);
 			} catch (Exception e) {
-				Constants.logger.error(e);
+				RefereeManager.logger.error(e);
 				e.printStackTrace();
 			}
 			
-			mgrRefs = new RefereeManager();
+			mgrRefs = new de.edgesoft.refereemanager.jaxb.RefereeManager();
 			mgrRefs.setContent(new ContentModel());
 		}
 
@@ -341,7 +341,7 @@ public class CommunicationHelper {
 				if (!isTest) {
 					FileAccess.writeFile(pathOut, lstText);
 				}
-				Constants.logger.info(String.format("writing letter to '%s'.", pathOut.toString()));
+				RefereeManager.logger.info(String.format("writing letter to '%s'.", pathOut.toString()));
 					
 				if (theAction == ArgumentCommunicationAction.LETTER) {
 					
@@ -352,14 +352,14 @@ public class CommunicationHelper {
 					if (!isTest) {
 						FileAccess.writeFile(pathOut, lstMergeFilled);
 					}
-					Constants.logger.info(String.format("writing merge to '%s'.", pathOut.toString()));
+					RefereeManager.logger.info(String.format("writing merge to '%s'.", pathOut.toString()));
 					
 					mgrRefs.getContent().getReferee().add(theReferee);
 					
 				}
 				
 			} catch (IOException e) {
-				Constants.logger.error(String.format("error while writing: '%s'.", e.getMessage()));
+				RefereeManager.logger.error(String.format("error while writing: '%s'.", e.getMessage()));
 			}
 		}
 		
@@ -373,16 +373,16 @@ public class CommunicationHelper {
 				if (!isTest) {
 					FileAccess.writeFile(pathOut, lstMergeFilled);
 				}
-				Constants.logger.info(String.format("writing merge to '%s'.", pathOut.toString()));
+				RefereeManager.logger.info(String.format("writing merge to '%s'.", pathOut.toString()));
 				
 			} catch (IOException e) {
-				Constants.logger.error(String.format("error while writing: '%s'.", e.getMessage()));
+				RefereeManager.logger.error(String.format("error while writing: '%s'.", e.getMessage()));
 			}
 			
 		}
 		
 		Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
-		Constants.logger.info(String.format("Writing time: %s.", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+		RefereeManager.logger.info(String.format("Writing time: %s.", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
 		
 	}
 	

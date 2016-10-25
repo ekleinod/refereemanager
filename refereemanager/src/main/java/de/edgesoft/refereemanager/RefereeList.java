@@ -9,11 +9,9 @@ import java.util.Objects;
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
-import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.model.ContactModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.ArgumentStatusType;
-import de.edgesoft.refereemanager.utils.Constants;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.TemplateHelper;
 
@@ -93,7 +91,7 @@ public class RefereeList extends AbstractMainClass {
 	 * Fills list of referees.
 	 * 
 	 * @param theDBPath input path
-	 * @param theDBFile db filename (null = {@link Constants#DATAFILENAMEPATTERN})
+	 * @param theDBFile db filename (null = {@link RefereeManager#DATAFILENAMEPATTERN})
 	 * @param theSeason season (null = current season)
 	 * @param theTemplatefile template file
 	 * @param theOutputfile output file (null = template + ".out")
@@ -107,7 +105,7 @@ public class RefereeList extends AbstractMainClass {
 	public void listReferees(final String theDBPath, final String theDBFile, final String theSeason, 
 			final String theTemplatefile, final String theOutputfile, final String theStatus, final boolean isEditor, final boolean isPrivateOnly) {
 		
-		Constants.logger.debug("start.");
+		RefereeManager.logger.debug("start.");
 		
 		Objects.requireNonNull(theTemplatefile, "template file must not be null");
 		
@@ -127,7 +125,7 @@ public class RefereeList extends AbstractMainClass {
 		
 		listReferees(pathDBFile, Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), theTemplatefile), Paths.get(sOutFile), argStatus, isEditor, isPrivateOnly);
 		
-		Constants.logger.debug("stop");
+		RefereeManager.logger.debug("stop");
 		
 	}
 	
@@ -154,25 +152,25 @@ public class RefereeList extends AbstractMainClass {
 		
 		try {
 			
-			Constants.logger.debug(String.format("read template '%s'.", theTemplatePath.toString()));
+			RefereeManager.logger.debug(String.format("read template '%s'.", theTemplatePath.toString()));
 			
 			final List<String> lstTemplate = FileAccess.readFileInList(theTemplatePath);
 			
-			Constants.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
+			RefereeManager.logger.debug(String.format("read database '%s'.", theDBPath.toString()));
 			
-			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
+			final de.edgesoft.refereemanager.jaxb.RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), de.edgesoft.refereemanager.jaxb.RefereeManager.class);
 			
-			Constants.logger.debug("fill template.");
+			RefereeManager.logger.debug("fill template.");
 			
 			ContactModel.isPrivateOnly = isPrivateOnly;
 			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null, 0, theStatus, isEditor);
 			
-			Constants.logger.debug(String.format("write referee list to '%s'.", theOutputPath.toString()));
+			RefereeManager.logger.debug(String.format("write referee list to '%s'.", theOutputPath.toString()));
 			
 			FileAccess.writeFile(theOutputPath, lstFilled);
 			
 		} catch (Exception e) {
-			Constants.logger.error(e);
+			RefereeManager.logger.error(e);
 			e.printStackTrace();
 		}
 		
