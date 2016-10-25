@@ -43,8 +43,8 @@ import de.edgesoft.refereemanager.model.URLModel;
     "contactType"
 })
 @XmlSeeAlso({
-    AddressModel.class,
     URLModel.class,
+    AddressModel.class,
     EMailModel.class,
     PhoneNumberModel.class
 })

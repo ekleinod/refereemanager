@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
+import de.edgesoft.refereemanager.Prefs;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
+import de.edgesoft.refereemanager.utils.PrefKey;
 
 /**
  * Referee model, additional methods for jaxb model class.
@@ -58,6 +60,28 @@ public class RefereeModel extends Referee {
     			.sorted(TrainingLevelModel.RANK.reversed())
     			.findFirst()
     			.orElse(null);
+    }
+
+	/**
+	 * Local training level.
+	 *
+	 * @return local training level
+	 *
+	 * @version 0.9.0
+	 * @since 0.9.0
+	 */
+    public TrainingLevel getLocalTrainingLevel() {
+    	TrainingLevel firstLevel = getTrainingLevel()
+    			.stream()
+    			.sorted(TrainingLevelModel.RANK)
+    			.findFirst()
+    			.orElse(null);
+    	
+    	if ((firstLevel == null) || !firstLevel.getType().getId().equals(Prefs.get(PrefKey.LOCAL_TRAININGLEVEL))) {
+    		return null;
+    	}
+    	
+    	return firstLevel;
     }
 
 	/**
