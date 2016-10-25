@@ -76,7 +76,7 @@ public class DBOperations extends AbstractMainClass {
 		addOption("d", "database", MessageFormat.format("database file name pattern (default: {0}).", Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE)), true, false);
 		addOption("s", "season", "season (empty for current season).", true, false);
 		addOption("o", "output", "output file (empty for database file + '.db.xml').", true, false);
-		addOption("r", "dboperation", "database operation (sort).", true, true);
+		addOption("r", "dboperation", "database operation (removeclubs, save, sort).", true, true);
 		
 		init(args);
 		
@@ -90,7 +90,7 @@ public class DBOperations extends AbstractMainClass {
 	 * @param theDBPath input path
 	 * @param theDBFile db filename (null = {@link Constants#DATAFILENAMEPATTERN})
 	 * @param theSeason season (null = current season)
-	 * @param theOutputfile output file (null = template + ".db.xml")
+	 * @param theOutputfile output file (null = database + ".db.xml")
 	 * @param theDBOperation database operation
 	 * 
 	 * @version 0.8.0
@@ -107,11 +107,11 @@ public class DBOperations extends AbstractMainClass {
 		Path pathDBFile = Paths.get((theDBPath == null) ? Prefs.get(PrefKey.PATH_DATABASE) : theDBPath,
 				String.format(((theDBFile == null) ? Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE) : theDBFile), iSeason));
 		
-		String sOutFile = (theOutputfile == null) ? String.format("%s.db.xml", pathDBFile) : theOutputfile;
+		Path sOutFile = Paths.get((theOutputfile == null) ? String.format("%s.db.xml", pathDBFile) : theOutputfile);
 		
 		ArgumentDBOperation argDBOperation = ArgumentDBOperation.fromValue(theDBOperation);
 		
-		dbOperation(pathDBFile, Paths.get(sOutFile), argDBOperation);
+		dbOperation(pathDBFile, sOutFile, argDBOperation);
 		
 		Constants.logger.debug("stop");
 		
@@ -121,7 +121,6 @@ public class DBOperations extends AbstractMainClass {
 	 * Executes database operation.
 	 * 
 	 * @param theDBPath database filename with path
-	 * @param theTemplatePath template file
 	 * @param theOutputPath output file
 	 * @param theDBOperation database operation
 	 * 
@@ -163,7 +162,6 @@ public class DBOperations extends AbstractMainClass {
 			Constants.logger.debug(String.format("write database '%s'.", theOutputPath.toString()));
 			
 			JAXBFiles.marshal(new ObjectFactory().createRefereemanager(mgrData), theOutputPath.toString(), "../../../git/refereemanager/java-backend/refereemanager/src/main/jaxb/refereemanager.xsd");
-			
 			
 		} catch (Exception e) {
 			Constants.logger.error(e);

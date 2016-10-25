@@ -2,10 +2,10 @@ package de.edgesoft.refereemanager.model;
 
 import java.util.Comparator;
 
-import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
+import de.edgesoft.refereemanager.jaxb.Date;
 
 /**
- * TrainingLevelType model, additional methods for jaxb model class.
+ * Date model, additional methods for jaxb model class.
  * 
  * ## Legal stuff
  * 
@@ -28,17 +28,17 @@ import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
  * 
  * @author Ekkart Kleinod
  * @version 0.9.0
- * @since 0.7.0
+ * @since 0.9.0
  */
-public class TrainingLevelTypeModel extends TrainingLevelType {
+public class DateModel extends Date {
 	
 	/** 
-	 * Comparator rank. 
+	 * Comparator start date/time. 
 	 * 
-	 * @version 0.7.0
-	 * @since 0.7.0
+	 * @version 0.9.0
+	 * @since 0.9.0
 	 */
-	public static final Comparator<TrainingLevelType> RANK = Comparator.comparingInt(TrainingLevelType::getRank);
+	public static final Comparator<Date> RANK_START = Comparator.comparing(Date::getStart);
 	
 }
 

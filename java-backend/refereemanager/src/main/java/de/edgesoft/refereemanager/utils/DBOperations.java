@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.League;
+import de.edgesoft.refereemanager.jaxb.OtherDate;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeAssignmentType;
@@ -16,9 +17,11 @@ import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.Team;
 import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
+import de.edgesoft.refereemanager.jaxb.Venue;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.DateModel;
+import de.edgesoft.refereemanager.model.LeagueModel;
 import de.edgesoft.refereemanager.model.PersonModel;
-import de.edgesoft.refereemanager.model.TeamModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 
@@ -45,7 +48,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.8.0
+ * @version 0.9.0
  * @since 0.7.0
  */
 public class DBOperations {
@@ -55,7 +58,7 @@ public class DBOperations {
 	 * 
 	 * @param theDB database
 	 * 
-	 * @version 0.8.0
+	 * @version 0.9.0
 	 * @since 0.7.0
 	 */
 	public static void sortDB(final RefereeManager theDB) {
@@ -76,17 +79,25 @@ public class DBOperations {
 		theDB.getContent().getTrainee().clear();
 		theDB.getContent().getTrainee().addAll(lstTrainee);
 		
-		List<League> lstLeague = theContent.getLeague().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).collect(Collectors.toList());
+		List<League> lstLeague = theContent.getLeague().stream().sorted(LeagueModel.RANK_DISPLAYTITLE).collect(Collectors.toList());
 		theDB.getContent().getLeague().clear();
 		theDB.getContent().getLeague().addAll(lstLeague);
 		
-		List<Club> lstClub = theContent.getClub().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).collect(Collectors.toList());
+		List<Club> lstClub = theContent.getClub().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
 		theDB.getContent().getClub().clear();
 		theDB.getContent().getClub().addAll(lstClub);
 		
-		List<Team> lstTeam = theContent.getTeam().stream().sorted(TeamModel.LEAGUE).collect(Collectors.toList());
+		List<Team> lstTeam = theContent.getTeam().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
 		theDB.getContent().getTeam().clear();
 		theDB.getContent().getTeam().addAll(lstTeam);
+		
+		List<OtherDate> lstOtherDate = theContent.getOtherdate().stream().sorted(DateModel.RANK_START).collect(Collectors.toList());
+		theDB.getContent().getOtherdate().clear();
+		theDB.getContent().getOtherdate().addAll(lstOtherDate);
+		
+		List<Venue> lstVenue = theContent.getVenue().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
+		theDB.getContent().getVenue().clear();
+		theDB.getContent().getVenue().addAll(lstVenue);
 		
 		List<SexType> lstSexType = theContent.getSexType().stream().sorted(TitledIDTypeModel.TITLE).collect(Collectors.toList());
 		theDB.getContent().getSexType().clear();
@@ -100,7 +111,7 @@ public class DBOperations {
 		theDB.getContent().getStatusType().clear();
 		theDB.getContent().getStatusType().addAll(lstStatusType);
 		
-		List<RefereeAssignmentType> lstRefereeAssignmentType = theContent.getRefereeAssignmentType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).collect(Collectors.toList());
+		List<RefereeAssignmentType> lstRefereeAssignmentType = theContent.getRefereeAssignmentType().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
 		theDB.getContent().getRefereeAssignmentType().clear();
 		theDB.getContent().getRefereeAssignmentType().addAll(lstRefereeAssignmentType);
 		

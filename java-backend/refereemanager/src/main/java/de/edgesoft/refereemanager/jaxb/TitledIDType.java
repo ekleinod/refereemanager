@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContactModel;
+import de.edgesoft.refereemanager.model.DateModel;
+import de.edgesoft.refereemanager.model.LeagueModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
@@ -49,12 +51,13 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
     TeamModel.class,
     SeasonModel.class,
     SexType.class,
-    League.class,
+    LeagueModel.class,
     ClubModel.class,
     StatusTypeModel.class,
     ContactModel.class,
     RefereeAssignmentType.class,
-    PersonModel.class
+    PersonModel.class,
+    DateModel.class
 })
 public abstract class TitledIDType
     extends IDType

@@ -23,7 +23,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 @author Ekkart Kleinod
-@version 0.8.0
+@version 0.9.0
 @since 0.4.0
 -->
 
@@ -63,6 +63,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="league" type="League" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="club" type="Club" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="team" type="Team" minOccurs="0" maxOccurs="unbounded" />
+
+					<xsd:element name="tournament" type="Tournament" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="otherdate" type="OtherDate" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="venue" type="Venue" minOccurs="0" maxOccurs="unbounded" />
 
 					<!-- types -->
 					<xsd:element name="sex_type" type="SexType" minOccurs="0" maxOccurs="unbounded" />
@@ -254,9 +258,11 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="results" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="referee_report" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="referee_quantity" type="RefereeQuantity" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="rank" type="xsd:int" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="national" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="results" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="referee_report" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="referee_quantity" type="RefereeQuantity" minOccurs="1" maxOccurs="unbounded" />
 
 					<!-- references -->
 					<xsd:element name="sex_type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
@@ -286,8 +292,9 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
+					<xsd:element name="local" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="filename" type="xsd:string" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="venue" type="Address" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="venue" type="Venue" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="u_r_l" type="URL" minOccurs="0" maxOccurs="unbounded" />
 
 					<xsd:element name="contact_person" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
@@ -325,6 +332,15 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 							<xsd:appinfo>
 								<jxb:property>
 									<jxb:baseType name="League" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="venue" type="xsd:IDREF" minOccurs="0" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Venue" />
 								</jxb:property>
 							</xsd:appinfo>
 						</xsd:annotation>
@@ -436,6 +452,79 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+
+	<xsd:complexType name="Venue">
+		<xsd:complexContent>
+			<xsd:extension base="Address">
+				<xsd:sequence>
+					<xsd:element name="latitude" type="xsd:double" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="longitude" type="xsd:double" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="Tournament">
+		<xsd:complexContent>
+			<xsd:extension base="Date">
+				<xsd:sequence>
+					<xsd:element name="announcement_u_r_l" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="information_u_r_l" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="result_u_r_l" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="referee_quantity" type="RefereeQuantity" minOccurs="0" maxOccurs="unbounded" />
+
+					<xsd:element name="organizing_club" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Club" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="organizer" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Person" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="OtherDate">
+		<xsd:complexContent>
+			<xsd:extension base="Date">
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="Date">
+		<xsd:complexContent>
+			<xsd:extension base="TitledIDType">
+				<xsd:sequence>
+					<xsd:element name="start" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="end" type="xsd:dateTime" minOccurs="0" maxOccurs="1" />
+
+					<!-- references -->
+					<xsd:element name="venue" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Venue" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 
 
 

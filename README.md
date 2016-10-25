@@ -45,6 +45,15 @@ Several features are working, see version list below.
 Therefore, the referee manager is *not* safe for using in the "real" internet.
 Use it in a closed envorinment (local server etc.) only.
 
+### v0.9.0
+
+*Released:* 2016-10-25
+
+- website exports
+- first assignments, tournaments and venues
+- no predefined templates
+- saving progress before massive cleanup and graphical interface
+
 ### v0.8.0
 
 *Released:* 2016-08-23
@@ -104,4 +113,3 @@ Use it in a closed envorinment (local server etc.) only.
 
 - no special functionality
 - saving the code before introducing the new branching model
-

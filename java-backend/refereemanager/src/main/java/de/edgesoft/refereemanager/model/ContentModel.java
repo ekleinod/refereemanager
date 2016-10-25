@@ -1,11 +1,16 @@
 package de.edgesoft.refereemanager.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.jaxb.Content;
+import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.Team;
 import de.edgesoft.refereemanager.jaxb.Wish;
 
 /**
@@ -31,7 +36,7 @@ import de.edgesoft.refereemanager.jaxb.Wish;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.7.0
+ * @version 0.9.0
  * @since 0.5.0
  */
 public class ContentModel extends Content {
@@ -95,7 +100,58 @@ public class ContentModel extends Content {
 		
 	}
 		
+	/**
+	 * Returns all used leagues, i.e. leagues with assignments.
+	 * 
+	 * @todo rewrite to look for assignments
+	 * 
+	 * @return used leagues (empty if there are none)
+	 * 
+	 * @version 0.9.0
+	 * @since 0.9.0
+	 */
+	public List<League> getUsedLeagues() {
 
+		List<League> lstReturn = new ArrayList<>();
+		
+		for (League theLeague : getLeague().stream().sorted(LeagueModel.RANK_DISPLAYTITLE).collect(Collectors.toList())) {
+			
+			if (theLeague.isNational()) {
+				lstReturn.add(theLeague);
+			}
+		}
+		
+		return lstReturn;
+		
+	}
+		
+	/**
+	 * Returns all local home teams for a league.
+	 * 
+	 * @todo rewrite to look for assignments
+	 * 
+	 * @param theLeague league
+	 * @return used home teams (empty if there are none)
+	 * 
+	 * @version 0.9.0
+	 * @since 0.9.0
+	 */
+	public List<Team> getLocalHomeTeams(final League theLeague) {
+
+		List<Team> lstReturn = new ArrayList<>();
+		
+		for (Team theTeam : getTeam().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList())) {
+			if ((theTeam.getLeague() != null) && (theTeam.getLeague() == theLeague)) {
+				if ((theTeam.getClub() != null) && (theTeam.getClub().isLocal())) {
+					lstReturn.add(theTeam);
+				}
+			}
+		}
+		
+		return lstReturn;
+		
+	}
+		
 }
 
 /* EOF */

@@ -1,9 +1,13 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
@@ -23,6 +27,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *         &lt;element name="number" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="club" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="league" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
+ *         &lt;element name="venue" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contact_person" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -37,6 +42,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
     "number",
     "club",
     "league",
+    "venue",
     "contactPerson"
 })
 public class Team
@@ -52,6 +58,8 @@ public class Team
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected League league;
+    @XmlElementRef(name = "venue", type = JAXBElement.class, required = false)
+    protected List<Venue> venue;
     @XmlElement(name = "contact_person", type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -127,6 +135,35 @@ public class Team
      */
     public void setLeague(League value) {
         this.league = value;
+    }
+
+    /**
+     * Gets the value of the venue property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the venue property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getVenue().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
+     * 
+     */
+    public List<Venue> getVenue() {
+        if (venue == null) {
+            venue = new ArrayList<Venue>();
+        }
+        return this.venue;
     }
 
     /**

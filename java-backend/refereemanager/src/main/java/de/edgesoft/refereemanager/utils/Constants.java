@@ -28,16 +28,16 @@ import de.edgesoft.refereemanager.Prefs;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.8.0
+ * @version 0.9.0
  * @since 0.4.0
  */
 public class Constants {
 
 	/** Program version. */
-	public static final String APPVERSION = "0.8.0";
+	public static final String APPVERSION = "0.9.0";
 	
 	/** Document version. */
-	public static final String DOCVERSION = "0.8.0";
+	public static final String DOCVERSION = "0.9.0";
 
 	/** Logger for all classes. */
 	public static final Logger logger = LogManager.getLogger(Prefs.class.getPackage().getName());

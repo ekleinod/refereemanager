@@ -3,14 +3,21 @@ package de.edgesoft.refereemanager;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.edgeutils.files.JAXBFiles;
+import de.edgesoft.refereemanager.jaxb.EMail;
+import de.edgesoft.refereemanager.jaxb.League;
+import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
-import de.edgesoft.refereemanager.model.ContactModel;
+import de.edgesoft.refereemanager.jaxb.Team;
+import de.edgesoft.refereemanager.jaxb.Venue;
+import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.ArgumentStatusType;
 import de.edgesoft.refereemanager.utils.Constants;
@@ -18,7 +25,11 @@ import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.TemplateHelper;
 
 /**
- * Fill the referee list.
+ * Assignment operations.
+ * 
+ * This is just hacked, because of lack of time.
+ * Thus, the code is cluttered with view information.
+ * Beware :)
  *
  * ## Legal stuff
  * 
@@ -40,21 +51,21 @@ import de.edgesoft.refereemanager.utils.TemplateHelper;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.8.0
- * @since 0.5.0
+ * @version 0.9.0
+ * @since 0.9.0
  */
-public class RefereeList extends AbstractMainClass {
+public class Assignments extends AbstractMainClass {
 	
 	/**
 	 * Command line entry point.
 	 * 
 	 * @param args command line arguments
 	 * 
-	 * @version 0.5.0
-	 * @since 0.5.0
+	 * @version 0.9.0
+	 * @since 0.9.0
 	 */
 	public static void main(String[] args) {
-		new RefereeList().executeOperation(args);
+		new Assignments().executeOperation(args);
 	}
 
 	/**
@@ -65,92 +76,74 @@ public class RefereeList extends AbstractMainClass {
 	 * - call init(args);
 	 * - call operation execution with arguments
 	 * 
-	 * @version 0.8.0
-	 * @since 0.5.0
+	 * @version 0.9.0
+	 * @since 0.9.0
 	 */
 	@Override
 	public void executeOperation(final String[] args) {
 		
-		setDescription("Generates referee lists.");
+		setDescription("Assignments operations.");
 		
 		addOption("p", "path", MessageFormat.format("input path of data (default: {0}).", Prefs.get(PrefKey.PATH_DATABASE)), true, false);
 		addOption("d", "database", MessageFormat.format("database file name pattern (default: {0}).", Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE)), true, false);
 		addOption("s", "season", "season (empty for current season).", true, false);
 		addOption("t", "template", "template to fill.", true, true);
-		addOption("o", "output", "output file (empty for template + '.out').", true, false);
-		addOption("a", "status", "status (all (default), active, inactive).", true, false);
-		addOption("e", "editor", "also use data that is editor only.", false, false);
-		addOption("i", "privateonly", "use only private contacts.", false, false);
+		addOption("o", "output", "output file or path.", true, true);
 		
 		init(args);
 		
-		listReferees(getOptionValue("p"), getOptionValue("d"), getOptionValue("s"), 
-				getOptionValue("t"), getOptionValue("o"), getOptionValue("a"), hasOption("e"), hasOption("i"));
+		assignmentOperation(getOptionValue("p"), getOptionValue("d"), getOptionValue("s"), getOptionValue("t"), getOptionValue("o"));
 		
 	}
 
 	/**
-	 * Fills list of referees.
+	 * Executes assignment operation.
 	 * 
 	 * @param theDBPath input path
 	 * @param theDBFile db filename (null = {@link Constants#DATAFILENAMEPATTERN})
 	 * @param theSeason season (null = current season)
 	 * @param theTemplatefile template file
-	 * @param theOutputfile output file (null = template + ".out")
-	 * @param theStatus status (all (default), activeonly)
-	 * @param isEditor use editor only data?
-	 * @param isPrivateOnly use only private contacts?
+	 * @param theOutputfile output file
 	 * 
-	 * @version 0.8.0
-	 * @since 0.5.0
+	 * @version 0.9.0
+	 * @since 0.9.0
 	 */
-	public void listReferees(final String theDBPath, final String theDBFile, final String theSeason, 
-			final String theTemplatefile, final String theOutputfile, final String theStatus, final boolean isEditor, final boolean isPrivateOnly) {
+	public void assignmentOperation(final String theDBPath, final String theDBFile, final String theSeason, final String theTemplatefile, final String theOutputfile) {
 		
 		Constants.logger.debug("start.");
 		
 		Objects.requireNonNull(theTemplatefile, "template file must not be null");
+		Objects.requireNonNull(theOutputfile, "output file/path must not be null");
 		
 		Integer iSeason = (theSeason == null) ? SeasonModel.getCurrentStartYear() : Integer.valueOf(theSeason);
-		
+
 		Path pathDBFile = Paths.get((theDBPath == null) ? Prefs.get(PrefKey.PATH_DATABASE) : theDBPath,
 				String.format(((theDBFile == null) ? Prefs.get(PrefKey.FILENAME_PATTERN_DATABASE) : theDBFile), iSeason));
 		
-		String sOutFile = (theOutputfile == null) ? String.format("%s.out", theTemplatefile) : theOutputfile;
+		Path pathOut = Paths.get(theOutputfile);
 		
-		ArgumentStatusType argStatus = ArgumentStatusType.ALL;
-		try {
-			argStatus = ArgumentStatusType.fromValue(theStatus);
-		} catch (IllegalArgumentException e) {
-			// do nothing, remains "all"
-		}
-		
-		listReferees(pathDBFile, Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), theTemplatefile), Paths.get(sOutFile), argStatus, isEditor, isPrivateOnly);
+		assignmentOperation(pathDBFile, Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), theTemplatefile), pathOut);
 		
 		Constants.logger.debug("stop");
 		
 	}
 	
 	/**
-	 * Fills list of referees.
+	 * Executes assignment operation.
 	 * 
 	 * @param theDBPath database filename with path
 	 * @param theTemplatePath template file
 	 * @param theOutputPath output file
-	 * @param theStatus status
-	 * @param isEditor use editor only data?
-	 * @param isPrivateOnly use only private contacts?
+	 * @param theDBOperation database operation
 	 * 
-	 * @version 0.8.0
-	 * @since 0.5.0
+	 * @version 0.9.0
+	 * @since 0.9.0
 	 */
-	public void listReferees(final Path theDBPath, final Path theTemplatePath, final Path theOutputPath, 
-			final ArgumentStatusType theStatus, final boolean isEditor, final boolean isPrivateOnly) {
+	public void assignmentOperation(final Path theDBPath, final Path theTemplatePath, final Path theOutputPath) {
 		
 		Objects.requireNonNull(theDBPath, "database file path must not be null");
 		Objects.requireNonNull(theTemplatePath, "template file path must not be null");
 		Objects.requireNonNull(theOutputPath, "output file path must not be null");
-		Objects.requireNonNull(theStatus, "status must not be null");
 		
 		try {
 			
@@ -163,11 +156,58 @@ public class RefereeList extends AbstractMainClass {
 			final RefereeManager mgrData = JAXBFiles.unmarshal(theDBPath.toString(), RefereeManager.class);
 			
 			Constants.logger.debug("fill template.");
+
+			// start hack (venue list)
+			List<String> lstContent = new ArrayList<>();
 			
-			ContactModel.isPrivateOnly = isPrivateOnly;
-			List<String> lstFilled = TemplateHelper.fillTemplate(lstTemplate, mgrData, null, 0, theStatus, isEditor);
+			for (League league : ((ContentModel) mgrData.getContent()).getUsedLeagues()) {
+				lstContent.add(String.format("<!--\\league{-->%s<!--}-->", league.getDisplayTitle()));
+				lstContent.add("");
+				
+				for (Team team : ((ContentModel) mgrData.getContent()).getLocalHomeTeams(league)) {
+					lstContent.add(String.format("<!--\\club{-->%s<!--}-->", team.getDisplayTitle()));
+					lstContent.add("");
+					
+					PersonModel person = (PersonModel) team.getContactPerson();
+					if (person != null) {
+						lstContent.add("Kontakt");
+						lstContent.add(String.format(": %s", person.getDisplayTitle()));
+						
+						for (PhoneNumber phone : person.getPhoneNumber()) {
+							lstContent.add(String.format(": %s", phone.getDisplayTitle()));
+						}
+						for (EMail email : person.getEMail()) {
+							lstContent.add(String.format(": <!--\\href{-->mailto:%1$s<!--}{-->%1$s<!--}-->", email.getDisplayTitle()));
+						}
+						lstContent.add("");
+					}
+					
+					int venuecount = 0;
+					for (Venue venue : team.getVenue()) {
+						
+						venuecount++;
+						String sVenue = "";
+						if (team.getVenue().size() > 1) {
+							sVenue = String.format("Spiellokal %d: ", venuecount);
+						}
+						lstContent.add(String.format("%s%s", sVenue, venue.getTitle()));
+						
+						lstContent.add(String.format(": %s", venue.getDisplayTitle()));
+						lstContent.add("");
+					}
+					
+				}
+			}
 			
-			Constants.logger.debug(String.format("write referee list to '%s'.", theOutputPath.toString()));
+			List<String> lstFilled = new ArrayList<>();
+			
+			for (String theLine : lstTemplate) {
+				lstFilled.add(TemplateHelper.replaceTextAndConditions(theLine, "content", TemplateHelper.toText(lstContent)));
+			}
+			lstFilled = TemplateHelper.fillTemplate(lstFilled, mgrData, null, 0, ArgumentStatusType.ALL, true);
+			
+			// end hack
+			Constants.logger.debug(String.format("write assignment output to '%s'.", theOutputPath.toString()));
 			
 			FileAccess.writeFile(theOutputPath, lstFilled);
 			
