@@ -10,6 +10,7 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 
 import de.edgesoft.edgeutils.commandline.AbstractMainClass;
+import de.edgesoft.refereemanager.utils.Prefs;
 
 /**
  * Preferences operations.

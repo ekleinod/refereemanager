@@ -14,6 +14,7 @@ import de.edgesoft.refereemanager.utils.ArgumentCommunicationAction;
 import de.edgesoft.refereemanager.utils.ArgumentCommunicationRecipient;
 import de.edgesoft.refereemanager.utils.CommunicationHelper;
 import de.edgesoft.refereemanager.utils.PrefKey;
+import de.edgesoft.refereemanager.utils.Prefs;
 
 /**
  * Referee communication.

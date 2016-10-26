@@ -13,6 +13,7 @@ import de.edgesoft.refereemanager.model.ContactModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.utils.ArgumentStatusType;
 import de.edgesoft.refereemanager.utils.PrefKey;
+import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.TemplateHelper;
 
 /**

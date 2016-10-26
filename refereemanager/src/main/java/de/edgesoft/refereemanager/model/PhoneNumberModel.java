@@ -1,8 +1,8 @@
 package de.edgesoft.refereemanager.model;
 
-import de.edgesoft.refereemanager.Prefs;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.utils.PrefKey;
+import de.edgesoft.refereemanager.utils.Prefs;
 
 /**
  * PhoneNumber model, additional methods for jaxb model class.

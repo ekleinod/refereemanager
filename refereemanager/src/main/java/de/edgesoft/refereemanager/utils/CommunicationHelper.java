@@ -33,7 +33,6 @@ import javax.mail.internet.MimeMultipart;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.edgeutils.files.FileAccess;
-import de.edgesoft.refereemanager.Prefs;
 import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.EMail;

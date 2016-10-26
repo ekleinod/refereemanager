@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
-import de.edgesoft.refereemanager.Prefs;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;

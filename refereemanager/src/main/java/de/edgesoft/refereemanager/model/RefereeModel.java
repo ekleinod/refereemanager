@@ -4,10 +4,10 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
-import de.edgesoft.refereemanager.Prefs;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 import de.edgesoft.refereemanager.utils.PrefKey;
+import de.edgesoft.refereemanager.utils.Prefs;
 
 /**
  * Referee model, additional methods for jaxb model class.

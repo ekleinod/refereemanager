@@ -2,9 +2,9 @@ package de.edgesoft.refereemanager.model;
 
 import java.util.function.Predicate;
 
-import de.edgesoft.refereemanager.Prefs;
 import de.edgesoft.refereemanager.jaxb.Contact;
 import de.edgesoft.refereemanager.utils.PrefKey;
+import de.edgesoft.refereemanager.utils.Prefs;
 
 /**
  * Contact model, additional methods for jaxb model class.
