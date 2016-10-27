@@ -57,7 +57,7 @@
                 </Menu>
                 <Menu fx:id="mnuStatistics" text="_Statistik">
                   <items>
-                    <MenuItem fx:id="mnuStatisticsData" onAction="#handleEventStatistics" text="_Daten">
+                    <MenuItem fx:id="mnuStatisticsData" onAction="#handleStatisticsData" text="_Daten">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
@@ -99,7 +99,7 @@
                         <Tooltip text="Datei unter anderem Namen speichern..." />
                      </tooltip></Button>
                   <Separator prefWidth="10.0" />
-                  <Button fx:id="btnStatisticsData" mnemonicParsing="false" onAction="#handleEventStatistics">
+                  <Button fx:id="btnStatisticsData" mnemonicParsing="false" onAction="#handleStatisticsData">
                      <tooltip>
                         <Tooltip text="Ereignisstatistik anzeigen." />
                      </tooltip></Button>

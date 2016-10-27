@@ -3,10 +3,16 @@ package de.edgesoft.refereemanager.controller;
 import java.io.File;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
+import de.edgesoft.edgeutils.EdgeUtilsException;
+import de.edgesoft.edgeutils.commons.Info;
+import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.refereemanager.RefereeManager;
+import de.edgesoft.refereemanager.jaxb.Content;
+import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
@@ -25,10 +31,12 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -329,31 +337,26 @@ public class AppLayoutController {
 	 */
 	private void newData() {
 
-//		de.edgesoft.gebu.jaxb.Gebu dtaGebu = new ObjectFactory().createGebu();
-//
-//		Info info = new de.edgesoft.edgeutils.commons.ObjectFactory().createInfo();
-//
-//		info.setCreated(LocalDateTime.now());
-//		info.setModified(LocalDateTime.now());
-//		info.setAppversion(RefereeManager.VERSION);
-//		info.setDocversion(RefereeManager.VERSION);
-//		info.setCreator(RefereeManager.class.getCanonicalName());
-//
-//		dtaGebu.setInfo(info);
-//
-//		Content content = new ObjectFactory().createContent();
-//		dtaGebu.setContent(content);
-//
-//		AppModel.setData(dtaGebu);
-//
-//		AppModel.setFilename(null);
-//		AppModel.setModified(false);
-//		AppModel.setLegacy(false);
-//		setAppTitle();
-//
-//		if (ctlEventOverview != null) {
-//			ctlEventOverview.setTableItems();
-//		}
+		de.edgesoft.refereemanager.jaxb.RefereeManager dtaRefMan = new ObjectFactory().createRefereeManager();
+
+		Info info = new de.edgesoft.edgeutils.commons.ObjectFactory().createInfo();
+
+		info.setCreated(LocalDateTime.now());
+		info.setModified(LocalDateTime.now());
+		info.setAppversion(RefereeManager.VERSION);
+		info.setDocversion(RefereeManager.VERSION);
+		info.setCreator(RefereeManager.class.getCanonicalName());
+
+		dtaRefMan.setInfo(info);
+
+		Content content = new ObjectFactory().createContent();
+		dtaRefMan.setContent(content);
+
+		AppModel.setData(dtaRefMan);
+		AppModel.setFilename(null);
+		AppModel.setModified(false);
+
+		setAppTitle();
 
     }
 
@@ -388,37 +391,27 @@ public class AppLayoutController {
 	 */
 	private void openData(final String theFilename) {
 
-//		try {
-//
-//			de.edgesoft.gebu.jaxb.Gebu dtaGebu = JAXBFiles.unmarshal(theFilename, de.edgesoft.gebu.jaxb.Gebu.class);
-//
-//			AppModel.setData(dtaGebu);
-//			AppModel.setLegacy(false);
-//
-//			// legacy files?
-//			if (dtaGebu.getInfo() == null) {
-//				openLegacyData(theFilename);
-//			}
-//
-//			if (ctlEventOverview != null) {
-//				ctlEventOverview.setTableItems();
-//			}
-//
-//			AppModel.setFilename(theFilename);
-//			AppModel.setModified(false);
-//			setAppTitle();
-//
-//		} catch (EdgeUtilsException e) {
-//
-//	        AlertUtils.createAlert(AlertType.ERROR, primaryStage,
-//	        		"Datenfehler",
-//	        		"Ein Fehler ist beim Laden der Referee-Manager-Daten aufgetreten.",
-//	        		MessageFormat.format("{0}\nDas Programm wird ohne Daten fortgeführt.", e.getMessage()))
-//	        .showAndWait();
-//
-//	        newData();
-//
-//		}
+		try {
+
+			de.edgesoft.refereemanager.jaxb.RefereeManager dtaRefMan = JAXBFiles.unmarshal(theFilename, de.edgesoft.refereemanager.jaxb.RefereeManager.class);
+
+			AppModel.setData(dtaRefMan);
+			AppModel.setFilename(theFilename);
+			AppModel.setModified(false);
+
+			setAppTitle();
+
+		} catch (EdgeUtilsException e) {
+
+	        AlertUtils.createAlert(AlertType.ERROR, primaryStage,
+	        		"Datenfehler",
+	        		"Ein Fehler ist beim Laden der Referee-Manager-Daten aufgetreten.",
+	        		MessageFormat.format("{0}\nDas Programm wird ohne Daten fortgeführt.", e.getMessage()))
+	        .showAndWait();
+
+	        newData();
+
+		}
 
     }
 
@@ -433,30 +426,26 @@ public class AppLayoutController {
 	@FXML
 	private void handleProgramPreferences() {
 
-//    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PreferencesEditDialog");
-//    	AnchorPane preferencesDialog = (AnchorPane) pneLoad.getKey();
-//
-//        // Create the dialog Stage.
-//        Stage dialogStage = new Stage();
-//        dialogStage.setTitle("Einstellungen");
-//        dialogStage.initModality(Modality.WINDOW_MODAL);
-//        dialogStage.initOwner(primaryStage);
-//
-//        Scene scene = new Scene(preferencesDialog);
-//        dialogStage.setScene(scene);
-//
-//        // initialize controller
-//        PreferencesEditDialogController controller = pneLoad.getValue().getController();
-//        controller.setDialogStage(dialogStage);
-//
-//        // Show the dialog and wait until the user closes it
-//        dialogStage.showAndWait();
-//
-//        // reload display after changing preferences
-//        if (isDisplay.getValue() && controller.isOkClicked()) {
-//        	handleProgramDisplay();
-//        }
-//        setAppTitle();
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PreferencesDialog");
+    	AnchorPane preferencesDialog = (AnchorPane) pneLoad.getKey();
+
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Einstellungen");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(primaryStage);
+
+        Scene scene = new Scene(preferencesDialog);
+        dialogStage.setScene(scene);
+
+        // initialize controller
+        PreferencesDialogController controller = pneLoad.getValue().getController();
+        controller.setDialogStage(dialogStage);
+
+        // Show the dialog and wait until the user closes it
+        dialogStage.showAndWait();
+
+        setAppTitle();
 
 	}
 
@@ -589,35 +578,35 @@ public class AppLayoutController {
     }
 
 	/**
-	 * Event menu statistics.
+	 * Menu statistics -> data.
 	 *
-	 * Shows the event statistics.
+	 * Shows the data statistics.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-    private void handleEventStatistics() {
+    private void handleStatisticsData() {
 
-//    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventStatistics");
-//    	AnchorPane eventStatistics = (AnchorPane) pneLoad.getKey();
-//
-//        // Create the dialog Stage.
-//        Stage dialogStage = new Stage();
-//        dialogStage.setTitle("Ereignisstatistik");
-//        dialogStage.initModality(Modality.WINDOW_MODAL);
-//        dialogStage.initOwner(primaryStage);
-//
-//        Scene scene = new Scene(eventStatistics);
-//        dialogStage.setScene(scene);
-//
-//        // Set the events into the controller.
-//        EventStatisticsController controller = pneLoad.getValue().getController();
-//        controller.fillStatistics(AppModel.getData().getContent().getEvent());
-//        controller.setDialogStage(dialogStage);
-//
-//        // Show the dialog and wait until the user closes it
-//        dialogStage.show();
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("Statistics");
+    	AnchorPane statistics = (AnchorPane) pneLoad.getKey();
+
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Statistik");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(primaryStage);
+
+        Scene scene = new Scene(statistics);
+        dialogStage.setScene(scene);
+
+        // Set the events into the controller.
+        StatisticsController controller = pneLoad.getValue().getController();
+        controller.fillStatistics();
+        controller.setDialogStage(dialogStage);
+
+        // Show the dialog and wait until the user closes it
+        dialogStage.show();
 
     }
 
@@ -672,34 +661,33 @@ public class AppLayoutController {
 	 */
 	private void saveData(final String theFilename) {
 
-//		try {
-//
-//			AppModel.getData().getInfo().setModified(LocalDateTime.now());
-//			AppModel.getData().getInfo().setAppversion(RefereeManager.VERSION);
-//			AppModel.getData().getInfo().setDocversion(RefereeManager.VERSION);
-//			AppModel.getData().getInfo().setCreator(RefereeManager.class.getCanonicalName());
-//
+		try {
+
+			AppModel.getData().getInfo().setModified(LocalDateTime.now());
+			AppModel.getData().getInfo().setAppversion(RefereeManager.VERSION);
+			AppModel.getData().getInfo().setDocversion(RefereeManager.VERSION);
+			AppModel.getData().getInfo().setCreator(RefereeManager.class.getCanonicalName());
+
 //			((ContentModel) AppModel.getData().getContent()).sortEvents();
-//
+
 //			if (ctlEventOverview != null) {
 //				ctlEventOverview.setTableItems();
 //			}
-//
-//			JAXBFiles.marshal(new ObjectFactory().createGebu(AppModel.getData()), theFilename, null);
-//
-//			AppModel.setFilename(theFilename);
-//			AppModel.setModified(false);
-//			AppModel.setLegacy(false);
-//
-//		} catch (EdgeUtilsException e) {
-//
-//	        AlertUtils.createAlert(AlertType.ERROR, primaryStage,
-//	        		"Datenfehler",
-//	        		"Ein Fehler ist beim Speichern der Referee-Manager-Daten aufgetreten.",
-//	        		MessageFormat.format("{0}\nDie Daten wurden nicht gespeichert.", e.getMessage()))
-//	        .showAndWait();
-//
-//		}
+
+			JAXBFiles.marshal(new ObjectFactory().createRefereemanager(AppModel.getData()), theFilename, null);
+
+			AppModel.setFilename(theFilename);
+			AppModel.setModified(false);
+
+		} catch (EdgeUtilsException e) {
+
+	        AlertUtils.createAlert(AlertType.ERROR, primaryStage,
+	        		"Datenfehler",
+	        		"Ein Fehler ist beim Speichern der Referee-Manager-Daten aufgetreten.",
+	        		MessageFormat.format("{0}\nDie Daten wurden nicht gespeichert.", e.getMessage()))
+	        .showAndWait();
+
+		}
 
 		setAppTitle();
 
