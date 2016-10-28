@@ -1,11 +1,15 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleStringProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.commons.IDType;
+import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContactModel;
 import de.edgesoft.refereemanager.model.DateModel;
@@ -27,9 +31,9 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}IDType">
  *       &lt;sequence>
- *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="shorttitle" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="remark" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="title" type="{}StringProperty" minOccurs="0"/>
+ *         &lt;element name="shorttitle" type="{}StringProperty" minOccurs="0"/>
+ *         &lt;element name="remark" type="{}StringProperty" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -63,9 +67,15 @@ public abstract class TitledIDType
     extends IDType
 {
 
-    protected String title;
-    protected String shorttitle;
-    protected String remark;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty title;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty shorttitle;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty remark;
 
     /**
      * Gets the value of the title property.
@@ -75,7 +85,7 @@ public abstract class TitledIDType
      *     {@link String }
      *     
      */
-    public String getTitle() {
+    public SimpleStringProperty getTitle() {
         return title;
     }
 
@@ -87,7 +97,7 @@ public abstract class TitledIDType
      *     {@link String }
      *     
      */
-    public void setTitle(String value) {
+    public void setTitle(SimpleStringProperty value) {
         this.title = value;
     }
 
@@ -99,7 +109,7 @@ public abstract class TitledIDType
      *     {@link String }
      *     
      */
-    public String getShorttitle() {
+    public SimpleStringProperty getShorttitle() {
         return shorttitle;
     }
 
@@ -111,7 +121,7 @@ public abstract class TitledIDType
      *     {@link String }
      *     
      */
-    public void setShorttitle(String value) {
+    public void setShorttitle(SimpleStringProperty value) {
         this.shorttitle = value;
     }
 
@@ -123,7 +133,7 @@ public abstract class TitledIDType
      *     {@link String }
      *     
      */
-    public String getRemark() {
+    public SimpleStringProperty getRemark() {
         return remark;
     }
 
@@ -135,7 +145,7 @@ public abstract class TitledIDType
      *     {@link String }
      *     
      */
-    public void setRemark(String value) {
+    public void setRemark(SimpleStringProperty value) {
         this.remark = value;
     }
 

@@ -1,13 +1,16 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
 
 
 /**
@@ -20,10 +23,10 @@ import de.edgesoft.edgeutils.commons.ModelClass;
  *   &lt;complexContent>
  *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
- *         &lt;element name="saturday" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="sunday" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="tournament_only" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="league_games_only" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="saturday" type="{}BooleanProperty" minOccurs="0"/>
+ *         &lt;element name="sunday" type="{}BooleanProperty" minOccurs="0"/>
+ *         &lt;element name="tournament_only" type="{}BooleanProperty" minOccurs="0"/>
+ *         &lt;element name="league_games_only" type="{}BooleanProperty" minOccurs="0"/>
  *         &lt;element name="club" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *         &lt;element name="league" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *         &lt;element name="sex_type" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
@@ -49,12 +52,22 @@ public class Wish
     extends ModelClass
 {
 
-    protected Boolean saturday;
-    protected Boolean sunday;
-    @XmlElement(name = "tournament_only")
-    protected Boolean tournamentOnly;
-    @XmlElement(name = "league_games_only")
-    protected Boolean leagueGamesOnly;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty saturday;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty sunday;
+    @XmlElement(name = "tournament_only", type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty tournamentOnly;
+    @XmlElement(name = "league_games_only", type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty leagueGamesOnly;
     @XmlElement(type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -73,10 +86,10 @@ public class Wish
      * 
      * @return
      *     possible object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public Boolean isSaturday() {
+    public SimpleBooleanProperty getSaturday() {
         return saturday;
     }
 
@@ -85,10 +98,10 @@ public class Wish
      * 
      * @param value
      *     allowed object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public void setSaturday(Boolean value) {
+    public void setSaturday(SimpleBooleanProperty value) {
         this.saturday = value;
     }
 
@@ -97,10 +110,10 @@ public class Wish
      * 
      * @return
      *     possible object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public Boolean isSunday() {
+    public SimpleBooleanProperty getSunday() {
         return sunday;
     }
 
@@ -109,10 +122,10 @@ public class Wish
      * 
      * @param value
      *     allowed object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public void setSunday(Boolean value) {
+    public void setSunday(SimpleBooleanProperty value) {
         this.sunday = value;
     }
 
@@ -121,10 +134,10 @@ public class Wish
      * 
      * @return
      *     possible object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public Boolean isTournamentOnly() {
+    public SimpleBooleanProperty getTournamentOnly() {
         return tournamentOnly;
     }
 
@@ -133,10 +146,10 @@ public class Wish
      * 
      * @param value
      *     allowed object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public void setTournamentOnly(Boolean value) {
+    public void setTournamentOnly(SimpleBooleanProperty value) {
         this.tournamentOnly = value;
     }
 
@@ -145,10 +158,10 @@ public class Wish
      * 
      * @return
      *     possible object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public Boolean isLeagueGamesOnly() {
+    public SimpleBooleanProperty getLeagueGamesOnly() {
         return leagueGamesOnly;
     }
 
@@ -157,10 +170,10 @@ public class Wish
      * 
      * @param value
      *     allowed object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public void setLeagueGamesOnly(Boolean value) {
+    public void setLeagueGamesOnly(SimpleBooleanProperty value) {
         this.leagueGamesOnly = value;
     }
 

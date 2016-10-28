@@ -1,10 +1,13 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleStringProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.ContactModel;
 
 
@@ -18,7 +21,7 @@ import de.edgesoft.refereemanager.model.ContactModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}Contact">
  *       &lt;sequence>
- *         &lt;element name="e_mail" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="e_mail" type="{}StringProperty"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -35,8 +38,9 @@ public class EMail
     extends ContactModel
 {
 
-    @XmlElement(name = "e_mail", required = true)
-    protected String eMail;
+    @XmlElement(name = "e_mail", required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty eMail;
 
     /**
      * Gets the value of the eMail property.
@@ -46,7 +50,7 @@ public class EMail
      *     {@link String }
      *     
      */
-    public String getEMail() {
+    public SimpleStringProperty getEMail() {
         return eMail;
     }
 
@@ -58,7 +62,7 @@ public class EMail
      *     {@link String }
      *     
      */
-    public void setEMail(String value) {
+    public void setEMail(SimpleStringProperty value) {
         this.eMail = value;
     }
 

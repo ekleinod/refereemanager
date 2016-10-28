@@ -29,7 +29,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 <project name="refereemanager" default="help" basedir=".">
 
-	<property name="edgeutils:path" value="../../../../edgeutils/jaxb" />
+	<property name="edgeutils:path" value="../../../../submodules/edgeutils/jaxb" />
 	<import file="${edgeutils:path}/ant-commons.xml"/>
 
 	<property name="refman:xsd" value="refereemanager.xsd" />

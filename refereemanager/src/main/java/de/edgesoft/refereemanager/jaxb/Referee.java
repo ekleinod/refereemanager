@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.jaxb;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.SimpleBooleanProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -10,6 +11,8 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
 import de.edgesoft.refereemanager.model.WishModel;
@@ -25,8 +28,8 @@ import de.edgesoft.refereemanager.model.WishModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}Person">
  *       &lt;sequence>
- *         &lt;element name="docs_by_letter" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="revoke_license" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="docs_by_letter" type="{}BooleanProperty"/>
+ *         &lt;element name="revoke_license" type="{}BooleanProperty" minOccurs="0"/>
  *         &lt;element name="training_level" type="{}TrainingLevel" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="prefer" type="{}Wish" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="avoid" type="{}Wish" maxOccurs="unbounded" minOccurs="0"/>
@@ -59,10 +62,14 @@ public class Referee
     extends PersonModel
 {
 
-    @XmlElement(name = "docs_by_letter")
-    protected boolean docsByLetter;
-    @XmlElement(name = "revoke_license")
-    protected Boolean revokeLicense;
+    @XmlElement(name = "docs_by_letter", required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty docsByLetter;
+    @XmlElement(name = "revoke_license", type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty revokeLicense;
     @XmlElement(name = "training_level", type = TrainingLevelModel.class)
     protected List<TrainingLevel> trainingLevel;
     @XmlElement(type = WishModel.class)
@@ -85,16 +92,24 @@ public class Referee
     /**
      * Gets the value of the docsByLetter property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public boolean isDocsByLetter() {
+    public SimpleBooleanProperty getDocsByLetter() {
         return docsByLetter;
     }
 
     /**
      * Sets the value of the docsByLetter property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setDocsByLetter(boolean value) {
+    public void setDocsByLetter(SimpleBooleanProperty value) {
         this.docsByLetter = value;
     }
 
@@ -103,10 +118,10 @@ public class Referee
      * 
      * @return
      *     possible object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public Boolean isRevokeLicense() {
+    public SimpleBooleanProperty getRevokeLicense() {
         return revokeLicense;
     }
 
@@ -115,10 +130,10 @@ public class Referee
      * 
      * @param value
      *     allowed object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public void setRevokeLicense(Boolean value) {
+    public void setRevokeLicense(SimpleBooleanProperty value) {
         this.revokeLicense = value;
     }
 

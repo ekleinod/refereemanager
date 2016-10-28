@@ -3,12 +3,17 @@ package de.edgesoft.refereemanager.jaxb;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.model.URLModel;
 
@@ -23,8 +28,8 @@ import de.edgesoft.refereemanager.model.URLModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="local" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="filename" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="local" type="{}BooleanProperty" minOccurs="0"/>
+ *         &lt;element name="filename" type="{}StringProperty" minOccurs="0"/>
  *         &lt;element name="venue" type="{}Venue" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contact_person" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
@@ -48,8 +53,13 @@ public class Club
     extends TitledIDTypeModel
 {
 
-    protected Boolean local;
-    protected String filename;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty local;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty filename;
     protected List<Venue> venue;
     @XmlElement(name = "u_r_l", type = URLModel.class)
     protected List<URL> url;
@@ -63,10 +73,10 @@ public class Club
      * 
      * @return
      *     possible object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public Boolean isLocal() {
+    public SimpleBooleanProperty getLocal() {
         return local;
     }
 
@@ -75,10 +85,10 @@ public class Club
      * 
      * @param value
      *     allowed object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public void setLocal(Boolean value) {
+    public void setLocal(SimpleBooleanProperty value) {
         this.local = value;
     }
 
@@ -90,7 +100,7 @@ public class Club
      *     {@link String }
      *     
      */
-    public String getFilename() {
+    public SimpleStringProperty getFilename() {
         return filename;
     }
 
@@ -102,7 +112,7 @@ public class Club
      *     {@link String }
      *     
      */
-    public void setFilename(String value) {
+    public void setFilename(SimpleStringProperty value) {
         this.filename = value;
     }
 

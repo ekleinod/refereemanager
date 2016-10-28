@@ -1,11 +1,15 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
 
 
 /**
@@ -18,10 +22,10 @@ import de.edgesoft.edgeutils.commons.ModelClass;
  *   &lt;complexContent>
  *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
- *         &lt;element name="points_written" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="points_practical" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="points_oral" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="points" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="points_written" type="{}IntegerProperty"/>
+ *         &lt;element name="points_practical" type="{}IntegerProperty"/>
+ *         &lt;element name="points_oral" type="{}IntegerProperty"/>
+ *         &lt;element name="points" type="{}IntegerProperty"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -41,75 +45,116 @@ public class Exam
     extends ModelClass
 {
 
-    @XmlElement(name = "points_written")
-    protected int pointsWritten;
-    @XmlElement(name = "points_practical")
-    protected int pointsPractical;
-    @XmlElement(name = "points_oral")
-    protected int pointsOral;
-    protected int points;
+    @XmlElement(name = "points_written", required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty pointsWritten;
+    @XmlElement(name = "points_practical", required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty pointsPractical;
+    @XmlElement(name = "points_oral", required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty pointsOral;
+    @XmlElement(required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty points;
 
     /**
      * Gets the value of the pointsWritten property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getPointsWritten() {
+    public SimpleIntegerProperty getPointsWritten() {
         return pointsWritten;
     }
 
     /**
      * Sets the value of the pointsWritten property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setPointsWritten(int value) {
+    public void setPointsWritten(SimpleIntegerProperty value) {
         this.pointsWritten = value;
     }
 
     /**
      * Gets the value of the pointsPractical property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getPointsPractical() {
+    public SimpleIntegerProperty getPointsPractical() {
         return pointsPractical;
     }
 
     /**
      * Sets the value of the pointsPractical property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setPointsPractical(int value) {
+    public void setPointsPractical(SimpleIntegerProperty value) {
         this.pointsPractical = value;
     }
 
     /**
      * Gets the value of the pointsOral property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getPointsOral() {
+    public SimpleIntegerProperty getPointsOral() {
         return pointsOral;
     }
 
     /**
      * Sets the value of the pointsOral property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setPointsOral(int value) {
+    public void setPointsOral(SimpleIntegerProperty value) {
         this.pointsOral = value;
     }
 
     /**
      * Gets the value of the points property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getPoints() {
+    public SimpleIntegerProperty getPoints() {
         return points;
     }
 
     /**
      * Sets the value of the points property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setPoints(int value) {
+    public void setPoints(SimpleIntegerProperty value) {
         this.points = value;
     }
 

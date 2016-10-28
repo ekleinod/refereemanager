@@ -1,9 +1,9 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.SimpleObjectProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.commons.ModelClass;
-import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateAdapter;
 
 
 /**
@@ -25,8 +25,8 @@ import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
  *   &lt;complexContent>
  *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
- *         &lt;element name="since" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
- *         &lt;element name="update" type="{http://www.w3.org/2001/XMLSchema}date" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="since" type="{}LocalDateProperty" minOccurs="0"/>
+ *         &lt;element name="update" type="{}LocalDateProperty" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -47,13 +47,13 @@ public class TrainingLevel
 {
 
     @XmlElement(type = String.class)
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    @XmlJavaTypeAdapter(SimpleObjectPropertyLocalDateAdapter.class)
     @XmlSchemaType(name = "date")
-    protected LocalDate since;
+    protected SimpleObjectProperty since;
     @XmlElement(type = String.class)
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    @XmlJavaTypeAdapter(SimpleObjectPropertyLocalDateAdapter.class)
     @XmlSchemaType(name = "date")
-    protected List<LocalDate> update;
+    protected List<SimpleObjectProperty> update;
     @XmlElement(required = true, type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -67,7 +67,7 @@ public class TrainingLevel
      *     {@link String }
      *     
      */
-    public LocalDate getSince() {
+    public SimpleObjectProperty getSince() {
         return since;
     }
 
@@ -79,7 +79,7 @@ public class TrainingLevel
      *     {@link String }
      *     
      */
-    public void setSince(LocalDate value) {
+    public void setSince(SimpleObjectProperty value) {
         this.since = value;
     }
 
@@ -105,9 +105,9 @@ public class TrainingLevel
      * 
      * 
      */
-    public List<LocalDate> getUpdate() {
+    public List<SimpleObjectProperty> getUpdate() {
         if (update == null) {
-            update = new ArrayList<LocalDate>();
+            update = new ArrayList<SimpleObjectProperty>();
         }
         return this.update;
     }

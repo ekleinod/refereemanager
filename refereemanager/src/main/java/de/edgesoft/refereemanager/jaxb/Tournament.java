@@ -3,12 +3,15 @@ package de.edgesoft.refereemanager.jaxb;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.DateModel;
 
 
@@ -22,9 +25,9 @@ import de.edgesoft.refereemanager.model.DateModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}Date">
  *       &lt;sequence>
- *         &lt;element name="announcement_u_r_l" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
- *         &lt;element name="information_u_r_l" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
- *         &lt;element name="result_u_r_l" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
+ *         &lt;element name="announcement_u_r_l" type="{}StringProperty" minOccurs="0"/>
+ *         &lt;element name="information_u_r_l" type="{}StringProperty" minOccurs="0"/>
+ *         &lt;element name="result_u_r_l" type="{}StringProperty" minOccurs="0"/>
  *         &lt;element name="referee_quantity" type="{}RefereeQuantity" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="organizing_club" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *         &lt;element name="organizer" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
@@ -49,15 +52,15 @@ public class Tournament
     extends DateModel
 {
 
-    @XmlElement(name = "announcement_u_r_l")
-    @XmlSchemaType(name = "anyURI")
-    protected String announcementURL;
-    @XmlElement(name = "information_u_r_l")
-    @XmlSchemaType(name = "anyURI")
-    protected String informationURL;
-    @XmlElement(name = "result_u_r_l")
-    @XmlSchemaType(name = "anyURI")
-    protected String resultURL;
+    @XmlElement(name = "announcement_u_r_l", type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty announcementURL;
+    @XmlElement(name = "information_u_r_l", type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty informationURL;
+    @XmlElement(name = "result_u_r_l", type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty resultURL;
     @XmlElement(name = "referee_quantity")
     protected List<RefereeQuantity> refereeQuantity;
     @XmlElement(name = "organizing_club", type = Object.class)
@@ -77,7 +80,7 @@ public class Tournament
      *     {@link String }
      *     
      */
-    public String getAnnouncementURL() {
+    public SimpleStringProperty getAnnouncementURL() {
         return announcementURL;
     }
 
@@ -89,7 +92,7 @@ public class Tournament
      *     {@link String }
      *     
      */
-    public void setAnnouncementURL(String value) {
+    public void setAnnouncementURL(SimpleStringProperty value) {
         this.announcementURL = value;
     }
 
@@ -101,7 +104,7 @@ public class Tournament
      *     {@link String }
      *     
      */
-    public String getInformationURL() {
+    public SimpleStringProperty getInformationURL() {
         return informationURL;
     }
 
@@ -113,7 +116,7 @@ public class Tournament
      *     {@link String }
      *     
      */
-    public void setInformationURL(String value) {
+    public void setInformationURL(SimpleStringProperty value) {
         this.informationURL = value;
     }
 
@@ -125,7 +128,7 @@ public class Tournament
      *     {@link String }
      *     
      */
-    public String getResultURL() {
+    public SimpleStringProperty getResultURL() {
         return resultURL;
     }
 
@@ -137,7 +140,7 @@ public class Tournament
      *     {@link String }
      *     
      */
-    public void setResultURL(String value) {
+    public void setResultURL(SimpleStringProperty value) {
         this.resultURL = value;
     }
 

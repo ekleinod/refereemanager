@@ -1,11 +1,14 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleStringProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.ContactModel;
 
 
@@ -19,10 +22,10 @@ import de.edgesoft.refereemanager.model.ContactModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}Contact">
  *       &lt;sequence>
- *         &lt;element name="street" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="number" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="zip_code" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="street" type="{}StringProperty"/>
+ *         &lt;element name="number" type="{}StringProperty" minOccurs="0"/>
+ *         &lt;element name="zip_code" type="{}StringProperty" minOccurs="0"/>
+ *         &lt;element name="city" type="{}StringProperty"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -45,13 +48,18 @@ public class Address
     extends ContactModel
 {
 
-    @XmlElement(required = true)
-    protected String street;
-    protected String number;
-    @XmlElement(name = "zip_code")
-    protected String zipCode;
-    @XmlElement(required = true)
-    protected String city;
+    @XmlElement(required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty street;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty number;
+    @XmlElement(name = "zip_code", type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty zipCode;
+    @XmlElement(required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty city;
 
     /**
      * Gets the value of the street property.
@@ -61,7 +69,7 @@ public class Address
      *     {@link String }
      *     
      */
-    public String getStreet() {
+    public SimpleStringProperty getStreet() {
         return street;
     }
 
@@ -73,7 +81,7 @@ public class Address
      *     {@link String }
      *     
      */
-    public void setStreet(String value) {
+    public void setStreet(SimpleStringProperty value) {
         this.street = value;
     }
 
@@ -85,7 +93,7 @@ public class Address
      *     {@link String }
      *     
      */
-    public String getNumber() {
+    public SimpleStringProperty getNumber() {
         return number;
     }
 
@@ -97,7 +105,7 @@ public class Address
      *     {@link String }
      *     
      */
-    public void setNumber(String value) {
+    public void setNumber(SimpleStringProperty value) {
         this.number = value;
     }
 
@@ -109,7 +117,7 @@ public class Address
      *     {@link String }
      *     
      */
-    public String getZipCode() {
+    public SimpleStringProperty getZipCode() {
         return zipCode;
     }
 
@@ -121,7 +129,7 @@ public class Address
      *     {@link String }
      *     
      */
-    public void setZipCode(String value) {
+    public void setZipCode(SimpleStringProperty value) {
         this.zipCode = value;
     }
 
@@ -133,7 +141,7 @@ public class Address
      *     {@link String }
      *     
      */
-    public String getCity() {
+    public SimpleStringProperty getCity() {
         return city;
     }
 
@@ -145,7 +153,7 @@ public class Address
      *     {@link String }
      *     
      */
-    public void setCity(String value) {
+    public void setCity(SimpleStringProperty value) {
         this.city = value;
     }
 

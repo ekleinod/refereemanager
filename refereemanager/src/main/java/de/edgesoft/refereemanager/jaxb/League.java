@@ -3,6 +3,9 @@ package de.edgesoft.refereemanager.jaxb;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -11,6 +14,10 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
@@ -24,10 +31,10 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="rank" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="national" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="results" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
- *         &lt;element name="referee_report" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
+ *         &lt;element name="rank" type="{}IntegerProperty"/>
+ *         &lt;element name="national" type="{}BooleanProperty" minOccurs="0"/>
+ *         &lt;element name="results" type="{}StringProperty"/>
+ *         &lt;element name="referee_report" type="{}StringProperty"/>
  *         &lt;element name="referee_quantity" type="{}RefereeQuantity" maxOccurs="unbounded"/>
  *         &lt;element name="sex_type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="referee_report_recipient" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded"/>
@@ -53,14 +60,20 @@ public class League
     extends TitledIDTypeModel
 {
 
-    protected int rank;
-    protected Boolean national;
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String results;
-    @XmlElement(name = "referee_report", required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String refereeReport;
+    @XmlElement(required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty rank;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty national;
+    @XmlElement(required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty results;
+    @XmlElement(name = "referee_report", required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty refereeReport;
     @XmlElement(name = "referee_quantity", required = true)
     protected List<RefereeQuantity> refereeQuantity;
     @XmlElement(name = "sex_type", required = true, type = Object.class)
@@ -73,16 +86,24 @@ public class League
     /**
      * Gets the value of the rank property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getRank() {
+    public SimpleIntegerProperty getRank() {
         return rank;
     }
 
     /**
      * Sets the value of the rank property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setRank(int value) {
+    public void setRank(SimpleIntegerProperty value) {
         this.rank = value;
     }
 
@@ -91,10 +112,10 @@ public class League
      * 
      * @return
      *     possible object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public Boolean isNational() {
+    public SimpleBooleanProperty getNational() {
         return national;
     }
 
@@ -103,10 +124,10 @@ public class League
      * 
      * @param value
      *     allowed object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public void setNational(Boolean value) {
+    public void setNational(SimpleBooleanProperty value) {
         this.national = value;
     }
 
@@ -118,7 +139,7 @@ public class League
      *     {@link String }
      *     
      */
-    public String getResults() {
+    public SimpleStringProperty getResults() {
         return results;
     }
 
@@ -130,7 +151,7 @@ public class League
      *     {@link String }
      *     
      */
-    public void setResults(String value) {
+    public void setResults(SimpleStringProperty value) {
         this.results = value;
     }
 
@@ -142,7 +163,7 @@ public class League
      *     {@link String }
      *     
      */
-    public String getRefereeReport() {
+    public SimpleStringProperty getRefereeReport() {
         return refereeReport;
     }
 
@@ -154,7 +175,7 @@ public class League
      *     {@link String }
      *     
      */
-    public void setRefereeReport(String value) {
+    public void setRefereeReport(SimpleStringProperty value) {
         this.refereeReport = value;
     }
 

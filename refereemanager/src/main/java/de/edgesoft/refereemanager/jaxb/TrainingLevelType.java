@@ -1,10 +1,14 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
@@ -18,8 +22,8 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="rank" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="update_interval" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="rank" type="{}IntegerProperty"/>
+ *         &lt;element name="update_interval" type="{}IntegerProperty"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -37,39 +41,60 @@ public class TrainingLevelType
     extends TitledIDTypeModel
 {
 
-    protected int rank;
-    @XmlElement(name = "update_interval")
-    protected int updateInterval;
+    @XmlElement(required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty rank;
+    @XmlElement(name = "update_interval", required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty updateInterval;
 
     /**
      * Gets the value of the rank property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getRank() {
+    public SimpleIntegerProperty getRank() {
         return rank;
     }
 
     /**
      * Sets the value of the rank property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setRank(int value) {
+    public void setRank(SimpleIntegerProperty value) {
         this.rank = value;
     }
 
     /**
      * Gets the value of the updateInterval property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getUpdateInterval() {
+    public SimpleIntegerProperty getUpdateInterval() {
         return updateInterval;
     }
 
     /**
      * Sets the value of the updateInterval property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setUpdateInterval(int value) {
+    public void setUpdateInterval(SimpleIntegerProperty value) {
         this.updateInterval = value;
     }
 

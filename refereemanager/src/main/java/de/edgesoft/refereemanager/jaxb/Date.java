@@ -1,7 +1,7 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
-import java.time.LocalDateTime;
+import javafx.beans.property.SimpleObjectProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import de.edgesoft.edgeutils.commons.ext.LocalDateTimeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateTimeAdapter;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
@@ -24,8 +24,8 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="start" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
- *         &lt;element name="end" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+ *         &lt;element name="start" type="{}LocalDateTimeProperty"/>
+ *         &lt;element name="end" type="{}LocalDateTimeProperty" minOccurs="0"/>
  *         &lt;element name="venue" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -50,13 +50,13 @@ public class Date
 {
 
     @XmlElement(required = true, type = String.class)
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    @XmlJavaTypeAdapter(SimpleObjectPropertyLocalDateTimeAdapter.class)
     @XmlSchemaType(name = "dateTime")
-    protected LocalDateTime start;
+    protected SimpleObjectProperty start;
     @XmlElement(type = String.class)
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    @XmlJavaTypeAdapter(SimpleObjectPropertyLocalDateTimeAdapter.class)
     @XmlSchemaType(name = "dateTime")
-    protected LocalDateTime end;
+    protected SimpleObjectProperty end;
     @XmlElement(type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -70,7 +70,7 @@ public class Date
      *     {@link String }
      *     
      */
-    public LocalDateTime getStart() {
+    public SimpleObjectProperty getStart() {
         return start;
     }
 
@@ -82,7 +82,7 @@ public class Date
      *     {@link String }
      *     
      */
-    public void setStart(LocalDateTime value) {
+    public void setStart(SimpleObjectProperty value) {
         this.start = value;
     }
 
@@ -94,7 +94,7 @@ public class Date
      *     {@link String }
      *     
      */
-    public LocalDateTime getEnd() {
+    public SimpleObjectProperty getEnd() {
         return end;
     }
 
@@ -106,7 +106,7 @@ public class Date
      *     {@link String }
      *     
      */
-    public void setEnd(LocalDateTime value) {
+    public void setEnd(SimpleObjectProperty value) {
         this.end = value;
     }
 

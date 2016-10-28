@@ -1,11 +1,13 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleStringProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.ContactModel;
 
 
@@ -19,7 +21,7 @@ import de.edgesoft.refereemanager.model.ContactModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}Contact">
  *       &lt;sequence>
- *         &lt;element name="u_r_l" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
+ *         &lt;element name="u_r_l" type="{}StringProperty"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -36,9 +38,9 @@ public class URL
     extends ContactModel
 {
 
-    @XmlElement(name = "u_r_l", required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String url;
+    @XmlElement(name = "u_r_l", required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty url;
 
     /**
      * Gets the value of the url property.
@@ -48,7 +50,7 @@ public class URL
      *     {@link String }
      *     
      */
-    public String getURL() {
+    public SimpleStringProperty getURL() {
         return url;
     }
 
@@ -60,7 +62,7 @@ public class URL
      *     {@link String }
      *     
      */
-    public void setURL(String value) {
+    public void setURL(SimpleStringProperty value) {
         this.url = value;
     }
 

@@ -1,13 +1,16 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
 
 
 /**
@@ -20,7 +23,7 @@ import de.edgesoft.edgeutils.commons.ModelClass;
  *   &lt;complexContent>
  *     &lt;extension base="{}ModelClass">
  *       &lt;sequence>
- *         &lt;element name="quantity" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="quantity" type="{}IntegerProperty"/>
  *         &lt;element name="referee_assigment_type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -39,7 +42,10 @@ public class RefereeQuantity
     extends ModelClass
 {
 
-    protected int quantity;
+    @XmlElement(required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty quantity;
     @XmlElement(name = "referee_assigment_type", required = true, type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -48,16 +54,24 @@ public class RefereeQuantity
     /**
      * Gets the value of the quantity property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getQuantity() {
+    public SimpleIntegerProperty getQuantity() {
         return quantity;
     }
 
     /**
      * Sets the value of the quantity property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setQuantity(int value) {
+    public void setQuantity(SimpleIntegerProperty value) {
         this.quantity = value;
     }
 

@@ -1,10 +1,13 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleStringProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.ContactModel;
 
 
@@ -18,9 +21,9 @@ import de.edgesoft.refereemanager.model.ContactModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}Contact">
  *       &lt;sequence>
- *         &lt;element name="country_code" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="area_code" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="number" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="country_code" type="{}StringProperty" minOccurs="0"/>
+ *         &lt;element name="area_code" type="{}StringProperty" minOccurs="0"/>
+ *         &lt;element name="number" type="{}StringProperty"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -39,12 +42,15 @@ public class PhoneNumber
     extends ContactModel
 {
 
-    @XmlElement(name = "country_code", required = true)
-    protected String countryCode;
-    @XmlElement(name = "area_code", required = true)
-    protected String areaCode;
-    @XmlElement(required = true)
-    protected String number;
+    @XmlElement(name = "country_code", type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty countryCode;
+    @XmlElement(name = "area_code", type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty areaCode;
+    @XmlElement(required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty number;
 
     /**
      * Gets the value of the countryCode property.
@@ -54,7 +60,7 @@ public class PhoneNumber
      *     {@link String }
      *     
      */
-    public String getCountryCode() {
+    public SimpleStringProperty getCountryCode() {
         return countryCode;
     }
 
@@ -66,7 +72,7 @@ public class PhoneNumber
      *     {@link String }
      *     
      */
-    public void setCountryCode(String value) {
+    public void setCountryCode(SimpleStringProperty value) {
         this.countryCode = value;
     }
 
@@ -78,7 +84,7 @@ public class PhoneNumber
      *     {@link String }
      *     
      */
-    public String getAreaCode() {
+    public SimpleStringProperty getAreaCode() {
         return areaCode;
     }
 
@@ -90,7 +96,7 @@ public class PhoneNumber
      *     {@link String }
      *     
      */
-    public void setAreaCode(String value) {
+    public void setAreaCode(SimpleStringProperty value) {
         this.areaCode = value;
     }
 
@@ -102,7 +108,7 @@ public class PhoneNumber
      *     {@link String }
      *     
      */
-    public String getNumber() {
+    public SimpleStringProperty getNumber() {
         return number;
     }
 
@@ -114,7 +120,7 @@ public class PhoneNumber
      *     {@link String }
      *     
      */
-    public void setNumber(String value) {
+    public void setNumber(SimpleStringProperty value) {
         this.number = value;
     }
 

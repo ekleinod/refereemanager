@@ -1,9 +1,10 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,7 +13,8 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import de.edgesoft.edgeutils.commons.ext.LocalDateAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.PhoneNumberModel;
@@ -31,10 +33,10 @@ import de.edgesoft.refereemanager.model.URLModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="first_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="birthday" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
- *         &lt;element name="day_of_death" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
+ *         &lt;element name="first_name" type="{}StringProperty" minOccurs="0"/>
+ *         &lt;element name="name" type="{}StringProperty"/>
+ *         &lt;element name="birthday" type="{}LocalDateProperty" minOccurs="0"/>
+ *         &lt;element name="day_of_death" type="{}LocalDateProperty" minOccurs="0"/>
  *         &lt;element name="picture" type="{}Picture" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="e_mail" type="{}EMail" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="address" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
@@ -69,18 +71,20 @@ public class Person
     extends TitledIDTypeModel
 {
 
-    @XmlElement(name = "first_name")
-    protected String firstName;
-    @XmlElement(required = true)
-    protected String name;
+    @XmlElement(name = "first_name", type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty firstName;
+    @XmlElement(required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty name;
     @XmlElement(type = String.class)
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    @XmlJavaTypeAdapter(SimpleObjectPropertyLocalDateAdapter.class)
     @XmlSchemaType(name = "date")
-    protected LocalDate birthday;
+    protected SimpleObjectProperty birthday;
     @XmlElement(name = "day_of_death", type = String.class)
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    @XmlJavaTypeAdapter(SimpleObjectPropertyLocalDateAdapter.class)
     @XmlSchemaType(name = "date")
-    protected LocalDate dayOfDeath;
+    protected SimpleObjectProperty dayOfDeath;
     protected List<Picture> picture;
     @XmlElement(name = "e_mail", type = EMailModel.class)
     protected List<EMail> eMail;
@@ -103,7 +107,7 @@ public class Person
      *     {@link String }
      *     
      */
-    public String getFirstName() {
+    public SimpleStringProperty getFirstName() {
         return firstName;
     }
 
@@ -115,7 +119,7 @@ public class Person
      *     {@link String }
      *     
      */
-    public void setFirstName(String value) {
+    public void setFirstName(SimpleStringProperty value) {
         this.firstName = value;
     }
 
@@ -127,7 +131,7 @@ public class Person
      *     {@link String }
      *     
      */
-    public String getName() {
+    public SimpleStringProperty getName() {
         return name;
     }
 
@@ -139,7 +143,7 @@ public class Person
      *     {@link String }
      *     
      */
-    public void setName(String value) {
+    public void setName(SimpleStringProperty value) {
         this.name = value;
     }
 
@@ -151,7 +155,7 @@ public class Person
      *     {@link String }
      *     
      */
-    public LocalDate getBirthday() {
+    public SimpleObjectProperty getBirthday() {
         return birthday;
     }
 
@@ -163,7 +167,7 @@ public class Person
      *     {@link String }
      *     
      */
-    public void setBirthday(LocalDate value) {
+    public void setBirthday(SimpleObjectProperty value) {
         this.birthday = value;
     }
 
@@ -175,7 +179,7 @@ public class Person
      *     {@link String }
      *     
      */
-    public LocalDate getDayOfDeath() {
+    public SimpleObjectProperty getDayOfDeath() {
         return dayOfDeath;
     }
 
@@ -187,7 +191,7 @@ public class Person
      *     {@link String }
      *     
      */
-    public void setDayOfDeath(LocalDate value) {
+    public void setDayOfDeath(SimpleObjectProperty value) {
         this.dayOfDeath = value;
     }
 

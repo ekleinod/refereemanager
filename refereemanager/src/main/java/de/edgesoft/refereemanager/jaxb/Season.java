@@ -1,10 +1,14 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
@@ -18,7 +22,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="start_year" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="start_year" type="{}IntegerProperty" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -35,18 +39,20 @@ public class Season
     extends TitledIDTypeModel
 {
 
-    @XmlElement(name = "start_year")
-    protected Integer startYear;
+    @XmlElement(name = "start_year", type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty startYear;
 
     /**
      * Gets the value of the startYear property.
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public Integer getStartYear() {
+    public SimpleIntegerProperty getStartYear() {
         return startYear;
     }
 
@@ -55,10 +61,10 @@ public class Season
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public void setStartYear(Integer value) {
+    public void setStartYear(SimpleIntegerProperty value) {
         this.startYear = value;
     }
 

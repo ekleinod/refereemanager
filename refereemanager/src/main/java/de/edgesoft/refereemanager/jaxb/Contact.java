@@ -1,6 +1,7 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,6 +9,8 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
 import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.PhoneNumberModel;
@@ -25,8 +28,8 @@ import de.edgesoft.refereemanager.model.URLModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="is_primary" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="editor_only" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="is_primary" type="{}BooleanProperty" minOccurs="0"/>
+ *         &lt;element name="editor_only" type="{}BooleanProperty" minOccurs="0"/>
  *         &lt;element name="contact_type" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -52,10 +55,14 @@ public abstract class Contact
     extends TitledIDTypeModel
 {
 
-    @XmlElement(name = "is_primary")
-    protected Boolean isPrimary;
-    @XmlElement(name = "editor_only")
-    protected Boolean editorOnly;
+    @XmlElement(name = "is_primary", type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty isPrimary;
+    @XmlElement(name = "editor_only", type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty editorOnly;
     @XmlElement(name = "contact_type", type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -66,10 +73,10 @@ public abstract class Contact
      * 
      * @return
      *     possible object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public Boolean isIsPrimary() {
+    public SimpleBooleanProperty getIsPrimary() {
         return isPrimary;
     }
 
@@ -78,10 +85,10 @@ public abstract class Contact
      * 
      * @param value
      *     allowed object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public void setIsPrimary(Boolean value) {
+    public void setIsPrimary(SimpleBooleanProperty value) {
         this.isPrimary = value;
     }
 
@@ -90,10 +97,10 @@ public abstract class Contact
      * 
      * @return
      *     possible object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public Boolean isEditorOnly() {
+    public SimpleBooleanProperty getEditorOnly() {
         return editorOnly;
     }
 
@@ -102,10 +109,10 @@ public abstract class Contact
      * 
      * @param value
      *     allowed object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public void setEditorOnly(Boolean value) {
+    public void setEditorOnly(SimpleBooleanProperty value) {
         this.editorOnly = value;
     }
 

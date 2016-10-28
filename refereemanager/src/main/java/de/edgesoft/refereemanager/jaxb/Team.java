@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.jaxb;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.SimpleIntegerProperty;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -11,6 +12,8 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
@@ -24,7 +27,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="number" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="number" type="{}IntegerProperty" minOccurs="0"/>
  *         &lt;element name="club" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="league" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="venue" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded" minOccurs="0"/>
@@ -49,7 +52,10 @@ public class Team
     extends TitledIDTypeModel
 {
 
-    protected Integer number;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty number;
     @XmlElement(required = true, type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -70,10 +76,10 @@ public class Team
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public Integer getNumber() {
+    public SimpleIntegerProperty getNumber() {
         return number;
     }
 
@@ -82,10 +88,10 @@ public class Team
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public void setNumber(Integer value) {
+    public void setNumber(SimpleIntegerProperty value) {
         this.number = value;
     }
 

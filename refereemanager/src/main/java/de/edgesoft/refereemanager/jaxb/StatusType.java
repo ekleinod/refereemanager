@@ -1,9 +1,16 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
@@ -17,9 +24,9 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="active" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="mmdmarkupstart" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="mmdmarkupend" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="active" type="{}BooleanProperty"/>
+ *         &lt;element name="mmdmarkupstart" type="{}StringProperty" minOccurs="0"/>
+ *         &lt;element name="mmdmarkupend" type="{}StringProperty" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -38,23 +45,38 @@ public class StatusType
     extends TitledIDTypeModel
 {
 
-    protected boolean active;
-    protected String mmdmarkupstart;
-    protected String mmdmarkupend;
+    @XmlElement(required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty active;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty mmdmarkupstart;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty mmdmarkupend;
 
     /**
      * Gets the value of the active property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public boolean isActive() {
+    public SimpleBooleanProperty getActive() {
         return active;
     }
 
     /**
      * Sets the value of the active property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setActive(boolean value) {
+    public void setActive(SimpleBooleanProperty value) {
         this.active = value;
     }
 
@@ -66,7 +88,7 @@ public class StatusType
      *     {@link String }
      *     
      */
-    public String getMmdmarkupstart() {
+    public SimpleStringProperty getMmdmarkupstart() {
         return mmdmarkupstart;
     }
 
@@ -78,7 +100,7 @@ public class StatusType
      *     {@link String }
      *     
      */
-    public void setMmdmarkupstart(String value) {
+    public void setMmdmarkupstart(SimpleStringProperty value) {
         this.mmdmarkupstart = value;
     }
 
@@ -90,7 +112,7 @@ public class StatusType
      *     {@link String }
      *     
      */
-    public String getMmdmarkupend() {
+    public SimpleStringProperty getMmdmarkupend() {
         return mmdmarkupend;
     }
 
@@ -102,7 +124,7 @@ public class StatusType
      *     {@link String }
      *     
      */
-    public void setMmdmarkupend(String value) {
+    public void setMmdmarkupend(SimpleStringProperty value) {
         this.mmdmarkupend = value;
     }
 

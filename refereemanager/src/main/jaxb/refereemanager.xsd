@@ -23,7 +23,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 @author Ekkart Kleinod
-@version 0.9.0
+@version 0.10.0
 @since 0.4.0
 -->
 
@@ -34,7 +34,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	<!-- allow xml:base attribute in order to avoid include errors -->
 	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2005/08/xml.xsd" />
 
-	<xsd:include schemaLocation="../../../../edgeutils/jaxb/commons.xsd" />
+	<xsd:include schemaLocation="../../../../submodules/edgeutils/jaxb/commons.xsd" />
 
 	<xsd:element name="refereemanager" type="RefereeManager" />
 
@@ -83,7 +83,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="start_year" type="xsd:int" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="start_year" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -93,10 +93,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="first_name" type="xsd:string" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="birthday" type="xsd:date" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="day_of_death" type="xsd:date" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="first_name" type="StringProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="name" type="StringProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="birthday" type="LocalDateProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="day_of_death" type="LocalDateProperty" minOccurs="0" maxOccurs="1" />
 
 					<!-- 1:n -->
 					<xsd:element name="picture" type="Picture" minOccurs="0" maxOccurs="unbounded" />
@@ -124,8 +124,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="Person">
 				<xsd:sequence>
-					<xsd:element name="docs_by_letter" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="revoke_license" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="docs_by_letter" type="BooleanProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="revoke_license" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 
 					<!-- 1:n -->
 					<xsd:element name="training_level" type="TrainingLevel" minOccurs="0" maxOccurs="unbounded" />
@@ -169,11 +169,11 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="Referee">
 				<xsd:sequence>
-					<xsd:element name="points_written_a" type="xsd:int" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="points_written_b" type="xsd:int" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="points_practical" type="xsd:int" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="points_oral" type="xsd:int" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="passed" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="points_written_a" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="points_written_b" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="points_practical" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="points_oral" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="passed" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -183,7 +183,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="u_r_l" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="u_r_l" type="StringProperty" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -193,7 +193,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="Contact">
 				<xsd:sequence>
-					<xsd:element name="e_mail" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="e_mail" type="StringProperty" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -203,10 +203,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="Contact">
 				<xsd:sequence>
-					<xsd:element name="street" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="number" type="xsd:string" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="zip_code" type="xsd:string" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="street" type="StringProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="number" type="StringProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="zip_code" type="StringProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="city" type="StringProperty" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -216,9 +216,9 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="Contact">
 				<xsd:sequence>
-					<xsd:element name="country_code" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="area_code" type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="number" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="country_code" type="StringProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="area_code" type="StringProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="number" type="StringProperty" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -228,7 +228,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="Contact">
 				<xsd:sequence>
-					<xsd:element name="u_r_l" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="u_r_l" type="StringProperty" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -238,8 +238,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="is_primary" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="editor_only" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="is_primary" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="editor_only" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="contact_type" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
@@ -258,10 +258,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="rank" type="xsd:int" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="national" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="results" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="referee_report" type="xsd:anyURI" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="rank" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="national" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="results" type="StringProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="referee_report" type="StringProperty" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="referee_quantity" type="RefereeQuantity" minOccurs="1" maxOccurs="unbounded" />
 
 					<!-- references -->
@@ -292,8 +292,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="local" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="filename" type="xsd:string" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="local" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="filename" type="StringProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="venue" type="Venue" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="u_r_l" type="URL" minOccurs="0" maxOccurs="unbounded" />
 
@@ -315,7 +315,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="number" type="xsd:int" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="number" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
 
 					<!-- references -->
 					<xsd:element name="club" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
@@ -363,7 +363,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="ModelClass">
 				<xsd:sequence>
-					<xsd:element name="quantity" type="xsd:int" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="quantity" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="referee_assigment_type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
@@ -382,8 +382,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="ModelClass">
 				<xsd:sequence>
-					<xsd:element name="since" type="xsd:date" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="update" type="xsd:date" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="since" type="LocalDateProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="update" type="LocalDateProperty" minOccurs="0" maxOccurs="unbounded" />
 
 					<xsd:element name="type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
 						<xsd:annotation>
@@ -403,10 +403,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="ModelClass">
 				<xsd:sequence>
-					<xsd:element name="saturday" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="sunday" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="tournament_only" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="league_games_only" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="saturday" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="sunday" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="tournament_only" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="league_games_only" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 
 					<xsd:element name="club" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
@@ -444,10 +444,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="ModelClass">
 				<xsd:sequence>
-					<xsd:element name="points_written" type="xsd:int" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="points_practical" type="xsd:int" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="points_oral" type="xsd:int" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="points" type="xsd:int" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="points_written" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="points_practical" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="points_oral" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="points" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -457,8 +457,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="Address">
 				<xsd:sequence>
-					<xsd:element name="latitude" type="xsd:double" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="longitude" type="xsd:double" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="latitude" type="DoubleProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="longitude" type="DoubleProperty" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -468,9 +468,9 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="Date">
 				<xsd:sequence>
-					<xsd:element name="announcement_u_r_l" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="information_u_r_l" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="result_u_r_l" type="xsd:anyURI" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="announcement_u_r_l" type="StringProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="information_u_r_l" type="StringProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="result_u_r_l" type="StringProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="referee_quantity" type="RefereeQuantity" minOccurs="0" maxOccurs="unbounded" />
 
 					<xsd:element name="organizing_club" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
@@ -507,8 +507,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="start" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="end" type="xsd:dateTime" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="start" type="LocalDateTimeProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="end" type="LocalDateTimeProperty" minOccurs="0" maxOccurs="1" />
 
 					<!-- references -->
 					<xsd:element name="venue" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
@@ -554,9 +554,9 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="active" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="mmdmarkupstart" type="xsd:string" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="mmdmarkupend" type="xsd:string" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="active" type="BooleanProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="mmdmarkupstart" type="StringProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="mmdmarkupend" type="StringProperty" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -566,8 +566,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="rank" type="xsd:int" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="update_interval" type="xsd:int" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="rank" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="update_interval" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -578,9 +578,9 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="IDType">
 				<xsd:sequence>
-					<xsd:element name="title" type="xsd:string" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="shorttitle" type="xsd:string" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="remark" type="xsd:string" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="title" type="StringProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="shorttitle" type="StringProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="remark" type="StringProperty" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

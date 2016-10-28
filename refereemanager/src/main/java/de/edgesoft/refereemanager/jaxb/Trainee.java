@@ -1,10 +1,16 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
 import de.edgesoft.refereemanager.model.RefereeModel;
 
 
@@ -18,11 +24,11 @@ import de.edgesoft.refereemanager.model.RefereeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}Referee">
  *       &lt;sequence>
- *         &lt;element name="points_written_a" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="points_written_b" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="points_practical" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="points_oral" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="passed" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="points_written_a" type="{}IntegerProperty" minOccurs="0"/>
+ *         &lt;element name="points_written_b" type="{}IntegerProperty" minOccurs="0"/>
+ *         &lt;element name="points_practical" type="{}IntegerProperty" minOccurs="0"/>
+ *         &lt;element name="points_oral" type="{}IntegerProperty" minOccurs="0"/>
+ *         &lt;element name="passed" type="{}BooleanProperty" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -43,25 +49,36 @@ public class Trainee
     extends RefereeModel
 {
 
-    @XmlElement(name = "points_written_a")
-    protected Integer pointsWrittenA;
-    @XmlElement(name = "points_written_b")
-    protected Integer pointsWrittenB;
-    @XmlElement(name = "points_practical")
-    protected Integer pointsPractical;
-    @XmlElement(name = "points_oral")
-    protected Integer pointsOral;
-    protected Boolean passed;
+    @XmlElement(name = "points_written_a", type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty pointsWrittenA;
+    @XmlElement(name = "points_written_b", type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty pointsWrittenB;
+    @XmlElement(name = "points_practical", type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty pointsPractical;
+    @XmlElement(name = "points_oral", type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty pointsOral;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty passed;
 
     /**
      * Gets the value of the pointsWrittenA property.
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public Integer getPointsWrittenA() {
+    public SimpleIntegerProperty getPointsWrittenA() {
         return pointsWrittenA;
     }
 
@@ -70,10 +87,10 @@ public class Trainee
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public void setPointsWrittenA(Integer value) {
+    public void setPointsWrittenA(SimpleIntegerProperty value) {
         this.pointsWrittenA = value;
     }
 
@@ -82,10 +99,10 @@ public class Trainee
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public Integer getPointsWrittenB() {
+    public SimpleIntegerProperty getPointsWrittenB() {
         return pointsWrittenB;
     }
 
@@ -94,10 +111,10 @@ public class Trainee
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public void setPointsWrittenB(Integer value) {
+    public void setPointsWrittenB(SimpleIntegerProperty value) {
         this.pointsWrittenB = value;
     }
 
@@ -106,10 +123,10 @@ public class Trainee
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public Integer getPointsPractical() {
+    public SimpleIntegerProperty getPointsPractical() {
         return pointsPractical;
     }
 
@@ -118,10 +135,10 @@ public class Trainee
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public void setPointsPractical(Integer value) {
+    public void setPointsPractical(SimpleIntegerProperty value) {
         this.pointsPractical = value;
     }
 
@@ -130,10 +147,10 @@ public class Trainee
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public Integer getPointsOral() {
+    public SimpleIntegerProperty getPointsOral() {
         return pointsOral;
     }
 
@@ -142,10 +159,10 @@ public class Trainee
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link String }
      *     
      */
-    public void setPointsOral(Integer value) {
+    public void setPointsOral(SimpleIntegerProperty value) {
         this.pointsOral = value;
     }
 
@@ -154,10 +171,10 @@ public class Trainee
      * 
      * @return
      *     possible object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public Boolean isPassed() {
+    public SimpleBooleanProperty getPassed() {
         return passed;
     }
 
@@ -166,10 +183,10 @@ public class Trainee
      * 
      * @param value
      *     allowed object is
-     *     {@link Boolean }
+     *     {@link String }
      *     
      */
-    public void setPassed(Boolean value) {
+    public void setPassed(SimpleBooleanProperty value) {
         this.passed = value;
     }
 
