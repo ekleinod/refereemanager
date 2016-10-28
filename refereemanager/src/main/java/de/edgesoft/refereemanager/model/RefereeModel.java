@@ -1,13 +1,16 @@
 package de.edgesoft.refereemanager.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
+import javafx.beans.property.SimpleBooleanProperty;
 
 /**
  * Referee model, additional methods for jaxb model class.
@@ -32,19 +35,34 @@ import de.edgesoft.refereemanager.utils.Prefs;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.8.0
+ * @version 0.10.0
  * @since 0.5.0
  */
 public class RefereeModel extends Referee {
 
-	/** Filter predicate for all status types. */
+	/**
+	 * Filter predicate for all status types.
+	 *
+	 * @version 0.6.0
+	 * @since 0.5.0
+	 */
 	public static Predicate<Referee> ALL = ref -> true;
 
-	/** Filter predicate for active status types. */
-	public static Predicate<Referee> ACTIVE = ref -> ref.getStatus().isActive();
+	/**
+	 * Filter predicate for active status types.
+	 *
+	 * @version 0.10.0
+	 * @since 0.5.0
+	 */
+	public static Predicate<Referee> ACTIVE = ref -> ref.getStatus().getActive().get();
 
-	/** Filter predicate for inactive status types. */
-	public static Predicate<Referee> INACTIVE = ref -> !ref.getStatus().isActive();
+	/**
+	 * Filter predicate for inactive status types.
+	 *
+	 * @version 0.10.0
+	 * @since 0.5.0
+	 */
+	public static Predicate<Referee> INACTIVE = ref -> !ref.getStatus().getActive().get();
 
 	/**
 	 * Highest training level.
@@ -76,11 +94,11 @@ public class RefereeModel extends Referee {
     			.sorted(TrainingLevelModel.RANK)
     			.findFirst()
     			.orElse(null);
-    	
+
     	if ((firstLevel == null) || !firstLevel.getType().getId().equals(Prefs.get(PrefKey.LOCAL_TRAININGLEVEL))) {
     		return null;
     	}
-    	
+
     	return firstLevel;
     }
 
@@ -89,7 +107,7 @@ public class RefereeModel extends Referee {
 	 *
 	 * @return last training update
 	 *
-	 * @version 0.8.0
+	 * @version 0.10.0
 	 * @since 0.8.0
 	 */
     public LocalDate getLastTrainingUpdate() {
@@ -100,14 +118,17 @@ public class RefereeModel extends Referee {
     		return null;
     	}
 
-    	LocalDate dteReturn = highestTrainingLevel.getUpdate()
+    	List<LocalDate> lstUpdate = new ArrayList<>();
+    	highestTrainingLevel.getUpdate().forEach(update -> lstUpdate.add((LocalDate) update.get()));
+
+    	LocalDate dteReturn = lstUpdate
     			.stream()
     			.sorted(Comparator.reverseOrder())
     			.findFirst()
     			.orElse(null);
 
     	if (dteReturn == null) {
-    		return highestTrainingLevel.getSince();
+    		return (LocalDate) highestTrainingLevel.getSince().get();
     	}
 
     	return dteReturn;
@@ -129,7 +150,7 @@ public class RefereeModel extends Referee {
     		return null;
     	}
 
-    	return lastTrainingUpdate.plusYears(getHighestTrainingLevel().getType().getUpdateInterval());
+    	return lastTrainingUpdate.plusYears(getHighestTrainingLevel().getType().getUpdateInterval().get());
     }
 
     /**
@@ -139,12 +160,12 @@ public class RefereeModel extends Referee {
      *
      * @return receive docs by letter?
 	 *
-	 * @version 0.8.0
+	 * @version 0.10.0
 	 * @since 0.8.0
      */
     @Override
-    public boolean isDocsByLetter() {
-        return docsByLetter || getEMail().isEmpty();
+    public SimpleBooleanProperty getDocsByLetter() {
+        return new SimpleBooleanProperty(docsByLetter.get() || getEMail().isEmpty());
     }
 
 }

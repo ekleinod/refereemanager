@@ -31,6 +31,8 @@ package de.edgesoft.refereemanager.utils;
  */
 public enum PrefKey {
 
+	AREA_CODE,
+
 	COUNTRY_CODE,
 	CONTACT_PRIVATE,
 

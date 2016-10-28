@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.model;
 import java.text.MessageFormat;
 
 import de.edgesoft.refereemanager.jaxb.Address;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  * Address model, additional methods for jaxb model class.
@@ -41,18 +42,18 @@ public class AddressModel extends Address {
 	 * @since 0.6.0
 	 */
 	@Override
-    public String getDisplayTitle() {
+    public SimpleStringProperty getDisplayTitle() {
 
     	if (isPrivateOnly && !isPrivate()) {
 			return null;
     	}
 
-    	return MessageFormat.format("{0} {1}, {2} {3}",
+    	return new SimpleStringProperty(MessageFormat.format("{0} {1}, {2} {3}",
     			(getStreet() == null) ? "" : getStreet().get(),
     			(getNumber() == null) ? "" : getNumber().get(),
     			(getZipCode() == null) ? "" : getZipCode().get(),
     			(getCity() == null) ? "" : getCity().get()
-    			);
+    			));
 
     }
 

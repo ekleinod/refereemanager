@@ -1,6 +1,7 @@
 package de.edgesoft.refereemanager.model;
 
 import de.edgesoft.refereemanager.jaxb.EMail;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  * EMail model, additional methods for jaxb model class.
@@ -39,7 +40,7 @@ public class EMailModel extends EMail {
 	 * @since 0.6.0
 	 */
 	@Override
-    public String getDisplayTitle() {
+    public SimpleStringProperty getDisplayTitle() {
 
     	if (isPrivateOnly && !isPrivate()) {
 			return null;
@@ -55,7 +56,7 @@ public class EMailModel extends EMail {
     		sbReturn.append(")");
     	}
 
-    	return sbReturn.toString();
+    	return new SimpleStringProperty(sbReturn.toString());
 
     }
 

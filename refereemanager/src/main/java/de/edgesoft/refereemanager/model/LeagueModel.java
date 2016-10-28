@@ -1,6 +1,5 @@
 package de.edgesoft.refereemanager.model;
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -9,6 +8,7 @@ import javax.xml.bind.JAXBElement;
 
 import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.Person;
+import javafx.beans.property.SimpleBooleanProperty;
 
 /**
  * Person model, additional methods for jaxb model class.
@@ -44,7 +44,7 @@ public class LeagueModel extends League {
 	 * @version 0.10.0
 	 * @since 0.9.0
 	 */
-	public static final Comparator<League> RANK_DISPLAYTITLE = Comparator.comparingInt(league -> league.getRank().get());
+	public static final Comparator<League> RANK = Comparator.comparingInt(league -> league.getRank().get());
 
 	/**
 	 * Comparator rank and display title.
@@ -52,22 +52,19 @@ public class LeagueModel extends League {
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
-//	public static final Comparator<League> RANK_DISPLAYTITLE = Comparator.comparingInt(league -> league.getRank().get()).
-//			thenComparing(Comparator.comparing(league -> league.getDisplayTitle().get(), Collator.getInstance()));
+	public static final Comparator<League> RANK_DISPLAYTITLE = RANK.thenComparing(TitledIDTypeModel.DISPLAYTITLE);
 
 	/**
-	 * Returns all used leagues, i.e. leagues with assignments.
+	 * Returns if league is national league.
 	 *
-	 * @todo rewrite to look for assignments
+	 * @return is league national league
 	 *
-	 * @return used leagues (empty if there are none)
-	 *
-	 * @version 0.9.0
+	 * @version 0.10.0
 	 * @since 0.9.0
 	 */
 	@Override
-	public Boolean isNational() {
-		return (super.isNational() == null) ? Boolean.FALSE : super.isNational();
+	public SimpleBooleanProperty getNational() {
+		return (super.getNational() == null) ? new SimpleBooleanProperty(Boolean.FALSE) : super.getNational();
 	}
 
     /**
