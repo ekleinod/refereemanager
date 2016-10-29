@@ -6,6 +6,7 @@ import java.time.Month;
 import java.util.Objects;
 
 import de.edgesoft.refereemanager.jaxb.Season;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  * Season model, additional methods for jaxb model class.
@@ -83,15 +84,15 @@ public class SeasonModel extends Season {
     /**
      * Gets the value of the title property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return title
+	 *
+	 * @version 0.10.0
+	 * @since 0.5.0
      */
     @Override
-    public String getTitle() {
+    public SimpleStringProperty getTitle() {
     	if (title == null) {
-    		return MessageFormat.format("{0,number,####}-{1,number,####}", getStartYear(), getStartYear() + 1);
+    		return new SimpleStringProperty(MessageFormat.format("{0,number,####}-{1,number,####}", getStartYear().get(), getStartYear().get() + 1));
     	}
         return title;
     }
