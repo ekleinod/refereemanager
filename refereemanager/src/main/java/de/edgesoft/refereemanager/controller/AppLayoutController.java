@@ -288,18 +288,32 @@ public class AppLayoutController {
     	primaryStage.setWidth(Double.parseDouble(Prefs.get(PrefKey.STAGE_WIDTH)));
     	primaryStage.setHeight(Double.parseDouble(Prefs.get(PrefKey.STAGE_HEIGHT)));
 
+    	primaryStage.setMaximized(Boolean.parseBoolean(Prefs.get(PrefKey.MAXIMIZED)));
+
 		// if changed, save bounds to preferences
 		primaryStage.xProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			Prefs.put(PrefKey.STAGE_X, Double.toString(newValue.doubleValue()));
+			if (!primaryStage.isMaximized()) {
+				Prefs.put(PrefKey.STAGE_X, Double.toString(newValue.doubleValue()));
+			}
 		});
 		primaryStage.widthProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			Prefs.put(PrefKey.STAGE_WIDTH, Double.toString(newValue.doubleValue()));
+			if (!primaryStage.isMaximized()) {
+				Prefs.put(PrefKey.STAGE_WIDTH, Double.toString(newValue.doubleValue()));
+			}
 		});
 		primaryStage.yProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			Prefs.put(PrefKey.STAGE_Y, Double.toString(newValue.doubleValue()));
+			if (!primaryStage.isMaximized()) {
+				Prefs.put(PrefKey.STAGE_Y, Double.toString(newValue.doubleValue()));
+			}
 		});
 		primaryStage.heightProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			Prefs.put(PrefKey.STAGE_HEIGHT, Double.toString(newValue.doubleValue()));
+			if (!primaryStage.isMaximized()) {
+				Prefs.put(PrefKey.STAGE_HEIGHT, Double.toString(newValue.doubleValue()));
+			}
+		});
+
+		primaryStage.maximizedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+			Prefs.put(PrefKey.MAXIMIZED, Boolean.toString(newValue.booleanValue()));
 		});
 
         // set handler for close requests (x-button of window)
