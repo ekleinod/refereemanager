@@ -17,12 +17,12 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TableView fx:id="tblEvents" layoutX="48.0" layoutY="124.0" prefHeight="200.0" prefWidth="350.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tblReferees" layoutX="48.0" layoutY="124.0" prefHeight="200.0" prefWidth="350.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="colDate" prefWidth="75.0" text="Datum" />
-                      <TableColumn fx:id="colTitle" prefWidth="75.0" text="Titel" />
-                        <TableColumn fx:id="colEventtype" prefWidth="75.0" text="Art" />
-                        <TableColumn fx:id="colCategory" prefWidth="75.0" text="Kategorie" />
+                      <TableColumn fx:id="colName" prefWidth="75.0" text="Name" />
+                      <TableColumn fx:id="colFirstname" prefWidth="75.0" text="Vorname" />
+                        <TableColumn fx:id="colTrainingLevel" prefWidth="75.0" text="Ausbildung" />
+                        <TableColumn fx:id="colClub" prefWidth="75.0" text="Verein" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -32,7 +32,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Label layoutX="51.0" layoutY="38.0" text="Ereignisdetails" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <Label layoutX="51.0" layoutY="38.0" text="Details" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                   <GridPane layoutX="23.0" layoutY="62.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="187.0" minWidth="10.0" prefWidth="80.0" />
@@ -45,21 +45,21 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Datum" />
-                        <Label text="Titel" GridPane.rowIndex="1" />
-                        <Label text="Art" GridPane.rowIndex="2" />
-                        <Label fx:id="lblDate" text="Label" GridPane.columnIndex="1" />
-                        <Label fx:id="lblTitle" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="lblEventtype" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Kategorie" GridPane.rowIndex="3" />
-                        <Label fx:id="lblCategory" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Name" />
+                        <Label text="Vorname" GridPane.rowIndex="1" />
+                        <Label text="Ausbildung" GridPane.rowIndex="2" />
+                        <Label fx:id="lblName" text="Label" GridPane.columnIndex="1" />
+                        <Label fx:id="lblFirstname" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="lblTrainingLevel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Verein" GridPane.rowIndex="3" />
+                        <Label fx:id="lblClub" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                   <ButtonBar layoutX="152.0" layoutY="458.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                     <buttons>
-                      <Button fx:id="btnNew" onAction="#handleNewEvent" text="_Neu..." />
-                        <Button fx:id="btnEdit" onAction="#handleEditEvent" prefWidth="140.0" text="Ände_rn..." />
-                        <Button fx:id="btnDelete" onAction="#handleDeleteEvent" text="_Löschen" />
+                      <Button fx:id="btnNew" onAction="#handleNewReferee" text="_Neu..." />
+                        <Button fx:id="btnEdit" onAction="#handleEditReferee" prefWidth="140.0" text="Ände_rn..." />
+                        <Button fx:id="btnDelete" onAction="#handleDeleteReferee" text="_Löschen" />
                     </buttons>
                   </ButtonBar>
                </children>
