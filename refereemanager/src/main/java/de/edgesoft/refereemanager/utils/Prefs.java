@@ -92,14 +92,17 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), Locale.GERMANY.toLanguageTag());
 
 			case STAGE_WIDTH:
-				return getPreferences().get(theKey.value(), "800");
+				return getPreferences().get(theKey.value(), Double.toString(800));
 			case STAGE_X:
 				return getPreferences().get(theKey.value(), Double.toString((Screen.getPrimary().getBounds().getWidth() - 800) / 2));
 
 			case STAGE_HEIGHT:
-				return getPreferences().get(theKey.value(), "600");
+				return getPreferences().get(theKey.value(), Double.toString(600));
 			case STAGE_Y:
 				return getPreferences().get(theKey.value(), Double.toString((Screen.getPrimary().getBounds().getHeight() - 600) / 2));
+
+			case STAGE_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
 
 			case TEMPLATE_DOCUMENT:
 				return getPreferences().get(theKey.value(), "document/document.mmd");
@@ -116,6 +119,9 @@ public class Prefs {
 
 			case TEMPLATE_VARIABLE_SEPARATOR:
 				return getPreferences().get(theKey.value(), "::");
+
+			case TITLE_FULLPATH:
+				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
 
 			default:
 				return getPreferences().get(theKey.value(), "");

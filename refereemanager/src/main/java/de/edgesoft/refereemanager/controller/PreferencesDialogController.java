@@ -136,6 +136,7 @@ public class PreferencesDialogController {
 	@FXML
 	private void initialize() {
 
+        chkTitleFullpath.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.TITLE_FULLPATH)));
 		txtTemplatePath.setText(Prefs.get(PrefKey.TEMPLATE_PATH));
 
 		// icons

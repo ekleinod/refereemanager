@@ -139,6 +139,15 @@ public class AppLayoutController {
 	private MenuItem mnuFileSaveAs;
 
 	/**
+	 * Menu item referee -> overview.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private MenuItem mnuRefereeOverview;
+
+	/**
 	 * Menu item statistics -> data.
 	 *
 	 * @version 0.10.0
@@ -175,40 +184,13 @@ public class AppLayoutController {
 	private Button btnProgramQuit;
 
 	/**
-	 * Button file -> new.
+	 * Button referee -> overview.
 	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
+	 * @version 0.10.0
+	 * @since 0.10.0
 	 */
 	@FXML
-	private Button btnFileNew;
-
-	/**
-	 * Button file -> open.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	@FXML
-	private Button btnFileOpen;
-
-	/**
-	 * Button file -> save.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	@FXML
-	private Button btnFileSave;
-
-	/**
-	 * Button file -> save as.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	@FXML
-	private Button btnFileSaveAs;
+	private Button btnRefereeOverview;
 
 	/**
 	 * Button statistics -> data.
@@ -246,13 +228,12 @@ public class AppLayoutController {
 		btnProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/actions/application-exit.png")));
 
 		mnuFileNew.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-new.png")));
-		btnFileNew.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-new.png")));
 		mnuFileOpen.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-open.png")));
-		btnFileOpen.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-open.png")));
 		mnuFileSave.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save.png")));
-		btnFileSave.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save.png")));
 		mnuFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save-as.png")));
-		btnFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save-as.png")));
+
+		mnuRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
+		btnRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
 		btnStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
@@ -588,6 +569,27 @@ public class AppLayoutController {
 
         alert.setGraphic(new ImageView(Resources.loadImage("images/icon-64.png")));
         alert.showAndWait();
+
+    }
+
+	/**
+	 * Menu referee -> overview.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+    private void handleRefereeOverview() {
+
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
+    	AnchorPane refList = (AnchorPane) pneLoad.getKey();
+
+        // Set event overview into the center of root layout.
+        appPane.setCenter(refList);
+
+        // Give the controller access to the app.
+        RefereeListController ctlRefList = pneLoad.getValue().getController();
+        ctlRefList.initController(this);
 
     }
 

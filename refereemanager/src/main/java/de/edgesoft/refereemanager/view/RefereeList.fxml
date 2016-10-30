@@ -10,8 +10,9 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.EventEditorController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.RefereeListController">
    <children>
       <SplitPane fx:id="pneSplit" dividerPositions="0.5" layoutX="100.0" layoutY="150.0" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -20,7 +21,7 @@
                   <TableView fx:id="tblReferees" layoutX="48.0" layoutY="124.0" prefHeight="200.0" prefWidth="350.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="colName" prefWidth="75.0" text="Name" />
-                      <TableColumn fx:id="colFirstname" prefWidth="75.0" text="Vorname" />
+                      <TableColumn fx:id="colFirstName" prefWidth="75.0" text="Vorname" />
                         <TableColumn fx:id="colTrainingLevel" prefWidth="75.0" text="Ausbildung" />
                         <TableColumn fx:id="colClub" prefWidth="75.0" text="Verein" />
                     </columns>
@@ -32,7 +33,10 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Label layoutX="51.0" layoutY="38.0" text="Details" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <Label layoutX="51.0" layoutY="38.0" text="Details" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
                   <GridPane layoutX="23.0" layoutY="62.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="187.0" minWidth="10.0" prefWidth="80.0" />
@@ -49,7 +53,7 @@
                         <Label text="Vorname" GridPane.rowIndex="1" />
                         <Label text="Ausbildung" GridPane.rowIndex="2" />
                         <Label fx:id="lblName" text="Label" GridPane.columnIndex="1" />
-                        <Label fx:id="lblFirstname" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="lblFirstName" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label fx:id="lblTrainingLevel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="Verein" GridPane.rowIndex="3" />
                         <Label fx:id="lblClub" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -57,9 +61,9 @@
                   </GridPane>
                   <ButtonBar layoutX="152.0" layoutY="458.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                     <buttons>
-                      <Button fx:id="btnNew" onAction="#handleNewReferee" text="_Neu..." />
-                        <Button fx:id="btnEdit" onAction="#handleEditReferee" prefWidth="140.0" text="Ände_rn..." />
-                        <Button fx:id="btnDelete" onAction="#handleDeleteReferee" text="_Löschen" />
+                      <Button fx:id="btnNew" onAction="#handleNew" text="_Neu..." />
+                        <Button fx:id="btnEdit" onAction="#handleEdit" prefWidth="140.0" text="Ände_rn..." />
+                        <Button fx:id="btnDelete" onAction="#handleDelete" text="_Löschen" />
                     </buttons>
                   </ButtonBar>
                </children>

@@ -55,7 +55,15 @@
                         </MenuItem>
                      </items>
                 </Menu>
-                <Menu fx:id="mnuStatistics" text="_Statistik">
+                  <Menu text="_Schiedsrichter">
+                    <items>
+                      <MenuItem fx:id="mnuRefereeOverview" onAction="#handleRefereeOverview" text="Ü_bersicht">
+                           <accelerator>
+                              <KeyCodeCombination alt="DOWN" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                    </items>
+                  </Menu>
+                <Menu fx:id="mnuStatistics" text="S_tatistik">
                   <items>
                     <MenuItem fx:id="mnuStatisticsData" onAction="#handleStatisticsData" text="_Daten">
                            <accelerator>
@@ -82,21 +90,9 @@
                         <Tooltip text="Programm beenden." />
                      </tooltip></Button>
                   <Separator prefWidth="10.0" />
-                  <Button fx:id="btnFileNew" mnemonicParsing="false" onAction="#handleFileNew">
+                  <Button fx:id="btnRefereeOverview" mnemonicParsing="false" onAction="#handleRefereeOverview">
                      <tooltip>
                         <Tooltip text="Neue, leere Datei anlegen." />
-                     </tooltip></Button>
-                  <Button fx:id="btnFileOpen" mnemonicParsing="false" onAction="#handleFileOpen">
-                     <tooltip>
-                        <Tooltip text="Datei öffnen..." />
-                     </tooltip></Button>
-                  <Button fx:id="btnFileSave" mnemonicParsing="false" onAction="#handleFileSave">
-                     <tooltip>
-                        <Tooltip text="Datei speichern." />
-                     </tooltip></Button>
-                  <Button fx:id="btnFileSaveAs" mnemonicParsing="false" onAction="#handleFileSaveAs">
-                     <tooltip>
-                        <Tooltip text="Datei unter anderem Namen speichern..." />
                      </tooltip></Button>
                   <Separator prefWidth="10.0" />
                   <Button fx:id="btnStatisticsData" mnemonicParsing="false" onAction="#handleStatisticsData">

@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.Team;
 import de.edgesoft.refereemanager.jaxb.Wish;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * Content model, additional methods for jaxb model class.
@@ -40,6 +44,15 @@ import de.edgesoft.refereemanager.jaxb.Wish;
  * @since 0.5.0
  */
 public class ContentModel extends Content {
+
+    /**
+     * Observable list of referees (singleton).
+     *
+	 * @version 0.10.0
+	 * @since 0.10.0
+     */
+	@XmlTransient
+	private ObservableList<Referee> observableReferees = null;
 
 	/**
 	 * Returns all referenced (used) clubs.
@@ -150,6 +163,21 @@ public class ContentModel extends Content {
 
 		return lstReturn;
 
+	}
+
+    /**
+     * Returns observable list of referees.
+     *
+     * @return observable list of referees
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+     */
+	public ObservableList<Referee> getObservableReferees() {
+		if (observableReferees == null) {
+			observableReferees = FXCollections.observableList(getReferee());
+		}
+		return observableReferees;
 	}
 
 }
