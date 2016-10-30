@@ -1,5 +1,8 @@
 package de.edgesoft.refereemanager.controller;
 
+import java.io.File;
+import java.nio.file.Paths;
+
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
@@ -18,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -128,6 +132,15 @@ public class RefereeListController {
 	 */
 	@FXML
 	private Label lblClub;
+
+	/**
+	 * Referee image.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private ImageView imgReferee;
 
 	/**
 	 * New button.
@@ -259,6 +272,7 @@ public class RefereeListController {
 	        lblFirstName.setText("");
 	        lblTrainingLevel.setText("");
 	        lblClub.setText("");
+	        imgReferee.setImage(null);
 
 	    } else {
 
@@ -278,6 +292,22 @@ public class RefereeListController {
 	        		(theDetailData.getMember() == null) ?
 	        				null :
 	        				theDetailData.getMember().getDisplayTitle().getValue());
+
+	        try {
+		        File fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), String.format("%s.jpg", theDetailData.getFileName().get())).toFile();
+		        if (fleImage.exists()) {
+		        	imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
+		        } else {
+			        fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), String.format("%s.jpg", "missing")).toFile();
+			        if (fleImage.exists()) {
+			        	imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
+			        } else {
+			        	imgReferee.setImage(null);
+			        }
+		        }
+	        } catch (Exception e) {
+	        	imgReferee.setImage(null);
+	        }
 
 	    }
 

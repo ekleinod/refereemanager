@@ -53,6 +53,9 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="Templates" GridPane.columnSpan="2147483647">
@@ -68,6 +71,19 @@
                                     <Button fx:id="btnTemplatePath" mnemonicParsing="false" onAction="#handleTemplatePath" />
                                  </children>
                               </HBox>
+                              <Label text="Bilder" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Verzeichnis" GridPane.rowIndex="5" />
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <children>
+                                    <TextField fx:id="txtImagePath" />
+                                    <Button fx:id="btnImagePath" mnemonicParsing="false" onAction="#handleImagePath" />
+                                 </children>
+                              </HBox>
+                              <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </children>

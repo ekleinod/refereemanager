@@ -232,8 +232,8 @@ public class AppLayoutController {
 		mnuFileSave.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save.png")));
 		mnuFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save-as.png")));
 
-		mnuRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
-		btnRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
+		mnuRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-referees.png")));
+		btnRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-referees.png")));
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
 		btnStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
