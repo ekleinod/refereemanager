@@ -1,34 +1,32 @@
 package de.edgesoft.refereemanager.controller;
 
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.Map;
 
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.RefereeModel;
-import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableView;
-import javafx.scene.image.Image;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
- * Controller for the referee list scene.
+ * Controller for the referee communication scene.
  *
  * ## Legal stuff
  *
@@ -56,77 +54,140 @@ import javafx.scene.layout.Pane;
 public class RefereeCommunicationController {
 
 	/**
-	 * Name label.
+	 * Textfield title.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Label lblName;
+	private TextField txtTitle;
 
 	/**
-	 * First name label.
+	 * Textfield opening.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Label lblFirstName;
+	private TextField txtOpening;
 
 	/**
-	 * Training level label.
+	 * Textarea body.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Label lblTrainingLevel;
+	private TextArea txtBody;
 
 	/**
-	 * Club label.
+	 * Textfield closing.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Label lblClub;
+	private TextField txtClosing;
 
 	/**
-	 * Referee image.
+	 * Textfield signature.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private ImageView imgReferee;
+	private TextField txtSignature;
 
 	/**
-	 * New button.
+	 * Textfield message file.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Button btnNew;
+	private TextField txtMessageFile;
 
 	/**
-	 * Edit button.
+	 * Button message file select.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Button btnEdit;
+	private Button btnMessageFileSelect;
 
 	/**
-	 * Delete button.
+	 * Button message file load.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Button btnDelete;
+	private Button btnMessageFileLoad;
 
+	/**
+	 * Button message file save.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnMessageFileSave;
+
+	/**
+	 * Checkbox email.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private CheckBox chkEMail;
+
+	/**
+	 * Checkbox letter.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private CheckBox chkLetter;
+
+	/**
+	 * Send button.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnSend;
+
+	/**
+	 * Prefs button.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnPrefs;
+
+	@FXML
+	private TextField txtAttachment1;
+	@FXML
+	private Button btnAttachmentSelect1;
+	@FXML
+	private Button btnAttachmentAdd1;
+	@FXML
+	private Button btnAttachmentDelete1;
+
+	/**
+	 * Attachment pane.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private GridPane pneAttachments;
+	
 	/**
 	 * Split pane.
 	 *
@@ -169,35 +230,34 @@ public class RefereeCommunicationController {
     	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
     	AnchorPane refList = (AnchorPane) pneLoad.getKey();
 
-        // Set event overview into the center of root layout.
-        pneSplit.getItems().add(0, refList);
+        // add referee list to split pane
+        pneSplit.getItems().add(refList);
 
+        // store referee table reference
         RefereeListController ctlRefList = pneLoad.getValue().getController();
         tblReferees = ctlRefList.getTableView();
 
-		// clear event details
-		showDetails(null);
-
-		// listen to selection changes, show event
-		tblReferees.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
-
-		// enabling edit/delete buttons only with selection
-		btnEdit.disableProperty().bind(tblReferees.getSelectionModel().selectedItemProperty().isNull());
-		btnDelete.disableProperty().bind(tblReferees.getSelectionModel().selectedItemProperty().isNull());
-
 		// set divider position
-		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.STAGE_SPLIT)));
+		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.REFEREE_COMMUNICATION_SPLIT_0)), Double.parseDouble(Prefs.get(PrefKey.REFEREE_COMMUNICATION_SPLIT_1)));
 
 		// if changed, save divider position to preferences
 		pneSplit.getDividers().get(0).positionProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			Prefs.put(PrefKey.STAGE_SPLIT, Double.toString(newValue.doubleValue()));
+			Prefs.put(PrefKey.REFEREE_COMMUNICATION_SPLIT_0, Double.toString(newValue.doubleValue()));
+		});
+		pneSplit.getDividers().get(1).positionProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+			Prefs.put(PrefKey.REFEREE_COMMUNICATION_SPLIT_1, Double.toString(newValue.doubleValue()));
 		});
 
 		// icons
-		btnNew.setGraphic(new ImageView(Resources.loadImage("icons/actions/list-add-16.png")));
-		btnEdit.setGraphic(new ImageView(Resources.loadImage("icons/actions/edit-16.png")));
-		btnDelete.setGraphic(new ImageView(Resources.loadImage("icons/actions/list-remove-16.png")));
+		btnSend.setGraphic(new ImageView(Resources.loadImage("icons/actions/mail-send.png")));
+		btnPrefs.setGraphic(new ImageView(Resources.loadImage("icons/actions/configure.png")));
+		btnMessageFileSelect.setGraphic(new ImageView(Resources.loadImage("icons/actions/folder-open-16.png")));
+		btnMessageFileLoad.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-open.png")));
+		btnMessageFileSave.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save.png")));
 
+		// enabling buttons
+		btnSend.disableProperty().bind(tblReferees.getSelectionModel().selectedItemProperty().isNull());
+		
 	}
 
 	/**
@@ -222,170 +282,112 @@ public class RefereeCommunicationController {
     }
 
 	/**
-	 * Shows selected data in detail window.
-	 *
-	 * @param theDetailData event (null if none is selected)
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	private void showDetails(final Referee theDetailData) {
-
-	    if (theDetailData == null) {
-
-	        lblName.setText("");
-	        lblFirstName.setText("");
-	        lblTrainingLevel.setText("");
-	        lblClub.setText("");
-	        imgReferee.setImage(null);
-
-	    } else {
-
-	        lblName.setText(
-	        		(theDetailData.getName() == null) ?
-	        				null :
-	        				theDetailData.getName().getValue());
-	        lblFirstName.setText(
-	        		(theDetailData.getFirstName() == null) ?
-	        				null :
-	        				theDetailData.getFirstName().getValue());
-	        lblTrainingLevel.setText(
-	        		(((RefereeModel) theDetailData).getHighestTrainingLevel() == null) ?
-	        				null :
-	        				((RefereeModel) theDetailData).getHighestTrainingLevel().getType().getDisplayTitle().getValue());
-	        lblClub.setText(
-	        		(theDetailData.getMember() == null) ?
-	        				null :
-	        				theDetailData.getMember().getDisplayTitle().getValue());
-
-	        try {
-		        File fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), String.format("%s.jpg", theDetailData.getFileName().get())).toFile();
-		        if (fleImage.exists()) {
-		        	imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
-		        } else {
-			        fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), String.format("%s.jpg", "missing")).toFile();
-			        if (fleImage.exists()) {
-			        	imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
-			        } else {
-			        	imgReferee.setImage(null);
-			        }
-		        }
-	        } catch (Exception e) {
-	        	imgReferee.setImage(null);
-	        }
-
-	    }
-
-	}
-
-	/**
-	 * Opens edit dialog for new data.
+	 * Send email.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private void handleNew() {
-
-		RefereeModel newReferee = new RefereeModel();
-		if (showEditDialog(newReferee)) {
-			((ContentModel) AppModel.getData().getContent()).getObservableReferees().add(newReferee);
-			tblReferees.getSelectionModel().select(newReferee);
-			AppModel.setModified(true);
-			appController.setAppTitle();
-		}
-
+	private void handleSend() {
+		System.out.println("#handleSend");
 	}
-
+	
 	/**
-	 * Opens edit dialog for editing selected data.
+	 * Open preferences.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private void handleEdit() {
+	private void handlePrefs() {
+		
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PreferencesDialog");
+    	AnchorPane preferencesDialog = (AnchorPane) pneLoad.getKey();
 
-		RefereeModel editReferee = (RefereeModel) tblReferees.getSelectionModel().getSelectedItem();
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Einstellungen");
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(appController.getPrimaryStage());
 
-	    if (editReferee != null) {
+        Scene scene = new Scene(preferencesDialog);
+        dialogStage.setScene(scene);
 
-			if (showEditDialog(editReferee)) {
-				showDetails(editReferee);
-				AppModel.setModified(true);
-				appController.setAppTitle();
-			}
+        // initialize controller
+        PreferencesDialogController controller = pneLoad.getValue().getController();
+        controller.initController(appController, dialogStage, "tabCommunication");
 
-	    }
+        // Show the dialog and wait until the user closes it
+        dialogStage.showAndWait();
+
+        appController.setAppTitle();
 
 	}
-
+	
 	/**
-	 * Deletes selected data from list.
+	 * Message file selection.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private void handleDelete() {
-
-	    int selectedIndex = tblReferees.getSelectionModel().getSelectedIndex();
-
-	    if (selectedIndex >= 0) {
-
-	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
-	    			"Bestätigung Schiedsrichter löschen",
-	    			"Soll der ausgewählte Schiedsrichter gelöscht werden?",
-	    			null);
-
-	        alert.showAndWait()
-	        		.filter(response -> response == ButtonType.OK)
-	        		.ifPresent(response -> {
-	        			tblReferees.getItems().remove(selectedIndex);
-	        			AppModel.setModified(true);
-	        			appController.setAppTitle();
-	        			});
-
-	    }
-
+	private void handleMessageFileSelect() {
+		System.out.println("#handleMessageFileSelect");
 	}
 
 	/**
-	 * Opens the referee edit dialog.
-	 *
-	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
-	 *
-	 * @param theReferee the referee to be edited
-	 * @return true if the user clicked OK, false otherwise.
+	 * Message file load.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
-	private boolean showEditDialog(Referee theReferee) {
+	@FXML
+	private void handleMessageFileLoad() {
+		System.out.println("#handleMessageFileLoad");
+	}
 
-//    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventEditDialog");
-//    	AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
-//
-//        // Create the dialog Stage.
-//        Stage dialogStage = new Stage();
-//        dialogStage.initModality(Modality.WINDOW_MODAL);
-//        dialogStage.initOwner(appController.getPrimaryStage());
-//        dialogStage.setTitle("Ereignis editieren");
-//
-//        Scene scene = new Scene(editDialog);
-//        dialogStage.setScene(scene);
-//
-//        // Set the event into the controller.
-//        EventEditDialogController editController = pneLoad.getValue().getController();
-//        editController.setDialogStage(dialogStage);
-//        editController.setEvent(theReferee);
-//
-//        // Show the dialog and wait until the user closes it
-//        dialogStage.showAndWait();
-//
-//        return editController.isOkClicked();
-		return false;
+	/**
+	 * Message file save.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private void handleMessageFileSave() {
+		System.out.println("#handleMessageFileSave");
+	}
 
+	/**
+	 * Attachment selection.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private void handleAttachmentSelect() {
+		System.out.println("#handleAttachmentSelect");
+	}
+
+	/**
+	 * Attachment addition.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private void handleAttachmentAdd() {
+		System.out.println("#handleAttachmentAdd");
+	}
+
+	/**
+	 * Attachment deletion.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private void handleAttachmentDelete() {
+		System.out.println("#handleAttachmentDelete");
 	}
 
 }

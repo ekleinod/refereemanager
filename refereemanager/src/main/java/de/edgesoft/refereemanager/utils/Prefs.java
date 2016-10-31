@@ -91,6 +91,14 @@ public class Prefs {
 			case LOCALE:
 				return getPreferences().get(theKey.value(), Locale.GERMANY.toLanguageTag());
 
+			case REFEREE_COMMUNICATION_SPLIT_0:
+				return getPreferences().get(theKey.value(), Double.toString(0.5));
+			case REFEREE_COMMUNICATION_SPLIT_1:
+				return getPreferences().get(theKey.value(), Double.toString(0.7));
+				
+			case REFEREE_OVERVIEW_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
+				
 			case STAGE_WIDTH:
 				return getPreferences().get(theKey.value(), Double.toString(800));
 			case STAGE_X:
@@ -100,9 +108,6 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), Double.toString(600));
 			case STAGE_Y:
 				return getPreferences().get(theKey.value(), Double.toString((Screen.getPrimary().getBounds().getHeight() - 600) / 2));
-
-			case STAGE_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 
 			case TEMPLATE_DOCUMENT:
 				return getPreferences().get(theKey.value(), "document/document.mmd");

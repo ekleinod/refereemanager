@@ -202,6 +202,15 @@ public class AppLayoutController {
 	private Button btnRefereeOverview;
 
 	/**
+	 * Button referee -> communication.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnRefereeCommunication;
+
+	/**
 	 * Button statistics -> data.
 	 *
 	 * @version 0.10.0
@@ -243,6 +252,8 @@ public class AppLayoutController {
 
 		mnuRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-referees.png")));
 		btnRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-referees.png")));
+		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/actions/mail-mark-unread.png")));
+		btnRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/actions/mail-mark-unread.png")));
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
 		btnStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
@@ -444,7 +455,7 @@ public class AppLayoutController {
 
         // initialize controller
         PreferencesDialogController controller = pneLoad.getValue().getController();
-        controller.initController(this, dialogStage, "tabCommunication");
+        controller.initController(this, dialogStage, null);
 
         // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();
@@ -612,7 +623,7 @@ public class AppLayoutController {
     private void handleRefereeCommunication() {
 
     	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeCommunication");
-    	AnchorPane pneCommunication = (AnchorPane) pneLoad.getKey();
+    	BorderPane pneCommunication = (BorderPane) pneLoad.getKey();
 
         // Set event overview into the center of root layout.
         appPane.setCenter(pneCommunication);

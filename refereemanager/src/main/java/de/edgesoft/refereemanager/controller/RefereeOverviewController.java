@@ -169,9 +169,10 @@ public class RefereeOverviewController {
     	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
     	AnchorPane refList = (AnchorPane) pneLoad.getKey();
 
-        // Set event overview into the center of root layout.
+        // add referee list to split pane
         pneSplit.getItems().add(0, refList);
 
+        // store referee table reference
         RefereeListController ctlRefList = pneLoad.getValue().getController();
         tblReferees = ctlRefList.getTableView();
 
@@ -186,11 +187,11 @@ public class RefereeOverviewController {
 		btnDelete.disableProperty().bind(tblReferees.getSelectionModel().selectedItemProperty().isNull());
 
 		// set divider position
-		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.STAGE_SPLIT)));
+		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.REFEREE_OVERVIEW_SPLIT)));
 
 		// if changed, save divider position to preferences
 		pneSplit.getDividers().get(0).positionProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			Prefs.put(PrefKey.STAGE_SPLIT, Double.toString(newValue.doubleValue()));
+			Prefs.put(PrefKey.REFEREE_OVERVIEW_SPLIT, Double.toString(newValue.doubleValue()));
 		});
 
 		// icons
