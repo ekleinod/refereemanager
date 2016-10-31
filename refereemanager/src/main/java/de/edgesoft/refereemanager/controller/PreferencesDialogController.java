@@ -1,21 +1,34 @@
 package de.edgesoft.refereemanager.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
+import java.util.Optional;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.InvalidPreferencesFormatException;
 
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -207,6 +220,24 @@ public class PreferencesDialogController {
 	 */
 	@FXML
 	private Button btnCancel;
+
+	/**
+	 * Import button.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnImport;
+
+	/**
+	 * Export button.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnExport;
 
 	/**
 	 * Tab display.
@@ -484,6 +515,103 @@ public class PreferencesDialogController {
 
         if (dir != null) {
             txtImagePath.setText(dir.getPath());
+        }
+
+	}
+
+	/**
+	 * Imports preferences.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+    private void handleImport() {
+
+    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
+    			"Einstellungsimport",
+    			"Überschreiben von Einstellungen.",
+    			"Wenn Sie Einstellungen importieren, werden die bisherigen Einstellungen überschrieben, wenn Einstellungen dafür vorhanden sind.\nWollen Sie fortfahren?");
+
+        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent()) {
+			if (result.get() == ButtonType.YES) {
+				FileChooser fileChooser = new FileChooser();
+
+				fileChooser.setTitle("Einstellungen importieren");
+		        fileChooser.getExtensionFilters().addAll(
+		        		new FileChooser.ExtensionFilter("Referee-Manager-Einstellungen (*.prefs)", "*.prefs"),
+		        		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
+		        		);
+		        if (!Prefs.get(PrefKey.PREFERENCES_FILE).isEmpty()) {
+		        	Path pathPrefs = Paths.get(Prefs.get(PrefKey.PREFERENCES_FILE));
+		        	fileChooser.setInitialDirectory(pathPrefs.getParent().toFile());
+		        	fileChooser.setInitialFileName(pathPrefs.getFileName().toString());
+		        }
+
+		        File flePrefs = fileChooser.showOpenDialog(dialogStage);
+
+		        if (flePrefs != null) {
+		        	Prefs.put(PrefKey.PREFERENCES_FILE, flePrefs.getAbsolutePath());
+
+					try (InputStream stmIn = new FileInputStream(flePrefs)) {
+						Prefs.importPrefs(stmIn);
+						fillValues();
+					} catch (IOException | InvalidPreferencesFormatException | BackingStoreException e) {
+				        AlertUtils.createAlert(AlertType.ERROR, dialogStage,
+				        		"Importfehler",
+				        		"Beim Import der Einstellungen ist ein Fehler aufgetreten.",
+				        		MessageFormat.format("{0}\nDie Daten wurden nicht importiert.", e.getMessage()))
+				        .showAndWait();
+					}
+		        }
+
+			}
+        }
+
+	}
+
+	/**
+	 * Exports preferences.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+    private void handleExport() {
+
+		FileChooser fileChooser = new FileChooser();
+
+		fileChooser.setTitle("Einstellungen exportieren");
+        fileChooser.getExtensionFilters().addAll(
+        		new FileChooser.ExtensionFilter("Referee-Manager-Einstellungen (*.prefs)", "*.prefs"),
+        		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
+        		);
+        if (!Prefs.get(PrefKey.PREFERENCES_FILE).isEmpty()) {
+        	Path pathPrefs = Paths.get(Prefs.get(PrefKey.PREFERENCES_FILE));
+        	fileChooser.setInitialDirectory(pathPrefs.getParent().toFile());
+        	fileChooser.setInitialFileName(pathPrefs.getFileName().toString());
+        }
+
+        File flePrefs = fileChooser.showSaveDialog(dialogStage);
+
+        if (flePrefs != null) {
+        	if (!flePrefs.getName().contains(".")) {
+        		flePrefs = new File(String.format("%s.prefs", flePrefs.getPath()));
+        	}
+        	Prefs.put(PrefKey.PREFERENCES_FILE, flePrefs.getAbsolutePath());
+
+			try (OutputStream stmOut = new FileOutputStream(flePrefs)) {
+				Prefs.exportPrefs(stmOut);
+			} catch (IOException | BackingStoreException e) {
+		        AlertUtils.createAlert(AlertType.ERROR, dialogStage,
+		        		"Exportfehler",
+		        		"Beim Export der Einstellungen ist ein Fehler aufgetreten.",
+		        		MessageFormat.format("{0}\nDie Daten wurden nicht exportiert.", e.getMessage()))
+		        .showAndWait();
+			}
         }
 
 	}
