@@ -20,7 +20,10 @@
               <menus>
                   <Menu text="_Programm">
                     <items>
-                        <MenuItem fx:id="mnuProgramPreferences" onAction="#handleProgramPreferences" text="E_instellungen" />
+                        <MenuItem fx:id="mnuProgramPreferences" onAction="#handleProgramPreferences" text="E_instellungen">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator></MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                     <MenuItem fx:id="mnuProgramQuit" onAction="#handleProgramExit" text="_Beenden">
                            <accelerator>
@@ -60,6 +63,11 @@
                       <MenuItem fx:id="mnuRefereeOverview" onAction="#handleRefereeOverview" text="Ü_bersicht">
                            <accelerator>
                               <KeyCodeCombination alt="DOWN" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="mnuRefereeCommunication" onAction="#handleRefereeCommunication" text="_Kommunikation">
+                           <accelerator>
+                              <KeyCodeCombination alt="DOWN" code="K" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator></MenuItem>
                     </items>
                   </Menu>

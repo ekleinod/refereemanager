@@ -191,7 +191,7 @@ public class RefereeCommunication extends AbstractMainClass {
 					break;
 					
 				case LETTER:
-					pathTemplate = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_LETTER));
+					pathTemplate = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_LETTER));
 					RefereeManager.logger.debug(String.format("read letter template from '%s'.", pathTemplate.toString()));
 					lstTemplate = FileAccess.readFileInList(pathTemplate);
 					
@@ -199,7 +199,7 @@ public class RefereeCommunication extends AbstractMainClass {
 					break;
 					
 				case MAIL:
-					pathTemplate = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.TEMPLATE_EMAIL));
+					pathTemplate = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_EMAIL));
 					RefereeManager.logger.debug(String.format("read email template from '%s'.", pathTemplate.toString()));
 					lstTemplate = FileAccess.readFileInList(pathTemplate);
 

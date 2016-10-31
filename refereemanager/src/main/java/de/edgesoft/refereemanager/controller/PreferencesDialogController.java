@@ -12,6 +12,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
@@ -91,6 +92,105 @@ public class PreferencesDialogController {
 	private Button btnImagePath;
 
 	/**
+	 * Communication - SMTP host.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtCommunicationSMTPHost;
+
+	/**
+	 * Communication - SMTP username.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtCommunicationSMTPUsername;
+
+	/**
+	 * Communication - SMTP password.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtCommunicationSMTPPassword;
+
+	/**
+	 * Communication - From name.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtCommunicationFromName;
+
+	/**
+	 * Communication - From ameil.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtCommunicationFromEMail;
+
+	/**
+	 * Communication - To name.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtCommunicationToName;
+
+	/**
+	 * Communication - To email.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtCommunicationToEMail;
+
+	/**
+	 * Communication - Templates - EMail.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtCommunicationTemplateEMail;
+
+	/**
+	 * Communication - Templates - Letter.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtCommunicationTemplateLetter;
+
+	/**
+	 * Communication - Templates - single merge.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtCommunicationTemplateMergeSingle;
+
+	/**
+	 * Communication - Templates - all merge.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtCommunicationTemplateMergeAll;
+
+	/**
 	 * OK button.
 	 *
 	 * @version 0.10.0
@@ -127,6 +227,25 @@ public class PreferencesDialogController {
 	private Tab tabPaths;
 
 	/**
+	 * Tab communication.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Tab tabCommunication;
+
+	/**
+	 * Tab pane.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TabPane pneTabs;
+
+
+	/**
 	 * Reference to dialog stage.
 	 *
 	 * @version 0.10.0
@@ -154,10 +273,6 @@ public class PreferencesDialogController {
 	@FXML
 	private void initialize() {
 
-        chkTitleFullpath.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.TITLE_FULLPATH)));
-		txtTemplatePath.setText(Prefs.get(PrefKey.TEMPLATE_PATH));
-		txtImagePath.setText(Prefs.get(PrefKey.IMAGE_PATH));
-
 		// icons
 		btnTemplatePath.setGraphic(new ImageView(Resources.loadImage("icons/actions/folder-open-16.png")));
 		btnImagePath.setGraphic(new ImageView(Resources.loadImage("icons/actions/folder-open-16.png")));
@@ -167,19 +282,31 @@ public class PreferencesDialogController {
 
 		tabDisplay.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-details.png")));
 		tabPaths.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-details.png")));
+		tabCommunication.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-details.png")));
+
+		fillValues();
 
     }
 
 	/**
-	 * Sets dialog stage.
+	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
 	 *
+	 * @param theAppController app controller
 	 * @param theStage dialog stage
+	 * @param theTabID tab to open
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
-	public void setDialogStage(final Stage theStage) {
+	public void initController(final AppLayoutController theAppController, final Stage theStage, final String theTabID) {
         dialogStage = theStage;
+        if (theTabID != null) {
+        	pneTabs.getTabs().forEach(tab -> {
+        		if (tab.getId().equals(theTabID)) {
+        			pneTabs.getSelectionModel().select(tab);
+        		}
+        	});
+        }
     }
 
 	/**
@@ -195,6 +322,36 @@ public class PreferencesDialogController {
     }
 
 	/**
+	 * Fill preference values.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	private void fillValues() {
+
+		// tab display
+        chkTitleFullpath.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.TITLE_FULLPATH)));
+
+        // tab templates
+		txtTemplatePath.setText(Prefs.get(PrefKey.TEMPLATE_PATH));
+		txtImagePath.setText(Prefs.get(PrefKey.IMAGE_PATH));
+
+		// tab communication
+		txtCommunicationSMTPHost.setText(Prefs.get(PrefKey.COMMUNICATION_SMTP_HOST));
+		txtCommunicationSMTPUsername.setText(Prefs.get(PrefKey.COMMUNICATION_SMTP_USERNAME));
+		txtCommunicationSMTPPassword.setText(Prefs.get(PrefKey.COMMUNICATION_SMTP_PASSWORD));
+		txtCommunicationFromName.setText(Prefs.get(PrefKey.COMMUNICATION_FROM_NAME));
+		txtCommunicationFromEMail.setText(Prefs.get(PrefKey.COMMUNICATION_FROM_EMAIL));
+		txtCommunicationToName.setText(Prefs.get(PrefKey.COMMUNICATION_TO_NAME));
+		txtCommunicationToEMail.setText(Prefs.get(PrefKey.COMMUNICATION_TO_EMAIL));
+		txtCommunicationTemplateEMail.setText(Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_EMAIL));
+		txtCommunicationTemplateLetter.setText(Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_LETTER));
+		txtCommunicationTemplateMergeSingle.setText(Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_MERGE_SINGLE));
+		txtCommunicationTemplateMergeAll.setText(Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_MERGE_ALL));
+
+    }
+
+	/**
 	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
 	 *
 	 * @version 0.10.0
@@ -205,26 +362,29 @@ public class PreferencesDialogController {
         okClicked = false;
         if (isInputValid()) {
 
+    		// tab display
         	Prefs.put(PrefKey.TITLE_FULLPATH, Boolean.toString(chkTitleFullpath.isSelected()));
 
+            // tab templates
         	Prefs.put(PrefKey.TEMPLATE_PATH, txtTemplatePath.getText());
         	Prefs.put(PrefKey.IMAGE_PATH, txtImagePath.getText());
+
+    		// tab communication
+        	Prefs.put(PrefKey.COMMUNICATION_SMTP_HOST, txtCommunicationSMTPHost.getText());
+        	Prefs.put(PrefKey.COMMUNICATION_SMTP_USERNAME, txtCommunicationSMTPUsername.getText());
+        	Prefs.put(PrefKey.COMMUNICATION_SMTP_PASSWORD, txtCommunicationSMTPPassword.getText());
+        	Prefs.put(PrefKey.COMMUNICATION_FROM_NAME, txtCommunicationFromName.getText());
+        	Prefs.put(PrefKey.COMMUNICATION_FROM_EMAIL, txtCommunicationFromEMail.getText());
+        	Prefs.put(PrefKey.COMMUNICATION_TO_NAME, txtCommunicationToName.getText());
+        	Prefs.put(PrefKey.COMMUNICATION_TO_EMAIL, txtCommunicationToEMail.getText());
+        	Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_EMAIL, txtCommunicationTemplateEMail.getText());
+        	Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_LETTER, txtCommunicationTemplateLetter.getText());
+        	Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_MERGE_SINGLE, txtCommunicationTemplateMergeSingle.getText());
+        	Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_MERGE_ALL, txtCommunicationTemplateMergeAll.getText());
 
             okClicked = true;
             dialogStage.close();
         }
-    }
-
-	/**
-	 * Stores non-ok click and closes dialog.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-    private void handleCancel() {
-        okClicked = false;
-        dialogStage.close();
     }
 
 	/**
@@ -266,6 +426,18 @@ public class PreferencesDialogController {
 
         return false;
 
+    }
+
+	/**
+	 * Stores non-ok click and closes dialog.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+    private void handleCancel() {
+        okClicked = false;
+        dialogStage.close();
     }
 
 	/**

@@ -148,6 +148,15 @@ public class AppLayoutController {
 	private MenuItem mnuRefereeOverview;
 
 	/**
+	 * Menu item referee -> communication.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private MenuItem mnuRefereeCommunication;
+
+	/**
 	 * Menu item statistics -> data.
 	 *
 	 * @version 0.10.0
@@ -435,7 +444,7 @@ public class AppLayoutController {
 
         // initialize controller
         PreferencesDialogController controller = pneLoad.getValue().getController();
-        controller.setDialogStage(dialogStage);
+        controller.initController(this, dialogStage, "tabCommunication");
 
         // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();
@@ -590,6 +599,27 @@ public class AppLayoutController {
         // Give the controller access to the app.
         RefereeOverviewController ctlRefOverview = pneLoad.getValue().getController();
         ctlRefOverview.initController(this);
+
+    }
+
+	/**
+	 * Menu referee -> communication.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+    private void handleRefereeCommunication() {
+
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeCommunication");
+    	AnchorPane pneCommunication = (AnchorPane) pneLoad.getKey();
+
+        // Set event overview into the center of root layout.
+        appPane.setCenter(pneCommunication);
+
+        // Give the controller access to the app.
+        RefereeCommunicationController ctlRefCommunication = pneLoad.getValue().getController();
+        ctlRefCommunication.initController(this);
 
     }
 
