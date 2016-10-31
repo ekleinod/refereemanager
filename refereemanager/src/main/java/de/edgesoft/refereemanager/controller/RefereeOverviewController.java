@@ -195,9 +195,9 @@ public class RefereeOverviewController {
 		});
 
 		// icons
-		btnNew.setGraphic(new ImageView(Resources.loadImage("icons/actions/list-add-16.png")));
-		btnEdit.setGraphic(new ImageView(Resources.loadImage("icons/actions/edit-16.png")));
-		btnDelete.setGraphic(new ImageView(Resources.loadImage("icons/actions/list-remove-16.png")));
+		btnNew.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
+		btnEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
+		btnDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 
 	}
 

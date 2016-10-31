@@ -305,15 +305,15 @@ public class PreferencesDialogController {
 	private void initialize() {
 
 		// icons
-		btnTemplatePath.setGraphic(new ImageView(Resources.loadImage("icons/actions/folder-open-16.png")));
-		btnImagePath.setGraphic(new ImageView(Resources.loadImage("icons/actions/folder-open-16.png")));
+		btnTemplatePath.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
+		btnImagePath.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
 
-		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-ok-16.png")));
-		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-cancel-16.png")));
+		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
+		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
 
-		tabDisplay.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-details.png")));
-		tabPaths.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-details.png")));
-		tabCommunication.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-details.png")));
+		tabDisplay.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+		tabPaths.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+		tabCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
 
 		fillValues();
 

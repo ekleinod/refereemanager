@@ -62,19 +62,19 @@ public class AlertUtils {
         // set alert icon
         switch (theAlertType) {
 			case CONFIRMATION:
-				alert.setGraphic(new ImageView(Resources.loadImage("icons/status/dialog-question.png")));
+				alert.setGraphic(new ImageView(Resources.loadImage("icons/48x48/status/dialog-question.png")));
 				break;
 			case ERROR:
-				alert.setGraphic(new ImageView(Resources.loadImage("icons/status/dialog-error.png")));
+				alert.setGraphic(new ImageView(Resources.loadImage("icons/48x48/status/dialog-error.png")));
 				break;
 			case INFORMATION:
-				alert.setGraphic(new ImageView(Resources.loadImage("icons/status/dialog-information.png")));
+				alert.setGraphic(new ImageView(Resources.loadImage("icons/48x48/status/dialog-information.png")));
 				break;
 			case NONE:
-				alert.setGraphic(new ImageView(Resources.loadImage("icons/status/image-missing.png")));
+				alert.setGraphic(new ImageView(Resources.loadImage("icons/48x48/status/image-missing.png")));
 				break;
 			case WARNING:
-				alert.setGraphic(new ImageView(Resources.loadImage("icons/status/dialog-warning.png")));
+				alert.setGraphic(new ImageView(Resources.loadImage("icons/48x48/status/dialog-warning.png")));
 				break;
 		}
 

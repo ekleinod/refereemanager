@@ -241,24 +241,24 @@ public class AppLayoutController {
 	private void initialize() {
 
 		// icons
-		mnuProgramPreferences.setGraphic(new ImageView(Resources.loadImage("icons/actions/configure.png")));
-		mnuProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/actions/application-exit.png")));
-		btnProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/actions/application-exit.png")));
+		mnuProgramPreferences.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/configure.png")));
+		mnuProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/application-exit.png")));
+		btnProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/application-exit.png")));
 
-		mnuFileNew.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-new.png")));
-		mnuFileOpen.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-open.png")));
-		mnuFileSave.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save.png")));
-		mnuFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save-as.png")));
+		mnuFileNew.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-new.png")));
+		mnuFileOpen.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-open.png")));
+		mnuFileSave.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-save.png")));
+		mnuFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-save-as.png")));
 
-		mnuRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-referees.png")));
-		btnRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/actions/view-list-referees.png")));
-		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/actions/mail-mark-unread.png")));
-		btnRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/actions/mail-mark-unread.png")));
+		mnuRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
+		btnRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
+		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
+		btnRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
 
-		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
-		btnStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
+		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
+		btnStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
 
-		mnuHelpAbout.setGraphic(new ImageView(Resources.loadImage("icons/actions/help-about.png")));
+		mnuHelpAbout.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/help-about.png")));
 
 	}
 

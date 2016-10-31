@@ -249,11 +249,11 @@ public class RefereeCommunicationController {
 		});
 
 		// icons
-		btnSend.setGraphic(new ImageView(Resources.loadImage("icons/actions/mail-send.png")));
-		btnPrefs.setGraphic(new ImageView(Resources.loadImage("icons/actions/configure.png")));
-		btnMessageFileSelect.setGraphic(new ImageView(Resources.loadImage("icons/actions/folder-open-16.png")));
-		btnMessageFileLoad.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-open.png")));
-		btnMessageFileSave.setGraphic(new ImageView(Resources.loadImage("icons/actions/document-save.png")));
+		btnSend.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/mail-send.png")));
+		btnPrefs.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/configure.png")));
+		btnMessageFileSelect.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
+		btnMessageFileLoad.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-open.png")));
+		btnMessageFileSave.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-save.png")));
 
 		// enabling buttons
 		btnSend.disableProperty().bind(tblReferees.getSelectionModel().selectedItemProperty().isNull());

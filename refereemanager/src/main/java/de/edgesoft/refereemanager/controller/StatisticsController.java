@@ -133,11 +133,11 @@ public class StatisticsController {
 	private void initialize() {
 
 		// icons
-		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-ok-16.png")));
+		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
 
-		tabOverview.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-bar.png")));
-		tabGender.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-pie.png")));
-		tabTrainingLevel.setGraphic(new ImageView(Resources.loadImage("icons/actions/office-chart-pie.png")));
+		tabOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
+		tabGender.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-pie.png")));
+		tabTrainingLevel.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-pie.png")));
 
 	}
 
