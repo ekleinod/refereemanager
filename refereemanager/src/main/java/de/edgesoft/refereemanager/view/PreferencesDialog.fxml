@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.PreferencesDialogController">
+<AnchorPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.PreferencesDialogController">
    <children>
       <TabPane fx:id="pneTabs" prefHeight="550.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -176,13 +176,13 @@
             </Tab>
         </tabs>
       </TabPane>
-      <ButtonBar layoutX="395.0" layoutY="654.0" prefHeight="40.0" prefWidth="268.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
+      <ButtonBar layoutX="395.0" layoutY="654.0" prefHeight="40.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
         <buttons>
           <Button fx:id="btnOK" defaultButton="true" onAction="#handleOk" text="_OK" />
             <Button fx:id="btnCancel" cancelButton="true" onAction="#handleCancel" text="_Abbrechen" />
         </buttons>
       </ButtonBar>
-      <ButtonBar layoutX="14.0" layoutY="755.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0">
+      <ButtonBar buttonMinWidth="100.0" layoutX="14.0" layoutY="755.0" prefHeight="40.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0">
         <buttons>
             <Button fx:id="btnImport" mnemonicParsing="false" onAction="#handleImport" text="Importieren" />
           <Button fx:id="btnExport" mnemonicParsing="false" onAction="#handleExport" text="Exportieren" />
