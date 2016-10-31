@@ -2,7 +2,6 @@ package de.edgesoft.refereemanager.controller;
 
 import java.util.Map;
 
-import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.utils.PrefKey;
@@ -14,8 +13,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -208,12 +207,12 @@ public class RefereeCommunicationController {
 
 
 	/**
-	 * Table view.
+	 * Referee list controller.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
-	private TableView<Referee> tblReferees;
+	private RefereeListController ctlRefList;
 
 	/**
 	 * Initializes the controller class.
@@ -233,9 +232,9 @@ public class RefereeCommunicationController {
         // add referee list to split pane
         pneSplit.getItems().add(refList);
 
-        // store referee table reference
-        RefereeListController ctlRefList = pneLoad.getValue().getController();
-        tblReferees = ctlRefList.getTableView();
+        // store referee table controller
+        ctlRefList = pneLoad.getValue().getController();
+        ctlRefList.setSelectionMode(SelectionMode.MULTIPLE);
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.REFEREE_COMMUNICATION_SPLIT_0)), Double.parseDouble(Prefs.get(PrefKey.REFEREE_COMMUNICATION_SPLIT_1)));
@@ -256,7 +255,9 @@ public class RefereeCommunicationController {
 		btnMessageFileSave.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-save.png")));
 
 		// enabling buttons
-		btnSend.disableProperty().bind(tblReferees.getSelectionModel().selectedItemProperty().isNull());
+		btnSend.disableProperty().bind(ctlRefList.getSelectionModel().selectedItemProperty().isNull());
+		btnMessageFileLoad.disableProperty().bind(txtMessageFile.textProperty().isEmpty());
+		btnMessageFileSave.disableProperty().bind(txtMessageFile.textProperty().isEmpty());
 		
 	}
 
@@ -272,12 +273,10 @@ public class RefereeCommunicationController {
 
 		appController = theAppController;
 
-		if (AppModel.getData() != null) {
-			tblReferees.setItems(((ContentModel) AppModel.getData().getContent()).getObservableReferees());
-			tblReferees.refresh();
+		if (AppModel.getData() == null) {
+			ctlRefList.setItems(null);
 		} else {
-			tblReferees.setItems(null);
-			tblReferees.refresh();
+			ctlRefList.setItems(((ContentModel) AppModel.getData().getContent()).getObservableReferees());
 		}
     }
 

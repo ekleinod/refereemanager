@@ -2,6 +2,7 @@ package de.edgesoft.refereemanager.controller;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.util.Map;
 
 import de.edgesoft.refereemanager.jaxb.Referee;
@@ -21,7 +22,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -101,13 +101,13 @@ public class RefereeOverviewController {
 	private ImageView imgReferee;
 
 	/**
-	 * New button.
+	 * Add button.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Button btnNew;
+	private Button btnAdd;
 
 	/**
 	 * Edit button.
@@ -147,12 +147,12 @@ public class RefereeOverviewController {
 
 
 	/**
-	 * Table view.
+	 * Referee list controller.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
-	private TableView<Referee> tblReferees;
+	private RefereeListController ctlRefList;
 
 	/**
 	 * Initializes the controller class.
@@ -172,19 +172,18 @@ public class RefereeOverviewController {
         // add referee list to split pane
         pneSplit.getItems().add(0, refList);
 
-        // store referee table reference
-        RefereeListController ctlRefList = pneLoad.getValue().getController();
-        tblReferees = ctlRefList.getTableView();
+        // store referee table controller
+        ctlRefList = pneLoad.getValue().getController();
 
 		// clear event details
 		showDetails(null);
 
 		// listen to selection changes, show event
-		tblReferees.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
+		ctlRefList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
 
 		// enabling edit/delete buttons only with selection
-		btnEdit.disableProperty().bind(tblReferees.getSelectionModel().selectedItemProperty().isNull());
-		btnDelete.disableProperty().bind(tblReferees.getSelectionModel().selectedItemProperty().isNull());
+		btnEdit.disableProperty().bind(ctlRefList.getSelectionModel().selectedItemProperty().isNull());
+		btnDelete.disableProperty().bind(ctlRefList.getSelectionModel().selectedItemProperty().isNull());
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.REFEREE_OVERVIEW_SPLIT)));
@@ -195,7 +194,7 @@ public class RefereeOverviewController {
 		});
 
 		// icons
-		btnNew.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
+		btnAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 
@@ -214,11 +213,9 @@ public class RefereeOverviewController {
 		appController = theAppController;
 
 		if (AppModel.getData() != null) {
-			tblReferees.setItems(((ContentModel) AppModel.getData().getContent()).getObservableReferees());
-			tblReferees.refresh();
+			ctlRefList.setItems(((ContentModel) AppModel.getData().getContent()).getObservableReferees());
 		} else {
-			tblReferees.setItems(null);
-			tblReferees.refresh();
+			ctlRefList.setItems(null);
 		}
     }
 
@@ -286,12 +283,12 @@ public class RefereeOverviewController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private void handleNew() {
+	private void handleAdd() {
 
 		RefereeModel newReferee = new RefereeModel();
 		if (showEditDialog(newReferee)) {
 			((ContentModel) AppModel.getData().getContent()).getObservableReferees().add(newReferee);
-			tblReferees.getSelectionModel().select(newReferee);
+			ctlRefList.getSelectionModel().select(newReferee);
 			AppModel.setModified(true);
 			appController.setAppTitle();
 		}
@@ -307,7 +304,7 @@ public class RefereeOverviewController {
 	@FXML
 	private void handleEdit() {
 
-		RefereeModel editReferee = (RefereeModel) tblReferees.getSelectionModel().getSelectedItem();
+		RefereeModel editReferee = (RefereeModel) ctlRefList.getSelectionModel().getSelectedItem();
 
 	    if (editReferee != null) {
 
@@ -329,20 +326,20 @@ public class RefereeOverviewController {
 	 */
 	@FXML
 	private void handleDelete() {
+		
+		Referee refDelete = ctlRefList.getSelectionModel().getSelectedItem();
 
-	    int selectedIndex = tblReferees.getSelectionModel().getSelectedIndex();
-
-	    if (selectedIndex >= 0) {
+	    if (refDelete != null) {
 
 	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
 	    			"Bestätigung Schiedsrichter löschen",
-	    			"Soll der ausgewählte Schiedsrichter gelöscht werden?",
+	    			MessageFormat.format("Soll ''{0}'' gelöscht werden?", refDelete.getDisplayTitle().get()),
 	    			null);
 
 	        alert.showAndWait()
 	        		.filter(response -> response == ButtonType.OK)
 	        		.ifPresent(response -> {
-	        			tblReferees.getItems().remove(selectedIndex);
+	        			((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(refDelete);
 	        			AppModel.setModified(true);
 	        			appController.setAppTitle();
 	        			});

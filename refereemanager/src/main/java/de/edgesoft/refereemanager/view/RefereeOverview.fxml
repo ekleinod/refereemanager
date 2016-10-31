@@ -47,7 +47,7 @@
                   </GridPane>
                   <ButtonBar layoutX="152.0" layoutY="458.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                     <buttons>
-                      <Button fx:id="btnNew" onAction="#handleNew" text="_Neu..." />
+                      <Button fx:id="btnAdd" onAction="#handleAdd" text="_Neu..." />
                         <Button fx:id="btnEdit" onAction="#handleEdit" prefWidth="140.0" text="Ände_rn..." />
                         <Button fx:id="btnDelete" onAction="#handleDelete" text="_Löschen" />
                     </buttons>

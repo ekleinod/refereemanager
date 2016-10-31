@@ -2,10 +2,14 @@ package de.edgesoft.refereemanager.controller;
 
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.model.RefereeModel;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 
 /**
  * Controller for the referee list scene.
@@ -79,6 +83,14 @@ public class RefereeListController {
 	 */
 	@FXML
 	private TableColumn<RefereeModel, String> colClub;
+	
+	/**
+	 * List of referees.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	private FilteredList<Referee> lstReferees;
 
 
 	/**
@@ -108,13 +120,60 @@ public class RefereeListController {
 	/**
 	 * Returns table view.
 	 *
-	 * @return table view
+	 * @param theReferees list of referees
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
-	public TableView<Referee> getTableView() {
-		return tblReferees;
+	public void setItems(final ObservableList<Referee> theReferees) {
+		
+		if (theReferees == null) {
+			lstReferees = null;
+		} else {
+			lstReferees = new FilteredList<>(theReferees, referee -> true);
+		}
+		
+		tblReferees.setItems(lstReferees);
+		handleFilterChange();
+		
+	}
+
+	/**
+	 * Handles filter change events.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private void handleFilterChange() {
+		
+		tblReferees.refresh();
+		
+	}
+	
+	/**
+	 * Sets selection mode.
+	 * 
+	 * @param theSelectionMode selection mode
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	public void setSelectionMode(final SelectionMode theSelectionMode) {
+		tblReferees.getSelectionModel().setSelectionMode(theSelectionMode);
+	}
+
+	/**
+	 * Returns selection model.
+	 *
+	 * @return selection model
+	 * 
+	 * @version 0.10.0
+	 * @return 
+	 * @since 0.10.0
+	 */
+	public TableViewSelectionModel<Referee> getSelectionModel() {
+		return tblReferees.getSelectionModel();
 	}
 
 }

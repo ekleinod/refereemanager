@@ -77,21 +77,21 @@ public class PersonModel extends Person {
     	StringBuilder sbReturn = new StringBuilder();
 
 		if ((getTitle() != null) && !getTitle().get().isEmpty()) {
-			sbReturn.append(getTitle());
+			sbReturn.append(getTitle().get());
 		}
 
 		if ((getFirstName() != null) && !getFirstName().get().isEmpty()) {
 			if (sbReturn.length() > 0) {
 				sbReturn.append(" ");
 			}
-			sbReturn.append(getFirstName());
+			sbReturn.append(getFirstName().get());
 		}
 
 		if ((getName() != null) && !getName().get().isEmpty()) {
 			if (sbReturn.length() > 0) {
 				sbReturn.append(" ");
 			}
-			sbReturn.append(getName());
+			sbReturn.append(getName().get());
 		}
 
 		return new SimpleStringProperty(sbReturn.toString());
