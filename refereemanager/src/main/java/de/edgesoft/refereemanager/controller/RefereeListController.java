@@ -5,6 +5,7 @@ import de.edgesoft.refereemanager.model.RefereeModel;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
@@ -85,6 +86,42 @@ public class RefereeListController {
 	private TableColumn<RefereeModel, String> colClub;
 	
 	/**
+	 * Checkbox filter active.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private CheckBox chkActive;
+	
+	/**
+	 * Checkbox filter inactive.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private CheckBox chkInactive;
+	
+	/**
+	 * Checkbox filter email.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private CheckBox chkEMail;
+	
+	/**
+	 * Checkbox filter letter only.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private CheckBox chkLetterOnly;
+	
+	/**
 	 * List of referees.
 	 *
 	 * @version 0.10.0
@@ -146,6 +183,15 @@ public class RefereeListController {
 	 */
 	@FXML
 	private void handleFilterChange() {
+		
+//		lstReferees.setPredicate(referee -> {
+//			return referee.getDisplayTitle().get().equals("Ekkart Kleinod");
+//		});
+		
+		System.out.println(chkActive.isSelected());
+		System.out.println(chkInactive.isSelected());
+		System.out.println(chkEMail.isSelected());
+		System.out.println(chkLetterOnly.isSelected());
 		
 		tblReferees.refresh();
 		
