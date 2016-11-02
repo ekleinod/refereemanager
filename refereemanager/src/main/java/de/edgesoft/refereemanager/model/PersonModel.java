@@ -2,6 +2,7 @@ package de.edgesoft.refereemanager.model;
 
 import java.text.Collator;
 import java.util.Comparator;
+import java.util.function.Predicate;
 
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.EMail;
@@ -51,6 +52,14 @@ public class PersonModel extends Person {
 	 * @since 0.10.0
 	 */
 	public static final Comparator<Person> NAME_FIRSTNAME = NAME.thenComparing(Comparator.comparing(person -> person.getFirstName().get(), Collator.getInstance()));
+
+	/**
+	 * Filter predicate for people with email addresses.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	public static Predicate<PersonModel> HAS_EMAIL = person -> (person.getPrimaryEMail() != null);
 
 	/**
 	 * Display title.

@@ -1,8 +1,10 @@
 package de.edgesoft.refereemanager.controller;
 
 import java.text.MessageFormat;
+import java.util.function.Predicate;
 
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -202,33 +204,32 @@ public class RefereeListController {
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
+	@SuppressWarnings("unchecked")
 	@FXML
 	private void handleFilterChange() {
 		
 		if (lstReferees == null) {
 			lblFilter.setText("Filter");
 		} else {
-			lstReferees.setPredicate(referee -> {
-				boolean isShown = true;
-				
-				if (chkActive.isSelected()) {
-					isShown &= referee.getStatus().getActive().get();
-				}
-				
-				if (chkInactive.isSelected()) {
-					isShown &= !referee.getStatus().getActive().get();
-				}
-				
-				if (chkEMail.isSelected()) {
-					isShown &= (referee.getPrimaryEMail() != null);
-				}
-				
-				if (chkLetterOnly.isSelected()) {
-					isShown &= (referee.getDocsByLetter().get());
-				}
-				
-				return isShown;
-			});
+			
+			lstReferees.setPredicate(RefereeModel.ALL);
+			
+			if (chkActive.isSelected()) {
+				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.ACTIVE));
+			}
+			
+			if (chkInactive.isSelected()) {
+				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.INACTIVE));
+			}
+			
+			if (chkEMail.isSelected()) {
+				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(PersonModel.HAS_EMAIL));
+			}
+			
+			if (chkLetterOnly.isSelected()) {
+				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.LETTER_ONLY));
+			}
+			
 			lblFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstReferees.size()));
 		}
 		

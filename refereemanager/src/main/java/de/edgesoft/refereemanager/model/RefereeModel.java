@@ -46,7 +46,7 @@ public class RefereeModel extends Referee {
 	 * @version 0.6.0
 	 * @since 0.5.0
 	 */
-	public static Predicate<Referee> ALL = ref -> true;
+	public static Predicate<Referee> ALL = referee -> true;
 
 	/**
 	 * Filter predicate for active status types.
@@ -54,7 +54,7 @@ public class RefereeModel extends Referee {
 	 * @version 0.10.0
 	 * @since 0.5.0
 	 */
-	public static Predicate<Referee> ACTIVE = ref -> ref.getStatus().getActive().get();
+	public static Predicate<Referee> ACTIVE = referee -> referee.getStatus().getActive().get();
 
 	/**
 	 * Filter predicate for inactive status types.
@@ -62,7 +62,15 @@ public class RefereeModel extends Referee {
 	 * @version 0.10.0
 	 * @since 0.5.0
 	 */
-	public static Predicate<Referee> INACTIVE = ref -> !ref.getStatus().getActive().get();
+	public static Predicate<Referee> INACTIVE = referee -> !referee.getStatus().getActive().get();
+
+	/**
+	 * Filter predicate for letter only (docs by letter and no email) referees.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	public static Predicate<Referee> LETTER_ONLY = referee -> referee.getDocsByLetter().get();
 
 	/**
 	 * Highest training level.
