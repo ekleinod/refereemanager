@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.utils;
 import java.io.File;
 import java.nio.file.Path;
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,14 +84,14 @@ public class IDHelper {
 				// originally this line was
 				// lstSingle = TemplateHelper.fillText(lstSingle, theReferee, theData);
 				// but this is extremely slow, thus I fill data directly, change this back when filling is optimized
-				lstSingle = TemplateHelper.fillTextAndConditions(lstSingle, "referee:fullname", theReferee.getFullName());
-				lstSingle = TemplateHelper.fillTextAndConditions(lstSingle, "referee:filename", theReferee.getFileName());
+				lstSingle = TemplateHelper.fillTextAndConditions(lstSingle, "referee:fullname", theReferee.getFullName().get());
+				lstSingle = TemplateHelper.fillTextAndConditions(lstSingle, "referee:filename", theReferee.getFileName().get());
 				
 				TrainingLevel lvlLocal = ((RefereeModel) theReferee).getLocalTrainingLevel();
 				boolean missesDate = (lvlLocal == null) || (lvlLocal.getSince() == null);
 				lstSingle = TemplateHelper.fillTextAndConditions(lstSingle, "referee:localtraininglevel:since:datemedium",
 						missesDate ? "---" :
-							lvlLocal.getSince().format(DateTimeFormatter.ofPattern(Prefs.get(DateTimeFormat.DATEMEDIUM), Locale.forLanguageTag(Prefs.get(PrefKey.LOCALE)))));
+							((LocalDate) lvlLocal.getSince().get()).format(DateTimeFormatter.ofPattern(Prefs.get(DateTimeFormat.DATEMEDIUM), Locale.forLanguageTag(Prefs.get(PrefKey.LOCALE)))));
 				if (missesDate) {
 					RefereeManager.logger.error(MessageFormat.format("Missing date for {0}", theReferee.getDisplayTitle()));
 				}
