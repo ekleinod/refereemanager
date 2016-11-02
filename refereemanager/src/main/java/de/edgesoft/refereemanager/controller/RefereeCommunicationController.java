@@ -255,7 +255,13 @@ public class RefereeCommunicationController {
 		btnMessageFileSave.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-save.png")));
 
 		// enabling buttons
-		btnSend.disableProperty().bind(ctlRefList.getSelectionModel().selectedItemProperty().isNull());
+		btnSend.disableProperty().bind(
+				ctlRefList.getSelectionModel().selectedItemProperty().isNull()
+				.or(
+						chkEMail.selectedProperty().not()
+						.and(chkLetter.selectedProperty().not())
+						)
+				);
 		btnMessageFileLoad.disableProperty().bind(txtMessageFile.textProperty().isEmpty());
 		btnMessageFileSave.disableProperty().bind(txtMessageFile.textProperty().isEmpty());
 		

@@ -21,7 +21,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Label text="Filter" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="5.0">
+      <Label fx:id="lblFilter" text="Filter" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="5.0">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

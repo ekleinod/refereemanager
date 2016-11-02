@@ -1,5 +1,7 @@
 package de.edgesoft.refereemanager.controller;
 
+import java.text.MessageFormat;
+
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import javafx.collections.ObservableList;
@@ -122,6 +124,16 @@ public class RefereeListController {
 	private CheckBox chkLetterOnly;
 	
 	/**
+	 * Label filter.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Label lblFilter;
+	
+
+	/**
 	 * List of referees.
 	 *
 	 * @version 0.10.0
@@ -141,16 +153,13 @@ public class RefereeListController {
 	@FXML
 	private void initialize() {
 
-		// set "empty data" text
-		Label lblPlaceholder = new Label("Es wurden noch keine Schiedsrichter eingegeben.");
-		lblPlaceholder.setWrapText(true);
-		tblReferees.setPlaceholder(lblPlaceholder);
-
 		// hook data to columns
 		colName.setCellValueFactory(cellData -> cellData.getValue().getName());
 		colFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
 		colTrainingLevel.setCellValueFactory(cellData -> cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitle());
 		colClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
+		
+		setItems(null);
 
 	}
 
@@ -171,6 +180,18 @@ public class RefereeListController {
 		}
 		
 		tblReferees.setItems(lstReferees);
+		
+		// set "empty data" text
+		if ((lstReferees == null) || lstReferees.isEmpty()) {
+			Label lblPlaceholder = new Label("Es wurden noch keine Schiedsrichter eingegeben.");
+			lblPlaceholder.setWrapText(true);
+			tblReferees.setPlaceholder(lblPlaceholder);
+		} else {
+			Label lblPlaceholder = new Label("Die Filterung schließt alle Schiedsrichter aus.");
+			lblPlaceholder.setWrapText(true);
+			tblReferees.setPlaceholder(lblPlaceholder);
+		}
+
 		handleFilterChange();
 		
 	}
@@ -184,14 +205,32 @@ public class RefereeListController {
 	@FXML
 	private void handleFilterChange() {
 		
-//		lstReferees.setPredicate(referee -> {
-//			return referee.getDisplayTitle().get().equals("Ekkart Kleinod");
-//		});
-		
-		System.out.println(chkActive.isSelected());
-		System.out.println(chkInactive.isSelected());
-		System.out.println(chkEMail.isSelected());
-		System.out.println(chkLetterOnly.isSelected());
+		if (lstReferees == null) {
+			lblFilter.setText("Filter");
+		} else {
+			lstReferees.setPredicate(referee -> {
+				boolean isShown = true;
+				
+				if (chkActive.isSelected()) {
+					isShown &= referee.getStatus().getActive().get();
+				}
+				
+				if (chkInactive.isSelected()) {
+					isShown &= !referee.getStatus().getActive().get();
+				}
+				
+				if (chkEMail.isSelected()) {
+					isShown &= (referee.getPrimaryEMail() != null);
+				}
+				
+				if (chkLetterOnly.isSelected()) {
+					isShown &= (referee.getDocsByLetter().get());
+				}
+				
+				return isShown;
+			});
+			lblFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstReferees.size()));
+		}
 		
 		tblReferees.refresh();
 		
