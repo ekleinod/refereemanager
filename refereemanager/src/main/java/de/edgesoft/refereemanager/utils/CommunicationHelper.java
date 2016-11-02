@@ -65,7 +65,7 @@ import de.edgesoft.refereemanager.model.template.DocumentData;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Ekkart Kleinod
- * @version 0.8.0
+ * @version 0.10.0
  * @since 0.8.0
  */
 public class CommunicationHelper {
@@ -167,7 +167,7 @@ public class CommunicationHelper {
 				try {
 					
 					EMail theEMail = theReferee.getPrimaryEMail();
-					msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail(), theReferee.getFullName(), StandardCharsets.UTF_8.name()));
+					msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().get(), theReferee.getFullName().get(), StandardCharsets.UTF_8.name()));
 					
 					MimeMultipart msgContent = new MimeMultipart();
 					
@@ -304,7 +304,7 @@ public class CommunicationHelper {
 						}
 						break;
 					case LETTERONLY:
-						if ((theAddress != null) && theReferee.isDocsByLetter()) {
+						if ((theAddress != null) && theReferee.getDocsByLetter().get()) {
 							lstRecipients.add(theReferee);
 						}
 						break;
