@@ -37,7 +37,7 @@ import de.edgesoft.refereemanager.model.PersonModel;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.9.0
+ * @version 0.10.0
  * @since 0.9.0
  */
 public class WebsiteHelper {
@@ -89,7 +89,7 @@ public class WebsiteHelper {
 	 * @param theTemplate template
 	 * @param theData data
 	 *
-	 * @version 0.9.0
+	 * @version 0.10.0
 	 * @since 0.9.0
 	 */
 	public static List<String> fillVenues(final List<String> theTemplate, final RefereeManager theData, final boolean useID) {
@@ -110,9 +110,9 @@ public class WebsiteHelper {
 			lstContent.add(String.format("%s  street: \"%s %s\"", sIndent, venue.getStreet(), venue.getNumber()));
 			lstContent.add(String.format("%s  city: \"%s %s\"", sIndent, venue.getZipCode(), venue.getCity()));
 
-			if ((venue.getRemark() != null) && !venue.getRemark().isEmpty()) {
+			if ((venue.getRemark() != null) && !venue.getRemark().get().isEmpty()) {
 				lstContent.add(String.format("%s  details: >", sIndent));
-				for (String sRemarkLine : venue.getRemark().split("\n")) {
+				for (String sRemarkLine : venue.getRemark().get().split("\n")) {
 					lstContent.add(String.format("%s    %s", sIndent, sRemarkLine));
 				}
 			}
@@ -157,18 +157,18 @@ public class WebsiteHelper {
 			lstContent.add("-");
 			lstContent.add(String.format("  title: \"%s\"", event.getTitle()));
 
-			lstContent.add(String.format("  date: %s", DateTimeUtils.formatAsDate(event.getStart())));
+			lstContent.add(String.format("  date: %s", DateTimeUtils.formatAsDate((LocalDateTime) event.getStart().get())));
 
-			LocalDateTime tmeTemp = event.getStart();
+			LocalDateTime tmeTemp = (LocalDateTime) event.getStart().get();
 			if ((tmeTemp != null) && (tmeTemp.getHour() != 0)) {
 				lstContent.add(String.format("  start: \"%s\"", DateTimeUtils.formatAsTime(tmeTemp)));
 			}
-			tmeTemp = event.getEnd();
+			tmeTemp = (LocalDateTime) event.getEnd().get();
 			if ((tmeTemp != null) && (tmeTemp.getHour() != 0)) {
 				lstContent.add(String.format("  end: \"%s\"", DateTimeUtils.formatAsTime(tmeTemp)));
 			}
 
-			if ((event.getRemark() != null) && !event.getRemark().isEmpty()) {
+			if ((event.getRemark() != null) && !event.getRemark().get().isEmpty()) {
 				lstContent.add(String.format("  description: \"%s\"", event.getRemark()));
 			}
 
