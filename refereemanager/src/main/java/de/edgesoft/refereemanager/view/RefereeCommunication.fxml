@@ -4,12 +4,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -37,6 +39,8 @@
                               <RowConstraints />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" valignment="BASELINE" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -45,37 +49,41 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Titel" GridPane.rowIndex="2" />
-                              <Label text="Anrede" GridPane.rowIndex="3" />
-                              <Label text="Text" GridPane.rowIndex="4" />
-                              <Label text="Schlussformel" GridPane.rowIndex="5" />
-                              <Label text="Unterschrift" GridPane.rowIndex="6" />
+                              <Label text="Titel" GridPane.rowIndex="3" />
+                              <Label text="Anrede" GridPane.rowIndex="5" />
+                              <Label text="Text" GridPane.rowIndex="6" />
+                              <Label text="Schlussformel" GridPane.rowIndex="7" />
+                              <Label text="Unterschrift" GridPane.rowIndex="8" />
                               <Label text="Nachricht" GridPane.columnSpan="2147483647">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
                               <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
-                              <TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField fx:id="txtOpening" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextArea fx:id="txtBody" prefHeight="300.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <TextField fx:id="txtClosing" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <TextField fx:id="txtSignature" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <Label text="Nachrichtendatei" GridPane.columnSpan="2147483647" GridPane.rowIndex="7">
+                              <TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="txtOpening" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextArea fx:id="txtBody" prefHeight="300.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <TextField fx:id="txtClosing" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <TextField fx:id="txtSignature" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                              <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="10" />
+                              <Label text="Dateiname" GridPane.rowIndex="11" />
+                              <Label text="Attachments" GridPane.columnSpan="2147483647" GridPane.rowIndex="9">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
-                              <Label text="Dateiname" GridPane.rowIndex="9" />
-                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11">
                                  <children>
-                                    <TextField fx:id="txtMessageFile" />
-                                    <Button fx:id="btnMessageFileSelect" mnemonicParsing="false" onAction="#handleMessageFileSelect" />
-                                    <Button fx:id="btnMessageFileLoad" mnemonicParsing="false" onAction="#handleMessageFileLoad" />
-                                    <Button fx:id="btnMessageFileSave" mnemonicParsing="false" onAction="#handleMessageFileSave" />
+                                    <TextField fx:id="txtAttachment1" />
+                                    <Button fx:id="btnAttachmentSelect1" mnemonicParsing="false" onAction="#handleAttachmentSelect" />
+                                    <Button fx:id="btnAttachmentAdd1" mnemonicParsing="false" onAction="#handleAttachmentAdd" />
+                                    <Button fx:id="btnAttachmentDelete1" mnemonicParsing="false" onAction="#handleAttachmentDelete" />
                                  </children>
                               </HBox>
+                              <Label text="Subtitel" GridPane.rowIndex="4" />
+                              <TextField fx:id="txtSubTitle" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="Datum" GridPane.rowIndex="2" />
+                              <DatePicker fx:id="pckDate" showWeekNumbers="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </content>
@@ -106,11 +114,6 @@
                               </Label>
                               <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
                               <Label text="Art" GridPane.rowIndex="2" />
-                              <Label text="Attachments" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Label>
                               <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
                               <Label text="Dateiname" GridPane.rowIndex="5" />
                               <VBox prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -119,12 +122,26 @@
                                     <CheckBox fx:id="chkLetter" mnemonicParsing="false" text="Brief" />
                                  </children>
                               </VBox>
+                              <Label text="Nachrichtendatei" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
                               <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <children>
-                                    <TextField fx:id="txtAttachment1" />
-                                    <Button fx:id="btnAttachmentSelect1" mnemonicParsing="false" onAction="#handleAttachmentSelect" />
-                                    <Button fx:id="btnAttachmentAdd1" mnemonicParsing="false" onAction="#handleAttachmentAdd" />
-                                    <Button fx:id="btnAttachmentDelete1" mnemonicParsing="false" onAction="#handleAttachmentDelete" />
+                                    <TextField fx:id="txtCommunicationFile" />
+                                    <Button fx:id="btnMessageFileSelect" mnemonicParsing="false" onAction="#handleMessageFileSelect">
+                                       <tooltip>
+                                          <Tooltip text="Datei auswählen." />
+                                       </tooltip></Button>
+                                    <Button fx:id="btnMessageFileLoad" mnemonicParsing="false" onAction="#handleMessageFileLoad">
+                                       <tooltip>
+                                          <Tooltip text="Dateiinhalte laden." />
+                                       </tooltip></Button>
+                                    <Button fx:id="btnMessageFileSave" mnemonicParsing="false" onAction="#handleMessageFileSave">
+                                       <tooltip>
+                                          <Tooltip text="Inhalte in Datei speichern." />
+                                       </tooltip></Button>
                                  </children>
                               </HBox>
                            </children>

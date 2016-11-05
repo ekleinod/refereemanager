@@ -1,18 +1,32 @@
 package de.edgesoft.refereemanager.controller;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.MessageFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
+import de.edgesoft.refereemanager.utils.TemplateHelper;
+import de.edgesoft.refereemanager.utils.TemplateVariable;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
@@ -21,8 +35,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 /**
  * Controller for the referee communication scene.
@@ -62,6 +78,15 @@ public class RefereeCommunicationController {
 	private TextField txtTitle;
 
 	/**
+	 * Textfield subtitle.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtSubtitle;
+
+	/**
 	 * Textfield opening.
 	 *
 	 * @version 0.10.0
@@ -98,13 +123,22 @@ public class RefereeCommunicationController {
 	private TextField txtSignature;
 
 	/**
+	 * Date picker.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private DatePicker pckDate;
+
+	/**
 	 * Textfield message file.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TextField txtMessageFile;
+	private TextField txtCommunicationFile;
 
 	/**
 	 * Button message file select.
@@ -186,7 +220,7 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private GridPane pneAttachments;
-	
+
 	/**
 	 * Split pane.
 	 *
@@ -213,6 +247,15 @@ public class RefereeCommunicationController {
 	 * @since 0.10.0
 	 */
 	private RefereeListController ctlRefList;
+
+	/**
+	 * A message variable token.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	public static final String MESSAGE_VARIABLE_TOKEN = "%s:";
+
 
 	/**
 	 * Initializes the controller class.
@@ -247,6 +290,33 @@ public class RefereeCommunicationController {
 			Prefs.put(PrefKey.REFEREE_COMMUNICATION_SPLIT_1, Double.toString(newValue.doubleValue()));
 		});
 
+		// communication file
+		txtCommunicationFile.setText(Prefs.get(PrefKey.REFEREE_COMMUNICATION_FILE));
+		txtCommunicationFile.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+			Prefs.put(PrefKey.REFEREE_COMMUNICATION_FILE, newValue);
+		});
+
+		// set date picker date format
+		pckDate.setConverter(new StringConverter<LocalDate>() {
+
+			@Override
+			public String toString(LocalDate date) {
+				if (date == null) {
+					return "";
+				}
+				return DateTimeUtils.formatDate(date);
+			}
+
+			@Override
+			public LocalDate fromString(String string) {
+				String sPattern = DateTimeUtils.DATE_PATTERN;
+				DateTimeUtils.setDatePattern("d.M.yyyy");
+				LocalDate dteParsed = DateTimeUtils.parseDate(string);
+				DateTimeUtils.setDatePattern(sPattern);
+				return dteParsed;
+			}
+		});
+
 		// icons
 		btnSend.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/mail-send.png")));
 		btnPrefs.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/configure.png")));
@@ -262,9 +332,9 @@ public class RefereeCommunicationController {
 						.and(chkLetter.selectedProperty().not())
 						)
 				);
-		btnMessageFileLoad.disableProperty().bind(txtMessageFile.textProperty().isEmpty());
-		btnMessageFileSave.disableProperty().bind(txtMessageFile.textProperty().isEmpty());
-		
+		btnMessageFileLoad.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
+		btnMessageFileSave.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
+
 	}
 
 	/**
@@ -284,6 +354,7 @@ public class RefereeCommunicationController {
 		} else {
 			ctlRefList.setItems(((ContentModel) AppModel.getData().getContent()).getObservableReferees());
 		}
+
     }
 
 	/**
@@ -296,7 +367,7 @@ public class RefereeCommunicationController {
 	private void handleSend() {
 		System.out.println("#handleSend");
 	}
-	
+
 	/**
 	 * Open preferences.
 	 *
@@ -305,7 +376,7 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private void handlePrefs() {
-		
+
     	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PreferencesDialog");
     	AnchorPane preferencesDialog = (AnchorPane) pneLoad.getKey();
 
@@ -328,7 +399,7 @@ public class RefereeCommunicationController {
         appController.setAppTitle();
 
 	}
-	
+
 	/**
 	 * Message file selection.
 	 *
@@ -337,7 +408,27 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private void handleMessageFileSelect() {
-		System.out.println("#handleMessageFileSelect");
+
+		FileChooser fileChooser = new FileChooser();
+
+		fileChooser.setTitle("Nachrichtendatei öffnen");
+        fileChooser.getExtensionFilters().addAll(
+        		new FileChooser.ExtensionFilter("Nachrichten-Dateien (*.mmd)", "*.mmd"),
+        		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
+        		);
+        if (!Prefs.get(PrefKey.REFEREE_COMMUNICATION_FILE).isEmpty()) {
+        	Path pthFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_FILE));
+        	if ((pthFile != null) && (pthFile.getParent() != null)) {
+        		fileChooser.setInitialDirectory(pthFile.getParent().toFile());
+        	}
+        }
+
+        File file = fileChooser.showOpenDialog(appController.getPrimaryStage());
+
+        if (file != null) {
+            txtCommunicationFile.setText(file.getPath());
+        }
+
 	}
 
 	/**
@@ -348,7 +439,78 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private void handleMessageFileLoad() {
-		System.out.println("#handleMessageFileLoad");
+
+		try {
+
+			final List<String> lstText = FileAccess.readFileInList(Paths.get(txtCommunicationFile.getText()));
+
+			List<String> lstBody = new ArrayList<>();
+			boolean isBody = false;
+			for (String theLine : lstText) {
+
+				if (isBody) {
+
+					lstBody.add(theLine.trim());
+
+				} else {
+
+					for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
+
+						String sVarToken = String.format(MESSAGE_VARIABLE_TOKEN, theTemplateVariable.value());
+						if (theLine.trim().startsWith(sVarToken)) {
+
+							String theLineContent = theLine.trim().substring(sVarToken.length()).trim();
+
+							switch (theTemplateVariable) {
+								case ATTACHMENT:
+									System.out.println("todo: attachment");
+									break;
+								case CLOSING:
+									txtClosing.setText(theLineContent);
+									break;
+								case DATE:
+									pckDate.setValue(DateTimeUtils.parseDate(theLineContent));
+									break;
+								case FILENAME:
+									System.out.println("todo filename");
+									break;
+								case OPENING:
+									txtOpening.setText(theLineContent);
+									break;
+								case SIGNATURE:
+									txtSignature.setText(theLineContent);
+									break;
+								case SUBJECT:
+									txtTitle.setText(theLineContent);
+									break;
+								case SUBTITLE:
+									txtSubtitle.setText(theLineContent);
+									break;
+
+							}
+						}
+
+					}
+
+				}
+
+				if (theLine.isEmpty()) {
+					isBody = true;
+				}
+			}
+
+			txtBody.setText(TemplateHelper.toText(lstBody));
+
+		} catch (Exception e) {
+
+	        AlertUtils.createAlert(AlertType.ERROR, appController.getPrimaryStage(),
+	        		"Dateifehler",
+	        		"Ein Fehler ist beim Laden der Nachricht aufgetreten.",
+	        		MessageFormat.format("{0}\nDie Daten wurden nicht geladen.", e.getMessage()))
+	        .showAndWait();
+
+		}
+
 	}
 
 	/**
