@@ -13,6 +13,7 @@ import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.template.Attachment;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
@@ -67,6 +68,14 @@ import javafx.util.StringConverter;
  * @since 0.10.0
  */
 public class RefereeCommunicationController {
+
+	/**
+	 * A message variable token.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	public static final String MESSAGE_VARIABLE_TOKEN = "%s:";
 
 	/**
 	 * Textfield title.
@@ -130,6 +139,15 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private DatePicker pckDate;
+	
+	/**
+	 * Textfield generated filename.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtFilename;
 
 	/**
 	 * Textfield message file.
@@ -249,12 +267,12 @@ public class RefereeCommunicationController {
 	private RefereeListController ctlRefList;
 
 	/**
-	 * A message variable token.
+	 * List of attachments.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
-	public static final String MESSAGE_VARIABLE_TOKEN = "%s:";
+	public List<Attachment> lstAttachments = null;
 
 
 	/**
@@ -335,6 +353,10 @@ public class RefereeCommunicationController {
 		btnMessageFileLoad.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
 		btnMessageFileSave.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
 
+		// attachment
+		btnAttachmentSelect1.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
+		btnAttachmentAdd1.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
+		btnAttachmentDelete1.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 	}
 
 	/**
@@ -472,7 +494,7 @@ public class RefereeCommunicationController {
 									pckDate.setValue(DateTimeUtils.parseDate(theLineContent));
 									break;
 								case FILENAME:
-									System.out.println("todo filename");
+									txtFilename.setText(theLineContent);
 									break;
 								case OPENING:
 									txtOpening.setText(theLineContent);
