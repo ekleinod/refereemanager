@@ -31,15 +31,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -202,31 +204,40 @@ public class RefereeCommunicationController {
 	private Button btnMessageFileSave;
 
 	/**
-	 * Checkbox email.
+	 * Radio button email.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private CheckBox chkEMail;
+	private RadioButton radEMail;
 
 	/**
-	 * Checkbox letter.
+	 * Radio button letter.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private CheckBox chkLetter;
+	private RadioButton radLetter;
 
 	/**
-	 * Checkbox document.
+	 * Radio button document.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private CheckBox chkDocument;
+	private RadioButton radDocument;
+	
+	/**
+	 * Toggle group communication kind.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private ToggleGroup grpCommKind;
 
 	/**
 	 * Send button.
@@ -410,17 +421,25 @@ public class RefereeCommunicationController {
 		// enabling buttons
 		btnSend.disableProperty().bind(
 				ctlRefList.getSelectionModel().selectedItemProperty().isNull()
-				.or(
-						chkEMail.selectedProperty().not()
-						.and(chkLetter.selectedProperty().not())
-						.and(chkDocument.selectedProperty().not())
-						)
 				);
 		btnMessageFileLoad.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
 		btnMessageFileSave.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
 		btnAttachmentEdit.disableProperty().bind(tblAttachments.getSelectionModel().selectedItemProperty().isNull());
 		btnAttachmentDelete.disableProperty().bind(tblAttachments.getSelectionModel().selectedItemProperty().isNull());
 
+		// text on send button
+		grpCommKind.selectedToggleProperty().addListener((ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) -> {
+			btnSend.setText((newValue == radEMail) ? "Senden" : "Erzeugen");
+		});
+//		radEMail.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+//			btnSend.setText(newValue ? "Senden" : "Erzeugen");
+//		});
+//		radLetter.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+//			btnSend.setText(newValue ? "Erzeugen" : "Senden");
+//		});
+//		radDocument.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+//			btnSend.setText(newValue ? "Erzeugen" : "Senden");
+//		});
 
 		// attachment list
 		colFilename.setCellValueFactory(cellData -> cellData.getValue().getFilename());

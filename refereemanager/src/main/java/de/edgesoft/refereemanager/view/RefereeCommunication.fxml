@@ -3,9 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
@@ -13,6 +13,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -108,7 +109,7 @@
                   </AnchorPane>
                   <ScrollPane fitToWidth="true">
                      <content>
-                        <GridPane fx:id="pneAttachments">
+                        <GridPane>
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="120.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -133,9 +134,13 @@
                               <Label text="Dateiname" GridPane.rowIndex="5" />
                               <VBox prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
-                                    <CheckBox fx:id="chkEMail" mnemonicParsing="false" selected="true" text="E-Mail" />
-                                    <CheckBox fx:id="chkLetter" mnemonicParsing="false" text="Brief" />
-                                    <CheckBox fx:id="chkDocument" mnemonicParsing="false" text="Dokument" />
+                                    <RadioButton fx:id="radEMail" mnemonicParsing="false" selected="true" text="E-Mail">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="grpCommKind" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="radLetter" mnemonicParsing="false" text="Brief" toggleGroup="$grpCommKind" />
+                                    <RadioButton fx:id="radDocument" mnemonicParsing="false" text="Dokument" toggleGroup="$grpCommKind" />
                                  </children>
                               </VBox>
                               <Label text="Nachrichtendatei" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
