@@ -26,19 +26,19 @@
           <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="lblTitle" mnemonicParsing="true" text="_Dateiname">
+            <Label mnemonicParsing="true" text="_Dateiname">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Label>
             <Label mnemonicParsing="true" text="_Titel" GridPane.rowIndex="1" />
             <Label mnemonicParsing="true" text="_Papierformat" GridPane.rowIndex="2" />
-            <TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <AnchorPane GridPane.columnIndex="1">
                <children>
-                  <TextField fx:id="chkFilename" layoutX="23.0" layoutY="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="21.0" />
+                  <TextField fx:id="txtFilename" layoutX="23.0" layoutY="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="21.0" />
                   <Button fx:id="btnFilename" layoutX="231.0" layoutY="3.0" mnemonicParsing="false" onAction="#handleFileSelect" prefHeight="16.0" prefWidth="16.0" AnchorPane.rightAnchor="0.0" />
                </children>
             </AnchorPane>
+            <TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <RadioButton fx:id="radPortrait" mnemonicParsing="false" selected="true" text="Hochformat">

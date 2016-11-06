@@ -27,8 +27,10 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -537,103 +539,114 @@ public class RefereeCommunicationController {
 	@FXML
 	private void handleMessageFileLoad() {
 
-		try {
+    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
+    			"Bestätigung Nachrichtendatei laden",
+    			"Soll die Nachrichtendatei geladen werden?",
+    			"Alle Eingaben werden dabei gelöscht bzw. überschrieben.");
 
-			final List<String> lstText = FileAccess.readFileInList(Paths.get(txtCommunicationFile.getText()));
-
-			tblAttachments.getItems().clear();
-			txtClosing.setText(null);
-			pckDate.setValue(null);
-			txtFilename.setText(null);
-			txtOpening.setText(null);
-			txtSignature.setText(null);
-			txtTitle.setText(null);
-			txtSubtitle.setText(null);
-			txtBody.setText(null);
-
-			List<String> lstBody = new ArrayList<>();
-			boolean isBody = false;
-			for (String theLine : lstText) {
-
-				if (isBody) {
-
-					lstBody.add(theLine.trim());
-
-				} else {
-
-					for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
-
-						String sVarToken = String.format(MESSAGE_VARIABLE_TOKEN, theTemplateVariable.value());
-						if (theLine.trim().startsWith(sVarToken)) {
-
-							String theLineContent = theLine.trim().substring(sVarToken.length()).trim();
-
-							switch (theTemplateVariable) {
-								case ATTACHMENT:
-									String[] arrAttachmentParts = theLineContent.split(ATTACHMENT_SEPARATOR);
-
-									Attachment attNew = new Attachment();
-
-									attNew.setFilename(new SimpleStringProperty(arrAttachmentParts[0].trim()));
-
-									if (arrAttachmentParts.length > 1) {
-										attNew.setTitle(new SimpleStringProperty(arrAttachmentParts[1].trim()));
-									}
-
-									if (arrAttachmentParts.length > 2) {
-										attNew.setLandscape(new SimpleBooleanProperty(Boolean.valueOf(arrAttachmentParts[2].trim())));
-									}
-
-									tblAttachments.getItems().add(attNew);
-									break;
-								case CLOSING:
-									txtClosing.setText(theLineContent);
-									break;
-								case DATE:
-									pckDate.setValue(DateTimeUtils.parseDate(theLineContent));
-									break;
-								case FILENAME:
-									txtFilename.setText(theLineContent);
-									break;
-								case OPENING:
-									txtOpening.setText(theLineContent);
-									break;
-								case SIGNATURE:
-									txtSignature.setText(theLineContent);
-									break;
-								case SUBTITLE:
-									txtSubtitle.setText(theLineContent);
-									break;
-								case TITLE:
-									txtTitle.setText(theLineContent);
-									break;
-
-							}
-						}
-
-					}
-
-				}
-
-				if (theLine.isEmpty()) {
-					isBody = true;
-				}
-			}
-
-			txtBody.setText(TemplateHelper.toText(lstBody));
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-	        AlertUtils.createAlert(AlertType.ERROR, appController.getPrimaryStage(),
-	        		"Dateifehler",
-	        		"Ein Fehler ist beim Laden der Nachricht aufgetreten.",
-	        		MessageFormat.format("{0}\nDie Daten wurden nicht geladen.", e.getMessage()))
-	        .showAndWait();
-
-		}
-
+        alert.showAndWait()
+        		.filter(response -> response == ButtonType.OK)
+        		.ifPresent(response -> {
+        			
+        			try {
+        				
+        				final List<String> lstText = FileAccess.readFileInList(Paths.get(txtCommunicationFile.getText()));
+        				
+        				tblAttachments.getItems().clear();
+        				txtClosing.setText(null);
+        				pckDate.setValue(null);
+        				txtFilename.setText(null);
+        				txtOpening.setText(null);
+        				txtSignature.setText(null);
+        				txtTitle.setText(null);
+        				txtSubtitle.setText(null);
+        				txtBody.setText(null);
+        				
+        				List<String> lstBody = new ArrayList<>();
+        				boolean isBody = false;
+        				for (String theLine : lstText) {
+        					
+        					if (isBody) {
+        						
+        						lstBody.add(theLine.trim());
+        						
+        					} else {
+        						
+        						for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
+        							
+        							String sVarToken = String.format(MESSAGE_VARIABLE_TOKEN, theTemplateVariable.value());
+        							if (theLine.trim().startsWith(sVarToken)) {
+        								
+        								String theLineContent = theLine.trim().substring(sVarToken.length()).trim();
+        								
+        								switch (theTemplateVariable) {
+        								case ATTACHMENT:
+        									String[] arrAttachmentParts = theLineContent.split(ATTACHMENT_SEPARATOR);
+        									
+        									Attachment attNew = new Attachment();
+        									
+        									attNew.setFilename(new SimpleStringProperty(arrAttachmentParts[0].trim()));
+        									
+        									if (arrAttachmentParts.length > 1) {
+        										attNew.setTitle(new SimpleStringProperty(arrAttachmentParts[1].trim()));
+        									}
+        									
+        									if (arrAttachmentParts.length > 2) {
+        										attNew.setLandscape(new SimpleBooleanProperty(Boolean.valueOf(arrAttachmentParts[2].trim())));
+        									}
+        									
+        									tblAttachments.getItems().add(attNew);
+        									break;
+        								case CLOSING:
+        									txtClosing.setText(theLineContent);
+        									break;
+        								case DATE:
+        									pckDate.setValue(DateTimeUtils.parseDate(theLineContent));
+        									break;
+        								case FILENAME:
+        									txtFilename.setText(theLineContent);
+        									break;
+        								case OPENING:
+        									txtOpening.setText(theLineContent);
+        									break;
+        								case SIGNATURE:
+        									txtSignature.setText(theLineContent);
+        									break;
+        								case SUBTITLE:
+        									txtSubtitle.setText(theLineContent);
+        									break;
+        								case TITLE:
+        									txtTitle.setText(theLineContent);
+        									break;
+        									
+        								}
+        							}
+        							
+        						}
+        						
+        					}
+        					
+        					if (theLine.isEmpty()) {
+        						isBody = true;
+        					}
+        				}
+        				
+        				txtBody.setText(TemplateHelper.toText(lstBody));
+        				
+        			} catch (Exception e) {
+        				
+        				e.printStackTrace();
+        				
+        				AlertUtils.createAlert(AlertType.ERROR, appController.getPrimaryStage(),
+        						"Dateifehler",
+        						"Ein Fehler ist beim Laden der Nachricht aufgetreten.",
+        						MessageFormat.format("{0}\nDie Daten wurden nicht geladen.", e.getMessage()))
+        				.showAndWait();
+        				
+        			}
+        			
+        		});
+        
 	}
 
 	/**
@@ -655,7 +668,13 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private void handleAttachmentAdd() {
-		System.out.println("#handleAttachmentAdd");
+		
+		Attachment newAttachment = new Attachment();
+		if (showAttachmentEditDialog(newAttachment)) {
+			tblAttachments.getItems().add(newAttachment);
+			tblAttachments.getSelectionModel().select(newAttachment);
+		}
+
 	}
 
 	/**
@@ -666,7 +685,13 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private void handleAttachmentEdit() {
-		System.out.println("#handleAttachmentEdit");
+		
+		Attachment editAttachment = tblAttachments.getSelectionModel().getSelectedItem();
+
+	    if (editAttachment != null) {
+			showAttachmentEditDialog(editAttachment);
+	    }
+
 	}
 
 	/**
@@ -677,7 +702,59 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private void handleAttachmentDelete() {
-		System.out.println("#handleAttachmentDelete");
+		
+		Attachment selectedAttachment = tblAttachments.getSelectionModel().getSelectedItem();
+
+	    if (selectedAttachment != null) {
+
+	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
+	    			"Bestätigung Attachment löschen",
+	    			"Soll das ausgewählte Attachment gelöscht werden?",
+	    			null);
+
+	        alert.showAndWait()
+	        		.filter(response -> response == ButtonType.OK)
+	        		.ifPresent(response -> {
+	        			tblAttachments.getItems().remove(selectedAttachment);
+	        			});
+
+	    }
+
+	}
+
+	/**
+	 * Opens the attachment edit dialog.
+	 *
+	 * @param theAttachment the attachment to be edited
+	 * @return true if the user clicked OK, false otherwise.
+	 *
+	 * @version 6.0.0
+	 * @since 6.0.0
+	 */
+	private boolean showAttachmentEditDialog(Attachment theAttachment) {
+
+    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AttachmentEditDialog");
+    	AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(appController.getPrimaryStage());
+        dialogStage.setTitle("Dateianhang editieren");
+
+        Scene scene = new Scene(editDialog);
+        dialogStage.setScene(scene);
+
+        // Set the event into the controller.
+        AttachmentEditDialogController editController = pneLoad.getValue().getController();
+        editController.setDialogStage(dialogStage);
+        editController.setAttachment(theAttachment);
+
+        // Show the dialog and wait until the user closes it
+        dialogStage.showAndWait();
+
+        return editController.isOkClicked();
+
 	}
 
 }

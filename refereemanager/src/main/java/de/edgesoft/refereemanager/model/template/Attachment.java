@@ -1,23 +1,12 @@
 
 package de.edgesoft.refereemanager.model.template;
 
-import de.edgesoft.edgeutils.commons.ModelClass;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 
 
 /**
- * Attachment, model class for document template variable.
- *
- * This class slightly breaks the model-view-controller concept,
- * as it contains view data.
- *
- * This eases the output of the data using the template language
- * without copy/paste of template resolving parts.
- *
- * Thus, the content is stored and processed here and used within the
- * {@link DocumentData}.
+ * Attachment class.
  *
  * ## Legal stuff
  *
@@ -42,7 +31,7 @@ import javafx.beans.property.StringProperty;
  * @version 0.10.0
  * @since 0.8.0
  */
-public class Attachment extends ModelClass {
+public class Attachment {
 
     /**
      * Title property.
@@ -78,15 +67,21 @@ public class Attachment extends ModelClass {
      * Gets the value of the property.
      *
      * @return property value
+     *
+	 * @version 0.10.0
+	 * @since 0.8.0
      */
     public StringProperty getTitle() {
-        return (title == null) ? getFilename() : title;
+        return title;
     }
 
     /**
      * Sets the value of the property.
      *
      * @param value
+     *
+	 * @version 0.10.0
+	 * @since 0.8.0
      */
     public void setTitle(StringProperty value) {
         title = value;
@@ -96,6 +91,9 @@ public class Attachment extends ModelClass {
      * Gets the value of the property.
      *
      * @return property value
+     *
+	 * @version 0.10.0
+	 * @since 0.8.0
      */
 	public StringProperty getFilename() {
 		return filename;
@@ -105,27 +103,36 @@ public class Attachment extends ModelClass {
      * Sets the value of the property.
      *
      * @param value
+     *
+	 * @version 0.10.0
+	 * @since 0.8.0
      */
 	public void setFilename(StringProperty value) {
-		this.filename = value;
+		filename = value;
 	}
 
     /**
      * Gets the value of the property.
      *
      * @return property value
+     *
+	 * @version 0.10.0
+	 * @since 0.8.0
      */
 	public BooleanProperty getLandscape() {
-		return (landscape == null) ? new SimpleBooleanProperty(Boolean.FALSE) : landscape;
+		return landscape;
 	}
 
     /**
      * Sets the value of the property.
      *
      * @param value
+     *
+	 * @version 0.10.0
+	 * @since 0.8.0
      */
 	public void setLandscape(BooleanProperty value) {
-		this.landscape = value;
+		landscape = value;
 	}
 
 }

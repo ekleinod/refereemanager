@@ -1,8 +1,13 @@
 package de.edgesoft.refereemanager.controller;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 import de.edgesoft.refereemanager.model.template.Attachment;
+import de.edgesoft.refereemanager.utils.PrefKey;
+import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -146,8 +152,9 @@ public class AttachmentEditDialogController {
 				);
 
 		// icons
-		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-ok-16.png")));
-		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/actions/dialog-cancel-16.png")));
+		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
+		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
+		btnFilename.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
 		
 	}
 
@@ -248,6 +255,36 @@ public class AttachmentEditDialogController {
     private void handleCancel() {
 		okClicked = false;
         dialogStage.close();
+    }
+
+	/**
+	 * Selects file, stores it to text field.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+    private void handleFileSelect() {
+		
+		FileChooser fileChooser = new FileChooser();
+
+		fileChooser.setTitle("Attachment auswählen");
+        fileChooser.getExtensionFilters().addAll(
+        		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
+        		);
+        if (!Prefs.get(PrefKey.REFEREE_COMMUNICATION_LAST_ATTACHMENT_PATH).isEmpty()) {
+        	Path pthFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_LAST_ATTACHMENT_PATH));
+        	if (pthFile != null) {
+        		fileChooser.setInitialDirectory(pthFile.toFile());
+        	}
+        }
+
+        File file = fileChooser.showOpenDialog(dialogStage);
+
+        if (file != null) {
+            txtFilename.setText(file.getPath());
+        }
+
     }
 
 }
