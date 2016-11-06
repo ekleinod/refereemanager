@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-import de.edgesoft.refereemanager.model.template.Attachment;
+import de.edgesoft.refereemanager.utils.Attachment;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;

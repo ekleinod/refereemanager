@@ -1,5 +1,5 @@
 
-package de.edgesoft.refereemanager.model.template;
+package de.edgesoft.refereemanager.utils;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;

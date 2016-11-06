@@ -39,7 +39,6 @@ import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
-import de.edgesoft.refereemanager.model.template.Attachment;
 import de.edgesoft.refereemanager.model.template.DocumentData;
 
 /**
