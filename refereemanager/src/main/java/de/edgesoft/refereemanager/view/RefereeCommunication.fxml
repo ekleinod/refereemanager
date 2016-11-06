@@ -29,80 +29,83 @@
          <children>
             <SplitPane fx:id="pneSplit" dividerPositions="0.5" layoutX="100.0" layoutY="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
-                  <ScrollPane fitToWidth="true">
-                     <content>
-                        <GridPane>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="170.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="179.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                              <RowConstraints />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" valignment="BASELINE" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints fillHeight="false" minHeight="10.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label text="Titel" GridPane.rowIndex="2" />
-                              <Label text="Anrede" GridPane.rowIndex="4" />
-                              <Label text="Text" GridPane.rowIndex="5" />
-                              <Label text="Schlussformel" GridPane.rowIndex="6" />
-                              <Label text="Unterschrift" GridPane.rowIndex="7" />
-                              <Label text="Nachricht" GridPane.columnSpan="2147483647">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Label>
-                              <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
-                              <TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField fx:id="txtOpening" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <TextArea fx:id="txtBody" prefHeight="300.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <TextField fx:id="txtClosing" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <TextField fx:id="txtSignature" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                              <Label text="Attachments" GridPane.columnSpan="2147483647" GridPane.rowIndex="11">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Untertitel" GridPane.rowIndex="3" />
-                              <TextField fx:id="txtSubtitle" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label text="Datum" GridPane.rowIndex="9" />
-                              <DatePicker fx:id="pckDate" showWeekNumbers="true" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                              <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
-                              <Label text="Generierter Dateiname" GridPane.rowIndex="10" />
-                              <TextField fx:id="txtFilename" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                              <ButtonBar buttonMinWidth="16.0" GridPane.columnIndex="1" GridPane.rowIndex="11">
-                                 <buttons>
-                                    <Button fx:id="btnAttachmentAdd" mnemonicParsing="false" onAction="#handleAttachmentAdd" />
-                                    <Button fx:id="btnAttachmentDelete" mnemonicParsing="false" onAction="#handleAttachmentDelete" />
-                                 </buttons>
-                              </ButtonBar>
-                              <TableView fx:id="tblAttachments" prefHeight="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="12">
-                                <columns>
-                                  <TableColumn fx:id="colFilename" editable="false" prefWidth="75.0" text="Dateiname" />
-                                  <TableColumn fx:id="colTitle" editable="false" prefWidth="75.0" text="Titel" />
-                                    <TableColumn fx:id="colFormat" editable="false" prefWidth="75.0" text="Papierformat" />
-                                </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                           </children>
-                        </GridPane>
-                     </content>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </ScrollPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                           <content>
+                              <GridPane>
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="170.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="179.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                    <RowConstraints />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" valignment="BASELINE" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Titel" GridPane.rowIndex="2" />
+                                    <Label text="Anrede" GridPane.rowIndex="4" />
+                                    <Label text="Text" GridPane.rowIndex="5" />
+                                    <Label text="Schlussformel" GridPane.rowIndex="6" />
+                                    <Label text="Unterschrift" GridPane.rowIndex="7" />
+                                    <Label text="Nachricht" GridPane.columnSpan="2147483647">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+                                    <TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="txtOpening" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <TextArea fx:id="txtBody" prefHeight="300.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <TextField fx:id="txtClosing" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <TextField fx:id="txtSignature" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <Label text="Untertitel" GridPane.rowIndex="3" />
+                                    <TextField fx:id="txtSubtitle" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label text="Datum" GridPane.rowIndex="9" />
+                                    <DatePicker fx:id="pckDate" showWeekNumbers="true" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                    <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
+                                    <Label text="Generierter Dateiname" GridPane.rowIndex="10" />
+                                    <TextField fx:id="txtFilename" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                 </children>
+                              </GridPane>
+                           </content>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </ScrollPane>
+                        <Label prefHeight="25.0" text="Attachments" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="5.0">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <ButtonBar buttonMinWidth="16.0" AnchorPane.bottomAnchor="160.0" AnchorPane.rightAnchor="5.0">
+                           <buttons>
+                              <Button fx:id="btnAttachmentAdd" mnemonicParsing="false" onAction="#handleAttachmentAdd" />
+                              <Button fx:id="btnAttachmentEdit" mnemonicParsing="false" onAction="#handleAttachmentEdit" />
+                              <Button fx:id="btnAttachmentDelete" mnemonicParsing="false" onAction="#handleAttachmentDelete" />
+                           </buttons>
+                        </ButtonBar>
+                        <TableView fx:id="tblAttachments" prefHeight="150.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                          <columns>
+                            <TableColumn fx:id="colFilename" editable="false" prefWidth="75.0" text="Dateiname" />
+                            <TableColumn fx:id="colTitle" editable="false" prefWidth="75.0" text="Titel" />
+                              <TableColumn fx:id="colFormat" editable="false" prefWidth="75.0" text="Papierformat" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
                   <ScrollPane fitToWidth="true">
                      <content>
                         <GridPane fx:id="pneAttachments">
@@ -132,6 +135,7 @@
                                  <children>
                                     <CheckBox fx:id="chkEMail" mnemonicParsing="false" selected="true" text="E-Mail" />
                                     <CheckBox fx:id="chkLetter" mnemonicParsing="false" text="Brief" />
+                                    <CheckBox fx:id="chkDocument" mnemonicParsing="false" text="Dokument" />
                                  </children>
                               </VBox>
                               <Label text="Nachrichtendatei" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">

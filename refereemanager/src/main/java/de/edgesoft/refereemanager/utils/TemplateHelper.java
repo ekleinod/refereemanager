@@ -24,7 +24,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
-import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
@@ -33,8 +32,6 @@ import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
-import de.edgesoft.refereemanager.model.template.Attachment;
-import de.edgesoft.refereemanager.model.template.DocumentData;
 
 /**
  * Provides methods and properties for templates.
@@ -670,36 +667,6 @@ public class TemplateHelper {
 			isFurther = true;
 		}
 		return sbReturn.toString();
-	}
-
-	/**
-	 * Creates attachment from attachment line.
-	 *
-	 * @param theLine attachment line
-	 *
-	 * @return attachment
-	 *
-	 * @version 0.8.0
-	 * @since 0.8.0
-	 */
-	public static Attachment createAttachment(final String theLine) {
-		Objects.requireNonNull(theLine, "attachment line must not be null");
-
-		String[] arrAttachmentParts = theLine.split(Prefs.get(PrefKey.TEMPLATE_VARIABLE_SEPARATOR));
-
-		Attachment attReturn = new Attachment();
-
-		attReturn.setFilename(arrAttachmentParts[0].trim());
-
-		if (arrAttachmentParts.length > 1) {
-			attReturn.setTitle(arrAttachmentParts[1].trim());
-		}
-
-		if (arrAttachmentParts.length > 2) {
-			attReturn.setLandscape(Boolean.valueOf(arrAttachmentParts[2].trim()));
-		}
-
-		return attReturn;
 	}
 
 }

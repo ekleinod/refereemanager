@@ -217,6 +217,15 @@ public class RefereeCommunicationController {
 	private CheckBox chkLetter;
 
 	/**
+	 * Checkbox document.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private CheckBox chkDocument;
+
+	/**
 	 * Send button.
 	 *
 	 * @version 0.10.0
@@ -242,6 +251,15 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private Button btnAttachmentAdd;
+
+	/**
+	 * Attachment edit button.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnAttachmentEdit;
 
 	/**
 	 * Attachment delete button.
@@ -383,6 +401,7 @@ public class RefereeCommunicationController {
 		btnMessageFileLoad.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-open.png")));
 		btnMessageFileSave.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-save.png")));
 		btnAttachmentAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
+		btnAttachmentEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnAttachmentDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 
 		// enabling buttons
@@ -391,10 +410,12 @@ public class RefereeCommunicationController {
 				.or(
 						chkEMail.selectedProperty().not()
 						.and(chkLetter.selectedProperty().not())
+						.and(chkDocument.selectedProperty().not())
 						)
 				);
 		btnMessageFileLoad.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
 		btnMessageFileSave.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
+		btnAttachmentEdit.disableProperty().bind(tblAttachments.getSelectionModel().selectedItemProperty().isNull());
 		btnAttachmentDelete.disableProperty().bind(tblAttachments.getSelectionModel().selectedItemProperty().isNull());
 
 
@@ -625,17 +646,6 @@ public class RefereeCommunicationController {
 	}
 
 	/**
-	 * Attachment selection.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private void handleAttachmentSelect() {
-		System.out.println("#handleAttachmentSelect");
-	}
-
-	/**
 	 * Attachment addition.
 	 *
 	 * @version 0.10.0
@@ -644,6 +654,17 @@ public class RefereeCommunicationController {
 	@FXML
 	private void handleAttachmentAdd() {
 		System.out.println("#handleAttachmentAdd");
+	}
+
+	/**
+	 * Attachment edit.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private void handleAttachmentEdit() {
+		System.out.println("#handleAttachmentEdit");
 	}
 
 	/**
