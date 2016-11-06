@@ -38,6 +38,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -307,13 +308,13 @@ public class RefereeCommunicationController {
 	private TableColumn<Attachment, String> colTitle;
 
 	/**
-	 * Paper format column.
+	 * Landscape paper format column.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TableColumn<Attachment, Boolean> colFormat;
+	private TableColumn<Attachment, Boolean> colLandscape;
 
 
 	/**
@@ -422,7 +423,8 @@ public class RefereeCommunicationController {
 		// attachment list
 		colFilename.setCellValueFactory(cellData -> cellData.getValue().getFilename());
 		colTitle.setCellValueFactory(cellData -> cellData.getValue().getTitle());
-		colFormat.setCellValueFactory(cellData -> cellData.getValue().getLandscape());
+		colLandscape.setCellValueFactory(cellData -> cellData.getValue().getLandscape());
+		colLandscape.setCellFactory(col -> new CheckBoxTableCell<>());
 
 		Label lblPlaceholder = new Label("Keine Attachments.");
 		lblPlaceholder.setWrapText(true);

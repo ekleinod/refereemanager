@@ -98,7 +98,7 @@
                           <columns>
                             <TableColumn fx:id="colFilename" editable="false" prefWidth="75.0" text="Dateiname" />
                             <TableColumn fx:id="colTitle" editable="false" prefWidth="75.0" text="Titel" />
-                              <TableColumn fx:id="colFormat" editable="false" prefWidth="75.0" text="Papierformat" />
+                              <TableColumn fx:id="colLandscape" editable="false" prefWidth="75.0" text="Querformat" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
