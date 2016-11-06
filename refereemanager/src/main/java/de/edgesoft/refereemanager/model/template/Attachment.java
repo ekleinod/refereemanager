@@ -2,6 +2,9 @@
 package de.edgesoft.refereemanager.model.template;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.StringProperty;
 
 
 /**
@@ -36,21 +39,47 @@ import de.edgesoft.edgeutils.commons.ModelClass;
  * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.8.0
+ * @version 0.10.0
  * @since 0.8.0
  */
 public class Attachment extends ModelClass {
 
-    private String title;
-    private String filename;
-    private Boolean landscape;
+    /**
+     * Title property.
+     *
+     * @return property value
+     *
+	 * @version 0.10.0
+	 * @since 0.8.0
+     */
+    private StringProperty title;
+
+    /**
+     * Filename property.
+     *
+     * @return property value
+     *
+	 * @version 0.10.0
+	 * @since 0.8.0
+     */
+    private StringProperty filename;
+
+    /**
+     * Landscape property.
+     *
+     * @return property value
+     *
+	 * @version 0.10.0
+	 * @since 0.8.0
+     */
+    private BooleanProperty landscape;
 
     /**
      * Gets the value of the property.
      *
      * @return property value
      */
-    public String getTitle() {
+    public StringProperty getTitle() {
         return (title == null) ? getFilename() : title;
     }
 
@@ -59,7 +88,7 @@ public class Attachment extends ModelClass {
      *
      * @param value
      */
-    public void setTitle(String value) {
+    public void setTitle(StringProperty value) {
         title = value;
     }
 
@@ -68,7 +97,7 @@ public class Attachment extends ModelClass {
      *
      * @return property value
      */
-	public String getFilename() {
+	public StringProperty getFilename() {
 		return filename;
 	}
 
@@ -77,7 +106,7 @@ public class Attachment extends ModelClass {
      *
      * @param value
      */
-	public void setFilename(String value) {
+	public void setFilename(StringProperty value) {
 		this.filename = value;
 	}
 
@@ -86,8 +115,8 @@ public class Attachment extends ModelClass {
      *
      * @return property value
      */
-	public Boolean getLandscape() {
-		return (landscape == null) ? Boolean.FALSE : landscape;
+	public BooleanProperty getLandscape() {
+		return (landscape == null) ? new SimpleBooleanProperty(Boolean.FALSE) : landscape;
 	}
 
     /**
@@ -95,7 +124,7 @@ public class Attachment extends ModelClass {
      *
      * @param value
      */
-	public void setLandscape(Boolean value) {
+	public void setLandscape(BooleanProperty value) {
 		this.landscape = value;
 	}
 

@@ -20,7 +20,10 @@ import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
 import de.edgesoft.refereemanager.utils.TemplateHelper;
 import de.edgesoft.refereemanager.utils.TemplateVariable;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -28,13 +31,15 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -76,6 +81,14 @@ public class RefereeCommunicationController {
 	 * @since 0.10.0
 	 */
 	public static final String MESSAGE_VARIABLE_TOKEN = "%s:";
+
+	/**
+	 * Attachment separator.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	public static final String ATTACHMENT_SEPARATOR = "::";
 
 	/**
 	 * Textfield title.
@@ -139,7 +152,7 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private DatePicker pckDate;
-	
+
 	/**
 	 * Textfield generated filename.
 	 *
@@ -221,23 +234,32 @@ public class RefereeCommunicationController {
 	@FXML
 	private Button btnPrefs;
 
-	@FXML
-	private TextField txtAttachment1;
-	@FXML
-	private Button btnAttachmentSelect1;
-	@FXML
-	private Button btnAttachmentAdd1;
-	@FXML
-	private Button btnAttachmentDelete1;
-
 	/**
-	 * Attachment pane.
+	 * Attachment add button.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private GridPane pneAttachments;
+	private Button btnAttachmentAdd;
+
+	/**
+	 * Attachment delete button.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnAttachmentDelete;
+
+	/**
+	 * Attachment table view.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TableView<Attachment> tblAttachments;
 
 	/**
 	 * Split pane.
@@ -247,6 +269,33 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private SplitPane pneSplit;
+
+	/**
+	 * Filename column.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TableColumn<Attachment, String> colFilename;
+
+	/**
+	 * Title column.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TableColumn<Attachment, String> colTitle;
+
+	/**
+	 * Paper format column.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TableColumn<Attachment, Boolean> colFormat;
 
 
 	/**
@@ -265,14 +314,6 @@ public class RefereeCommunicationController {
 	 * @since 0.10.0
 	 */
 	private RefereeListController ctlRefList;
-
-	/**
-	 * List of attachments.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	public List<Attachment> lstAttachments = null;
 
 
 	/**
@@ -341,6 +382,8 @@ public class RefereeCommunicationController {
 		btnMessageFileSelect.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
 		btnMessageFileLoad.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-open.png")));
 		btnMessageFileSave.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-save.png")));
+		btnAttachmentAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
+		btnAttachmentDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 
 		// enabling buttons
 		btnSend.disableProperty().bind(
@@ -352,11 +395,20 @@ public class RefereeCommunicationController {
 				);
 		btnMessageFileLoad.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
 		btnMessageFileSave.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
+		btnAttachmentDelete.disableProperty().bind(tblAttachments.getSelectionModel().selectedItemProperty().isNull());
 
-		// attachment
-		btnAttachmentSelect1.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
-		btnAttachmentAdd1.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
-		btnAttachmentDelete1.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
+
+		// attachment list
+		colFilename.setCellValueFactory(cellData -> cellData.getValue().getFilename());
+		colTitle.setCellValueFactory(cellData -> cellData.getValue().getTitle());
+		colFormat.setCellValueFactory(cellData -> cellData.getValue().getLandscape());
+
+		Label lblPlaceholder = new Label("Keine Attachments.");
+		lblPlaceholder.setWrapText(true);
+		tblAttachments.setPlaceholder(lblPlaceholder);
+
+		tblAttachments.setItems(FXCollections.observableList(new ArrayList<>()));
+
 	}
 
 	/**
@@ -466,6 +518,16 @@ public class RefereeCommunicationController {
 
 			final List<String> lstText = FileAccess.readFileInList(Paths.get(txtCommunicationFile.getText()));
 
+			tblAttachments.getItems().clear();
+			txtClosing.setText(null);
+			pckDate.setValue(null);
+			txtFilename.setText(null);
+			txtOpening.setText(null);
+			txtSignature.setText(null);
+			txtTitle.setText(null);
+			txtSubtitle.setText(null);
+			txtBody.setText(null);
+
 			List<String> lstBody = new ArrayList<>();
 			boolean isBody = false;
 			for (String theLine : lstText) {
@@ -485,7 +547,21 @@ public class RefereeCommunicationController {
 
 							switch (theTemplateVariable) {
 								case ATTACHMENT:
-									System.out.println("todo: attachment");
+									String[] arrAttachmentParts = theLineContent.split(ATTACHMENT_SEPARATOR);
+
+									Attachment attNew = new Attachment();
+
+									attNew.setFilename(new SimpleStringProperty(arrAttachmentParts[0].trim()));
+
+									if (arrAttachmentParts.length > 1) {
+										attNew.setTitle(new SimpleStringProperty(arrAttachmentParts[1].trim()));
+									}
+
+									if (arrAttachmentParts.length > 2) {
+										attNew.setLandscape(new SimpleBooleanProperty(Boolean.valueOf(arrAttachmentParts[2].trim())));
+									}
+
+									tblAttachments.getItems().add(attNew);
 									break;
 								case CLOSING:
 									txtClosing.setText(theLineContent);
@@ -502,11 +578,11 @@ public class RefereeCommunicationController {
 								case SIGNATURE:
 									txtSignature.setText(theLineContent);
 									break;
-								case SUBJECT:
-									txtTitle.setText(theLineContent);
-									break;
 								case SUBTITLE:
 									txtSubtitle.setText(theLineContent);
+									break;
+								case TITLE:
+									txtTitle.setText(theLineContent);
 									break;
 
 							}
@@ -524,6 +600,8 @@ public class RefereeCommunicationController {
 			txtBody.setText(TemplateHelper.toText(lstBody));
 
 		} catch (Exception e) {
+
+			e.printStackTrace();
 
 	        AlertUtils.createAlert(AlertType.ERROR, appController.getPrimaryStage(),
 	        		"Dateifehler",
