@@ -865,6 +865,9 @@ public class RefereeCommunicationController {
 			LocalTime tmeStart = LocalTime.now();
 			RefereeManager.logger.info("Start Mailsenden.");
 
+			int iSuccess = 0;
+			int iError = 0;
+
 			try {
 
 				// load email template
@@ -933,8 +936,9 @@ public class RefereeCommunicationController {
 							}
 						}
 
-						Transport.send(msgMail);
+//						Transport.send(msgMail);
 						RefereeManager.logger.info("gesendet.");
+						iSuccess++;
 
 					} catch (SendFailedException e) {
 						if (e.getInvalidAddresses() != null) {
@@ -949,6 +953,7 @@ public class RefereeCommunicationController {
 							Arrays.asList(e.getValidSentAddresses()).forEach(adr ->
 									RefereeManager.logger.error(MessageFormat.format("gesendet, valide Adresse: {0} ({1})", adr.toString(), e.getMessage())));
 						}
+						iError++;
 					}
 
 				}
@@ -956,11 +961,23 @@ public class RefereeCommunicationController {
 			} catch (MessagingException | IOException | TemplateException e) {
 				RefereeManager.logger.error(e);
 				e.printStackTrace();
+				iError++;
 			}
 
 			RefereeManager.logger.info("Ende Mailsenden.");
 			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
 			RefereeManager.logger.info(MessageFormat.format("Dauer: {0}", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+
+	    	Alert alert = AlertUtils.createExpandableAlert((iError > 0) ? AlertType.ERROR : AlertType.INFORMATION, appController.getPrimaryStage(),
+	    			"E-Mails versenden",
+	    			MessageFormat.format("Versand {0,choice,0#erfolgreich|1#fehlerhaft|1<fehlerhaft}", iError),
+	    			MessageFormat.format("{0,choice,0#Keine E-Mails|1#Eine E-Mail|1<{0,number,integer} E-Mails} wurden versendet, es {1,choice,0#traten keine|1#trat ein|1<traten {1,number,integer}} Fehler auf.",
+	    					iSuccess, iError),
+	    			"Details:",
+	    			wrtProtocol.toString());
+
+	        alert.showAndWait();
+
 
 		} catch (IOException e) {
 			RefereeManager.logger.error(e);
