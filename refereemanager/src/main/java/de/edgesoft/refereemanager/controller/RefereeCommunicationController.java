@@ -48,7 +48,7 @@ import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
 import de.edgesoft.refereemanager.utils.TemplateHelper;
-import de.edgesoft.refereemanager.utils.TemplateVariable;
+import de.edgesoft.refereemanager.utils.DocumentDataVariable;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -478,7 +478,7 @@ public class RefereeCommunicationController {
 	private void handleSend() {
 
 		Map<String, Object> mapDocData = new HashMap<>();
-		for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
+		for (DocumentDataVariable theTemplateVariable : DocumentDataVariable.values()) {
 
 			switch (theTemplateVariable) {
 				case ATTACHMENT:
@@ -636,7 +636,7 @@ public class RefereeCommunicationController {
 
         					} else {
 
-        						for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
+        						for (DocumentDataVariable theTemplateVariable : DocumentDataVariable.values()) {
 
         							String sVarToken = String.format(MESSAGE_VARIABLE_TOKEN, theTemplateVariable.value());
         							if (theLine.trim().startsWith(sVarToken)) {
@@ -881,8 +881,8 @@ public class RefereeCommunicationController {
 					Message msgMail = new MimeMessage(session);
 					msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.COMMUNICATION_FROM_EMAIL), Prefs.get(PrefKey.COMMUNICATION_FROM_NAME), StandardCharsets.UTF_8.name()));
 
-					msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(TemplateVariable.DATE.value())));
-					msgMail.setSubject((String) mapFilled.get(TemplateVariable.SUBJECT.value()));
+					msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE.value())));
+					msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
 
 					EMail theEMail = referee.getPrimaryEMail();
 					msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().get(), referee.getFullName().get(), StandardCharsets.UTF_8.name()));
@@ -898,7 +898,7 @@ public class RefereeCommunicationController {
 
 					msgMail.setContent(msgContent);
 
-					for (Attachment theAttachment : (List<Attachment>) mapFilled.get(TemplateVariable.ATTACHMENT.value())) {
+					for (Attachment theAttachment : (List<Attachment>) mapFilled.get(DocumentDataVariable.ATTACHMENT.value())) {
 						Path attachment = Paths.get(theAttachment.getFilename().get());
 
 						BodyPart bpAttachment = new MimeBodyPart();

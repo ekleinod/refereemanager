@@ -2,7 +2,7 @@
 package de.edgesoft.refereemanager.utils;
 
 /**
- * Template variables.
+ * Document data variables.
  *
  * For enums I use the coding style of jaxb, so there will be no inconsistencies.
  *
@@ -29,7 +29,7 @@ package de.edgesoft.refereemanager.utils;
  * @version 0.10.0
  * @since 0.8.0
  */
-public enum TemplateVariable {
+public enum DocumentDataVariable {
 
 	ATTACHMENT,
 	BODY,
@@ -44,7 +44,7 @@ public enum TemplateVariable {
 
     private final String value;
 
-    TemplateVariable() {
+    DocumentDataVariable() {
         value = name().toLowerCase();
     }
 
@@ -52,8 +52,8 @@ public enum TemplateVariable {
         return value;
     }
 
-    public static TemplateVariable fromValue(String v) {
-        for (TemplateVariable c: TemplateVariable.values()) {
+    public static DocumentDataVariable fromValue(String v) {
+        for (DocumentDataVariable c: DocumentDataVariable.values()) {
             if (c.value.equals(v)) {
                 return c;
             }
