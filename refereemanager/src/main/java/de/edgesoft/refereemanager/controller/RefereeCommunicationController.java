@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -44,11 +45,11 @@ import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.Attachment;
+import de.edgesoft.refereemanager.utils.DocumentDataVariable;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
 import de.edgesoft.refereemanager.utils.TemplateHelper;
-import de.edgesoft.refereemanager.utils.DocumentDataVariable;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -838,7 +839,7 @@ public class RefereeCommunicationController {
 	 * Maybe I'm doing something wrong there, in that case the code could be
 	 * changes to including all recipients as BCC.
 	 *
-	 * @todo log in string
+	 * @todo log output in alert
 	 *
 	 * @param theDocData document data
 	 *
@@ -847,103 +848,115 @@ public class RefereeCommunicationController {
 	 */
 	private void sendEMail(final Map<String, Object> theDocData) {
 
-		StringBuilder sbProtocol = new StringBuilder();
+		Objects.requireNonNull(theDocData, "document data must not be null");
 
-		LocalTime tmeStart = LocalTime.now();
-		sbProtocol.append(MessageFormat.format("Start: {0}\n", DateTimeUtils.formatAsTime(LocalDateTime.now())));
+		try (StringWriter wrtProtocol = new StringWriter()) {
 
-		try {
+			RefereeManager.addAppender(wrtProtocol, "sendEMail");
 
-			// load email template
-			Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_EMAIL));
+			LocalTime tmeStart = LocalTime.now();
+			RefereeManager.logger.info("Start Mailsenden.");
 
-			Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
-			cfg.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
-			cfg.setDefaultEncoding(StandardCharsets.UTF_8.name());
-			cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-			cfg.setLogTemplateExceptions(false);
+			try {
 
-			Template tplEMail = cfg.getTemplate(pathTemplateFile.getFileName().toString());
+				// load email template
+				Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_EMAIL));
 
-			// send email
-			Properties mailProps = new Properties();
-			mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.COMMUNICATION_SMTP_HOST));
-			mailProps.setProperty("mail.smtp.auth", "true");
+				Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
+				cfg.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
+				cfg.setDefaultEncoding(StandardCharsets.UTF_8.name());
+				cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+				cfg.setLogTemplateExceptions(false);
 
-			Session session = Session.getInstance(mailProps, new Authenticator() {
-			      @Override protected PasswordAuthentication getPasswordAuthentication() {
-			          return new PasswordAuthentication(Prefs.get(PrefKey.COMMUNICATION_SMTP_USERNAME), Prefs.get(PrefKey.COMMUNICATION_SMTP_PASSWORD));
-			        }
-			      });
+				Template tplEMail = cfg.getTemplate(pathTemplateFile.getFileName().toString());
 
-			for (Referee referee : new FilteredList<>(ctlRefList.getSelectionModel().getSelectedItems(), PersonModel.HAS_EMAIL)) {
+				// send email
+				Properties mailProps = new Properties();
+				mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.COMMUNICATION_SMTP_HOST));
+				mailProps.setProperty("mail.smtp.auth", "true");
 
-				sbProtocol.append(MessageFormat.format("Mail an: {0}\n", referee.getDisplayTitle().get()));
+				Session session = Session.getInstance(mailProps, new Authenticator() {
+				      @Override protected PasswordAuthentication getPasswordAuthentication() {
+				          return new PasswordAuthentication(Prefs.get(PrefKey.COMMUNICATION_SMTP_USERNAME), Prefs.get(PrefKey.COMMUNICATION_SMTP_PASSWORD));
+				        }
+				      });
 
-				// fill variables in generated content (todo)
-				Map<String, Object> mapFilled = theDocData;
+				for (Referee referee : new FilteredList<>(ctlRefList.getSelectionModel().getSelectedItems(), PersonModel.HAS_EMAIL)) {
 
-				try {
+					RefereeManager.logger.info(MessageFormat.format("Mail an ''{0}''.", referee.getDisplayTitle().get()));
 
-					Message msgMail = new MimeMessage(session);
-					msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.COMMUNICATION_FROM_EMAIL), Prefs.get(PrefKey.COMMUNICATION_FROM_NAME), StandardCharsets.UTF_8.name()));
+					// fill variables in generated content (todo)
+					Map<String, Object> mapFilled = theDocData;
 
-					msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE.value())));
-					msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
+					try {
 
-					EMail theEMail = referee.getPrimaryEMail();
-					msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().get(), referee.getFullName().get(), StandardCharsets.UTF_8.name()));
+						Message msgMail = new MimeMessage(session);
+						msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.COMMUNICATION_FROM_EMAIL), Prefs.get(PrefKey.COMMUNICATION_FROM_NAME), StandardCharsets.UTF_8.name()));
 
-					MimeMultipart msgContent = new MimeMultipart();
+						msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE.value())));
+						msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
 
-					try (StringWriter wrtContent = new StringWriter()) {
-						tplEMail.process(mapFilled, wrtContent);
-						MimeBodyPart text = new MimeBodyPart();
-						text.setText(wrtContent.toString());
-						msgContent.addBodyPart(text);
+						EMail theEMail = referee.getPrimaryEMail();
+						msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().get(), referee.getFullName().get(), StandardCharsets.UTF_8.name()));
+
+						MimeMultipart msgContent = new MimeMultipart();
+
+						try (StringWriter wrtContent = new StringWriter()) {
+							tplEMail.process(mapFilled, wrtContent);
+							MimeBodyPart text = new MimeBodyPart();
+							text.setText(wrtContent.toString());
+							msgContent.addBodyPart(text);
+						}
+
+						msgMail.setContent(msgContent);
+
+						if (mapFilled.containsKey(DocumentDataVariable.ATTACHMENT.value())) {
+							for (Attachment theAttachment : (List<Attachment>) mapFilled.get(DocumentDataVariable.ATTACHMENT.value())) {
+								Path attachment = Paths.get(theAttachment.getFilename().get());
+
+								BodyPart bpAttachment = new MimeBodyPart();
+								bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
+								bpAttachment.setFileName(attachment.getFileName().toString());
+
+								msgContent.addBodyPart(bpAttachment);
+
+								RefereeManager.logger.info(MessageFormat.format("Attachment: {0}", bpAttachment.getFileName()));
+							}
+						}
+
+	//					Transport.send(msgMail);
+						RefereeManager.logger.info("gesendet.");
+
+					} catch (SendFailedException e) {
+						if (e.getInvalidAddresses() != null) {
+							Arrays.asList(e.getInvalidAddresses()).forEach(adr ->
+									RefereeManager.logger.error(MessageFormat.format("nicht gesendet, fehlerhafte Adresse: {0} ({1})", adr.toString(), e.getMessage())));
+						}
+						if (e.getValidUnsentAddresses() != null) {
+							Arrays.asList(e.getValidUnsentAddresses()).forEach(adr ->
+									RefereeManager.logger.error(MessageFormat.format("nicht gesendet, valide Adresse: {0} ({1})", adr.toString(), e.getMessage())));
+						}
+						if (e.getValidSentAddresses() != null) {
+							Arrays.asList(e.getValidSentAddresses()).forEach(adr ->
+									RefereeManager.logger.error(MessageFormat.format("gesendet, valide Adresse: {0} ({1})", adr.toString(), e.getMessage())));
+						}
 					}
 
-					msgMail.setContent(msgContent);
-
-					for (Attachment theAttachment : (List<Attachment>) mapFilled.get(DocumentDataVariable.ATTACHMENT.value())) {
-						Path attachment = Paths.get(theAttachment.getFilename().get());
-
-						BodyPart bpAttachment = new MimeBodyPart();
-						bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
-						bpAttachment.setFileName(attachment.getFileName().toString());
-
-						msgContent.addBodyPart(bpAttachment);
-
-						sbProtocol.append(MessageFormat.format("\tAttachment: {0}\n", bpAttachment.getFileName()));
-					}
-
-//					Transport.send(msgMail);
-					sbProtocol.append(MessageFormat.format("\terfolgreich gesendet. ({0})\n", LocalDateTime.now()));
-
-				} catch (SendFailedException e) {
-					if (e.getInvalidAddresses() != null) {
-						Arrays.asList(e.getInvalidAddresses()).forEach(adr -> sbProtocol.append(MessageFormat.format("\tnicht gesendet, fehlerhafte Adresse: {0} ({1}, {2})\n", adr.toString(), LocalDateTime.now(), e.getMessage())));
-					}
-					if (e.getValidUnsentAddresses() != null) {
-						Arrays.asList(e.getValidUnsentAddresses()).forEach(adr -> sbProtocol.append(MessageFormat.format("\tnicht gesendet, valide Adresse: {0} ({1}, {2})\n", adr.toString(), LocalDateTime.now(), e.getMessage())));
-					}
-					if (e.getValidSentAddresses() != null) {
-						Arrays.asList(e.getValidSentAddresses()).forEach(adr -> sbProtocol.append(MessageFormat.format("\tgesendet, valide Adresse: {0} ({1}, {2})\n", adr.toString(), LocalDateTime.now(), e.getMessage())));
-					}
 				}
 
+			} catch (MessagingException | IOException | TemplateException e) {
+				RefereeManager.logger.error(e);
+				e.printStackTrace();
 			}
 
-		} catch (MessagingException | IOException | TemplateException e) {
+			RefereeManager.logger.info("Ende Mailsenden.");
+			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
+			RefereeManager.logger.info(MessageFormat.format("Dauer: {0}", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+
+		} catch (IOException e) {
+			RefereeManager.logger.error(e);
 			e.printStackTrace();
 		}
-
-		sbProtocol.append(MessageFormat.format("Ende: {0}\n", DateTimeUtils.formatAsTime(LocalDateTime.now())));
-		Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
-		sbProtocol.append(MessageFormat.format("Dauer: {0}\n", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
-
-		RefereeManager.logger.info(sbProtocol.toString());
-
 	}
 
 }

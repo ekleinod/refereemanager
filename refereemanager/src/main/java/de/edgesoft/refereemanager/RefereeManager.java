@@ -1,9 +1,18 @@
 package de.edgesoft.refereemanager;
 
+import java.io.Writer;
 import java.util.Map;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.Filter;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.appender.WriterAppender;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.apache.logging.log4j.core.layout.PatternLayout;
 
 import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.application.HostServicesDelegate;
@@ -166,6 +175,43 @@ public class RefereeManager extends Application {
 		stage.show();
 		new Thread(splashTask).start();
 
+	}
+
+	/**
+	 * Adds writer appender.
+	 *
+	 * @param theWriter writer
+	 * @param theWriterName name of writer
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	public static void addAppender(final Writer theWriter, final String theWriterName) {
+	    final LoggerContext context = LoggerContext.getContext(false);
+	    final Configuration config = context.getConfiguration();
+	    final PatternLayout layout = PatternLayout.createLayout("%d %-5p: %m%n", null, config, null, null, true, false, null, null);
+	    final Appender appender = WriterAppender.createAppender(layout, null, theWriter, theWriterName, false, true);
+	    appender.start();
+	    config.addAppender(appender);
+	    updateLoggers(appender, config);
+	}
+
+	/**
+	 * Updates all loggers with new appender.
+	 *
+	 * @param theAppender new appender
+	 * @param theConfig logger configuration
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	private static void updateLoggers(final Appender theAppender, final Configuration theConfig) {
+	    final Level level = null;
+	    final Filter filter = null;
+	    for (final LoggerConfig loggerConfig : theConfig.getLoggers().values()) {
+	        loggerConfig.addAppender(theAppender, level, filter);
+	    }
+	    theConfig.getRootLogger().addAppender(theAppender, level, filter);
 	}
 
 }
