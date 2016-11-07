@@ -423,6 +423,11 @@ public class RefereeCommunicationController {
 		// enabling buttons
 		btnSend.disableProperty().bind(
 				ctlRefList.getSelectionModel().selectedItemProperty().isNull()
+				.or(txtTitle.textProperty().isEmpty())
+				.or(txtOpening.textProperty().isEmpty())
+				.or(txtBody.textProperty().isEmpty())
+				.or(txtClosing.textProperty().isEmpty())
+				.or(txtSignature.textProperty().isEmpty())
 				);
 		btnMessageFileLoad.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
 		btnMessageFileSave.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
@@ -832,6 +837,8 @@ public class RefereeCommunicationController {
 	 * Thus, every mail is sent individually.
 	 * Maybe I'm doing something wrong there, in that case the code could be
 	 * changes to including all recipients as BCC.
+	 *
+	 * @todo log in string
 	 *
 	 * @param theDocData document data
 	 *
