@@ -1,29 +1,34 @@
 package de.edgesoft.refereemanager.controller;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.SendFailedException;
 import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -46,6 +51,7 @@ import de.edgesoft.refereemanager.utils.TemplateHelper;
 import de.edgesoft.refereemanager.utils.TemplateVariable;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -59,7 +65,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
@@ -77,7 +82,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 /**
  * Controller for the referee communication scene.
@@ -473,6 +477,43 @@ public class RefereeCommunicationController {
 	@FXML
 	private void handleSend() {
 
+		Map<String, Object> mapDocData = new HashMap<>();
+		for (TemplateVariable theTemplateVariable : TemplateVariable.values()) {
+
+			switch (theTemplateVariable) {
+				case ATTACHMENT:
+					tblAttachments.getItems().forEach(attachment -> {
+						mapDocData.putIfAbsent(theTemplateVariable.value(), new ArrayList<>());
+						((List<Attachment>) mapDocData.get(theTemplateVariable.value())).add(attachment);
+					});
+					break;
+				case BODY:
+					mapDocData.put(theTemplateVariable.value(), txtBody.getText());
+					break;
+				case CLOSING:
+					mapDocData.put(theTemplateVariable.value(), txtClosing.getText());
+					break;
+				case DATE:
+					mapDocData.put(theTemplateVariable.value(), LocalDateTime.now());
+					break;
+				case FILENAME:
+					mapDocData.put(theTemplateVariable.value(), txtFilename.getText());
+					break;
+				case OPENING:
+					mapDocData.put(theTemplateVariable.value(), txtOpening.getText());
+					break;
+				case SIGNATURE:
+					mapDocData.put(theTemplateVariable.value(), txtSignature.getText());
+					break;
+				case SUBTITLE:
+					mapDocData.put(theTemplateVariable.value(), txtSubtitle.getText());
+					break;
+				case SUBJECT:
+					mapDocData.put(theTemplateVariable.value(), txtTitle.getText());
+					break;
+			}
+		}
+
 		if (grpCommKind.getSelectedToggle() == radEMail) {
 
 	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
@@ -483,7 +524,7 @@ public class RefereeCommunicationController {
 	        alert.showAndWait()
 	        		.filter(response -> response == ButtonType.OK)
 	        		.ifPresent(response -> {
-	        			sendEMail();
+	        			sendEMail(mapDocData);
 	        		});
 		} else {
 			System.out.println("#handleCreate");
@@ -577,13 +618,13 @@ public class RefereeCommunicationController {
         				final List<String> lstText = FileAccess.readFileInList(Paths.get(txtCommunicationFile.getText()));
 
         				tblAttachments.getItems().clear();
+        				txtBody.setText(null);
         				txtClosing.setText(null);
         				txtFilename.setText(null);
         				txtOpening.setText(null);
         				txtSignature.setText(null);
         				txtTitle.setText(null);
         				txtSubtitle.setText(null);
-        				txtBody.setText(null);
 
         				List<String> lstBody = new ArrayList<>();
         				boolean isBody = false;
@@ -603,42 +644,47 @@ public class RefereeCommunicationController {
         								String theLineContent = theLine.trim().substring(sVarToken.length()).trim();
 
         								switch (theTemplateVariable) {
-        								case ATTACHMENT:
-        									String[] arrAttachmentParts = theLineContent.split(ATTACHMENT_SEPARATOR);
+	        								case ATTACHMENT:
+	        									String[] arrAttachmentParts = theLineContent.split(ATTACHMENT_SEPARATOR);
 
-        									Attachment attNew = new Attachment();
+	        									Attachment attNew = new Attachment();
 
-        									attNew.setFilename(new SimpleStringProperty(arrAttachmentParts[0].trim()));
+	        									attNew.setFilename(new SimpleStringProperty(arrAttachmentParts[0].trim()));
 
-        									if (arrAttachmentParts.length > 1) {
-        										attNew.setTitle(new SimpleStringProperty(arrAttachmentParts[1].trim()));
-        									}
+	        									if (arrAttachmentParts.length > 1) {
+	        										attNew.setTitle(new SimpleStringProperty(arrAttachmentParts[1].trim()));
+	        									}
 
-        									if (arrAttachmentParts.length > 2) {
-        										attNew.setLandscape(new SimpleBooleanProperty(Boolean.valueOf(arrAttachmentParts[2].trim())));
-        									}
+	        									if (arrAttachmentParts.length > 2) {
+	        										attNew.setLandscape(new SimpleBooleanProperty(Boolean.valueOf(arrAttachmentParts[2].trim())));
+	        									}
 
-        									tblAttachments.getItems().add(attNew);
-        									break;
-        								case CLOSING:
-        									txtClosing.setText(theLineContent);
-        									break;
-        								case FILENAME:
-        									txtFilename.setText(theLineContent);
-        									break;
-        								case OPENING:
-        									txtOpening.setText(theLineContent);
-        									break;
-        								case SIGNATURE:
-        									txtSignature.setText(theLineContent);
-        									break;
-        								case SUBTITLE:
-        									txtSubtitle.setText(theLineContent);
-        									break;
-        								case TITLE:
-        									txtTitle.setText(theLineContent);
-        									break;
-
+	        									tblAttachments.getItems().add(attNew);
+	        									break;
+	        								case BODY:
+	        									// multiple lines without explicit token
+	        									break;
+	        								case CLOSING:
+	        									txtClosing.setText(theLineContent);
+	        									break;
+	        								case DATE:
+	        									// not used for now, always "now"
+	        									break;
+	        								case FILENAME:
+	        									txtFilename.setText(theLineContent);
+	        									break;
+	        								case OPENING:
+	        									txtOpening.setText(theLineContent);
+	        									break;
+	        								case SIGNATURE:
+	        									txtSignature.setText(theLineContent);
+	        									break;
+	        								case SUBTITLE:
+	        									txtSubtitle.setText(theLineContent);
+	        									break;
+	        								case SUBJECT:
+	        									txtTitle.setText(theLineContent);
+	        									break;
         								}
         							}
 
@@ -787,64 +833,73 @@ public class RefereeCommunicationController {
 	 * Maybe I'm doing something wrong there, in that case the code could be
 	 * changes to including all recipients as BCC.
 	 *
+	 * @param theDocData document data
+	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
-	private void sendEMail() {
-
-		// load email template
-		Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_EMAIL));
-
-		Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
-		cfg.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
-		cfg.setDefaultEncoding(StandardCharsets.UTF_8.name());
-		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-		cfg.setLogTemplateExceptions(false);
-
-		Template tplEMail = cfg.getTemplate(pathTemplateFile.getFileName().toString());
-
-		// send email
-		Properties mailProps = new Properties();
-		mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.COMMUNICATION_SMTP_HOST));
-		mailProps.setProperty("mail.smtp.auth", "true");
-
-		Session session = Session.getInstance(mailProps, new Authenticator() {
-		      @Override protected PasswordAuthentication getPasswordAuthentication() {
-		          return new PasswordAuthentication(Prefs.get(PrefKey.COMMUNICATION_SMTP_USERNAME), Prefs.get(PrefKey.COMMUNICATION_SMTP_PASSWORD));
-		        }
-		      });
+	private void sendEMail(final Map<String, Object> theDocData) {
 
 		StringBuilder sbProtocol = new StringBuilder();
 
+		LocalTime tmeStart = LocalTime.now();
+		sbProtocol.append(MessageFormat.format("Start: {0}\n", DateTimeUtils.formatAsTime(LocalDateTime.now())));
+
 		try {
 
-			LocalTime tmeStart = LocalTime.now();
-			sbProtocol.append(MessageFormat.format("Start: {0}\n", DateTimeUtils.formatAsTime(LocalDateTime.now())));
+			// load email template
+			Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_EMAIL));
 
-			new FilteredList<>(ctlRefList.getSelectionModel().getSelectedItems(), PersonModel.HAS_EMAIL).forEach(referee -> {
+			Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
+			cfg.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
+			cfg.setDefaultEncoding(StandardCharsets.UTF_8.name());
+			cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+			cfg.setLogTemplateExceptions(false);
 
-				Message msgMail = new MimeMessage(session);
-				msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.COMMUNICATION_FROM_EMAIL), Prefs.get(PrefKey.COMMUNICATION_FROM_NAME), StandardCharsets.UTF_8.name()));
+			Template tplEMail = cfg.getTemplate(pathTemplateFile.getFileName().toString());
 
-				msgMail.setSentDate(DateTimeUtils.toDate(LocalDateTime.now()));
-				msgMail.setSubject(txtTitle.getText());
+			// send email
+			Properties mailProps = new Properties();
+			mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.COMMUNICATION_SMTP_HOST));
+			mailProps.setProperty("mail.smtp.auth", "true");
+
+			Session session = Session.getInstance(mailProps, new Authenticator() {
+			      @Override protected PasswordAuthentication getPasswordAuthentication() {
+			          return new PasswordAuthentication(Prefs.get(PrefKey.COMMUNICATION_SMTP_USERNAME), Prefs.get(PrefKey.COMMUNICATION_SMTP_PASSWORD));
+			        }
+			      });
+
+			for (Referee referee : new FilteredList<>(ctlRefList.getSelectionModel().getSelectedItems(), PersonModel.HAS_EMAIL)) {
+
+				sbProtocol.append(MessageFormat.format("Mail an: {0}\n", referee.getDisplayTitle().get()));
+
+				// fill variables in generated content (todo)
+				Map<String, Object> mapFilled = theDocData;
 
 				try {
+
+					Message msgMail = new MimeMessage(session);
+					msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.COMMUNICATION_FROM_EMAIL), Prefs.get(PrefKey.COMMUNICATION_FROM_NAME), StandardCharsets.UTF_8.name()));
+
+					msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(TemplateVariable.DATE.value())));
+					msgMail.setSubject((String) mapFilled.get(TemplateVariable.SUBJECT.value()));
 
 					EMail theEMail = referee.getPrimaryEMail();
 					msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().get(), referee.getFullName().get(), StandardCharsets.UTF_8.name()));
 
 					MimeMultipart msgContent = new MimeMultipart();
 
-					MimeBodyPart text = new MimeBodyPart();
-					String sText = TemplateHelper.toText(TemplateHelper.fillText(theTemplate, docData, docData));
-					text.setText(sText);
-					msgContent.addBodyPart(text);
+					try (StringWriter wrtContent = new StringWriter()) {
+						tplEMail.process(mapFilled, wrtContent);
+						MimeBodyPart text = new MimeBodyPart();
+						text.setText(wrtContent.toString());
+						msgContent.addBodyPart(text);
+					}
 
 					msgMail.setContent(msgContent);
 
-					for (Attachment theAttachment : docData.getAttachment()) {
-						Path attachment = Paths.get(theAttachment.getFilename());
+					for (Attachment theAttachment : (List<Attachment>) mapFilled.get(TemplateVariable.ATTACHMENT.value())) {
+						Path attachment = Paths.get(theAttachment.getFilename().get());
 
 						BodyPart bpAttachment = new MimeBodyPart();
 						bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
@@ -852,39 +907,35 @@ public class RefereeCommunicationController {
 
 						msgContent.addBodyPart(bpAttachment);
 
-						RefereeManager.logger.info(String.format("Adding attachment '%s'.", bpAttachment.getFileName()));
+						sbProtocol.append(MessageFormat.format("\tAttachment: {0}\n", bpAttachment.getFileName()));
 					}
 
-					if (!isTest) {
-						Transport.send(msgMail);
-					}
-
-					Arrays.asList(msgMail.getRecipients(RecipientType.TO))
-							.stream()
-							.forEach(adr -> RefereeManager.logger.info(String.format("sent mail to '%s'.", adr.toString())));
+//					Transport.send(msgMail);
+					sbProtocol.append(MessageFormat.format("\terfolgreich gesendet. ({0})\n", LocalDateTime.now()));
 
 				} catch (SendFailedException e) {
 					if (e.getInvalidAddresses() != null) {
-						Arrays.asList(e.getInvalidAddresses()).forEach(adr -> RefereeManager.logger.error(String.format("invalid address, not sent: '%s'.", adr.toString())));
+						Arrays.asList(e.getInvalidAddresses()).forEach(adr -> sbProtocol.append(MessageFormat.format("\tnicht gesendet, fehlerhafte Adresse: {0} ({1}, {2})\n", adr.toString(), LocalDateTime.now(), e.getMessage())));
 					}
 					if (e.getValidUnsentAddresses() != null) {
-						Arrays.asList(e.getValidUnsentAddresses()).forEach(adr -> RefereeManager.logger.error(String.format("valid address, but not sent: '%s'.", adr.toString())));
+						Arrays.asList(e.getValidUnsentAddresses()).forEach(adr -> sbProtocol.append(MessageFormat.format("\tnicht gesendet, valide Adresse: {0} ({1}, {2})\n", adr.toString(), LocalDateTime.now(), e.getMessage())));
 					}
 					if (e.getValidSentAddresses() != null) {
-						Arrays.asList(e.getValidSentAddresses()).forEach(adr -> RefereeManager.logger.error(String.format("valid address, sent email: '%s'.", adr.toString())));
+						Arrays.asList(e.getValidSentAddresses()).forEach(adr -> sbProtocol.append(MessageFormat.format("\tgesendet, valide Adresse: {0} ({1}, {2})\n", adr.toString(), LocalDateTime.now(), e.getMessage())));
 					}
 				}
-			});
 
-			sbProtocol.append(MessageFormat.format("End: {0}\n", DateTimeUtils.formatAsTime(LocalDateTime.now())));
-			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
-			sbProtocol.append(MessageFormat.format("Dauer: {0}\n", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+			}
 
-
-		} catch (MessagingException | UnsupportedEncodingException e) {
+		} catch (MessagingException | IOException | TemplateException e) {
 			e.printStackTrace();
 		}
 
+		sbProtocol.append(MessageFormat.format("Ende: {0}\n", DateTimeUtils.formatAsTime(LocalDateTime.now())));
+		Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
+		sbProtocol.append(MessageFormat.format("Dauer: {0}\n", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+
+		RefereeManager.logger.info(sbProtocol.toString());
 
 	}
 
