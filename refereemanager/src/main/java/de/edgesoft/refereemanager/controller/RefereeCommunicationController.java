@@ -936,7 +936,7 @@ public class RefereeCommunicationController {
 							}
 						}
 
-//						Transport.send(msgMail);
+						Transport.send(msgMail);
 						RefereeManager.logger.info("gesendet.");
 						iSuccess++;
 
