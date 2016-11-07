@@ -54,6 +54,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -527,11 +528,18 @@ public class RefereeCommunicationController {
 	    			"E-Mails versenden?",
 	    			"Je nach Empfängeranzahl kann das etwas dauern.");
 
+	    	final BooleanProperty doSend = new SimpleBooleanProperty(false);
+
 	        alert.showAndWait()
 	        		.filter(response -> response == ButtonType.OK)
 	        		.ifPresent(response -> {
-	        			sendEMail(mapDocData);
+	        			doSend.set(true);
 	        		});
+
+	        if (doSend.get()) {
+	        	sendEMail(mapDocData);
+	        }
+
 		} else {
 			System.out.println("#handleCreate");
 		}
