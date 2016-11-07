@@ -33,7 +33,6 @@ public enum TemplateVariable {
 
 	ATTACHMENT,
 	CLOSING,
-	DATE,
 	FILENAME,
 	OPENING,
 	SIGNATURE,
