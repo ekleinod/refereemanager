@@ -876,10 +876,11 @@ public class RefereeCommunicationController {
 				mailProps.setProperty("mail.smtp.auth", "true");
 
 				Session session = Session.getInstance(mailProps, new Authenticator() {
-				      @Override protected PasswordAuthentication getPasswordAuthentication() {
+				      @Override
+				      protected PasswordAuthentication getPasswordAuthentication() {
 				          return new PasswordAuthentication(Prefs.get(PrefKey.COMMUNICATION_SMTP_USERNAME), Prefs.get(PrefKey.COMMUNICATION_SMTP_PASSWORD));
-				        }
-				      });
+				      }
+				});
 
 				for (Referee referee : new FilteredList<>(ctlRefList.getSelectionModel().getSelectedItems(), PersonModel.HAS_EMAIL)) {
 
@@ -924,7 +925,7 @@ public class RefereeCommunicationController {
 							}
 						}
 
-	//					Transport.send(msgMail);
+						Transport.send(msgMail);
 						RefereeManager.logger.info("gesendet.");
 
 					} catch (SendFailedException e) {
