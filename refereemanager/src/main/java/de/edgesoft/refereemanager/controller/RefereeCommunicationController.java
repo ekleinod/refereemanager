@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -60,6 +61,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -865,121 +867,159 @@ public class RefereeCommunicationController {
 			LocalTime tmeStart = LocalTime.now();
 			RefereeManager.logger.info("Start Mailsenden.");
 
-			int iSuccess = 0;
-			int iError = 0;
+			Task<Map<String, Integer>> taskSend = new Task<Map<String,Integer>>() {
 
-			try {
-
-				// load email template
-				Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_EMAIL));
-
-				Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
-				cfg.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
-				cfg.setDefaultEncoding(StandardCharsets.UTF_8.name());
-				cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-				cfg.setLogTemplateExceptions(false);
-
-				Template tplEMail = cfg.getTemplate(pathTemplateFile.getFileName().toString());
-
-				// send email
-				Properties mailProps = new Properties();
-				mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.COMMUNICATION_SMTP_HOST));
-				mailProps.setProperty("mail.smtp.auth", "true");
-
-				Session session = Session.getInstance(mailProps, new Authenticator() {
-				      @Override
-				      protected PasswordAuthentication getPasswordAuthentication() {
-				          return new PasswordAuthentication(Prefs.get(PrefKey.COMMUNICATION_SMTP_USERNAME), Prefs.get(PrefKey.COMMUNICATION_SMTP_PASSWORD));
-				      }
-				});
-
-				for (Referee referee : new FilteredList<>(ctlRefList.getSelectionModel().getSelectedItems(), PersonModel.HAS_EMAIL)) {
-
-					RefereeManager.logger.info(MessageFormat.format("Mail an ''{0}''.", referee.getDisplayTitle().get()));
-
-					// fill variables in generated content (todo)
-					Map<String, Object> mapFilled = theDocData;
+				/** Main execution method. */
+				@Override
+				protected Map<String, Integer> call() throws Exception {
+					
+					int iSuccess = 0;
+					int iError = 0;
 
 					try {
 
-						Message msgMail = new MimeMessage(session);
-						msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.COMMUNICATION_FROM_EMAIL), Prefs.get(PrefKey.COMMUNICATION_FROM_NAME), StandardCharsets.UTF_8.name()));
+						// load email template
+						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_EMAIL));
 
-						msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE.value())));
-						msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
+						Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
+						cfg.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
+						cfg.setDefaultEncoding(StandardCharsets.UTF_8.name());
+						cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+						cfg.setLogTemplateExceptions(false);
 
-						EMail theEMail = referee.getPrimaryEMail();
-						msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().get(), referee.getFullName().get(), StandardCharsets.UTF_8.name()));
+						Template tplEMail = cfg.getTemplate(pathTemplateFile.getFileName().toString());
 
-						MimeMultipart msgContent = new MimeMultipart();
+						// send email
+						Properties mailProps = new Properties();
+						mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.COMMUNICATION_SMTP_HOST));
+						mailProps.setProperty("mail.smtp.auth", "true");
 
-						try (StringWriter wrtContent = new StringWriter()) {
-							tplEMail.process(mapFilled, wrtContent);
-							MimeBodyPart text = new MimeBodyPart();
-							text.setText(wrtContent.toString());
-							msgContent.addBodyPart(text);
-						}
+						Session session = Session.getInstance(mailProps, new Authenticator() {
+						      @Override
+						      protected PasswordAuthentication getPasswordAuthentication() {
+						          return new PasswordAuthentication(Prefs.get(PrefKey.COMMUNICATION_SMTP_USERNAME), Prefs.get(PrefKey.COMMUNICATION_SMTP_PASSWORD));
+						      }
+						});
 
-						msgMail.setContent(msgContent);
+						FilteredList<Referee> lstReferees = new FilteredList<>(ctlRefList.getSelectionModel().getSelectedItems(), PersonModel.HAS_EMAIL);
+						int iCount = lstReferees.size();
+						for (Referee referee : lstReferees) {
 
-						if (mapFilled.containsKey(DocumentDataVariable.ATTACHMENT.value())) {
-							for (Attachment theAttachment : (List<Attachment>) mapFilled.get(DocumentDataVariable.ATTACHMENT.value())) {
-								Path attachment = Paths.get(theAttachment.getFilename().get());
+							RefereeManager.logger.info(MessageFormat.format("Mail an ''{0}''.", referee.getDisplayTitle().get()));
+							this.updateMessage(MessageFormat.format("Mail an ''{0}''.", referee.getDisplayTitle().get()));
 
-								BodyPart bpAttachment = new MimeBodyPart();
-								bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
-								bpAttachment.setFileName(attachment.getFileName().toString());
+							// fill variables in generated content (todo)
+							Map<String, Object> mapFilled = theDocData;
 
-								msgContent.addBodyPart(bpAttachment);
+							try {
 
-								RefereeManager.logger.info(MessageFormat.format("Attachment: {0}", bpAttachment.getFileName()));
+								Message msgMail = new MimeMessage(session);
+								msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.COMMUNICATION_FROM_EMAIL), Prefs.get(PrefKey.COMMUNICATION_FROM_NAME), StandardCharsets.UTF_8.name()));
+
+								msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE.value())));
+								msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
+
+								EMail theEMail = referee.getPrimaryEMail();
+								msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().get(), referee.getFullName().get(), StandardCharsets.UTF_8.name()));
+
+								MimeMultipart msgContent = new MimeMultipart();
+
+								try (StringWriter wrtContent = new StringWriter()) {
+									tplEMail.process(mapFilled, wrtContent);
+									MimeBodyPart text = new MimeBodyPart();
+									text.setText(wrtContent.toString());
+									msgContent.addBodyPart(text);
+								}
+
+								msgMail.setContent(msgContent);
+
+								if (mapFilled.containsKey(DocumentDataVariable.ATTACHMENT.value())) {
+									for (Attachment theAttachment : (List<Attachment>) mapFilled.get(DocumentDataVariable.ATTACHMENT.value())) {
+										Path attachment = Paths.get(theAttachment.getFilename().get());
+
+										BodyPart bpAttachment = new MimeBodyPart();
+										bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
+										bpAttachment.setFileName(attachment.getFileName().toString());
+
+										msgContent.addBodyPart(bpAttachment);
+
+										RefereeManager.logger.info(MessageFormat.format("Attachment: {0}", bpAttachment.getFileName()));
+									}
+								}
+
+//								Transport.send(msgMail);
+								Thread.sleep(500);
+								RefereeManager.logger.info("gesendet.");
+								iSuccess++;
+
+							} catch (SendFailedException e) {
+								if (e.getInvalidAddresses() != null) {
+									Arrays.asList(e.getInvalidAddresses()).forEach(adr ->
+											RefereeManager.logger.error(MessageFormat.format("nicht gesendet, fehlerhafte Adresse: {0} ({1})", adr.toString(), e.getMessage())));
+								}
+								if (e.getValidUnsentAddresses() != null) {
+									Arrays.asList(e.getValidUnsentAddresses()).forEach(adr ->
+											RefereeManager.logger.error(MessageFormat.format("nicht gesendet, valide Adresse: {0} ({1})", adr.toString(), e.getMessage())));
+								}
+								if (e.getValidSentAddresses() != null) {
+									Arrays.asList(e.getValidSentAddresses()).forEach(adr ->
+											RefereeManager.logger.error(MessageFormat.format("gesendet, valide Adresse: {0} ({1})", adr.toString(), e.getMessage())));
+								}
+								iError++;
 							}
+							
+							updateProgress(iError + iSuccess, iCount);
+
 						}
 
-						Transport.send(msgMail);
-						RefereeManager.logger.info("gesendet.");
-						iSuccess++;
-
-					} catch (SendFailedException e) {
-						if (e.getInvalidAddresses() != null) {
-							Arrays.asList(e.getInvalidAddresses()).forEach(adr ->
-									RefereeManager.logger.error(MessageFormat.format("nicht gesendet, fehlerhafte Adresse: {0} ({1})", adr.toString(), e.getMessage())));
-						}
-						if (e.getValidUnsentAddresses() != null) {
-							Arrays.asList(e.getValidUnsentAddresses()).forEach(adr ->
-									RefereeManager.logger.error(MessageFormat.format("nicht gesendet, valide Adresse: {0} ({1})", adr.toString(), e.getMessage())));
-						}
-						if (e.getValidSentAddresses() != null) {
-							Arrays.asList(e.getValidSentAddresses()).forEach(adr ->
-									RefereeManager.logger.error(MessageFormat.format("gesendet, valide Adresse: {0} ({1})", adr.toString(), e.getMessage())));
-						}
+					} catch (MessagingException | IOException | TemplateException e) {
+						RefereeManager.logger.error(e);
+						e.printStackTrace();
 						iError++;
 					}
-
+					
+					Map<String, Integer> mapReturn = new HashMap<>();
+					mapReturn.put("success", iSuccess);
+					mapReturn.put("error", iError);
+					
+					return mapReturn;
 				}
-
-			} catch (MessagingException | IOException | TemplateException e) {
-				RefereeManager.logger.error(e);
-				e.printStackTrace();
-				iError++;
-			}
+			};
 
 			RefereeManager.logger.info("Ende Mailsenden.");
 			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
 			RefereeManager.logger.info(MessageFormat.format("Dauer: {0}", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
 
-	    	Alert alert = AlertUtils.createExpandableAlert((iError > 0) ? AlertType.ERROR : AlertType.INFORMATION, appController.getPrimaryStage(),
+			// show progress dialog
+	    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
+	    	AnchorPane progress = (AnchorPane) pneLoad.getKey();
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Mail senden");
+	        dialogStage.initModality(Modality.WINDOW_MODAL);
+	        dialogStage.initOwner(appController.getPrimaryStage());
+	        Scene scene = new Scene(progress);
+	        dialogStage.setScene(scene);
+	        ProgressDialogController controller = pneLoad.getValue().getController();
+	        controller.initController("Mail senden", taskSend.progressProperty(), taskSend.messageProperty());
+	        dialogStage.show();
+	        
+	        // start sending task
+	        new Thread(taskSend).start();
+	        Map<String, Integer> mapResult = taskSend.get();
+	        
+	        dialogStage.close();
+
+	    	Alert alert = AlertUtils.createExpandableAlert((mapResult.get("error") > 0) ? AlertType.ERROR : AlertType.INFORMATION, appController.getPrimaryStage(),
 	    			"E-Mails versenden",
-	    			MessageFormat.format("Versand {0,choice,0#erfolgreich|1#fehlerhaft|1<fehlerhaft}", iError),
+	    			MessageFormat.format("Versand {0,choice,0#erfolgreich|1#fehlerhaft|1<fehlerhaft}", mapResult.get("error")),
 	    			MessageFormat.format("{0,choice,0#Keine E-Mails|1#Eine E-Mail|1<{0,number,integer} E-Mails} wurden versendet, es {1,choice,0#traten keine|1#trat ein|1<traten {1,number,integer}} Fehler auf.",
-	    					iSuccess, iError),
+	    					mapResult.get("success"), mapResult.get("error")),
 	    			"Details:",
 	    			wrtProtocol.toString());
 
 	        alert.showAndWait();
 
-
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException | ExecutionException e) {
 			RefereeManager.logger.error(e);
 			e.printStackTrace();
 		}
