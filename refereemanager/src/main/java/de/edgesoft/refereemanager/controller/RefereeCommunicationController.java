@@ -872,7 +872,7 @@ public class RefereeCommunicationController {
 				/** Main execution method. */
 				@Override
 				protected Map<String, Integer> call() throws Exception {
-					
+
 					int iSuccess = 0;
 					int iError = 0;
 
@@ -967,7 +967,7 @@ public class RefereeCommunicationController {
 								}
 								iError++;
 							}
-							
+
 							updateProgress(iError + iSuccess, iCount);
 
 						}
@@ -977,18 +977,14 @@ public class RefereeCommunicationController {
 						e.printStackTrace();
 						iError++;
 					}
-					
+
 					Map<String, Integer> mapReturn = new HashMap<>();
 					mapReturn.put("success", iSuccess);
 					mapReturn.put("error", iError);
-					
+
 					return mapReturn;
 				}
 			};
-
-			RefereeManager.logger.info("Ende Mailsenden.");
-			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
-			RefereeManager.logger.info(MessageFormat.format("Dauer: {0}", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
 
 			// show progress dialog
 	    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
@@ -1002,12 +998,16 @@ public class RefereeCommunicationController {
 	        ProgressDialogController controller = pneLoad.getValue().getController();
 	        controller.initController("Mail senden", taskSend.progressProperty(), taskSend.messageProperty());
 	        dialogStage.show();
-	        
+
 	        // start sending task
 	        new Thread(taskSend).start();
 	        Map<String, Integer> mapResult = taskSend.get();
-	        
+
 	        dialogStage.close();
+
+	        RefereeManager.logger.info("Ende Mailsenden.");
+	        Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
+	        RefereeManager.logger.info(MessageFormat.format("Dauer: {0}", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
 
 	    	Alert alert = AlertUtils.createExpandableAlert((mapResult.get("error") > 0) ? AlertType.ERROR : AlertType.INFORMATION, appController.getPrimaryStage(),
 	    			"E-Mails versenden",
