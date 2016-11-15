@@ -1,6 +1,6 @@
 package de.edgesoft.refereemanager.controller;
 
-import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -81,16 +81,15 @@ public class ProgressDialogController {
 	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
 	 *
 	 * @param theTitle title
-	 * @param theProgress progress value to bind
-	 * @param theMessage message text to bind
+	 * @param theTask task to bind
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
-	public void initController(final String theTitle, final ObservableValue<? extends Number> theProgress, final ObservableValue<? extends String> theMessage) {
+	public void initController(final String theTitle, final Task<?> theTask) {
 		lblTitle.setText(theTitle);
-		progBar.progressProperty().bind(theProgress);
-		lblMessage.textProperty().bind(theMessage);
+		progBar.progressProperty().bind(theTask.progressProperty());
+		lblMessage.textProperty().bind(theTask.messageProperty());
     }
 
 }

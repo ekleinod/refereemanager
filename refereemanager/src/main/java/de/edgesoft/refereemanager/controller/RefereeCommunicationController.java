@@ -86,6 +86,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Controller for the referee communication scene.
@@ -871,7 +872,7 @@ public class RefereeCommunicationController {
 
 				/** Main execution method. */
 				@Override
-				protected Map<String, Integer> call() throws Exception {
+				protected Map<String, Integer> call() throws InterruptedException {
 
 					int iSuccess = 0;
 					int iError = 0;
@@ -879,6 +880,7 @@ public class RefereeCommunicationController {
 					try {
 
 						// load email template
+						updateMessage("Lade Mail-Template.");
 						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_EMAIL));
 
 						Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
@@ -906,7 +908,7 @@ public class RefereeCommunicationController {
 						for (Referee referee : lstReferees) {
 
 							RefereeManager.logger.info(MessageFormat.format("Mail an ''{0}''.", referee.getDisplayTitle().get()));
-							this.updateMessage(MessageFormat.format("Mail an ''{0}''.", referee.getDisplayTitle().get()));
+							updateMessage(MessageFormat.format("Mail an ''{0}''.", referee.getDisplayTitle().get()));
 
 							// fill variables in generated content (todo)
 							Map<String, Object> mapFilled = theDocData;
@@ -985,25 +987,27 @@ public class RefereeCommunicationController {
 					return mapReturn;
 				}
 			};
-
+			
 			// show progress dialog
 	    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
-	    	AnchorPane progress = (AnchorPane) pneLoad.getKey();
-	        Stage dialogStage = new Stage();
-	        dialogStage.setTitle("Mail senden");
-	        dialogStage.initModality(Modality.WINDOW_MODAL);
-	        dialogStage.initOwner(appController.getPrimaryStage());
-	        Scene scene = new Scene(progress);
-	        dialogStage.setScene(scene);
+	    	
+	        Stage dialogStage = new Stage(StageStyle.UTILITY);
+	        dialogStage.initModality(Modality.APPLICATION_MODAL);
+	        dialogStage.setResizable(false);
+	        dialogStage.setScene(new Scene(pneLoad.getKey()));
+	        
 	        ProgressDialogController controller = pneLoad.getValue().getController();
-	        controller.initController("Mail senden", taskSend.progressProperty(), taskSend.messageProperty());
+	        controller.initController("Mail senden", taskSend);
+	        
+			taskSend.setOnSucceeded(event -> {
+                dialogStage.close();
+            });
+
 	        dialogStage.show();
 
 	        // start sending task
 	        new Thread(taskSend).start();
 	        Map<String, Integer> mapResult = taskSend.get();
-
-	        dialogStage.close();
 
 	        RefereeManager.logger.info("Ende Mailsenden.");
 	        Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
