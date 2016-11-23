@@ -16,20 +16,20 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
- * This file is part of refereemanager.
+ * This file is part of TT-Schiri: Referee Manager.
  *
- * refereemanager is free software: you can redistribute it and/or modify
+ * TT-Schiri: Referee Manager is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * refereemanager is distributed in the hope that it will be useful,
+ * TT-Schiri: Referee Manager is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
+ * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
  * @version 0.10.0
@@ -70,9 +70,9 @@ public class PersonModel extends Person {
 	 * @since 0.8.0
 	 */
 	@Override
-    public SimpleStringProperty getDisplayTitle() {
-    	return getFullName();
-    }
+		public SimpleStringProperty getDisplayTitle() {
+			return getFullName();
+		}
 
 	/**
 	 * Full name of person.
@@ -82,8 +82,8 @@ public class PersonModel extends Person {
 	 * @version 0.10.0
 	 * @since 0.5.0
 	 */
-    public SimpleStringProperty getFullName() {
-    	StringBuilder sbReturn = new StringBuilder();
+		public SimpleStringProperty getFullName() {
+			StringBuilder sbReturn = new StringBuilder();
 
 		if ((getTitle() != null) && !getTitle().get().isEmpty()) {
 			sbReturn.append(getTitle().get());
@@ -104,7 +104,7 @@ public class PersonModel extends Person {
 		}
 
 		return new SimpleStringProperty(sbReturn.toString());
-    }
+		}
 
 	/**
 	 * Table name of person.
@@ -114,8 +114,8 @@ public class PersonModel extends Person {
 	 * @version 0.10.0
 	 * @since 0.5.0
 	 */
-    public SimpleStringProperty getTableName() {
-    	StringBuilder sbReturn = new StringBuilder();
+		public SimpleStringProperty getTableName() {
+			StringBuilder sbReturn = new StringBuilder();
 
 		if ((getName() != null) && !getName().get().isEmpty()) {
 			sbReturn.append(getName());
@@ -136,7 +136,7 @@ public class PersonModel extends Person {
 		}
 
 		return new SimpleStringProperty(sbReturn.toString());
-    }
+		}
 
 	/**
 	 * Filename name of person.
@@ -146,8 +146,8 @@ public class PersonModel extends Person {
 	 * @version 0.10.0
 	 * @since 0.8.0
 	 */
-    public SimpleStringProperty getFileName() {
-    	StringBuilder sbReturn = new StringBuilder();
+		public SimpleStringProperty getFileName() {
+			StringBuilder sbReturn = new StringBuilder();
 
 		if ((getName() != null) && !getName().get().isEmpty()) {
 			sbReturn.append(getName().get().toLowerCase());
@@ -161,7 +161,7 @@ public class PersonModel extends Person {
 		}
 
 		return new SimpleStringProperty(sbReturn.toString());
-    }
+		}
 
 	/**
 	 * Primary address.
@@ -171,13 +171,13 @@ public class PersonModel extends Person {
 	 * @version 0.6.0
 	 * @since 0.6.0
 	 */
-    public Address getPrimaryAddress() {
-    	return getAddress()
-    			.stream()
-    			.filter(ContactModel.ISPRIMARY)
-    			.findFirst()
-    			.orElse(null);
-    }
+		public Address getPrimaryAddress() {
+			return getAddress()
+					.stream()
+					.filter(ContactModel.ISPRIMARY)
+					.findFirst()
+					.orElse(null);
+		}
 
 	/**
 	 * Primary email.
@@ -187,13 +187,13 @@ public class PersonModel extends Person {
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-    public EMail getPrimaryEMail() {
-    	return getEMail()
-    			.stream()
-    			.filter(ContactModel.ISPRIMARY)
-    			.findFirst()
-    			.orElse(null);
-    }
+		public EMail getPrimaryEMail() {
+			return getEMail()
+					.stream()
+					.filter(ContactModel.ISPRIMARY)
+					.findFirst()
+					.orElse(null);
+		}
 
 }
 

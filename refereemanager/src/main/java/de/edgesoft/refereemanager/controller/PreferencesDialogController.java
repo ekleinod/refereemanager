@@ -38,20 +38,20 @@ import javafx.stage.Stage;
  *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
- * This file is part of refereemanager.
+ * This file is part of TT-Schiri: Referee Manager.
  *
- * refereemanager is free software: you can redistribute it and/or modify
+ * TT-Schiri: Referee Manager is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * refereemanager is distributed in the hope that it will be useful,
+ * TT-Schiri: Referee Manager is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
+ * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
  * @version 0.10.0
@@ -317,7 +317,7 @@ public class PreferencesDialogController {
 
 		fillValues();
 
-    }
+		}
 
 	/**
 	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
@@ -330,15 +330,15 @@ public class PreferencesDialogController {
 	 * @since 0.10.0
 	 */
 	public void initController(final AppLayoutController theAppController, final Stage theStage, final String theTabID) {
-        dialogStage = theStage;
-        if (theTabID != null) {
-        	pneTabs.getTabs().forEach(tab -> {
-        		if (tab.getId().equals(theTabID)) {
-        			pneTabs.getSelectionModel().select(tab);
-        		}
-        	});
-        }
-    }
+				dialogStage = theStage;
+				if (theTabID != null) {
+					pneTabs.getTabs().forEach(tab -> {
+						if (tab.getId().equals(theTabID)) {
+							pneTabs.getSelectionModel().select(tab);
+						}
+					});
+				}
+		}
 
 	/**
 	 * Returns if user clicked ok.
@@ -349,8 +349,8 @@ public class PreferencesDialogController {
 	 * @since 0.10.0
 	 */
 	public boolean isOkClicked() {
-        return okClicked;
-    }
+				return okClicked;
+		}
 
 	/**
 	 * Fill preference values.
@@ -361,9 +361,9 @@ public class PreferencesDialogController {
 	private void fillValues() {
 
 		// tab display
-        chkTitleFullpath.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.TITLE_FULLPATH)));
+				chkTitleFullpath.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.TITLE_FULLPATH)));
 
-        // tab templates
+				// tab templates
 		txtTemplatePath.setText(Prefs.get(PrefKey.TEMPLATE_PATH));
 		txtImagePath.setText(Prefs.get(PrefKey.IMAGE_PATH));
 
@@ -380,7 +380,7 @@ public class PreferencesDialogController {
 		txtCommunicationTemplateMergeSingle.setText(Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_MERGE_SINGLE));
 		txtCommunicationTemplateMergeAll.setText(Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_MERGE_ALL));
 
-    }
+		}
 
 	/**
 	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
@@ -389,34 +389,34 @@ public class PreferencesDialogController {
 	 * @since 0.10.0
 	 */
 	@FXML
-    private void handleOk() {
-        okClicked = false;
-        if (isInputValid()) {
+		private void handleOk() {
+				okClicked = false;
+				if (isInputValid()) {
 
-    		// tab display
-        	Prefs.put(PrefKey.TITLE_FULLPATH, Boolean.toString(chkTitleFullpath.isSelected()));
+				// tab display
+					Prefs.put(PrefKey.TITLE_FULLPATH, Boolean.toString(chkTitleFullpath.isSelected()));
 
-            // tab templates
-        	Prefs.put(PrefKey.TEMPLATE_PATH, txtTemplatePath.getText());
-        	Prefs.put(PrefKey.IMAGE_PATH, txtImagePath.getText());
+						// tab templates
+					Prefs.put(PrefKey.TEMPLATE_PATH, txtTemplatePath.getText());
+					Prefs.put(PrefKey.IMAGE_PATH, txtImagePath.getText());
 
-    		// tab communication
-        	Prefs.put(PrefKey.COMMUNICATION_SMTP_HOST, txtCommunicationSMTPHost.getText());
-        	Prefs.put(PrefKey.COMMUNICATION_SMTP_USERNAME, txtCommunicationSMTPUsername.getText());
-        	Prefs.put(PrefKey.COMMUNICATION_SMTP_PASSWORD, txtCommunicationSMTPPassword.getText());
-        	Prefs.put(PrefKey.COMMUNICATION_FROM_NAME, txtCommunicationFromName.getText());
-        	Prefs.put(PrefKey.COMMUNICATION_FROM_EMAIL, txtCommunicationFromEMail.getText());
-        	Prefs.put(PrefKey.COMMUNICATION_TO_NAME, txtCommunicationToName.getText());
-        	Prefs.put(PrefKey.COMMUNICATION_TO_EMAIL, txtCommunicationToEMail.getText());
-        	Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_EMAIL, txtCommunicationTemplateEMail.getText());
-        	Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_LETTER, txtCommunicationTemplateLetter.getText());
-        	Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_MERGE_SINGLE, txtCommunicationTemplateMergeSingle.getText());
-        	Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_MERGE_ALL, txtCommunicationTemplateMergeAll.getText());
+				// tab communication
+					Prefs.put(PrefKey.COMMUNICATION_SMTP_HOST, txtCommunicationSMTPHost.getText());
+					Prefs.put(PrefKey.COMMUNICATION_SMTP_USERNAME, txtCommunicationSMTPUsername.getText());
+					Prefs.put(PrefKey.COMMUNICATION_SMTP_PASSWORD, txtCommunicationSMTPPassword.getText());
+					Prefs.put(PrefKey.COMMUNICATION_FROM_NAME, txtCommunicationFromName.getText());
+					Prefs.put(PrefKey.COMMUNICATION_FROM_EMAIL, txtCommunicationFromEMail.getText());
+					Prefs.put(PrefKey.COMMUNICATION_TO_NAME, txtCommunicationToName.getText());
+					Prefs.put(PrefKey.COMMUNICATION_TO_EMAIL, txtCommunicationToEMail.getText());
+					Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_EMAIL, txtCommunicationTemplateEMail.getText());
+					Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_LETTER, txtCommunicationTemplateLetter.getText());
+					Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_MERGE_SINGLE, txtCommunicationTemplateMergeSingle.getText());
+					Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_MERGE_ALL, txtCommunicationTemplateMergeAll.getText());
 
-            okClicked = true;
-            dialogStage.close();
-        }
-    }
+						okClicked = true;
+						dialogStage.close();
+				}
+		}
 
 	/**
 	 * Validates input, shows error message for invalid input.
@@ -428,36 +428,36 @@ public class PreferencesDialogController {
 	 */
 	private boolean isInputValid() {
 
-        StringBuilder sbErrorMessage = new StringBuilder();
+				StringBuilder sbErrorMessage = new StringBuilder();
 
-        if (!txtTemplatePath.getText().isEmpty()) {
-	        File flePath = Paths.get(txtTemplatePath.getText()).toFile();
-	        if (!flePath.exists() || !flePath.isDirectory()) {
-	            sbErrorMessage.append("Der Template-Pfad existiert nicht oder ist kein Verzeichnis.\n");
-	        }
-        }
+				if (!txtTemplatePath.getText().isEmpty()) {
+					File flePath = Paths.get(txtTemplatePath.getText()).toFile();
+					if (!flePath.exists() || !flePath.isDirectory()) {
+							sbErrorMessage.append("Der Template-Pfad existiert nicht oder ist kein Verzeichnis.\n");
+					}
+				}
 
-        if (!txtImagePath.getText().isEmpty()) {
-	        File flePath = Paths.get(txtImagePath.getText()).toFile();
-	        if (!flePath.exists() || !flePath.isDirectory()) {
-	            sbErrorMessage.append("Der Bilder-Pfad existiert nicht oder ist kein Verzeichnis.\n");
-	        }
-        }
+				if (!txtImagePath.getText().isEmpty()) {
+					File flePath = Paths.get(txtImagePath.getText()).toFile();
+					if (!flePath.exists() || !flePath.isDirectory()) {
+							sbErrorMessage.append("Der Bilder-Pfad existiert nicht oder ist kein Verzeichnis.\n");
+					}
+				}
 
-        if (sbErrorMessage.length() == 0) {
-            return true;
-        }
+				if (sbErrorMessage.length() == 0) {
+						return true;
+				}
 
-        // Show the error message.
-        AlertUtils.createAlert(AlertType.ERROR, dialogStage,
-        		"Ungültige Eingaben",
-        		"Bitte korrigieren Sie die fehlerhaften Eingaben.",
-        		sbErrorMessage.toString())
-        .showAndWait();
+				// Show the error message.
+				AlertUtils.createAlert(AlertType.ERROR, dialogStage,
+						"Ungültige Eingaben",
+						"Bitte korrigieren Sie die fehlerhaften Eingaben.",
+						sbErrorMessage.toString())
+				.showAndWait();
 
-        return false;
+				return false;
 
-    }
+		}
 
 	/**
 	 * Stores non-ok click and closes dialog.
@@ -466,10 +466,10 @@ public class PreferencesDialogController {
 	 * @since 0.10.0
 	 */
 	@FXML
-    private void handleCancel() {
-        okClicked = false;
-        dialogStage.close();
-    }
+		private void handleCancel() {
+				okClicked = false;
+				dialogStage.close();
+		}
 
 	/**
 	 * Set template path.
@@ -483,15 +483,15 @@ public class PreferencesDialogController {
 		DirectoryChooser dirChooser = new DirectoryChooser();
 
 		dirChooser.setTitle("Template-Pfad auswählen");
-        if (!Prefs.get(PrefKey.TEMPLATE_PATH).isEmpty()) {
-        	dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.TEMPLATE_PATH)));
-        }
+				if (!Prefs.get(PrefKey.TEMPLATE_PATH).isEmpty()) {
+					dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.TEMPLATE_PATH)));
+				}
 
-        File dir = dirChooser.showDialog(dialogStage);
+				File dir = dirChooser.showDialog(dialogStage);
 
-        if (dir != null) {
-            txtTemplatePath.setText(dir.getPath());
-        }
+				if (dir != null) {
+						txtTemplatePath.setText(dir.getPath());
+				}
 
 	}
 
@@ -507,15 +507,15 @@ public class PreferencesDialogController {
 		DirectoryChooser dirChooser = new DirectoryChooser();
 
 		dirChooser.setTitle("Bilder-Pfad auswählen");
-        if (!Prefs.get(PrefKey.IMAGE_PATH).isEmpty()) {
-        	dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.IMAGE_PATH)));
-        }
+				if (!Prefs.get(PrefKey.IMAGE_PATH).isEmpty()) {
+					dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.IMAGE_PATH)));
+				}
 
-        File dir = dirChooser.showDialog(dialogStage);
+				File dir = dirChooser.showDialog(dialogStage);
 
-        if (dir != null) {
-            txtImagePath.setText(dir.getPath());
-        }
+				if (dir != null) {
+						txtImagePath.setText(dir.getPath());
+				}
 
 	}
 
@@ -526,50 +526,50 @@ public class PreferencesDialogController {
 	 * @since 0.10.0
 	 */
 	@FXML
-    private void handleImport() {
+		private void handleImport() {
 
-    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
-    			"Einstellungsimport",
-    			"Überschreiben von Einstellungen.",
-    			"Wenn Sie Einstellungen importieren, werden die bisherigen Einstellungen überschrieben, wenn Einstellungen dafür vorhanden sind.\nWollen Sie fortfahren?");
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
+					"Einstellungsimport",
+					"Überschreiben von Einstellungen.",
+					"Wenn Sie Einstellungen importieren, werden die bisherigen Einstellungen überschrieben, wenn Einstellungen dafür vorhanden sind.\nWollen Sie fortfahren?");
 
-        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+				alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent()) {
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.isPresent()) {
 			if (result.get() == ButtonType.YES) {
 				FileChooser fileChooser = new FileChooser();
 
 				fileChooser.setTitle("Einstellungen importieren");
-		        fileChooser.getExtensionFilters().addAll(
-		        		new FileChooser.ExtensionFilter("Referee-Manager-Einstellungen (*.prefs)", "*.prefs"),
-		        		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
-		        		);
-		        if (!Prefs.get(PrefKey.PREFERENCES_FILE).isEmpty()) {
-		        	Path pathPrefs = Paths.get(Prefs.get(PrefKey.PREFERENCES_FILE));
-		        	fileChooser.setInitialDirectory(pathPrefs.getParent().toFile());
-		        	fileChooser.setInitialFileName(pathPrefs.getFileName().toString());
-		        }
+						fileChooser.getExtensionFilters().addAll(
+								new FileChooser.ExtensionFilter("Referee-Manager-Einstellungen (*.prefs)", "*.prefs"),
+								new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
+								);
+						if (!Prefs.get(PrefKey.PREFERENCES_FILE).isEmpty()) {
+							Path pathPrefs = Paths.get(Prefs.get(PrefKey.PREFERENCES_FILE));
+							fileChooser.setInitialDirectory(pathPrefs.getParent().toFile());
+							fileChooser.setInitialFileName(pathPrefs.getFileName().toString());
+						}
 
-		        File flePrefs = fileChooser.showOpenDialog(dialogStage);
+						File flePrefs = fileChooser.showOpenDialog(dialogStage);
 
-		        if (flePrefs != null) {
-		        	Prefs.put(PrefKey.PREFERENCES_FILE, flePrefs.getAbsolutePath());
+						if (flePrefs != null) {
+							Prefs.put(PrefKey.PREFERENCES_FILE, flePrefs.getAbsolutePath());
 
 					try (InputStream stmIn = new FileInputStream(flePrefs)) {
 						Prefs.importPrefs(stmIn);
 						fillValues();
 					} catch (IOException | InvalidPreferencesFormatException | BackingStoreException e) {
-				        AlertUtils.createAlert(AlertType.ERROR, dialogStage,
-				        		"Importfehler",
-				        		"Beim Import der Einstellungen ist ein Fehler aufgetreten.",
-				        		MessageFormat.format("{0}\nDie Daten wurden nicht importiert.", e.getMessage()))
-				        .showAndWait();
+								AlertUtils.createAlert(AlertType.ERROR, dialogStage,
+										"Importfehler",
+										"Beim Import der Einstellungen ist ein Fehler aufgetreten.",
+										MessageFormat.format("{0}\nDie Daten wurden nicht importiert.", e.getMessage()))
+								.showAndWait();
 					}
-		        }
+						}
 
 			}
-        }
+				}
 
 	}
 
@@ -580,39 +580,39 @@ public class PreferencesDialogController {
 	 * @since 0.10.0
 	 */
 	@FXML
-    private void handleExport() {
+		private void handleExport() {
 
 		FileChooser fileChooser = new FileChooser();
 
 		fileChooser.setTitle("Einstellungen exportieren");
-        fileChooser.getExtensionFilters().addAll(
-        		new FileChooser.ExtensionFilter("Referee-Manager-Einstellungen (*.prefs)", "*.prefs"),
-        		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
-        		);
-        if (!Prefs.get(PrefKey.PREFERENCES_FILE).isEmpty()) {
-        	Path pathPrefs = Paths.get(Prefs.get(PrefKey.PREFERENCES_FILE));
-        	fileChooser.setInitialDirectory(pathPrefs.getParent().toFile());
-        	fileChooser.setInitialFileName(pathPrefs.getFileName().toString());
-        }
+				fileChooser.getExtensionFilters().addAll(
+						new FileChooser.ExtensionFilter("Referee-Manager-Einstellungen (*.prefs)", "*.prefs"),
+						new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
+						);
+				if (!Prefs.get(PrefKey.PREFERENCES_FILE).isEmpty()) {
+					Path pathPrefs = Paths.get(Prefs.get(PrefKey.PREFERENCES_FILE));
+					fileChooser.setInitialDirectory(pathPrefs.getParent().toFile());
+					fileChooser.setInitialFileName(pathPrefs.getFileName().toString());
+				}
 
-        File flePrefs = fileChooser.showSaveDialog(dialogStage);
+				File flePrefs = fileChooser.showSaveDialog(dialogStage);
 
-        if (flePrefs != null) {
-        	if (!flePrefs.getName().contains(".")) {
-        		flePrefs = new File(String.format("%s.prefs", flePrefs.getPath()));
-        	}
-        	Prefs.put(PrefKey.PREFERENCES_FILE, flePrefs.getAbsolutePath());
+				if (flePrefs != null) {
+					if (!flePrefs.getName().contains(".")) {
+						flePrefs = new File(String.format("%s.prefs", flePrefs.getPath()));
+					}
+					Prefs.put(PrefKey.PREFERENCES_FILE, flePrefs.getAbsolutePath());
 
 			try (OutputStream stmOut = new FileOutputStream(flePrefs)) {
 				Prefs.exportPrefs(stmOut);
 			} catch (IOException | BackingStoreException e) {
-		        AlertUtils.createAlert(AlertType.ERROR, dialogStage,
-		        		"Exportfehler",
-		        		"Beim Export der Einstellungen ist ein Fehler aufgetreten.",
-		        		MessageFormat.format("{0}\nDie Daten wurden nicht exportiert.", e.getMessage()))
-		        .showAndWait();
+						AlertUtils.createAlert(AlertType.ERROR, dialogStage,
+								"Exportfehler",
+								"Beim Export der Einstellungen ist ein Fehler aufgetreten.",
+								MessageFormat.format("{0}\nDie Daten wurden nicht exportiert.", e.getMessage()))
+						.showAndWait();
 			}
-        }
+				}
 
 	}
 

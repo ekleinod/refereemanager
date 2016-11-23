@@ -42,20 +42,20 @@ import javafx.util.Duration;
  *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
- * This file is part of refereemanager.
+ * This file is part of TT-Schiri: Referee Manager.
  *
- * refereemanager is free software: you can redistribute it and/or modify
+ * TT-Schiri: Referee Manager is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * refereemanager is distributed in the hope that it will be useful,
+ * TT-Schiri: Referee Manager is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
+ * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
  * @version 0.10.0
@@ -101,27 +101,27 @@ public class RefereeManager extends Application {
 		launch(args);
 	}
 
-    /**
-     * The main entry point for all JavaFX applications.
-     * The start method is called after the init method has returned,
-     * and after the system is ready for the application to begin running.
-     *
-     * @param primaryStage primary stage
+		/**
+		 * The main entry point for all JavaFX applications.
+		 * The start method is called after the init method has returned,
+		 * and after the system is ready for the application to begin running.
+		 *
+		 * @param primaryStage primary stage
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
-     */
+		 */
 	@Override
 	public void start(Stage primaryStage) {
 
 //		showSplashScreen();
 
 		// load app layout and controller, then delegate control to controller
-    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AppLayout");
-    	((AppLayoutController) pneLoad.getValue().getController()).initController(primaryStage);
+			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AppLayout");
+			((AppLayoutController) pneLoad.getValue().getController()).initController(primaryStage);
 
-        // host services
-        hostServices = HostServicesFactory.getInstance(this);
+				// host services
+				hostServices = HostServicesFactory.getInstance(this);
 
 	}
 
@@ -162,14 +162,14 @@ public class RefereeManager extends Application {
 
 		// add listener to succeed state of task, then fade out
 		splashTask.stateProperty().addListener((observableValue, oldState, newState) -> {
-            if (newState == Worker.State.SUCCEEDED) {
-                FadeTransition fadeSplash = new FadeTransition(Duration.seconds(1.2), pane);
-                fadeSplash.setFromValue(1.0);
-                fadeSplash.setToValue(0.0);
-                fadeSplash.setOnFinished(actionEvent -> stage.hide());
-                fadeSplash.play();
-            }
-        });
+						if (newState == Worker.State.SUCCEEDED) {
+								FadeTransition fadeSplash = new FadeTransition(Duration.seconds(1.2), pane);
+								fadeSplash.setFromValue(1.0);
+								fadeSplash.setToValue(0.0);
+								fadeSplash.setOnFinished(actionEvent -> stage.hide());
+								fadeSplash.play();
+						}
+				});
 
 		// show splash screen, then start fading task
 		stage.show();
@@ -187,13 +187,13 @@ public class RefereeManager extends Application {
 	 * @since 0.10.0
 	 */
 	public static void addAppender(final Writer theWriter, final String theWriterName) {
-	    final LoggerContext context = LoggerContext.getContext(false);
-	    final Configuration config = context.getConfiguration();
-	    final PatternLayout layout = PatternLayout.createLayout("%d %-5p: %m%n", null, config, null, null, true, false, null, null);
-	    final Appender appender = WriterAppender.createAppender(layout, null, theWriter, theWriterName, false, true);
-	    appender.start();
-	    config.addAppender(appender);
-	    updateLoggers(appender, config);
+			final LoggerContext context = LoggerContext.getContext(false);
+			final Configuration config = context.getConfiguration();
+			final PatternLayout layout = PatternLayout.createLayout("%d %-5p: %m%n", null, config, null, null, true, false, null, null);
+			final Appender appender = WriterAppender.createAppender(layout, null, theWriter, theWriterName, false, true);
+			appender.start();
+			config.addAppender(appender);
+			updateLoggers(appender, config);
 	}
 
 	/**
@@ -206,12 +206,12 @@ public class RefereeManager extends Application {
 	 * @since 0.10.0
 	 */
 	private static void updateLoggers(final Appender theAppender, final Configuration theConfig) {
-	    final Level level = null;
-	    final Filter filter = null;
-	    for (final LoggerConfig loggerConfig : theConfig.getLoggers().values()) {
-	        loggerConfig.addAppender(theAppender, level, filter);
-	    }
-	    theConfig.getRootLogger().addAppender(theAppender, level, filter);
+			final Level level = null;
+			final Filter filter = null;
+			for (final LoggerConfig loggerConfig : theConfig.getLoggers().values()) {
+					loggerConfig.addAppender(theAppender, level, filter);
+			}
+			theConfig.getRootLogger().addAppender(theAppender, level, filter);
 	}
 
 }

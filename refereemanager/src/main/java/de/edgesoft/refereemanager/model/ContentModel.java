@@ -24,20 +24,20 @@ import javafx.collections.ObservableList;
  *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
- * This file is part of refereemanager.
+ * This file is part of TT-Schiri: Referee Manager.
  *
- * refereemanager is free software: you can redistribute it and/or modify
+ * TT-Schiri: Referee Manager is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * refereemanager is distributed in the hope that it will be useful,
+ * TT-Schiri: Referee Manager is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
+ * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
  * @version 0.10.0
@@ -45,12 +45,12 @@ import javafx.collections.ObservableList;
  */
 public class ContentModel extends Content {
 
-    /**
-     * Observable list of referees (singleton).
-     *
+		/**
+		 * Observable list of referees (singleton).
+		 *
 	 * @version 0.10.0
 	 * @since 0.10.0
-     */
+		 */
 	@XmlTransient
 	private ObservableList<Referee> observableReferees = null;
 
@@ -165,14 +165,14 @@ public class ContentModel extends Content {
 
 	}
 
-    /**
-     * Returns observable list of referees.
-     *
-     * @return observable list of referees
+		/**
+		 * Returns observable list of referees.
+		 *
+		 * @return observable list of referees
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
-     */
+		 */
 	public ObservableList<Referee> getObservableReferees() {
 		if (observableReferees == null) {
 			observableReferees = FXCollections.observableList(getReferee());

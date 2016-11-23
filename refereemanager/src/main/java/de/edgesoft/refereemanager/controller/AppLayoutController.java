@@ -46,20 +46,20 @@ import javafx.stage.Stage;
  *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
- * This file is part of refereemanager.
+ * This file is part of TT-Schiri: Referee Manager.
  *
- * refereemanager is free software: you can redistribute it and/or modify
+ * TT-Schiri: Referee Manager is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * refereemanager is distributed in the hope that it will be useful,
+ * TT-Schiri: Referee Manager is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
+ * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
  * @version 0.10.0
@@ -274,22 +274,22 @@ public class AppLayoutController {
 
 		primaryStage = thePrimaryStage;
 
-        // set icon
+				// set icon
 		primaryStage.getIcons().add(ICON);
 
-        // Show the scene containing the root layout.
-        Scene scene = new Scene(appPane);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+				// Show the scene containing the root layout.
+				Scene scene = new Scene(appPane);
+				primaryStage.setScene(scene);
+				primaryStage.show();
 
-        // resize to last dimensions
-    	primaryStage.setX(Double.parseDouble(Prefs.get(PrefKey.STAGE_X)));
-    	primaryStage.setY(Double.parseDouble(Prefs.get(PrefKey.STAGE_Y)));
+				// resize to last dimensions
+			primaryStage.setX(Double.parseDouble(Prefs.get(PrefKey.STAGE_X)));
+			primaryStage.setY(Double.parseDouble(Prefs.get(PrefKey.STAGE_Y)));
 
-    	primaryStage.setWidth(Double.parseDouble(Prefs.get(PrefKey.STAGE_WIDTH)));
-    	primaryStage.setHeight(Double.parseDouble(Prefs.get(PrefKey.STAGE_HEIGHT)));
+			primaryStage.setWidth(Double.parseDouble(Prefs.get(PrefKey.STAGE_WIDTH)));
+			primaryStage.setHeight(Double.parseDouble(Prefs.get(PrefKey.STAGE_HEIGHT)));
 
-    	primaryStage.setMaximized(Boolean.parseBoolean(Prefs.get(PrefKey.MAXIMIZED)));
+			primaryStage.setMaximized(Boolean.parseBoolean(Prefs.get(PrefKey.MAXIMIZED)));
 
 		// if changed, save bounds to preferences
 		primaryStage.xProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
@@ -317,16 +317,16 @@ public class AppLayoutController {
 			Prefs.put(PrefKey.MAXIMIZED, Boolean.toString(newValue.booleanValue()));
 		});
 
-        // set handler for close requests (x-button of window)
+				// set handler for close requests (x-button of window)
 		primaryStage.setOnCloseRequest(event -> {
-        	event.consume();
-        	handleProgramExit();
-        });
+					event.consume();
+					handleProgramExit();
+				});
 
 		// finally, we can initialize the data
 		initData();
 
-    }
+		}
 
 	/**
 	 * Initializes the data.
@@ -342,7 +342,7 @@ public class AppLayoutController {
 			openData(Prefs.get(PrefKey.FILE));
 		}
 
-    }
+		}
 
 	/**
 	 * Creates new data.
@@ -373,7 +373,7 @@ public class AppLayoutController {
 
 		setAppTitle();
 
-    }
+		}
 
 	/**
 	 * Sets the app title.
@@ -394,7 +394,7 @@ public class AppLayoutController {
 				AppModel.isModified() ? " *" : ""
 				));
 
-    }
+		}
 
 	/**
 	 * Loads data from the given file.
@@ -418,17 +418,17 @@ public class AppLayoutController {
 
 		} catch (EdgeUtilsException e) {
 
-	        AlertUtils.createAlert(AlertType.ERROR, primaryStage,
-	        		"Datenfehler",
-	        		"Ein Fehler ist beim Laden der Referee-Manager-Daten aufgetreten.",
-	        		MessageFormat.format("{0}\nDas Programm wird ohne Daten fortgeführt.", e.getMessage()))
-	        .showAndWait();
+					AlertUtils.createAlert(AlertType.ERROR, primaryStage,
+							"Datenfehler",
+							"Ein Fehler ist beim Laden der Referee-Manager-Daten aufgetreten.",
+							MessageFormat.format("{0}\nDas Programm wird ohne Daten fortgeführt.", e.getMessage()))
+					.showAndWait();
 
-	        newData();
+					newData();
 
 		}
 
-    }
+		}
 
 	/**
 	 * Program menu preferences.
@@ -441,26 +441,26 @@ public class AppLayoutController {
 	@FXML
 	private void handleProgramPreferences() {
 
-    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PreferencesDialog");
-    	AnchorPane preferencesDialog = (AnchorPane) pneLoad.getKey();
+			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PreferencesDialog");
+			AnchorPane preferencesDialog = (AnchorPane) pneLoad.getKey();
 
-        // Create the dialog Stage.
-        Stage dialogStage = new Stage();
-        dialogStage.setTitle("Einstellungen");
-        dialogStage.initModality(Modality.WINDOW_MODAL);
-        dialogStage.initOwner(primaryStage);
+				// Create the dialog Stage.
+				Stage dialogStage = new Stage();
+				dialogStage.setTitle("Einstellungen");
+				dialogStage.initModality(Modality.WINDOW_MODAL);
+				dialogStage.initOwner(primaryStage);
 
-        Scene scene = new Scene(preferencesDialog);
-        dialogStage.setScene(scene);
+				Scene scene = new Scene(preferencesDialog);
+				dialogStage.setScene(scene);
 
-        // initialize controller
-        PreferencesDialogController controller = pneLoad.getValue().getController();
-        controller.initController(this, dialogStage, null);
+				// initialize controller
+				PreferencesDialogController controller = pneLoad.getValue().getController();
+				controller.initController(this, dialogStage, null);
 
-        // Show the dialog and wait until the user closes it
-        dialogStage.showAndWait();
+				// Show the dialog and wait until the user closes it
+				dialogStage.showAndWait();
 
-        setAppTitle();
+				setAppTitle();
 
 	}
 
@@ -504,19 +504,19 @@ public class AppLayoutController {
 			FileChooser fileChooser = new FileChooser();
 
 			fileChooser.setTitle("Referee-Manager-Datei öffnen");
-	        fileChooser.getExtensionFilters().addAll(
-	        		new FileChooser.ExtensionFilter("Referee-Manager-Dateien (*.refman, *.xml)", "*.refman", "*.xml"),
-	        		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
-	        		);
-	        if (!Prefs.get(PrefKey.PATH).isEmpty()) {
-	        	fileChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATH)));
-	        }
+					fileChooser.getExtensionFilters().addAll(
+							new FileChooser.ExtensionFilter("Referee-Manager-Dateien (*.refman, *.xml)", "*.refman", "*.xml"),
+							new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
+							);
+					if (!Prefs.get(PrefKey.PATH).isEmpty()) {
+						fileChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATH)));
+					}
 
-	        File file = fileChooser.showOpenDialog(primaryStage);
+					File file = fileChooser.showOpenDialog(primaryStage);
 
-	        if (file != null) {
-	            openData(file.getPath());
-	        }
+					if (file != null) {
+							openData(file.getPath());
+					}
 
 		}
 
@@ -529,13 +529,13 @@ public class AppLayoutController {
 	 * @since 0.10.0
 	 */
 	@FXML
-    public void handleFileSave() {
-        if (Prefs.get(PrefKey.FILE).isEmpty()) {
-        	handleFileSaveAs();
-        } else {
-        	saveData(Prefs.get(PrefKey.FILE));
-        }
-    }
+		public void handleFileSave() {
+				if (Prefs.get(PrefKey.FILE).isEmpty()) {
+					handleFileSaveAs();
+				} else {
+					saveData(Prefs.get(PrefKey.FILE));
+				}
+		}
 
 	/**
 	 * File menu save as.
@@ -544,29 +544,29 @@ public class AppLayoutController {
 	 * @since 0.10.0
 	 */
 	@FXML
-    private void handleFileSaveAs() {
+		private void handleFileSaveAs() {
 
 		FileChooser fileChooser = new FileChooser();
 
 		fileChooser.setTitle("Referee-Manager-Datei speichern");
-        fileChooser.getExtensionFilters().addAll(
-        		new FileChooser.ExtensionFilter("Referee-Manager-Dateien (*.refman, *.xml)", "*.refman", "*.xml"),
-        		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
-        		);
-        if (!Prefs.get(PrefKey.PATH).isEmpty()) {
-        	fileChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATH)));
-        }
+				fileChooser.getExtensionFilters().addAll(
+						new FileChooser.ExtensionFilter("Referee-Manager-Dateien (*.refman, *.xml)", "*.refman", "*.xml"),
+						new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
+						);
+				if (!Prefs.get(PrefKey.PATH).isEmpty()) {
+					fileChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATH)));
+				}
 
-        File file = fileChooser.showSaveDialog(primaryStage);
+				File file = fileChooser.showSaveDialog(primaryStage);
 
-        if (file != null) {
-        	if (!file.getName().contains(".")) {
-        		file = new File(String.format("%s.refman", file.getPath()));
-        	}
-            saveData(file.getPath());
-        }
+				if (file != null) {
+					if (!file.getName().contains(".")) {
+						file = new File(String.format("%s.refman", file.getPath()));
+					}
+						saveData(file.getPath());
+				}
 
-    }
+		}
 
 	/**
 	 * Help menu about.
@@ -575,22 +575,22 @@ public class AppLayoutController {
 	 * @since 0.10.0
 	 */
 	@FXML
-    private void handleHelpAbout() {
+		private void handleHelpAbout() {
 
-        Alert alert = AlertUtils.createAlert(AlertType.INFORMATION, primaryStage,
-        		"Über \"Referee-Manager\"",
-        		MessageFormat.format("Referee-Manager Version {0}", RefereeManager.VERSION),
-        		null
-        		);
+				Alert alert = AlertUtils.createAlert(AlertType.INFORMATION, primaryStage,
+						"Über \"Referee-Manager\"",
+						MessageFormat.format("Referee-Manager Version {0}", RefereeManager.VERSION),
+						null
+						);
 
-    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AboutText");
-    	VBox aboutText = (VBox) pneLoad.getKey();
-    	alert.getDialogPane().contentProperty().set(aboutText);
+			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AboutText");
+			VBox aboutText = (VBox) pneLoad.getKey();
+			alert.getDialogPane().contentProperty().set(aboutText);
 
-        alert.setGraphic(new ImageView(Resources.loadImage("images/icon-64.png")));
-        alert.showAndWait();
+				alert.setGraphic(new ImageView(Resources.loadImage("images/icon-64.png")));
+				alert.showAndWait();
 
-    }
+		}
 
 	/**
 	 * Menu referee -> overview.
@@ -599,19 +599,19 @@ public class AppLayoutController {
 	 * @since 0.10.0
 	 */
 	@FXML
-    private void handleRefereeOverview() {
+		private void handleRefereeOverview() {
 
-    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeOverview");
-    	AnchorPane refOverview = (AnchorPane) pneLoad.getKey();
+			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeOverview");
+			AnchorPane refOverview = (AnchorPane) pneLoad.getKey();
 
-        // Set event overview into the center of root layout.
-        appPane.setCenter(refOverview);
+				// Set event overview into the center of root layout.
+				appPane.setCenter(refOverview);
 
-        // Give the controller access to the app.
-        RefereeOverviewController ctlRefOverview = pneLoad.getValue().getController();
-        ctlRefOverview.initController(this);
+				// Give the controller access to the app.
+				RefereeOverviewController ctlRefOverview = pneLoad.getValue().getController();
+				ctlRefOverview.initController(this);
 
-    }
+		}
 
 	/**
 	 * Menu referee -> communication.
@@ -620,19 +620,19 @@ public class AppLayoutController {
 	 * @since 0.10.0
 	 */
 	@FXML
-    private void handleRefereeCommunication() {
+		private void handleRefereeCommunication() {
 
-    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeCommunication");
-    	BorderPane pneCommunication = (BorderPane) pneLoad.getKey();
+			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeCommunication");
+			BorderPane pneCommunication = (BorderPane) pneLoad.getKey();
 
-        // Set event overview into the center of root layout.
-        appPane.setCenter(pneCommunication);
+				// Set event overview into the center of root layout.
+				appPane.setCenter(pneCommunication);
 
-        // Give the controller access to the app.
-        RefereeCommunicationController ctlRefCommunication = pneLoad.getValue().getController();
-        ctlRefCommunication.initController(this);
+				// Give the controller access to the app.
+				RefereeCommunicationController ctlRefCommunication = pneLoad.getValue().getController();
+				ctlRefCommunication.initController(this);
 
-    }
+		}
 
 	/**
 	 * Menu statistics -> data.
@@ -643,29 +643,29 @@ public class AppLayoutController {
 	 * @since 0.10.0
 	 */
 	@FXML
-    private void handleStatisticsData() {
+		private void handleStatisticsData() {
 
-    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("Statistics");
-    	AnchorPane statistics = (AnchorPane) pneLoad.getKey();
+			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("Statistics");
+			AnchorPane statistics = (AnchorPane) pneLoad.getKey();
 
-        // Create the dialog Stage.
-        Stage dialogStage = new Stage();
-        dialogStage.setTitle("Statistik");
-        dialogStage.initModality(Modality.WINDOW_MODAL);
-        dialogStage.initOwner(primaryStage);
+				// Create the dialog Stage.
+				Stage dialogStage = new Stage();
+				dialogStage.setTitle("Statistik");
+				dialogStage.initModality(Modality.WINDOW_MODAL);
+				dialogStage.initOwner(primaryStage);
 
-        Scene scene = new Scene(statistics);
-        dialogStage.setScene(scene);
+				Scene scene = new Scene(statistics);
+				dialogStage.setScene(scene);
 
-        // Set the events into the controller.
-        StatisticsController controller = pneLoad.getValue().getController();
-        controller.fillStatistics();
-        controller.setDialogStage(dialogStage);
+				// Set the events into the controller.
+				StatisticsController controller = pneLoad.getValue().getController();
+				controller.fillStatistics();
+				controller.setDialogStage(dialogStage);
 
-        // Show the dialog and wait until the user closes it
-        dialogStage.show();
+				// Show the dialog and wait until the user closes it
+				dialogStage.show();
 
-    }
+		}
 
 	/**
 	 * Check if data is modified, show corresponding dialog, save data if needed.
@@ -681,26 +681,26 @@ public class AppLayoutController {
 
 		if (AppModel.isModified()) {
 
-	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, primaryStage,
-	    			"Nicht gespeicherte Änderungen",
-	    			"Sie haben Änderungen durchgeführt, die noch nicht gespeichert wurden.",
-	    			"Wollen Sie die geänderten Daten speichern, nicht speichern oder wollen Sie den gesamten Vorgang abbrechen?");
+				Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, primaryStage,
+						"Nicht gespeicherte Änderungen",
+						"Sie haben Änderungen durchgeführt, die noch nicht gespeichert wurden.",
+						"Wollen Sie die geänderten Daten speichern, nicht speichern oder wollen Sie den gesamten Vorgang abbrechen?");
 
-	        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+					alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 
-	        Optional<ButtonType> result = alert.showAndWait();
-	        if (result.isPresent()) {
-    			if (result.get() == ButtonType.YES) {
-    				handleFileSave();
-    				doContinue = true;
-    			}
-    			if (result.get() == ButtonType.NO) {
-    				doContinue = true;
-    			}
-    			if (result.get() == ButtonType.CANCEL) {
-    				doContinue = false;
-    			}
-	        }
+					Optional<ButtonType> result = alert.showAndWait();
+					if (result.isPresent()) {
+					if (result.get() == ButtonType.YES) {
+						handleFileSave();
+						doContinue = true;
+					}
+					if (result.get() == ButtonType.NO) {
+						doContinue = true;
+					}
+					if (result.get() == ButtonType.CANCEL) {
+						doContinue = false;
+					}
+					}
 
 		}
 
@@ -738,17 +738,17 @@ public class AppLayoutController {
 
 		} catch (EdgeUtilsException e) {
 
-	        AlertUtils.createAlert(AlertType.ERROR, primaryStage,
-	        		"Datenfehler",
-	        		"Ein Fehler ist beim Speichern der Referee-Manager-Daten aufgetreten.",
-	        		MessageFormat.format("{0}\nDie Daten wurden nicht gespeichert.", e.getMessage()))
-	        .showAndWait();
+					AlertUtils.createAlert(AlertType.ERROR, primaryStage,
+							"Datenfehler",
+							"Ein Fehler ist beim Speichern der Referee-Manager-Daten aufgetreten.",
+							MessageFormat.format("{0}\nDie Daten wurden nicht gespeichert.", e.getMessage()))
+					.showAndWait();
 
 		}
 
 		setAppTitle();
 
-    }
+		}
 
 	/**
 	 * Returns primary stage.
