@@ -2,114 +2,76 @@
 
 The referee manager is a free, open tool for managing table tennis referees and their assignments.
 
-It is a web based application using *CakePHP* as base.
+Part of the project "Open-TT" which provides open documents and applications for table tennis.
 
 License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License, see file LICENSE.
 
-## Releases
-
-There are two ways to get releases of the referee manager:
-
-1. via tag in *github*: https://github.com/ekleinod/refereemanager/releases
-2. via download in *sourceforge*: https://sourceforge.net/projects/refereemanager/files/latest/download
-
-## Git-Repository
-
-The project uses *git* as means of version management.
-It uses *github* for providing the git server.
-
-The repository structure and working process is based on thoughts about a successful git branching model, described in http://nvie.com/posts/a-successful-git-branching-model/
-
-This means, there are always these three branches:
-
-1. `master` - contains released versions
-2. `develop` - development branch, synchronizing the feature, release, and hotfix branches
-3. `feature/work` - main branch in which I work/develop
-
-Additionally the following branches may be created:
-
-- `feature/*` - for writing a special feature
-- `release/*` - releasing a new version, merging all features between `develop` and `master`
-- `hotfix/*` - hotfixes for fast error correction
-
-## ToDo
-
-- Why is `/refereemanager/src/main/java/de/edgesoft/refereemanager/jaxb/AdditionalType.java` generated? It can be deleted without problems. Strange.
-
-## Versions
-
 At the moment, there is no stable, productive version available.
-Several features are working, see version list below.
+Several features are working, see changelog.
 
 **Important:** the focus of development at the moment is *features*, not safety.
 Therefore, the referee manager is *not* safe for using in the "real" internet.
 Use it in a closed envorinment (local server etc.) only.
 
-### v0.9.0
+## Git-Repository
 
-*Released:* 2016-10-25
+Short information about the structure of the git repository:
 
-- website exports
-- first assignments, tournaments and venues
-- no predefined templates
-- saving progress before massive cleanup and graphical interface
+The branches are constructed regarding the git branching model of http://nvie.com/posts/a-successful-git-branching-model/
 
-### v0.8.0
+This means, there are always at least three branches:
 
-*Released:* 2016-08-23
+1. `master` - contains released versions
+2. `develop` - main synchronisation branch for feature, release, and hotfix branches
+3. `feature/work` - main working branch for development
 
-- improvement of database operations
-- refined template helper functions and template language
-- referee communication by mail and letter
+Additionally, the following branches may occur:
 
-### v0.7.0
+- `feature/*` - writing a special feature
+- `release/*` - synchronizing release versions between `develop` and `master`
+- `hotfix/*` - fast bugfixes
 
-*Released:* 2016-08-01
+## Legal stuff
 
-- database operations: sort and remove unused clubs
+### Licenses
 
-### v0.6.0
+License of the documents: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+See file LICENSE.
 
-*Released:* 2016-07-31
+License of the programs: GNU General Public License, GNU LESSER GENERAL PUBLIC LICENSE.
+See file COPYING, COPYING.LESSER.
 
-- export of contact and disposition list in mmd
-- first draft of template language
+Which means:
 
-### v0.5.0
+- the documents are free, as long as you
+	- don't make money with them
+	- mention the creator
+	- share derivates with the same license
+- programs are free and open source
+	- you have to provide the source code of the programs
+	- if you change the source code, you have to distribute it under the same license
 
-*Released:* 2016-07-27
 
-- working java backend
-- export of anonymous referee list in mmd
-- many improvements and changes in data modeling
+### Copyright
 
-### v0.4.0
+Copyright 2016 Ekkart Kleinod <ekleinod@edgesoft.de>
 
-*Released:* 2016-05-25
+The program is distributed under the terms of the GNU General Public License.
 
-- extensive rewrite of database and functions
-- giving up because of complexity of database and PHP
-- switch to NoSQL data (XML) and java backend with simplified PHP frontend or static pages
-- saving progress of PHP and database modeling
-- converter database -> XML
+See COPYING for details.
 
-### v0.3
+This file is part of Open-TT: Referee Manager.
 
-*Released:* 2015-07-20
+Open-TT: Referee Manager is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-- many functions working for referees and messages
-- last version before switching to CakePHP 3.*
+Open-TT: Referee Manager is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-### v0.2
+You should have received a copy of the GNU General Public License
+along with Open-TT: Referee Manager.  If not, see <http://www.gnu.org/licenses/>.
 
-*Released:* 2014-05-04
-
-- database for referees working
-- output of referee lists: HTML, PDF, Excel
-
-### v0.1
-
-*Released:* 2013-10-13
-
-- no special functionality
-- saving the code before introducing the new branching model

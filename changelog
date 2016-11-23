@@ -1,0 +1,76 @@
+# v0.10.0
+
+*Released:* 2016-11-23
+
+- communication
+- code clearance
+- before restructuring to TT-Schiri
+
+# v0.9.0
+
+*Released:* 2016-10-25
+
+- website exports
+- first assignments, tournaments and venues
+- no predefined templates
+- saving progress before massive cleanup and graphical interface
+
+# v0.8.0
+
+*Released:* 2016-08-23
+
+- improvement of database operations
+- refined template helper functions and template language
+- referee communication by mail and letter
+
+# v0.7.0
+
+*Released:* 2016-08-01
+
+- database operations: sort and remove unused clubs
+
+# v0.6.0
+
+*Released:* 2016-07-31
+
+- export of contact and disposition list in mmd
+- first draft of template language
+
+# v0.5.0
+
+*Released:* 2016-07-27
+
+- working java backend
+- export of anonymous referee list in mmd
+- many improvements and changes in data modeling
+
+# v0.4.0
+
+*Released:* 2016-05-25
+
+- extensive rewrite of database and functions
+- giving up because of complexity of database and PHP
+- switch to NoSQL data (XML) and java backend with simplified PHP frontend or static pages
+- saving progress of PHP and database modeling
+- converter database -> XML
+
+# v0.3
+
+*Released:* 2015-07-20
+
+- many functions working for referees and messages
+- last version before switching to CakePHP 3.*
+
+# v0.2
+
+*Released:* 2014-05-04
+
+- database for referees working
+- output of referee lists: HTML, PDF, Excel
+
+# v0.1
+
+*Released:* 2013-10-13
+
+- no special functionality
+- saving the code before introducing the new branching model
