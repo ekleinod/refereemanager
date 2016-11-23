@@ -12,20 +12,20 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
- * This file is part of refereemanager.
+ * This file is part of TT-Schiri: Referee Manager.
  *
- * refereemanager is free software: you can redistribute it and/or modify
+ * TT-Schiri: Referee Manager is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * refereemanager is distributed in the hope that it will be useful,
+ * TT-Schiri: Referee Manager is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
+ * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
  * @version 0.10.0
@@ -42,19 +42,19 @@ public class PhoneNumberModel extends PhoneNumber {
 	 * @since 0.6.0
 	 */
 	@Override
-    public SimpleStringProperty getDisplayTitle() {
+		public SimpleStringProperty getDisplayTitle() {
 
-    	if (isPrivateOnly && !isPrivate()) {
+			if (isPrivateOnly && !isPrivate()) {
 			return null;
-    	}
+			}
 
-    	StringBuilder sbReturn = new StringBuilder();
+			StringBuilder sbReturn = new StringBuilder();
 
-    	if ((getCountryCode() != null) && !getCountryCode().get().equals(Prefs.get(PrefKey.COUNTRY_CODE))) {
-    		sbReturn.append("+");
-    		sbReturn.append(getCountryCode().get());
-    		sbReturn.append(" ");
-    	}
+			if ((getCountryCode() != null) && !getCountryCode().get().equals(Prefs.get(PrefKey.COUNTRY_CODE))) {
+				sbReturn.append("+");
+				sbReturn.append(getCountryCode().get());
+				sbReturn.append(" ");
+			}
 
 		sbReturn.append("0");
 		sbReturn.append((getAreaCode() == null) ? Prefs.get(PrefKey.AREA_CODE) : getAreaCode().get());
@@ -62,15 +62,15 @@ public class PhoneNumberModel extends PhoneNumber {
 
 		sbReturn.append(getNumber().get());
 
-    	if (!isPrivate()) {
-    		sbReturn.append(" (");
-    		sbReturn.append(getContactType().getShorttitle().get());
-    		sbReturn.append(")");
-    	}
+			if (!isPrivate()) {
+				sbReturn.append(" (");
+				sbReturn.append(getContactType().getShorttitle().get());
+				sbReturn.append(")");
+			}
 
-    	return new SimpleStringProperty(sbReturn.toString());
+			return new SimpleStringProperty(sbReturn.toString());
 
-    }
+		}
 
 }
 

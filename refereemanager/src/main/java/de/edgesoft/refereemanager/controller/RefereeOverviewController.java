@@ -34,20 +34,20 @@ import javafx.scene.layout.Pane;
  *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
- * This file is part of refereemanager.
+ * This file is part of TT-Schiri: Referee Manager.
  *
- * refereemanager is free software: you can redistribute it and/or modify
+ * TT-Schiri: Referee Manager is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * refereemanager is distributed in the hope that it will be useful,
+ * TT-Schiri: Referee Manager is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
+ * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
  * @version 0.10.0
@@ -166,14 +166,14 @@ public class RefereeOverviewController {
 	private void initialize() {
 
 		// list
-    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
-    	AnchorPane refList = (AnchorPane) pneLoad.getKey();
+			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
+			AnchorPane refList = (AnchorPane) pneLoad.getKey();
 
-        // add referee list to split pane
-        pneSplit.getItems().add(0, refList);
+				// add referee list to split pane
+				pneSplit.getItems().add(0, refList);
 
-        // store referee table controller
-        ctlRefList = pneLoad.getValue().getController();
+				// store referee table controller
+				ctlRefList = pneLoad.getValue().getController();
 
 		// clear event details
 		showDetails(null);
@@ -217,7 +217,7 @@ public class RefereeOverviewController {
 		} else {
 			ctlRefList.setItems(null);
 		}
-    }
+		}
 
 	/**
 	 * Shows selected data in detail window.
@@ -229,50 +229,50 @@ public class RefereeOverviewController {
 	 */
 	private void showDetails(final Referee theDetailData) {
 
-	    if (theDetailData == null) {
+			if (theDetailData == null) {
 
-	        lblName.setText("");
-	        lblFirstName.setText("");
-	        lblTrainingLevel.setText("");
-	        lblClub.setText("");
-	        imgReferee.setImage(null);
+					lblName.setText("");
+					lblFirstName.setText("");
+					lblTrainingLevel.setText("");
+					lblClub.setText("");
+					imgReferee.setImage(null);
 
-	    } else {
+			} else {
 
-	        lblName.setText(
-	        		(theDetailData.getName() == null) ?
-	        				null :
-	        				theDetailData.getName().getValue());
-	        lblFirstName.setText(
-	        		(theDetailData.getFirstName() == null) ?
-	        				null :
-	        				theDetailData.getFirstName().getValue());
-	        lblTrainingLevel.setText(
-	        		(((RefereeModel) theDetailData).getHighestTrainingLevel() == null) ?
-	        				null :
-	        				((RefereeModel) theDetailData).getHighestTrainingLevel().getType().getDisplayTitle().getValue());
-	        lblClub.setText(
-	        		(theDetailData.getMember() == null) ?
-	        				null :
-	        				theDetailData.getMember().getDisplayTitle().getValue());
+					lblName.setText(
+							(theDetailData.getName() == null) ?
+									null :
+									theDetailData.getName().getValue());
+					lblFirstName.setText(
+							(theDetailData.getFirstName() == null) ?
+									null :
+									theDetailData.getFirstName().getValue());
+					lblTrainingLevel.setText(
+							(((RefereeModel) theDetailData).getHighestTrainingLevel() == null) ?
+									null :
+									((RefereeModel) theDetailData).getHighestTrainingLevel().getType().getDisplayTitle().getValue());
+					lblClub.setText(
+							(theDetailData.getMember() == null) ?
+									null :
+									theDetailData.getMember().getDisplayTitle().getValue());
 
-	        try {
-		        File fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), String.format("%s.jpg", theDetailData.getFileName().get())).toFile();
-		        if (fleImage.exists()) {
-		        	imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
-		        } else {
-			        fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), String.format("%s.jpg", "missing")).toFile();
-			        if (fleImage.exists()) {
-			        	imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
-			        } else {
-			        	imgReferee.setImage(null);
-			        }
-		        }
-	        } catch (Exception e) {
-	        	imgReferee.setImage(null);
-	        }
+					try {
+						File fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), String.format("%s.jpg", theDetailData.getFileName().get())).toFile();
+						if (fleImage.exists()) {
+							imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
+						} else {
+							fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), String.format("%s.jpg", "missing")).toFile();
+							if (fleImage.exists()) {
+								imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
+							} else {
+								imgReferee.setImage(null);
+							}
+						}
+					} catch (Exception e) {
+						imgReferee.setImage(null);
+					}
 
-	    }
+			}
 
 	}
 
@@ -306,7 +306,7 @@ public class RefereeOverviewController {
 
 		RefereeModel editReferee = (RefereeModel) ctlRefList.getSelectionModel().getSelectedItem();
 
-	    if (editReferee != null) {
+			if (editReferee != null) {
 
 			if (showEditDialog(editReferee)) {
 				showDetails(editReferee);
@@ -314,7 +314,7 @@ public class RefereeOverviewController {
 				appController.setAppTitle();
 			}
 
-	    }
+			}
 
 	}
 
@@ -326,25 +326,25 @@ public class RefereeOverviewController {
 	 */
 	@FXML
 	private void handleDelete() {
-		
+
 		Referee refDelete = ctlRefList.getSelectionModel().getSelectedItem();
 
-	    if (refDelete != null) {
+			if (refDelete != null) {
 
-	    	Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
-	    			"Bestätigung Schiedsrichter löschen",
-	    			MessageFormat.format("Soll ''{0}'' gelöscht werden?", refDelete.getDisplayTitle().get()),
-	    			null);
+				Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
+						"Bestätigung Schiedsrichter löschen",
+						MessageFormat.format("Soll ''{0}'' gelöscht werden?", refDelete.getDisplayTitle().get()),
+						null);
 
-	        alert.showAndWait()
-	        		.filter(response -> response == ButtonType.OK)
-	        		.ifPresent(response -> {
-	        			((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(refDelete);
-	        			AppModel.setModified(true);
-	        			appController.setAppTitle();
-	        			});
+					alert.showAndWait()
+							.filter(response -> response == ButtonType.OK)
+							.ifPresent(response -> {
+								((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(refDelete);
+								AppModel.setModified(true);
+								appController.setAppTitle();
+								});
 
-	    }
+			}
 
 	}
 
