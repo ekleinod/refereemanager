@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg7384"
+   style="enable-background:new"
+   height="16"
+   width="16"
+   version="1.1"
+   inkscape:version="0.91 r"
+   sodipodi:docname="configure.svg"
+   inkscape:export-filename="/home/ekleinod/working/git/open-tt/refereemanager/refereemanager/src/main/resources/icons/16x16/actions/configure.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1678"
+     inkscape:window-height="973"
+     id="namedview10"
+     showgrid="false"
+     inkscape:zoom="14.75"
+     inkscape:cx="8.1355932"
+     inkscape:cy="8"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg7384" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Paper Symbolic Icon Theme</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <title
+     id="title8473">Paper Symbolic Icon Theme</title>
+  <defs
+     id="defs7386">
+    <filter
+       id="filter7554"
+       style="color-interpolation-filters:sRGB">
+      <feBlend
+         id="feBlend7556"
+         in2="BackgroundImage"
+         mode="darken" />
+    </filter>
+  </defs>
+  <g
+     id="layer2"
+     transform="translate(-424,-428)">
+    <path
+       id="path10500-6"
+       opacity=".5"
+       style="enable-background:new"
+       d="m430.25 429-0.1543 1.8438a5.5 5.5 0 0 0 -1.6074 0.92969l-1.6758-0.78906-1.75 3.0312 1.5215 1.0566a5.5 5.5 0 0 0 -0.084 0.92773 5.5 5.5 0 0 0 0.0801 0.93164l-1.5176 1.0527 1.75 3.0312 1.6719-0.7871a5.5 5.5 0 0 0 1.6113 0.92382l0.15 1.85h3.5l0.1543-1.8438a5.5 5.5 0 0 0 1.6074 -0.92969l1.6758 0.78906 1.75-3.0312-1.5215-1.0566a5.5 5.5 0 0 0 0.084 -0.92773 5.5 5.5 0 0 0 -0.0801 -0.93164l1.5176-1.0527-1.75-3.0312-1.6719 0.7871a5.5 5.5 0 0 0 -1.6113 -0.92382l-0.15-1.85h-3.5zm1.75 5a2 2 0 0 1 2 2 2 2 0 0 1 -2 2 2 2 0 0 1 -2 -2 2 2 0 0 1 2 -2z" />
+  </g>
+</svg>
