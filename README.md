@@ -2,7 +2,7 @@
 
 The referee manager is a free, open tool for managing table tennis referees and their assignments.
 
-Part of the project "Open-TT" which provides open documents and applications for table tennis.
+Part of the project "TT-Schiri" which provides open documents and applications for table tennis.
 
 License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License, see file LICENSE.
 
@@ -60,18 +60,18 @@ The program is distributed under the terms of the GNU General Public License.
 
 See COPYING for details.
 
-This file is part of Open-TT: Referee Manager.
+This file is part of TT-Schiri: Referee Manager.
 
-Open-TT: Referee Manager is free software: you can redistribute it and/or modify
+TT-Schiri: Referee Manager is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-Open-TT: Referee Manager is distributed in the hope that it will be useful,
+TT-Schiri: Referee Manager is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Open-TT: Referee Manager.  If not, see <http://www.gnu.org/licenses/>.
+along with TT-Schiri: Referee Manager.  If not, see <http://www.gnu.org/licenses/>.
 

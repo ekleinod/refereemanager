@@ -18,20 +18,20 @@ import javafx.stage.Stage;
  *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
- * This file is part of refereemanager.
+ * This file is part of TT-Schiri: Referee Manager.
  *
- * refereemanager is free software: you can redistribute it and/or modify
+ * TT-Schiri: Referee Manager is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * refereemanager is distributed in the hope that it will be useful,
+ * TT-Schiri: Referee Manager is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
+ * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
  * @version 0.10.0
@@ -59,17 +59,17 @@ public class AlertUtils {
 	public static Alert createAlert(final AlertType theAlertType, final Stage theOwner,
 			final String theTitle, final String theHeader, final String theContent) {
 
-        Alert alert = new Alert(theAlertType);
+				Alert alert = new Alert(theAlertType);
 
-        // set owning stage
-        alert.initOwner(theOwner);
+				// set owning stage
+				alert.initOwner(theOwner);
 
-        // display all text and resize to height
-        alert.setResizable(true);
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+				// display all text and resize to height
+				alert.setResizable(true);
+				alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
-        // set alert icon
-        switch (theAlertType) {
+				// set alert icon
+				switch (theAlertType) {
 			case CONFIRMATION:
 				alert.setGraphic(new ImageView(Resources.loadImage("icons/48x48/status/dialog-question.png")));
 				break;
@@ -87,17 +87,17 @@ public class AlertUtils {
 				break;
 		}
 
-        // set window icon
-        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(AppLayoutController.ICON);
+				// set window icon
+				((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(AppLayoutController.ICON);
 
-        // set texts
-        alert.setTitle(theTitle);
-        alert.setHeaderText(theHeader);
-        alert.setContentText(theContent);
+				// set texts
+				alert.setTitle(theTitle);
+				alert.setHeaderText(theHeader);
+				alert.setContentText(theContent);
 
-        return alert;
+				return alert;
 
-    }
+		}
 
 	/**
 	 * Creates and initializes an alert.
@@ -121,30 +121,30 @@ public class AlertUtils {
 	public static Alert createExpandableAlert(final AlertType theAlertType, final Stage theOwner,
 			final String theTitle, final String theHeader, final String theContent, final String theDetails, final String theLongtext) {
 
-        Alert alert = createAlert(theAlertType, theOwner, theTitle, theHeader, theContent);
+				Alert alert = createAlert(theAlertType, theOwner, theTitle, theHeader, theContent);
 
-        Label label = new Label(theDetails);
+				Label label = new Label(theDetails);
 
-        TextArea textArea = new TextArea(theLongtext);
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
+				TextArea textArea = new TextArea(theLongtext);
+				textArea.setEditable(false);
+				textArea.setWrapText(true);
 
-        textArea.setMaxWidth(Double.MAX_VALUE);
-        textArea.setMaxHeight(Double.MAX_VALUE);
-        GridPane.setVgrow(textArea, Priority.ALWAYS);
-        GridPane.setHgrow(textArea, Priority.ALWAYS);
+				textArea.setMaxWidth(Double.MAX_VALUE);
+				textArea.setMaxHeight(Double.MAX_VALUE);
+				GridPane.setVgrow(textArea, Priority.ALWAYS);
+				GridPane.setHgrow(textArea, Priority.ALWAYS);
 
-        GridPane expContent = new GridPane();
-        expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.add(label, 0, 0);
-        expContent.add(textArea, 0, 1);
+				GridPane expContent = new GridPane();
+				expContent.setMaxWidth(Double.MAX_VALUE);
+				expContent.add(label, 0, 0);
+				expContent.add(textArea, 0, 1);
 
-        // Set expandable Exception into the dialog pane.
-        alert.getDialogPane().setExpandableContent(expContent);
+				// Set expandable Exception into the dialog pane.
+				alert.getDialogPane().setExpandableContent(expContent);
 
-        return alert;
+				return alert;
 
-    }
+		}
 
 }
 

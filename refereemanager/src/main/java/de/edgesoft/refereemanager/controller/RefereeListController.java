@@ -23,20 +23,20 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
  *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
- * This file is part of refereemanager.
+ * This file is part of TT-Schiri: Referee Manager.
  *
- * refereemanager is free software: you can redistribute it and/or modify
+ * TT-Schiri: Referee Manager is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * refereemanager is distributed in the hope that it will be useful,
+ * TT-Schiri: Referee Manager is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
+ * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
  * @version 0.10.0
@@ -88,7 +88,7 @@ public class RefereeListController {
 	 */
 	@FXML
 	private TableColumn<RefereeModel, String> colClub;
-	
+
 	/**
 	 * Checkbox filter active.
 	 *
@@ -97,7 +97,7 @@ public class RefereeListController {
 	 */
 	@FXML
 	private CheckBox chkActive;
-	
+
 	/**
 	 * Checkbox filter inactive.
 	 *
@@ -106,7 +106,7 @@ public class RefereeListController {
 	 */
 	@FXML
 	private CheckBox chkInactive;
-	
+
 	/**
 	 * Checkbox filter email.
 	 *
@@ -115,7 +115,7 @@ public class RefereeListController {
 	 */
 	@FXML
 	private CheckBox chkEMail;
-	
+
 	/**
 	 * Checkbox filter letter only.
 	 *
@@ -124,7 +124,7 @@ public class RefereeListController {
 	 */
 	@FXML
 	private CheckBox chkLetterOnly;
-	
+
 	/**
 	 * Label filter.
 	 *
@@ -133,7 +133,7 @@ public class RefereeListController {
 	 */
 	@FXML
 	private Label lblFilter;
-	
+
 
 	/**
 	 * List of referees.
@@ -160,7 +160,7 @@ public class RefereeListController {
 		colFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
 		colTrainingLevel.setCellValueFactory(cellData -> cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitle());
 		colClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
-		
+
 		setItems(null);
 
 	}
@@ -174,15 +174,15 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	public void setItems(final ObservableList<Referee> theReferees) {
-		
+
 		if (theReferees == null) {
 			lstReferees = null;
 		} else {
 			lstReferees = new FilteredList<>(theReferees, referee -> true);
 		}
-		
+
 		tblReferees.setItems(lstReferees);
-		
+
 		// set "empty data" text
 		if ((lstReferees == null) || lstReferees.isEmpty()) {
 			Label lblPlaceholder = new Label("Es wurden noch keine Schiedsrichter eingegeben.");
@@ -195,7 +195,7 @@ public class RefereeListController {
 		}
 
 		handleFilterChange();
-		
+
 	}
 
 	/**
@@ -207,39 +207,39 @@ public class RefereeListController {
 	@SuppressWarnings("unchecked")
 	@FXML
 	private void handleFilterChange() {
-		
+
 		if (lstReferees == null) {
 			lblFilter.setText("Filter");
 		} else {
-			
+
 			lstReferees.setPredicate(RefereeModel.ALL);
-			
+
 			if (chkActive.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.ACTIVE));
 			}
-			
+
 			if (chkInactive.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.INACTIVE));
 			}
-			
+
 			if (chkEMail.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(PersonModel.HAS_EMAIL));
 			}
-			
+
 			if (chkLetterOnly.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.LETTER_ONLY));
 			}
-			
+
 			lblFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstReferees.size()));
 		}
-		
+
 		tblReferees.refresh();
-		
+
 	}
-	
+
 	/**
 	 * Sets selection mode.
-	 * 
+	 *
 	 * @param theSelectionMode selection mode
 	 *
 	 * @version 0.10.0
@@ -253,9 +253,9 @@ public class RefereeListController {
 	 * Returns selection model.
 	 *
 	 * @return selection model
-	 * 
+	 *
 	 * @version 0.10.0
-	 * @return 
+	 * @return
 	 * @since 0.10.0
 	 */
 	public TableViewSelectionModel<Referee> getSelectionModel() {

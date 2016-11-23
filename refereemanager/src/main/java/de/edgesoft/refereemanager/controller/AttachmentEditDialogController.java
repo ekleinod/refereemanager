@@ -26,20 +26,20 @@ import javafx.stage.Stage;
  *
  * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
- * This file is part of refereemanager.
+ * This file is part of TT-Schiri: Referee Manager.
  *
- * refereemanager is free software: you can redistribute it and/or modify
+ * TT-Schiri: Referee Manager is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * refereemanager is distributed in the hope that it will be useful,
+ * TT-Schiri: Referee Manager is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
+ * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
  * @version 0.10.0
@@ -155,7 +155,7 @@ public class AttachmentEditDialogController {
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
 		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
 		btnFilename.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
-		
+
 	}
 
 	/**
@@ -167,8 +167,8 @@ public class AttachmentEditDialogController {
 	 * @since 0.10.0
 	 */
 	public void setDialogStage(final Stage theStage) {
-        dialogStage = theStage;
-    }
+				dialogStage = theStage;
+		}
 
 	/**
 	 * Sets attachment to be edited.
@@ -182,26 +182,26 @@ public class AttachmentEditDialogController {
 
 		Objects.requireNonNull(theAttachment);
 
-        txtFilename.setText(
-        		(theAttachment.getFilename() == null) ?
-        				null :
-        				theAttachment.getFilename().get());
+				txtFilename.setText(
+						(theAttachment.getFilename() == null) ?
+								null :
+								theAttachment.getFilename().get());
 
-        txtTitle.setText(
-        		(theAttachment.getTitle() == null) ?
-        				null :
-        				theAttachment.getTitle().get());
+				txtTitle.setText(
+						(theAttachment.getTitle() == null) ?
+								null :
+								theAttachment.getTitle().get());
 
-        radPortrait.setSelected(
-        		(theAttachment.getLandscape() == null) ?
-        				true :
-        				!theAttachment.getLandscape().get());
+				radPortrait.setSelected(
+						(theAttachment.getLandscape() == null) ?
+								true :
+								!theAttachment.getLandscape().get());
 
-        radLandscape.setSelected(!radPortrait.isSelected());
+				radLandscape.setSelected(!radPortrait.isSelected());
 
-        currentAttachment = theAttachment;
+				currentAttachment = theAttachment;
 
-    }
+		}
 
 	/**
 	 * Returns if user clicked ok.
@@ -212,8 +212,8 @@ public class AttachmentEditDialogController {
 	 * @since 0.10.0
 	 */
 	public boolean isOkClicked() {
-        return okClicked;
-    }
+				return okClicked;
+		}
 
 	/**
 	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
@@ -222,28 +222,28 @@ public class AttachmentEditDialogController {
 	 * @since 0.10.0
 	 */
 	@FXML
-    private void handleOk() {
-        okClicked = false;
+		private void handleOk() {
+				okClicked = false;
 
-    	if (currentAttachment.getFilename() == null) {
-    		currentAttachment.setFilename(new SimpleStringProperty());
-    	}
-        currentAttachment.getFilename().setValue(txtFilename.getText());
+			if (currentAttachment.getFilename() == null) {
+				currentAttachment.setFilename(new SimpleStringProperty());
+			}
+				currentAttachment.getFilename().setValue(txtFilename.getText());
 
-    	if (currentAttachment.getTitle() == null) {
-    		currentAttachment.setTitle(new SimpleStringProperty());
-    	}
-        currentAttachment.getTitle().setValue(txtTitle.getText());
+			if (currentAttachment.getTitle() == null) {
+				currentAttachment.setTitle(new SimpleStringProperty());
+			}
+				currentAttachment.getTitle().setValue(txtTitle.getText());
 
-    	if (currentAttachment.getLandscape() == null) {
-    		currentAttachment.setLandscape(new SimpleBooleanProperty());
-    	}
-        currentAttachment.getLandscape().setValue(radLandscape.isSelected());
+			if (currentAttachment.getLandscape() == null) {
+				currentAttachment.setLandscape(new SimpleBooleanProperty());
+			}
+				currentAttachment.getLandscape().setValue(radLandscape.isSelected());
 
-        okClicked = true;
-        dialogStage.close();
+				okClicked = true;
+				dialogStage.close();
 
-    }
+		}
 
 	/**
 	 * Stores non-ok click and closes dialog.
@@ -252,10 +252,10 @@ public class AttachmentEditDialogController {
 	 * @since 0.10.0
 	 */
 	@FXML
-    private void handleCancel() {
+		private void handleCancel() {
 		okClicked = false;
-        dialogStage.close();
-    }
+				dialogStage.close();
+		}
 
 	/**
 	 * Selects file, stores it to text field.
@@ -264,28 +264,28 @@ public class AttachmentEditDialogController {
 	 * @since 0.10.0
 	 */
 	@FXML
-    private void handleFileSelect() {
-		
+		private void handleFileSelect() {
+
 		FileChooser fileChooser = new FileChooser();
 
 		fileChooser.setTitle("Attachment auswählen");
-        fileChooser.getExtensionFilters().addAll(
-        		new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
-        		);
-        if (!Prefs.get(PrefKey.REFEREE_COMMUNICATION_LAST_ATTACHMENT_PATH).isEmpty()) {
-        	Path pthFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_LAST_ATTACHMENT_PATH));
-        	if (pthFile != null) {
-        		fileChooser.setInitialDirectory(pthFile.toFile());
-        	}
-        }
+				fileChooser.getExtensionFilters().addAll(
+						new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
+						);
+				if (!Prefs.get(PrefKey.REFEREE_COMMUNICATION_LAST_ATTACHMENT_PATH).isEmpty()) {
+					Path pthFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_LAST_ATTACHMENT_PATH));
+					if (pthFile != null) {
+						fileChooser.setInitialDirectory(pthFile.toFile());
+					}
+				}
 
-        File file = fileChooser.showOpenDialog(dialogStage);
+				File file = fileChooser.showOpenDialog(dialogStage);
 
-        if (file != null) {
-            txtFilename.setText(file.getPath());
-        }
+				if (file != null) {
+						txtFilename.setText(file.getPath());
+				}
 
-    }
+		}
 
 }
 
