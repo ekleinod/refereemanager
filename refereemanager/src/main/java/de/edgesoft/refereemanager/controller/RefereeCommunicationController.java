@@ -946,8 +946,8 @@ public class RefereeCommunicationController {
 									}
 								}
 
-								Transport.send(msgMail);
-//								Thread.sleep(500);
+//								Transport.send(msgMail);
+								Thread.sleep(500);
 								RefereeManager.logger.info("gesendet.");
 								iSuccess++;
 
