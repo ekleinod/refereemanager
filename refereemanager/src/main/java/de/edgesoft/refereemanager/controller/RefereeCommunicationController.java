@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.concurrent.ExecutionException;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -388,15 +387,15 @@ public class RefereeCommunicationController {
 	private void initialize() {
 
 		// list
-			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
-			AnchorPane refList = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
+		AnchorPane refList = (AnchorPane) pneLoad.getKey();
 
-				// add referee list to split pane
-				pneSplit.getItems().add(refList);
+		// add referee list to split pane
+		pneSplit.getItems().add(refList);
 
-				// store referee table controller
-				ctlRefList = pneLoad.getValue().getController();
-				ctlRefList.setSelectionMode(SelectionMode.MULTIPLE);
+		// store referee table controller
+		ctlRefList = pneLoad.getValue().getController();
+		ctlRefList.setSelectionMode(SelectionMode.MULTIPLE);
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.REFEREE_COMMUNICATION_SPLIT_0)), Double.parseDouble(Prefs.get(PrefKey.REFEREE_COMMUNICATION_SPLIT_1)));
@@ -526,22 +525,22 @@ public class RefereeCommunicationController {
 
 		if (grpCommKind.getSelectedToggle() == radEMail) {
 
-				Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
-						"Bestätigung E-Mail senden",
-						"E-Mails versenden?",
-						"Je nach Empfängeranzahl kann das etwas dauern.");
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
+					"Bestätigung E-Mail senden",
+					"E-Mails versenden?",
+					"Je nach Empfängeranzahl kann das etwas dauern.");
 
-				final BooleanProperty doSend = new SimpleBooleanProperty(false);
+			final BooleanProperty doSend = new SimpleBooleanProperty(false);
 
-					alert.showAndWait()
-							.filter(response -> response == ButtonType.OK)
-							.ifPresent(response -> {
-								doSend.set(true);
-							});
+			alert.showAndWait()
+					.filter(response -> response == ButtonType.OK)
+					.ifPresent(response -> {
+						doSend.set(true);
+					});
 
-					if (doSend.get()) {
-						sendEMail(mapDocData);
-					}
+			if (doSend.get()) {
+				sendEMail(mapDocData);
+			}
 
 		} else {
 			System.out.println("#handleCreate");
@@ -558,26 +557,26 @@ public class RefereeCommunicationController {
 	@FXML
 	private void handlePrefs() {
 
-			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PreferencesDialog");
-			AnchorPane preferencesDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PreferencesDialog");
+		AnchorPane preferencesDialog = (AnchorPane) pneLoad.getKey();
 
-				// Create the dialog Stage.
-				Stage dialogStage = new Stage();
-				dialogStage.setTitle("Einstellungen");
-				dialogStage.initModality(Modality.WINDOW_MODAL);
-				dialogStage.initOwner(appController.getPrimaryStage());
+		// Create the dialog Stage.
+		Stage dialogStage = new Stage();
+		dialogStage.setTitle("Einstellungen");
+		dialogStage.initModality(Modality.WINDOW_MODAL);
+		dialogStage.initOwner(appController.getPrimaryStage());
 
-				Scene scene = new Scene(preferencesDialog);
-				dialogStage.setScene(scene);
+		Scene scene = new Scene(preferencesDialog);
+		dialogStage.setScene(scene);
 
-				// initialize controller
-				PreferencesDialogController controller = pneLoad.getValue().getController();
-				controller.initController(appController, dialogStage, "tabCommunication");
+		// initialize controller
+		PreferencesDialogController controller = pneLoad.getValue().getController();
+		controller.initController(appController, dialogStage, "tabCommunication");
 
-				// Show the dialog and wait until the user closes it
-				dialogStage.showAndWait();
+		// Show the dialog and wait until the user closes it
+		dialogStage.showAndWait();
 
-				appController.setAppTitle();
+		appController.setAppTitle();
 
 	}
 
@@ -597,18 +596,18 @@ public class RefereeCommunicationController {
 						new FileChooser.ExtensionFilter("Nachrichten-Dateien (*.mmd)", "*.mmd"),
 						new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
 						);
-				if (!Prefs.get(PrefKey.REFEREE_COMMUNICATION_FILE).isEmpty()) {
-					Path pthFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_FILE));
-					if ((pthFile != null) && (pthFile.getParent() != null)) {
-						fileChooser.setInitialDirectory(pthFile.getParent().toFile());
-					}
-				}
+		if (!Prefs.get(PrefKey.REFEREE_COMMUNICATION_FILE).isEmpty()) {
+			Path pthFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_FILE));
+			if ((pthFile != null) && (pthFile.getParent() != null)) {
+				fileChooser.setInitialDirectory(pthFile.getParent().toFile());
+			}
+		}
 
-				File file = fileChooser.showOpenDialog(appController.getPrimaryStage());
+		File file = fileChooser.showOpenDialog(appController.getPrimaryStage());
 
-				if (file != null) {
-						txtCommunicationFile.setText(file.getPath());
-				}
+		if (file != null) {
+			txtCommunicationFile.setText(file.getPath());
+		}
 
 	}
 
@@ -621,114 +620,114 @@ public class RefereeCommunicationController {
 	@FXML
 	private void handleMessageFileLoad() {
 
-			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
-					"Bestätigung Nachrichtendatei laden",
-					"Soll die Nachrichtendatei geladen werden?",
-					"Alle Eingaben werden dabei gelöscht bzw. überschrieben.");
+		Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
+				"Bestätigung Nachrichtendatei laden",
+				"Soll die Nachrichtendatei geladen werden?",
+				"Alle Eingaben werden dabei gelöscht bzw. überschrieben.");
 
-				alert.showAndWait()
-						.filter(response -> response == ButtonType.OK)
-						.ifPresent(response -> {
+		alert.showAndWait()
+				.filter(response -> response == ButtonType.OK)
+				.ifPresent(response -> {
 
-							try {
+			try {
 
-								final List<String> lstText = FileAccess.readFileInList(Paths.get(txtCommunicationFile.getText()));
+				final List<String> lstText = FileAccess.readFileInList(Paths.get(txtCommunicationFile.getText()));
 
-								tblAttachments.getItems().clear();
-								txtBody.setText(null);
-								txtClosing.setText(null);
-								txtFilename.setText(null);
-								txtOpening.setText(null);
-								txtSignature.setText(null);
-								txtTitle.setText(null);
-								txtSubtitle.setText(null);
+				tblAttachments.getItems().clear();
+				txtBody.setText(null);
+				txtClosing.setText(null);
+				txtFilename.setText(null);
+				txtOpening.setText(null);
+				txtSignature.setText(null);
+				txtTitle.setText(null);
+				txtSubtitle.setText(null);
 
-								List<String> lstBody = new ArrayList<>();
-								boolean isBody = false;
-								for (String theLine : lstText) {
+				List<String> lstBody = new ArrayList<>();
+				boolean isBody = false;
+				for (String theLine : lstText) {
 
-									if (isBody) {
+					if (isBody) {
 
-										lstBody.add(theLine.trim());
+						lstBody.add(theLine.trim());
 
-									} else {
+					} else {
 
-										for (DocumentDataVariable theTemplateVariable : DocumentDataVariable.values()) {
+						for (DocumentDataVariable theTemplateVariable : DocumentDataVariable.values()) {
 
-											String sVarToken = String.format(MESSAGE_VARIABLE_TOKEN, theTemplateVariable.value());
-											if (theLine.trim().startsWith(sVarToken)) {
+							String sVarToken = String.format(MESSAGE_VARIABLE_TOKEN, theTemplateVariable.value());
+							if (theLine.trim().startsWith(sVarToken)) {
 
-												String theLineContent = theLine.trim().substring(sVarToken.length()).trim();
+								String theLineContent = theLine.trim().substring(sVarToken.length()).trim();
 
-												switch (theTemplateVariable) {
-													case ATTACHMENT:
-														String[] arrAttachmentParts = theLineContent.split(ATTACHMENT_SEPARATOR);
+								switch (theTemplateVariable) {
+									case ATTACHMENT:
+										String[] arrAttachmentParts = theLineContent.split(ATTACHMENT_SEPARATOR);
 
-														Attachment attNew = new Attachment();
+										Attachment attNew = new Attachment();
 
-														attNew.setFilename(new SimpleStringProperty(arrAttachmentParts[0].trim()));
+										attNew.setFilename(new SimpleStringProperty(arrAttachmentParts[0].trim()));
 
-														if (arrAttachmentParts.length > 1) {
-															attNew.setTitle(new SimpleStringProperty(arrAttachmentParts[1].trim()));
-														}
-
-														if (arrAttachmentParts.length > 2) {
-															attNew.setLandscape(new SimpleBooleanProperty(Boolean.valueOf(arrAttachmentParts[2].trim())));
-														}
-
-														tblAttachments.getItems().add(attNew);
-														break;
-													case BODY:
-														// multiple lines without explicit token
-														break;
-													case CLOSING:
-														txtClosing.setText(theLineContent);
-														break;
-													case DATE:
-														// not used for now, always "now"
-														break;
-													case FILENAME:
-														txtFilename.setText(theLineContent);
-														break;
-													case OPENING:
-														txtOpening.setText(theLineContent);
-														break;
-													case SIGNATURE:
-														txtSignature.setText(theLineContent);
-														break;
-													case SUBTITLE:
-														txtSubtitle.setText(theLineContent);
-														break;
-													case SUBJECT:
-														txtTitle.setText(theLineContent);
-														break;
-												}
-											}
-
+										if (arrAttachmentParts.length > 1) {
+											attNew.setTitle(new SimpleStringProperty(arrAttachmentParts[1].trim()));
 										}
 
-									}
+										if (arrAttachmentParts.length > 2) {
+											attNew.setLandscape(new SimpleBooleanProperty(Boolean.valueOf(arrAttachmentParts[2].trim())));
+										}
 
-									if (theLine.isEmpty()) {
-										isBody = true;
-									}
+										tblAttachments.getItems().add(attNew);
+										break;
+									case BODY:
+										// multiple lines without explicit token
+										break;
+									case CLOSING:
+										txtClosing.setText(theLineContent);
+										break;
+									case DATE:
+										// not used for now, always "now"
+										break;
+									case FILENAME:
+										txtFilename.setText(theLineContent);
+										break;
+									case OPENING:
+										txtOpening.setText(theLineContent);
+										break;
+									case SIGNATURE:
+										txtSignature.setText(theLineContent);
+										break;
+									case SUBTITLE:
+										txtSubtitle.setText(theLineContent);
+										break;
+									case SUBJECT:
+										txtTitle.setText(theLineContent);
+										break;
 								}
-
-								txtBody.setText(TemplateHelper.toText(lstBody));
-
-							} catch (Exception e) {
-
-								e.printStackTrace();
-
-								AlertUtils.createAlert(AlertType.ERROR, appController.getPrimaryStage(),
-										"Dateifehler",
-										"Ein Fehler ist beim Laden der Nachricht aufgetreten.",
-										MessageFormat.format("{0}\nDie Daten wurden nicht geladen.", e.getMessage()))
-								.showAndWait();
-
 							}
 
-						});
+						}
+
+					}
+
+					if (theLine.isEmpty()) {
+						isBody = true;
+					}
+				}
+
+				txtBody.setText(TemplateHelper.toText(lstBody));
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+
+				AlertUtils.createAlert(AlertType.ERROR, appController.getPrimaryStage(),
+						"Dateifehler",
+						"Ein Fehler ist beim Laden der Nachricht aufgetreten.",
+						MessageFormat.format("{0}\nDie Daten wurden nicht geladen.", e.getMessage()))
+				.showAndWait();
+
+			}
+
+		});
 
 	}
 
@@ -771,9 +770,9 @@ public class RefereeCommunicationController {
 
 		Attachment editAttachment = tblAttachments.getSelectionModel().getSelectedItem();
 
-			if (editAttachment != null) {
+		if (editAttachment != null) {
 			showAttachmentEditDialog(editAttachment);
-			}
+		}
 
 	}
 
@@ -788,20 +787,20 @@ public class RefereeCommunicationController {
 
 		Attachment selectedAttachment = tblAttachments.getSelectionModel().getSelectedItem();
 
-			if (selectedAttachment != null) {
+		if (selectedAttachment != null) {
 
-				Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
-						"Bestätigung Attachment löschen",
-						"Soll das ausgewählte Attachment gelöscht werden?",
-						null);
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
+					"Bestätigung Attachment löschen",
+					"Soll das ausgewählte Attachment gelöscht werden?",
+					null);
+	
+			alert.showAndWait()
+					.filter(response -> response == ButtonType.OK)
+					.ifPresent(response -> {
+						tblAttachments.getItems().remove(selectedAttachment);
+						});
 
-					alert.showAndWait()
-							.filter(response -> response == ButtonType.OK)
-							.ifPresent(response -> {
-								tblAttachments.getItems().remove(selectedAttachment);
-								});
-
-			}
+		}
 
 	}
 
@@ -816,27 +815,27 @@ public class RefereeCommunicationController {
 	 */
 	private boolean showAttachmentEditDialog(Attachment theAttachment) {
 
-			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AttachmentEditDialog");
-			AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AttachmentEditDialog");
+		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
 
-				// Create the dialog Stage.
-				Stage dialogStage = new Stage();
-				dialogStage.initModality(Modality.WINDOW_MODAL);
-				dialogStage.initOwner(appController.getPrimaryStage());
-				dialogStage.setTitle("Dateianhang editieren");
+		// Create the dialog Stage.
+		Stage dialogStage = new Stage();
+		dialogStage.initModality(Modality.WINDOW_MODAL);
+		dialogStage.initOwner(appController.getPrimaryStage());
+		dialogStage.setTitle("Dateianhang editieren");
 
-				Scene scene = new Scene(editDialog);
-				dialogStage.setScene(scene);
+		Scene scene = new Scene(editDialog);
+		dialogStage.setScene(scene);
 
-				// Set the event into the controller.
-				AttachmentEditDialogController editController = pneLoad.getValue().getController();
-				editController.setDialogStage(dialogStage);
-				editController.setAttachment(theAttachment);
+		// Set the event into the controller.
+		AttachmentEditDialogController editController = pneLoad.getValue().getController();
+		editController.setDialogStage(dialogStage);
+		editController.setAttachment(theAttachment);
 
-				// Show the dialog and wait until the user closes it
-				dialogStage.showAndWait();
+		// Show the dialog and wait until the user closes it
+		dialogStage.showAndWait();
 
-				return editController.isOkClicked();
+		return editController.isOkClicked();
 
 	}
 
@@ -850,11 +849,9 @@ public class RefereeCommunicationController {
 	 * Maybe I'm doing something wrong there, in that case the code could be
 	 * changes to including all recipients as BCC.
 	 *
-	 * @todo log output in alert
-	 *
 	 * @param theDocData document data
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	private void sendEMail(final Map<String, Object> theDocData) {
@@ -949,8 +946,8 @@ public class RefereeCommunicationController {
 									}
 								}
 
-//								Transport.send(msgMail);
-								Thread.sleep(500);
+								Transport.send(msgMail);
+//								Thread.sleep(500);
 								RefereeManager.logger.info("gesendet.");
 								iSuccess++;
 
@@ -987,46 +984,49 @@ public class RefereeCommunicationController {
 					return mapReturn;
 				}
 			};
+			
+            // progress dialog
+			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
 
-			// show progress dialog
-				Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
+			Stage dialogStage = new Stage(StageStyle.UTILITY);
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setResizable(false);
+			dialogStage.setScene(new Scene(pneLoad.getKey()));
 
-					Stage dialogStage = new Stage(StageStyle.UTILITY);
-					dialogStage.initModality(Modality.APPLICATION_MODAL);
-					dialogStage.setResizable(false);
-					dialogStage.setScene(new Scene(pneLoad.getKey()));
+			ProgressDialogController controller = pneLoad.getValue().getController();
+			controller.initController("Mail senden", taskSend);
+            
+            // task succeeded - show results
+            taskSend.setOnSucceeded(event -> {
+                dialogStage.close();
+                
+    			Map<String, Integer> mapResult = taskSend.getValue();
+    			
+    			RefereeManager.logger.info("Ende Mailsenden.");
+    			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
+    			RefereeManager.logger.info(MessageFormat.format("Dauer: {0}", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+    			
+    			Alert alert = AlertUtils.createExpandableAlert((mapResult.get("error") > 0) ? AlertType.ERROR : AlertType.INFORMATION, appController.getPrimaryStage(),
+    					"E-Mails versenden",
+    					MessageFormat.format("Versand {0,choice,0#erfolgreich|1#fehlerhaft|1<fehlerhaft}", mapResult.get("error")),
+    					MessageFormat.format("{0,choice,0#Keine E-Mails|1#Eine E-Mail|1<{0,number,integer} E-Mails} wurden versendet, es {1,choice,0#traten keine|1#trat ein|1<traten {1,number,integer}} Fehler auf.",
+    							mapResult.get("success"), mapResult.get("error")),
+    					"Details:",
+    					wrtProtocol.toString());
+    			
+    			alert.showAndWait();
+            });
 
-					ProgressDialogController controller = pneLoad.getValue().getController();
-					controller.initController("Mail senden", taskSend);
+            dialogStage.show();
 
-			taskSend.setOnSucceeded(event -> {
-								dialogStage.close();
-						});
+            Thread thread = new Thread(taskSend);
+            thread.start();
 
-					dialogStage.show();
-
-					// start sending task
-					new Thread(taskSend).start();
-					Map<String, Integer> mapResult = taskSend.get();
-
-					RefereeManager.logger.info("Ende Mailsenden.");
-					Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
-					RefereeManager.logger.info(MessageFormat.format("Dauer: {0}", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
-
-				Alert alert = AlertUtils.createExpandableAlert((mapResult.get("error") > 0) ? AlertType.ERROR : AlertType.INFORMATION, appController.getPrimaryStage(),
-						"E-Mails versenden",
-						MessageFormat.format("Versand {0,choice,0#erfolgreich|1#fehlerhaft|1<fehlerhaft}", mapResult.get("error")),
-						MessageFormat.format("{0,choice,0#Keine E-Mails|1#Eine E-Mail|1<{0,number,integer} E-Mails} wurden versendet, es {1,choice,0#traten keine|1#trat ein|1<traten {1,number,integer}} Fehler auf.",
-								mapResult.get("success"), mapResult.get("error")),
-						"Details:",
-						wrtProtocol.toString());
-
-					alert.showAndWait();
-
-		} catch (IOException | InterruptedException | ExecutionException e) {
+		} catch (IOException e) {
 			RefereeManager.logger.error(e);
 			e.printStackTrace();
 		}
+		
 	}
 
 }
