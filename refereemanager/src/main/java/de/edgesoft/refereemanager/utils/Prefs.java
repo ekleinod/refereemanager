@@ -34,7 +34,7 @@ import javafx.stage.Screen;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.8.0
  */
 public class Prefs {
@@ -68,7 +68,7 @@ public class Prefs {
 	 * @param theKey preference key
 	 * @return preference value
 	 *
-	 * @version 0.8.0
+	 * @version 0.12.0
 	 * @since 0.8.0
 	 */
 	public static String get(final PrefKey theKey) {
@@ -79,6 +79,18 @@ public class Prefs {
 			case COUNTRY_CODE:
 				return getPreferences().get(theKey.value(), "49");
 
+			case DOCUMENTS_TEMPLATE_DOCUMENT:
+				return getPreferences().get(theKey.value(), "document/document.mmd");
+				
+			case EMAIL_TEMPLATE_EMAIL:
+				return getPreferences().get(theKey.value(), "email/email.mmd");
+			case EMAIL_TEMPLATE_LETTER:
+				return getPreferences().get(theKey.value(), "letter/letter.mmd");
+			case EMAIL_TEMPLATE_MERGE_SINGLE:
+				return getPreferences().get(theKey.value(), "letter/merge_referee.tex");
+			case EMAIL_TEMPLATE_MERGE_ALL:
+				return getPreferences().get(theKey.value(), "letter/merge_referees.tex");
+				
 			case FILENAME_PATTERN_DATABASE:
 				return getPreferences().get(theKey.value(), "refereemanager_%04d.xml");
 			case FILENAME_PATTERN_REFEREE_DATA:
@@ -109,16 +121,6 @@ public class Prefs {
 			case STAGE_Y:
 				return getPreferences().get(theKey.value(), Double.toString((Screen.getPrimary().getBounds().getHeight() - 600) / 2));
 
-			case TEMPLATE_DOCUMENT:
-				return getPreferences().get(theKey.value(), "document/document.mmd");
-			case COMMUNICATION_TEMPLATE_EMAIL:
-				return getPreferences().get(theKey.value(), "email/email.mmd");
-			case COMMUNICATION_TEMPLATE_LETTER:
-				return getPreferences().get(theKey.value(), "letter/letter.mmd");
-			case COMMUNICATION_TEMPLATE_MERGE_SINGLE:
-				return getPreferences().get(theKey.value(), "letter/merge_referee.tex");
-			case COMMUNICATION_TEMPLATE_MERGE_ALL:
-				return getPreferences().get(theKey.value(), "letter/merge_referees.tex");
 			case TEMPLATE_REFEREE_DATA:
 				return getPreferences().get(theKey.value(), "referee-data/referee-data.mmd");
 

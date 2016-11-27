@@ -39,7 +39,6 @@ import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
-import de.edgesoft.refereemanager.model.template.DocumentData;
 
 /**
  * Provides methods and properties for communication.
@@ -140,12 +139,12 @@ public class CommunicationHelper {
 
 		// send email
 		Properties mailProps = new Properties();
-		mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.COMMUNICATION_SMTP_HOST));
+		mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.EMAIL_SMTP_HOST));
 		mailProps.setProperty("mail.smtp.auth", "true");
 
 		Session session = Session.getInstance(mailProps, new Authenticator() {
 					@Override protected PasswordAuthentication getPasswordAuthentication() {
-							return new PasswordAuthentication(Prefs.get(PrefKey.COMMUNICATION_SMTP_USERNAME), Prefs.get(PrefKey.COMMUNICATION_SMTP_PASSWORD));
+							return new PasswordAuthentication(Prefs.get(PrefKey.EMAIL_SMTP_USERNAME), Prefs.get(PrefKey.EMAIL_SMTP_PASSWORD));
 						}
 					});
 
@@ -156,7 +155,7 @@ public class CommunicationHelper {
 			for (Referee theReferee : lstRecipients) {
 
 				Message msgMail = new MimeMessage(session);
-				msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.COMMUNICATION_FROM_EMAIL), Prefs.get(PrefKey.COMMUNICATION_FROM_NAME), StandardCharsets.UTF_8.name()));
+				msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM_EMAIL), Prefs.get(PrefKey.EMAIL_FROM_NAME), StandardCharsets.UTF_8.name()));
 
 				DocumentData docData = TemplateHelper.extractMessageParts(TemplateHelper.fillText(theText, theReferee, theData));
 
@@ -257,7 +256,7 @@ public class CommunicationHelper {
 		de.edgesoft.refereemanager.jaxb.RefereeManager mgrRefs = null;
 		if (theAction == ArgumentCommunicationAction.LETTER) {
 
-			Path pathTemp = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_MERGE_SINGLE));
+			Path pathTemp = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.EMAIL_TEMPLATE_MERGE_SINGLE));
 			RefereeManager.logger.debug(String.format("read merge template from '%s'.", pathTemp.toString()));
 			try {
 				lstMergeRef = FileAccess.readFileInList(pathTemp);
@@ -266,7 +265,7 @@ public class CommunicationHelper {
 				e.printStackTrace();
 			}
 
-			pathTemp = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_MERGE_ALL));
+			pathTemp = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.EMAIL_TEMPLATE_MERGE_ALL));
 			RefereeManager.logger.debug(String.format("read merge template from '%s'.", pathTemp.toString()));
 			try {
 				lstMergeRefs = FileAccess.readFileInList(pathTemp);

@@ -878,7 +878,7 @@ public class RefereeCommunicationController {
 
 						// load email template
 						updateMessage("Lade Mail-Template.");
-						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_EMAIL));
+						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.EMAIL_TEMPLATE_EMAIL));
 
 						Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
 						cfg.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
@@ -890,13 +890,13 @@ public class RefereeCommunicationController {
 
 						// send email
 						Properties mailProps = new Properties();
-						mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.COMMUNICATION_SMTP_HOST));
+						mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.EMAIL_SMTP_HOST));
 						mailProps.setProperty("mail.smtp.auth", "true");
 
 						Session session = Session.getInstance(mailProps, new Authenticator() {
 									@Override
 									protected PasswordAuthentication getPasswordAuthentication() {
-											return new PasswordAuthentication(Prefs.get(PrefKey.COMMUNICATION_SMTP_USERNAME), Prefs.get(PrefKey.COMMUNICATION_SMTP_PASSWORD));
+											return new PasswordAuthentication(Prefs.get(PrefKey.EMAIL_SMTP_USERNAME), Prefs.get(PrefKey.EMAIL_SMTP_PASSWORD));
 									}
 						});
 
@@ -913,7 +913,7 @@ public class RefereeCommunicationController {
 							try {
 
 								Message msgMail = new MimeMessage(session);
-								msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.COMMUNICATION_FROM_EMAIL), Prefs.get(PrefKey.COMMUNICATION_FROM_NAME), StandardCharsets.UTF_8.name()));
+								msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM_EMAIL), Prefs.get(PrefKey.EMAIL_FROM_NAME), StandardCharsets.UTF_8.name()));
 
 								msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE.value())));
 								msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
