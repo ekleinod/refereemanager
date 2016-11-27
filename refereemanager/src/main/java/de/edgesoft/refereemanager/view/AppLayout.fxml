@@ -112,6 +112,12 @@
                      <tooltip>
                         <Tooltip text="Ereignisstatistik anzeigen." />
                      </tooltip></Button>
+                  <Separator prefWidth="10.0" />
+                  <Button fx:id="btnProgramPreferences" mnemonicParsing="false" onAction="#handleProgramPreferences">
+                     <tooltip>
+                        <Tooltip text="Ereignisstatistik anzeigen." />
+                     </tooltip>
+                  </Button>
               </items>
             </ToolBar>
          </children>

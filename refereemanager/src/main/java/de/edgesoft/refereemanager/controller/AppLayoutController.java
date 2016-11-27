@@ -219,6 +219,15 @@ public class AppLayoutController {
 	@FXML
 	private Button btnStatisticsData;
 
+	/**
+	 * Button program -> preferences.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Button btnProgramPreferences;
+
 
 	/**
 	 * Primary stage.
@@ -234,7 +243,7 @@ public class AppLayoutController {
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
@@ -242,6 +251,7 @@ public class AppLayoutController {
 
 		// icons
 		mnuProgramPreferences.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/configure.png")));
+		btnProgramPreferences.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/configure.png")));
 		mnuProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/application-exit.png")));
 		btnProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/application-exit.png")));
 
@@ -289,7 +299,7 @@ public class AppLayoutController {
 			primaryStage.setWidth(Double.parseDouble(Prefs.get(PrefKey.STAGE_WIDTH)));
 			primaryStage.setHeight(Double.parseDouble(Prefs.get(PrefKey.STAGE_HEIGHT)));
 
-			primaryStage.setMaximized(Boolean.parseBoolean(Prefs.get(PrefKey.MAXIMIZED)));
+			primaryStage.setMaximized(Boolean.parseBoolean(Prefs.get(PrefKey.STAGE_MAXIMIZED)));
 
 		// if changed, save bounds to preferences
 		primaryStage.xProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
@@ -314,7 +324,7 @@ public class AppLayoutController {
 		});
 
 		primaryStage.maximizedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-			Prefs.put(PrefKey.MAXIMIZED, Boolean.toString(newValue.booleanValue()));
+			Prefs.put(PrefKey.STAGE_MAXIMIZED, Boolean.toString(newValue.booleanValue()));
 		});
 
 				// set handler for close requests (x-button of window)

@@ -81,7 +81,7 @@ public class Prefs {
 
 			case DOCUMENTS_TEMPLATE_DOCUMENT:
 				return getPreferences().get(theKey.value(), "document/document.mmd");
-				
+
 			case EMAIL_TEMPLATE_EMAIL:
 				return getPreferences().get(theKey.value(), "email/email.mmd");
 			case EMAIL_TEMPLATE_LETTER:
@@ -90,7 +90,7 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), "letter/merge_referee.tex");
 			case EMAIL_TEMPLATE_MERGE_ALL:
 				return getPreferences().get(theKey.value(), "letter/merge_referees.tex");
-				
+
 			case FILENAME_PATTERN_DATABASE:
 				return getPreferences().get(theKey.value(), "refereemanager_%04d.xml");
 			case FILENAME_PATTERN_REFEREE_DATA:
@@ -121,11 +121,8 @@ public class Prefs {
 			case STAGE_Y:
 				return getPreferences().get(theKey.value(), Double.toString((Screen.getPrimary().getBounds().getHeight() - 600) / 2));
 
-			case TEMPLATE_REFEREE_DATA:
-				return getPreferences().get(theKey.value(), "referee-data/referee-data.mmd");
-
-			case TEMPLATE_VARIABLE_SEPARATOR:
-				return getPreferences().get(theKey.value(), "::");
+			case STAGE_MAXIMIZED:
+				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
 
 			case TITLE_FULLPATH:
 				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
