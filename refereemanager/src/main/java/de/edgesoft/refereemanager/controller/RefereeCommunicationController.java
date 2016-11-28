@@ -150,6 +150,15 @@ public class RefereeCommunicationController {
 	private TextField txtSubtitle;
 
 	/**
+	 * Label opening.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Label lblOpening;
+
+	/**
 	 * Textfield opening.
 	 *
 	 * @version 0.10.0
@@ -380,7 +389,7 @@ public class RefereeCommunicationController {
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
@@ -428,10 +437,15 @@ public class RefereeCommunicationController {
 		btnSend.disableProperty().bind(
 				ctlRefList.getSelectionModel().selectedItemProperty().isNull()
 				.or(txtTitle.textProperty().isEmpty())
-				.or(txtOpening.textProperty().isEmpty())
 				.or(txtBody.textProperty().isEmpty())
-				.or(txtClosing.textProperty().isEmpty())
-				.or(txtSignature.textProperty().isEmpty())
+				.or(
+						radDocument.selectedProperty().not()
+						.and(
+								txtOpening.textProperty().isEmpty()
+								.or(txtClosing.textProperty().isEmpty())
+								.or(txtSignature.textProperty().isEmpty())
+								)
+						)
 				);
 		btnMessageFileLoad.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
 		btnMessageFileSave.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
@@ -442,6 +456,12 @@ public class RefereeCommunicationController {
 		grpCommKind.selectedToggleProperty().addListener((ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) -> {
 			btnSend.setText((newValue == radEMail) ? "Senden" : "Erzeugen");
 		});
+
+		// input elements
+		lblOpening.visibleProperty().bind(radDocument.selectedProperty().not());
+		txtOpening.visibleProperty().bind(radDocument.selectedProperty().not());
+		lblOpening.managedProperty().bind(radDocument.selectedProperty().not());
+		txtOpening.managedProperty().bind(radDocument.selectedProperty().not());
 
 		// attachment list
 		colFilename.setCellValueFactory(cellData -> cellData.getValue().getFilename());
@@ -793,7 +813,7 @@ public class RefereeCommunicationController {
 					"Bestätigung Attachment löschen",
 					"Soll das ausgewählte Attachment gelöscht werden?",
 					null);
-	
+
 			alert.showAndWait()
 					.filter(response -> response == ButtonType.OK)
 					.ifPresent(response -> {
@@ -984,7 +1004,7 @@ public class RefereeCommunicationController {
 					return mapReturn;
 				}
 			};
-			
+
             // progress dialog
 			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
 
@@ -995,17 +1015,17 @@ public class RefereeCommunicationController {
 
 			ProgressDialogController controller = pneLoad.getValue().getController();
 			controller.initController("Mail senden", taskSend);
-            
+
             // task succeeded - show results
             taskSend.setOnSucceeded(event -> {
                 dialogStage.close();
-                
+
     			Map<String, Integer> mapResult = taskSend.getValue();
-    			
+
     			RefereeManager.logger.info("Ende Mailsenden.");
     			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
     			RefereeManager.logger.info(MessageFormat.format("Dauer: {0}", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
-    			
+
     			Alert alert = AlertUtils.createExpandableAlert((mapResult.get("error") > 0) ? AlertType.ERROR : AlertType.INFORMATION, appController.getPrimaryStage(),
     					"E-Mails versenden",
     					MessageFormat.format("Versand {0,choice,0#erfolgreich|1#fehlerhaft|1<fehlerhaft}", mapResult.get("error")),
@@ -1013,7 +1033,7 @@ public class RefereeCommunicationController {
     							mapResult.get("success"), mapResult.get("error")),
     					"Details:",
     					wrtProtocol.toString());
-    			
+
     			alert.showAndWait();
             });
 
@@ -1026,7 +1046,7 @@ public class RefereeCommunicationController {
 			RefereeManager.logger.error(e);
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

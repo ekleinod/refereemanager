@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.RefereeCommunicationController">
+<BorderPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.RefereeCommunicationController">
    <center>
       <AnchorPane prefHeight="800.0" prefWidth="1000.0">
          <children>
@@ -43,7 +43,7 @@
                                     <RowConstraints />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" valignment="BASELINE" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -55,7 +55,7 @@
                                        <font>
                                           <Font name="System Bold" />
                                        </font></Label>
-                                    <Label text="Anrede" GridPane.rowIndex="4">
+                                    <Label fx:id="lblOpening" text="Anrede" GridPane.rowIndex="4">
                                        <font>
                                           <Font name="System Bold" />
                                        </font>
@@ -83,7 +83,10 @@
                                     <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
                                     <TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <TextField fx:id="txtSubtitle" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <TextField fx:id="txtOpening" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <TextField fx:id="txtOpening" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </GridPane.margin></TextField>
                                     <TextArea fx:id="txtBody" prefHeight="300.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                     <TextField fx:id="txtClosing" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                     <TextField fx:id="txtSignature" GridPane.columnIndex="1" GridPane.rowIndex="7" />
@@ -92,6 +95,9 @@
                                     <Label text="Generierter Dateiname" GridPane.rowIndex="9" />
                                     <TextField fx:id="txtFilename" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                                  </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
                               </GridPane>
                            </content>
                            <padding>
