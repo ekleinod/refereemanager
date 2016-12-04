@@ -177,6 +177,15 @@ public class RefereeCommunicationController {
 	private TextArea txtBody;
 
 	/**
+	 * Label closing.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Label lblClosing;
+
+	/**
 	 * Textfield closing.
 	 *
 	 * @version 0.10.0
@@ -184,6 +193,15 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private TextField txtClosing;
+
+	/**
+	 * Label signature.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Label lblSignature;
 
 	/**
 	 * Textfield signature.
@@ -462,6 +480,14 @@ public class RefereeCommunicationController {
 		txtOpening.visibleProperty().bind(radDocument.selectedProperty().not());
 		lblOpening.managedProperty().bind(radDocument.selectedProperty().not());
 		txtOpening.managedProperty().bind(radDocument.selectedProperty().not());
+		lblClosing.visibleProperty().bind(radDocument.selectedProperty().not());
+		txtClosing.visibleProperty().bind(radDocument.selectedProperty().not());
+		lblClosing.managedProperty().bind(radDocument.selectedProperty().not());
+		txtClosing.managedProperty().bind(radDocument.selectedProperty().not());
+		lblSignature.visibleProperty().bind(radDocument.selectedProperty().not());
+		txtSignature.visibleProperty().bind(radDocument.selectedProperty().not());
+		lblSignature.managedProperty().bind(radDocument.selectedProperty().not());
+		txtSignature.managedProperty().bind(radDocument.selectedProperty().not());
 
 		// attachment list
 		colFilename.setCellValueFactory(cellData -> cellData.getValue().getFilename());

@@ -41,14 +41,14 @@
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" />
                                     <RowConstraints />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints vgrow="SOMETIMES" />
                                     <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" valignment="BASELINE" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints valignment="BASELINE" vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
                                     <Label text="Titel" GridPane.rowIndex="2">
@@ -59,18 +59,21 @@
                                        <font>
                                           <Font name="System Bold" />
                                        </font>
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
                                     </Label>
                                     <Label text="Text" GridPane.rowIndex="5">
                                        <font>
                                           <Font name="System Bold" />
                                        </font>
                                     </Label>
-                                    <Label text="Schlussformel" GridPane.rowIndex="6">
+                                    <Label fx:id="lblClosing" text="Schlussformel" GridPane.rowIndex="6">
                                        <font>
                                           <Font name="System Bold" />
                                        </font>
                                     </Label>
-                                    <Label text="Unterschrift" GridPane.rowIndex="7">
+                                    <Label fx:id="lblSignature" text="Unterschrift" GridPane.rowIndex="7">
                                        <font>
                                           <Font name="System Bold" />
                                        </font>
@@ -81,19 +84,40 @@
                                        </font>
                                     </Label>
                                     <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
-                                    <TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <TextField fx:id="txtSubtitle" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </GridPane.margin></TextField>
+                                    <TextField fx:id="txtSubtitle" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </GridPane.margin></TextField>
                                     <TextField fx:id="txtOpening" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" top="5.0" />
                                        </GridPane.margin></TextField>
-                                    <TextArea fx:id="txtBody" prefHeight="300.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <TextField fx:id="txtClosing" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <TextField fx:id="txtSignature" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                    <Label text="Untertitel" GridPane.rowIndex="3" />
+                                    <TextArea fx:id="txtBody" prefHeight="300.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </GridPane.margin></TextArea>
+                                    <TextField fx:id="txtClosing" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </GridPane.margin></TextField>
+                                    <TextField fx:id="txtSignature" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </GridPane.margin></TextField>
+                                    <Label text="Untertitel" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin></Label>
                                     <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
                                     <Label text="Generierter Dateiname" GridPane.rowIndex="9" />
-                                    <TextField fx:id="txtFilename" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                    <TextField fx:id="txtFilename" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </GridPane.margin></TextField>
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
