@@ -18,7 +18,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -173,6 +172,9 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="Kommunikation" GridPane.columnSpan="2147483647">
@@ -200,23 +202,33 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                              <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <children>
-                                    <TextField fx:id="txtCommunicationFile" />
-                                    <Button fx:id="btnMessageFileSelect" mnemonicParsing="false" onAction="#handleMessageFileSelect">
-                                       <tooltip>
-                                          <Tooltip text="Datei auswählen." />
-                                       </tooltip></Button>
-                                    <Button fx:id="btnMessageFileLoad" mnemonicParsing="false" onAction="#handleMessageFileLoad">
-                                       <tooltip>
-                                          <Tooltip text="Dateiinhalte laden." />
-                                       </tooltip></Button>
-                                    <Button fx:id="btnMessageFileSave" mnemonicParsing="false" onAction="#handleMessageFileSave">
-                                       <tooltip>
-                                          <Tooltip text="Inhalte in Datei speichern." />
-                                       </tooltip></Button>
+                                    <TextField fx:id="txtCommunicationFile" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="128.0" />
+                                    <ButtonBar buttonMinWidth="16.0" AnchorPane.rightAnchor="0.0">
+                                       <buttons>
+                                          <Button fx:id="btnMessageFileSelect" mnemonicParsing="false" onAction="#handleMessageFileSelect">
+                                             <tooltip>
+                                                <Tooltip text="Datei auswählen." />
+                                             </tooltip>
+                                          </Button>
+                                          <Button fx:id="btnMessageFileLoad" mnemonicParsing="false" onAction="#handleMessageFileLoad">
+                                             <tooltip>
+                                                <Tooltip text="Dateiinhalte laden." />
+                                             </tooltip>
+                                          </Button>
+                                          <Button fx:id="btnMessageFileSave" mnemonicParsing="false" onAction="#handleMessageFileSave">
+                                             <tooltip>
+                                                <Tooltip text="Inhalte in Datei speichern." />
+                                             </tooltip>
+                                          </Button>
+                                       </buttons>
+                                    </ButtonBar>
                                  </children>
-                              </HBox>
+                                 <GridPane.margin>
+                                    <Insets bottom="5.0" top="5.0" />
+                                 </GridPane.margin>
+                              </AnchorPane>
                            </children>
                         </GridPane>
                      </content>
