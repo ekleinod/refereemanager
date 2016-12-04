@@ -72,6 +72,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Separator;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -212,6 +213,15 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private TextField txtSignature;
+
+	/**
+	 * Label generated filename.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Label lblFilename;
 
 	/**
 	 * Textfield generated filename.
@@ -376,6 +386,42 @@ public class RefereeCommunicationController {
 	private TableView<Attachment> tblAttachments;
 
 	/**
+	 * Label output.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Label lblCommunicationOutput;
+
+	/**
+	 * Separator output.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Separator sepCommunicationOutput;
+
+	/**
+	 * Label output path.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Label lblCommunicationOutputPath;
+
+	/**
+	 * Text field output path.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TextField txtCommunicationOutputPath;
+
+	/**
 	 * Split pane.
 	 *
 	 * @version 0.10.0
@@ -469,6 +515,12 @@ public class RefereeCommunicationController {
 			Prefs.put(PrefKey.REFEREE_COMMUNICATION_FILE, newValue);
 		});
 
+		// output path
+		txtCommunicationOutputPath.setText(Prefs.get(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH));
+		txtCommunicationOutputPath.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+			Prefs.put(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH, newValue);
+		});
+
 		// icons
 		btnSend.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/mail-send.png")));
 		btnPrefs.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/configure.png")));
@@ -503,23 +555,39 @@ public class RefereeCommunicationController {
 			btnSend.setText((newValue == radEMail) ? "Senden" : "Erzeugen");
 		});
 
-		// input elements
-		lblOpening.visibleProperty().bind(radDocument.selectedProperty().not());
-		txtOpening.visibleProperty().bind(radDocument.selectedProperty().not());
-		lblOpening.managedProperty().bind(radDocument.selectedProperty().not());
-		txtOpening.managedProperty().bind(radDocument.selectedProperty().not());
-		lblClosing.visibleProperty().bind(radDocument.selectedProperty().not());
-		txtClosing.visibleProperty().bind(radDocument.selectedProperty().not());
-		lblClosing.managedProperty().bind(radDocument.selectedProperty().not());
-		txtClosing.managedProperty().bind(radDocument.selectedProperty().not());
-		lblSignature.visibleProperty().bind(radDocument.selectedProperty().not());
-		txtSignature.visibleProperty().bind(radDocument.selectedProperty().not());
-		lblSignature.managedProperty().bind(radDocument.selectedProperty().not());
-		txtSignature.managedProperty().bind(radDocument.selectedProperty().not());
-		
-		lblAttachments.visibleProperty().bind(radDocument.selectedProperty().not());
-		barAttachments.visibleProperty().bind(radDocument.selectedProperty().not());
-		tblAttachments.visibleProperty().bind(radDocument.selectedProperty().not());
+		// visible for emails and letters
+		lblOpening.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		lblOpening.managedProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		txtOpening.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		txtOpening.managedProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		lblClosing.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		lblClosing.managedProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		txtClosing.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		txtClosing.managedProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		lblSignature.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		lblSignature.managedProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		txtSignature.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		txtSignature.managedProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+
+		lblAttachments.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		barAttachments.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		tblAttachments.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+
+		// visible for letters and documents
+		lblFilename.visibleProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
+		lblFilename.managedProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
+		txtFilename.visibleProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
+		txtFilename.managedProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
+
+		// visible for documents
+		lblCommunicationOutput.visibleProperty().bind(radDocument.selectedProperty());
+		lblCommunicationOutput.managedProperty().bind(radDocument.selectedProperty());
+		sepCommunicationOutput.visibleProperty().bind(radDocument.selectedProperty());
+		sepCommunicationOutput.managedProperty().bind(radDocument.selectedProperty());
+		lblCommunicationOutputPath.visibleProperty().bind(radDocument.selectedProperty());
+		lblCommunicationOutputPath.managedProperty().bind(radDocument.selectedProperty());
+		txtCommunicationOutputPath.visibleProperty().bind(radDocument.selectedProperty());
+		txtCommunicationOutputPath.managedProperty().bind(radDocument.selectedProperty());
 
 		// attachment list
 		colFilename.setCellValueFactory(cellData -> cellData.getValue().getFilename());
@@ -999,7 +1067,7 @@ public class RefereeCommunicationController {
 								} else {
 									msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.fromString((String) mapFilled.get(DocumentDataVariable.DATE.value()))));
 								}
-								
+
 								msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
 
 								EMail theEMail = referee.getPrimaryEMail();

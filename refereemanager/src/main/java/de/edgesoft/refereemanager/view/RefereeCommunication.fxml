@@ -113,17 +113,17 @@
                                           <Insets />
                                        </GridPane.margin></Label>
                                     <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
-                                    <Label text="Generierter Dateiname" GridPane.rowIndex="10" />
-                                    <TextField fx:id="txtFilename" GridPane.columnIndex="1" GridPane.rowIndex="10">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" top="5.0" />
-                                       </GridPane.margin></TextField>
                                     <Label text="Datum" GridPane.rowIndex="9" />
                                     <TextField fx:id="txtDate" GridPane.columnIndex="1" GridPane.rowIndex="9">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" top="5.0" />
                                        </GridPane.margin>
                                     </TextField>
+                                    <Label fx:id="lblFilename" text="Generierter Dateiname" GridPane.rowIndex="10" />
+                                    <TextField fx:id="txtFilename" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </GridPane.margin></TextField>
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
@@ -171,10 +171,10 @@
                             <RowConstraints minHeight="10.0" valignment="BASELINE" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="Kommunikation" GridPane.columnSpan="2147483647">
@@ -196,6 +196,9 @@
                                     <RadioButton fx:id="radLetter" mnemonicParsing="false" text="Brief" toggleGroup="$grpCommKind" />
                                     <RadioButton fx:id="radDocument" mnemonicParsing="false" text="Dokument" toggleGroup="$grpCommKind" />
                                  </children>
+                                 <GridPane.margin>
+                                    <Insets bottom="5.0" top="5.0" />
+                                 </GridPane.margin>
                               </VBox>
                               <Label text="Nachrichtendatei" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
                                  <font>
@@ -229,6 +232,18 @@
                                     <Insets bottom="5.0" top="5.0" />
                                  </GridPane.margin>
                               </AnchorPane>
+                              <Label fx:id="lblCommunicationOutput" minHeight="30.0" text="Ausgabe" GridPane.columnSpan="2147483647" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Separator fx:id="sepCommunicationOutput" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="7" />
+                              <Label fx:id="lblCommunicationOutputPath" text="Ausgabepfad" GridPane.rowIndex="8" />
+                              <TextField fx:id="txtCommunicationOutputPath" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                 <GridPane.margin>
+                                    <Insets bottom="5.0" top="5.0" />
+                                 </GridPane.margin>
+                              </TextField>
                            </children>
                         </GridPane>
                      </content>
