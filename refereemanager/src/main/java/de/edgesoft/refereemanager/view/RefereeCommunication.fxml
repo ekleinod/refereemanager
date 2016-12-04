@@ -259,7 +259,7 @@
    <bottom>
       <ButtonBar prefHeight="40.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button fx:id="btnSend" onAction="#handleSend" text="Senden" />
+          <Button fx:id="btnSend" onAction="#handleSendCreate" text="Senden" />
             <Button fx:id="btnPrefs" onAction="#handlePrefs" text="Einstellungen..." />
         </buttons>
          <BorderPane.margin>

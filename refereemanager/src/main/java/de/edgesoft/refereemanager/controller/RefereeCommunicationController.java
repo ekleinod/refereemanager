@@ -630,7 +630,7 @@ public class RefereeCommunicationController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private void handleSend() {
+	private void handleSendCreate() {
 
 		Map<String, Object> mapDocData = new HashMap<>();
 		for (DocumentDataVariable theTemplateVariable : DocumentDataVariable.values()) {
@@ -669,6 +669,11 @@ public class RefereeCommunicationController {
 			}
 		}
 
+		Configuration tplConfig = new Configuration(Configuration.VERSION_2_3_25);
+		tplConfig.setDefaultEncoding(StandardCharsets.UTF_8.name());
+		tplConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+		tplConfig.setLogTemplateExceptions(false);
+
 		if (grpCommKind.getSelectedToggle() == radEMail) {
 
 			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
@@ -685,11 +690,17 @@ public class RefereeCommunicationController {
 					});
 
 			if (doSend.get()) {
-				sendEMail(mapDocData);
+				sendEMail(mapDocData, tplConfig);
 			}
 
+		} else if (grpCommKind.getSelectedToggle() == radDocument) {
+			createDocument(mapDocData, tplConfig);
 		} else {
-			System.out.println("#handleCreate");
+			AlertUtils.createAlert(AlertType.ERROR, appController.getPrimaryStage(),
+					"Unbekannte Aktion",
+					MessageFormat.format("Unbekannte Aktion ''{0}''.", ((RadioButton) grpCommKind.getSelectedToggle()).getText()),
+					null)
+			.showAndWait();
 		}
 
 	}
@@ -717,7 +728,9 @@ public class RefereeCommunicationController {
 
 		// initialize controller
 		PreferencesDialogController controller = pneLoad.getValue().getController();
-		controller.initController(appController, dialogStage, "tabCommunication");
+		controller.initController(appController, dialogStage,
+				(radEMail.isSelected()) ? "tabEMail" :
+					(radLetter.isSelected()) ? "tabEMail" : "tabDocuments");
 
 		// Show the dialog and wait until the user closes it
 		dialogStage.showAndWait();
@@ -997,13 +1010,15 @@ public class RefereeCommunicationController {
 	 * changes to including all recipients as BCC.
 	 *
 	 * @param theDocData document data
+	 * @param theConfig template configuration
 	 *
 	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
-	private void sendEMail(final Map<String, Object> theDocData) {
+	private void sendEMail(final Map<String, Object> theDocData, Configuration theConfig) {
 
 		Objects.requireNonNull(theDocData, "document data must not be null");
+		Objects.requireNonNull(theConfig, "template configuration must not be null");
 
 		try (StringWriter wrtProtocol = new StringWriter()) {
 
@@ -1027,13 +1042,8 @@ public class RefereeCommunicationController {
 						updateMessage("Lade Mail-Template.");
 						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.EMAIL_TEMPLATE_EMAIL));
 
-						Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
-						cfg.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
-						cfg.setDefaultEncoding(StandardCharsets.UTF_8.name());
-						cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-						cfg.setLogTemplateExceptions(false);
-
-						Template tplEMail = cfg.getTemplate(pathTemplateFile.getFileName().toString());
+						theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
+						Template tplEMail = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
 
 						// send email
 						Properties mailProps = new Properties();
@@ -1175,6 +1185,63 @@ public class RefereeCommunicationController {
             thread.start();
 
 		} catch (IOException e) {
+			RefereeManager.logger.error(e);
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Creates document.
+	 *
+	 * @param theDocData document data
+	 * @param theConfig template configuration
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	private void createDocument(final Map<String, Object> theDocData, Configuration theConfig) {
+
+		Objects.requireNonNull(theDocData, "document data must not be null");
+		Objects.requireNonNull(theConfig, "template configuration must not be null");
+
+		try (StringWriter wrtProtocol = new StringWriter()) {
+
+			RefereeManager.addAppender(wrtProtocol, "createDocument");
+
+			LocalTime tmeStart = LocalTime.now();
+			RefereeManager.logger.info("Start Dokumenterzeugung.");
+
+			// fill variables in generated content (todo)
+			Map<String, Object> mapFilled = theDocData;
+
+			// load document template
+			RefereeManager.logger.info("Lade Dokument-Template.");
+			Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
+			theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
+			Template tplDocument = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
+
+			// fill document template
+			Path pthOutFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH), (String) mapFilled.get(DocumentDataVariable.FILENAME));
+			try (StringWriter wrtContent = new StringWriter()) {
+				tplDocument.process(mapFilled, wrtContent);
+				FileAccess.writeFile(pthOutFile, wrtContent.toString());
+			}
+
+			RefereeManager.logger.info("Ende Mailsenden.");
+			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
+			RefereeManager.logger.info(MessageFormat.format("Dauer: {0}", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+
+			Alert alert = AlertUtils.createExpandableAlert(AlertType.INFORMATION, appController.getPrimaryStage(),
+					"Dokument erzeugen",
+					MessageFormat.format("Dokument ''{0}'' erzeugt", pthOutFile.toString()),
+					null,
+					"Details:",
+					wrtProtocol.toString());
+
+			alert.showAndWait();
+
+		} catch (IOException | TemplateException e) {
 			RefereeManager.logger.error(e);
 			e.printStackTrace();
 		}
