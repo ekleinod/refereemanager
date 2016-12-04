@@ -223,6 +223,15 @@ public class RefereeCommunicationController {
 	private TextField txtFilename;
 
 	/**
+	 * Textfield date.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TextField txtDate;
+
+	/**
 	 * Textfield message file.
 	 *
 	 * @version 0.10.0
@@ -549,7 +558,7 @@ public class RefereeCommunicationController {
 	/**
 	 * Send email or create letter/document.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
@@ -566,28 +575,28 @@ public class RefereeCommunicationController {
 					});
 					break;
 				case BODY:
-					mapDocData.put(theTemplateVariable.value(), txtBody.getText());
+					mapDocData.put(theTemplateVariable.value(), txtBody.getText().trim());
 					break;
 				case CLOSING:
-					mapDocData.put(theTemplateVariable.value(), txtClosing.getText());
+					mapDocData.put(theTemplateVariable.value(), txtClosing.getText().trim());
 					break;
 				case DATE:
-					mapDocData.put(theTemplateVariable.value(), LocalDateTime.now());
+					mapDocData.put(theTemplateVariable.value(), txtDate.getText().trim().isEmpty() ? LocalDateTime.now() : txtDate.getText().trim());
 					break;
 				case FILENAME:
-					mapDocData.put(theTemplateVariable.value(), txtFilename.getText());
+					mapDocData.put(theTemplateVariable.value(), txtFilename.getText().trim());
 					break;
 				case OPENING:
-					mapDocData.put(theTemplateVariable.value(), txtOpening.getText());
+					mapDocData.put(theTemplateVariable.value(), txtOpening.getText().trim());
 					break;
 				case SIGNATURE:
-					mapDocData.put(theTemplateVariable.value(), txtSignature.getText());
+					mapDocData.put(theTemplateVariable.value(), txtSignature.getText().trim());
 					break;
 				case SUBTITLE:
-					mapDocData.put(theTemplateVariable.value(), txtSubtitle.getText());
+					mapDocData.put(theTemplateVariable.value(), txtSubtitle.getText().trim());
 					break;
 				case SUBJECT:
-					mapDocData.put(theTemplateVariable.value(), txtTitle.getText());
+					mapDocData.put(theTemplateVariable.value(), txtTitle.getText().trim());
 					break;
 			}
 		}
@@ -705,6 +714,7 @@ public class RefereeCommunicationController {
 				tblAttachments.getItems().clear();
 				txtBody.setText(null);
 				txtClosing.setText(null);
+				txtDate.setText(null);
 				txtFilename.setText(null);
 				txtOpening.setText(null);
 				txtSignature.setText(null);
@@ -753,7 +763,7 @@ public class RefereeCommunicationController {
 										txtClosing.setText(theLineContent);
 										break;
 									case DATE:
-										// not used for now, always "now"
+										txtDate.setText(theLineContent);
 										break;
 									case FILENAME:
 										txtFilename.setText(theLineContent);
@@ -984,7 +994,12 @@ public class RefereeCommunicationController {
 								Message msgMail = new MimeMessage(session);
 								msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM_EMAIL), Prefs.get(PrefKey.EMAIL_FROM_NAME), StandardCharsets.UTF_8.name()));
 
-								msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE.value())));
+								if (mapFilled.get(DocumentDataVariable.DATE.value()) instanceof LocalDateTime) {
+									msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE.value())));
+								} else {
+									msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.fromString((String) mapFilled.get(DocumentDataVariable.DATE.value()))));
+								}
+								
 								msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
 
 								EMail theEMail = referee.getPrimaryEMail();
