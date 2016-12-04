@@ -128,12 +128,12 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                         </ScrollPane>
-                        <Label prefHeight="25.0" text="Attachments" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="5.0">
+                        <Label fx:id="lblAttachments" prefHeight="25.0" text="Attachments" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="5.0">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <ButtonBar buttonMinWidth="16.0" AnchorPane.bottomAnchor="160.0" AnchorPane.rightAnchor="5.0">
+                        <ButtonBar fx:id="barAttachments" buttonMinWidth="16.0" AnchorPane.bottomAnchor="160.0" AnchorPane.rightAnchor="5.0">
                            <buttons>
                               <Button fx:id="btnAttachmentAdd" mnemonicParsing="false" onAction="#handleAttachmentAdd" />
                               <Button fx:id="btnAttachmentEdit" mnemonicParsing="false" onAction="#handleAttachmentEdit" />

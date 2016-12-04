@@ -67,6 +67,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -312,6 +313,24 @@ public class RefereeCommunicationController {
 	private Button btnPrefs;
 
 	/**
+	 * Label attachments.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Label lblAttachments;
+
+	/**
+	 * Buttonbar attachments.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private ButtonBar barAttachments;
+
+	/**
 	 * Attachment add button.
 	 *
 	 * @version 0.10.0
@@ -488,6 +507,10 @@ public class RefereeCommunicationController {
 		txtSignature.visibleProperty().bind(radDocument.selectedProperty().not());
 		lblSignature.managedProperty().bind(radDocument.selectedProperty().not());
 		txtSignature.managedProperty().bind(radDocument.selectedProperty().not());
+		
+		lblAttachments.visibleProperty().bind(radDocument.selectedProperty().not());
+		barAttachments.visibleProperty().bind(radDocument.selectedProperty().not());
+		tblAttachments.visibleProperty().bind(radDocument.selectedProperty().not());
 
 		// attachment list
 		colFilename.setCellValueFactory(cellData -> cellData.getValue().getFilename());
