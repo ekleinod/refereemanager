@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -632,39 +633,57 @@ public class RefereeCommunicationController {
 	@FXML
 	private void handleSendCreate() {
 
-		Map<String, Object> mapDocData = new HashMap<>();
+		Map<DocumentDataVariable, Object> mapDocData = new HashMap<>();
 		for (DocumentDataVariable theTemplateVariable : DocumentDataVariable.values()) {
 
 			switch (theTemplateVariable) {
 				case ATTACHMENT:
 					tblAttachments.getItems().forEach(attachment -> {
-						mapDocData.putIfAbsent(theTemplateVariable.value(), new ArrayList<>());
-						((List<Attachment>) mapDocData.get(theTemplateVariable.value())).add(attachment);
+						mapDocData.putIfAbsent(theTemplateVariable, new ArrayList<>());
+						((List<Attachment>) mapDocData.get(theTemplateVariable)).add(attachment);
 					});
 					break;
 				case BODY:
-					mapDocData.put(theTemplateVariable.value(), txtBody.getText().trim());
+					if ((txtBody.getText() != null) && !txtBody.getText().trim().isEmpty()) {
+						mapDocData.put(theTemplateVariable, txtBody.getText().trim());
+					}
 					break;
 				case CLOSING:
-					mapDocData.put(theTemplateVariable.value(), txtClosing.getText().trim());
+					if ((txtClosing.getText() != null) && !txtClosing.getText().trim().isEmpty()) {
+						mapDocData.put(theTemplateVariable, txtClosing.getText().trim());
+					}
 					break;
 				case DATE:
-					mapDocData.put(theTemplateVariable.value(), txtDate.getText().trim().isEmpty() ? LocalDateTime.now() : txtDate.getText().trim());
+					if ((txtDate.getText() != null) && !txtDate.getText().trim().isEmpty()) {
+						mapDocData.put(theTemplateVariable, txtDate.getText().trim());
+					} else {
+						mapDocData.put(theTemplateVariable, LocalDateTime.now());
+					}
 					break;
 				case FILENAME:
-					mapDocData.put(theTemplateVariable.value(), txtFilename.getText().trim());
+					if ((txtFilename.getText() != null) && !txtFilename.getText().trim().isEmpty()) {
+						mapDocData.put(theTemplateVariable, txtFilename.getText().trim());
+					}
 					break;
 				case OPENING:
-					mapDocData.put(theTemplateVariable.value(), txtOpening.getText().trim());
+					if ((txtOpening.getText() != null) && !txtOpening.getText().trim().isEmpty()) {
+						mapDocData.put(theTemplateVariable, txtOpening.getText().trim());
+					}
 					break;
 				case SIGNATURE:
-					mapDocData.put(theTemplateVariable.value(), txtSignature.getText().trim());
+					if ((txtSignature.getText() != null) && !txtSignature.getText().trim().isEmpty()) {
+						mapDocData.put(theTemplateVariable, txtSignature.getText().trim());
+					}
 					break;
 				case SUBTITLE:
-					mapDocData.put(theTemplateVariable.value(), txtSubtitle.getText().trim());
+					if ((txtSubtitle.getText() != null) && !txtSubtitle.getText().trim().isEmpty()) {
+						mapDocData.put(theTemplateVariable, txtSubtitle.getText().trim());
+					}
 					break;
 				case SUBJECT:
-					mapDocData.put(theTemplateVariable.value(), txtTitle.getText().trim());
+					if ((txtTitle.getText() != null) && !txtTitle.getText().trim().isEmpty()) {
+						mapDocData.put(theTemplateVariable, txtTitle.getText().trim());
+					}
 					break;
 			}
 		}
@@ -1015,7 +1034,7 @@ public class RefereeCommunicationController {
 	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
-	private void sendEMail(final Map<String, Object> theDocData, Configuration theConfig) {
+	private void sendEMail(final Map<DocumentDataVariable, Object> theDocData, Configuration theConfig) {
 
 		Objects.requireNonNull(theDocData, "document data must not be null");
 		Objects.requireNonNull(theConfig, "template configuration must not be null");
@@ -1040,7 +1059,7 @@ public class RefereeCommunicationController {
 
 						// load email template
 						updateMessage("Lade Mail-Template.");
-						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.EMAIL_TEMPLATE_EMAIL));
+						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.EMAIL_TEMPLATE_EMAIL));
 
 						theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
 						Template tplEMail = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
@@ -1065,20 +1084,20 @@ public class RefereeCommunicationController {
 							updateMessage(MessageFormat.format("Mail an ''{0}''.", referee.getDisplayTitle().get()));
 
 							// fill variables in generated content (todo)
-							Map<String, Object> mapFilled = theDocData;
+							Map<DocumentDataVariable, Object> mapFilled = theDocData;
 
 							try {
 
 								Message msgMail = new MimeMessage(session);
 								msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM_EMAIL), Prefs.get(PrefKey.EMAIL_FROM_NAME), StandardCharsets.UTF_8.name()));
 
-								if (mapFilled.get(DocumentDataVariable.DATE.value()) instanceof LocalDateTime) {
-									msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE.value())));
+								if (mapFilled.get(DocumentDataVariable.DATE) instanceof LocalDateTime) {
+									msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE)));
 								} else {
-									msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.fromString((String) mapFilled.get(DocumentDataVariable.DATE.value()))));
+									msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.fromString((String) mapFilled.get(DocumentDataVariable.DATE))));
 								}
 
-								msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
+								msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT));
 
 								EMail theEMail = referee.getPrimaryEMail();
 								msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().get(), referee.getFullName().get(), StandardCharsets.UTF_8.name()));
@@ -1094,8 +1113,8 @@ public class RefereeCommunicationController {
 
 								msgMail.setContent(msgContent);
 
-								if (mapFilled.containsKey(DocumentDataVariable.ATTACHMENT.value())) {
-									for (Attachment theAttachment : (List<Attachment>) mapFilled.get(DocumentDataVariable.ATTACHMENT.value())) {
+								if (mapFilled.containsKey(DocumentDataVariable.ATTACHMENT)) {
+									for (Attachment theAttachment : (List<Attachment>) mapFilled.get(DocumentDataVariable.ATTACHMENT)) {
 										Path attachment = Paths.get(theAttachment.getFilename().get());
 
 										BodyPart bpAttachment = new MimeBodyPart();
@@ -1200,49 +1219,59 @@ public class RefereeCommunicationController {
 	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
-	private void createDocument(final Map<String, Object> theDocData, Configuration theConfig) {
+	private void createDocument(final Map<DocumentDataVariable, Object> theDocData, Configuration theConfig) {
 
 		Objects.requireNonNull(theDocData, "document data must not be null");
 		Objects.requireNonNull(theConfig, "template configuration must not be null");
 
+		
 		try (StringWriter wrtProtocol = new StringWriter()) {
-
+			
 			RefereeManager.addAppender(wrtProtocol, "createDocument");
 
 			LocalTime tmeStart = LocalTime.now();
 			RefereeManager.logger.info("Start Dokumenterzeugung.");
-
-			// fill variables in generated content (todo)
-			Map<String, Object> mapFilled = theDocData;
-
-			// load document template
-			RefereeManager.logger.info("Lade Dokument-Template.");
-			Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATH_TEMPLATES), Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
-			theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
-			Template tplDocument = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
-
-			// fill document template
-			Path pthOutFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH), (String) mapFilled.get(DocumentDataVariable.FILENAME));
-			try (StringWriter wrtContent = new StringWriter()) {
-				tplDocument.process(mapFilled, wrtContent);
-				FileAccess.writeFile(pthOutFile, wrtContent.toString());
+			
+			Optional<String> sCreated = Optional.empty();
+			
+			try {
+	
+				// fill variables in generated content (todo)
+				Map<DocumentDataVariable, Object> mapFilled = theDocData;
+	
+				// load document template
+				Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
+				RefereeManager.logger.info(MessageFormat.format("Lade Dokument-Template ''{0}''.", pathTemplateFile.toAbsolutePath().toString()));
+				theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
+				Template tplDocument = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
+	
+				// fill document template
+				Path pathOutFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH), (String) mapFilled.get(DocumentDataVariable.FILENAME));
+				try (StringWriter wrtContent = new StringWriter()) {
+					tplDocument.process(mapFilled, wrtContent);
+					FileAccess.writeFile(pathOutFile, wrtContent.toString());
+				}
+				sCreated = Optional.of(pathOutFile.toAbsolutePath().toString());
+	
+			} catch (IOException | TemplateException e) {
+				RefereeManager.logger.error(e);
+				e.printStackTrace();
 			}
-
-			RefereeManager.logger.info("Ende Mailsenden.");
+			
+			RefereeManager.logger.info("Ende Dokumenterzeugung.");
 			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
 			RefereeManager.logger.info(MessageFormat.format("Dauer: {0}", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
-
+			
 			Alert alert = AlertUtils.createExpandableAlert(AlertType.INFORMATION, appController.getPrimaryStage(),
 					"Dokument erzeugen",
-					MessageFormat.format("Dokument ''{0}'' erzeugt", pthOutFile.toString()),
-					null,
-					"Details:",
-					wrtProtocol.toString());
-
+					sCreated.isPresent() ? MessageFormat.format("Dokument ''{0}'' erzeugt", sCreated.get()) : "Kein Dokument erzeugt",
+							null,
+							"Details:",
+							wrtProtocol.toString());
+			
 			alert.showAndWait();
-
-		} catch (IOException | TemplateException e) {
-			RefereeManager.logger.error(e);
+			
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
