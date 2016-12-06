@@ -32,7 +32,7 @@ import javafx.beans.property.SimpleStringProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.5.0
  */
 public class PersonModel extends Person {
@@ -111,28 +111,28 @@ public class PersonModel extends Person {
 	 *
 	 * @return table name of the person
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.5.0
 	 */
 		public SimpleStringProperty getTableName() {
 			StringBuilder sbReturn = new StringBuilder();
 
 		if ((getName() != null) && !getName().get().isEmpty()) {
-			sbReturn.append(getName());
+			sbReturn.append(getName().get());
 		}
 
 		if ((getTitle() != null) && !getTitle().get().isEmpty()) {
 			if (sbReturn.length() > 0) {
 				sbReturn.append(", ");
 			}
-			sbReturn.append(getTitle());
+			sbReturn.append(getTitle().get());
 		}
 
 		if ((getFirstName() != null) && !getFirstName().get().isEmpty()) {
 			if (sbReturn.length() > 0) {
 				sbReturn.append(", ");
 			}
-			sbReturn.append(getFirstName());
+			sbReturn.append(getFirstName().get());
 		}
 
 		return new SimpleStringProperty(sbReturn.toString());
