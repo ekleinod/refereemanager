@@ -2,6 +2,7 @@ package de.edgesoft.refereemanager.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -633,56 +634,56 @@ public class RefereeCommunicationController {
 	@FXML
 	private void handleSendCreate() {
 
-		Map<DocumentDataVariable, Object> mapDocData = new HashMap<>();
+		Map<String, Object> mapDocData = new HashMap<>();
 		for (DocumentDataVariable theTemplateVariable : DocumentDataVariable.values()) {
 
 			switch (theTemplateVariable) {
 				case ATTACHMENT:
 					tblAttachments.getItems().forEach(attachment -> {
-						mapDocData.putIfAbsent(theTemplateVariable, new ArrayList<>());
-						((List<Attachment>) mapDocData.get(theTemplateVariable)).add(attachment);
+						mapDocData.putIfAbsent(theTemplateVariable.value(), new ArrayList<>());
+						((List<Attachment>) mapDocData.get(theTemplateVariable.value())).add(attachment);
 					});
 					break;
 				case BODY:
 					if ((txtBody.getText() != null) && !txtBody.getText().trim().isEmpty()) {
-						mapDocData.put(theTemplateVariable, txtBody.getText().trim());
+						mapDocData.put(theTemplateVariable.value(), txtBody.getText().trim());
 					}
 					break;
 				case CLOSING:
 					if ((txtClosing.getText() != null) && !txtClosing.getText().trim().isEmpty()) {
-						mapDocData.put(theTemplateVariable, txtClosing.getText().trim());
+						mapDocData.put(theTemplateVariable.value(), txtClosing.getText().trim());
 					}
 					break;
 				case DATE:
 					if ((txtDate.getText() != null) && !txtDate.getText().trim().isEmpty()) {
-						mapDocData.put(theTemplateVariable, txtDate.getText().trim());
+						mapDocData.put(theTemplateVariable.value(), txtDate.getText().trim());
 					} else {
-						mapDocData.put(theTemplateVariable, LocalDateTime.now());
+						mapDocData.put(theTemplateVariable.value(), LocalDateTime.now());
 					}
 					break;
 				case FILENAME:
 					if ((txtFilename.getText() != null) && !txtFilename.getText().trim().isEmpty()) {
-						mapDocData.put(theTemplateVariable, txtFilename.getText().trim());
+						mapDocData.put(theTemplateVariable.value(), txtFilename.getText().trim());
 					}
 					break;
 				case OPENING:
 					if ((txtOpening.getText() != null) && !txtOpening.getText().trim().isEmpty()) {
-						mapDocData.put(theTemplateVariable, txtOpening.getText().trim());
+						mapDocData.put(theTemplateVariable.value(), txtOpening.getText().trim());
 					}
 					break;
 				case SIGNATURE:
 					if ((txtSignature.getText() != null) && !txtSignature.getText().trim().isEmpty()) {
-						mapDocData.put(theTemplateVariable, txtSignature.getText().trim());
+						mapDocData.put(theTemplateVariable.value(), txtSignature.getText().trim());
 					}
 					break;
 				case SUBTITLE:
 					if ((txtSubtitle.getText() != null) && !txtSubtitle.getText().trim().isEmpty()) {
-						mapDocData.put(theTemplateVariable, txtSubtitle.getText().trim());
+						mapDocData.put(theTemplateVariable.value(), txtSubtitle.getText().trim());
 					}
 					break;
 				case SUBJECT:
 					if ((txtTitle.getText() != null) && !txtTitle.getText().trim().isEmpty()) {
-						mapDocData.put(theTemplateVariable, txtTitle.getText().trim());
+						mapDocData.put(theTemplateVariable.value(), txtTitle.getText().trim());
 					}
 					break;
 			}
@@ -1034,7 +1035,7 @@ public class RefereeCommunicationController {
 	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
-	private void sendEMail(final Map<DocumentDataVariable, Object> theDocData, Configuration theConfig) {
+	private void sendEMail(final Map<String, Object> theDocData, Configuration theConfig) {
 
 		Objects.requireNonNull(theDocData, "document data must not be null");
 		Objects.requireNonNull(theConfig, "template configuration must not be null");
@@ -1084,20 +1085,20 @@ public class RefereeCommunicationController {
 							updateMessage(MessageFormat.format("Mail an ''{0}''.", referee.getDisplayTitle().get()));
 
 							// fill variables in generated content (todo)
-							Map<DocumentDataVariable, Object> mapFilled = theDocData;
+							Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig);
 
 							try {
 
 								Message msgMail = new MimeMessage(session);
 								msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM_EMAIL), Prefs.get(PrefKey.EMAIL_FROM_NAME), StandardCharsets.UTF_8.name()));
 
-								if (mapFilled.get(DocumentDataVariable.DATE) instanceof LocalDateTime) {
-									msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE)));
+								if (mapFilled.get(DocumentDataVariable.DATE.value()) instanceof LocalDateTime) {
+									msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE.value())));
 								} else {
-									msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.fromString((String) mapFilled.get(DocumentDataVariable.DATE))));
+									msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.fromString((String) mapFilled.get(DocumentDataVariable.DATE.value()))));
 								}
 
-								msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT));
+								msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
 
 								EMail theEMail = referee.getPrimaryEMail();
 								msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().get(), referee.getFullName().get(), StandardCharsets.UTF_8.name()));
@@ -1113,8 +1114,8 @@ public class RefereeCommunicationController {
 
 								msgMail.setContent(msgContent);
 
-								if (mapFilled.containsKey(DocumentDataVariable.ATTACHMENT)) {
-									for (Attachment theAttachment : (List<Attachment>) mapFilled.get(DocumentDataVariable.ATTACHMENT)) {
+								if (mapFilled.containsKey(DocumentDataVariable.ATTACHMENT.value())) {
+									for (Attachment theAttachment : (List<Attachment>) mapFilled.get(DocumentDataVariable.ATTACHMENT.value())) {
 										Path attachment = Paths.get(theAttachment.getFilename().get());
 
 										BodyPart bpAttachment = new MimeBodyPart();
@@ -1219,7 +1220,7 @@ public class RefereeCommunicationController {
 	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
-	private void createDocument(final Map<DocumentDataVariable, Object> theDocData, Configuration theConfig) {
+	private void createDocument(final Map<String, Object> theDocData, Configuration theConfig) {
 
 		Objects.requireNonNull(theDocData, "document data must not be null");
 		Objects.requireNonNull(theConfig, "template configuration must not be null");
@@ -1237,7 +1238,7 @@ public class RefereeCommunicationController {
 			try {
 	
 				// fill variables in generated content (todo)
-				Map<DocumentDataVariable, Object> mapFilled = theDocData;
+				Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig);
 	
 				// load document template
 				Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
@@ -1246,7 +1247,7 @@ public class RefereeCommunicationController {
 				Template tplDocument = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
 	
 				// fill document template
-				Path pathOutFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH), (String) mapFilled.get(DocumentDataVariable.FILENAME));
+				Path pathOutFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH), (String) mapFilled.get(DocumentDataVariable.FILENAME.value()));
 				try (StringWriter wrtContent = new StringWriter()) {
 					tplDocument.process(mapFilled, wrtContent);
 					FileAccess.writeFile(pathOutFile, wrtContent.toString());
@@ -1275,6 +1276,45 @@ public class RefereeCommunicationController {
 			e.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * Fills document data.
+	 *
+	 * @param theDocData document data
+	 * @return filled document data
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	private Map<String, Object> fillDocumentData(final Map<String, Object> theDocData, Configuration theConfig) {
+		Map<String, Object> mapReturn = new HashMap<>();
+		
+		Map<String, Object> mapData = new HashMap<>();
+		mapData.put("today", DateTimeUtils.toDate(LocalDateTime.now()));
+		mapData.put("documentdata", theDocData);
+		mapData.put("refdata", AppModel.getData());
+		mapData.put("refs", ctlRefList.getSelectionModel().getSelectedItems());
+		
+		theDocData.forEach((key, value) -> {
+			if (value instanceof String) {
+				String sFilled = (String) value;
+				try {
+					Template tplTemp = new Template(key, new StringReader(sFilled), theConfig);
+					try (StringWriter wrtContent = new StringWriter()) {
+						tplTemp.process(mapData, wrtContent);
+						sFilled = wrtContent.toString();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				mapReturn.put(key, sFilled);
+			} else {
+				mapReturn.put(key, value);
+			}
+		});
+		
+		return mapReturn;
 	}
 
 }
