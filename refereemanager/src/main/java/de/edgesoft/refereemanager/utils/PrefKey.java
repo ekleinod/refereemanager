@@ -64,7 +64,7 @@ public enum PrefKey {
 	LOCALE,
 
 	PATH,
-	
+
 	PREFERENCES_FILE,
 
 	REFEREE_COMMUNICATION_FILE,
@@ -83,27 +83,29 @@ public enum PrefKey {
 
 	TEMPLATE_PATH,
 
+	TEXTS_TEMPLATE_TEXT,
+
 	TITLE_FULLPATH,
 	;
 
-		private final String value;
+	private final String value;
 
-		PrefKey() {
-				value = name().toLowerCase();
-		}
+	PrefKey() {
+		value = name().toLowerCase();
+	}
 
-		public String value() {
-				return value;
-		}
+	public String value() {
+			return value;
+	}
 
-		public static PrefKey fromValue(String v) {
-				for (PrefKey c: PrefKey.values()) {
-						if (c.value.equals(v)) {
-								return c;
-						}
-				}
-				throw new IllegalArgumentException(v);
+	public static PrefKey fromValue(String v) {
+		for (PrefKey c: PrefKey.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
 		}
+		throw new IllegalArgumentException(v);
+	}
 
 }
 

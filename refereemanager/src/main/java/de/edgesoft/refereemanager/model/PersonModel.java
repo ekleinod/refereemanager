@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Person;
+import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -70,9 +71,9 @@ public class PersonModel extends Person {
 	 * @since 0.8.0
 	 */
 	@Override
-		public SimpleStringProperty getDisplayTitle() {
-			return getFullName();
-		}
+	public SimpleStringProperty getDisplayTitle() {
+		return getFullName();
+	}
 
 	/**
 	 * Full name of person.
@@ -82,8 +83,8 @@ public class PersonModel extends Person {
 	 * @version 0.10.0
 	 * @since 0.5.0
 	 */
-		public SimpleStringProperty getFullName() {
-			StringBuilder sbReturn = new StringBuilder();
+	public SimpleStringProperty getFullName() {
+		StringBuilder sbReturn = new StringBuilder();
 
 		if ((getTitle() != null) && !getTitle().get().isEmpty()) {
 			sbReturn.append(getTitle().get());
@@ -104,7 +105,7 @@ public class PersonModel extends Person {
 		}
 
 		return new SimpleStringProperty(sbReturn.toString());
-		}
+	}
 
 	/**
 	 * Table name of person.
@@ -114,8 +115,8 @@ public class PersonModel extends Person {
 	 * @version 0.12.0
 	 * @since 0.5.0
 	 */
-		public SimpleStringProperty getTableName() {
-			StringBuilder sbReturn = new StringBuilder();
+	public SimpleStringProperty getTableName() {
+		StringBuilder sbReturn = new StringBuilder();
 
 		if ((getName() != null) && !getName().get().isEmpty()) {
 			sbReturn.append(getName().get());
@@ -136,7 +137,7 @@ public class PersonModel extends Person {
 		}
 
 		return new SimpleStringProperty(sbReturn.toString());
-		}
+	}
 
 	/**
 	 * Filename name of person.
@@ -146,8 +147,8 @@ public class PersonModel extends Person {
 	 * @version 0.10.0
 	 * @since 0.8.0
 	 */
-		public SimpleStringProperty getFileName() {
-			StringBuilder sbReturn = new StringBuilder();
+	public SimpleStringProperty getFileName() {
+		StringBuilder sbReturn = new StringBuilder();
 
 		if ((getName() != null) && !getName().get().isEmpty()) {
 			sbReturn.append(getName().get().toLowerCase());
@@ -161,7 +162,7 @@ public class PersonModel extends Person {
 		}
 
 		return new SimpleStringProperty(sbReturn.toString());
-		}
+	}
 
 	/**
 	 * Primary address.
@@ -171,13 +172,13 @@ public class PersonModel extends Person {
 	 * @version 0.6.0
 	 * @since 0.6.0
 	 */
-		public Address getPrimaryAddress() {
-			return getAddress()
-					.stream()
-					.filter(ContactModel.ISPRIMARY)
-					.findFirst()
-					.orElse(null);
-		}
+	public Address getPrimaryAddress() {
+		return getAddress()
+				.stream()
+				.filter(ContactModel.ISPRIMARY)
+				.findFirst()
+				.orElse(null);
+	}
 
 	/**
 	 * Primary email.
@@ -187,13 +188,29 @@ public class PersonModel extends Person {
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-		public EMail getPrimaryEMail() {
-			return getEMail()
-					.stream()
-					.filter(ContactModel.ISPRIMARY)
-					.findFirst()
-					.orElse(null);
-		}
+	public EMail getPrimaryEMail() {
+		return getEMail()
+				.stream()
+				.filter(ContactModel.ISPRIMARY)
+				.findFirst()
+				.orElse(null);
+	}
+
+	/**
+	 * Primary phone number.
+	 *
+	 * @return primary phone number
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public PhoneNumber getPrimaryPhoneNumber() {
+		return getPhoneNumber()
+				.stream()
+				.filter(ContactModel.ISPRIMARY)
+				.findFirst()
+				.orElse(null);
+	}
 
 }
 

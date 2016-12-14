@@ -51,7 +51,7 @@
                                     <RowConstraints vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="Titel" GridPane.rowIndex="2">
+                                    <Label fx:id="lblTitle" text="Titel" GridPane.rowIndex="2">
                                        <font>
                                           <Font name="System Bold" />
                                        </font></Label>
@@ -108,12 +108,12 @@
                                        <GridPane.margin>
                                           <Insets bottom="5.0" top="5.0" />
                                        </GridPane.margin></TextField>
-                                    <Label text="Untertitel" GridPane.rowIndex="3">
+                                    <Label fx:id="lblSubtitle" text="Untertitel" GridPane.rowIndex="3">
                                        <GridPane.margin>
                                           <Insets />
                                        </GridPane.margin></Label>
                                     <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
-                                    <Label text="Datum" GridPane.rowIndex="9" />
+                                    <Label fx:id="lblDate" text="Datum" GridPane.rowIndex="9" />
                                     <TextField fx:id="txtDate" GridPane.columnIndex="1" GridPane.rowIndex="9">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" top="5.0" />
@@ -196,6 +196,7 @@
                                     </RadioButton>
                                     <RadioButton fx:id="radLetter" mnemonicParsing="false" text="Brief" toggleGroup="$grpCommKind" />
                                     <RadioButton fx:id="radDocument" mnemonicParsing="false" text="Dokument" toggleGroup="$grpCommKind" />
+                                    <RadioButton fx:id="radText" mnemonicParsing="false" text="Text" toggleGroup="$grpCommKind" />
                                  </children>
                                  <GridPane.margin>
                                     <Insets bottom="5.0" top="5.0" />

@@ -136,6 +136,15 @@ public class RefereeCommunicationController {
 	public static final String ATTACHMENT_SEPARATOR = "::";
 
 	/**
+	 * Label title.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Label lblTitle;
+
+	/**
 	 * Textfield title.
 	 *
 	 * @version 0.10.0
@@ -143,6 +152,15 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private TextField txtTitle;
+
+	/**
+	 * Label subtitle.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Label lblSubtitle;
 
 	/**
 	 * Textfield subtitle.
@@ -235,6 +253,15 @@ public class RefereeCommunicationController {
 	private TextField txtFilename;
 
 	/**
+	 * Label date.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Label lblDate;
+
+	/**
 	 * Textfield date.
 	 *
 	 * @version 0.12.0
@@ -305,6 +332,15 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private RadioButton radDocument;
+
+	/**
+	 * Radio button text.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private RadioButton radText;
 
 	/**
 	 * Toggle group communication kind.
@@ -554,17 +590,28 @@ public class RefereeCommunicationController {
 		// enabling buttons
 		btnSend.disableProperty().bind(
 				ctlRefList.getSelectionModel().selectedItemProperty().isNull()
-				.or(txtTitle.textProperty().isEmpty())
 				.or(txtBody.textProperty().isEmpty())
 				.or(
-						radDocument.selectedProperty().not()
+						radEMail.selectedProperty().or(radLetter.selectedProperty())
 						.and(
 								txtOpening.textProperty().isEmpty()
 								.or(txtClosing.textProperty().isEmpty())
 								.or(txtSignature.textProperty().isEmpty())
-								)
 						)
-				);
+				)
+				.or(
+						radText.selectedProperty().not()
+						.and(
+								txtTitle.textProperty().isEmpty()
+						)
+				)
+				.or(
+						radText.selectedProperty().or(radDocument.selectedProperty())
+						.and(
+								txtFilename.textProperty().isEmpty()
+						)
+				)
+		);
 		btnMessageFileLoad.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
 		btnMessageFileSave.disableProperty().bind(txtCommunicationFile.textProperty().isEmpty());
 		btnAttachmentEdit.disableProperty().bind(tblAttachments.getSelectionModel().selectedItemProperty().isNull());
@@ -575,45 +622,61 @@ public class RefereeCommunicationController {
 			btnSend.setText((newValue == radEMail) ? "Senden" : "Erzeugen");
 		});
 
-		// visible for emails and letters
-		lblOpening.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		lblOpening.managedProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		txtOpening.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		txtOpening.managedProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		lblClosing.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		lblClosing.managedProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		txtClosing.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		txtClosing.managedProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		lblSignature.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		lblSignature.managedProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		txtSignature.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		txtSignature.managedProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		// visible for emails, letters, and documents
+		txtTitle.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()).or(radDocument.selectedProperty()));
+		txtTitle.managedProperty().bind(txtTitle.visibleProperty());
+		lblTitle.visibleProperty().bind(txtTitle.visibleProperty());
+		lblTitle.managedProperty().bind(txtTitle.visibleProperty());
+		txtSubtitle.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()).or(radDocument.selectedProperty()));
+		txtSubtitle.managedProperty().bind(txtSubtitle.visibleProperty());
+		lblSubtitle.visibleProperty().bind(txtSubtitle.visibleProperty());
+		lblSubtitle.managedProperty().bind(txtSubtitle.visibleProperty());
+		txtDate.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()).or(radDocument.selectedProperty()));
+		txtDate.managedProperty().bind(txtDate.visibleProperty());
+		lblDate.visibleProperty().bind(txtDate.visibleProperty());
+		lblDate.managedProperty().bind(txtDate.visibleProperty());
 
-		lblAttachments.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		barAttachments.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		// visible for emails and letters
+		txtOpening.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		txtOpening.managedProperty().bind(txtOpening.visibleProperty());
+		lblOpening.visibleProperty().bind(txtOpening.visibleProperty());
+		lblOpening.managedProperty().bind(txtOpening.visibleProperty());
+		txtClosing.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		txtClosing.managedProperty().bind(txtClosing.visibleProperty());
+		lblClosing.visibleProperty().bind(txtClosing.visibleProperty());
+		lblClosing.managedProperty().bind(txtClosing.visibleProperty());
+		txtSignature.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		txtSignature.managedProperty().bind(txtSignature.visibleProperty());
+		lblSignature.visibleProperty().bind(txtSignature.visibleProperty());
+		lblSignature.managedProperty().bind(txtSignature.visibleProperty());
+
 		tblAttachments.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
+		lblAttachments.visibleProperty().bind(tblAttachments.visibleProperty());
+		barAttachments.visibleProperty().bind(tblAttachments.visibleProperty());
+
+		// visible for documents and texts
+		txtCommunicationOutputPath.visibleProperty().bind(radDocument.selectedProperty().or(radText.selectedProperty()));
+		txtCommunicationOutputPath.managedProperty().bind(txtCommunicationOutputPath.visibleProperty());
+		lblCommunicationOutputPath.visibleProperty().bind(txtCommunicationOutputPath.visibleProperty());
+		lblCommunicationOutputPath.managedProperty().bind(txtCommunicationOutputPath.visibleProperty());
 
 		// visible for letters and documents
-		lblFilename.visibleProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
-		lblFilename.managedProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
-		txtFilename.visibleProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
-		txtFilename.managedProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
-		lblOptions.visibleProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
-		lblOptions.managedProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
 		txtOptions.visibleProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
-		txtOptions.managedProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
+		txtOptions.managedProperty().bind(txtOptions.visibleProperty());
+		lblOptions.visibleProperty().bind(txtOptions.visibleProperty());
+		lblOptions.managedProperty().bind(txtOptions.visibleProperty());
 
-		// visible for documents
-		lblCommunicationOutputPath.visibleProperty().bind(radDocument.selectedProperty());
-		lblCommunicationOutputPath.managedProperty().bind(radDocument.selectedProperty());
-		txtCommunicationOutputPath.visibleProperty().bind(radDocument.selectedProperty());
-		txtCommunicationOutputPath.managedProperty().bind(radDocument.selectedProperty());
+		// visible for letters, documents, and texts
+		txtFilename.visibleProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()).or(radText.selectedProperty()));
+		txtFilename.managedProperty().bind(txtFilename.visibleProperty());
+		lblFilename.visibleProperty().bind(txtFilename.visibleProperty());
+		lblFilename.managedProperty().bind(txtFilename.visibleProperty());
 
 		// visible for specific fields
 		lblCommunicationOutput.visibleProperty().bind(lblCommunicationOutputPath.visibleProperty().or(lblOptions.visibleProperty()));
-		lblCommunicationOutput.managedProperty().bind(lblCommunicationOutputPath.managedProperty().or(lblOptions.managedProperty()));
-		sepCommunicationOutput.visibleProperty().bind(lblCommunicationOutputPath.visibleProperty().or(lblOptions.visibleProperty()));
-		sepCommunicationOutput.managedProperty().bind(lblCommunicationOutputPath.managedProperty().or(lblOptions.managedProperty()));
+		lblCommunicationOutput.managedProperty().bind(lblCommunicationOutput.visibleProperty());
+		sepCommunicationOutput.visibleProperty().bind(lblCommunicationOutput.visibleProperty());
+		sepCommunicationOutput.managedProperty().bind(lblCommunicationOutput.visibleProperty());
 
 		// attachment list
 		colFilename.setCellValueFactory(cellData -> cellData.getValue().getFilename());
@@ -779,7 +842,8 @@ public class RefereeCommunicationController {
 		PreferencesDialogController controller = pneLoad.getValue().getController();
 		controller.initController(appController, dialogStage,
 				(radEMail.isSelected()) ? "tabEMail" :
-					(radLetter.isSelected()) ? "tabEMail" : "tabDocuments");
+					(radLetter.isSelected()) ? "tabEMail" :
+						(radDocument.isSelected()) ? "tabDocuments" : "tabTexts");
 
 		// Show the dialog and wait until the user closes it
 		dialogStage.showAndWait();

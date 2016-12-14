@@ -213,6 +213,15 @@ public class PreferencesDialogController {
 	private TextField txtDocumentsTemplateDocument;
 
 	/**
+	 * Texts - Templates - Text.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TextField txtTextsTemplateText;
+
+	/**
 	 * OK button.
 	 *
 	 * @version 0.10.0
@@ -276,13 +285,22 @@ public class PreferencesDialogController {
 	private Tab tabEMail;
 
 	/**
-	 * Tab Documents.
+	 * Tab documents.
 	 *
 	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
 	private Tab tabDocuments;
+
+	/**
+	 * Tab texts.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Tab tabTexts;
 
 	/**
 	 * Tab pane.
@@ -333,6 +351,7 @@ public class PreferencesDialogController {
 		tabPaths.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
 		tabEMail.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
 		tabDocuments.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+		tabTexts.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
 
 		fillValues();
 
@@ -402,6 +421,9 @@ public class PreferencesDialogController {
 		// tab documents
 		txtDocumentsTemplateDocument.setText(Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
 
+		// tab texts
+		txtTextsTemplateText.setText(Prefs.get(PrefKey.TEXTS_TEMPLATE_TEXT));
+
 	}
 
 	/**
@@ -437,6 +459,9 @@ public class PreferencesDialogController {
 
 			// tab documents
 			Prefs.put(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT, txtDocumentsTemplateDocument.getText());
+
+			// tab documents
+			Prefs.put(PrefKey.TEXTS_TEMPLATE_TEXT, txtTextsTemplateText.getText());
 
 			okClicked = true;
 			dialogStage.close();
@@ -564,7 +589,7 @@ public class PreferencesDialogController {
 		if (result.isPresent()) {
 			if (result.get() == ButtonType.YES) {
 				FileChooser fileChooser = new FileChooser();
-	
+
 				fileChooser.setTitle("Einstellungen importieren");
 				fileChooser.getExtensionFilters().addAll(
 						new FileChooser.ExtensionFilter("Referee-Manager-Einstellungen (*.prefs)", "*.prefs"),
@@ -577,10 +602,10 @@ public class PreferencesDialogController {
 				}
 
 				File flePrefs = fileChooser.showOpenDialog(dialogStage);
-	
+
 				if (flePrefs != null) {
 					Prefs.put(PrefKey.PREFERENCES_FILE, flePrefs.getAbsolutePath());
-	
+
 					try (InputStream stmIn = new FileInputStream(flePrefs)) {
 						Prefs.importPrefs(stmIn);
 						fillValues();
@@ -592,7 +617,7 @@ public class PreferencesDialogController {
 						.showAndWait();
 					}
 				}
-	
+
 			}
 		}
 
@@ -605,7 +630,7 @@ public class PreferencesDialogController {
 	 * @since 0.10.0
 	 */
 	@FXML
-		private void handleExport() {
+	private void handleExport() {
 
 		FileChooser fileChooser = new FileChooser();
 
