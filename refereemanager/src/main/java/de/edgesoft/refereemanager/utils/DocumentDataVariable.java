@@ -26,7 +26,7 @@ package de.edgesoft.refereemanager.utils;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.8.0
  */
 public enum DocumentDataVariable {
@@ -37,6 +37,7 @@ public enum DocumentDataVariable {
 	DATE,
 	FILENAME,
 	OPENING,
+	OPTIONS,
 	SIGNATURE,
 	SUBJECT,
 	SUBTITLE,

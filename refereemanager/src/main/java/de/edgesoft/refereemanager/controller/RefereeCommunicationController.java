@@ -424,6 +424,24 @@ public class RefereeCommunicationController {
 	private TextField txtCommunicationOutputPath;
 
 	/**
+	 * Label options.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Label lblOptions;
+
+	/**
+	 * Text field options.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TextField txtOptions;
+
+	/**
 	 * Split pane.
 	 *
 	 * @version 0.10.0
@@ -580,16 +598,22 @@ public class RefereeCommunicationController {
 		lblFilename.managedProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
 		txtFilename.visibleProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
 		txtFilename.managedProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
+		lblOptions.visibleProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
+		lblOptions.managedProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
+		txtOptions.visibleProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
+		txtOptions.managedProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
 
 		// visible for documents
-		lblCommunicationOutput.visibleProperty().bind(radDocument.selectedProperty());
-		lblCommunicationOutput.managedProperty().bind(radDocument.selectedProperty());
-		sepCommunicationOutput.visibleProperty().bind(radDocument.selectedProperty());
-		sepCommunicationOutput.managedProperty().bind(radDocument.selectedProperty());
 		lblCommunicationOutputPath.visibleProperty().bind(radDocument.selectedProperty());
 		lblCommunicationOutputPath.managedProperty().bind(radDocument.selectedProperty());
 		txtCommunicationOutputPath.visibleProperty().bind(radDocument.selectedProperty());
 		txtCommunicationOutputPath.managedProperty().bind(radDocument.selectedProperty());
+
+		// visible for specific fields
+		lblCommunicationOutput.visibleProperty().bind(lblCommunicationOutputPath.visibleProperty().or(lblOptions.visibleProperty()));
+		lblCommunicationOutput.managedProperty().bind(lblCommunicationOutputPath.managedProperty().or(lblOptions.managedProperty()));
+		sepCommunicationOutput.visibleProperty().bind(lblCommunicationOutputPath.visibleProperty().or(lblOptions.visibleProperty()));
+		sepCommunicationOutput.managedProperty().bind(lblCommunicationOutputPath.managedProperty().or(lblOptions.managedProperty()));
 
 		// attachment list
 		colFilename.setCellValueFactory(cellData -> cellData.getValue().getFilename());
@@ -669,6 +693,11 @@ public class RefereeCommunicationController {
 				case OPENING:
 					if ((txtOpening.getText() != null) && !txtOpening.getText().trim().isEmpty()) {
 						mapDocData.put(theTemplateVariable.value(), txtOpening.getText().trim());
+					}
+					break;
+				case OPTIONS:
+					if ((txtOptions.getText() != null) && !txtOptions.getText().trim().isEmpty()) {
+						mapDocData.put(theTemplateVariable.value(), txtOptions.getText().trim());
 					}
 					break;
 				case SIGNATURE:
@@ -793,7 +822,7 @@ public class RefereeCommunicationController {
 	/**
 	 * Message file load.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
@@ -871,6 +900,9 @@ public class RefereeCommunicationController {
 										break;
 									case OPENING:
 										txtOpening.setText(theLineContent);
+										break;
+									case OPTIONS:
+										txtOptions.setText(theLineContent);
 										break;
 									case SIGNATURE:
 										txtSignature.setText(theLineContent);
@@ -1225,27 +1257,27 @@ public class RefereeCommunicationController {
 		Objects.requireNonNull(theDocData, "document data must not be null");
 		Objects.requireNonNull(theConfig, "template configuration must not be null");
 
-		
+
 		try (StringWriter wrtProtocol = new StringWriter()) {
-			
+
 			RefereeManager.addAppender(wrtProtocol, "createDocument");
 
 			LocalTime tmeStart = LocalTime.now();
 			RefereeManager.logger.info("Start Dokumenterzeugung.");
-			
+
 			Optional<String> sCreated = Optional.empty();
-			
+
 			try {
-	
+
 				// fill variables in generated content (todo)
 				Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig);
-	
+
 				// load document template
 				Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
 				RefereeManager.logger.info(MessageFormat.format("Lade Dokument-Template ''{0}''.", pathTemplateFile.toAbsolutePath().toString()));
 				theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
 				Template tplDocument = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
-	
+
 				// fill document template
 				Path pathOutFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH), (String) mapFilled.get(DocumentDataVariable.FILENAME.value()));
 				try (StringWriter wrtContent = new StringWriter()) {
@@ -1253,25 +1285,25 @@ public class RefereeCommunicationController {
 					FileAccess.writeFile(pathOutFile, wrtContent.toString());
 				}
 				sCreated = Optional.of(pathOutFile.toAbsolutePath().toString());
-	
+
 			} catch (IOException | TemplateException e) {
 				RefereeManager.logger.error(e);
 				e.printStackTrace();
 			}
-			
+
 			RefereeManager.logger.info("Ende Dokumenterzeugung.");
 			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
 			RefereeManager.logger.info(MessageFormat.format("Dauer: {0}", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
-			
+
 			Alert alert = AlertUtils.createExpandableAlert(AlertType.INFORMATION, appController.getPrimaryStage(),
 					"Dokument erzeugen",
 					sCreated.isPresent() ? MessageFormat.format("Dokument ''{0}'' erzeugt", sCreated.get()) : "Kein Dokument erzeugt",
 							null,
 							"Details:",
 							wrtProtocol.toString());
-			
+
 			alert.showAndWait();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -1289,13 +1321,13 @@ public class RefereeCommunicationController {
 	 */
 	private Map<String, Object> fillDocumentData(final Map<String, Object> theDocData, Configuration theConfig) {
 		Map<String, Object> mapReturn = new HashMap<>();
-		
+
 		Map<String, Object> mapData = new HashMap<>();
 		mapData.put("today", DateTimeUtils.toDate(LocalDateTime.now()));
 		mapData.put("documentdata", theDocData);
 		mapData.put("refdata", AppModel.getData());
 		mapData.put("refs", ctlRefList.getSelectionModel().getSelectedItems());
-		
+
 		theDocData.forEach((key, value) -> {
 			if (value instanceof String) {
 				String sFilled = (String) value;
@@ -1313,7 +1345,7 @@ public class RefereeCommunicationController {
 				mapReturn.put(key, value);
 			}
 		});
-		
+
 		return mapReturn;
 	}
 
