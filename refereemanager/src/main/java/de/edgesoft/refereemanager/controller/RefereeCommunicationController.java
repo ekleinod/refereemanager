@@ -41,6 +41,7 @@ import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.EMail;
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.PersonModel;
@@ -1113,12 +1114,17 @@ public class RefereeCommunicationController {
 	/**
 	 * Sends mails.
 	 *
-	 * If there are multiple recipients, {@link Transport#send(Message, String, String)} sends
-	 * all mails in a transaction, meaning if one fails, all fail.
+	 * Every mail is sent individually for two reasons:
 	 *
-	 * Thus, every mail is sent individually.
+	 * 1. If there are multiple recipients, {@link Transport#send(Message, String, String)} sends
+	 * all mails in a transaction, meaning if one fails, all fail.
+	 * This is bad, because mails frequently fail, meaning one has to resend all Mails.
+	 *
 	 * Maybe I'm doing something wrong there, in that case the code could be
 	 * changes to including all recipients as BCC.
+	 *
+	 * 2. I have to use individualized mails (per template), this only works
+	 * with individual mails.
 	 *
 	 * @param theDocData document data
 	 * @param theConfig template configuration
@@ -1156,7 +1162,7 @@ public class RefereeCommunicationController {
 						theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
 						Template tplEMail = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
 
-						// send email
+						// prepare email
 						Properties mailProps = new Properties();
 						mailProps.setProperty("mail.smtp.host", Prefs.get(PrefKey.EMAIL_SMTP_HOST));
 						mailProps.setProperty("mail.smtp.auth", "true");
@@ -1168,6 +1174,7 @@ public class RefereeCommunicationController {
 									}
 						});
 
+						// send email for every referee individually (see remark in method doc)
 						FilteredList<Referee> lstReferees = new FilteredList<>(ctlRefList.getRefereesSelectionModel().getSelectedItems(), PersonModel.HAS_EMAIL);
 						int iCount = lstReferees.size();
 						for (Referee referee : lstReferees) {
@@ -1176,7 +1183,7 @@ public class RefereeCommunicationController {
 							updateMessage(MessageFormat.format("Mail an ''{0}''.", referee.getDisplayTitle().get()));
 
 							// fill variables in generated content (todo)
-							Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig);
+							Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, referee);
 
 							try {
 
@@ -1336,7 +1343,7 @@ public class RefereeCommunicationController {
 			try {
 
 				// fill variables in generated content (todo)
-				Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig);
+				Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, null);
 
 				// load document template
 				Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
@@ -1380,12 +1387,15 @@ public class RefereeCommunicationController {
 	 * Fills document data.
 	 *
 	 * @param theDocData document data
+	 * @param theConfig template configuration
+	 * @param thePerson currently processed person, null if there is none
+	 *
 	 * @return filled document data
 	 *
 	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
-	private Map<String, Object> fillDocumentData(final Map<String, Object> theDocData, Configuration theConfig) {
+	private Map<String, Object> fillDocumentData(final Map<String, Object> theDocData, final Configuration theConfig, final Person thePerson) {
 		Map<String, Object> mapReturn = new HashMap<>();
 
 		Map<String, Object> mapData = new HashMap<>();
@@ -1393,7 +1403,7 @@ public class RefereeCommunicationController {
 		mapData.put("documentdata", theDocData);
 		mapData.put("refdata", AppModel.getData());
 		mapData.put("selection", ctlRefList.getCurrentSelection());
-		mapData.put("current", null);
+		mapData.put("current", thePerson);
 
 		theDocData.forEach((key, value) -> {
 			if (value instanceof String) {
