@@ -1174,16 +1174,16 @@ public class RefereeCommunicationController {
 									}
 						});
 
-						// send email for every referee individually (see remark in method doc)
-						FilteredList<Referee> lstReferees = new FilteredList<>(ctlRefList.getRefereesSelectionModel().getSelectedItems(), PersonModel.HAS_EMAIL);
-						int iCount = lstReferees.size();
-						for (Referee referee : lstReferees) {
+						// send email for every person individually (see remark in method doc)
+						FilteredList<PersonModel> lstPeople = new FilteredList<>(ctlRefList.getCurrentSelection(), PersonModel.HAS_EMAIL);
+						int iCount = lstPeople.size();
+						for (PersonModel person : lstPeople) {
 
-							RefereeManager.logger.info(MessageFormat.format("Mail an ''{0}''.", referee.getDisplayTitle().get()));
-							updateMessage(MessageFormat.format("Mail an ''{0}''.", referee.getDisplayTitle().get()));
+							RefereeManager.logger.info(MessageFormat.format("Mail an ''{0}''.", person.getDisplayTitle().get()));
+							updateMessage(MessageFormat.format("Mail an ''{0}''.", person.getDisplayTitle().get()));
 
 							// fill variables in generated content (todo)
-							Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, referee);
+							Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, person);
 
 							try {
 
@@ -1198,8 +1198,8 @@ public class RefereeCommunicationController {
 
 								msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
 
-								EMail theEMail = referee.getPrimaryEMail();
-								msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().get(), referee.getFullName().get(), StandardCharsets.UTF_8.name()));
+								EMail theEMail = person.getPrimaryEMail();
+								msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().get(), person.getFullName().get(), StandardCharsets.UTF_8.name()));
 
 								MimeMultipart msgContent = new MimeMultipart();
 

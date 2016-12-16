@@ -12,6 +12,8 @@ import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -470,9 +472,9 @@ public class RefereeListController {
 	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
-	public List<Person> getCurrentSelection() {
+	public ObservableList<PersonModel> getCurrentSelection() {
 
-		List<Person> lstReturn = new ArrayList<>();
+		List<PersonModel> lstReturn = new ArrayList<>();
 
 		if (tabReferees.isSelected()) {
 			tblReferees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
@@ -483,10 +485,10 @@ public class RefereeListController {
 		}
 
 		if (tabPeople.isSelected()) {
-			tblPeople.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
+			tblPeople.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add((PersonModel) person));
 		}
 
-		return lstReturn;
+		return FXCollections.observableList(lstReturn);
 	}
 
 }
