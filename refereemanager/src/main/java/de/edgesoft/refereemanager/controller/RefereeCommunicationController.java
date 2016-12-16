@@ -1201,6 +1201,13 @@ public class RefereeCommunicationController {
 									MimeBodyPart text = new MimeBodyPart();
 									text.setText(wrtContent.toString());
 									msgContent.addBodyPart(text);
+									FileAccess.writeFile(Paths.get("test.txt"),
+											String.format("to: %s\nsubject: %s\n\n%s",
+													msgMail.getRecipients(RecipientType.TO)[0].toString(),
+													msgMail.getSubject(),
+													text.getContent()
+											)
+									);
 								}
 
 								msgMail.setContent(msgContent);
@@ -1382,10 +1389,11 @@ public class RefereeCommunicationController {
 		Map<String, Object> mapReturn = new HashMap<>();
 
 		Map<String, Object> mapData = new HashMap<>();
-		mapData.put("today", DateTimeUtils.toDate(LocalDateTime.now()));
+		mapData.put("today", LocalDateTime.now());
 		mapData.put("documentdata", theDocData);
 		mapData.put("refdata", AppModel.getData());
 		mapData.put("selection", ctlRefList.getCurrentSelection());
+		mapData.put("current", null);
 
 		theDocData.forEach((key, value) -> {
 			if (value instanceof String) {
