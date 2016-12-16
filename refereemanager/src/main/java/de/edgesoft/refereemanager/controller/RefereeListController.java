@@ -4,14 +4,18 @@ import java.text.MessageFormat;
 import java.util.function.Predicate;
 
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.Trainee;
+import de.edgesoft.refereemanager.model.AppModel;
+import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
@@ -39,13 +43,31 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.10.0
  */
 public class RefereeListController {
 
 	/**
-	 * Table view.
+	 * Tab pane content.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TabPane tabPaneContent;
+
+	/**
+	 * Tab referees.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Tab tabReferees;
+
+	/**
+	 * Table view referees.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
@@ -90,6 +112,15 @@ public class RefereeListController {
 	private TableColumn<RefereeModel, String> colClub;
 
 	/**
+	 * Label filter.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Label lblFilter;
+
+	/**
 	 * Checkbox filter active.
 	 *
 	 * @version 0.10.0
@@ -126,22 +157,31 @@ public class RefereeListController {
 	private CheckBox chkLetterOnly;
 
 	/**
-	 * Label filter.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Label lblFilter;
-
-
-	/**
 	 * List of referees.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	private FilteredList<Referee> lstReferees;
+
+
+	/**
+	 * Tab trainees.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Tab tabTrainees;
+
+	/**
+	 * Table view trainees.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableView<Trainee> tblTrainees;
 
 
 	/**
@@ -161,24 +201,31 @@ public class RefereeListController {
 		colTrainingLevel.setCellValueFactory(cellData -> cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitle());
 		colClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
 
-		setItems(null);
+		// listen to tab changes
+		tabPaneContent.getSelectionModel().selectedItemProperty().addListener((event, oldTab, newTab) -> {
+	        handleTabChange();
+	    });
+
+		setItems();
 
 	}
 
 	/**
-	 * Returns table view.
+	 * Sets table items.
 	 *
-	 * @param theReferees list of referees
-	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
-	public void setItems(final ObservableList<Referee> theReferees) {
+	public void setItems() {
 
-		if (theReferees == null) {
+		if (AppModel.getData() == null) {
 			lstReferees = null;
 		} else {
-			lstReferees = new FilteredList<>(theReferees, referee -> true);
+			if (tabReferees.isSelected()) {
+				lstReferees = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableReferees(), referee -> true);
+			} else {
+				System.out.println("todo");
+			}
 		}
 
 		tblReferees.setItems(lstReferees);
@@ -234,6 +281,23 @@ public class RefereeListController {
 		}
 
 		tblReferees.refresh();
+
+	}
+
+	/**
+	 * Handles tab change events.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private void handleTabChange() {
+
+		System.out.println("tab change");
+
+		setItems();
+
+		handleFilterChange();
 
 	}
 

@@ -43,7 +43,6 @@ import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.model.AppModel;
-import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.Attachment;
@@ -697,20 +696,16 @@ public class RefereeCommunicationController {
 	 *
 	 * @param theAppController app controller
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	public void initController(final AppLayoutController theAppController) {
 
 		appController = theAppController;
 
-		if (AppModel.getData() == null) {
-			ctlRefList.setItems(null);
-		} else {
-			ctlRefList.setItems(((ContentModel) AppModel.getData().getContent()).getObservableReferees());
-		}
+		ctlRefList.setItems();
 
-		}
+	}
 
 	/**
 	 * Send email or create letter/document.

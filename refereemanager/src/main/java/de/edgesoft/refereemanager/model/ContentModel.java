@@ -13,6 +13,7 @@ import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.Team;
+import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.jaxb.Wish;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,19 +41,28 @@ import javafx.collections.ObservableList;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.5.0
  */
 public class ContentModel extends Content {
 
-		/**
-		 * Observable list of referees (singleton).
-		 *
+	/**
+	 * Observable list of referees (singleton).
+	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
-		 */
+	 */
 	@XmlTransient
 	private ObservableList<Referee> observableReferees = null;
+
+	/**
+	 * Observable list of trainees (singleton).
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@XmlTransient
+	private ObservableList<Trainee> observableTrainees = null;
 
 	/**
 	 * Returns all referenced (used) clubs.
@@ -165,19 +175,34 @@ public class ContentModel extends Content {
 
 	}
 
-		/**
-		 * Returns observable list of referees.
-		 *
-		 * @return observable list of referees
+	/**
+	 * Returns observable list of referees.
+	 *
+	 * @return observable list of referees
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
-		 */
+	 */
 	public ObservableList<Referee> getObservableReferees() {
 		if (observableReferees == null) {
 			observableReferees = FXCollections.observableList(getReferee());
 		}
 		return observableReferees;
+	}
+
+	/**
+	 * Returns observable list of trainees.
+	 *
+	 * @return observable list of trainees
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public ObservableList<Trainee> getObservableTrainees() {
+		if (observableTrainees == null) {
+			observableTrainees = FXCollections.observableList(getTrainee());
+		}
+		return observableTrainees;
 	}
 
 }

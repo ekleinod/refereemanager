@@ -205,19 +205,16 @@ public class RefereeOverviewController {
 	 *
 	 * @param theAppController app controller
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	public void initController(final AppLayoutController theAppController) {
 
 		appController = theAppController;
 
-		if (AppModel.getData() != null) {
-			ctlRefList.setItems(((ContentModel) AppModel.getData().getContent()).getObservableReferees());
-		} else {
-			ctlRefList.setItems(null);
-		}
-		}
+		ctlRefList.setItems();
+
+	}
 
 	/**
 	 * Shows selected data in detail window.
