@@ -1,8 +1,11 @@
 package de.edgesoft.refereemanager.controller;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -49,6 +52,22 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
 public class RefereeListController {
 
 	/**
+	 * Text for empty table: no data.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	private static final String TABLE_NO_DATA = "Es wurden noch keine {0} eingegeben.";
+
+	/**
+	 * Text for empty table: filtered.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	private static final String TABLE_FILTERED = "Die Filterung schließt alle {0} aus.";
+
+	/**
 	 * Tab pane content.
 	 *
 	 * @version 0.12.0
@@ -82,7 +101,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TableColumn<RefereeModel, String> colName;
+	private TableColumn<RefereeModel, String> colRefereesName;
 
 	/**
 	 * First name column.
@@ -91,7 +110,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TableColumn<RefereeModel, String> colFirstName;
+	private TableColumn<RefereeModel, String> colRefereesFirstName;
 
 	/**
 	 * Training level column.
@@ -100,7 +119,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TableColumn<RefereeModel, String> colTrainingLevel;
+	private TableColumn<RefereeModel, String> colRefereesTrainingLevel;
 
 	/**
 	 * Club column.
@@ -109,7 +128,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TableColumn<RefereeModel, String> colClub;
+	private TableColumn<RefereeModel, String> colRefereesClub;
 
 	/**
 	 * Label filter.
@@ -118,7 +137,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Label lblFilter;
+	private Label lblRefereesFilter;
 
 	/**
 	 * Checkbox filter active.
@@ -127,7 +146,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private CheckBox chkActive;
+	private CheckBox chkRefereesActive;
 
 	/**
 	 * Checkbox filter inactive.
@@ -136,7 +155,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private CheckBox chkInactive;
+	private CheckBox chkRefereesInactive;
 
 	/**
 	 * Checkbox filter email.
@@ -145,7 +164,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private CheckBox chkEMail;
+	private CheckBox chkRefereesEMail;
 
 	/**
 	 * Checkbox filter letter only.
@@ -154,7 +173,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private CheckBox chkLetterOnly;
+	private CheckBox chkRefereesLetterOnly;
 
 	/**
 	 * List of referees.
@@ -183,23 +202,112 @@ public class RefereeListController {
 	@FXML
 	private TableView<Trainee> tblTrainees;
 
+	/**
+	 * Name column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<Trainee, String> colTraineesName;
+
+	/**
+	 * First name column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<Trainee, String> colTraineesFirstName;
+
+	/**
+	 * Club column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<Trainee, String> colTraineesClub;
+
+	/**
+	 * List of trainees.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	private FilteredList<Trainee> lstTrainees;
+
+
+	/**
+	 * Tab people.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Tab tabPeople;
+
+	/**
+	 * Table view trainees.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableView<Person> tblPeople;
+
+	/**
+	 * Name column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<PersonModel, String> colPeopleName;
+
+	/**
+	 * First name column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<PersonModel, String> colPeopleFirstName;
+
+	/**
+	 * List of people.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	private FilteredList<Person> lstPeople;
+
 
 	/**
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
 	private void initialize() {
 
-		// hook data to columns
-		colName.setCellValueFactory(cellData -> cellData.getValue().getName());
-		colFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
-		colTrainingLevel.setCellValueFactory(cellData -> cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitle());
-		colClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
+		// hook data to columns (referees)
+		colRefereesName.setCellValueFactory(cellData -> cellData.getValue().getName());
+		colRefereesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
+		colRefereesTrainingLevel.setCellValueFactory(cellData -> cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitle());
+		colRefereesClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
+
+		// hook data to columns (trainees)
+		colTraineesName.setCellValueFactory(cellData -> cellData.getValue().getName());
+		colTraineesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
+		colTraineesClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
+
+		// hook data to columns (people)
+		colPeopleName.setCellValueFactory(cellData -> cellData.getValue().getName());
+		colPeopleFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
 
 		// listen to tab changes
 		tabPaneContent.getSelectionModel().selectedItemProperty().addListener((event, oldTab, newTab) -> {
@@ -220,26 +328,30 @@ public class RefereeListController {
 
 		if (AppModel.getData() == null) {
 			lstReferees = null;
+			lstTrainees = null;
+			lstPeople = null;
 		} else {
-			if (tabReferees.isSelected()) {
-				lstReferees = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableReferees(), referee -> true);
-			} else {
-				System.out.println("todo");
-			}
+			lstReferees = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableReferees(), referee -> true);
+			lstTrainees = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableTrainees(), trainee -> true);
+			lstPeople = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservablePeople(), person -> true);
 		}
 
 		tblReferees.setItems(lstReferees);
+		tblTrainees.setItems(lstTrainees);
+		tblPeople.setItems(lstPeople);
 
 		// set "empty data" text
-		if ((lstReferees == null) || lstReferees.isEmpty()) {
-			Label lblPlaceholder = new Label("Es wurden noch keine Schiedsrichter eingegeben.");
-			lblPlaceholder.setWrapText(true);
-			tblReferees.setPlaceholder(lblPlaceholder);
-		} else {
-			Label lblPlaceholder = new Label("Die Filterung schließt alle Schiedsrichter aus.");
-			lblPlaceholder.setWrapText(true);
-			tblReferees.setPlaceholder(lblPlaceholder);
-		}
+		Label lblPlaceholder = new Label(MessageFormat.format(((lstReferees == null) || lstReferees.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Schiedsrichter"));
+		lblPlaceholder.setWrapText(true);
+		tblReferees.setPlaceholder(lblPlaceholder);
+
+		lblPlaceholder = new Label(MessageFormat.format(((lstTrainees == null) || lstTrainees.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Lehrgangsteilnehmer"));
+		lblPlaceholder.setWrapText(true);
+		tblTrainees.setPlaceholder(lblPlaceholder);
+
+		lblPlaceholder = new Label(MessageFormat.format(((lstPeople == null) || lstPeople.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Personen"));
+		lblPlaceholder.setWrapText(true);
+		tblPeople.setPlaceholder(lblPlaceholder);
 
 		handleFilterChange();
 
@@ -248,39 +360,42 @@ public class RefereeListController {
 	/**
 	 * Handles filter change events.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@SuppressWarnings("unchecked")
 	@FXML
 	private void handleFilterChange() {
 
+		// filter for referees
 		if (lstReferees == null) {
-			lblFilter.setText("Filter");
+			lblRefereesFilter.setText("Filter");
 		} else {
 
 			lstReferees.setPredicate(RefereeModel.ALL);
 
-			if (chkActive.isSelected()) {
+			if (chkRefereesActive.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.ACTIVE));
 			}
 
-			if (chkInactive.isSelected()) {
+			if (chkRefereesInactive.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.INACTIVE));
 			}
 
-			if (chkEMail.isSelected()) {
+			if (chkRefereesEMail.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(PersonModel.HAS_EMAIL));
 			}
 
-			if (chkLetterOnly.isSelected()) {
+			if (chkRefereesLetterOnly.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.LETTER_ONLY));
 			}
 
-			lblFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstReferees.size()));
+			lblRefereesFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstReferees.size()));
 		}
 
 		tblReferees.refresh();
+		tblTrainees.refresh();
+		tblPeople.refresh();
 
 	}
 
@@ -292,13 +407,7 @@ public class RefereeListController {
 	 */
 	@FXML
 	private void handleTabChange() {
-
-		System.out.println("tab change");
-
-		setItems();
-
 		handleFilterChange();
-
 	}
 
 	/**
@@ -306,24 +415,78 @@ public class RefereeListController {
 	 *
 	 * @param theSelectionMode selection mode
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	public void setSelectionMode(final SelectionMode theSelectionMode) {
 		tblReferees.getSelectionModel().setSelectionMode(theSelectionMode);
+		tblTrainees.getSelectionModel().setSelectionMode(theSelectionMode);
+		tblPeople.getSelectionModel().setSelectionMode(theSelectionMode);
 	}
 
 	/**
-	 * Returns selection model.
+	 * Returns selection model of referees table.
 	 *
 	 * @return selection model
 	 *
-	 * @version 0.10.0
-	 * @return
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
-	public TableViewSelectionModel<Referee> getSelectionModel() {
+	public TableViewSelectionModel<Referee> getRefereesSelectionModel() {
 		return tblReferees.getSelectionModel();
+	}
+
+	/**
+	 * Returns selection model of trainees table.
+	 *
+	 * @return selection model
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public TableViewSelectionModel<Trainee> getTraineesSelectionModel() {
+		return tblTrainees.getSelectionModel();
+	}
+
+	/**
+	 * Returns selection model of people table.
+	 *
+	 * @return selection model
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public TableViewSelectionModel<Person> getPeopleSelectionModel() {
+		return tblPeople.getSelectionModel();
+	}
+
+	/**
+	 * Returns current selection.
+	 *
+	 * @todo maybe this can be implemented simpler with a clever cast?
+	 *
+	 * @return current (visible) selection
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public List<Person> getCurrentSelection() {
+
+		List<Person> lstReturn = new ArrayList<>();
+
+		if (tabReferees.isSelected()) {
+			tblReferees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
+		}
+
+		if (tabTrainees.isSelected()) {
+			tblTrainees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
+		}
+
+		if (tabPeople.isSelected()) {
+			tblPeople.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
+		}
+
+		return lstReturn;
 	}
 
 }

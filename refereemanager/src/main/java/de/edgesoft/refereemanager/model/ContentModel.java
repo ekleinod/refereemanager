@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.League;
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.Team;
 import de.edgesoft.refereemanager.jaxb.Trainee;
@@ -63,6 +64,62 @@ public class ContentModel extends Content {
 	 */
 	@XmlTransient
 	private ObservableList<Trainee> observableTrainees = null;
+
+	/**
+	 * Observable list of people (singleton).
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@XmlTransient
+	private ObservableList<Person> observablePeople = null;
+
+
+	/**
+	 * Returns observable list of referees.
+	 *
+	 * @return observable list of referees
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	public ObservableList<Referee> getObservableReferees() {
+		if (observableReferees == null) {
+			observableReferees = FXCollections.observableList(getReferee());
+		}
+		return observableReferees;
+	}
+
+	/**
+	 * Returns observable list of trainees.
+	 *
+	 * @return observable list of trainees
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public ObservableList<Trainee> getObservableTrainees() {
+		if (observableTrainees == null) {
+			observableTrainees = FXCollections.observableList(getTrainee());
+		}
+		return observableTrainees;
+	}
+
+	/**
+	 * Returns observable list of people.
+	 *
+	 * @return observable list of people
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public ObservableList<Person> getObservablePeople() {
+		if (observablePeople == null) {
+			observablePeople = FXCollections.observableList(getPerson());
+		}
+		return observablePeople;
+	}
+
 
 	/**
 	 * Returns all referenced (used) clubs.
@@ -173,36 +230,6 @@ public class ContentModel extends Content {
 
 		return lstReturn;
 
-	}
-
-	/**
-	 * Returns observable list of referees.
-	 *
-	 * @return observable list of referees
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	public ObservableList<Referee> getObservableReferees() {
-		if (observableReferees == null) {
-			observableReferees = FXCollections.observableList(getReferee());
-		}
-		return observableReferees;
-	}
-
-	/**
-	 * Returns observable list of trainees.
-	 *
-	 * @return observable list of trainees
-	 *
-	 * @version 0.12.0
-	 * @since 0.12.0
-	 */
-	public ObservableList<Trainee> getObservableTrainees() {
-		if (observableTrainees == null) {
-			observableTrainees = FXCollections.observableList(getTrainee());
-		}
-		return observableTrainees;
 	}
 
 }

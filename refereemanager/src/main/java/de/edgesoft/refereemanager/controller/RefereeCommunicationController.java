@@ -588,7 +588,7 @@ public class RefereeCommunicationController {
 
 		// enabling buttons
 		btnSend.disableProperty().bind(
-				ctlRefList.getSelectionModel().selectedItemProperty().isNull()
+				ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull()
 				.or(txtBody.textProperty().isEmpty())
 				.or(
 						radEMail.selectedProperty().or(radLetter.selectedProperty())
@@ -1168,7 +1168,7 @@ public class RefereeCommunicationController {
 									}
 						});
 
-						FilteredList<Referee> lstReferees = new FilteredList<>(ctlRefList.getSelectionModel().getSelectedItems(), PersonModel.HAS_EMAIL);
+						FilteredList<Referee> lstReferees = new FilteredList<>(ctlRefList.getRefereesSelectionModel().getSelectedItems(), PersonModel.HAS_EMAIL);
 						int iCount = lstReferees.size();
 						for (Referee referee : lstReferees) {
 
@@ -1385,7 +1385,7 @@ public class RefereeCommunicationController {
 		mapData.put("today", DateTimeUtils.toDate(LocalDateTime.now()));
 		mapData.put("documentdata", theDocData);
 		mapData.put("refdata", AppModel.getData());
-		mapData.put("refs", ctlRefList.getSelectionModel().getSelectedItems());
+		mapData.put("selection", ctlRefList.getCurrentSelection());
 
 		theDocData.forEach((key, value) -> {
 			if (value instanceof String) {

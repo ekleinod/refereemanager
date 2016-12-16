@@ -20,26 +20,26 @@
                      <children>
                         <TableView fx:id="tblReferees" prefHeight="200.0" prefWidth="350.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
-                            <TableColumn fx:id="colName" prefWidth="75.0" text="Name" />
-                            <TableColumn fx:id="colFirstName" prefWidth="75.0" text="Vorname" />
-                              <TableColumn fx:id="colTrainingLevel" prefWidth="75.0" text="Ausbildung" />
-                              <TableColumn fx:id="colClub" prefWidth="75.0" text="Verein" />
+                            <TableColumn fx:id="colRefereesName" prefWidth="-1.0" text="Name" />
+                            <TableColumn fx:id="colRefereesFirstName" prefWidth="-1.0" text="Vorname" />
+                              <TableColumn fx:id="colRefereesTrainingLevel" prefWidth="-1.0" text="Ausbildung" />
+                              <TableColumn fx:id="colRefereesClub" prefWidth="-1.0" text="Verein" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Label fx:id="lblFilter" text="Filter" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="5.0">
+                        <Label fx:id="lblRefereesFilter" text="Filter" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="5.0">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
                         <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="30.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                            <children>
-                              <CheckBox fx:id="chkActive" mnemonicParsing="false" onAction="#handleFilterChange" text="Aktiv" />
-                              <CheckBox fx:id="chkInactive" mnemonicParsing="false" onAction="#handleFilterChange" text="Inaktiv" />
-                              <CheckBox fx:id="chkEMail" mnemonicParsing="false" onAction="#handleFilterChange" text="E-Mail" />
-                              <CheckBox fx:id="chkLetterOnly" mnemonicParsing="false" onAction="#handleFilterChange" text="Nur Brief" />
+                              <CheckBox fx:id="chkRefereesActive" mnemonicParsing="false" onAction="#handleFilterChange" text="Aktiv" />
+                              <CheckBox fx:id="chkRefereesInactive" mnemonicParsing="false" onAction="#handleFilterChange" text="Inaktiv" />
+                              <CheckBox fx:id="chkRefereesEMail" mnemonicParsing="false" onAction="#handleFilterChange" text="E-Mail" />
+                              <CheckBox fx:id="chkRefereesLetterOnly" mnemonicParsing="false" onAction="#handleFilterChange" text="Nur Brief" />
                            </children>
                         </HBox>
                      </children>
@@ -52,10 +52,26 @@
                      <children>
                         <TableView fx:id="tblTrainees" prefHeight="200.0" prefWidth="350.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
-                              <TableColumn fx:id="colName1" prefWidth="75.0" text="Name" />
-                              <TableColumn fx:id="colFirstName1" prefWidth="75.0" text="Vorname" />
-                              <TableColumn fx:id="colTrainingLevel1" prefWidth="75.0" text="Ausbildung" />
-                              <TableColumn fx:id="colClub1" prefWidth="75.0" text="Verein" />
+                              <TableColumn fx:id="colTraineesName" prefWidth="-1.0" text="Name" />
+                              <TableColumn fx:id="colTraineesFirstName" prefWidth="-1.0" text="Vorname" />
+                              <TableColumn fx:id="colTraineesClub" prefWidth="-1.0" text="Verein" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="tabPeople" text="Personen">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tblPeople" prefHeight="200.0" prefWidth="350.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columns>
+                              <TableColumn fx:id="colPeopleName" prefWidth="-1.0" text="Name" />
+                              <TableColumn fx:id="colPeopleFirstName" prefWidth="-1.0" text="Vorname" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

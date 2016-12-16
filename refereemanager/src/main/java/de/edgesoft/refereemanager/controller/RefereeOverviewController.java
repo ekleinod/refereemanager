@@ -179,11 +179,11 @@ public class RefereeOverviewController {
 		showDetails(null);
 
 		// listen to selection changes, show event
-		ctlRefList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
+		ctlRefList.getRefereesSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
 
 		// enabling edit/delete buttons only with selection
-		btnEdit.disableProperty().bind(ctlRefList.getSelectionModel().selectedItemProperty().isNull());
-		btnDelete.disableProperty().bind(ctlRefList.getSelectionModel().selectedItemProperty().isNull());
+		btnEdit.disableProperty().bind(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull());
+		btnDelete.disableProperty().bind(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull());
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.REFEREE_OVERVIEW_SPLIT)));
@@ -285,7 +285,7 @@ public class RefereeOverviewController {
 		RefereeModel newReferee = new RefereeModel();
 		if (showEditDialog(newReferee)) {
 			((ContentModel) AppModel.getData().getContent()).getObservableReferees().add(newReferee);
-			ctlRefList.getSelectionModel().select(newReferee);
+			ctlRefList.getRefereesSelectionModel().select(newReferee);
 			AppModel.setModified(true);
 			appController.setAppTitle();
 		}
@@ -301,7 +301,7 @@ public class RefereeOverviewController {
 	@FXML
 	private void handleEdit() {
 
-		RefereeModel editReferee = (RefereeModel) ctlRefList.getSelectionModel().getSelectedItem();
+		RefereeModel editReferee = (RefereeModel) ctlRefList.getRefereesSelectionModel().getSelectedItem();
 
 			if (editReferee != null) {
 
@@ -324,7 +324,7 @@ public class RefereeOverviewController {
 	@FXML
 	private void handleDelete() {
 
-		Referee refDelete = ctlRefList.getSelectionModel().getSelectedItem();
+		Referee refDelete = ctlRefList.getRefereesSelectionModel().getSelectedItem();
 
 			if (refDelete != null) {
 
