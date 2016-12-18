@@ -23,6 +23,7 @@ import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -71,6 +72,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
@@ -134,6 +136,35 @@ public class RefereeCommunicationController {
 	 * @since 0.10.0
 	 */
 	public static final String ATTACHMENT_SEPARATOR = "::";
+
+
+	/**
+	 * Split pane.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private SplitPane pneSplit;
+
+
+	/**
+	 * Send button.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnSend;
+
+	/**
+	 * Prefs button.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnPrefs;
 
 	/**
 	 * Label title.
@@ -235,24 +266,6 @@ public class RefereeCommunicationController {
 	private TextField txtSignature;
 
 	/**
-	 * Label generated filename.
-	 *
-	 * @version 0.12.0
-	 * @since 0.12.0
-	 */
-	@FXML
-	private Label lblFilename;
-
-	/**
-	 * Textfield generated filename.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtFilename;
-
-	/**
 	 * Label date.
 	 *
 	 * @version 0.12.0
@@ -271,103 +284,23 @@ public class RefereeCommunicationController {
 	private TextField txtDate;
 
 	/**
-	 * Textfield message file.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtCommunicationFile;
-
-	/**
-	 * Button message file select.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Button btnMessageFileSelect;
-
-	/**
-	 * Button message file load.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Button btnMessageFileLoad;
-
-	/**
-	 * Button message file save.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Button btnMessageFileSave;
-
-	/**
-	 * Radio button email.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private RadioButton radEMail;
-
-	/**
-	 * Radio button letter.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private RadioButton radLetter;
-
-	/**
-	 * Radio button document.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private RadioButton radDocument;
-
-	/**
-	 * Radio button text.
+	 * Label generated filename.
 	 *
 	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
-	private RadioButton radText;
+	private Label lblFilename;
 
 	/**
-	 * Toggle group communication kind.
+	 * Textfield generated filename.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private ToggleGroup grpCommKind;
+	private TextField txtFilename;
 
-	/**
-	 * Send button.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Button btnSend;
-
-	/**
-	 * Prefs button.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Button btnPrefs;
 
 	/**
 	 * Label attachments.
@@ -424,6 +357,117 @@ public class RefereeCommunicationController {
 	private TableView<Attachment> tblAttachments;
 
 	/**
+	 * Filename column.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TableColumn<Attachment, String> colFilename;
+
+	/**
+	 * Title column.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TableColumn<Attachment, String> colTitle;
+
+	/**
+	 * Landscape paper format column.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TableColumn<Attachment, Boolean> colLandscape;
+
+
+	/**
+	 * Toggle group communication kind.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private ToggleGroup grpCommKind;
+
+	/**
+	 * Radio button email.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private RadioButton radEMail;
+
+	/**
+	 * Radio button letter.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private RadioButton radLetter;
+
+	/**
+	 * Radio button document.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private RadioButton radDocument;
+
+	/**
+	 * Radio button text.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private RadioButton radText;
+
+
+	/**
+	 * Textfield message file.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtCommunicationFile;
+
+	/**
+	 * Button message file select.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnMessageFileSelect;
+
+	/**
+	 * Button message file load.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnMessageFileLoad;
+
+	/**
+	 * Button message file save.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnMessageFileSave;
+
+
+	/**
 	 * Label output.
 	 *
 	 * @version 0.12.0
@@ -477,41 +521,42 @@ public class RefereeCommunicationController {
 	@FXML
 	private TextField txtOptions;
 
-	/**
-	 * Split pane.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private SplitPane pneSplit;
 
 	/**
-	 * Filename column.
+	 * Label other.
 	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
+	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
-	private TableColumn<Attachment, String> colFilename;
+	private Label lblOther;
 
 	/**
-	 * Title column.
+	 * Separator other.
 	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
+	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
-	private TableColumn<Attachment, String> colTitle;
+	private Separator sepOther;
 
 	/**
-	 * Landscape paper format column.
+	 * Label test mail.
 	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
+	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
-	private TableColumn<Attachment, Boolean> colLandscape;
+	private Label lblTestMail;
+
+	/**
+	 * Checkbox test mail.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private CheckBox chkTestMail;
 
 
 	/**
@@ -621,6 +666,17 @@ public class RefereeCommunicationController {
 		grpCommKind.selectedToggleProperty().addListener((ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) -> {
 			btnSend.setText((newValue == radEMail) ? "Senden" : "Erzeugen");
 		});
+
+		// visible for emails
+		ObservableBooleanValue obsEmail = radEMail.selectedProperty();
+		lblOther.visibleProperty().bind(obsEmail);
+		lblOther.managedProperty().bind(obsEmail);
+		sepOther.visibleProperty().bind(obsEmail);
+		sepOther.managedProperty().bind(obsEmail);
+		lblTestMail.visibleProperty().bind(obsEmail);
+		lblTestMail.managedProperty().bind(obsEmail);
+		chkTestMail.visibleProperty().bind(obsEmail);
+		chkTestMail.managedProperty().bind(obsEmail);
 
 		// visible for emails, letters, and documents
 		ObservableBooleanValue obsEmailLetterDocument = radEMail.selectedProperty().or(radLetter.selectedProperty()).or(radDocument.selectedProperty());
@@ -1230,9 +1286,13 @@ public class RefereeCommunicationController {
 									}
 								}
 
-								Transport.send(msgMail);
-//								Thread.sleep(500);
-								RefereeManager.logger.info("gesendet.");
+								if (chkTestMail.isSelected()) {
+									RefereeManager.logger.info(mail2String(msgMail));
+									RefereeManager.logger.info("Test! Nicht gesendet.");
+								} else {
+									Transport.send(msgMail);
+									RefereeManager.logger.info("gesendet.");
+								}
 								iSuccess++;
 
 							} catch (SendFailedException e) {
@@ -1581,6 +1641,80 @@ public class RefereeCommunicationController {
 		});
 
 		return mapReturn;
+	}
+
+	/**
+	 * Convert mail to string.
+	 *
+	 * @param theMail document data
+	 * @return string representation of mail
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	private static String mail2String(final Message theMail) {
+		StringBuilder sbReturn = new StringBuilder();
+
+		sbReturn.append("-------------------\n");
+
+		try {
+
+			RecipientType theType = RecipientType.TO;
+			if (theMail.getRecipients(theType) != null) {
+				sbReturn.append(theType.toString());
+				sbReturn.append("\n");
+				for (Address theAddress : theMail.getRecipients(theType)) {
+					sbReturn.append("\t");
+					sbReturn.append(theAddress.toString());
+					sbReturn.append("\n");
+				}
+			}
+
+			theType = RecipientType.CC;
+			if (theMail.getRecipients(theType) != null) {
+				sbReturn.append(theType.toString());
+				sbReturn.append("\n");
+				for (Address theAddress : theMail.getRecipients(theType)) {
+					sbReturn.append("\t");
+					sbReturn.append(theAddress.toString());
+					sbReturn.append("\n");
+				}
+			}
+
+			theType = RecipientType.BCC;
+			if (theMail.getRecipients(theType) != null) {
+				sbReturn.append(theType.toString());
+				sbReturn.append("\n");
+				for (Address theAddress : theMail.getRecipients(theType)) {
+					sbReturn.append("\t");
+					sbReturn.append(theAddress.toString());
+					sbReturn.append("\n");
+				}
+			}
+
+			sbReturn.append("Subject: ");
+			sbReturn.append(theMail.getSubject());
+			sbReturn.append("\n");
+
+			for (int i = 0; i < ((MimeMultipart) theMail.getContent()).getCount(); i++) {
+				if (((MimeMultipart) theMail.getContent()).getBodyPart(i).getFileName() == null) {
+					sbReturn.append("Body\n");
+					sbReturn.append(((MimeMultipart) theMail.getContent()).getBodyPart(i).getContent());
+					sbReturn.append("\n");
+				} else {
+					sbReturn.append("Attachment: ");
+					sbReturn.append(((MimeMultipart) theMail.getContent()).getBodyPart(i).getFileName());
+					sbReturn.append("\n");
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		sbReturn.append("-------------------\n");
+
+		return sbReturn.toString();
 	}
 
 }
