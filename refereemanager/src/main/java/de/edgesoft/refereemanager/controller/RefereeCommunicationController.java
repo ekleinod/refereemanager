@@ -23,7 +23,6 @@ import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -48,6 +47,7 @@ import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.Attachment;
 import de.edgesoft.refereemanager.utils.DocumentDataVariable;
+import de.edgesoft.refereemanager.utils.MailUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -1287,7 +1287,7 @@ public class RefereeCommunicationController {
 								}
 
 								if (chkTestMail.isSelected()) {
-									RefereeManager.logger.info(mail2String(msgMail));
+									RefereeManager.logger.info(MailUtils.toString(msgMail));
 									RefereeManager.logger.info("Test! Nicht gesendet.");
 								} else {
 									Transport.send(msgMail);
@@ -1430,6 +1430,10 @@ public class RefereeCommunicationController {
 						// create docs
 						FilteredList<PersonModel> lstPeople = new FilteredList<>(ctlRefList.getCurrentSelection(), PersonModel.HAS_ADDRESS);
 						int iCount = lstPeople.size();
+
+						Map<String, List<String>> mapFilenames = new HashMap<>();
+						mapFilenames.put("merges", new ArrayList<>());
+
 						for (PersonModel person : lstPeople) {
 
 							RefereeManager.logger.info(MessageFormat.format("Brief an ''{0}''.", person.getDisplayTitle().get()));
@@ -1440,20 +1444,6 @@ public class RefereeCommunicationController {
 
 							try {
 
-//								if (mapFilled.containsKey(DocumentDataVariable.ATTACHMENT.value())) {
-//									for (Attachment theAttachment : (List<Attachment>) mapFilled.get(DocumentDataVariable.ATTACHMENT.value())) {
-//										Path attachment = Paths.get(theAttachment.getFilename().get());
-//
-//										BodyPart bpAttachment = new MimeBodyPart();
-//										bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
-//										bpAttachment.setFileName(attachment.getFileName().toString());
-//
-//										msgContent.addBodyPart(bpAttachment);
-//
-//										RefereeManager.logger.info(MessageFormat.format("Attachment: {0}", bpAttachment.getFileName()));
-//									}
-//								}
-
 								// fill document template, write document
 								Path pathOutFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH), (String) mapFilled.get(DocumentDataVariable.FILENAME.value()));
 								try (StringWriter wrtContent = new StringWriter()) {
@@ -1463,6 +1453,18 @@ public class RefereeCommunicationController {
 
 								RefereeManager.logger.info(MessageFormat.format("Dokument ''{0}'' erzeugt", pathOutFile.toAbsolutePath().toString()));
 
+								iSuccess++;
+
+								// fill single merge template, write document
+								pathOutFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH),
+										String.format("merge_%s", mapFilled.get(DocumentDataVariable.FILENAME.value())).replace(".mmd", ".tex"));
+								try (StringWriter wrtContent = new StringWriter()) {
+									tplMergeSingle.process(mapFilled, wrtContent);
+									FileAccess.writeFile(pathOutFile, wrtContent.toString());
+								}
+								mapFilenames.get("merges").add(pathOutFile.getFileName().toString().replace(".tex", ".pdf"));
+
+								RefereeManager.logger.info(MessageFormat.format("Dokument ''{0}'' erzeugt", pathOutFile.toAbsolutePath().toString()));
 
 								iSuccess++;
 
@@ -1473,6 +1475,23 @@ public class RefereeCommunicationController {
 
 							updateProgress(iError + iSuccess, iCount);
 
+						}
+
+						try {
+
+							// fill all merge template, write document
+							Path pathOutFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH), "merge_all.tex");
+							try (StringWriter wrtContent = new StringWriter()) {
+								tplMergeAll.process(mapFilenames, wrtContent);
+								FileAccess.writeFile(pathOutFile, wrtContent.toString());
+							}
+
+							RefereeManager.logger.info(MessageFormat.format("Dokument ''{0}'' erzeugt", pathOutFile.toAbsolutePath().toString()));
+
+							iSuccess++;
+
+						} catch (IOException | TemplateException e) {
+							RefereeManager.logger.error(e);
 						}
 
 					} catch (IOException e) {
@@ -1513,7 +1532,7 @@ public class RefereeCommunicationController {
     			Alert alert = AlertUtils.createExpandableAlert((mapResult.get("error") > 0) ? AlertType.ERROR : AlertType.INFORMATION, appController.getPrimaryStage(),
     					"Brieferzeugung",
     					MessageFormat.format("Erzeugung {0,choice,0#erfolgreich|1#fehlerhaft|1<fehlerhaft}", mapResult.get("error")),
-    					MessageFormat.format("{0,choice,0#Keine Briefe wurden|1#Ein Brief wurde|1<{0,number,integer} Briefe wurden} erzeugt, es {1,choice,0#traten keine|1#trat ein|1<traten {1,number,integer}} Fehler auf.",
+    					MessageFormat.format("{0,choice,0#Keine Dateien wurden|1#Eine Datei wurde|1<{0,number,integer} Dateien wurden} erzeugt, es {1,choice,0#traten keine|1#trat ein|1<traten {1,number,integer}} Fehler auf.",
     							mapResult.get("success"), mapResult.get("error")),
     					"Details:",
     					wrtProtocol.toString());
@@ -1623,7 +1642,9 @@ public class RefereeCommunicationController {
 		mapData.put("current", thePerson);
 
 		theDocData.forEach((key, value) -> {
+
 			if (value instanceof String) {
+
 				String sFilled = (String) value;
 				try {
 					Template tplTemp = new Template(key, new StringReader(sFilled), theConfig);
@@ -1635,89 +1656,62 @@ public class RefereeCommunicationController {
 					e.printStackTrace();
 				}
 				mapReturn.put(key, sFilled);
+
+			} else if (value instanceof List<?>) {
+
+				List<Attachment> lstAtts = new ArrayList<>();
+
+				for (Attachment theAttachment : (List<Attachment>) value) {
+
+					Attachment attTemp = new Attachment();
+
+					if ((theAttachment.getFilename() != null) && !theAttachment.getFilename().getValue().isEmpty()) {
+						String sFilled = theAttachment.getFilename().getValue();
+						try {
+							Template tplTemp = new Template(key, new StringReader(sFilled), theConfig);
+							try (StringWriter wrtContent = new StringWriter()) {
+								tplTemp.process(mapData, wrtContent);
+								sFilled = wrtContent.toString();
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						attTemp.setFilename(new SimpleStringProperty(sFilled));
+					}
+
+					if ((theAttachment.getTitle() != null) && !theAttachment.getTitle().getValue().isEmpty()) {
+						String sFilled = theAttachment.getTitle().getValue();
+						try {
+							Template tplTemp = new Template(key, new StringReader(sFilled), theConfig);
+							try (StringWriter wrtContent = new StringWriter()) {
+								tplTemp.process(mapData, wrtContent);
+								sFilled = wrtContent.toString();
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						attTemp.setTitle(new SimpleStringProperty(sFilled));
+					}
+
+					attTemp.setLandscape(theAttachment.getLandscape());
+
+					lstAtts.add(attTemp);
+
+				}
+
+				mapReturn.put(key, lstAtts);
+
+
 			} else {
 				mapReturn.put(key, value);
 			}
+
 		});
 
 		// for templates that need the current person
 		mapReturn.put("current", thePerson);
 
 		return mapReturn;
-	}
-
-	/**
-	 * Convert mail to string.
-	 *
-	 * @param theMail document data
-	 * @return string representation of mail
-	 *
-	 * @version 0.12.0
-	 * @since 0.12.0
-	 */
-	private static String mail2String(final Message theMail) {
-		StringBuilder sbReturn = new StringBuilder();
-
-		sbReturn.append("-------------------\n");
-
-		try {
-
-			RecipientType theType = RecipientType.TO;
-			if (theMail.getRecipients(theType) != null) {
-				sbReturn.append(theType.toString());
-				sbReturn.append("\n");
-				for (Address theAddress : theMail.getRecipients(theType)) {
-					sbReturn.append("\t");
-					sbReturn.append(theAddress.toString());
-					sbReturn.append("\n");
-				}
-			}
-
-			theType = RecipientType.CC;
-			if (theMail.getRecipients(theType) != null) {
-				sbReturn.append(theType.toString());
-				sbReturn.append("\n");
-				for (Address theAddress : theMail.getRecipients(theType)) {
-					sbReturn.append("\t");
-					sbReturn.append(theAddress.toString());
-					sbReturn.append("\n");
-				}
-			}
-
-			theType = RecipientType.BCC;
-			if (theMail.getRecipients(theType) != null) {
-				sbReturn.append(theType.toString());
-				sbReturn.append("\n");
-				for (Address theAddress : theMail.getRecipients(theType)) {
-					sbReturn.append("\t");
-					sbReturn.append(theAddress.toString());
-					sbReturn.append("\n");
-				}
-			}
-
-			sbReturn.append("Subject: ");
-			sbReturn.append(theMail.getSubject());
-			sbReturn.append("\n");
-
-			for (int i = 0; i < ((MimeMultipart) theMail.getContent()).getCount(); i++) {
-				if (((MimeMultipart) theMail.getContent()).getBodyPart(i).getFileName() == null) {
-					sbReturn.append("Body\n");
-					sbReturn.append(((MimeMultipart) theMail.getContent()).getBodyPart(i).getContent());
-					sbReturn.append("\n");
-				} else {
-					sbReturn.append("Attachment: ");
-					sbReturn.append(((MimeMultipart) theMail.getContent()).getBodyPart(i).getFileName());
-					sbReturn.append("\n");
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		sbReturn.append("-------------------\n");
-
-		return sbReturn.toString();
 	}
 
 }
