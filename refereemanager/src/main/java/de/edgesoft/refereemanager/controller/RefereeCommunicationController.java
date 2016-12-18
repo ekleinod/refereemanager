@@ -1353,7 +1353,7 @@ public class RefereeCommunicationController {
     			Alert alert = AlertUtils.createExpandableAlert((mapResult.get("error") > 0) ? AlertType.ERROR : AlertType.INFORMATION, appController.getPrimaryStage(),
     					"E-Mails versenden",
     					MessageFormat.format("Versand {0,choice,0#erfolgreich|1#fehlerhaft|1<fehlerhaft}", mapResult.get("error")),
-    					MessageFormat.format("{0,choice,0#Keine E-Mails|1#Eine E-Mail|1<{0,number,integer} E-Mails} wurden versendet, es {1,choice,0#traten keine|1#trat ein|1<traten {1,number,integer}} Fehler auf.",
+    					MessageFormat.format("{0,choice,0#Keine E-Mails wurden|1#Eine E-Mail wurde|1<{0,number,integer} E-Mails wurden} versendet, es {1,choice,0#traten keine|1#trat ein|1<traten {1,number,integer}} Fehler auf.",
     							mapResult.get("success"), mapResult.get("error")),
     					"Details:",
     					wrtProtocol.toString());
@@ -1513,7 +1513,7 @@ public class RefereeCommunicationController {
     			Alert alert = AlertUtils.createExpandableAlert((mapResult.get("error") > 0) ? AlertType.ERROR : AlertType.INFORMATION, appController.getPrimaryStage(),
     					"Brieferzeugung",
     					MessageFormat.format("Erzeugung {0,choice,0#erfolgreich|1#fehlerhaft|1<fehlerhaft}", mapResult.get("error")),
-    					MessageFormat.format("{0,choice,0#Keine Briefe|1#Eine Brief|1<{0,number,integer} Briefe} wurden erzeugt, es {1,choice,0#traten keine|1#trat ein|1<traten {1,number,integer}} Fehler auf.",
+    					MessageFormat.format("{0,choice,0#Keine Briefe wurden|1#Ein Brief wurde|1<{0,number,integer} Briefe wurden} erzeugt, es {1,choice,0#traten keine|1#trat ein|1<traten {1,number,integer}} Fehler auf.",
     							mapResult.get("success"), mapResult.get("error")),
     					"Details:",
     					wrtProtocol.toString());
@@ -1639,6 +1639,9 @@ public class RefereeCommunicationController {
 				mapReturn.put(key, value);
 			}
 		});
+
+		// for templates that need the current person
+		mapReturn.put("current", thePerson);
 
 		return mapReturn;
 	}
