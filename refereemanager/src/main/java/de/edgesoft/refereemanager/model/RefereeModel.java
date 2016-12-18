@@ -161,20 +161,20 @@ public class RefereeModel extends Referee {
 			return lastTrainingUpdate.plusYears(getHighestTrainingLevel().getType().getUpdateInterval().get());
 		}
 
-		/**
-		 * Does referee receive docs by letter?.
-		 *
-		 * Considers property and lack of email address.
-		 *
-		 * @return receive docs by letter?
+	/**
+	 * Does referee receive docs by letter?.
+	 *
+	 * Considers property and lack of email address.
+	 *
+	 * @return receive docs by letter?
 	 *
 	 * @version 0.10.0
 	 * @since 0.8.0
-		 */
-		@Override
-		public SimpleBooleanProperty getDocsByLetter() {
-				return new SimpleBooleanProperty(docsByLetter.get() || getEMail().isEmpty());
-		}
+	 */
+	@Override
+	public SimpleBooleanProperty getDocsByLetter() {
+			return new SimpleBooleanProperty(docsByLetter.get() || getEMail().isEmpty());
+	}
 
 }
 

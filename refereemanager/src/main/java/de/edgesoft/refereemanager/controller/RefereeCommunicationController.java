@@ -58,6 +58,7 @@ import freemarker.template.TemplateExceptionHandler;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
@@ -622,54 +623,56 @@ public class RefereeCommunicationController {
 		});
 
 		// visible for emails, letters, and documents
-		txtTitle.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()).or(radDocument.selectedProperty()));
-		txtTitle.managedProperty().bind(txtTitle.visibleProperty());
-		lblTitle.visibleProperty().bind(txtTitle.visibleProperty());
-		lblTitle.managedProperty().bind(txtTitle.visibleProperty());
-		txtSubtitle.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()).or(radDocument.selectedProperty()));
-		txtSubtitle.managedProperty().bind(txtSubtitle.visibleProperty());
-		lblSubtitle.visibleProperty().bind(txtSubtitle.visibleProperty());
-		lblSubtitle.managedProperty().bind(txtSubtitle.visibleProperty());
-		txtDate.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()).or(radDocument.selectedProperty()));
-		txtDate.managedProperty().bind(txtDate.visibleProperty());
-		lblDate.visibleProperty().bind(txtDate.visibleProperty());
-		lblDate.managedProperty().bind(txtDate.visibleProperty());
+		ObservableBooleanValue obsEmailLetterDocument = radEMail.selectedProperty().or(radLetter.selectedProperty()).or(radDocument.selectedProperty());
+		txtTitle.visibleProperty().bind(obsEmailLetterDocument);
+		txtTitle.managedProperty().bind(obsEmailLetterDocument);
+		lblTitle.visibleProperty().bind(obsEmailLetterDocument);
+		lblTitle.managedProperty().bind(obsEmailLetterDocument);
+		txtSubtitle.visibleProperty().bind(obsEmailLetterDocument);
+		txtSubtitle.managedProperty().bind(obsEmailLetterDocument);
+		lblSubtitle.visibleProperty().bind(obsEmailLetterDocument);
+		lblSubtitle.managedProperty().bind(obsEmailLetterDocument);
+		txtDate.visibleProperty().bind(obsEmailLetterDocument);
+		txtDate.managedProperty().bind(obsEmailLetterDocument);
+		lblDate.visibleProperty().bind(obsEmailLetterDocument);
+		lblDate.managedProperty().bind(obsEmailLetterDocument);
 
 		// visible for emails and letters
-		txtOpening.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		txtOpening.managedProperty().bind(txtOpening.visibleProperty());
-		lblOpening.visibleProperty().bind(txtOpening.visibleProperty());
-		lblOpening.managedProperty().bind(txtOpening.visibleProperty());
-		txtClosing.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		txtClosing.managedProperty().bind(txtClosing.visibleProperty());
-		lblClosing.visibleProperty().bind(txtClosing.visibleProperty());
-		lblClosing.managedProperty().bind(txtClosing.visibleProperty());
-		txtSignature.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		txtSignature.managedProperty().bind(txtSignature.visibleProperty());
-		lblSignature.visibleProperty().bind(txtSignature.visibleProperty());
-		lblSignature.managedProperty().bind(txtSignature.visibleProperty());
+		ObservableBooleanValue obsEmailLetter = radEMail.selectedProperty().or(radLetter.selectedProperty());
+		txtOpening.visibleProperty().bind(obsEmailLetter);
+		txtOpening.managedProperty().bind(obsEmailLetter);
+		lblOpening.visibleProperty().bind(obsEmailLetter);
+		lblOpening.managedProperty().bind(obsEmailLetter);
+		txtClosing.visibleProperty().bind(obsEmailLetter);
+		txtClosing.managedProperty().bind(obsEmailLetter);
+		lblClosing.visibleProperty().bind(obsEmailLetter);
+		lblClosing.managedProperty().bind(obsEmailLetter);
+		txtSignature.visibleProperty().bind(obsEmailLetter);
+		txtSignature.managedProperty().bind(obsEmailLetter);
+		lblSignature.visibleProperty().bind(obsEmailLetter);
+		lblSignature.managedProperty().bind(obsEmailLetter);
 
-		tblAttachments.visibleProperty().bind(radEMail.selectedProperty().or(radLetter.selectedProperty()));
-		lblAttachments.visibleProperty().bind(tblAttachments.visibleProperty());
-		barAttachments.visibleProperty().bind(tblAttachments.visibleProperty());
-
-		// visible for documents and texts
-		txtCommunicationOutputPath.visibleProperty().bind(radDocument.selectedProperty().or(radText.selectedProperty()));
-		txtCommunicationOutputPath.managedProperty().bind(txtCommunicationOutputPath.visibleProperty());
-		lblCommunicationOutputPath.visibleProperty().bind(txtCommunicationOutputPath.visibleProperty());
-		lblCommunicationOutputPath.managedProperty().bind(txtCommunicationOutputPath.visibleProperty());
+		tblAttachments.visibleProperty().bind(obsEmailLetter);
+		lblAttachments.visibleProperty().bind(obsEmailLetter);
+		barAttachments.visibleProperty().bind(obsEmailLetter);
 
 		// visible for letters and documents
-		txtOptions.visibleProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()));
-		txtOptions.managedProperty().bind(txtOptions.visibleProperty());
-		lblOptions.visibleProperty().bind(txtOptions.visibleProperty());
-		lblOptions.managedProperty().bind(txtOptions.visibleProperty());
+		ObservableBooleanValue obsLetterDocument = radLetter.selectedProperty().or(radDocument.selectedProperty());
+		txtOptions.visibleProperty().bind(obsLetterDocument);
+		txtOptions.managedProperty().bind(obsLetterDocument);
+		lblOptions.visibleProperty().bind(obsLetterDocument);
+		lblOptions.managedProperty().bind(obsLetterDocument);
 
 		// visible for letters, documents, and texts
-		txtFilename.visibleProperty().bind(radLetter.selectedProperty().or(radDocument.selectedProperty()).or(radText.selectedProperty()));
-		txtFilename.managedProperty().bind(txtFilename.visibleProperty());
-		lblFilename.visibleProperty().bind(txtFilename.visibleProperty());
-		lblFilename.managedProperty().bind(txtFilename.visibleProperty());
+		ObservableBooleanValue obsLetterDocumentText = radLetter.selectedProperty().or(radDocument.selectedProperty()).or(radText.selectedProperty());
+		txtCommunicationOutputPath.visibleProperty().bind(obsLetterDocumentText);
+		txtCommunicationOutputPath.managedProperty().bind(obsLetterDocumentText);
+		lblCommunicationOutputPath.visibleProperty().bind(obsLetterDocumentText);
+		lblCommunicationOutputPath.managedProperty().bind(obsLetterDocumentText);
+		txtFilename.visibleProperty().bind(obsLetterDocumentText);
+		txtFilename.managedProperty().bind(obsLetterDocumentText);
+		lblFilename.visibleProperty().bind(obsLetterDocumentText);
+		lblFilename.managedProperty().bind(obsLetterDocumentText);
 
 		// visible for specific fields
 		lblCommunicationOutput.visibleProperty().bind(lblCommunicationOutputPath.visibleProperty().or(lblOptions.visibleProperty()));
@@ -800,6 +803,8 @@ public class RefereeCommunicationController {
 				sendEMail(mapDocData, tplConfig);
 			}
 
+		} else if (grpCommKind.getSelectedToggle() == radLetter) {
+			createLetters(mapDocData, tplConfig);
 		} else if (grpCommKind.getSelectedToggle() == radDocument) {
 			createDocument(mapDocData, tplConfig);
 		} else {
@@ -837,7 +842,7 @@ public class RefereeCommunicationController {
 		PreferencesDialogController controller = pneLoad.getValue().getController();
 		controller.initController(appController, dialogStage,
 				(radEMail.isSelected()) ? "tabEMail" :
-					(radLetter.isSelected()) ? "tabEMail" :
+					(radLetter.isSelected()) ? "tabLetters" :
 						(radDocument.isSelected()) ? "tabDocuments" : "tabTexts");
 
 		// Show the dialog and wait until the user closes it
@@ -1181,7 +1186,7 @@ public class RefereeCommunicationController {
 							RefereeManager.logger.info(MessageFormat.format("Mail an ''{0}''.", person.getDisplayTitle().get()));
 							updateMessage(MessageFormat.format("Mail an ''{0}''.", person.getDisplayTitle().get()));
 
-							// fill variables in generated content (todo)
+							// fill variables in generated content
 							Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, person);
 
 							try {
@@ -1299,6 +1304,166 @@ public class RefereeCommunicationController {
             dialogStage.show();
 
             Thread thread = new Thread(taskSend);
+            thread.start();
+
+		} catch (IOException e) {
+			RefereeManager.logger.error(e);
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Create letters.
+	 *
+	 * @param theDocData document data
+	 * @param theConfig template configuration
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	private void createLetters(final Map<String, Object> theDocData, Configuration theConfig) {
+
+		Objects.requireNonNull(theDocData, "document data must not be null");
+		Objects.requireNonNull(theConfig, "template configuration must not be null");
+
+		try (StringWriter wrtProtocol = new StringWriter()) {
+
+			RefereeManager.addAppender(wrtProtocol, "createLetters");
+
+			LocalTime tmeStart = LocalTime.now();
+			RefereeManager.logger.info("Start Brieferzeugung.");
+
+			Task<Map<String, Integer>> taskLetter = new Task<Map<String,Integer>>() {
+
+				/** Main execution method. */
+				@Override
+				protected Map<String, Integer> call() throws InterruptedException {
+
+					int iSuccess = 0;
+					int iError = 0;
+
+					try {
+
+						// load document template
+						updateMessage("Lade Brief-Template.");
+						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.LETTERS_TEMPLATE_LETTER));
+
+						theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
+						Template tplLetter = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
+
+						// load single merge template
+						updateMessage("Lade Single-Merge-Template.");
+						pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.LETTERS_TEMPLATE_MERGE_SINGLE));
+
+						theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
+						Template tplMergeSingle = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
+
+						// load all merge template
+						updateMessage("Lade All-Merge-Template.");
+						pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.LETTERS_TEMPLATE_MERGE_ALL));
+
+						theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
+						Template tplMergeAll = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
+
+
+						// create docs
+						FilteredList<PersonModel> lstPeople = new FilteredList<>(ctlRefList.getCurrentSelection(), PersonModel.HAS_ADDRESS);
+						int iCount = lstPeople.size();
+						for (PersonModel person : lstPeople) {
+
+							RefereeManager.logger.info(MessageFormat.format("Brief an ''{0}''.", person.getDisplayTitle().get()));
+							updateMessage(MessageFormat.format("Brief an ''{0}''.", person.getDisplayTitle().get()));
+
+							// fill variables in generated content
+							Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, person);
+
+							try {
+
+//								if (mapFilled.containsKey(DocumentDataVariable.ATTACHMENT.value())) {
+//									for (Attachment theAttachment : (List<Attachment>) mapFilled.get(DocumentDataVariable.ATTACHMENT.value())) {
+//										Path attachment = Paths.get(theAttachment.getFilename().get());
+//
+//										BodyPart bpAttachment = new MimeBodyPart();
+//										bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
+//										bpAttachment.setFileName(attachment.getFileName().toString());
+//
+//										msgContent.addBodyPart(bpAttachment);
+//
+//										RefereeManager.logger.info(MessageFormat.format("Attachment: {0}", bpAttachment.getFileName()));
+//									}
+//								}
+
+								// fill document template, write document
+								Path pathOutFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH), (String) mapFilled.get(DocumentDataVariable.FILENAME.value()));
+								try (StringWriter wrtContent = new StringWriter()) {
+									tplLetter.process(mapFilled, wrtContent);
+									FileAccess.writeFile(pathOutFile, wrtContent.toString());
+								}
+
+								RefereeManager.logger.info(MessageFormat.format("Dokument ''{0}'' erzeugt", pathOutFile.toAbsolutePath().toString()));
+
+
+								iSuccess++;
+
+							} catch (IOException | TemplateException e) {
+								RefereeManager.logger.error(e);
+								iError++;
+							}
+
+							updateProgress(iError + iSuccess, iCount);
+
+						}
+
+					} catch (IOException e) {
+						RefereeManager.logger.error(e);
+						e.printStackTrace();
+						iError++;
+					}
+
+					Map<String, Integer> mapReturn = new HashMap<>();
+					mapReturn.put("success", iSuccess);
+					mapReturn.put("error", iError);
+
+					return mapReturn;
+				}
+			};
+
+            // progress dialog
+			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
+
+			Stage dialogStage = new Stage(StageStyle.UTILITY);
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setResizable(false);
+			dialogStage.setScene(new Scene(pneLoad.getKey()));
+
+			ProgressDialogController controller = pneLoad.getValue().getController();
+			controller.initController("Briefe erzeugen", taskLetter);
+
+            // task succeeded - show results
+            taskLetter.setOnSucceeded(event -> {
+                dialogStage.close();
+
+    			Map<String, Integer> mapResult = taskLetter.getValue();
+
+    			RefereeManager.logger.info("Ende Brieferzeugung.");
+    			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
+    			RefereeManager.logger.info(MessageFormat.format("Dauer: {0}", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+
+    			Alert alert = AlertUtils.createExpandableAlert((mapResult.get("error") > 0) ? AlertType.ERROR : AlertType.INFORMATION, appController.getPrimaryStage(),
+    					"Brieferzeugung",
+    					MessageFormat.format("Erzeugung {0,choice,0#erfolgreich|1#fehlerhaft|1<fehlerhaft}", mapResult.get("error")),
+    					MessageFormat.format("{0,choice,0#Keine Briefe|1#Eine Brief|1<{0,number,integer} Briefe} wurden erzeugt, es {1,choice,0#traten keine|1#trat ein|1<traten {1,number,integer}} Fehler auf.",
+    							mapResult.get("success"), mapResult.get("error")),
+    					"Details:",
+    					wrtProtocol.toString());
+
+    			alert.showAndWait();
+            });
+
+            dialogStage.show();
+
+            Thread thread = new Thread(taskLetter);
             thread.start();
 
 		} catch (IOException e) {

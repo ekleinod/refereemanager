@@ -84,12 +84,6 @@ public class Prefs {
 
 			case EMAIL_TEMPLATE_EMAIL:
 				return getPreferences().get(theKey.value(), "email/email.mmd");
-			case EMAIL_TEMPLATE_LETTER:
-				return getPreferences().get(theKey.value(), "letter/letter.mmd");
-			case EMAIL_TEMPLATE_MERGE_SINGLE:
-				return getPreferences().get(theKey.value(), "letter/merge_referee.tex");
-			case EMAIL_TEMPLATE_MERGE_ALL:
-				return getPreferences().get(theKey.value(), "letter/merge_referees.tex");
 
 			case FILENAME_PATTERN_DATABASE:
 				return getPreferences().get(theKey.value(), "refereemanager_%04d.xml");
@@ -99,6 +93,13 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), "merge_%s.tex");
 			case FILENAME_PATTERN_REFEREES_MERGE:
 				return getPreferences().get(theKey.value(), "merge_all.tex");
+
+			case LETTERS_TEMPLATE_LETTER:
+				return getPreferences().get(theKey.value(), "letter/letter.mmd");
+			case LETTERS_TEMPLATE_MERGE_SINGLE:
+				return getPreferences().get(theKey.value(), "letter/merge_referee.tex");
+			case LETTERS_TEMPLATE_MERGE_ALL:
+				return getPreferences().get(theKey.value(), "letter/merge_referees.tex");
 
 			case LOCALE:
 				return getPreferences().get(theKey.value(), Locale.GERMANY.toLanguageTag());

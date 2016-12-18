@@ -60,13 +60,79 @@ import javafx.stage.Stage;
 public class PreferencesDialogController {
 
 	/**
+	 * OK button.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnOK;
+
+	/**
+	 * Cancel button.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnCancel;
+
+	/**
+	 * Import button.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnImport;
+
+	/**
+	 * Export button.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnExport;
+
+
+	/**
+	 * Tab pane.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TabPane pneTabs;
+
+
+	/**
+	 * Tab display.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Tab tabDisplay;
+
+	/**
 	 * Checkbox: full path in title.
 	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
+	 * @version 0.10.0
+	 * @since 0.10.0
 	 */
 	@FXML
 	private CheckBox chkTitleFullpath;
+
+
+	/**
+	 * Tab paths.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Tab tabPaths;
 
 	/**
 	 * Template path.
@@ -103,6 +169,16 @@ public class PreferencesDialogController {
 	 */
 	@FXML
 	private Button btnImagePath;
+
+
+	/**
+	 * Tab EMail.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Tab tabEMail;
 
 	/**
 	 * EMail - SMTP host.
@@ -176,113 +252,43 @@ public class PreferencesDialogController {
 	@FXML
 	private TextField txtEMailTemplateEMail;
 
-	/**
-	 * EMail - Templates - Letter.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtEMailTemplateLetter;
 
 	/**
-	 * EMail - Templates - single merge.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtEMailTemplateMergeSingle;
-
-	/**
-	 * EMail - Templates - all merge.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtEMailTemplateMergeAll;
-
-	/**
-	 * Documents - Templates - Document.
+	 * Tab letters.
 	 *
 	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
-	private TextField txtDocumentsTemplateDocument;
+	private Tab tabLetters;
 
 	/**
-	 * Texts - Templates - Text.
+	 * Letters - Templates - Letter.
 	 *
 	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
-	private TextField txtTextsTemplateText;
+	private TextField txtLettersTemplateLetter;
 
 	/**
-	 * OK button.
+	 * Letters - Templates - single merge.
 	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
+	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
-	private Button btnOK;
+	private TextField txtLettersTemplateMergeSingle;
 
 	/**
-	 * Cancel button.
+	 * Letters - Templates - all merge.
 	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
+	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
-	private Button btnCancel;
+	private TextField txtLettersTemplateMergeAll;
 
-	/**
-	 * Import button.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Button btnImport;
-
-	/**
-	 * Export button.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Button btnExport;
-
-	/**
-	 * Tab display.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Tab tabDisplay;
-
-	/**
-	 * Tab paths.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Tab tabPaths;
-
-	/**
-	 * Tab EMail.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Tab tabEMail;
 
 	/**
 	 * Tab documents.
@@ -294,6 +300,16 @@ public class PreferencesDialogController {
 	private Tab tabDocuments;
 
 	/**
+	 * Documents - Templates - Document.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TextField txtDocumentsTemplateDocument;
+
+
+	/**
 	 * Tab texts.
 	 *
 	 * @version 0.12.0
@@ -303,13 +319,13 @@ public class PreferencesDialogController {
 	private Tab tabTexts;
 
 	/**
-	 * Tab pane.
+	 * Texts - Templates - Text.
 	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
+	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
-	private TabPane pneTabs;
+	private TextField txtTextsTemplateText;
 
 
 	/**
@@ -341,18 +357,24 @@ public class PreferencesDialogController {
 	private void initialize() {
 
 		// icons
-		btnTemplatePath.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
-		btnImagePath.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
-
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
 		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
 
 		tabDisplay.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+		btnTemplatePath.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
+		btnImagePath.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
+
 		tabPaths.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+
 		tabEMail.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+
+		tabLetters.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+
 		tabDocuments.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+
 		tabTexts.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
 
+		// fill with existing values
 		fillValues();
 
 	}
@@ -414,9 +436,11 @@ public class PreferencesDialogController {
 		txtEMailToName.setText(Prefs.get(PrefKey.EMAIL_TO_NAME));
 		txtEMailToEMail.setText(Prefs.get(PrefKey.EMAIL_TO_EMAIL));
 		txtEMailTemplateEMail.setText(Prefs.get(PrefKey.EMAIL_TEMPLATE_EMAIL));
-		txtEMailTemplateLetter.setText(Prefs.get(PrefKey.EMAIL_TEMPLATE_LETTER));
-		txtEMailTemplateMergeSingle.setText(Prefs.get(PrefKey.EMAIL_TEMPLATE_MERGE_SINGLE));
-		txtEMailTemplateMergeAll.setText(Prefs.get(PrefKey.EMAIL_TEMPLATE_MERGE_ALL));
+
+		// tab letters
+		txtLettersTemplateLetter.setText(Prefs.get(PrefKey.LETTERS_TEMPLATE_LETTER));
+		txtLettersTemplateMergeSingle.setText(Prefs.get(PrefKey.LETTERS_TEMPLATE_MERGE_SINGLE));
+		txtLettersTemplateMergeAll.setText(Prefs.get(PrefKey.LETTERS_TEMPLATE_MERGE_ALL));
 
 		// tab documents
 		txtDocumentsTemplateDocument.setText(Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
@@ -453,9 +477,11 @@ public class PreferencesDialogController {
 			Prefs.put(PrefKey.EMAIL_TO_NAME, txtEMailToName.getText());
 			Prefs.put(PrefKey.EMAIL_TO_EMAIL, txtEMailToEMail.getText());
 			Prefs.put(PrefKey.EMAIL_TEMPLATE_EMAIL, txtEMailTemplateEMail.getText());
-			Prefs.put(PrefKey.EMAIL_TEMPLATE_LETTER, txtEMailTemplateLetter.getText());
-			Prefs.put(PrefKey.EMAIL_TEMPLATE_MERGE_SINGLE, txtEMailTemplateMergeSingle.getText());
-			Prefs.put(PrefKey.EMAIL_TEMPLATE_MERGE_ALL, txtEMailTemplateMergeAll.getText());
+
+			// tab letters
+			Prefs.put(PrefKey.LETTERS_TEMPLATE_LETTER, txtLettersTemplateLetter.getText());
+			Prefs.put(PrefKey.LETTERS_TEMPLATE_MERGE_SINGLE, txtLettersTemplateMergeSingle.getText());
+			Prefs.put(PrefKey.LETTERS_TEMPLATE_MERGE_ALL, txtLettersTemplateMergeAll.getText());
 
 			// tab documents
 			Prefs.put(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT, txtDocumentsTemplateDocument.getText());

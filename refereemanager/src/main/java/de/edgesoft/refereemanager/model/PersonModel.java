@@ -63,6 +63,14 @@ public class PersonModel extends Person {
 	public static Predicate<PersonModel> HAS_EMAIL = person -> (person.getPrimaryEMail() != null);
 
 	/**
+	 * Filter predicate for people with postal addresses.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public static Predicate<PersonModel> HAS_ADDRESS = person -> (person.getPrimaryAddress() != null);
+
+	/**
 	 * Display title.
 	 *
 	 * @return display title
