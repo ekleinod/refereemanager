@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.model;
 import java.text.MessageFormat;
 import java.util.List;
 
+import de.edgesoft.edgeutils.files.FileUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Team;
 import de.edgesoft.refereemanager.jaxb.Venue;
@@ -31,7 +32,7 @@ import javafx.beans.property.SimpleStringProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.8.0
  */
 public class TeamModel extends Team {
@@ -45,31 +46,31 @@ public class TeamModel extends Team {
 	 * @since 0.8.0
 	 */
 	@Override
-		public SimpleStringProperty getDisplayTitle() {
+	public SimpleStringProperty getDisplayTitle() {
 
 		if (getNumber() == null) {
 			return getClub().getDisplayTitle();
 		}
 
 		return new SimpleStringProperty(MessageFormat.format("{0} {1}", getClub().getDisplayTitle().get(), getNumber().get()));
-		}
+	}
 
 	/**
 	 * Filename.
 	 *
 	 * @return filename
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.9.0
 	 */
-		public SimpleStringProperty getFilename() {
+	public SimpleStringProperty getFilename() {
 
 		if (getNumber() == null) {
 			return getClub().getFilename();
 		}
 
-		return new SimpleStringProperty(String.format("%s%d", getClub().getFilename().get(), getNumber().get()));
-		}
+		return new SimpleStringProperty(FileUtils.cleanFilename(String.format("%s%d", getClub().getFilename().get(), getNumber().get())));
+	}
 
 	/**
 	 * Return contact person.
@@ -79,8 +80,8 @@ public class TeamModel extends Team {
 	 * @version 0.9.0
 	 * @since 0.9.0
 	 */
-		@Override
-		public Person getContactPerson() {
+	@Override
+	public Person getContactPerson() {
 
 		if (super.getContactPerson() != null) {
 			return super.getContactPerson();
@@ -92,7 +93,7 @@ public class TeamModel extends Team {
 
 		return null;
 
-		}
+	}
 
 	/**
 	 * Return venues.
@@ -102,8 +103,8 @@ public class TeamModel extends Team {
 	 * @version 0.9.0
 	 * @since 0.9.0
 	 */
-		@Override
-		public List<Venue> getVenue() {
+	@Override
+	public List<Venue> getVenue() {
 
 		if (super.getVenue().isEmpty() && (getClub() != null) && (!getClub().getVenue().isEmpty())) {
 			return getClub().getVenue();
@@ -111,7 +112,7 @@ public class TeamModel extends Team {
 
 		return super.getVenue();
 
-		}
+	}
 
 }
 

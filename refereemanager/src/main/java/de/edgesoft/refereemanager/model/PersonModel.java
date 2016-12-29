@@ -4,6 +4,7 @@ import java.text.Collator;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
+import de.edgesoft.edgeutils.files.FileUtils;
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Person;
@@ -152,7 +153,7 @@ public class PersonModel extends Person {
 	 *
 	 * @return filename name of the person
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.8.0
 	 */
 	public SimpleStringProperty getFileName() {
@@ -169,7 +170,7 @@ public class PersonModel extends Person {
 			sbReturn.append(getFirstName().get().toLowerCase());
 		}
 
-		return new SimpleStringProperty(sbReturn.toString());
+		return new SimpleStringProperty(FileUtils.cleanFilename(sbReturn.toString()));
 	}
 
 	/**
