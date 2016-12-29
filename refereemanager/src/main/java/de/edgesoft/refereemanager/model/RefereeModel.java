@@ -80,35 +80,47 @@ public class RefereeModel extends Referee {
 	 * @version 0.6.0
 	 * @since 0.5.0
 	 */
-		public TrainingLevel getHighestTrainingLevel() {
-			return getTrainingLevel()
-					.stream()
-					.sorted(TrainingLevelModel.RANK.reversed())
-					.findFirst()
-					.orElse(null);
-		}
+	public TrainingLevel getHighestTrainingLevel() {
+		return getTrainingLevel()
+				.stream()
+				.sorted(TrainingLevelModel.RANK.reversed())
+				.findFirst()
+				.orElse(null);
+	}
+
+	/**
+	 * First training level.
+	 *
+	 * @return first training level
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public TrainingLevel getFirstTrainingLevel() {
+		return getTrainingLevel()
+				.stream()
+				.sorted(TrainingLevelModel.RANK)
+				.findFirst()
+				.orElse(null);
+	}
 
 	/**
 	 * Local training level.
 	 *
 	 * @return local training level
 	 *
-	 * @version 0.9.0
+	 * @version 0.12.0
 	 * @since 0.9.0
 	 */
-		public TrainingLevel getLocalTrainingLevel() {
-			TrainingLevel firstLevel = getTrainingLevel()
-					.stream()
-					.sorted(TrainingLevelModel.RANK)
-					.findFirst()
-					.orElse(null);
+	public TrainingLevel getLocalTrainingLevel() {
+		TrainingLevel firstLevel = getFirstTrainingLevel();
 
-			if ((firstLevel == null) || !firstLevel.getType().getId().equals(Prefs.get(PrefKey.LOCAL_TRAININGLEVEL))) {
-				return null;
-			}
-
-			return firstLevel;
+		if ((firstLevel == null) || !firstLevel.getType().getId().equals(Prefs.get(PrefKey.LOCAL_TRAININGLEVEL))) {
+			return null;
 		}
+
+		return firstLevel;
+	}
 
 	/**
 	 * Last training update.
@@ -118,29 +130,29 @@ public class RefereeModel extends Referee {
 	 * @version 0.10.0
 	 * @since 0.8.0
 	 */
-		public LocalDate getLastTrainingUpdate() {
+	public LocalDate getLastTrainingUpdate() {
 
-			TrainingLevel highestTrainingLevel = getHighestTrainingLevel();
+		TrainingLevel highestTrainingLevel = getHighestTrainingLevel();
 
-			if (highestTrainingLevel == null) {
-				return null;
-			}
-
-			List<LocalDate> lstUpdate = new ArrayList<>();
-			highestTrainingLevel.getUpdate().forEach(update -> lstUpdate.add((LocalDate) update.get()));
-
-			LocalDate dteReturn = lstUpdate
-					.stream()
-					.sorted(Comparator.reverseOrder())
-					.findFirst()
-					.orElse(null);
-
-			if (dteReturn == null) {
-				return (LocalDate) highestTrainingLevel.getSince().get();
-			}
-
-			return dteReturn;
+		if (highestTrainingLevel == null) {
+			return null;
 		}
+
+		List<LocalDate> lstUpdate = new ArrayList<>();
+		highestTrainingLevel.getUpdate().forEach(update -> lstUpdate.add((LocalDate) update.get()));
+
+		LocalDate dteReturn = lstUpdate
+				.stream()
+				.sorted(Comparator.reverseOrder())
+				.findFirst()
+				.orElse(null);
+
+		if (dteReturn == null) {
+			return (LocalDate) highestTrainingLevel.getSince().get();
+		}
+
+		return dteReturn;
+	}
 
 	/**
 	 * Next training update.
@@ -150,16 +162,16 @@ public class RefereeModel extends Referee {
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-		public LocalDate getNextTrainingUpdate() {
+	public LocalDate getNextTrainingUpdate() {
 
-			LocalDate lastTrainingUpdate = getLastTrainingUpdate();
+		LocalDate lastTrainingUpdate = getLastTrainingUpdate();
 
-			if (lastTrainingUpdate == null) {
-				return null;
-			}
-
-			return lastTrainingUpdate.plusYears(getHighestTrainingLevel().getType().getUpdateInterval().get());
+		if (lastTrainingUpdate == null) {
+			return null;
 		}
+
+		return lastTrainingUpdate.plusYears(getHighestTrainingLevel().getType().getUpdateInterval().get());
+	}
 
 	/**
 	 * Does referee receive docs by letter?.

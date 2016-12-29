@@ -400,7 +400,7 @@ public class RefereeCommunicationController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private RadioButton radEMail;
+	private RadioButton radEMails;
 
 	/**
 	 * Radio button letter.
@@ -409,7 +409,16 @@ public class RefereeCommunicationController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private RadioButton radLetter;
+	private RadioButton radLetters;
+
+	/**
+	 * Radio button text.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private RadioButton radTexts;
 
 	/**
 	 * Radio button document.
@@ -419,15 +428,6 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private RadioButton radDocument;
-
-	/**
-	 * Radio button text.
-	 *
-	 * @version 0.12.0
-	 * @since 0.12.0
-	 */
-	@FXML
-	private RadioButton radText;
 
 
 	/**
@@ -637,7 +637,7 @@ public class RefereeCommunicationController {
 				ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull()
 				.or(txtBody.textProperty().isEmpty())
 				.or(
-						radEMail.selectedProperty().or(radLetter.selectedProperty())
+						radEMails.selectedProperty().or(radLetters.selectedProperty())
 						.and(
 								txtOpening.textProperty().isEmpty()
 								.or(txtClosing.textProperty().isEmpty())
@@ -645,13 +645,13 @@ public class RefereeCommunicationController {
 						)
 				)
 				.or(
-						radText.selectedProperty().not()
+						radTexts.selectedProperty().not()
 						.and(
 								txtTitle.textProperty().isEmpty()
 						)
 				)
 				.or(
-						radText.selectedProperty().or(radDocument.selectedProperty())
+						radTexts.selectedProperty().or(radDocument.selectedProperty())
 						.and(
 								txtFilename.textProperty().isEmpty()
 						)
@@ -664,11 +664,11 @@ public class RefereeCommunicationController {
 
 		// text on send button
 		grpCommKind.selectedToggleProperty().addListener((ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) -> {
-			btnSend.setText((newValue == radEMail) ? "Senden" : "Erzeugen");
+			btnSend.setText((newValue == radEMails) ? "Senden" : "Erzeugen");
 		});
 
 		// visible for emails
-		ObservableBooleanValue obsEmail = radEMail.selectedProperty();
+		ObservableBooleanValue obsEmail = radEMails.selectedProperty();
 		lblOther.visibleProperty().bind(obsEmail);
 		lblOther.managedProperty().bind(obsEmail);
 		sepOther.visibleProperty().bind(obsEmail);
@@ -679,7 +679,7 @@ public class RefereeCommunicationController {
 		chkTestMail.managedProperty().bind(obsEmail);
 
 		// visible for emails, letters, and documents
-		ObservableBooleanValue obsEmailLetterDocument = radEMail.selectedProperty().or(radLetter.selectedProperty()).or(radDocument.selectedProperty());
+		ObservableBooleanValue obsEmailLetterDocument = radEMails.selectedProperty().or(radLetters.selectedProperty()).or(radDocument.selectedProperty());
 		txtTitle.visibleProperty().bind(obsEmailLetterDocument);
 		txtTitle.managedProperty().bind(obsEmailLetterDocument);
 		lblTitle.visibleProperty().bind(obsEmailLetterDocument);
@@ -694,7 +694,7 @@ public class RefereeCommunicationController {
 		lblDate.managedProperty().bind(obsEmailLetterDocument);
 
 		// visible for emails and letters
-		ObservableBooleanValue obsEmailLetter = radEMail.selectedProperty().or(radLetter.selectedProperty());
+		ObservableBooleanValue obsEmailLetter = radEMails.selectedProperty().or(radLetters.selectedProperty());
 		txtOpening.visibleProperty().bind(obsEmailLetter);
 		txtOpening.managedProperty().bind(obsEmailLetter);
 		lblOpening.visibleProperty().bind(obsEmailLetter);
@@ -713,14 +713,14 @@ public class RefereeCommunicationController {
 		barAttachments.visibleProperty().bind(obsEmailLetter);
 
 		// visible for letters and documents
-		ObservableBooleanValue obsLetterDocument = radLetter.selectedProperty().or(radDocument.selectedProperty());
+		ObservableBooleanValue obsLetterDocument = radLetters.selectedProperty().or(radDocument.selectedProperty());
 		txtOptions.visibleProperty().bind(obsLetterDocument);
 		txtOptions.managedProperty().bind(obsLetterDocument);
 		lblOptions.visibleProperty().bind(obsLetterDocument);
 		lblOptions.managedProperty().bind(obsLetterDocument);
 
 		// visible for letters, documents, and texts
-		ObservableBooleanValue obsLetterDocumentText = radLetter.selectedProperty().or(radDocument.selectedProperty()).or(radText.selectedProperty());
+		ObservableBooleanValue obsLetterDocumentText = radLetters.selectedProperty().or(radDocument.selectedProperty()).or(radTexts.selectedProperty());
 		txtCommunicationOutputPath.visibleProperty().bind(obsLetterDocumentText);
 		txtCommunicationOutputPath.managedProperty().bind(obsLetterDocumentText);
 		lblCommunicationOutputPath.visibleProperty().bind(obsLetterDocumentText);
@@ -840,7 +840,7 @@ public class RefereeCommunicationController {
 		tplConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 		tplConfig.setLogTemplateExceptions(false);
 
-		if (grpCommKind.getSelectedToggle() == radEMail) {
+		if (grpCommKind.getSelectedToggle() == radEMails) {
 
 			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
 					"Bestätigung E-Mail senden",
@@ -856,11 +856,13 @@ public class RefereeCommunicationController {
 					});
 
 			if (doSend.get()) {
-				sendEMail(mapDocData, tplConfig);
+				sendEMails(mapDocData, tplConfig);
 			}
 
-		} else if (grpCommKind.getSelectedToggle() == radLetter) {
+		} else if (grpCommKind.getSelectedToggle() == radLetters) {
 			createLetters(mapDocData, tplConfig);
+		} else if (grpCommKind.getSelectedToggle() == radTexts) {
+			createTexts(mapDocData, tplConfig);
 		} else if (grpCommKind.getSelectedToggle() == radDocument) {
 			createDocument(mapDocData, tplConfig);
 		} else {
@@ -897,8 +899,8 @@ public class RefereeCommunicationController {
 		// initialize controller
 		PreferencesDialogController controller = pneLoad.getValue().getController();
 		controller.initController(appController, dialogStage,
-				(radEMail.isSelected()) ? "tabEMail" :
-					(radLetter.isSelected()) ? "tabLetters" :
+				(radEMails.isSelected()) ? "tabEMail" :
+					(radLetters.isSelected()) ? "tabLetters" :
 						(radDocument.isSelected()) ? "tabDocuments" : "tabTexts");
 
 		// Show the dialog and wait until the user closes it
@@ -1192,7 +1194,7 @@ public class RefereeCommunicationController {
 	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
-	private void sendEMail(final Map<String, Object> theDocData, Configuration theConfig) {
+	private void sendEMails(final Map<String, Object> theDocData, Configuration theConfig) {
 
 		Objects.requireNonNull(theDocData, "document data must not be null");
 		Objects.requireNonNull(theConfig, "template configuration must not be null");
@@ -1533,6 +1535,138 @@ public class RefereeCommunicationController {
     					"Brieferzeugung",
     					MessageFormat.format("Erzeugung {0,choice,0#erfolgreich|1#fehlerhaft|1<fehlerhaft}", mapResult.get("error")),
     					MessageFormat.format("{0,choice,0#Keine Dateien wurden|1#Eine Datei wurde|1<{0,number,integer} Dateien wurden} erzeugt, es {1,choice,0#traten keine|1#trat ein|1<traten {1,number,integer}} Fehler auf.",
+    							mapResult.get("success"), mapResult.get("error")),
+    					"Details:",
+    					wrtProtocol.toString());
+
+    			alert.showAndWait();
+            });
+
+            dialogStage.show();
+
+            Thread thread = new Thread(taskLetter);
+            thread.start();
+
+		} catch (IOException e) {
+			RefereeManager.logger.error(e);
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Create texts.
+	 *
+	 * @param theDocData document data
+	 * @param theConfig template configuration
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	private void createTexts(final Map<String, Object> theDocData, Configuration theConfig) {
+
+		Objects.requireNonNull(theDocData, "document data must not be null");
+		Objects.requireNonNull(theConfig, "template configuration must not be null");
+
+		try (StringWriter wrtProtocol = new StringWriter()) {
+
+			RefereeManager.addAppender(wrtProtocol, "createTexts");
+
+			LocalTime tmeStart = LocalTime.now();
+			RefereeManager.logger.info("Start Texterzeugung.");
+
+			Task<Map<String, Integer>> taskLetter = new Task<Map<String,Integer>>() {
+
+				/** Main execution method. */
+				@Override
+				protected Map<String, Integer> call() throws InterruptedException {
+
+					int iSuccess = 0;
+					int iError = 0;
+
+					try {
+
+						// load text template
+						updateMessage("Lade Text-Template.");
+						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.TEXTS_TEMPLATE_TEXT));
+
+						theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
+						Template tplLetter = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
+
+
+						// create texts
+						List<PersonModel> lstPeople = ctlRefList.getCurrentSelection();
+						int iCount = lstPeople.size();
+
+						for (PersonModel person : lstPeople) {
+
+							RefereeManager.logger.info(MessageFormat.format("Text für ''{0}''.", person.getDisplayTitle().get()));
+							updateMessage(MessageFormat.format("Text für ''{0}''.", person.getDisplayTitle().get()));
+
+							// fill variables in generated content
+							Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, person);
+
+							try {
+
+								// fill document template, write document
+								Path pathOutFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH), (String) mapFilled.get(DocumentDataVariable.FILENAME.value()));
+								try (StringWriter wrtContent = new StringWriter()) {
+									tplLetter.process(mapFilled, wrtContent);
+									FileAccess.writeFile(pathOutFile, wrtContent.toString());
+								}
+
+								RefereeManager.logger.info(MessageFormat.format("Dokument ''{0}'' erzeugt", pathOutFile.toAbsolutePath().toString()));
+
+								iSuccess++;
+
+							} catch (IOException | TemplateException e) {
+								RefereeManager.logger.error(e);
+								iError++;
+							}
+
+							updateProgress(iError + iSuccess, iCount);
+
+						}
+
+					} catch (IOException e) {
+						RefereeManager.logger.error(e);
+						e.printStackTrace();
+						iError++;
+					}
+
+					Map<String, Integer> mapReturn = new HashMap<>();
+					mapReturn.put("success", iSuccess);
+					mapReturn.put("error", iError);
+
+					return mapReturn;
+				}
+			};
+
+            // progress dialog
+			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
+
+			Stage dialogStage = new Stage(StageStyle.UTILITY);
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setResizable(false);
+			dialogStage.setScene(new Scene(pneLoad.getKey()));
+
+			ProgressDialogController controller = pneLoad.getValue().getController();
+			controller.initController("Texte erzeugen", taskLetter);
+
+            // task succeeded - show results
+            taskLetter.setOnSucceeded(event -> {
+                dialogStage.close();
+
+    			Map<String, Integer> mapResult = taskLetter.getValue();
+
+    			RefereeManager.logger.info("Ende Texterzeugung.");
+    			Duration sendingTime = Duration.between(tmeStart, LocalTime.now());
+    			RefereeManager.logger.info(MessageFormat.format("Dauer: {0}", DateTimeFormatter.ISO_LOCAL_TIME.format(LocalTime.ofSecondOfDay(sendingTime.getSeconds()))));
+
+    			Alert alert = AlertUtils.createExpandableAlert((mapResult.get("error") > 0) ? AlertType.ERROR : AlertType.INFORMATION, appController.getPrimaryStage(),
+    					"Texterzeugung",
+    					MessageFormat.format("Erzeugung {0,choice,0#erfolgreich|1#fehlerhaft|1<fehlerhaft}", mapResult.get("error")),
+    					MessageFormat.format("{0,choice,0#Keine Texte wurden|1#Ein Text wurde|1<{0,number,integer} Texte wurden} erzeugt, es {1,choice,0#traten keine|1#trat ein|1<traten {1,number,integer}} Fehler auf.",
     							mapResult.get("success"), mapResult.get("error")),
     					"Details:",
     					wrtProtocol.toString());

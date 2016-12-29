@@ -193,14 +193,14 @@
                               <Label text="Dateiname" GridPane.rowIndex="5" />
                               <VBox prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
-                                    <RadioButton fx:id="radEMail" mnemonicParsing="false" selected="true" text="E-Mail">
+                                    <RadioButton fx:id="radEMails" mnemonicParsing="false" selected="true" text="E-Mail (1 pro gewählter Person)">
                                        <toggleGroup>
                                           <ToggleGroup fx:id="grpCommKind" />
                                        </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton fx:id="radLetter" mnemonicParsing="false" text="Brief" toggleGroup="$grpCommKind" />
-                                    <RadioButton fx:id="radDocument" mnemonicParsing="false" text="Dokument" toggleGroup="$grpCommKind" />
-                                    <RadioButton fx:id="radText" mnemonicParsing="false" text="Text" toggleGroup="$grpCommKind" />
+                                    <RadioButton fx:id="radLetters" mnemonicParsing="false" text="Brief (1 pro gewählter Person)" toggleGroup="$grpCommKind" />
+                                    <RadioButton fx:id="radTexts" mnemonicParsing="false" text="Text (1 pro gewählter Person)" toggleGroup="$grpCommKind" />
+                                    <RadioButton fx:id="radDocument" mnemonicParsing="false" text="Dokument (1 unabhängig von Auswahl)" toggleGroup="$grpCommKind" />
                                  </children>
                                  <GridPane.margin>
                                     <Insets bottom="5.0" top="5.0" />
