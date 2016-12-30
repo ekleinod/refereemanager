@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -51,7 +52,6 @@ import de.edgesoft.refereemanager.utils.MailUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
-import de.edgesoft.refereemanager.utils.TemplateHelper;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -116,7 +116,7 @@ import javafx.stage.StageStyle;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.10.0
  */
 public class RefereeCommunicationController {
@@ -1047,7 +1047,7 @@ public class RefereeCommunicationController {
 					}
 				}
 
-				txtBody.setText(TemplateHelper.toText(lstBody));
+				txtBody.setText(lstBody.stream().collect(Collectors.joining(System.lineSeparator())));
 
 			} catch (Exception e) {
 

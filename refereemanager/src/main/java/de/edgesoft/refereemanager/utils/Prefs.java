@@ -135,34 +135,6 @@ public class Prefs {
 	}
 
 	/**
-	 * Get preference for date/time format.
-	 *
-	 * @param theKey date time format
-	 * @return preference value
-	 *
-	 * @version 0.8.0
-	 * @since 0.8.0
-	 */
-	public static String get(final DateTimeFormat theKey) {
-
-		switch (theKey) {
-			case DATELONG:
-				return getPreferences().get(theKey.value(), "d. MMMM yyyy");
-			case DATEMEDIUM:
-				return getPreferences().get(theKey.value(), "dd.MM.yyyy");
-			case DATEYEAR:
-				return getPreferences().get(theKey.value(), "yyyy");
-
-			case DATETIMELONG:
-				return getPreferences().get(theKey.value(), "ccc: d. MMM yyyy, hh:mm:ss");
-
-			default:
-				return getPreferences().get(theKey.value(), "'unknown format'");
-		}
-
-	}
-
-	/**
 	 * Set preference value for key.
 	 *
 	 * @param theKey preference key
