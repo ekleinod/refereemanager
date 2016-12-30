@@ -36,6 +36,7 @@ public enum DocumentDataVariable {
 	CLOSING,
 	DATE,
 	FILENAME,
+	IMAGEPATH,
 	OPENING,
 	OPTIONS,
 	SIGNATURE,
