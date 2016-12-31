@@ -855,7 +855,7 @@ public class RefereeCommunicationController {
 						doSend.set(true);
 					});
 
-			if (doSend.get()) {
+			if (doSend.getValue()) {
 				sendEMails(mapDocData, tplConfig);
 			}
 
@@ -1241,8 +1241,8 @@ public class RefereeCommunicationController {
 						int iCount = lstPeople.size();
 						for (PersonModel person : lstPeople) {
 
-							RefereeManager.logger.info(MessageFormat.format("Mail an ''{0}''.", person.getDisplayTitle().get()));
-							updateMessage(MessageFormat.format("Mail an ''{0}''.", person.getDisplayTitle().get()));
+							RefereeManager.logger.info(MessageFormat.format("Mail an ''{0}''.", person.getDisplayTitle().getValue()));
+							updateMessage(MessageFormat.format("Mail an ''{0}''.", person.getDisplayTitle().getValue()));
 
 							// fill variables in generated content
 							Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, person);
@@ -1261,7 +1261,7 @@ public class RefereeCommunicationController {
 								msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
 
 								EMail theEMail = person.getPrimaryEMail();
-								msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().get(), person.getFullName().get(), StandardCharsets.UTF_8.name()));
+								msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().getValue(), person.getFullName().getValue(), StandardCharsets.UTF_8.name()));
 
 								MimeMultipart msgContent = new MimeMultipart();
 
@@ -1276,7 +1276,7 @@ public class RefereeCommunicationController {
 
 								if (mapFilled.containsKey(DocumentDataVariable.ATTACHMENT.value())) {
 									for (Attachment theAttachment : (List<Attachment>) mapFilled.get(DocumentDataVariable.ATTACHMENT.value())) {
-										Path attachment = Paths.get(theAttachment.getFilename().get());
+										Path attachment = Paths.get(theAttachment.getFilename().getValue());
 
 										BodyPart bpAttachment = new MimeBodyPart();
 										bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
@@ -1438,8 +1438,8 @@ public class RefereeCommunicationController {
 
 						for (PersonModel person : lstPeople) {
 
-							RefereeManager.logger.info(MessageFormat.format("Brief an ''{0}''.", person.getDisplayTitle().get()));
-							updateMessage(MessageFormat.format("Brief an ''{0}''.", person.getDisplayTitle().get()));
+							RefereeManager.logger.info(MessageFormat.format("Brief an ''{0}''.", person.getDisplayTitle().getValue()));
+							updateMessage(MessageFormat.format("Brief an ''{0}''.", person.getDisplayTitle().getValue()));
 
 							// fill variables in generated content
 							Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, person);
@@ -1600,8 +1600,8 @@ public class RefereeCommunicationController {
 
 						for (PersonModel person : lstPeople) {
 
-							RefereeManager.logger.info(MessageFormat.format("Text für ''{0}''.", person.getDisplayTitle().get()));
-							updateMessage(MessageFormat.format("Text für ''{0}''.", person.getDisplayTitle().get()));
+							RefereeManager.logger.info(MessageFormat.format("Text für ''{0}''.", person.getDisplayTitle().getValue()));
+							updateMessage(MessageFormat.format("Text für ''{0}''.", person.getDisplayTitle().getValue()));
 
 							// fill variables in generated content
 							Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, person);

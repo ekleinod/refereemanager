@@ -35,7 +35,7 @@ import javafx.beans.property.SimpleBooleanProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.5.0
  */
 public class RefereeModel extends Referee {
@@ -51,26 +51,26 @@ public class RefereeModel extends Referee {
 	/**
 	 * Filter predicate for active status types.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.5.0
 	 */
-	public static Predicate<Referee> ACTIVE = referee -> referee.getStatus().getActive().get();
+	public static Predicate<Referee> ACTIVE = referee -> referee.getStatus().getActive().getValue();
 
 	/**
 	 * Filter predicate for inactive status types.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.5.0
 	 */
-	public static Predicate<Referee> INACTIVE = referee -> !referee.getStatus().getActive().get();
+	public static Predicate<Referee> INACTIVE = referee -> !referee.getStatus().getActive().getValue();
 
 	/**
 	 * Filter predicate for letter only (docs by letter and no email) referees.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
-	public static Predicate<Referee> LETTER_ONLY = referee -> referee.getDocsByLetter().get();
+	public static Predicate<Referee> LETTER_ONLY = referee -> referee.getDocsByLetter().getValue();
 
 	/**
 	 * Highest training level.
@@ -127,7 +127,7 @@ public class RefereeModel extends Referee {
 	 *
 	 * @return last training update
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.8.0
 	 */
 	public LocalDate getLastTrainingUpdate() {
@@ -139,7 +139,7 @@ public class RefereeModel extends Referee {
 		}
 
 		List<LocalDate> lstUpdate = new ArrayList<>();
-		highestTrainingLevel.getUpdate().forEach(update -> lstUpdate.add((LocalDate) update.get()));
+		highestTrainingLevel.getUpdate().forEach(update -> lstUpdate.add((LocalDate) update.getValue()));
 
 		LocalDate dteReturn = lstUpdate
 				.stream()
@@ -148,7 +148,7 @@ public class RefereeModel extends Referee {
 				.orElse(null);
 
 		if (dteReturn == null) {
-			return (LocalDate) highestTrainingLevel.getSince().get();
+			return (LocalDate) highestTrainingLevel.getSince().getValue();
 		}
 
 		return dteReturn;
@@ -159,7 +159,7 @@ public class RefereeModel extends Referee {
 	 *
 	 * @return next training update
 	 *
-	 * @version 0.8.0
+	 * @version 0.12.0
 	 * @since 0.8.0
 	 */
 	public LocalDate getNextTrainingUpdate() {
@@ -170,7 +170,7 @@ public class RefereeModel extends Referee {
 			return null;
 		}
 
-		return lastTrainingUpdate.plusYears(getHighestTrainingLevel().getType().getUpdateInterval().get());
+		return lastTrainingUpdate.plusYears(getHighestTrainingLevel().getType().getUpdateInterval().getValue());
 	}
 
 	/**
@@ -180,12 +180,12 @@ public class RefereeModel extends Referee {
 	 *
 	 * @return receive docs by letter?
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.8.0
 	 */
 	@Override
 	public SimpleBooleanProperty getDocsByLetter() {
-			return new SimpleBooleanProperty(docsByLetter.get() || getEMail().isEmpty());
+			return new SimpleBooleanProperty(docsByLetter.getValue() || getEMail().isEmpty());
 	}
 
 }
