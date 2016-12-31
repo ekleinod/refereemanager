@@ -50,7 +50,6 @@
                                     <RowConstraints vgrow="SOMETIMES" />
                                     <RowConstraints vgrow="SOMETIMES" />
                                     <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
                                     <Label fx:id="lblTitle" text="Titel" GridPane.rowIndex="2">
@@ -123,11 +122,6 @@
                                     </TextField>
                                     <Label fx:id="lblFilename" text="Generierter Dateiname" GridPane.rowIndex="10" />
                                     <TextField fx:id="txtFilename" GridPane.columnIndex="1" GridPane.rowIndex="10">
-                                       <GridPane.margin>
-                                          <Insets bottom="5.0" top="5.0" />
-                                       </GridPane.margin></TextField>
-                                    <Label fx:id="lblImagepath" text="Bilderpfad" GridPane.rowIndex="11" />
-                                    <TextField fx:id="txtImagepath" GridPane.columnIndex="1" GridPane.rowIndex="11">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" top="5.0" />
                                        </GridPane.margin></TextField>

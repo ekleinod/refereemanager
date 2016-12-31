@@ -301,24 +301,6 @@ public class RefereeCommunicationController {
 	@FXML
 	private TextField txtFilename;
 
-	/**
-	 * Label imagepath.
-	 *
-	 * @version 0.12.0
-	 * @since 0.12.0
-	 */
-	@FXML
-	private Label lblImagepath;
-
-	/**
-	 * Textfield imagepath.
-	 *
-	 * @version 0.12.0
-	 * @since 0.12.0
-	 */
-	@FXML
-	private TextField txtImagepath;
-
 
 	/**
 	 * Label attachments.
@@ -748,13 +730,6 @@ public class RefereeCommunicationController {
 		lblFilename.visibleProperty().bind(obsLetterDocumentText);
 		lblFilename.managedProperty().bind(obsLetterDocumentText);
 
-		// visible for letters, documents, and texts
-		ObservableBooleanValue obsText = radTexts.selectedProperty();
-		txtImagepath.visibleProperty().bind(obsText);
-		txtImagepath.managedProperty().bind(obsText);
-		lblImagepath.visibleProperty().bind(obsText);
-		lblImagepath.managedProperty().bind(obsText);
-
 		// visible for specific fields
 		lblCommunicationOutput.visibleProperty().bind(lblCommunicationOutputPath.visibleProperty().or(lblOptions.visibleProperty()));
 		lblCommunicationOutput.managedProperty().bind(lblCommunicationOutput.visibleProperty());
@@ -830,11 +805,6 @@ public class RefereeCommunicationController {
 				case FILENAME:
 					if ((txtFilename.getText() != null) && !txtFilename.getText().trim().isEmpty()) {
 						mapDocData.put(theTemplateVariable.value(), txtFilename.getText().trim());
-					}
-					break;
-				case IMAGEPATH:
-					if ((txtImagepath.getText() != null) && !txtImagepath.getText().trim().isEmpty()) {
-						mapDocData.put(theTemplateVariable.value(), txtImagepath.getText().trim());
 					}
 					break;
 				case OPENING:
@@ -1049,9 +1019,6 @@ public class RefereeCommunicationController {
 										break;
 									case FILENAME:
 										txtFilename.setText(theLineContent);
-										break;
-									case IMAGEPATH:
-										txtImagepath.setText(theLineContent);
 										break;
 									case OPENING:
 										txtOpening.setText(theLineContent);
@@ -1807,6 +1774,7 @@ public class RefereeCommunicationController {
 		mapData.put("refdata", AppModel.getData());
 		mapData.put("selection", ctlRefList.getCurrentSelection());
 		mapData.put("current", thePerson);
+		mapData.put("prefs", Prefs.getPrefMap());
 
 		theDocData.forEach((key, value) -> {
 

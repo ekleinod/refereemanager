@@ -3,7 +3,9 @@ package de.edgesoft.refereemanager.utils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 import java.util.prefs.Preferences;
@@ -190,6 +192,25 @@ public class Prefs {
 	public static void importPrefs(final InputStream theStream) throws IOException, InvalidPreferencesFormatException, BackingStoreException {
 		getPreferences().clear();
 		Preferences.importPreferences(theStream);
+	}
+
+	/**
+	 * Returns preferences map.
+	 *
+	 * @return preferences map
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public static Map<String, Object> getPrefMap() {
+
+		Map<String, Object> mapReturn = new HashMap<>();
+
+		for (PrefKey theKey : PrefKey.values()) {
+			mapReturn.put(theKey.value(), get(theKey));
+		}
+
+		return mapReturn;
 	}
 
 }

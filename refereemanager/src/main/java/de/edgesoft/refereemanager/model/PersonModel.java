@@ -1,5 +1,6 @@
 package de.edgesoft.refereemanager.model;
 
+import java.nio.file.Paths;
 import java.text.Collator;
 import java.util.Comparator;
 import java.util.function.Predicate;
@@ -171,6 +172,25 @@ public class PersonModel extends Person {
 		}
 
 		return new SimpleStringProperty(FileUtils.cleanFilename(sbReturn.toString()));
+	}
+
+	/**
+	 * Returns if image file given by image path and filename exists.
+	 *
+	 * @param theImagePath image path
+	 * @return does image file given by image path and filename exist
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public boolean existsImageFile(final String theImagePath) {
+
+		if ((getFileName() == null) || (getFileName().getValue() == null) || getFileName().getValue().isEmpty()) {
+			return false;
+		}
+
+		return Paths.get(theImagePath, String.format("%s.jpg", getFileName().getValue())).toFile().exists();
+
 	}
 
 	/**

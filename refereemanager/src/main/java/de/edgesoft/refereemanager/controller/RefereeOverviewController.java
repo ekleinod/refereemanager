@@ -254,11 +254,11 @@ public class RefereeOverviewController {
 									theDetailData.getMember().getDisplayTitle().getValue());
 
 					try {
-						File fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), String.format("%s.jpg", theDetailData.getFileName().get())).toFile();
-						if (fleImage.exists()) {
+						if (theDetailData.existsImageFile(Prefs.get(PrefKey.IMAGE_PATH))) {
+							File fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), String.format("%s.jpg", theDetailData.getFileName().getValue())).toFile();
 							imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
 						} else {
-							fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), String.format("%s.jpg", "missing")).toFile();
+							File fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), "missing.jpg").toFile();
 							if (fleImage.exists()) {
 								imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
 							} else {
