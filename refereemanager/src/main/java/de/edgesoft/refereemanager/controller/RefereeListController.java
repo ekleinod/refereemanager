@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
@@ -463,11 +464,9 @@ public class RefereeListController {
 	}
 
 	/**
-	 * Returns current selection.
+	 * Returns current selection (visible and non-visible items) as sorted list.
 	 *
-	 * @todo maybe this can be implemented simpler with a clever cast?
-	 *
-	 * @return current (visible) selection
+	 * @return current sorted selection
 	 *
 	 * @version 0.12.0
 	 * @since 0.12.0
@@ -476,19 +475,11 @@ public class RefereeListController {
 
 		List<PersonModel> lstReturn = new ArrayList<>();
 
-		if (tabReferees.isSelected()) {
-			tblReferees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
-		}
+		tblReferees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
+		tblTrainees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
+		tblPeople.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add((PersonModel) person));
 
-		if (tabTrainees.isSelected()) {
-			tblTrainees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
-		}
-
-		if (tabPeople.isSelected()) {
-			tblPeople.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add((PersonModel) person));
-		}
-
-		return FXCollections.observableList(lstReturn);
+		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
 	}
 
 }
