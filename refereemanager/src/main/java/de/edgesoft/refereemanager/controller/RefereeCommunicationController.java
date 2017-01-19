@@ -1430,7 +1430,7 @@ public class RefereeCommunicationController {
 
 
 						// create docs
-						FilteredList<PersonModel> lstPeople = new FilteredList<>(ctlRefList.getCurrentSelection(), PersonModel.HAS_ADDRESS);
+						List<PersonModel> lstPeople = ctlRefList.getCurrentSelection();
 						int iCount = lstPeople.size();
 
 						Map<String, List<String>> mapFilenames = new HashMap<>();
