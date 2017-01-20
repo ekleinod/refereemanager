@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.RefereeCommunicationController">
+<BorderPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.RefereeCommunicationController">
    <center>
       <AnchorPane prefHeight="800.0" prefWidth="1000.0">
          <children>
@@ -263,7 +263,7 @@
                               </Label>
                               <Separator fx:id="sepOther" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="11" />
                               <Label fx:id="lblTestMail" text="Mailtest" GridPane.rowIndex="12" />
-                              <CheckBox fx:id="chkTestMail" mnemonicParsing="false" text="Mailtext erzeugen, nicht senden" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                              <CheckBox fx:id="chkTestMail" mnemonicParsing="false" selected="true" text="Mailtext erzeugen, nicht senden" GridPane.columnIndex="1" GridPane.rowIndex="12">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" top="5.0" />
                                  </GridPane.margin>
