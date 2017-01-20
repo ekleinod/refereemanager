@@ -11,13 +11,14 @@ import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 /**
  * Referee model, additional methods for jaxb model class.
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -130,7 +131,7 @@ public class RefereeModel extends Referee {
 	 * @version 0.12.0
 	 * @since 0.8.0
 	 */
-	public LocalDate getLastTrainingUpdate() {
+	public SimpleObjectProperty<LocalDate> getLastTrainingUpdate() {
 
 		TrainingLevel highestTrainingLevel = getHighestTrainingLevel();
 
@@ -148,10 +149,14 @@ public class RefereeModel extends Referee {
 				.orElse(null);
 
 		if (dteReturn == null) {
-			return (LocalDate) highestTrainingLevel.getSince().getValue();
+			if (highestTrainingLevel.getSince() == null) {
+				return null;
+			}
+
+			return new SimpleObjectProperty<>((LocalDate) highestTrainingLevel.getSince().getValue());
 		}
 
-		return dteReturn;
+		return new SimpleObjectProperty<>(dteReturn);
 	}
 
 	/**
@@ -162,15 +167,13 @@ public class RefereeModel extends Referee {
 	 * @version 0.12.0
 	 * @since 0.8.0
 	 */
-	public LocalDate getNextTrainingUpdate() {
+	public SimpleObjectProperty<LocalDate> getNextTrainingUpdate() {
 
-		LocalDate lastTrainingUpdate = getLastTrainingUpdate();
-
-		if (lastTrainingUpdate == null) {
+		if (getLastTrainingUpdate() == null) {
 			return null;
 		}
 
-		return lastTrainingUpdate.plusYears(getHighestTrainingLevel().getType().getUpdateInterval().getValue());
+		return new SimpleObjectProperty<>(getLastTrainingUpdate().getValue().plusYears(getHighestTrainingLevel().getType().getUpdateInterval().getValue()));
 	}
 
 	/**
@@ -185,7 +188,22 @@ public class RefereeModel extends Referee {
 	 */
 	@Override
 	public SimpleBooleanProperty getDocsByLetter() {
-			return new SimpleBooleanProperty(docsByLetter.getValue() || getEMail().isEmpty());
+		return new SimpleBooleanProperty(docsByLetter.getValue() || getEMail().isEmpty());
+	}
+
+	/**
+	 * Will license be revoked.
+	 *
+	 * @return Will license be revoked?
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public SimpleBooleanProperty getRevokingLicense() {
+		if ((getRevokeLicense() == null) || (getRevokeLicense().getRevoke() == null)) {
+			return new SimpleBooleanProperty(false);
+		}
+		return getRevokeLicense().getRevoke();
 	}
 
 }
