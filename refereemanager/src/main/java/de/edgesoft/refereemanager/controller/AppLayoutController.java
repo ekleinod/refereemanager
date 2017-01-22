@@ -741,7 +741,8 @@ public class AppLayoutController {
 //				ctlEventOverview.setTableItems();
 //			}
 
-			JAXBFiles.marshal(new ObjectFactory().createRefereemanager(AppModel.getData()), theFilename, null);
+			JAXBFiles.marshal(new ObjectFactory().createRefereemanager(AppModel.getData()), theFilename,
+					(Prefs.get(PrefKey.PATHS_XSD).isEmpty() ? null : Prefs.get(PrefKey.PATHS_XSD)));
 
 			AppModel.setFilename(theFilename);
 			AppModel.setModified(false);

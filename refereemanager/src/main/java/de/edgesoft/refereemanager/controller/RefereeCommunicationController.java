@@ -1219,7 +1219,7 @@ public class RefereeCommunicationController {
 
 						// load email template
 						updateMessage("Lade Mail-Template.");
-						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.EMAIL_TEMPLATE_EMAIL));
+						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATHS_TEMPLATE), Prefs.get(PrefKey.EMAIL_TEMPLATE_EMAIL));
 
 						theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
 						Template tplEMail = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
@@ -1409,21 +1409,21 @@ public class RefereeCommunicationController {
 
 						// load document template
 						updateMessage("Lade Brief-Template.");
-						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.LETTERS_TEMPLATE_LETTER));
+						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATHS_TEMPLATE), Prefs.get(PrefKey.LETTERS_TEMPLATE_LETTER));
 
 						theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
 						Template tplLetter = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
 
 						// load single merge template
 						updateMessage("Lade Single-Merge-Template.");
-						pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.LETTERS_TEMPLATE_MERGE_SINGLE));
+						pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATHS_TEMPLATE), Prefs.get(PrefKey.LETTERS_TEMPLATE_MERGE_SINGLE));
 
 						theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
 						Template tplMergeSingle = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
 
 						// load all merge template
 						updateMessage("Lade All-Merge-Template.");
-						pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.LETTERS_TEMPLATE_MERGE_ALL));
+						pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATHS_TEMPLATE), Prefs.get(PrefKey.LETTERS_TEMPLATE_MERGE_ALL));
 
 						theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
 						Template tplMergeAll = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
@@ -1588,7 +1588,7 @@ public class RefereeCommunicationController {
 
 						// load text template
 						updateMessage("Lade Text-Template.");
-						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.TEXTS_TEMPLATE_TEXT));
+						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATHS_TEMPLATE), Prefs.get(PrefKey.TEXTS_TEMPLATE_TEXT));
 
 						theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
 						Template tplLetter = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
@@ -1716,7 +1716,7 @@ public class RefereeCommunicationController {
 				Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, null);
 
 				// load document template
-				Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.TEMPLATE_PATH), Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
+				Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATHS_TEMPLATE), Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
 				RefereeManager.logger.info(MessageFormat.format("Lade Dokument-Template ''{0}''.", pathTemplateFile.toAbsolutePath().toString()));
 				theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
 				Template tplDocument = theConfig.getTemplate(pathTemplateFile.getFileName().toString());

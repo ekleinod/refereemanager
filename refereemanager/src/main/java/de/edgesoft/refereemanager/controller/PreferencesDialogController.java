@@ -36,7 +36,7 @@ import javafx.stage.Stage;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -137,38 +137,56 @@ public class PreferencesDialogController {
 	/**
 	 * Template path.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TextField txtTemplatePath;
+	private TextField txtPathsTemplate;
 
 	/**
 	 * Template path button.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Button btnTemplatePath;
+	private Button btnPathsTemplate;
 
 	/**
 	 * Image path.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TextField txtImagePath;
+	private TextField txtPathsImage;
 
 	/**
 	 * Image path button.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Button btnImagePath;
+	private Button btnPathsImage;
+
+	/**
+	 * Schema path.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TextField txtPathsXSD;
+
+	/**
+	 * Schema path button.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Button btnPathsXSD;
 
 
 	/**
@@ -361,8 +379,9 @@ public class PreferencesDialogController {
 		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
 
 		tabDisplay.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
-		btnTemplatePath.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
-		btnImagePath.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
+		btnPathsTemplate.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
+		btnPathsImage.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
+		btnPathsXSD.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-open.png")));
 
 		tabPaths.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
 
@@ -424,8 +443,9 @@ public class PreferencesDialogController {
 		chkTitleFullpath.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.TITLE_FULLPATH)));
 
 		// tab templates
-		txtTemplatePath.setText(Prefs.get(PrefKey.TEMPLATE_PATH));
-		txtImagePath.setText(Prefs.get(PrefKey.IMAGE_PATH));
+		txtPathsImage.setText(Prefs.get(PrefKey.PATHS_IMAGE));
+		txtPathsTemplate.setText(Prefs.get(PrefKey.PATHS_TEMPLATE));
+		txtPathsXSD.setText(Prefs.get(PrefKey.PATHS_XSD));
 
 		// tab email
 		txtEMailSMTPHost.setText(Prefs.get(PrefKey.EMAIL_SMTP_HOST));
@@ -464,9 +484,10 @@ public class PreferencesDialogController {
 			// tab display
 			Prefs.put(PrefKey.TITLE_FULLPATH, Boolean.toString(chkTitleFullpath.isSelected()));
 
-			// tab templates
-			Prefs.put(PrefKey.TEMPLATE_PATH, txtTemplatePath.getText());
-			Prefs.put(PrefKey.IMAGE_PATH, txtImagePath.getText());
+			// tab paths
+			Prefs.put(PrefKey.PATHS_IMAGE, txtPathsImage.getText());
+			Prefs.put(PrefKey.PATHS_TEMPLATE, txtPathsTemplate.getText());
+			Prefs.put(PrefKey.PATHS_XSD, txtPathsXSD.getText());
 
 			// tab email
 			Prefs.put(PrefKey.EMAIL_SMTP_HOST, txtEMailSMTPHost.getText());
@@ -506,15 +527,15 @@ public class PreferencesDialogController {
 
 		StringBuilder sbErrorMessage = new StringBuilder();
 
-		if (!txtTemplatePath.getText().isEmpty()) {
-			File flePath = Paths.get(txtTemplatePath.getText()).toFile();
+		if (!txtPathsTemplate.getText().isEmpty()) {
+			File flePath = Paths.get(txtPathsTemplate.getText()).toFile();
 			if (!flePath.exists() || !flePath.isDirectory()) {
 				sbErrorMessage.append("Der Template-Pfad existiert nicht oder ist kein Verzeichnis.\n");
 			}
 		}
 
-		if (!txtImagePath.getText().isEmpty()) {
-			File flePath = Paths.get(txtImagePath.getText()).toFile();
+		if (!txtPathsImage.getText().isEmpty()) {
+			File flePath = Paths.get(txtPathsImage.getText()).toFile();
 			if (!flePath.exists() || !flePath.isDirectory()) {
 				sbErrorMessage.append("Der Bilder-Pfad existiert nicht oder ist kein Verzeichnis.\n");
 			}
@@ -550,23 +571,23 @@ public class PreferencesDialogController {
 	/**
 	 * Set template path.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private void handleTemplatePath() {
+	private void handlePathsTemplate() {
 
 		DirectoryChooser dirChooser = new DirectoryChooser();
 
 		dirChooser.setTitle("Template-Pfad auswählen");
-		if (!Prefs.get(PrefKey.TEMPLATE_PATH).isEmpty()) {
-			dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.TEMPLATE_PATH)));
+		if (!Prefs.get(PrefKey.PATHS_TEMPLATE).isEmpty()) {
+			dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATHS_TEMPLATE)));
 		}
 
 		File dir = dirChooser.showDialog(dialogStage);
 
 		if (dir != null) {
-			txtTemplatePath.setText(dir.getPath());
+			txtPathsTemplate.setText(dir.getPath());
 		}
 
 	}
@@ -574,23 +595,53 @@ public class PreferencesDialogController {
 	/**
 	 * Set image path.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private void handleImagePath() {
+	private void handlePathsImage() {
 
 		DirectoryChooser dirChooser = new DirectoryChooser();
 
 		dirChooser.setTitle("Bilder-Pfad auswählen");
-		if (!Prefs.get(PrefKey.IMAGE_PATH).isEmpty()) {
-			dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.IMAGE_PATH)));
+		if (!Prefs.get(PrefKey.PATHS_IMAGE).isEmpty()) {
+			dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATHS_IMAGE)));
 		}
 
 		File dir = dirChooser.showDialog(dialogStage);
 
 		if (dir != null) {
-			txtImagePath.setText(dir.getPath());
+			txtPathsImage.setText(dir.getPath());
+		}
+
+	}
+
+	/**
+	 * Set XSD path.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private void handlePathsXSD() {
+
+		FileChooser fileChooser = new FileChooser();
+
+		fileChooser.setTitle("XML-Schema auswählen");
+		fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("XML-Schema (*.xsd)", "*.xsd"),
+				new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
+				);
+		if (!Prefs.get(PrefKey.PATHS_XSD).isEmpty()) {
+			Path pathPrefs = Paths.get(Prefs.get(PrefKey.PATHS_XSD));
+			fileChooser.setInitialDirectory(pathPrefs.getParent().toFile());
+			fileChooser.setInitialFileName(pathPrefs.getFileName().toString());
+		}
+
+		File flePrefs = fileChooser.showOpenDialog(dialogStage);
+
+		if (flePrefs != null) {
+			txtPathsXSD.setText(flePrefs.getAbsolutePath());
 		}
 
 	}

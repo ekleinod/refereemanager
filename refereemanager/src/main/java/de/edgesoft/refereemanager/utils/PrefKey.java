@@ -8,7 +8,7 @@ package de.edgesoft.refereemanager.utils;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -54,8 +54,6 @@ public enum PrefKey {
 	FILENAME_PATTERN_REFEREE_MERGE,
 	FILENAME_PATTERN_REFEREES_MERGE,
 
-	IMAGE_PATH,
-
 	LETTERS_TEMPLATE_LETTER,
 	LETTERS_TEMPLATE_MERGE_SINGLE,
 	LETTERS_TEMPLATE_MERGE_ALL,
@@ -65,6 +63,10 @@ public enum PrefKey {
 	LOCALE,
 
 	PATH,
+
+	PATHS_IMAGE,
+	PATHS_TEMPLATE,
+	PATHS_XSD,
 
 	PREFERENCES_FILE,
 
@@ -81,8 +83,6 @@ public enum PrefKey {
 	STAGE_WIDTH,
 	STAGE_X,
 	STAGE_Y,
-
-	TEMPLATE_PATH,
 
 	TEXTS_TEMPLATE_TEXT,
 
