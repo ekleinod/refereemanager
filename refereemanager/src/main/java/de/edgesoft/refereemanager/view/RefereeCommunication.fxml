@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.RefereeCommunicationController">
+<BorderPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.RefereeCommunicationController">
    <center>
       <AnchorPane prefHeight="800.0" prefWidth="1000.0">
          <children>
@@ -201,6 +201,7 @@
                                     <RadioButton fx:id="radLetters" mnemonicParsing="false" text="Brief (1 pro gewählter Person)" toggleGroup="$grpCommKind" />
                                     <RadioButton fx:id="radTexts" mnemonicParsing="false" text="Text (1 pro gewählter Person)" toggleGroup="$grpCommKind" />
                                     <RadioButton fx:id="radDocument" mnemonicParsing="false" text="Dokument (1 unabhängig von Auswahl)" toggleGroup="$grpCommKind" />
+                                    <RadioButton fx:id="radText" mnemonicParsing="false" text="Text (1 unabhängig von Auswahl)" toggleGroup="$grpCommKind" />
                                  </children>
                                  <GridPane.margin>
                                     <Insets bottom="5.0" top="5.0" />

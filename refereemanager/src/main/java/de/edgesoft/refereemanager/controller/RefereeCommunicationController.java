@@ -412,7 +412,7 @@ public class RefereeCommunicationController {
 	private RadioButton radLetters;
 
 	/**
-	 * Radio button text.
+	 * Radio button texts.
 	 *
 	 * @version 0.12.0
 	 * @since 0.12.0
@@ -428,6 +428,15 @@ public class RefereeCommunicationController {
 	 */
 	@FXML
 	private RadioButton radDocument;
+
+	/**
+	 * Radio button text.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private RadioButton radText;
 
 
 	/**
@@ -645,13 +654,13 @@ public class RefereeCommunicationController {
 						)
 				)
 				.or(
-						radTexts.selectedProperty().not()
+						radEMails.selectedProperty().or(radLetters.selectedProperty()).or(radDocument.selectedProperty())
 						.and(
 								txtTitle.textProperty().isEmpty()
 						)
 				)
 				.or(
-						radTexts.selectedProperty().or(radDocument.selectedProperty())
+						radTexts.selectedProperty().or(radDocument.selectedProperty()).or(radText.selectedProperty())
 						.and(
 								txtFilename.textProperty().isEmpty()
 						)
@@ -719,8 +728,8 @@ public class RefereeCommunicationController {
 		lblOptions.visibleProperty().bind(obsLetterDocument);
 		lblOptions.managedProperty().bind(obsLetterDocument);
 
-		// visible for letters, documents, and texts
-		ObservableBooleanValue obsLetterDocumentText = radLetters.selectedProperty().or(radDocument.selectedProperty()).or(radTexts.selectedProperty());
+		// visible for letters, texts, documents, and text
+		ObservableBooleanValue obsLetterDocumentText = radLetters.selectedProperty().or(radTexts.selectedProperty()).or(radDocument.selectedProperty()).or(radText.selectedProperty());
 		txtCommunicationOutputPath.visibleProperty().bind(obsLetterDocumentText);
 		txtCommunicationOutputPath.managedProperty().bind(obsLetterDocumentText);
 		lblCommunicationOutputPath.visibleProperty().bind(obsLetterDocumentText);
@@ -864,7 +873,9 @@ public class RefereeCommunicationController {
 		} else if (grpCommKind.getSelectedToggle() == radTexts) {
 			createTexts(mapDocData, tplConfig);
 		} else if (grpCommKind.getSelectedToggle() == radDocument) {
-			createDocument(mapDocData, tplConfig);
+			createDocumentOrText(mapDocData, tplConfig, Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
+		} else if (grpCommKind.getSelectedToggle() == radText) {
+			createDocumentOrText(mapDocData, tplConfig, Prefs.get(PrefKey.TEXTS_TEMPLATE_TEXT));
 		} else {
 			AlertUtils.createAlert(AlertType.ERROR, appController.getPrimaryStage(),
 					"Unbekannte Aktion",
@@ -1687,7 +1698,7 @@ public class RefereeCommunicationController {
 	}
 
 	/**
-	 * Creates document.
+	 * Creates document or text.
 	 *
 	 * @param theDocData document data
 	 * @param theConfig template configuration
@@ -1695,7 +1706,7 @@ public class RefereeCommunicationController {
 	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
-	private void createDocument(final Map<String, Object> theDocData, Configuration theConfig) {
+	private void createDocumentOrText(final Map<String, Object> theDocData, Configuration theConfig, final String theTemplate) {
 
 		Objects.requireNonNull(theDocData, "document data must not be null");
 		Objects.requireNonNull(theConfig, "template configuration must not be null");
@@ -1716,7 +1727,7 @@ public class RefereeCommunicationController {
 				Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, null);
 
 				// load document template
-				Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATHS_TEMPLATE), Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
+				Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATHS_TEMPLATE), theTemplate);
 				RefereeManager.logger.info(MessageFormat.format("Lade Dokument-Template ''{0}''.", pathTemplateFile.toAbsolutePath().toString()));
 				theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
 				Template tplDocument = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
