@@ -24,7 +24,7 @@ import de.edgesoft.refereemanager.model.RefereeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}Referee">
  *       &lt;sequence>
- *         &lt;element name="withdrawed" type="{}BooleanProperty" minOccurs="0"/>
+ *         &lt;element name="withdrawn" type="{}BooleanProperty" minOccurs="0"/>
  *         &lt;element name="did_not_start" type="{}BooleanProperty" minOccurs="0"/>
  *         &lt;element name="points_written_a" type="{}IntegerProperty" minOccurs="0"/>
  *         &lt;element name="points_written_b" type="{}IntegerProperty" minOccurs="0"/>
@@ -41,7 +41,7 @@ import de.edgesoft.refereemanager.model.RefereeModel;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Trainee", propOrder = {
-    "withdrawed",
+    "withdrawn",
     "didNotStart",
     "pointsWrittenA",
     "pointsWrittenB",
@@ -56,7 +56,7 @@ public class Trainee
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
     @XmlSchemaType(name = "boolean")
-    protected SimpleBooleanProperty withdrawed;
+    protected SimpleBooleanProperty withdrawn;
     @XmlElement(name = "did_not_start", type = String.class)
     @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
     @XmlSchemaType(name = "boolean")
@@ -83,27 +83,27 @@ public class Trainee
     protected SimpleBooleanProperty passed;
 
     /**
-     * Gets the value of the withdrawed property.
+     * Gets the value of the withdrawn property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public SimpleBooleanProperty getWithdrawed() {
-        return withdrawed;
+    public SimpleBooleanProperty getWithdrawn() {
+        return withdrawn;
     }
 
     /**
-     * Sets the value of the withdrawed property.
+     * Sets the value of the withdrawn property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setWithdrawed(SimpleBooleanProperty value) {
-        this.withdrawed = value;
+    public void setWithdrawn(SimpleBooleanProperty value) {
+        this.withdrawn = value;
     }
 
     /**
