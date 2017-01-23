@@ -107,13 +107,13 @@ public class PreferencesDialogController {
 
 
 	/**
-	 * Tab display.
+	 * Tab other.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Tab tabDisplay;
+	private Tab tabOther;
 
 	/**
 	 * Checkbox: full path in title.
@@ -123,6 +123,15 @@ public class PreferencesDialogController {
 	 */
 	@FXML
 	private CheckBox chkTitleFullpath;
+
+	/**
+	 * Checkbox: sort data after loading.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private CheckBox chkDataSortLoading;
 
 
 	/**
@@ -378,7 +387,7 @@ public class PreferencesDialogController {
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
 		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
 
-		tabDisplay.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+		tabOther.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
 		btnPathsTemplate.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
 		btnPathsImage.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
 		btnPathsXSD.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-open.png")));
@@ -439,8 +448,9 @@ public class PreferencesDialogController {
 	 */
 	private void fillValues() {
 
-		// tab display
-		chkTitleFullpath.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.TITLE_FULLPATH)));
+		// tab other
+		chkTitleFullpath.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.OTHER_TITLE_FULLPATH)));
+		chkDataSortLoading.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.OTHER_DATA_SORT_LOADING)));
 
 		// tab templates
 		txtPathsImage.setText(Prefs.get(PrefKey.PATHS_IMAGE));
@@ -481,8 +491,9 @@ public class PreferencesDialogController {
 		okClicked = false;
 		if (isInputValid()) {
 
-			// tab display
-			Prefs.put(PrefKey.TITLE_FULLPATH, Boolean.toString(chkTitleFullpath.isSelected()));
+			// tab other
+			Prefs.put(PrefKey.OTHER_TITLE_FULLPATH, Boolean.toString(chkTitleFullpath.isSelected()));
+			Prefs.put(PrefKey.OTHER_DATA_SORT_LOADING, Boolean.toString(chkDataSortLoading.isSelected()));
 
 			// tab paths
 			Prefs.put(PrefKey.PATHS_IMAGE, txtPathsImage.getText());

@@ -395,7 +395,7 @@ public class AppLayoutController {
 
 		String sFile = Prefs.get(PrefKey.FILE).isEmpty() ?
 				"" :
-				String.format(" - %s", Boolean.parseBoolean(Prefs.get(PrefKey.TITLE_FULLPATH)) ?
+				String.format(" - %s", Boolean.parseBoolean(Prefs.get(PrefKey.OTHER_TITLE_FULLPATH)) ?
 						Paths.get(Prefs.get(PrefKey.FILE)).toAbsolutePath().toString() :
 						Paths.get(Prefs.get(PrefKey.FILE)).getFileName().toString());
 

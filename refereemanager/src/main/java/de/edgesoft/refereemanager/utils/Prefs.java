@@ -18,7 +18,7 @@ import javafx.stage.Screen;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -106,6 +106,11 @@ public class Prefs {
 			case LOCALE:
 				return getPreferences().get(theKey.value(), Locale.GERMANY.toLanguageTag());
 
+			case OTHER_TITLE_FULLPATH:
+				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
+			case OTHER_DATA_SORT_LOADING:
+				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
+
 			case REFEREE_COMMUNICATION_SPLIT_0:
 				return getPreferences().get(theKey.value(), Double.toString(0.5));
 			case REFEREE_COMMUNICATION_SPLIT_1:
@@ -125,9 +130,6 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), Double.toString((Screen.getPrimary().getBounds().getHeight() - 600) / 2));
 
 			case STAGE_MAXIMIZED:
-				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
-
-			case TITLE_FULLPATH:
 				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
 
 			default:

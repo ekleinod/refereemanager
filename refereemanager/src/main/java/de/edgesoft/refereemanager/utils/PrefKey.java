@@ -62,6 +62,9 @@ public enum PrefKey {
 
 	LOCALE,
 
+	OTHER_TITLE_FULLPATH,
+	OTHER_DATA_SORT_LOADING,
+
 	PATH,
 
 	PATHS_IMAGE,
@@ -85,8 +88,6 @@ public enum PrefKey {
 	STAGE_Y,
 
 	TEXTS_TEMPLATE_TEXT,
-
-	TITLE_FULLPATH,
 	;
 
 	private final String value;
