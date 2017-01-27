@@ -63,11 +63,11 @@ public class ContactModel extends Contact {
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-		public boolean isPrivate() {
+	public boolean isPrivate() {
 
-			return (getContactType() == null) || ((getContactType() != null) && getContactType().getId().equals(Prefs.get(PrefKey.CONTACT_PRIVATE)));
+		return (getContactType() == null) || ((getContactType() != null) && getContactType().getId().equals(Prefs.get(PrefKey.CONTACT_PRIVATE)));
 
-		}
+	}
 
 }
 
