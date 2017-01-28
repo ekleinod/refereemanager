@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.model;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -147,6 +148,19 @@ public class PhoneNumberModel extends PhoneNumber {
 
 		return new SimpleStringProperty(getStandard().getValue().replace(' ', '-'));
 
+	}
+
+	/**
+	 * Returns is phone is cell phone.
+	 *
+	 * @return is cell phone?
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@Override
+	public SimpleBooleanProperty getIsCell() {
+		return (super.getIsCell() == null) ? new SimpleBooleanProperty(false) : super.getIsCell();
 	}
 
 }
