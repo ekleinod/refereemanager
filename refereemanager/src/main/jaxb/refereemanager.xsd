@@ -221,6 +221,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="country_code" type="StringProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="area_code" type="StringProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="number" type="StringProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="is_cell" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
