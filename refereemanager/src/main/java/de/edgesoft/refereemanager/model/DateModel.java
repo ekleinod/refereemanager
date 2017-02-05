@@ -1,6 +1,6 @@
 package de.edgesoft.refereemanager.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 
 import de.edgesoft.refereemanager.jaxb.Date;
@@ -10,7 +10,7 @@ import de.edgesoft.refereemanager.jaxb.Date;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -28,7 +28,7 @@ import de.edgesoft.refereemanager.jaxb.Date;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.9.0
  */
 public class DateModel extends Date {
@@ -36,10 +36,10 @@ public class DateModel extends Date {
 	/**
 	 * Comparator start date/time.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.9.0
 	 */
-	public static final Comparator<Date> RANK_START = Comparator.comparing(date -> (LocalDate) date.getStart().get());
+	public static final Comparator<Date> RANK_START = Comparator.comparing(date -> (LocalDateTime) date.getStart().getValue());
 
 }
 

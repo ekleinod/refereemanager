@@ -14,6 +14,7 @@ import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.model.AppModel;
+import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
@@ -411,7 +412,7 @@ public class AppLayoutController {
 	 *
 	 * @param theFilename filename
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	private void openData(final String theFilename) {
@@ -423,6 +424,10 @@ public class AppLayoutController {
 			AppModel.setData(dtaRefMan);
 			AppModel.setFilename(theFilename);
 			AppModel.setModified(false);
+
+			if (Boolean.parseBoolean(Prefs.get(PrefKey.OTHER_DATA_SORT_LOADING))) {
+				((ContentModel) AppModel.getData().getContent()).sortData();
+			}
 
 			setAppTitle();
 
@@ -438,7 +443,7 @@ public class AppLayoutController {
 
 		}
 
-		}
+	}
 
 	/**
 	 * Program menu preferences.
@@ -734,12 +739,6 @@ public class AppLayoutController {
 			AppModel.getData().getInfo().setAppversion(RefereeManager.VERSION);
 			AppModel.getData().getInfo().setDocversion(RefereeManager.VERSION);
 			AppModel.getData().getInfo().setCreator(RefereeManager.class.getCanonicalName());
-
-//			((ContentModel) AppModel.getData().getContent()).sortEvents();
-
-//			if (ctlEventOverview != null) {
-//				ctlEventOverview.setTableItems();
-//			}
 
 			JAXBFiles.marshal(new ObjectFactory().createRefereemanager(AppModel.getData()), theFilename,
 					(Prefs.get(PrefKey.PATHS_XSD).isEmpty() ? null : Prefs.get(PrefKey.PATHS_XSD)));
