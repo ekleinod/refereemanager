@@ -1,11 +1,13 @@
 package de.edgesoft.refereemanager.controller;
 
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.Trainee;
@@ -16,12 +18,14 @@ import de.edgesoft.refereemanager.model.RefereeModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
@@ -132,6 +136,15 @@ public class RefereeListController {
 	 */
 	@FXML
 	private TableColumn<RefereeModel, String> colRefereesClub;
+
+	/**
+	 * Next update column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<RefereeModel, LocalDate> colRefereesUpdate;
 
 	/**
 	 * Label filter.
@@ -302,6 +315,8 @@ public class RefereeListController {
 		colRefereesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
 		colRefereesTrainingLevel.setCellValueFactory(cellData -> cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitle());
 		colRefereesClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
+		colRefereesUpdate.setCellValueFactory(cellData -> cellData.getValue().getNextTrainingUpdate());
+		colRefereesUpdate.setVisible(false);
 
 		// hook data to columns (trainees)
 		colTraineesName.setCellValueFactory(cellData -> cellData.getValue().getName());
@@ -311,6 +326,22 @@ public class RefereeListController {
 		// hook data to columns (people)
 		colPeopleName.setCellValueFactory(cellData -> cellData.getValue().getName());
 		colPeopleFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
+
+		// format date columns
+		colRefereesUpdate.setCellFactory(column -> {
+		    return new TableCell<RefereeModel, LocalDate>() {
+		        @Override
+		        protected void updateItem(LocalDate item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		                setText(null);
+		            } else {
+		                setText(DateTimeUtils.formatDate(item, "yyyy"));
+		            }
+		        }
+		    };
+		});
 
 		// listen to tab changes
 		tabPaneContent.getSelectionModel().selectedItemProperty().addListener((event, oldTab, newTab) -> {
@@ -339,16 +370,24 @@ public class RefereeListController {
 			lstPeople = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservablePeople(), person -> true);
 		}
 
-		tblReferees.setItems(lstReferees);
-		tblTrainees.setItems(lstTrainees);
-		tblPeople.setItems(lstPeople);
+		SortedList<Referee> lstSortedRefs = new SortedList<>(lstReferees);
+		lstSortedRefs.comparatorProperty().bind(tblReferees.comparatorProperty());
+		tblReferees.setItems(lstSortedRefs);
+
+		SortedList<Trainee> lstSortedTrainees = new SortedList<>(lstTrainees);
+		lstSortedTrainees.comparatorProperty().bind(tblTrainees.comparatorProperty());
+		tblTrainees.setItems(lstSortedTrainees);
+
+		SortedList<Person> lstSortedPeople = new SortedList<>(lstPeople);
+		lstSortedPeople.comparatorProperty().bind(tblPeople.comparatorProperty());
+		tblPeople.setItems(lstSortedPeople);
 
 		// set "empty data" text
 		Label lblPlaceholder = new Label(MessageFormat.format(((lstReferees == null) || lstReferees.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Schiedsrichter"));
 		lblPlaceholder.setWrapText(true);
 		tblReferees.setPlaceholder(lblPlaceholder);
 
-		lblPlaceholder = new Label(MessageFormat.format(((lstTrainees == null) || lstTrainees.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Lehrgangsteilnehmer"));
+		lblPlaceholder = new Label(MessageFormat.format(((lstTrainees == null) || lstTrainees.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Azubis"));
 		lblPlaceholder.setWrapText(true);
 		tblTrainees.setPlaceholder(lblPlaceholder);
 
