@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
 import de.edgesoft.refereemanager.model.WishModel;
 
@@ -56,7 +57,7 @@ import de.edgesoft.refereemanager.model.WishModel;
     "status"
 })
 @XmlSeeAlso({
-    Trainee.class
+    TraineeModel.class
 })
 public class Referee
     extends PersonModel

@@ -15,6 +15,7 @@ import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
+import de.edgesoft.refereemanager.model.TraineeModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -35,7 +36,7 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -138,6 +139,15 @@ public class RefereeListController {
 	private TableColumn<RefereeModel, String> colRefereesClub;
 
 	/**
+	 * Birthday column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<RefereeModel, LocalDate> colRefereesBirthday;
+
+	/**
 	 * Next update column.
 	 *
 	 * @version 0.12.0
@@ -145,6 +155,14 @@ public class RefereeListController {
 	 */
 	@FXML
 	private TableColumn<RefereeModel, LocalDate> colRefereesUpdate;
+
+	/**
+	 * List of referees.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	private FilteredList<Referee> lstReferees;
 
 	/**
 	 * Label filter.
@@ -191,14 +209,6 @@ public class RefereeListController {
 	@FXML
 	private CheckBox chkRefereesLetterOnly;
 
-	/**
-	 * List of referees.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	private FilteredList<Referee> lstReferees;
-
 
 	/**
 	 * Tab trainees.
@@ -225,7 +235,7 @@ public class RefereeListController {
 	 * @since 0.12.0
 	 */
 	@FXML
-	private TableColumn<Trainee, String> colTraineesName;
+	private TableColumn<TraineeModel, String> colTraineesName;
 
 	/**
 	 * First name column.
@@ -234,7 +244,7 @@ public class RefereeListController {
 	 * @since 0.12.0
 	 */
 	@FXML
-	private TableColumn<Trainee, String> colTraineesFirstName;
+	private TableColumn<TraineeModel, String> colTraineesFirstName;
 
 	/**
 	 * Club column.
@@ -243,7 +253,16 @@ public class RefereeListController {
 	 * @since 0.12.0
 	 */
 	@FXML
-	private TableColumn<Trainee, String> colTraineesClub;
+	private TableColumn<TraineeModel, String> colTraineesClub;
+
+	/**
+	 * Birthday column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<TraineeModel, LocalDate> colTraineesBirthday;
 
 	/**
 	 * List of trainees.
@@ -291,6 +310,15 @@ public class RefereeListController {
 	private TableColumn<PersonModel, String> colPeopleFirstName;
 
 	/**
+	 * Birthday column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<PersonModel, LocalDate> colPeopleBirthday;
+
+	/**
 	 * List of people.
 	 *
 	 * @version 0.12.0
@@ -315,6 +343,9 @@ public class RefereeListController {
 		colRefereesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
 		colRefereesTrainingLevel.setCellValueFactory(cellData -> cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitle());
 		colRefereesClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
+
+		colRefereesBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
+		colRefereesBirthday.setVisible(false);
 		colRefereesUpdate.setCellValueFactory(cellData -> cellData.getValue().getNextTrainingUpdate());
 		colRefereesUpdate.setVisible(false);
 
@@ -323,11 +354,31 @@ public class RefereeListController {
 		colTraineesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
 		colTraineesClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
 
+		colTraineesBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
+		colTraineesBirthday.setVisible(false);
+
 		// hook data to columns (people)
 		colPeopleName.setCellValueFactory(cellData -> cellData.getValue().getName());
 		colPeopleFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
 
+		colPeopleBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
+		colPeopleBirthday.setVisible(false);
+
 		// format date columns
+		colRefereesBirthday.setCellFactory(column -> {
+		    return new TableCell<RefereeModel, LocalDate>() {
+		        @Override
+		        protected void updateItem(LocalDate item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		                setText(null);
+		            } else {
+		                setText(DateTimeUtils.formatDate(item));
+		            }
+		        }
+		    };
+		});
 		colRefereesUpdate.setCellFactory(column -> {
 		    return new TableCell<RefereeModel, LocalDate>() {
 		        @Override
@@ -338,6 +389,34 @@ public class RefereeListController {
 		                setText(null);
 		            } else {
 		                setText(DateTimeUtils.formatDate(item, "yyyy"));
+		            }
+		        }
+		    };
+		});
+		colTraineesBirthday.setCellFactory(column -> {
+		    return new TableCell<TraineeModel, LocalDate>() {
+		        @Override
+		        protected void updateItem(LocalDate item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		                setText(null);
+		            } else {
+		                setText(DateTimeUtils.formatDate(item));
+		            }
+		        }
+		    };
+		});
+		colPeopleBirthday.setCellFactory(column -> {
+		    return new TableCell<PersonModel, LocalDate>() {
+		        @Override
+		        protected void updateItem(LocalDate item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		                setText(null);
+		            } else {
+		                setText(DateTimeUtils.formatDate(item));
 		            }
 		        }
 		    };

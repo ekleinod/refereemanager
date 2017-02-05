@@ -18,6 +18,7 @@ import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
 import de.edgesoft.refereemanager.model.TeamModel;
+import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 import de.edgesoft.refereemanager.model.URLModel;
@@ -121,7 +122,7 @@ public class ObjectFactory {
      * 
      */
     public Trainee createTrainee() {
-        return new Trainee();
+        return new TraineeModel();
     }
 
     /**
