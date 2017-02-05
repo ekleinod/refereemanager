@@ -1266,7 +1266,7 @@ public class RefereeCommunicationController {
 								if (mapFilled.get(DocumentDataVariable.DATE.value()) instanceof LocalDateTime) {
 									msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE.value())));
 								} else {
-									msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.fromString((String) mapFilled.get(DocumentDataVariable.DATE.value()))));
+									msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.parseDateTime((String) mapFilled.get(DocumentDataVariable.DATE.value()))));
 								}
 
 								msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
