@@ -1,17 +1,32 @@
 package de.edgesoft.refereemanager.controller;
 
 import java.text.MessageFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.Trainee;
+import de.edgesoft.refereemanager.model.AppModel;
+import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
+import de.edgesoft.refereemanager.model.TraineeModel;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
@@ -21,7 +36,7 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -39,13 +54,47 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.10.0
  */
 public class RefereeListController {
 
 	/**
-	 * Table view.
+	 * Text for empty table: no data.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	private static final String TABLE_NO_DATA = "Es wurden noch keine {0} eingegeben.";
+
+	/**
+	 * Text for empty table: filtered.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	private static final String TABLE_FILTERED = "Die Filterung schließt alle {0} aus.";
+
+	/**
+	 * Tab pane content.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TabPane tabPaneContent;
+
+	/**
+	 * Tab referees.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Tab tabReferees;
+
+	/**
+	 * Table view referees.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
@@ -60,7 +109,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TableColumn<RefereeModel, String> colName;
+	private TableColumn<RefereeModel, String> colRefereesName;
 
 	/**
 	 * First name column.
@@ -69,7 +118,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TableColumn<RefereeModel, String> colFirstName;
+	private TableColumn<RefereeModel, String> colRefereesFirstName;
 
 	/**
 	 * Training level column.
@@ -78,7 +127,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TableColumn<RefereeModel, String> colTrainingLevel;
+	private TableColumn<RefereeModel, String> colRefereesTrainingLevel;
 
 	/**
 	 * Club column.
@@ -87,53 +136,25 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TableColumn<RefereeModel, String> colClub;
+	private TableColumn<RefereeModel, String> colRefereesClub;
 
 	/**
-	 * Checkbox filter active.
+	 * Birthday column.
 	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
+	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
-	private CheckBox chkActive;
+	private TableColumn<RefereeModel, LocalDate> colRefereesBirthday;
 
 	/**
-	 * Checkbox filter inactive.
+	 * Next update column.
 	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
+	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
-	private CheckBox chkInactive;
-
-	/**
-	 * Checkbox filter email.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private CheckBox chkEMail;
-
-	/**
-	 * Checkbox filter letter only.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private CheckBox chkLetterOnly;
-
-	/**
-	 * Label filter.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Label lblFilter;
-
+	private TableColumn<RefereeModel, LocalDate> colRefereesUpdate;
 
 	/**
 	 * List of referees.
@@ -143,56 +164,315 @@ public class RefereeListController {
 	 */
 	private FilteredList<Referee> lstReferees;
 
+	/**
+	 * Label filter.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Label lblRefereesFilter;
+
+	/**
+	 * Checkbox filter active.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private CheckBox chkRefereesActive;
+
+	/**
+	 * Checkbox filter inactive.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private CheckBox chkRefereesInactive;
+
+	/**
+	 * Checkbox filter email.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private CheckBox chkRefereesEMail;
+
+	/**
+	 * Checkbox filter letter only.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private CheckBox chkRefereesLetterOnly;
+
+
+	/**
+	 * Tab trainees.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Tab tabTrainees;
+
+	/**
+	 * Table view trainees.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableView<Trainee> tblTrainees;
+
+	/**
+	 * Name column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<TraineeModel, String> colTraineesName;
+
+	/**
+	 * First name column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<TraineeModel, String> colTraineesFirstName;
+
+	/**
+	 * Club column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<TraineeModel, String> colTraineesClub;
+
+	/**
+	 * Birthday column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<TraineeModel, LocalDate> colTraineesBirthday;
+
+	/**
+	 * List of trainees.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	private FilteredList<Trainee> lstTrainees;
+
+
+	/**
+	 * Tab people.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Tab tabPeople;
+
+	/**
+	 * Table view trainees.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableView<Person> tblPeople;
+
+	/**
+	 * Name column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<PersonModel, String> colPeopleName;
+
+	/**
+	 * First name column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<PersonModel, String> colPeopleFirstName;
+
+	/**
+	 * Birthday column.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TableColumn<PersonModel, LocalDate> colPeopleBirthday;
+
+	/**
+	 * List of people.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	private FilteredList<Person> lstPeople;
+
 
 	/**
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
 	private void initialize() {
 
-		// hook data to columns
-		colName.setCellValueFactory(cellData -> cellData.getValue().getName());
-		colFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
-		colTrainingLevel.setCellValueFactory(cellData -> cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitle());
-		colClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
+		// hook data to columns (referees)
+		colRefereesName.setCellValueFactory(cellData -> cellData.getValue().getName());
+		colRefereesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
+		colRefereesTrainingLevel.setCellValueFactory(cellData -> cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitle());
+		colRefereesClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
 
-		setItems(null);
+		colRefereesBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
+		colRefereesBirthday.setVisible(false);
+		colRefereesUpdate.setCellValueFactory(cellData -> cellData.getValue().getNextTrainingUpdate());
+		colRefereesUpdate.setVisible(false);
+
+		// hook data to columns (trainees)
+		colTraineesName.setCellValueFactory(cellData -> cellData.getValue().getName());
+		colTraineesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
+		colTraineesClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
+
+		colTraineesBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
+		colTraineesBirthday.setVisible(false);
+
+		// hook data to columns (people)
+		colPeopleName.setCellValueFactory(cellData -> cellData.getValue().getName());
+		colPeopleFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
+
+		colPeopleBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
+		colPeopleBirthday.setVisible(false);
+
+		// format date columns
+		colRefereesBirthday.setCellFactory(column -> {
+		    return new TableCell<RefereeModel, LocalDate>() {
+		        @Override
+		        protected void updateItem(LocalDate item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		                setText(null);
+		            } else {
+		                setText(DateTimeUtils.formatDate(item));
+		            }
+		        }
+		    };
+		});
+		colRefereesUpdate.setCellFactory(column -> {
+		    return new TableCell<RefereeModel, LocalDate>() {
+		        @Override
+		        protected void updateItem(LocalDate item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		                setText(null);
+		            } else {
+		                setText(DateTimeUtils.formatDate(item, "yyyy"));
+		            }
+		        }
+		    };
+		});
+		colTraineesBirthday.setCellFactory(column -> {
+		    return new TableCell<TraineeModel, LocalDate>() {
+		        @Override
+		        protected void updateItem(LocalDate item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		                setText(null);
+		            } else {
+		                setText(DateTimeUtils.formatDate(item));
+		            }
+		        }
+		    };
+		});
+		colPeopleBirthday.setCellFactory(column -> {
+		    return new TableCell<PersonModel, LocalDate>() {
+		        @Override
+		        protected void updateItem(LocalDate item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		                setText(null);
+		            } else {
+		                setText(DateTimeUtils.formatDate(item));
+		            }
+		        }
+		    };
+		});
+
+		// listen to tab changes
+		tabPaneContent.getSelectionModel().selectedItemProperty().addListener((event, oldTab, newTab) -> {
+	        handleTabChange();
+	    });
+
+		setItems();
 
 	}
 
 	/**
-	 * Returns table view.
+	 * Sets table items.
 	 *
-	 * @param theReferees list of referees
-	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
-	public void setItems(final ObservableList<Referee> theReferees) {
+	public void setItems() {
 
-		if (theReferees == null) {
+		if (AppModel.getData() == null) {
 			lstReferees = null;
+			lstTrainees = null;
+			lstPeople = null;
 		} else {
-			lstReferees = new FilteredList<>(theReferees, referee -> true);
+			lstReferees = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableReferees(), referee -> true);
+			lstTrainees = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableTrainees(), trainee -> true);
+			lstPeople = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservablePeople(), person -> true);
 		}
 
-		tblReferees.setItems(lstReferees);
+		SortedList<Referee> lstSortedRefs = new SortedList<>(lstReferees);
+		lstSortedRefs.comparatorProperty().bind(tblReferees.comparatorProperty());
+		tblReferees.setItems(lstSortedRefs);
+
+		SortedList<Trainee> lstSortedTrainees = new SortedList<>(lstTrainees);
+		lstSortedTrainees.comparatorProperty().bind(tblTrainees.comparatorProperty());
+		tblTrainees.setItems(lstSortedTrainees);
+
+		SortedList<Person> lstSortedPeople = new SortedList<>(lstPeople);
+		lstSortedPeople.comparatorProperty().bind(tblPeople.comparatorProperty());
+		tblPeople.setItems(lstSortedPeople);
 
 		// set "empty data" text
-		if ((lstReferees == null) || lstReferees.isEmpty()) {
-			Label lblPlaceholder = new Label("Es wurden noch keine Schiedsrichter eingegeben.");
-			lblPlaceholder.setWrapText(true);
-			tblReferees.setPlaceholder(lblPlaceholder);
-		} else {
-			Label lblPlaceholder = new Label("Die Filterung schließt alle Schiedsrichter aus.");
-			lblPlaceholder.setWrapText(true);
-			tblReferees.setPlaceholder(lblPlaceholder);
-		}
+		Label lblPlaceholder = new Label(MessageFormat.format(((lstReferees == null) || lstReferees.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Schiedsrichter"));
+		lblPlaceholder.setWrapText(true);
+		tblReferees.setPlaceholder(lblPlaceholder);
+
+		lblPlaceholder = new Label(MessageFormat.format(((lstTrainees == null) || lstTrainees.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Azubis"));
+		lblPlaceholder.setWrapText(true);
+		tblTrainees.setPlaceholder(lblPlaceholder);
+
+		lblPlaceholder = new Label(MessageFormat.format(((lstPeople == null) || lstPeople.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Personen"));
+		lblPlaceholder.setWrapText(true);
+		tblPeople.setPlaceholder(lblPlaceholder);
 
 		handleFilterChange();
 
@@ -201,40 +481,54 @@ public class RefereeListController {
 	/**
 	 * Handles filter change events.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@SuppressWarnings("unchecked")
 	@FXML
 	private void handleFilterChange() {
 
+		// filter for referees
 		if (lstReferees == null) {
-			lblFilter.setText("Filter");
+			lblRefereesFilter.setText("Filter");
 		} else {
 
 			lstReferees.setPredicate(RefereeModel.ALL);
 
-			if (chkActive.isSelected()) {
+			if (chkRefereesActive.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.ACTIVE));
 			}
 
-			if (chkInactive.isSelected()) {
+			if (chkRefereesInactive.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.INACTIVE));
 			}
 
-			if (chkEMail.isSelected()) {
+			if (chkRefereesEMail.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(PersonModel.HAS_EMAIL));
 			}
 
-			if (chkLetterOnly.isSelected()) {
+			if (chkRefereesLetterOnly.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.LETTER_ONLY));
 			}
 
-			lblFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstReferees.size()));
+			lblRefereesFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstReferees.size()));
 		}
 
 		tblReferees.refresh();
+		tblTrainees.refresh();
+		tblPeople.refresh();
 
+	}
+
+	/**
+	 * Handles tab change events.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private void handleTabChange() {
+		handleFilterChange();
 	}
 
 	/**
@@ -242,24 +536,68 @@ public class RefereeListController {
 	 *
 	 * @param theSelectionMode selection mode
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	public void setSelectionMode(final SelectionMode theSelectionMode) {
 		tblReferees.getSelectionModel().setSelectionMode(theSelectionMode);
+		tblTrainees.getSelectionModel().setSelectionMode(theSelectionMode);
+		tblPeople.getSelectionModel().setSelectionMode(theSelectionMode);
 	}
 
 	/**
-	 * Returns selection model.
+	 * Returns selection model of referees table.
 	 *
 	 * @return selection model
 	 *
-	 * @version 0.10.0
-	 * @return
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
-	public TableViewSelectionModel<Referee> getSelectionModel() {
+	public TableViewSelectionModel<Referee> getRefereesSelectionModel() {
 		return tblReferees.getSelectionModel();
+	}
+
+	/**
+	 * Returns selection model of trainees table.
+	 *
+	 * @return selection model
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public TableViewSelectionModel<Trainee> getTraineesSelectionModel() {
+		return tblTrainees.getSelectionModel();
+	}
+
+	/**
+	 * Returns selection model of people table.
+	 *
+	 * @return selection model
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public TableViewSelectionModel<Person> getPeopleSelectionModel() {
+		return tblPeople.getSelectionModel();
+	}
+
+	/**
+	 * Returns current selection (visible and non-visible items) as sorted list.
+	 *
+	 * @return current sorted selection
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public ObservableList<PersonModel> getCurrentSelection() {
+
+		List<PersonModel> lstReturn = new ArrayList<>();
+
+		tblReferees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
+		tblTrainees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
+		tblPeople.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add((PersonModel) person));
+
+		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
 	}
 
 }

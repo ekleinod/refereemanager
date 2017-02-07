@@ -36,7 +36,7 @@ import javafx.stage.Stage;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -54,154 +54,10 @@ import javafx.stage.Stage;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.10.0
  */
 public class PreferencesDialogController {
-
-	/**
-	 * Checkbox: full path in title.
-	 *
-	 * @version 6.0.0
-	 * @since 6.0.0
-	 */
-	@FXML
-	private CheckBox chkTitleFullpath;
-
-	/**
-	 * Template path.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtTemplatePath;
-
-	/**
-	 * Template path button.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Button btnTemplatePath;
-
-	/**
-	 * Image path.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtImagePath;
-
-	/**
-	 * Image path button.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private Button btnImagePath;
-
-	/**
-	 * Communication - SMTP host.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtCommunicationSMTPHost;
-
-	/**
-	 * Communication - SMTP username.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtCommunicationSMTPUsername;
-
-	/**
-	 * Communication - SMTP password.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtCommunicationSMTPPassword;
-
-	/**
-	 * Communication - From name.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtCommunicationFromName;
-
-	/**
-	 * Communication - From ameil.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtCommunicationFromEMail;
-
-	/**
-	 * Communication - To name.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtCommunicationToName;
-
-	/**
-	 * Communication - To email.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtCommunicationToEMail;
-
-	/**
-	 * Communication - Templates - EMail.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtCommunicationTemplateEMail;
-
-	/**
-	 * Communication - Templates - Letter.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtCommunicationTemplateLetter;
-
-	/**
-	 * Communication - Templates - single merge.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtCommunicationTemplateMergeSingle;
-
-	/**
-	 * Communication - Templates - all merge.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-	private TextField txtCommunicationTemplateMergeAll;
 
 	/**
 	 * OK button.
@@ -239,14 +95,44 @@ public class PreferencesDialogController {
 	@FXML
 	private Button btnExport;
 
+
 	/**
-	 * Tab display.
+	 * Tab pane.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Tab tabDisplay;
+	private TabPane pneTabs;
+
+
+	/**
+	 * Tab other.
+	 *
+	 * @version 0.12.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Tab tabOther;
+
+	/**
+	 * Checkbox: full path in title.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private CheckBox chkTitleFullpath;
+
+	/**
+	 * Checkbox: sort data after loading.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private CheckBox chkDataSortLoading;
+
 
 	/**
 	 * Tab paths.
@@ -258,22 +144,215 @@ public class PreferencesDialogController {
 	private Tab tabPaths;
 
 	/**
-	 * Tab communication.
+	 * Template path.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private Tab tabCommunication;
+	private TextField txtPathsTemplate;
 
 	/**
-	 * Tab pane.
+	 * Template path button.
+	 *
+	 * @version 0.12.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnPathsTemplate;
+
+	/**
+	 * Image path.
+	 *
+	 * @version 0.12.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtPathsImage;
+
+	/**
+	 * Image path button.
+	 *
+	 * @version 0.12.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private Button btnPathsImage;
+
+	/**
+	 * Schema path.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TextField txtPathsXSD;
+
+	/**
+	 * Schema path button.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Button btnPathsXSD;
+
+
+	/**
+	 * Tab EMail.
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TabPane pneTabs;
+	private Tab tabEMail;
+
+	/**
+	 * EMail - SMTP host.
+	 *
+	 * @version 0.12.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtEMailSMTPHost;
+
+	/**
+	 * EMail - SMTP username.
+	 *
+	 * @version 0.12.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtEMailSMTPUsername;
+
+	/**
+	 * EMail - SMTP password.
+	 *
+	 * @version 0.12.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtEMailSMTPPassword;
+
+	/**
+	 * EMail - From name.
+	 *
+	 * @version 0.12.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtEMailFromName;
+
+	/**
+	 * EMail - From ameil.
+	 *
+	 * @version 0.12.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtEMailFromEMail;
+
+	/**
+	 * EMail - To name.
+	 *
+	 * @version 0.12.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtEMailToName;
+
+	/**
+	 * EMail - To email.
+	 *
+	 * @version 0.12.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtEMailToEMail;
+
+	/**
+	 * EMail - Templates - EMail.
+	 *
+	 * @version 0.12.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private TextField txtEMailTemplateEMail;
+
+
+	/**
+	 * Tab letters.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Tab tabLetters;
+
+	/**
+	 * Letters - Templates - Letter.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TextField txtLettersTemplateLetter;
+
+	/**
+	 * Letters - Templates - single merge.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TextField txtLettersTemplateMergeSingle;
+
+	/**
+	 * Letters - Templates - all merge.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TextField txtLettersTemplateMergeAll;
+
+
+	/**
+	 * Tab documents.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Tab tabDocuments;
+
+	/**
+	 * Documents - Templates - Document.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TextField txtDocumentsTemplateDocument;
+
+
+	/**
+	 * Tab texts.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Tab tabTexts;
+
+	/**
+	 * Texts - Templates - Text.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private TextField txtTextsTemplateText;
 
 
 	/**
@@ -298,26 +377,35 @@ public class PreferencesDialogController {
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
 	private void initialize() {
 
 		// icons
-		btnTemplatePath.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
-		btnImagePath.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
-
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
 		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
 
-		tabDisplay.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
-		tabPaths.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
-		tabCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+		tabOther.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+		btnPathsTemplate.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
+		btnPathsImage.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
+		btnPathsXSD.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-open.png")));
 
+		tabPaths.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+
+		tabEMail.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+
+		tabLetters.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+
+		tabDocuments.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+
+		tabTexts.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+
+		// fill with existing values
 		fillValues();
 
-		}
+	}
 
 	/**
 	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
@@ -330,15 +418,15 @@ public class PreferencesDialogController {
 	 * @since 0.10.0
 	 */
 	public void initController(final AppLayoutController theAppController, final Stage theStage, final String theTabID) {
-				dialogStage = theStage;
-				if (theTabID != null) {
-					pneTabs.getTabs().forEach(tab -> {
-						if (tab.getId().equals(theTabID)) {
-							pneTabs.getSelectionModel().select(tab);
-						}
-					});
+		dialogStage = theStage;
+		if (theTabID != null) {
+			pneTabs.getTabs().forEach(tab -> {
+				if (tab.getId().equals(theTabID)) {
+					pneTabs.getSelectionModel().select(tab);
 				}
+			});
 		}
+	}
 
 	/**
 	 * Returns if user clicked ok.
@@ -349,74 +437,94 @@ public class PreferencesDialogController {
 	 * @since 0.10.0
 	 */
 	public boolean isOkClicked() {
-				return okClicked;
-		}
+		return okClicked;
+	}
 
 	/**
 	 * Fill preference values.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	private void fillValues() {
 
-		// tab display
-				chkTitleFullpath.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.TITLE_FULLPATH)));
+		// tab other
+		chkTitleFullpath.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.OTHER_TITLE_FULLPATH)));
+		chkDataSortLoading.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.OTHER_DATA_SORT_LOADING)));
 
-				// tab templates
-		txtTemplatePath.setText(Prefs.get(PrefKey.TEMPLATE_PATH));
-		txtImagePath.setText(Prefs.get(PrefKey.IMAGE_PATH));
+		// tab templates
+		txtPathsImage.setText(Prefs.get(PrefKey.PATHS_IMAGE));
+		txtPathsTemplate.setText(Prefs.get(PrefKey.PATHS_TEMPLATE));
+		txtPathsXSD.setText(Prefs.get(PrefKey.PATHS_XSD));
 
-		// tab communication
-		txtCommunicationSMTPHost.setText(Prefs.get(PrefKey.COMMUNICATION_SMTP_HOST));
-		txtCommunicationSMTPUsername.setText(Prefs.get(PrefKey.COMMUNICATION_SMTP_USERNAME));
-		txtCommunicationSMTPPassword.setText(Prefs.get(PrefKey.COMMUNICATION_SMTP_PASSWORD));
-		txtCommunicationFromName.setText(Prefs.get(PrefKey.COMMUNICATION_FROM_NAME));
-		txtCommunicationFromEMail.setText(Prefs.get(PrefKey.COMMUNICATION_FROM_EMAIL));
-		txtCommunicationToName.setText(Prefs.get(PrefKey.COMMUNICATION_TO_NAME));
-		txtCommunicationToEMail.setText(Prefs.get(PrefKey.COMMUNICATION_TO_EMAIL));
-		txtCommunicationTemplateEMail.setText(Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_EMAIL));
-		txtCommunicationTemplateLetter.setText(Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_LETTER));
-		txtCommunicationTemplateMergeSingle.setText(Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_MERGE_SINGLE));
-		txtCommunicationTemplateMergeAll.setText(Prefs.get(PrefKey.COMMUNICATION_TEMPLATE_MERGE_ALL));
+		// tab email
+		txtEMailSMTPHost.setText(Prefs.get(PrefKey.EMAIL_SMTP_HOST));
+		txtEMailSMTPUsername.setText(Prefs.get(PrefKey.EMAIL_SMTP_USERNAME));
+		txtEMailSMTPPassword.setText(Prefs.get(PrefKey.EMAIL_SMTP_PASSWORD));
+		txtEMailFromName.setText(Prefs.get(PrefKey.EMAIL_FROM_NAME));
+		txtEMailFromEMail.setText(Prefs.get(PrefKey.EMAIL_FROM_EMAIL));
+		txtEMailToName.setText(Prefs.get(PrefKey.EMAIL_TO_NAME));
+		txtEMailToEMail.setText(Prefs.get(PrefKey.EMAIL_TO_EMAIL));
+		txtEMailTemplateEMail.setText(Prefs.get(PrefKey.EMAIL_TEMPLATE_EMAIL));
 
-		}
+		// tab letters
+		txtLettersTemplateLetter.setText(Prefs.get(PrefKey.LETTERS_TEMPLATE_LETTER));
+		txtLettersTemplateMergeSingle.setText(Prefs.get(PrefKey.LETTERS_TEMPLATE_MERGE_SINGLE));
+		txtLettersTemplateMergeAll.setText(Prefs.get(PrefKey.LETTERS_TEMPLATE_MERGE_ALL));
+
+		// tab documents
+		txtDocumentsTemplateDocument.setText(Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
+
+		// tab texts
+		txtTextsTemplateText.setText(Prefs.get(PrefKey.TEXTS_TEMPLATE_TEXT));
+
+	}
 
 	/**
 	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
-		private void handleOk() {
-				okClicked = false;
-				if (isInputValid()) {
+	private void handleOk() {
+		okClicked = false;
+		if (isInputValid()) {
 
-				// tab display
-					Prefs.put(PrefKey.TITLE_FULLPATH, Boolean.toString(chkTitleFullpath.isSelected()));
+			// tab other
+			Prefs.put(PrefKey.OTHER_TITLE_FULLPATH, Boolean.toString(chkTitleFullpath.isSelected()));
+			Prefs.put(PrefKey.OTHER_DATA_SORT_LOADING, Boolean.toString(chkDataSortLoading.isSelected()));
 
-						// tab templates
-					Prefs.put(PrefKey.TEMPLATE_PATH, txtTemplatePath.getText());
-					Prefs.put(PrefKey.IMAGE_PATH, txtImagePath.getText());
+			// tab paths
+			Prefs.put(PrefKey.PATHS_IMAGE, txtPathsImage.getText());
+			Prefs.put(PrefKey.PATHS_TEMPLATE, txtPathsTemplate.getText());
+			Prefs.put(PrefKey.PATHS_XSD, txtPathsXSD.getText());
 
-				// tab communication
-					Prefs.put(PrefKey.COMMUNICATION_SMTP_HOST, txtCommunicationSMTPHost.getText());
-					Prefs.put(PrefKey.COMMUNICATION_SMTP_USERNAME, txtCommunicationSMTPUsername.getText());
-					Prefs.put(PrefKey.COMMUNICATION_SMTP_PASSWORD, txtCommunicationSMTPPassword.getText());
-					Prefs.put(PrefKey.COMMUNICATION_FROM_NAME, txtCommunicationFromName.getText());
-					Prefs.put(PrefKey.COMMUNICATION_FROM_EMAIL, txtCommunicationFromEMail.getText());
-					Prefs.put(PrefKey.COMMUNICATION_TO_NAME, txtCommunicationToName.getText());
-					Prefs.put(PrefKey.COMMUNICATION_TO_EMAIL, txtCommunicationToEMail.getText());
-					Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_EMAIL, txtCommunicationTemplateEMail.getText());
-					Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_LETTER, txtCommunicationTemplateLetter.getText());
-					Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_MERGE_SINGLE, txtCommunicationTemplateMergeSingle.getText());
-					Prefs.put(PrefKey.COMMUNICATION_TEMPLATE_MERGE_ALL, txtCommunicationTemplateMergeAll.getText());
+			// tab email
+			Prefs.put(PrefKey.EMAIL_SMTP_HOST, txtEMailSMTPHost.getText());
+			Prefs.put(PrefKey.EMAIL_SMTP_USERNAME, txtEMailSMTPUsername.getText());
+			Prefs.put(PrefKey.EMAIL_SMTP_PASSWORD, txtEMailSMTPPassword.getText());
+			Prefs.put(PrefKey.EMAIL_FROM_NAME, txtEMailFromName.getText());
+			Prefs.put(PrefKey.EMAIL_FROM_EMAIL, txtEMailFromEMail.getText());
+			Prefs.put(PrefKey.EMAIL_TO_NAME, txtEMailToName.getText());
+			Prefs.put(PrefKey.EMAIL_TO_EMAIL, txtEMailToEMail.getText());
+			Prefs.put(PrefKey.EMAIL_TEMPLATE_EMAIL, txtEMailTemplateEMail.getText());
 
-						okClicked = true;
-						dialogStage.close();
-				}
+			// tab letters
+			Prefs.put(PrefKey.LETTERS_TEMPLATE_LETTER, txtLettersTemplateLetter.getText());
+			Prefs.put(PrefKey.LETTERS_TEMPLATE_MERGE_SINGLE, txtLettersTemplateMergeSingle.getText());
+			Prefs.put(PrefKey.LETTERS_TEMPLATE_MERGE_ALL, txtLettersTemplateMergeAll.getText());
+
+			// tab documents
+			Prefs.put(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT, txtDocumentsTemplateDocument.getText());
+
+			// tab documents
+			Prefs.put(PrefKey.TEXTS_TEMPLATE_TEXT, txtTextsTemplateText.getText());
+
+			okClicked = true;
+			dialogStage.close();
 		}
+	}
 
 	/**
 	 * Validates input, shows error message for invalid input.
@@ -428,36 +536,36 @@ public class PreferencesDialogController {
 	 */
 	private boolean isInputValid() {
 
-				StringBuilder sbErrorMessage = new StringBuilder();
+		StringBuilder sbErrorMessage = new StringBuilder();
 
-				if (!txtTemplatePath.getText().isEmpty()) {
-					File flePath = Paths.get(txtTemplatePath.getText()).toFile();
-					if (!flePath.exists() || !flePath.isDirectory()) {
-							sbErrorMessage.append("Der Template-Pfad existiert nicht oder ist kein Verzeichnis.\n");
-					}
-				}
-
-				if (!txtImagePath.getText().isEmpty()) {
-					File flePath = Paths.get(txtImagePath.getText()).toFile();
-					if (!flePath.exists() || !flePath.isDirectory()) {
-							sbErrorMessage.append("Der Bilder-Pfad existiert nicht oder ist kein Verzeichnis.\n");
-					}
-				}
-
-				if (sbErrorMessage.length() == 0) {
-						return true;
-				}
-
-				// Show the error message.
-				AlertUtils.createAlert(AlertType.ERROR, dialogStage,
-						"Ungültige Eingaben",
-						"Bitte korrigieren Sie die fehlerhaften Eingaben.",
-						sbErrorMessage.toString())
-				.showAndWait();
-
-				return false;
-
+		if (!txtPathsTemplate.getText().isEmpty()) {
+			File flePath = Paths.get(txtPathsTemplate.getText()).toFile();
+			if (!flePath.exists() || !flePath.isDirectory()) {
+				sbErrorMessage.append("Der Template-Pfad existiert nicht oder ist kein Verzeichnis.\n");
+			}
 		}
+
+		if (!txtPathsImage.getText().isEmpty()) {
+			File flePath = Paths.get(txtPathsImage.getText()).toFile();
+			if (!flePath.exists() || !flePath.isDirectory()) {
+				sbErrorMessage.append("Der Bilder-Pfad existiert nicht oder ist kein Verzeichnis.\n");
+			}
+		}
+
+		if (sbErrorMessage.length() == 0) {
+				return true;
+		}
+
+		// Show the error message.
+		AlertUtils.createAlert(AlertType.ERROR, dialogStage,
+				"Ungültige Eingaben",
+				"Bitte korrigieren Sie die fehlerhaften Eingaben.",
+				sbErrorMessage.toString())
+		.showAndWait();
+
+		return false;
+
+	}
 
 	/**
 	 * Stores non-ok click and closes dialog.
@@ -466,56 +574,86 @@ public class PreferencesDialogController {
 	 * @since 0.10.0
 	 */
 	@FXML
-		private void handleCancel() {
-				okClicked = false;
-				dialogStage.close();
-		}
+	private void handleCancel() {
+		okClicked = false;
+		dialogStage.close();
+	}
 
 	/**
 	 * Set template path.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private void handleTemplatePath() {
+	private void handlePathsTemplate() {
 
 		DirectoryChooser dirChooser = new DirectoryChooser();
 
 		dirChooser.setTitle("Template-Pfad auswählen");
-				if (!Prefs.get(PrefKey.TEMPLATE_PATH).isEmpty()) {
-					dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.TEMPLATE_PATH)));
-				}
+		if (!Prefs.get(PrefKey.PATHS_TEMPLATE).isEmpty()) {
+			dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATHS_TEMPLATE)));
+		}
 
-				File dir = dirChooser.showDialog(dialogStage);
+		File dir = dirChooser.showDialog(dialogStage);
 
-				if (dir != null) {
-						txtTemplatePath.setText(dir.getPath());
-				}
+		if (dir != null) {
+			txtPathsTemplate.setText(dir.getPath());
+		}
 
 	}
 
 	/**
 	 * Set image path.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
-	private void handleImagePath() {
+	private void handlePathsImage() {
 
 		DirectoryChooser dirChooser = new DirectoryChooser();
 
 		dirChooser.setTitle("Bilder-Pfad auswählen");
-				if (!Prefs.get(PrefKey.IMAGE_PATH).isEmpty()) {
-					dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.IMAGE_PATH)));
-				}
+		if (!Prefs.get(PrefKey.PATHS_IMAGE).isEmpty()) {
+			dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATHS_IMAGE)));
+		}
 
-				File dir = dirChooser.showDialog(dialogStage);
+		File dir = dirChooser.showDialog(dialogStage);
 
-				if (dir != null) {
-						txtImagePath.setText(dir.getPath());
-				}
+		if (dir != null) {
+			txtPathsImage.setText(dir.getPath());
+		}
+
+	}
+
+	/**
+	 * Set XSD path.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private void handlePathsXSD() {
+
+		FileChooser fileChooser = new FileChooser();
+
+		fileChooser.setTitle("XML-Schema auswählen");
+		fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("XML-Schema (*.xsd)", "*.xsd"),
+				new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
+				);
+		if (!Prefs.get(PrefKey.PATHS_XSD).isEmpty()) {
+			Path pathPrefs = Paths.get(Prefs.get(PrefKey.PATHS_XSD));
+			fileChooser.setInitialDirectory(pathPrefs.getParent().toFile());
+			fileChooser.setInitialFileName(pathPrefs.getFileName().toString());
+		}
+
+		File flePrefs = fileChooser.showOpenDialog(dialogStage);
+
+		if (flePrefs != null) {
+			txtPathsXSD.setText(flePrefs.getAbsolutePath());
+		}
 
 	}
 
@@ -526,65 +664,21 @@ public class PreferencesDialogController {
 	 * @since 0.10.0
 	 */
 	@FXML
-		private void handleImport() {
+	private void handleImport() {
 
-			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
-					"Einstellungsimport",
-					"Überschreiben von Einstellungen.",
-					"Wenn Sie Einstellungen importieren, werden die bisherigen Einstellungen überschrieben, wenn Einstellungen dafür vorhanden sind.\nWollen Sie fortfahren?");
+		Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
+				"Einstellungsimport",
+				"Überschreiben von Einstellungen.",
+				"Wenn Sie Einstellungen importieren, werden die bisherigen Einstellungen überschrieben, wenn Einstellungen dafür vorhanden sind.\nWollen Sie fortfahren?");
 
-				alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+		alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
 
-				Optional<ButtonType> result = alert.showAndWait();
-				if (result.isPresent()) {
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.isPresent()) {
 			if (result.get() == ButtonType.YES) {
 				FileChooser fileChooser = new FileChooser();
 
 				fileChooser.setTitle("Einstellungen importieren");
-						fileChooser.getExtensionFilters().addAll(
-								new FileChooser.ExtensionFilter("Referee-Manager-Einstellungen (*.prefs)", "*.prefs"),
-								new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
-								);
-						if (!Prefs.get(PrefKey.PREFERENCES_FILE).isEmpty()) {
-							Path pathPrefs = Paths.get(Prefs.get(PrefKey.PREFERENCES_FILE));
-							fileChooser.setInitialDirectory(pathPrefs.getParent().toFile());
-							fileChooser.setInitialFileName(pathPrefs.getFileName().toString());
-						}
-
-						File flePrefs = fileChooser.showOpenDialog(dialogStage);
-
-						if (flePrefs != null) {
-							Prefs.put(PrefKey.PREFERENCES_FILE, flePrefs.getAbsolutePath());
-
-					try (InputStream stmIn = new FileInputStream(flePrefs)) {
-						Prefs.importPrefs(stmIn);
-						fillValues();
-					} catch (IOException | InvalidPreferencesFormatException | BackingStoreException e) {
-								AlertUtils.createAlert(AlertType.ERROR, dialogStage,
-										"Importfehler",
-										"Beim Import der Einstellungen ist ein Fehler aufgetreten.",
-										MessageFormat.format("{0}\nDie Daten wurden nicht importiert.", e.getMessage()))
-								.showAndWait();
-					}
-						}
-
-			}
-				}
-
-	}
-
-	/**
-	 * Exports preferences.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-	 */
-	@FXML
-		private void handleExport() {
-
-		FileChooser fileChooser = new FileChooser();
-
-		fileChooser.setTitle("Einstellungen exportieren");
 				fileChooser.getExtensionFilters().addAll(
 						new FileChooser.ExtensionFilter("Referee-Manager-Einstellungen (*.prefs)", "*.prefs"),
 						new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
@@ -595,24 +689,68 @@ public class PreferencesDialogController {
 					fileChooser.setInitialFileName(pathPrefs.getFileName().toString());
 				}
 
-				File flePrefs = fileChooser.showSaveDialog(dialogStage);
+				File flePrefs = fileChooser.showOpenDialog(dialogStage);
 
 				if (flePrefs != null) {
-					if (!flePrefs.getName().contains(".")) {
-						flePrefs = new File(String.format("%s.prefs", flePrefs.getPath()));
-					}
 					Prefs.put(PrefKey.PREFERENCES_FILE, flePrefs.getAbsolutePath());
+
+					try (InputStream stmIn = new FileInputStream(flePrefs)) {
+						Prefs.importPrefs(stmIn);
+						fillValues();
+					} catch (IOException | InvalidPreferencesFormatException | BackingStoreException e) {
+						AlertUtils.createAlert(AlertType.ERROR, dialogStage,
+								"Importfehler",
+								"Beim Import der Einstellungen ist ein Fehler aufgetreten.",
+								MessageFormat.format("{0}\nDie Daten wurden nicht importiert.", e.getMessage()))
+						.showAndWait();
+					}
+				}
+
+			}
+		}
+
+	}
+
+	/**
+	 * Exports preferences.
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	@FXML
+	private void handleExport() {
+
+		FileChooser fileChooser = new FileChooser();
+
+		fileChooser.setTitle("Einstellungen exportieren");
+		fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("Referee-Manager-Einstellungen (*.prefs)", "*.prefs"),
+				new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
+				);
+		if (!Prefs.get(PrefKey.PREFERENCES_FILE).isEmpty()) {
+			Path pathPrefs = Paths.get(Prefs.get(PrefKey.PREFERENCES_FILE));
+			fileChooser.setInitialDirectory(pathPrefs.getParent().toFile());
+			fileChooser.setInitialFileName(pathPrefs.getFileName().toString());
+		}
+
+		File flePrefs = fileChooser.showSaveDialog(dialogStage);
+
+		if (flePrefs != null) {
+			if (!flePrefs.getName().contains(".")) {
+				flePrefs = new File(String.format("%s.prefs", flePrefs.getPath()));
+			}
+			Prefs.put(PrefKey.PREFERENCES_FILE, flePrefs.getAbsolutePath());
 
 			try (OutputStream stmOut = new FileOutputStream(flePrefs)) {
 				Prefs.exportPrefs(stmOut);
 			} catch (IOException | BackingStoreException e) {
-						AlertUtils.createAlert(AlertType.ERROR, dialogStage,
-								"Exportfehler",
-								"Beim Export der Einstellungen ist ein Fehler aufgetreten.",
-								MessageFormat.format("{0}\nDie Daten wurden nicht exportiert.", e.getMessage()))
-						.showAndWait();
+				AlertUtils.createAlert(AlertType.ERROR, dialogStage,
+						"Exportfehler",
+						"Beim Export der Einstellungen ist ein Fehler aufgetreten.",
+						MessageFormat.format("{0}\nDie Daten wurden nicht exportiert.", e.getMessage()))
+				.showAndWait();
 			}
-				}
+		}
 
 	}
 

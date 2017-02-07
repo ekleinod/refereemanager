@@ -15,6 +15,7 @@ import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
 import de.edgesoft.refereemanager.model.TeamModel;
+import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 
 
@@ -83,6 +84,7 @@ public class Content
     protected List<Person> person;
     @XmlElement(type = RefereeModel.class)
     protected List<Referee> referee;
+    @XmlElement(type = TraineeModel.class)
     protected List<Trainee> trainee;
     @XmlElement(type = LeagueModel.class)
     protected List<League> league;

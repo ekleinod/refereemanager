@@ -5,7 +5,7 @@ XSD-Schema for refereemanager.
 
 ## Legal stuff
 
-Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
 
 This file is part of refereemanager.
 
@@ -23,7 +23,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 @author Ekkart Kleinod
-@version 0.10.0
+@version 0.12.0
 @since 0.4.0
 -->
 
@@ -125,7 +125,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:extension base="Person">
 				<xsd:sequence>
 					<xsd:element name="docs_by_letter" type="BooleanProperty" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="revoke_license" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="revoke_license" type="RevokeLicense" minOccurs="0" maxOccurs="1" />
 
 					<!-- 1:n -->
 					<xsd:element name="training_level" type="TrainingLevel" minOccurs="0" maxOccurs="unbounded" />
@@ -169,6 +169,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="Referee">
 				<xsd:sequence>
+					<xsd:element name="withdrawn" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="did_not_start" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="points_written_a" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="points_written_b" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="points_practical" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
@@ -219,6 +221,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="country_code" type="StringProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="area_code" type="StringProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="number" type="StringProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="is_cell" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -525,6 +528,16 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:complexContent>
 	</xsd:complexType>
 
+	<xsd:complexType name="RevokeLicense">
+		<xsd:complexContent>
+			<xsd:extension base="ModelClass">
+				<xsd:sequence>
+					<xsd:element name="revoke" type="BooleanProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="reason" type="StringProperty" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
 
 

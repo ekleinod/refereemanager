@@ -58,7 +58,7 @@ import javafx.util.Duration;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.10.0
  */
 public class RefereeManager extends Application {
@@ -74,10 +74,10 @@ public class RefereeManager extends Application {
 	/**
 	 * Program and doc version.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
-	public static final Version VERSION = new VersionExt("0.10.0");
+	public static final Version VERSION = new VersionExt("0.12.0");
 
 	/**
 	 * Host services delegate.

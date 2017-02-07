@@ -1,12 +1,15 @@
 package de.edgesoft.refereemanager.model;
 
+import java.nio.file.Paths;
 import java.text.Collator;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
+import de.edgesoft.edgeutils.files.FileUtils;
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Person;
+import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -32,7 +35,7 @@ import javafx.beans.property.SimpleStringProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.5.0
  */
 public class PersonModel extends Person {
@@ -62,6 +65,14 @@ public class PersonModel extends Person {
 	public static Predicate<PersonModel> HAS_EMAIL = person -> (person.getPrimaryEMail() != null);
 
 	/**
+	 * Filter predicate for people with postal addresses.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public static Predicate<PersonModel> HAS_ADDRESS = person -> (person.getPrimaryAddress() != null);
+
+	/**
 	 * Display title.
 	 *
 	 * @return display title
@@ -70,9 +81,9 @@ public class PersonModel extends Person {
 	 * @since 0.8.0
 	 */
 	@Override
-		public SimpleStringProperty getDisplayTitle() {
-			return getFullName();
-		}
+	public SimpleStringProperty getDisplayTitle() {
+		return getFullName();
+	}
 
 	/**
 	 * Full name of person.
@@ -82,8 +93,8 @@ public class PersonModel extends Person {
 	 * @version 0.10.0
 	 * @since 0.5.0
 	 */
-		public SimpleStringProperty getFullName() {
-			StringBuilder sbReturn = new StringBuilder();
+	public SimpleStringProperty getFullName() {
+		StringBuilder sbReturn = new StringBuilder();
 
 		if ((getTitle() != null) && !getTitle().get().isEmpty()) {
 			sbReturn.append(getTitle().get());
@@ -104,50 +115,50 @@ public class PersonModel extends Person {
 		}
 
 		return new SimpleStringProperty(sbReturn.toString());
-		}
+	}
 
 	/**
 	 * Table name of person.
 	 *
 	 * @return table name of the person
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.5.0
 	 */
-		public SimpleStringProperty getTableName() {
-			StringBuilder sbReturn = new StringBuilder();
+	public SimpleStringProperty getTableName() {
+		StringBuilder sbReturn = new StringBuilder();
 
 		if ((getName() != null) && !getName().get().isEmpty()) {
-			sbReturn.append(getName());
+			sbReturn.append(getName().get());
 		}
 
 		if ((getTitle() != null) && !getTitle().get().isEmpty()) {
 			if (sbReturn.length() > 0) {
 				sbReturn.append(", ");
 			}
-			sbReturn.append(getTitle());
+			sbReturn.append(getTitle().get());
 		}
 
 		if ((getFirstName() != null) && !getFirstName().get().isEmpty()) {
 			if (sbReturn.length() > 0) {
 				sbReturn.append(", ");
 			}
-			sbReturn.append(getFirstName());
+			sbReturn.append(getFirstName().get());
 		}
 
 		return new SimpleStringProperty(sbReturn.toString());
-		}
+	}
 
 	/**
 	 * Filename name of person.
 	 *
 	 * @return filename name of the person
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.8.0
 	 */
-		public SimpleStringProperty getFileName() {
-			StringBuilder sbReturn = new StringBuilder();
+	public SimpleStringProperty getFileName() {
+		StringBuilder sbReturn = new StringBuilder();
 
 		if ((getName() != null) && !getName().get().isEmpty()) {
 			sbReturn.append(getName().get().toLowerCase());
@@ -160,8 +171,27 @@ public class PersonModel extends Person {
 			sbReturn.append(getFirstName().get().toLowerCase());
 		}
 
-		return new SimpleStringProperty(sbReturn.toString());
+		return new SimpleStringProperty(FileUtils.cleanFilename(sbReturn.toString()));
+	}
+
+	/**
+	 * Returns if image file given by image path and filename exists.
+	 *
+	 * @param theImagePath image path
+	 * @return does image file given by image path and filename exist
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public boolean existsImageFile(final String theImagePath) {
+
+		if ((getFileName() == null) || (getFileName().getValue() == null) || getFileName().getValue().isEmpty()) {
+			return false;
 		}
+
+		return Paths.get(theImagePath, String.format("%s.jpg", getFileName().getValue())).toFile().exists();
+
+	}
 
 	/**
 	 * Primary address.
@@ -171,13 +201,13 @@ public class PersonModel extends Person {
 	 * @version 0.6.0
 	 * @since 0.6.0
 	 */
-		public Address getPrimaryAddress() {
-			return getAddress()
-					.stream()
-					.filter(ContactModel.ISPRIMARY)
-					.findFirst()
-					.orElse(null);
-		}
+	public Address getPrimaryAddress() {
+		return getAddress()
+				.stream()
+				.filter(ContactModel.ISPRIMARY)
+				.findFirst()
+				.orElse(null);
+	}
 
 	/**
 	 * Primary email.
@@ -187,13 +217,29 @@ public class PersonModel extends Person {
 	 * @version 0.8.0
 	 * @since 0.8.0
 	 */
-		public EMail getPrimaryEMail() {
-			return getEMail()
-					.stream()
-					.filter(ContactModel.ISPRIMARY)
-					.findFirst()
-					.orElse(null);
-		}
+	public EMail getPrimaryEMail() {
+		return getEMail()
+				.stream()
+				.filter(ContactModel.ISPRIMARY)
+				.findFirst()
+				.orElse(null);
+	}
+
+	/**
+	 * Primary phone number.
+	 *
+	 * @return primary phone number
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public PhoneNumber getPrimaryPhoneNumber() {
+		return getPhoneNumber()
+				.stream()
+				.filter(ContactModel.ISPRIMARY)
+				.findFirst()
+				.orElse(null);
+	}
 
 }
 

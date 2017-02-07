@@ -9,10 +9,19 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlTransient;
 
 import de.edgesoft.refereemanager.jaxb.Club;
+import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.League;
+import de.edgesoft.refereemanager.jaxb.OtherDate;
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.RefereeAssignmentType;
+import de.edgesoft.refereemanager.jaxb.SexType;
+import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.Team;
+import de.edgesoft.refereemanager.jaxb.Trainee;
+import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
+import de.edgesoft.refereemanager.jaxb.Venue;
 import de.edgesoft.refereemanager.jaxb.Wish;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +31,7 @@ import javafx.collections.ObservableList;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -40,19 +49,84 @@ import javafx.collections.ObservableList;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.5.0
  */
 public class ContentModel extends Content {
 
-		/**
-		 * Observable list of referees (singleton).
-		 *
+	/**
+	 * Observable list of referees (singleton).
+	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
-		 */
+	 */
 	@XmlTransient
 	private ObservableList<Referee> observableReferees = null;
+
+	/**
+	 * Observable list of trainees (singleton).
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@XmlTransient
+	private ObservableList<Trainee> observableTrainees = null;
+
+	/**
+	 * Observable list of people (singleton).
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@XmlTransient
+	private ObservableList<Person> observablePeople = null;
+
+
+	/**
+	 * Returns observable list of referees.
+	 *
+	 * @return observable list of referees
+	 *
+	 * @version 0.10.0
+	 * @since 0.10.0
+	 */
+	public ObservableList<Referee> getObservableReferees() {
+		if (observableReferees == null) {
+			observableReferees = FXCollections.observableList(getReferee());
+		}
+		return observableReferees;
+	}
+
+	/**
+	 * Returns observable list of trainees.
+	 *
+	 * @return observable list of trainees
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public ObservableList<Trainee> getObservableTrainees() {
+		if (observableTrainees == null) {
+			observableTrainees = FXCollections.observableList(getTrainee());
+		}
+		return observableTrainees;
+	}
+
+	/**
+	 * Returns observable list of people.
+	 *
+	 * @return observable list of people
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public ObservableList<Person> getObservablePeople() {
+		if (observablePeople == null) {
+			observablePeople = FXCollections.observableList(getPerson());
+		}
+		return observablePeople;
+	}
+
 
 	/**
 	 * Returns all referenced (used) clubs.
@@ -165,19 +239,66 @@ public class ContentModel extends Content {
 
 	}
 
-		/**
-		 * Returns observable list of referees.
-		 *
-		 * @return observable list of referees
+	/**
+	 * Sorts all data in model.
 	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
-		 */
-	public ObservableList<Referee> getObservableReferees() {
-		if (observableReferees == null) {
-			observableReferees = FXCollections.observableList(getReferee());
-		}
-		return observableReferees;
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public void sortData() {
+
+		List<Person> lstPerson = getPerson().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList());
+		getPerson().clear();
+		getPerson().addAll(lstPerson);
+
+		List<Referee> lstReferee = getReferee().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList());
+		getReferee().clear();
+		getReferee().addAll(lstReferee);
+
+		List<Trainee> lstTrainee = getTrainee().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList());
+		getTrainee().clear();
+		getTrainee().addAll(lstTrainee);
+
+		List<League> lstLeague = getLeague().stream().sorted(LeagueModel.RANK_DISPLAYTITLE).collect(Collectors.toList());
+		getLeague().clear();
+		getLeague().addAll(lstLeague);
+
+		List<Club> lstClub = getClub().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
+		getClub().clear();
+		getClub().addAll(lstClub);
+
+		List<Team> lstTeam = getTeam().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
+		getTeam().clear();
+		getTeam().addAll(lstTeam);
+
+		List<OtherDate> lstOtherDate = getOtherdate().stream().sorted(DateModel.RANK_START).collect(Collectors.toList());
+		getOtherdate().clear();
+		getOtherdate().addAll(lstOtherDate);
+
+		List<Venue> lstVenue = getVenue().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
+		getVenue().clear();
+		getVenue().addAll(lstVenue);
+
+		List<SexType> lstSexType = getSexType().stream().sorted(TitledIDTypeModel.TITLE).collect(Collectors.toList());
+		getSexType().clear();
+		getSexType().addAll(lstSexType);
+
+		List<ContactType> lstContactType = getContactType().stream().sorted(TitledIDTypeModel.TITLE).collect(Collectors.toList());
+		getContactType().clear();
+		getContactType().addAll(lstContactType);
+
+		List<StatusType> lstStatusType = getStatusType().stream().sorted(TitledIDTypeModel.TITLE).collect(Collectors.toList());
+		getStatusType().clear();
+		getStatusType().addAll(lstStatusType);
+
+		List<RefereeAssignmentType> lstRefereeAssignmentType = getRefereeAssignmentType().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
+		getRefereeAssignmentType().clear();
+		getRefereeAssignmentType().addAll(lstRefereeAssignmentType);
+
+		List<TrainingLevelType> lstTrainingLevelType = getTrainingLevelType().stream().sorted(TrainingLevelTypeModel.RANK).collect(Collectors.toList());
+		getTrainingLevelType().clear();
+		getTrainingLevelType().addAll(lstTrainingLevelType);
+
 	}
 
 }

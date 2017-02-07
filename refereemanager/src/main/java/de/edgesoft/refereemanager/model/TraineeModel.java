@@ -1,12 +1,12 @@
 package de.edgesoft.refereemanager.model;
 
-import java.time.LocalDateTime;
-import java.util.Comparator;
+import java.util.function.Predicate;
 
-import de.edgesoft.refereemanager.jaxb.Date;
+import de.edgesoft.refereemanager.jaxb.Trainee;
+import javafx.beans.property.SimpleBooleanProperty;
 
 /**
- * Date model, additional methods for jaxb model class.
+ * Trainee model, additional methods for jaxb model class.
  *
  * ## Legal stuff
  *
@@ -29,17 +29,33 @@ import de.edgesoft.refereemanager.jaxb.Date;
  *
  * @author Ekkart Kleinod
  * @version 0.12.0
- * @since 0.9.0
+ * @since 0.12.0
  */
-public class DateModel extends Date {
+public class TraineeModel extends Trainee {
 
 	/**
-	 * Comparator start date/time.
+	 * Filter predicate for trainees that passed the exam.
 	 *
 	 * @version 0.12.0
-	 * @since 0.9.0
+	 * @since 0.12.0
 	 */
-	public static final Comparator<Date> RANK_START = Comparator.comparing(date -> (LocalDateTime) date.getStart().getValue());
+	public static Predicate<Trainee> PASSED = trainee -> trainee.getPassed().getValue();
+
+	/**
+	 * Has referee passed exam.
+	 *
+	 * @return has referee passed exam?
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@Override
+	public SimpleBooleanProperty getPassed() {
+		if (super.getPassed() == null) {
+			return new SimpleBooleanProperty(false);
+		}
+		return super.getPassed();
+	}
 
 }
 

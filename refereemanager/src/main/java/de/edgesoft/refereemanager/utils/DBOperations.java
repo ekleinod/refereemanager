@@ -30,7 +30,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -48,80 +48,10 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.9.0
+ * @version 0.12.0
  * @since 0.7.0
  */
 public class DBOperations {
-
-	/**
-	 * Sorts entries of database.
-	 *
-	 * @param theDB database
-	 *
-	 * @version 0.9.0
-	 * @since 0.7.0
-	 */
-	public static void sortDB(final de.edgesoft.refereemanager.jaxb.RefereeManager theDB) {
-
-		Objects.requireNonNull(theDB, "database must not be null");
-
-		ContentModel theContent = ((ContentModel) theDB.getContent());
-
-		List<Person> lstPerson = theContent.getPerson().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList());
-		theDB.getContent().getPerson().clear();
-		theDB.getContent().getPerson().addAll(lstPerson);
-
-		List<Referee> lstReferee = theContent.getReferee().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList());
-		theDB.getContent().getReferee().clear();
-		theDB.getContent().getReferee().addAll(lstReferee);
-
-		List<Trainee> lstTrainee = theContent.getTrainee().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList());
-		theDB.getContent().getTrainee().clear();
-		theDB.getContent().getTrainee().addAll(lstTrainee);
-
-		List<League> lstLeague = theContent.getLeague().stream().sorted(LeagueModel.RANK_DISPLAYTITLE).collect(Collectors.toList());
-		theDB.getContent().getLeague().clear();
-		theDB.getContent().getLeague().addAll(lstLeague);
-
-		List<Club> lstClub = theContent.getClub().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
-		theDB.getContent().getClub().clear();
-		theDB.getContent().getClub().addAll(lstClub);
-
-		List<Team> lstTeam = theContent.getTeam().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
-		theDB.getContent().getTeam().clear();
-		theDB.getContent().getTeam().addAll(lstTeam);
-
-		List<OtherDate> lstOtherDate = theContent.getOtherdate().stream().sorted(DateModel.RANK_START).collect(Collectors.toList());
-		theDB.getContent().getOtherdate().clear();
-		theDB.getContent().getOtherdate().addAll(lstOtherDate);
-
-		List<Venue> lstVenue = theContent.getVenue().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
-		theDB.getContent().getVenue().clear();
-		theDB.getContent().getVenue().addAll(lstVenue);
-
-		List<SexType> lstSexType = theContent.getSexType().stream().sorted(TitledIDTypeModel.TITLE).collect(Collectors.toList());
-		theDB.getContent().getSexType().clear();
-		theDB.getContent().getSexType().addAll(lstSexType);
-
-		List<ContactType> lstContactType = theContent.getContactType().stream().sorted(TitledIDTypeModel.TITLE).collect(Collectors.toList());
-		theDB.getContent().getContactType().clear();
-		theDB.getContent().getContactType().addAll(lstContactType);
-
-		List<StatusType> lstStatusType = theContent.getStatusType().stream().sorted(TitledIDTypeModel.TITLE).collect(Collectors.toList());
-		theDB.getContent().getStatusType().clear();
-		theDB.getContent().getStatusType().addAll(lstStatusType);
-
-		List<RefereeAssignmentType> lstRefereeAssignmentType = theContent.getRefereeAssignmentType().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
-		theDB.getContent().getRefereeAssignmentType().clear();
-		theDB.getContent().getRefereeAssignmentType().addAll(lstRefereeAssignmentType);
-
-		List<TrainingLevelType> lstTrainingLevelType = theContent.getTrainingLevelType().stream().sorted(TrainingLevelTypeModel.RANK).collect(Collectors.toList());
-		theDB.getContent().getTrainingLevelType().clear();
-		theDB.getContent().getTrainingLevelType().addAll(lstTrainingLevelType);
-
-		RefereeManager.logger.info("sorted database");
-
-	}
 
 	/**
 	 * Removes unused clubs.
