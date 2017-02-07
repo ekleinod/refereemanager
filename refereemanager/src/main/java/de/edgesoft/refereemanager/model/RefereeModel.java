@@ -11,13 +11,14 @@ import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 /**
  * Referee model, additional methods for jaxb model class.
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -35,7 +36,7 @@ import javafx.beans.property.SimpleBooleanProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.5.0
  */
 public class RefereeModel extends Referee {
@@ -51,26 +52,26 @@ public class RefereeModel extends Referee {
 	/**
 	 * Filter predicate for active status types.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.5.0
 	 */
-	public static Predicate<Referee> ACTIVE = referee -> referee.getStatus().getActive().get();
+	public static Predicate<Referee> ACTIVE = referee -> referee.getStatus().getActive().getValue();
 
 	/**
 	 * Filter predicate for inactive status types.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.5.0
 	 */
-	public static Predicate<Referee> INACTIVE = referee -> !referee.getStatus().getActive().get();
+	public static Predicate<Referee> INACTIVE = referee -> !referee.getStatus().getActive().getValue();
 
 	/**
 	 * Filter predicate for letter only (docs by letter and no email) referees.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
-	public static Predicate<Referee> LETTER_ONLY = referee -> referee.getDocsByLetter().get();
+	public static Predicate<Referee> LETTER_ONLY = referee -> referee.getDocsByLetter().getValue();
 
 	/**
 	 * Highest training level.
@@ -80,101 +81,130 @@ public class RefereeModel extends Referee {
 	 * @version 0.6.0
 	 * @since 0.5.0
 	 */
-		public TrainingLevel getHighestTrainingLevel() {
-			return getTrainingLevel()
-					.stream()
-					.sorted(TrainingLevelModel.RANK.reversed())
-					.findFirst()
-					.orElse(null);
-		}
+	public TrainingLevel getHighestTrainingLevel() {
+		return getTrainingLevel()
+				.stream()
+				.sorted(TrainingLevelModel.RANK.reversed())
+				.findFirst()
+				.orElse(null);
+	}
+
+	/**
+	 * First training level.
+	 *
+	 * @return first training level
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public TrainingLevel getFirstTrainingLevel() {
+		return getTrainingLevel()
+				.stream()
+				.sorted(TrainingLevelModel.RANK)
+				.findFirst()
+				.orElse(null);
+	}
 
 	/**
 	 * Local training level.
 	 *
 	 * @return local training level
 	 *
-	 * @version 0.9.0
+	 * @version 0.12.0
 	 * @since 0.9.0
 	 */
-		public TrainingLevel getLocalTrainingLevel() {
-			TrainingLevel firstLevel = getTrainingLevel()
-					.stream()
-					.sorted(TrainingLevelModel.RANK)
-					.findFirst()
-					.orElse(null);
+	public TrainingLevel getLocalTrainingLevel() {
+		TrainingLevel firstLevel = getFirstTrainingLevel();
 
-			if ((firstLevel == null) || !firstLevel.getType().getId().equals(Prefs.get(PrefKey.LOCAL_TRAININGLEVEL))) {
-				return null;
-			}
-
-			return firstLevel;
+		if ((firstLevel == null) || !firstLevel.getType().getId().equals(Prefs.get(PrefKey.LOCAL_TRAININGLEVEL))) {
+			return null;
 		}
+
+		return firstLevel;
+	}
 
 	/**
 	 * Last training update.
 	 *
 	 * @return last training update
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.8.0
 	 */
-		public LocalDate getLastTrainingUpdate() {
+	public SimpleObjectProperty<LocalDate> getLastTrainingUpdate() {
 
-			TrainingLevel highestTrainingLevel = getHighestTrainingLevel();
+		TrainingLevel highestTrainingLevel = getHighestTrainingLevel();
 
-			if (highestTrainingLevel == null) {
+		if (highestTrainingLevel == null) {
+			return null;
+		}
+
+		List<LocalDate> lstUpdate = new ArrayList<>();
+		highestTrainingLevel.getUpdate().forEach(update -> lstUpdate.add((LocalDate) update.getValue()));
+
+		LocalDate dteReturn = lstUpdate
+				.stream()
+				.sorted(Comparator.reverseOrder())
+				.findFirst()
+				.orElse(null);
+
+		if (dteReturn == null) {
+			if (highestTrainingLevel.getSince() == null) {
 				return null;
 			}
 
-			List<LocalDate> lstUpdate = new ArrayList<>();
-			highestTrainingLevel.getUpdate().forEach(update -> lstUpdate.add((LocalDate) update.get()));
-
-			LocalDate dteReturn = lstUpdate
-					.stream()
-					.sorted(Comparator.reverseOrder())
-					.findFirst()
-					.orElse(null);
-
-			if (dteReturn == null) {
-				return (LocalDate) highestTrainingLevel.getSince().get();
-			}
-
-			return dteReturn;
+			return new SimpleObjectProperty<>((LocalDate) highestTrainingLevel.getSince().getValue());
 		}
+
+		return new SimpleObjectProperty<>(dteReturn);
+	}
 
 	/**
 	 * Next training update.
 	 *
 	 * @return next training update
 	 *
-	 * @version 0.8.0
+	 * @version 0.12.0
 	 * @since 0.8.0
 	 */
-		public LocalDate getNextTrainingUpdate() {
+	public SimpleObjectProperty<LocalDate> getNextTrainingUpdate() {
 
-			LocalDate lastTrainingUpdate = getLastTrainingUpdate();
-
-			if (lastTrainingUpdate == null) {
-				return null;
-			}
-
-			return lastTrainingUpdate.plusYears(getHighestTrainingLevel().getType().getUpdateInterval().get());
+		if (getLastTrainingUpdate() == null) {
+			return null;
 		}
 
-		/**
-		 * Does referee receive docs by letter?.
-		 *
-		 * Considers property and lack of email address.
-		 *
-		 * @return receive docs by letter?
+		return new SimpleObjectProperty<>(getLastTrainingUpdate().getValue().plusYears(getHighestTrainingLevel().getType().getUpdateInterval().getValue()));
+	}
+
+	/**
+	 * Does referee receive docs by letter?.
 	 *
-	 * @version 0.10.0
+	 * Considers property and lack of email address.
+	 *
+	 * @return receive docs by letter?
+	 *
+	 * @version 0.12.0
 	 * @since 0.8.0
-		 */
-		@Override
-		public SimpleBooleanProperty getDocsByLetter() {
-				return new SimpleBooleanProperty(docsByLetter.get() || getEMail().isEmpty());
+	 */
+	@Override
+	public SimpleBooleanProperty getDocsByLetter() {
+		return new SimpleBooleanProperty(docsByLetter.getValue() || getEMail().isEmpty());
+	}
+
+	/**
+	 * Will license be revoked.
+	 *
+	 * @return Will license be revoked?
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public SimpleBooleanProperty getRevokingLicense() {
+		if ((getRevokeLicense() == null) || (getRevokeLicense().getRevoke() == null)) {
+			return new SimpleBooleanProperty(false);
 		}
+		return getRevokeLicense().getRevoke();
+	}
 
 }
 

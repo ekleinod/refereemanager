@@ -24,6 +24,8 @@ import de.edgesoft.refereemanager.model.RefereeModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}Referee">
  *       &lt;sequence>
+ *         &lt;element name="withdrawn" type="{}BooleanProperty" minOccurs="0"/>
+ *         &lt;element name="did_not_start" type="{}BooleanProperty" minOccurs="0"/>
  *         &lt;element name="points_written_a" type="{}IntegerProperty" minOccurs="0"/>
  *         &lt;element name="points_written_b" type="{}IntegerProperty" minOccurs="0"/>
  *         &lt;element name="points_practical" type="{}IntegerProperty" minOccurs="0"/>
@@ -39,6 +41,8 @@ import de.edgesoft.refereemanager.model.RefereeModel;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Trainee", propOrder = {
+    "withdrawn",
+    "didNotStart",
     "pointsWrittenA",
     "pointsWrittenB",
     "pointsPractical",
@@ -49,6 +53,14 @@ public class Trainee
     extends RefereeModel
 {
 
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty withdrawn;
+    @XmlElement(name = "did_not_start", type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty didNotStart;
     @XmlElement(name = "points_written_a", type = String.class)
     @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
     @XmlSchemaType(name = "int")
@@ -69,6 +81,54 @@ public class Trainee
     @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
     @XmlSchemaType(name = "boolean")
     protected SimpleBooleanProperty passed;
+
+    /**
+     * Gets the value of the withdrawn property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public SimpleBooleanProperty getWithdrawn() {
+        return withdrawn;
+    }
+
+    /**
+     * Sets the value of the withdrawn property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setWithdrawn(SimpleBooleanProperty value) {
+        this.withdrawn = value;
+    }
+
+    /**
+     * Gets the value of the didNotStart property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public SimpleBooleanProperty getDidNotStart() {
+        return didNotStart;
+    }
+
+    /**
+     * Sets the value of the didNotStart property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDidNotStart(SimpleBooleanProperty value) {
+        this.didNotStart = value;
+    }
 
     /**
      * Gets the value of the pointsWrittenA property.

@@ -179,11 +179,11 @@ public class RefereeOverviewController {
 		showDetails(null);
 
 		// listen to selection changes, show event
-		ctlRefList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
+		ctlRefList.getRefereesSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
 
 		// enabling edit/delete buttons only with selection
-		btnEdit.disableProperty().bind(ctlRefList.getSelectionModel().selectedItemProperty().isNull());
-		btnDelete.disableProperty().bind(ctlRefList.getSelectionModel().selectedItemProperty().isNull());
+		btnEdit.disableProperty().bind(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull());
+		btnDelete.disableProperty().bind(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull());
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.REFEREE_OVERVIEW_SPLIT)));
@@ -205,19 +205,16 @@ public class RefereeOverviewController {
 	 *
 	 * @param theAppController app controller
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	public void initController(final AppLayoutController theAppController) {
 
 		appController = theAppController;
 
-		if (AppModel.getData() != null) {
-			ctlRefList.setItems(((ContentModel) AppModel.getData().getContent()).getObservableReferees());
-		} else {
-			ctlRefList.setItems(null);
-		}
-		}
+		ctlRefList.setItems();
+
+	}
 
 	/**
 	 * Shows selected data in detail window.
@@ -257,11 +254,11 @@ public class RefereeOverviewController {
 									theDetailData.getMember().getDisplayTitle().getValue());
 
 					try {
-						File fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), String.format("%s.jpg", theDetailData.getFileName().get())).toFile();
-						if (fleImage.exists()) {
+						if (theDetailData.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
+							File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), String.format("%s.jpg", theDetailData.getFileName().getValue())).toFile();
 							imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
 						} else {
-							fleImage = Paths.get(Prefs.get(PrefKey.IMAGE_PATH), String.format("%s.jpg", "missing")).toFile();
+							File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), "missing.jpg").toFile();
 							if (fleImage.exists()) {
 								imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
 							} else {
@@ -288,7 +285,7 @@ public class RefereeOverviewController {
 		RefereeModel newReferee = new RefereeModel();
 		if (showEditDialog(newReferee)) {
 			((ContentModel) AppModel.getData().getContent()).getObservableReferees().add(newReferee);
-			ctlRefList.getSelectionModel().select(newReferee);
+			ctlRefList.getRefereesSelectionModel().select(newReferee);
 			AppModel.setModified(true);
 			appController.setAppTitle();
 		}
@@ -304,7 +301,7 @@ public class RefereeOverviewController {
 	@FXML
 	private void handleEdit() {
 
-		RefereeModel editReferee = (RefereeModel) ctlRefList.getSelectionModel().getSelectedItem();
+		RefereeModel editReferee = (RefereeModel) ctlRefList.getRefereesSelectionModel().getSelectedItem();
 
 			if (editReferee != null) {
 
@@ -327,7 +324,7 @@ public class RefereeOverviewController {
 	@FXML
 	private void handleDelete() {
 
-		Referee refDelete = ctlRefList.getSelectionModel().getSelectedItem();
+		Referee refDelete = ctlRefList.getRefereesSelectionModel().getSelectedItem();
 
 			if (refDelete != null) {
 

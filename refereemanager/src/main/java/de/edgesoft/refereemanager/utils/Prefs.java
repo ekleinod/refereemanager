@@ -3,7 +3,9 @@ package de.edgesoft.refereemanager.utils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 import java.util.prefs.Preferences;
@@ -16,7 +18,7 @@ import javafx.stage.Screen;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -34,7 +36,7 @@ import javafx.stage.Screen;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.8.0
  */
 public class Prefs {
@@ -68,7 +70,7 @@ public class Prefs {
 	 * @param theKey preference key
 	 * @return preference value
 	 *
-	 * @version 0.8.0
+	 * @version 0.12.0
 	 * @since 0.8.0
 	 */
 	public static String get(final PrefKey theKey) {
@@ -79,6 +81,12 @@ public class Prefs {
 			case COUNTRY_CODE:
 				return getPreferences().get(theKey.value(), "49");
 
+			case DOCUMENTS_TEMPLATE_DOCUMENT:
+				return getPreferences().get(theKey.value(), "document/document.mmd");
+
+			case EMAIL_TEMPLATE_EMAIL:
+				return getPreferences().get(theKey.value(), "email/email.mmd");
+
 			case FILENAME_PATTERN_DATABASE:
 				return getPreferences().get(theKey.value(), "refereemanager_%04d.xml");
 			case FILENAME_PATTERN_REFEREE_DATA:
@@ -88,8 +96,20 @@ public class Prefs {
 			case FILENAME_PATTERN_REFEREES_MERGE:
 				return getPreferences().get(theKey.value(), "merge_all.tex");
 
+			case LETTERS_TEMPLATE_LETTER:
+				return getPreferences().get(theKey.value(), "letter/letter.mmd");
+			case LETTERS_TEMPLATE_MERGE_SINGLE:
+				return getPreferences().get(theKey.value(), "letter/merge_referee.tex");
+			case LETTERS_TEMPLATE_MERGE_ALL:
+				return getPreferences().get(theKey.value(), "letter/merge_referees.tex");
+
 			case LOCALE:
 				return getPreferences().get(theKey.value(), Locale.GERMANY.toLanguageTag());
+
+			case OTHER_TITLE_FULLPATH:
+				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
+			case OTHER_DATA_SORT_LOADING:
+				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
 
 			case REFEREE_COMMUNICATION_SPLIT_0:
 				return getPreferences().get(theKey.value(), Double.toString(0.5));
@@ -109,55 +129,11 @@ public class Prefs {
 			case STAGE_Y:
 				return getPreferences().get(theKey.value(), Double.toString((Screen.getPrimary().getBounds().getHeight() - 600) / 2));
 
-			case TEMPLATE_DOCUMENT:
-				return getPreferences().get(theKey.value(), "document/document.mmd");
-			case COMMUNICATION_TEMPLATE_EMAIL:
-				return getPreferences().get(theKey.value(), "email/email.mmd");
-			case COMMUNICATION_TEMPLATE_LETTER:
-				return getPreferences().get(theKey.value(), "letter/letter.mmd");
-			case COMMUNICATION_TEMPLATE_MERGE_SINGLE:
-				return getPreferences().get(theKey.value(), "letter/merge_referee.tex");
-			case COMMUNICATION_TEMPLATE_MERGE_ALL:
-				return getPreferences().get(theKey.value(), "letter/merge_referees.tex");
-			case TEMPLATE_REFEREE_DATA:
-				return getPreferences().get(theKey.value(), "referee-data/referee-data.mmd");
-
-			case TEMPLATE_VARIABLE_SEPARATOR:
-				return getPreferences().get(theKey.value(), "::");
-
-			case TITLE_FULLPATH:
+			case STAGE_MAXIMIZED:
 				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
 
 			default:
 				return getPreferences().get(theKey.value(), "");
-		}
-
-	}
-
-	/**
-	 * Get preference for date/time format.
-	 *
-	 * @param theKey date time format
-	 * @return preference value
-	 *
-	 * @version 0.8.0
-	 * @since 0.8.0
-	 */
-	public static String get(final DateTimeFormat theKey) {
-
-		switch (theKey) {
-			case DATELONG:
-				return getPreferences().get(theKey.value(), "d. MMMM yyyy");
-			case DATEMEDIUM:
-				return getPreferences().get(theKey.value(), "dd.MM.yyyy");
-			case DATEYEAR:
-				return getPreferences().get(theKey.value(), "yyyy");
-
-			case DATETIMELONG:
-				return getPreferences().get(theKey.value(), "ccc: d. MMM yyyy, hh:mm:ss");
-
-			default:
-				return getPreferences().get(theKey.value(), "'unknown format'");
 		}
 
 	}
@@ -218,6 +194,25 @@ public class Prefs {
 	public static void importPrefs(final InputStream theStream) throws IOException, InvalidPreferencesFormatException, BackingStoreException {
 		getPreferences().clear();
 		Preferences.importPreferences(theStream);
+	}
+
+	/**
+	 * Returns preferences map.
+	 *
+	 * @return preferences map
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	public static Map<String, Object> getPrefMap() {
+
+		Map<String, Object> mapReturn = new HashMap<>();
+
+		for (PrefKey theKey : PrefKey.values()) {
+			mapReturn.put(theKey.value(), get(theKey));
+		}
+
+		return mapReturn;
 	}
 
 }

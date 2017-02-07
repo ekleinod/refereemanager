@@ -1,12 +1,15 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.ContactModel;
 
@@ -24,6 +27,7 @@ import de.edgesoft.refereemanager.model.ContactModel;
  *         &lt;element name="country_code" type="{}StringProperty" minOccurs="0"/>
  *         &lt;element name="area_code" type="{}StringProperty" minOccurs="0"/>
  *         &lt;element name="number" type="{}StringProperty"/>
+ *         &lt;element name="is_cell" type="{}BooleanProperty" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -36,7 +40,8 @@ import de.edgesoft.refereemanager.model.ContactModel;
 @XmlType(name = "PhoneNumber", propOrder = {
     "countryCode",
     "areaCode",
-    "number"
+    "number",
+    "isCell"
 })
 public class PhoneNumber
     extends ContactModel
@@ -51,6 +56,10 @@ public class PhoneNumber
     @XmlElement(required = true, type = String.class)
     @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
     protected SimpleStringProperty number;
+    @XmlElement(name = "is_cell", type = String.class)
+    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
+    @XmlSchemaType(name = "boolean")
+    protected SimpleBooleanProperty isCell;
 
     /**
      * Gets the value of the countryCode property.
@@ -122,6 +131,30 @@ public class PhoneNumber
      */
     public void setNumber(SimpleStringProperty value) {
         this.number = value;
+    }
+
+    /**
+     * Gets the value of the isCell property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public SimpleBooleanProperty getIsCell() {
+        return isCell;
+    }
+
+    /**
+     * Sets the value of the isCell property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setIsCell(SimpleBooleanProperty value) {
+        this.isCell = value;
     }
 
 }

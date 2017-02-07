@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
 import de.edgesoft.refereemanager.model.WishModel;
 
@@ -29,7 +30,7 @@ import de.edgesoft.refereemanager.model.WishModel;
  *     &lt;extension base="{}Person">
  *       &lt;sequence>
  *         &lt;element name="docs_by_letter" type="{}BooleanProperty"/>
- *         &lt;element name="revoke_license" type="{}BooleanProperty" minOccurs="0"/>
+ *         &lt;element name="revoke_license" type="{}RevokeLicense" minOccurs="0"/>
  *         &lt;element name="training_level" type="{}TrainingLevel" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="prefer" type="{}Wish" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="avoid" type="{}Wish" maxOccurs="unbounded" minOccurs="0"/>
@@ -56,7 +57,7 @@ import de.edgesoft.refereemanager.model.WishModel;
     "status"
 })
 @XmlSeeAlso({
-    Trainee.class
+    TraineeModel.class
 })
 public class Referee
     extends PersonModel
@@ -66,10 +67,8 @@ public class Referee
     @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
     @XmlSchemaType(name = "boolean")
     protected SimpleBooleanProperty docsByLetter;
-    @XmlElement(name = "revoke_license", type = String.class)
-    @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
-    @XmlSchemaType(name = "boolean")
-    protected SimpleBooleanProperty revokeLicense;
+    @XmlElement(name = "revoke_license")
+    protected RevokeLicense revokeLicense;
     @XmlElement(name = "training_level", type = TrainingLevelModel.class)
     protected List<TrainingLevel> trainingLevel;
     @XmlElement(type = WishModel.class)
@@ -118,10 +117,10 @@ public class Referee
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link RevokeLicense }
      *     
      */
-    public SimpleBooleanProperty getRevokeLicense() {
+    public RevokeLicense getRevokeLicense() {
         return revokeLicense;
     }
 
@@ -130,10 +129,10 @@ public class Referee
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link RevokeLicense }
      *     
      */
-    public void setRevokeLicense(SimpleBooleanProperty value) {
+    public void setRevokeLicense(RevokeLicense value) {
         this.revokeLicense = value;
     }
 

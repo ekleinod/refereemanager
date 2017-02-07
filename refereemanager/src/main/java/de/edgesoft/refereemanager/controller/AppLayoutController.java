@@ -14,6 +14,7 @@ import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.model.AppModel;
+import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
@@ -219,6 +220,15 @@ public class AppLayoutController {
 	@FXML
 	private Button btnStatisticsData;
 
+	/**
+	 * Button program -> preferences.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
+	private Button btnProgramPreferences;
+
 
 	/**
 	 * Primary stage.
@@ -234,7 +244,7 @@ public class AppLayoutController {
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
@@ -242,6 +252,7 @@ public class AppLayoutController {
 
 		// icons
 		mnuProgramPreferences.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/configure.png")));
+		btnProgramPreferences.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/configure.png")));
 		mnuProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/application-exit.png")));
 		btnProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/application-exit.png")));
 
@@ -289,7 +300,7 @@ public class AppLayoutController {
 			primaryStage.setWidth(Double.parseDouble(Prefs.get(PrefKey.STAGE_WIDTH)));
 			primaryStage.setHeight(Double.parseDouble(Prefs.get(PrefKey.STAGE_HEIGHT)));
 
-			primaryStage.setMaximized(Boolean.parseBoolean(Prefs.get(PrefKey.MAXIMIZED)));
+			primaryStage.setMaximized(Boolean.parseBoolean(Prefs.get(PrefKey.STAGE_MAXIMIZED)));
 
 		// if changed, save bounds to preferences
 		primaryStage.xProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
@@ -314,7 +325,7 @@ public class AppLayoutController {
 		});
 
 		primaryStage.maximizedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-			Prefs.put(PrefKey.MAXIMIZED, Boolean.toString(newValue.booleanValue()));
+			Prefs.put(PrefKey.STAGE_MAXIMIZED, Boolean.toString(newValue.booleanValue()));
 		});
 
 				// set handler for close requests (x-button of window)
@@ -385,7 +396,7 @@ public class AppLayoutController {
 
 		String sFile = Prefs.get(PrefKey.FILE).isEmpty() ?
 				"" :
-				String.format(" - %s", Boolean.parseBoolean(Prefs.get(PrefKey.TITLE_FULLPATH)) ?
+				String.format(" - %s", Boolean.parseBoolean(Prefs.get(PrefKey.OTHER_TITLE_FULLPATH)) ?
 						Paths.get(Prefs.get(PrefKey.FILE)).toAbsolutePath().toString() :
 						Paths.get(Prefs.get(PrefKey.FILE)).getFileName().toString());
 
@@ -401,7 +412,7 @@ public class AppLayoutController {
 	 *
 	 * @param theFilename filename
 	 *
-	 * @version 0.10.0
+	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	private void openData(final String theFilename) {
@@ -413,6 +424,10 @@ public class AppLayoutController {
 			AppModel.setData(dtaRefMan);
 			AppModel.setFilename(theFilename);
 			AppModel.setModified(false);
+
+			if (Boolean.parseBoolean(Prefs.get(PrefKey.OTHER_DATA_SORT_LOADING))) {
+				((ContentModel) AppModel.getData().getContent()).sortData();
+			}
 
 			setAppTitle();
 
@@ -428,7 +443,7 @@ public class AppLayoutController {
 
 		}
 
-		}
+	}
 
 	/**
 	 * Program menu preferences.
@@ -725,13 +740,8 @@ public class AppLayoutController {
 			AppModel.getData().getInfo().setDocversion(RefereeManager.VERSION);
 			AppModel.getData().getInfo().setCreator(RefereeManager.class.getCanonicalName());
 
-//			((ContentModel) AppModel.getData().getContent()).sortEvents();
-
-//			if (ctlEventOverview != null) {
-//				ctlEventOverview.setTableItems();
-//			}
-
-			JAXBFiles.marshal(new ObjectFactory().createRefereemanager(AppModel.getData()), theFilename, null);
+			JAXBFiles.marshal(new ObjectFactory().createRefereemanager(AppModel.getData()), theFilename,
+					(Prefs.get(PrefKey.PATHS_XSD).isEmpty() ? null : Prefs.get(PrefKey.PATHS_XSD)));
 
 			AppModel.setFilename(theFilename);
 			AppModel.setModified(false);

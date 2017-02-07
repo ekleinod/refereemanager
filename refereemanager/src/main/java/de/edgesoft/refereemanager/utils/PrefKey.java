@@ -8,7 +8,7 @@ package de.edgesoft.refereemanager.utils;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -26,7 +26,7 @@ package de.edgesoft.refereemanager.utils;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.12.0
  * @since 0.8.0
  */
 public enum PrefKey {
@@ -36,17 +36,16 @@ public enum PrefKey {
 	COUNTRY_CODE,
 	CONTACT_PRIVATE,
 
-	COMMUNICATION_FROM_EMAIL,
-	COMMUNICATION_FROM_NAME,
-	COMMUNICATION_SMTP_HOST,
-	COMMUNICATION_SMTP_USERNAME,
-	COMMUNICATION_SMTP_PASSWORD,
-	COMMUNICATION_TEMPLATE_EMAIL,
-	COMMUNICATION_TEMPLATE_LETTER,
-	COMMUNICATION_TEMPLATE_MERGE_SINGLE,
-	COMMUNICATION_TEMPLATE_MERGE_ALL,
-	COMMUNICATION_TO_EMAIL,
-	COMMUNICATION_TO_NAME,
+	DOCUMENTS_TEMPLATE_DOCUMENT,
+
+	EMAIL_FROM_EMAIL,
+	EMAIL_FROM_NAME,
+	EMAIL_SMTP_HOST,
+	EMAIL_SMTP_PASSWORD,
+	EMAIL_SMTP_USERNAME,
+	EMAIL_TEMPLATE_EMAIL,
+	EMAIL_TO_EMAIL,
+	EMAIL_TO_NAME,
 
 	FILE,
 
@@ -55,64 +54,60 @@ public enum PrefKey {
 	FILENAME_PATTERN_REFEREE_MERGE,
 	FILENAME_PATTERN_REFEREES_MERGE,
 
-	IMAGE_PATH,
+	LETTERS_TEMPLATE_LETTER,
+	LETTERS_TEMPLATE_MERGE_SINGLE,
+	LETTERS_TEMPLATE_MERGE_ALL,
 
 	LOCAL_TRAININGLEVEL,
 
 	LOCALE,
 
-	MAXIMIZED,
-
-	MY_EMAIL,
-	MY_NAME,
+	OTHER_TITLE_FULLPATH,
+	OTHER_DATA_SORT_LOADING,
 
 	PATH,
-	PATH_DATABASE,
-	PATH_OUTPUT,
-	PATH_TEMPLATES,
+
+	PATHS_IMAGE,
+	PATHS_TEMPLATE,
+	PATHS_XSD,
 
 	PREFERENCES_FILE,
 
-	REFEREE_OVERVIEW_SPLIT,
-
 	REFEREE_COMMUNICATION_FILE,
+	REFEREE_COMMUNICATION_OUTPUT_PATH,
 	REFEREE_COMMUNICATION_LAST_ATTACHMENT_PATH,
 	REFEREE_COMMUNICATION_SPLIT_0,
 	REFEREE_COMMUNICATION_SPLIT_1,
 
+	REFEREE_OVERVIEW_SPLIT,
+
 	STAGE_HEIGHT,
+	STAGE_MAXIMIZED,
 	STAGE_WIDTH,
 	STAGE_X,
 	STAGE_Y,
 
-	TEMPLATE_DOCUMENT,
-	TEMPLATE_REFEREE_DATA,
-
-	TEMPLATE_PATH,
-
-	TEMPLATE_VARIABLE_SEPARATOR,
-
-	TITLE_FULLPATH,
+	TEXTS_TEMPLATE_TEXT,
 	;
 
-		private final String value;
+	private final String value;
 
-		PrefKey() {
-				value = name().toLowerCase();
-		}
+	PrefKey() {
+		value = name().toLowerCase();
+	}
 
-		public String value() {
-				return value;
-		}
+	public String value() {
+			return value;
+	}
 
-		public static PrefKey fromValue(String v) {
-				for (PrefKey c: PrefKey.values()) {
-						if (c.value.equals(v)) {
-								return c;
-						}
-				}
-				throw new IllegalArgumentException(v);
+	public static PrefKey fromValue(String v) {
+		for (PrefKey c: PrefKey.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
 		}
+		throw new IllegalArgumentException(v);
+	}
 
 }
 
