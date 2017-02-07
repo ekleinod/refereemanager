@@ -54,7 +54,7 @@ Which means:
 
 ### Copyright
 
-Copyright 2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
 
 The program is distributed under the terms of the GNU General Public License.
 
