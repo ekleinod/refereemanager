@@ -32,7 +32,7 @@ import javafx.scene.layout.Pane;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -50,7 +50,7 @@ import javafx.scene.layout.Pane;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.13.0
  * @since 0.10.0
  */
 public class RefereeOverviewController {
@@ -65,6 +65,15 @@ public class RefereeOverviewController {
 	private Label lblName;
 
 	/**
+	 * Name label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblNameLabel;
+
+	/**
 	 * First name label.
 	 *
 	 * @version 0.10.0
@@ -72,6 +81,15 @@ public class RefereeOverviewController {
 	 */
 	@FXML
 	private Label lblFirstName;
+
+	/**
+	 * First name label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblFirstNameLabel;
 
 	/**
 	 * Training level label.
@@ -83,6 +101,15 @@ public class RefereeOverviewController {
 	private Label lblTrainingLevel;
 
 	/**
+	 * Training level label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblTrainingLevelLabel;
+
+	/**
 	 * Club label.
 	 *
 	 * @version 0.10.0
@@ -90,6 +117,69 @@ public class RefereeOverviewController {
 	 */
 	@FXML
 	private Label lblClub;
+
+	/**
+	 * Club label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblClubLabel;
+
+	/**
+	 * Birthday label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblBirthday;
+
+	/**
+	 * Birthday label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblBirthdayLabel;
+
+	/**
+	 * Last update label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblLastUpdate;
+
+	/**
+	 * Last update label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblLastUpdateLabel;
+
+	/**
+	 * Next update label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblNextUpdate;
+
+	/**
+	 * Next update label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblNextUpdateLabel;
 
 	/**
 	 * Referee image.
@@ -166,14 +256,14 @@ public class RefereeOverviewController {
 	private void initialize() {
 
 		// list
-			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
-			AnchorPane refList = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
+		AnchorPane refList = (AnchorPane) pneLoad.getKey();
 
-				// add referee list to split pane
-				pneSplit.getItems().add(0, refList);
+		// add referee list to split pane
+		pneSplit.getItems().add(0, refList);
 
-				// store referee table controller
-				ctlRefList = pneLoad.getValue().getController();
+		// store referee table controller
+		ctlRefList = pneLoad.getValue().getController();
 
 		// clear event details
 		showDetails(null);
@@ -201,7 +291,7 @@ public class RefereeOverviewController {
 	}
 
 	/**
-	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
+	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
 	 *
 	 * @param theAppController app controller
 	 *
@@ -226,50 +316,51 @@ public class RefereeOverviewController {
 	 */
 	private void showDetails(final Referee theDetailData) {
 
-			if (theDetailData == null) {
+		if (theDetailData == null) {
 
-					lblName.setText("");
-					lblFirstName.setText("");
-					lblTrainingLevel.setText("");
-					lblClub.setText("");
-					imgReferee.setImage(null);
+			lblName.setText("");
+			lblFirstName.setText("");
+			lblTrainingLevel.setText("");
+			lblClub.setText("");
 
-			} else {
+			imgReferee.setImage(null);
 
-					lblName.setText(
-							(theDetailData.getName() == null) ?
-									null :
-									theDetailData.getName().getValue());
-					lblFirstName.setText(
-							(theDetailData.getFirstName() == null) ?
-									null :
-									theDetailData.getFirstName().getValue());
-					lblTrainingLevel.setText(
-							(((RefereeModel) theDetailData).getHighestTrainingLevel() == null) ?
-									null :
-									((RefereeModel) theDetailData).getHighestTrainingLevel().getType().getDisplayTitle().getValue());
-					lblClub.setText(
-							(theDetailData.getMember() == null) ?
-									null :
-									theDetailData.getMember().getDisplayTitle().getValue());
+		} else {
 
-					try {
-						if (theDetailData.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
-							File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), String.format("%s.jpg", theDetailData.getFileName().getValue())).toFile();
-							imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
-						} else {
-							File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), "missing.jpg").toFile();
-							if (fleImage.exists()) {
-								imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
-							} else {
-								imgReferee.setImage(null);
-							}
-						}
-					} catch (Exception e) {
+			lblName.setText(
+					(theDetailData.getName() == null) ?
+							null :
+							theDetailData.getName().getValue());
+			lblFirstName.setText(
+					(theDetailData.getFirstName() == null) ?
+							null :
+							theDetailData.getFirstName().getValue());
+			lblTrainingLevel.setText(
+					(((RefereeModel) theDetailData).getHighestTrainingLevel() == null) ?
+							null :
+							((RefereeModel) theDetailData).getHighestTrainingLevel().getType().getDisplayTitle().getValue());
+			lblClub.setText(
+					(theDetailData.getMember() == null) ?
+							null :
+							theDetailData.getMember().getDisplayTitle().getValue());
+
+			try {
+				if (theDetailData.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
+					File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), String.format("%s.jpg", theDetailData.getFileName().getValue())).toFile();
+					imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
+				} else {
+					File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), "missing.jpg").toFile();
+					if (fleImage.exists()) {
+						imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
+					} else {
 						imgReferee.setImage(null);
 					}
-
+				}
+			} catch (Exception e) {
+				imgReferee.setImage(null);
 			}
+
+		}
 
 	}
 
@@ -303,7 +394,7 @@ public class RefereeOverviewController {
 
 		RefereeModel editReferee = (RefereeModel) ctlRefList.getRefereesSelectionModel().getSelectedItem();
 
-			if (editReferee != null) {
+		if (editReferee != null) {
 
 			if (showEditDialog(editReferee)) {
 				showDetails(editReferee);
@@ -311,7 +402,7 @@ public class RefereeOverviewController {
 				appController.setAppTitle();
 			}
 
-			}
+		}
 
 	}
 
@@ -326,22 +417,22 @@ public class RefereeOverviewController {
 
 		Referee refDelete = ctlRefList.getRefereesSelectionModel().getSelectedItem();
 
-			if (refDelete != null) {
+		if (refDelete != null) {
 
-				Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
-						"Bestätigung Schiedsrichter löschen",
-						MessageFormat.format("Soll ''{0}'' gelöscht werden?", refDelete.getDisplayTitle().get()),
-						null);
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
+					"Bestätigung Schiedsrichter löschen",
+					MessageFormat.format("Soll ''{0}'' gelöscht werden?", refDelete.getDisplayTitle().get()),
+					null);
 
-					alert.showAndWait()
-							.filter(response -> response == ButtonType.OK)
-							.ifPresent(response -> {
-								((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(refDelete);
-								AppModel.setModified(true);
-								appController.setAppTitle();
-								});
+			alert.showAndWait()
+					.filter(response -> response == ButtonType.OK)
+					.ifPresent(response -> {
+						((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(refDelete);
+						AppModel.setModified(true);
+						appController.setAppTitle();
+						});
 
-			}
+		}
 
 	}
 
