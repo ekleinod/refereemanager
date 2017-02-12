@@ -3,8 +3,10 @@ package de.edgesoft.refereemanager.controller;
 import java.io.File;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.util.Map;
 
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
@@ -16,6 +18,7 @@ import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -26,6 +29,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * Controller for the referee list scene.
@@ -54,6 +59,15 @@ import javafx.scene.layout.Pane;
  * @since 0.10.0
  */
 public class RefereeOverviewController {
+
+	/**
+	 * Heading label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblHeading;
 
 	/**
 	 * Name label.
@@ -311,21 +325,31 @@ public class RefereeOverviewController {
 	 *
 	 * @param theDetailData event (null if none is selected)
 	 *
-	 * @version 0.10.0
+	 * @version 0.13.0
 	 * @since 0.10.0
 	 */
 	private void showDetails(final Referee theDetailData) {
 
 		if (theDetailData == null) {
 
+			lblHeading.setText("Details");
+
 			lblName.setText("");
 			lblFirstName.setText("");
 			lblTrainingLevel.setText("");
 			lblClub.setText("");
+			lblBirthday.setText("");
+			lblLastUpdate.setText("");
+			lblNextUpdate.setText("");
 
 			imgReferee.setImage(null);
 
 		} else {
+
+			lblHeading.setText(
+					(theDetailData.getDisplayTitle() == null) ?
+							null :
+							theDetailData.getDisplayTitle().getValue());
 
 			lblName.setText(
 					(theDetailData.getName() == null) ?
@@ -343,6 +367,18 @@ public class RefereeOverviewController {
 					(theDetailData.getMember() == null) ?
 							null :
 							theDetailData.getMember().getDisplayTitle().getValue());
+			lblBirthday.setText(
+					(theDetailData.getBirthday() == null) ?
+							null :
+							DateTimeUtils.formatDate((LocalDate) theDetailData.getBirthday().getValue()));
+			lblLastUpdate.setText(
+					(((RefereeModel) theDetailData).getLastTrainingUpdate() == null) ?
+							null :
+							DateTimeUtils.formatDate(((RefereeModel) theDetailData).getLastTrainingUpdate().getValue()));
+			lblNextUpdate.setText(
+					(((RefereeModel) theDetailData).getNextTrainingUpdate() == null) ?
+							null :
+							DateTimeUtils.formatDate(((RefereeModel) theDetailData).getNextTrainingUpdate().getValue(), "yyyy"));
 
 			try {
 				if (theDetailData.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
@@ -449,28 +485,27 @@ public class RefereeOverviewController {
 	 */
 	private boolean showEditDialog(Referee theReferee) {
 
-//    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventEditDialog");
-//    	AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
-//
-//        // Create the dialog Stage.
-//        Stage dialogStage = new Stage();
-//        dialogStage.initModality(Modality.WINDOW_MODAL);
-//        dialogStage.initOwner(appController.getPrimaryStage());
-//        dialogStage.setTitle("Ereignis editieren");
-//
-//        Scene scene = new Scene(editDialog);
-//        dialogStage.setScene(scene);
-//
-//        // Set the event into the controller.
-//        EventEditDialogController editController = pneLoad.getValue().getController();
-//        editController.setDialogStage(dialogStage);
-//        editController.setEvent(theReferee);
-//
-//        // Show the dialog and wait until the user closes it
-//        dialogStage.showAndWait();
-//
-//        return editController.isOkClicked();
-		return false;
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeEditDialog");
+		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+
+		// Create the dialog Stage.
+		Stage dialogStage = new Stage();
+		dialogStage.initModality(Modality.WINDOW_MODAL);
+		dialogStage.initOwner(appController.getPrimaryStage());
+		dialogStage.setTitle("Schiedsrichter_in editieren");
+
+		Scene scene = new Scene(editDialog);
+		dialogStage.setScene(scene);
+
+		// Set the referee
+		RefereeEditDialogController editController = pneLoad.getValue().getController();
+		editController.setDialogStage(dialogStage);
+		editController.setReferee(theReferee);
+
+		// Show the dialog and wait until the user closes it
+		dialogStage.showAndWait();
+
+		return editController.isOkClicked();
 
 	}
 

@@ -1172,7 +1172,7 @@ public class RefereeCommunicationController {
 		Scene scene = new Scene(editDialog);
 		dialogStage.setScene(scene);
 
-		// Set the event into the controller.
+		// Set the attachment
 		AttachmentEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(dialogStage);
 		editController.setAttachment(theAttachment);
