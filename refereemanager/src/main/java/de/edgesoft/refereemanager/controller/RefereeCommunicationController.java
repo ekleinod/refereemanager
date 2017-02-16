@@ -1248,7 +1248,7 @@ public class RefereeCommunicationController {
 						});
 
 						// send email for every person individually (see remark in method doc)
-						FilteredList<PersonModel> lstPeople = new FilteredList<>(ctlRefList.getCurrentSelection(), PersonModel.HAS_EMAIL);
+						FilteredList<PersonModel> lstPeople = new FilteredList<>(ctlRefList.getAllTabSelection(), PersonModel.HAS_EMAIL);
 						int iCount = lstPeople.size();
 						for (PersonModel person : lstPeople) {
 
@@ -1441,7 +1441,7 @@ public class RefereeCommunicationController {
 
 
 						// create docs
-						List<PersonModel> lstPeople = ctlRefList.getCurrentSelection();
+						List<PersonModel> lstPeople = ctlRefList.getAllTabSelection();
 						int iCount = lstPeople.size();
 
 						Map<String, List<String>> mapFilenames = new HashMap<>();
@@ -1606,7 +1606,7 @@ public class RefereeCommunicationController {
 
 
 						// create texts
-						List<PersonModel> lstPeople = ctlRefList.getCurrentSelection();
+						List<PersonModel> lstPeople = ctlRefList.getAllTabSelection();
 						int iCount = lstPeople.size();
 
 						for (PersonModel person : lstPeople) {
@@ -1783,7 +1783,7 @@ public class RefereeCommunicationController {
 		mapData.put("today", LocalDateTime.now());
 		mapData.put("documentdata", theDocData);
 		mapData.put("refdata", AppModel.getData());
-		mapData.put("selection", ctlRefList.getCurrentSelection());
+		mapData.put("selection", ctlRefList.getAllTabSelection());
 		mapData.put("current", thePerson);
 		mapData.put("prefs", Prefs.getPrefMap());
 

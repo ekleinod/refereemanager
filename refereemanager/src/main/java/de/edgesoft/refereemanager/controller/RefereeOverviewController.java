@@ -15,6 +15,7 @@ import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -288,6 +289,28 @@ public class RefereeOverviewController {
 		// enabling edit/delete buttons only with selection
 		btnEdit.disableProperty().bind(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull());
 		btnDelete.disableProperty().bind(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull());
+
+		// disabling labels
+		ObservableBooleanValue obsReferees = ctlRefList.getTabReferees().selectedProperty();
+		lblTrainingLevelLabel.visibleProperty().bind(obsReferees);
+		lblTrainingLevelLabel.managedProperty().bind(obsReferees);
+		lblTrainingLevel.visibleProperty().bind(obsReferees);
+		lblTrainingLevel.managedProperty().bind(obsReferees);
+		lblLastUpdateLabel.visibleProperty().bind(obsReferees);
+		lblLastUpdateLabel.managedProperty().bind(obsReferees);
+		lblLastUpdate.visibleProperty().bind(obsReferees);
+		lblLastUpdate.managedProperty().bind(obsReferees);
+		lblNextUpdateLabel.visibleProperty().bind(obsReferees);
+		lblNextUpdateLabel.managedProperty().bind(obsReferees);
+		lblNextUpdate.visibleProperty().bind(obsReferees);
+		lblNextUpdate.managedProperty().bind(obsReferees);
+
+		ObservableBooleanValue obsRefereesOrTrainees = ctlRefList.getTabReferees().selectedProperty().or(ctlRefList.getTabTrainees().selectedProperty());
+		lblClubLabel.visibleProperty().bind(obsRefereesOrTrainees);
+		lblClubLabel.managedProperty().bind(obsRefereesOrTrainees);
+		lblClub.visibleProperty().bind(obsRefereesOrTrainees);
+		lblClub.managedProperty().bind(obsRefereesOrTrainees);
+
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.REFEREE_OVERVIEW_SPLIT)));
