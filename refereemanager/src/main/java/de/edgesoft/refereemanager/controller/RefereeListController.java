@@ -582,7 +582,21 @@ public class RefereeListController {
 	}
 
 	/**
+	 * Returns tab pane.
+	 *
+	 * @return tab pane
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public TabPane getContentTab() {
+		return tabPaneContent;
+	}
+
+	/**
 	 * Returns referees tab.
+	 *
+	 * @return referees tab
 	 *
 	 * @version 0.13.0
 	 * @since 0.13.0
@@ -594,6 +608,8 @@ public class RefereeListController {
 	/**
 	 * Returns trainees tab.
 	 *
+	 * @return trainees tab
+	 *
 	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
@@ -603,6 +619,8 @@ public class RefereeListController {
 
 	/**
 	 * Returns people tab.
+	 *
+	 * @return people tab
 	 *
 	 * @version 0.13.0
 	 * @since 0.13.0
@@ -623,9 +641,9 @@ public class RefereeListController {
 
 		List<PersonModel> lstReturn = new ArrayList<>();
 
-		tblReferees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
-		tblTrainees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
-		tblPeople.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add((PersonModel) person));
+		getTabRefereesSelection().forEach(person -> lstReturn.add(person));
+		getTabTraineesSelection().forEach(person -> lstReturn.add(person));
+		getTabPeopleSelection().forEach(person -> lstReturn.add(person));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
 	}
@@ -640,13 +658,19 @@ public class RefereeListController {
 	 */
 	public ObservableList<PersonModel> getVisibleTabSelection() {
 
-		List<PersonModel> lstReturn = new ArrayList<>();
+		if (tabReferees.isSelected()) {
+			return getTabRefereesSelection();
+		}
 
-		tblReferees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
-		tblTrainees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
-		tblPeople.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add((PersonModel) person));
+		if (tabTrainees.isSelected()) {
+			return getTabTraineesSelection();
+		}
 
-		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
+		if (tabPeople.isSelected()) {
+			return getTabPeopleSelection();
+		}
+
+		return FXCollections.observableList(new ArrayList<>());
 	}
 
 	/**
@@ -657,7 +681,7 @@ public class RefereeListController {
 	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
-	public ObservableList<Referee> getTabRefereesSelection() {
+	public ObservableList<PersonModel> getTabRefereesSelection() {
 		return FXCollections.observableList(tblReferees.getSelectionModel().getSelectedItems().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
 	}
 
@@ -669,7 +693,7 @@ public class RefereeListController {
 	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
-	public ObservableList<Trainee> getTabTraineesSelection() {
+	public ObservableList<PersonModel> getTabTraineesSelection() {
 		return FXCollections.observableList(tblTrainees.getSelectionModel().getSelectedItems().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
 	}
 
@@ -681,8 +705,12 @@ public class RefereeListController {
 	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
-	public ObservableList<Person> getTabPeopleSelection() {
-		return FXCollections.observableList(tblPeople.getSelectionModel().getSelectedItems().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
+	public ObservableList<PersonModel> getTabPeopleSelection() {
+		List<PersonModel> lstReturn = new ArrayList<>();
+
+		tblPeople.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add((PersonModel) person));
+
+		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
 	}
 
 }

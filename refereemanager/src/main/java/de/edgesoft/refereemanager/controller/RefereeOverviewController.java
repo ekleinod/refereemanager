@@ -7,9 +7,11 @@ import java.time.LocalDate;
 import java.util.Map;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
@@ -17,6 +19,7 @@ import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -264,7 +267,7 @@ public class RefereeOverviewController {
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 *
-	 * @version 0.10.0
+	 * @version 0.13.0
 	 * @since 0.10.0
 	 */
 	@FXML
@@ -283,34 +286,40 @@ public class RefereeOverviewController {
 		// clear event details
 		showDetails(null);
 
-		// listen to selection changes, show event
+		// listen to selection changes, show person
 		ctlRefList.getRefereesSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
+		ctlRefList.getTraineesSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
+		ctlRefList.getPeopleSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
+		ctlRefList.getTabReferees().selectedProperty().addListener((event, oldTab, newTab) -> showDetails());
+		ctlRefList.getTabTrainees().selectedProperty().addListener((event, oldTab, newTab) -> showDetails());
+		ctlRefList.getTabPeople().selectedProperty().addListener((event, oldTab, newTab) -> showDetails());
 
 		// enabling edit/delete buttons only with selection
 		btnEdit.disableProperty().bind(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull());
 		btnDelete.disableProperty().bind(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull());
 
 		// disabling labels
-		ObservableBooleanValue obsReferees = ctlRefList.getTabReferees().selectedProperty();
-		lblTrainingLevelLabel.visibleProperty().bind(obsReferees);
-		lblTrainingLevelLabel.managedProperty().bind(obsReferees);
-		lblTrainingLevel.visibleProperty().bind(obsReferees);
-		lblTrainingLevel.managedProperty().bind(obsReferees);
-		lblLastUpdateLabel.visibleProperty().bind(obsReferees);
-		lblLastUpdateLabel.managedProperty().bind(obsReferees);
-		lblLastUpdate.visibleProperty().bind(obsReferees);
-		lblLastUpdate.managedProperty().bind(obsReferees);
-		lblNextUpdateLabel.visibleProperty().bind(obsReferees);
-		lblNextUpdateLabel.managedProperty().bind(obsReferees);
-		lblNextUpdate.visibleProperty().bind(obsReferees);
-		lblNextUpdate.managedProperty().bind(obsReferees);
+		ObservableBooleanValue isReferee = ctlRefList.getTabReferees().selectedProperty();
+		lblTrainingLevelLabel.visibleProperty().bind(isReferee);
+		lblTrainingLevelLabel.managedProperty().bind(isReferee);
+		lblTrainingLevel.visibleProperty().bind(isReferee);
+		lblTrainingLevel.managedProperty().bind(isReferee);
+		lblLastUpdateLabel.visibleProperty().bind(isReferee);
+		lblLastUpdateLabel.managedProperty().bind(isReferee);
+		lblLastUpdate.visibleProperty().bind(isReferee);
+		lblLastUpdate.managedProperty().bind(isReferee);
+		lblNextUpdateLabel.visibleProperty().bind(isReferee);
+		lblNextUpdateLabel.managedProperty().bind(isReferee);
+		lblNextUpdate.visibleProperty().bind(isReferee);
+		lblNextUpdate.managedProperty().bind(isReferee);
 
-		ObservableBooleanValue obsRefereesOrTrainees = ctlRefList.getTabReferees().selectedProperty().or(ctlRefList.getTabTrainees().selectedProperty());
-		lblClubLabel.visibleProperty().bind(obsRefereesOrTrainees);
-		lblClubLabel.managedProperty().bind(obsRefereesOrTrainees);
-		lblClub.visibleProperty().bind(obsRefereesOrTrainees);
-		lblClub.managedProperty().bind(obsRefereesOrTrainees);
-
+		ObservableBooleanValue isRefereeOrTrainee = ctlRefList.getTabReferees().selectedProperty().or(ctlRefList.getTabTrainees().selectedProperty());
+		lblClubLabel.visibleProperty().bind(isRefereeOrTrainee);
+		lblClubLabel.managedProperty().bind(isRefereeOrTrainee);
+		lblClub.visibleProperty().bind(isRefereeOrTrainee);
+		lblClub.managedProperty().bind(isRefereeOrTrainee);
+		imgReferee.visibleProperty().bind(isRefereeOrTrainee);
+		imgReferee.managedProperty().bind(isRefereeOrTrainee);
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.REFEREE_OVERVIEW_SPLIT)));
@@ -346,12 +355,32 @@ public class RefereeOverviewController {
 	/**
 	 * Shows selected data in detail window.
 	 *
+	 * Checks if an item is selected in visible tab, uses this.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	private void showDetails() {
+
+		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
+
+		if (lstSelected.size() == 1) {
+			showDetails(lstSelected.get(0));
+		} else {
+			showDetails(null);
+		}
+
+	}
+
+	/**
+	 * Shows selected data in detail window.
+	 *
 	 * @param theDetailData event (null if none is selected)
 	 *
 	 * @version 0.13.0
 	 * @since 0.10.0
 	 */
-	private void showDetails(final Referee theDetailData) {
+	private void showDetails(final Person theDetailData) {
 
 		if (theDetailData == null) {
 
@@ -382,42 +411,49 @@ public class RefereeOverviewController {
 					(theDetailData.getFirstName() == null) ?
 							null :
 							theDetailData.getFirstName().getValue());
-			lblTrainingLevel.setText(
-					(((RefereeModel) theDetailData).getHighestTrainingLevel() == null) ?
-							null :
-							((RefereeModel) theDetailData).getHighestTrainingLevel().getType().getDisplayTitle().getValue());
-			lblClub.setText(
-					(theDetailData.getMember() == null) ?
-							null :
-							theDetailData.getMember().getDisplayTitle().getValue());
 			lblBirthday.setText(
 					(theDetailData.getBirthday() == null) ?
 							null :
 							DateTimeUtils.formatDate((LocalDate) theDetailData.getBirthday().getValue()));
-			lblLastUpdate.setText(
-					(((RefereeModel) theDetailData).getLastTrainingUpdate() == null) ?
-							null :
-							DateTimeUtils.formatDate(((RefereeModel) theDetailData).getLastTrainingUpdate().getValue()));
-			lblNextUpdate.setText(
-					(((RefereeModel) theDetailData).getNextTrainingUpdate() == null) ?
-							null :
-							DateTimeUtils.formatDate(((RefereeModel) theDetailData).getNextTrainingUpdate().getValue(), "yyyy"));
 
-			try {
-				if (theDetailData.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
-					File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), String.format("%s.jpg", theDetailData.getFileName().getValue())).toFile();
-					imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
-				} else {
-					File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), "missing.jpg").toFile();
-					if (fleImage.exists()) {
+			if (theDetailData instanceof RefereeModel) {
+				RefereeModel mdlTemp = (RefereeModel) theDetailData;
+
+				lblClub.setText(
+						(mdlTemp.getMember() == null) ?
+								null :
+								mdlTemp.getMember().getDisplayTitle().getValue());
+
+				lblTrainingLevel.setText(
+						(mdlTemp.getHighestTrainingLevel() == null) ?
+								null :
+								mdlTemp.getHighestTrainingLevel().getType().getDisplayTitle().getValue());
+				lblLastUpdate.setText(
+						(mdlTemp.getLastTrainingUpdate() == null) ?
+								null :
+								DateTimeUtils.formatDate(mdlTemp.getLastTrainingUpdate().getValue()));
+				lblNextUpdate.setText(
+						(mdlTemp.getNextTrainingUpdate() == null) ?
+								null :
+								DateTimeUtils.formatDate(mdlTemp.getNextTrainingUpdate().getValue(), "yyyy"));
+				try {
+					if (mdlTemp.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
+						File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), String.format("%s.jpg", mdlTemp.getFileName().getValue())).toFile();
 						imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
 					} else {
-						imgReferee.setImage(null);
+						File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), "missing.jpg").toFile();
+						if (fleImage.exists()) {
+							imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
+						} else {
+							imgReferee.setImage(null);
+						}
 					}
+				} catch (Exception e) {
+					imgReferee.setImage(null);
 				}
-			} catch (Exception e) {
-				imgReferee.setImage(null);
+
 			}
+
 
 		}
 

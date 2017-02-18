@@ -98,7 +98,7 @@ import javafx.stage.StageStyle;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -116,7 +116,7 @@ import javafx.stage.StageStyle;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.13.0
  * @since 0.10.0
  */
 public class RefereeCommunicationController {
@@ -677,67 +677,67 @@ public class RefereeCommunicationController {
 		});
 
 		// visible for emails
-		ObservableBooleanValue obsEmail = radEMails.selectedProperty();
-		lblOther.visibleProperty().bind(obsEmail);
-		lblOther.managedProperty().bind(obsEmail);
-		sepOther.visibleProperty().bind(obsEmail);
-		sepOther.managedProperty().bind(obsEmail);
-		lblTestMail.visibleProperty().bind(obsEmail);
-		lblTestMail.managedProperty().bind(obsEmail);
-		chkTestMail.visibleProperty().bind(obsEmail);
-		chkTestMail.managedProperty().bind(obsEmail);
+		ObservableBooleanValue isEmail = radEMails.selectedProperty();
+		lblOther.visibleProperty().bind(isEmail);
+		lblOther.managedProperty().bind(isEmail);
+		sepOther.visibleProperty().bind(isEmail);
+		sepOther.managedProperty().bind(isEmail);
+		lblTestMail.visibleProperty().bind(isEmail);
+		lblTestMail.managedProperty().bind(isEmail);
+		chkTestMail.visibleProperty().bind(isEmail);
+		chkTestMail.managedProperty().bind(isEmail);
 
 		// visible for emails, letters, and documents
-		ObservableBooleanValue obsEmailLetterDocument = radEMails.selectedProperty().or(radLetters.selectedProperty()).or(radDocument.selectedProperty());
-		txtTitle.visibleProperty().bind(obsEmailLetterDocument);
-		txtTitle.managedProperty().bind(obsEmailLetterDocument);
-		lblTitle.visibleProperty().bind(obsEmailLetterDocument);
-		lblTitle.managedProperty().bind(obsEmailLetterDocument);
-		txtSubtitle.visibleProperty().bind(obsEmailLetterDocument);
-		txtSubtitle.managedProperty().bind(obsEmailLetterDocument);
-		lblSubtitle.visibleProperty().bind(obsEmailLetterDocument);
-		lblSubtitle.managedProperty().bind(obsEmailLetterDocument);
-		txtDate.visibleProperty().bind(obsEmailLetterDocument);
-		txtDate.managedProperty().bind(obsEmailLetterDocument);
-		lblDate.visibleProperty().bind(obsEmailLetterDocument);
-		lblDate.managedProperty().bind(obsEmailLetterDocument);
+		ObservableBooleanValue isEmailOrLetterOrDocument = radEMails.selectedProperty().or(radLetters.selectedProperty()).or(radDocument.selectedProperty());
+		txtTitle.visibleProperty().bind(isEmailOrLetterOrDocument);
+		txtTitle.managedProperty().bind(isEmailOrLetterOrDocument);
+		lblTitle.visibleProperty().bind(isEmailOrLetterOrDocument);
+		lblTitle.managedProperty().bind(isEmailOrLetterOrDocument);
+		txtSubtitle.visibleProperty().bind(isEmailOrLetterOrDocument);
+		txtSubtitle.managedProperty().bind(isEmailOrLetterOrDocument);
+		lblSubtitle.visibleProperty().bind(isEmailOrLetterOrDocument);
+		lblSubtitle.managedProperty().bind(isEmailOrLetterOrDocument);
+		txtDate.visibleProperty().bind(isEmailOrLetterOrDocument);
+		txtDate.managedProperty().bind(isEmailOrLetterOrDocument);
+		lblDate.visibleProperty().bind(isEmailOrLetterOrDocument);
+		lblDate.managedProperty().bind(isEmailOrLetterOrDocument);
 
 		// visible for emails and letters
-		ObservableBooleanValue obsEmailLetter = radEMails.selectedProperty().or(radLetters.selectedProperty());
-		txtOpening.visibleProperty().bind(obsEmailLetter);
-		txtOpening.managedProperty().bind(obsEmailLetter);
-		lblOpening.visibleProperty().bind(obsEmailLetter);
-		lblOpening.managedProperty().bind(obsEmailLetter);
-		txtClosing.visibleProperty().bind(obsEmailLetter);
-		txtClosing.managedProperty().bind(obsEmailLetter);
-		lblClosing.visibleProperty().bind(obsEmailLetter);
-		lblClosing.managedProperty().bind(obsEmailLetter);
-		txtSignature.visibleProperty().bind(obsEmailLetter);
-		txtSignature.managedProperty().bind(obsEmailLetter);
-		lblSignature.visibleProperty().bind(obsEmailLetter);
-		lblSignature.managedProperty().bind(obsEmailLetter);
+		ObservableBooleanValue isEmailOrLetter = radEMails.selectedProperty().or(radLetters.selectedProperty());
+		txtOpening.visibleProperty().bind(isEmailOrLetter);
+		txtOpening.managedProperty().bind(isEmailOrLetter);
+		lblOpening.visibleProperty().bind(isEmailOrLetter);
+		lblOpening.managedProperty().bind(isEmailOrLetter);
+		txtClosing.visibleProperty().bind(isEmailOrLetter);
+		txtClosing.managedProperty().bind(isEmailOrLetter);
+		lblClosing.visibleProperty().bind(isEmailOrLetter);
+		lblClosing.managedProperty().bind(isEmailOrLetter);
+		txtSignature.visibleProperty().bind(isEmailOrLetter);
+		txtSignature.managedProperty().bind(isEmailOrLetter);
+		lblSignature.visibleProperty().bind(isEmailOrLetter);
+		lblSignature.managedProperty().bind(isEmailOrLetter);
 
-		tblAttachments.visibleProperty().bind(obsEmailLetter);
-		lblAttachments.visibleProperty().bind(obsEmailLetter);
-		barAttachments.visibleProperty().bind(obsEmailLetter);
+		tblAttachments.visibleProperty().bind(isEmailOrLetter);
+		lblAttachments.visibleProperty().bind(isEmailOrLetter);
+		barAttachments.visibleProperty().bind(isEmailOrLetter);
 
 		// visible for letters and documents
-		ObservableBooleanValue obsLetterDocument = radLetters.selectedProperty().or(radDocument.selectedProperty());
-		txtOptions.visibleProperty().bind(obsLetterDocument);
-		txtOptions.managedProperty().bind(obsLetterDocument);
-		lblOptions.visibleProperty().bind(obsLetterDocument);
-		lblOptions.managedProperty().bind(obsLetterDocument);
+		ObservableBooleanValue isLetterOrDocument = radLetters.selectedProperty().or(radDocument.selectedProperty());
+		txtOptions.visibleProperty().bind(isLetterOrDocument);
+		txtOptions.managedProperty().bind(isLetterOrDocument);
+		lblOptions.visibleProperty().bind(isLetterOrDocument);
+		lblOptions.managedProperty().bind(isLetterOrDocument);
 
 		// visible for letters, texts, documents, and text
-		ObservableBooleanValue obsLetterDocumentText = radLetters.selectedProperty().or(radTexts.selectedProperty()).or(radDocument.selectedProperty()).or(radText.selectedProperty());
-		txtCommunicationOutputPath.visibleProperty().bind(obsLetterDocumentText);
-		txtCommunicationOutputPath.managedProperty().bind(obsLetterDocumentText);
-		lblCommunicationOutputPath.visibleProperty().bind(obsLetterDocumentText);
-		lblCommunicationOutputPath.managedProperty().bind(obsLetterDocumentText);
-		txtFilename.visibleProperty().bind(obsLetterDocumentText);
-		txtFilename.managedProperty().bind(obsLetterDocumentText);
-		lblFilename.visibleProperty().bind(obsLetterDocumentText);
-		lblFilename.managedProperty().bind(obsLetterDocumentText);
+		ObservableBooleanValue isLetterOrDocumentOrText = radLetters.selectedProperty().or(radTexts.selectedProperty()).or(radDocument.selectedProperty()).or(radText.selectedProperty());
+		txtCommunicationOutputPath.visibleProperty().bind(isLetterOrDocumentOrText);
+		txtCommunicationOutputPath.managedProperty().bind(isLetterOrDocumentOrText);
+		lblCommunicationOutputPath.visibleProperty().bind(isLetterOrDocumentOrText);
+		lblCommunicationOutputPath.managedProperty().bind(isLetterOrDocumentOrText);
+		txtFilename.visibleProperty().bind(isLetterOrDocumentOrText);
+		txtFilename.managedProperty().bind(isLetterOrDocumentOrText);
+		lblFilename.visibleProperty().bind(isLetterOrDocumentOrText);
+		lblFilename.managedProperty().bind(isLetterOrDocumentOrText);
 
 		// visible for specific fields
 		lblCommunicationOutput.visibleProperty().bind(lblCommunicationOutputPath.visibleProperty().or(lblOptions.visibleProperty()));
