@@ -1,15 +1,21 @@
 package de.edgesoft.refereemanager.controller;
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.utils.JAXBMatch;
+import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -54,31 +60,33 @@ public class RefereeEditDialogController {
 	private TextField txtTitle;
 
 	/**
-	 * Date picker.
+	 * First name text field.
 	 *
 	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
 	@FXML
-	private DatePicker pickDate;
+	private TextField txtFirstName;
 
 	/**
-	 * Eventtype combobox.
+	 * Name text field.
 	 *
 	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
 	@FXML
-	private ComboBox<String> cboEventtype;
+	@JAXBMatch(jaxbfield = "name", jaxbclass = Person.class)
+	private TextField txtName;
 
 	/**
-	 * Category combobox.
+	 * Birthday picker.
 	 *
 	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
 	@FXML
-	private ComboBox<String> cboCategory;
+	private DatePicker pckBirthday;
+
 
 	/**
 	 * OK button.
@@ -135,7 +143,7 @@ public class RefereeEditDialogController {
 	private void initialize() {
 
 		// set date picker date format
-		pickDate.setConverter(new StringConverter<LocalDate>() {
+		pckBirthday.setConverter(new StringConverter<LocalDate>() {
 
 			@Override
 			public String toString(LocalDate date) {
@@ -151,12 +159,24 @@ public class RefereeEditDialogController {
 			}
 		});
 
+		// required fields
+		for (Field theJAXBField : Person.class.getDeclaredFields()) {
+			if ((theJAXBField.getAnnotation(XmlElement.class) != null) && theJAXBField.getAnnotation(XmlElement.class).required()) {
+				System.out.println(theJAXBField);
+
+				for (Field theFXMLField : getClass().getDeclaredFields()) {
+					if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+						System.out.println(theFXMLField);
+						System.out.println("fett");
+						System.out.println(theFXMLField.getType());
+					}
+				}
+			}
+		}
+
 		// enable ok button for valid entries only
 		btnOK.disableProperty().bind(
-				pickDate.valueProperty().isNull()
-				.or(txtTitle.textProperty().isEmpty())
-				.or(cboEventtype.valueProperty().isNull())
-				.or(cboEventtype.valueProperty().asString().isEmpty())
+				txtName.textProperty().isEmpty()
 				);
 
 		// icons
@@ -191,26 +211,23 @@ public class RefereeEditDialogController {
 
         currentReferee = (Referee) thePerson;
 
+        // person data
         txtTitle.setText(
-        		(thePerson.getTitle() == null) ?
+        		(currentReferee.getTitle() == null) ?
         				null :
-        				thePerson.getTitle().getValue());
-//        pickDate.setValue(
-//        		(theReferee.getDate() == null) ?
-//        				null :
-//        				(LocalDate) theReferee.getDate().getValue());
-//        cboEventtype.setValue(
-//        		(theReferee.getEventtype() == null) ?
-//        				null :
-//        				theReferee.getEventtype().getValue());
-//        cboCategory.setValue(
-//        		(theReferee.getCategory() == null) ?
-//        				null :
-//        				theReferee.getCategory().getValue());
-
-		// fill event type and category boxes
-//		cboEventtype.setItems(FXCollections.observableArrayList(((ContentModel) AppModel.getData().getContent()).getEventtypes()));
-//		cboCategory.setItems(FXCollections.observableArrayList(((ContentModel) AppModel.getData().getContent()).getCategories()));
+    					currentReferee.getTitle().getValue());
+        txtFirstName.setText(
+        		(currentReferee.getFirstName() == null) ?
+        				null :
+    					currentReferee.getFirstName().getValue());
+        txtName.setText(
+        		(currentReferee.getName() == null) ?
+        				null :
+    					currentReferee.getName().getValue());
+        pckBirthday.setValue(
+        		(currentReferee.getBirthday() == null) ?
+        				null :
+        				(LocalDate) currentReferee.getBirthday().getValue());
 
     }
 
@@ -241,20 +258,10 @@ public class RefereeEditDialogController {
     	}
         currentReferee.getTitle().setValue(txtTitle.getText());
 
-//        if (currentReferee.getDate() == null) {
-//    		currentReferee.setDate(new SimpleObjectProperty<>());
-//    	}
-//        currentReferee.getDate().setValue(pickDate.getValue());
-//
-//    	if (currentReferee.getEventtype() == null) {
-//    		currentReferee.setEventtype(new SimpleStringProperty());
-//    	}
-//        currentReferee.getEventtype().setValue(cboEventtype.getValue());
-//
-//        if (currentReferee.getCategory() == null) {
-//    		currentReferee.setCategory(new SimpleStringProperty());
-//    	}
-//        currentReferee.getCategory().setValue(cboCategory.getValue());
+        if (currentReferee.getBirthday() == null) {
+    		currentReferee.setBirthday(new SimpleObjectProperty<>());
+    	}
+        currentReferee.getBirthday().setValue(pckBirthday.getValue());
 
         okClicked = true;
         dialogStage.close();

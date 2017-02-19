@@ -1,7 +1,10 @@
 package de.edgesoft.refereemanager;
 
 import java.io.Writer;
+import java.lang.reflect.Field;
 import java.util.Map;
+
+import javax.xml.bind.annotation.XmlElement;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -20,6 +23,7 @@ import com.sun.javafx.application.HostServicesDelegate;
 import de.edgesoft.edgeutils.commons.Version;
 import de.edgesoft.edgeutils.commons.ext.VersionExt;
 import de.edgesoft.refereemanager.controller.AppLayoutController;
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
@@ -101,27 +105,27 @@ public class RefereeManager extends Application {
 		launch(args);
 	}
 
-		/**
-		 * The main entry point for all JavaFX applications.
-		 * The start method is called after the init method has returned,
-		 * and after the system is ready for the application to begin running.
-		 *
-		 * @param primaryStage primary stage
+	/**
+	 * The main entry point for all JavaFX applications.
+	 * The start method is called after the init method has returned,
+	 * and after the system is ready for the application to begin running.
+	 *
+	 * @param primaryStage primary stage
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
-		 */
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 
 //		showSplashScreen();
 
 		// load app layout and controller, then delegate control to controller
-			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AppLayout");
-			((AppLayoutController) pneLoad.getValue().getController()).initController(primaryStage);
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AppLayout");
+		((AppLayoutController) pneLoad.getValue().getController()).initController(primaryStage);
 
-				// host services
-				hostServices = HostServicesFactory.getInstance(this);
+		// host services
+		hostServices = HostServicesFactory.getInstance(this);
 
 	}
 

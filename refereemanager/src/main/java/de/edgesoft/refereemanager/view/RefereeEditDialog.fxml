@@ -43,7 +43,7 @@
                                     <Label text="Name" GridPane.rowIndex="2" />
                                     <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <Label text="Geburtsdatum" GridPane.rowIndex="3" />
-                                    <DatePicker fx:id="pickDate" promptText="dd.mm.jjjj" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <DatePicker fx:id="pckBirthday" promptText="dd.mm.jjjj" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
