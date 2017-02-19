@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -179,19 +180,21 @@ public class RefereeEditDialogController {
 	/**
 	 * Sets referee to be edited.
 	 *
-	 * @param theReferee referee
+	 * @param thePerson referee
 	 *
 	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
-	public void setReferee(Referee theReferee) {
+	public void setPerson(PersonModel thePerson) {
 
-		Objects.requireNonNull(theReferee);
+		Objects.requireNonNull(thePerson);
+
+        currentReferee = (Referee) thePerson;
 
         txtTitle.setText(
-        		(theReferee.getTitle() == null) ?
+        		(thePerson.getTitle() == null) ?
         				null :
-        				theReferee.getTitle().getValue());
+        				thePerson.getTitle().getValue());
 //        pickDate.setValue(
 //        		(theReferee.getDate() == null) ?
 //        				null :
@@ -204,8 +207,6 @@ public class RefereeEditDialogController {
 //        		(theReferee.getCategory() == null) ?
 //        				null :
 //        				theReferee.getCategory().getValue());
-
-        currentReferee = theReferee;
 
 		// fill event type and category boxes
 //		cboEventtype.setItems(FXCollections.observableArrayList(((ContentModel) AppModel.getData().getContent()).getEventtypes()));

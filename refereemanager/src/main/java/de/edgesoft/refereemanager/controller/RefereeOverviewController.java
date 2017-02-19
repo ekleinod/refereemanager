@@ -5,14 +5,17 @@ import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Objects;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
+import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
@@ -295,8 +298,11 @@ public class RefereeOverviewController {
 		ctlRefList.getTabPeople().selectedProperty().addListener((event, oldTab, newTab) -> showDetails());
 
 		// enabling edit/delete buttons only with selection
-		btnEdit.disableProperty().bind(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull());
-		btnDelete.disableProperty().bind(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull());
+		ObservableBooleanValue isOneItemSelected = ctlRefList.getTabReferees().selectedProperty().not().or(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull())
+				.and(ctlRefList.getTabTrainees().selectedProperty().not().or(ctlRefList.getTraineesSelectionModel().selectedItemProperty().isNull()))
+				.and(ctlRefList.getTabPeople().selectedProperty().not().or(ctlRefList.getPeopleSelectionModel().selectedItemProperty().isNull()));
+		btnEdit.disableProperty().bind(isOneItemSelected);
+		btnDelete.disableProperty().bind(isOneItemSelected);
 
 		// disabling labels
 		ObservableBooleanValue isReferee = ctlRefList.getTabReferees().selectedProperty();
@@ -462,16 +468,43 @@ public class RefereeOverviewController {
 	/**
 	 * Opens edit dialog for new data.
 	 *
-	 * @version 0.10.0
+	 * @version 0.13.0
 	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleAdd() {
 
-		RefereeModel newReferee = new RefereeModel();
-		if (showEditDialog(newReferee)) {
-			((ContentModel) AppModel.getData().getContent()).getObservableReferees().add(newReferee);
-			ctlRefList.getRefereesSelectionModel().select(newReferee);
+		PersonModel newPerson = null;
+
+		if (ctlRefList.getTabReferees().isSelected()) {
+			newPerson = new RefereeModel();
+		}
+
+		if (ctlRefList.getTabTrainees().isSelected()) {
+			newPerson = new TraineeModel();
+		}
+
+		if (ctlRefList.getTabPeople().isSelected()) {
+			newPerson = new PersonModel();
+		}
+
+		if (showEditDialog(newPerson)) {
+
+			if (ctlRefList.getTabReferees().isSelected()) {
+				((ContentModel) AppModel.getData().getContent()).getObservableReferees().add((Referee) newPerson);
+				ctlRefList.getRefereesSelectionModel().select((Referee) newPerson);
+			}
+
+			if (ctlRefList.getTabTrainees().isSelected()) {
+				((ContentModel) AppModel.getData().getContent()).getObservableTrainees().add((Trainee) newPerson);
+				ctlRefList.getTraineesSelectionModel().select((Trainee) newPerson);
+			}
+
+			if (ctlRefList.getTabPeople().isSelected()) {
+				((ContentModel) AppModel.getData().getContent()).getObservablePeople().add(newPerson);
+				ctlRefList.getPeopleSelectionModel().select(newPerson);
+			}
+
 			AppModel.setModified(true);
 			appController.setAppTitle();
 		}
@@ -481,22 +514,20 @@ public class RefereeOverviewController {
 	/**
 	 * Opens edit dialog for editing selected data.
 	 *
-	 * @version 0.10.0
+	 * @version 0.13.0
 	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleEdit() {
 
-		RefereeModel editReferee = (RefereeModel) ctlRefList.getRefereesSelectionModel().getSelectedItem();
+		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
 
-		if (editReferee != null) {
-
-			if (showEditDialog(editReferee)) {
-				showDetails(editReferee);
+		if (lstSelected.size() == 1) {
+			if (showEditDialog(lstSelected.get(0))) {
+				showDetails(lstSelected.get(0));
 				AppModel.setModified(true);
 				appController.setAppTitle();
 			}
-
 		}
 
 	}
@@ -504,25 +535,25 @@ public class RefereeOverviewController {
 	/**
 	 * Deletes selected data from list.
 	 *
-	 * @version 0.10.0
+	 * @version 0.13.0
 	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleDelete() {
 
-		Referee refDelete = ctlRefList.getRefereesSelectionModel().getSelectedItem();
+		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
 
-		if (refDelete != null) {
+		if (lstSelected.size() == 1) {
 
 			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
-					"Bestätigung Schiedsrichter löschen",
-					MessageFormat.format("Soll ''{0}'' gelöscht werden?", refDelete.getDisplayTitle().get()),
+					"Löschbestätigung",
+					MessageFormat.format("Soll ''{0}'' gelöscht werden?", lstSelected.get(0).getDisplayTitle().get()),
 					null);
 
 			alert.showAndWait()
 					.filter(response -> response == ButtonType.OK)
 					.ifPresent(response -> {
-						((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(refDelete);
+						((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(lstSelected.get(0));
 						AppModel.setModified(true);
 						appController.setAppTitle();
 						});
@@ -532,26 +563,44 @@ public class RefereeOverviewController {
 	}
 
 	/**
-	 * Opens the referee edit dialog.
+	 * Opens the data edit dialog.
 	 *
 	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
 	 *
-	 * @param theReferee the referee to be edited
+	 * @param thePerson the person to be edited
 	 * @return true if the user clicked OK, false otherwise.
 	 *
-	 * @version 0.10.0
+	 * @version 0.13.0
 	 * @since 0.10.0
 	 */
-	private boolean showEditDialog(Referee theReferee) {
+	private boolean showEditDialog(PersonModel thePerson) {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeEditDialog");
+		Objects.requireNonNull(thePerson);
+
+		Map.Entry<Pane, FXMLLoader> pneLoad = null;
+
+		if (ctlRefList.getTabReferees().isSelected()) {
+			pneLoad = Resources.loadPane("RefereeEditDialog");
+		}
+
+		if (ctlRefList.getTabTrainees().isSelected()) {
+			pneLoad = Resources.loadPane("TraineeEditDialog");
+		}
+
+		if (ctlRefList.getTabPeople().isSelected()) {
+			pneLoad = Resources.loadPane("PersonEditDialog");
+		}
+
 		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initOwner(appController.getPrimaryStage());
-		dialogStage.setTitle("Schiedsrichter_in editieren");
+		dialogStage.setTitle(String.format("%s editieren",
+				ctlRefList.getTabReferees().isSelected() ? "Schiedsrichter_in" :
+					ctlRefList.getTabTrainees().isSelected() ? "Azubi" :
+						"Person"));
 
 		Scene scene = new Scene(editDialog);
 		dialogStage.setScene(scene);
@@ -559,7 +608,7 @@ public class RefereeOverviewController {
 		// Set the referee
 		RefereeEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(dialogStage);
-		editController.setReferee(theReferee);
+		editController.setPerson(thePerson);
 
 		// Show the dialog and wait until the user closes it
 		dialogStage.showAndWait();
