@@ -17,8 +17,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -67,6 +70,16 @@ public class RefereeEditDialogController {
 	 */
 	@FXML
 	private TextField txtFirstName;
+
+	/**
+	 * Name text field label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "name", jaxbclass = Person.class)
+	private Label lblName;
 
 	/**
 	 * Name text field.
@@ -162,15 +175,22 @@ public class RefereeEditDialogController {
 		// required fields
 		for (Field theJAXBField : Person.class.getDeclaredFields()) {
 			if ((theJAXBField.getAnnotation(XmlElement.class) != null) && theJAXBField.getAnnotation(XmlElement.class).required()) {
-				System.out.println(theJAXBField);
 
 				for (Field theFXMLField : getClass().getDeclaredFields()) {
 					if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
-						System.out.println(theFXMLField);
-						System.out.println("fett");
-						System.out.println(theFXMLField.getType());
+
+						try {
+							if (theFXMLField.get(this) instanceof Label) {
+								Font fntTemp = ((Label) theFXMLField.get(this)).getFont();
+								((Label) theFXMLField.get(this)).setFont(Font.font(fntTemp.getFamily(), FontWeight.BOLD, fntTemp.getSize()));
+							}
+						} catch (IllegalArgumentException | IllegalAccessException e) {
+							e.printStackTrace();
+						}
+
 					}
 				}
+
 			}
 		}
 
