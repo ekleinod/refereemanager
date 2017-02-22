@@ -1,19 +1,23 @@
 package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -60,6 +64,7 @@ public class RefereeEditDialogController {
 	 * @since 0.13.0
 	 */
 	@FXML
+	@JAXBMatch(jaxbfield = "title", jaxbclass = TitledIDType.class)
 	private TextField txtTitle;
 
 	/**
@@ -69,6 +74,7 @@ public class RefereeEditDialogController {
 	 * @since 0.13.0
 	 */
 	@FXML
+	@JAXBMatch(jaxbfield = "firstName", jaxbclass = Person.class)
 	private TextField txtFirstName;
 
 	/**
@@ -98,6 +104,7 @@ public class RefereeEditDialogController {
 	 * @since 0.13.0
 	 */
 	@FXML
+	@JAXBMatch(jaxbfield = "birthday", jaxbclass = Person.class)
 	private DatePicker pckBirthday;
 
 
@@ -231,19 +238,83 @@ public class RefereeEditDialogController {
 
         currentReferee = (Referee) thePerson;
 
+        for (Field theFXMLField : getClass().getDeclaredFields()) {
+
+        	Class<?> theClass = IDType.class;
+        	for (Field theJAXBField : theClass.getDeclaredFields()) {
+
+				if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+
+					try {
+						if (theFXMLField.get(this) instanceof TextField) {
+							StringProperty sTemp = (StringProperty) theClass
+									.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
+									.invoke(currentReferee);
+							((TextField) theFXMLField.get(this)).setText((sTemp == null) ? null : sTemp.getValue());
+						}
+					} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+						e.printStackTrace();
+					}
+
+				}
+
+			}
+
+        	theClass = TitledIDType.class;
+        	for (Field theJAXBField : theClass.getDeclaredFields()) {
+
+				if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+
+					try {
+						if (theFXMLField.get(this) instanceof TextField) {
+							StringProperty sTemp = (StringProperty) theClass
+									.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
+									.invoke(currentReferee);
+							((TextField) theFXMLField.get(this)).setText((sTemp == null) ? null : sTemp.getValue());
+						}
+					} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+						e.printStackTrace();
+					}
+
+				}
+
+			}
+
+        	theClass = Person.class;
+        	for (Field theJAXBField : theClass.getDeclaredFields()) {
+
+				if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+
+					try {
+						if (theFXMLField.get(this) instanceof TextField) {
+							StringProperty sTemp = (StringProperty) theClass
+									.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
+									.invoke(currentReferee);
+							((TextField) theFXMLField.get(this)).setText((sTemp == null) ? null : sTemp.getValue());
+						}
+					} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+						e.printStackTrace();
+					}
+
+				}
+
+			}
+
+		}
+
         // person data
-        txtTitle.setText(
-        		(currentReferee.getTitle() == null) ?
-        				null :
-    					currentReferee.getTitle().getValue());
-        txtFirstName.setText(
-        		(currentReferee.getFirstName() == null) ?
-        				null :
-    					currentReferee.getFirstName().getValue());
-        txtName.setText(
-        		(currentReferee.getName() == null) ?
-        				null :
-    					currentReferee.getName().getValue());
+//        txtTitle.setText(
+//        		(currentReferee.getTitle() == null) ?
+//        				null :
+//    					currentReferee.getTitle().getValue());
+//        txtFirstName.setText(
+//        		(currentReferee.getFirstName() == null) ?
+//        				null :
+//    					currentReferee.getFirstName().getValue());
+//        txtName.setText(
+//        		(currentReferee.getName() == null) ?
+//        				null :
+//    					currentReferee.getName().getValue());
         pckBirthday.setValue(
         		(currentReferee.getBirthday() == null) ?
         				null :
