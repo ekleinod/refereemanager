@@ -1,17 +1,12 @@
 package de.edgesoft.refereemanager.utils;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 
-import javax.xml.bind.annotation.XmlElement.DEFAULT;
-
-import de.edgesoft.refereemanager.model.PersonModel;
-import javafx.scene.control.Control;
+import de.edgesoft.edgeutils.commons.ModelClass;
+import javafx.beans.property.StringProperty;
+import javafx.scene.control.TextField;
 
 
 /**
@@ -43,9 +38,56 @@ import javafx.scene.control.Control;
 public class JAXBMatchUtils {
 
 	/**
-	 * Sets referee to be edited.
+	 * Fill fields of fxml class with data of data classes?
 	 *
-	 * @param thePerson referee
+	 * @param theFXMLObject calling fxml object
+	 * @param theModel data model object
+	 * @param theDataClasses data classes
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public static void fillFields(final Object theFXMLObject, final ModelClass theModel, final Class<?>... theDataClasses) {
+
+		Objects.requireNonNull(theFXMLObject);
+		Objects.requireNonNull(theModel);
+
+        for (Field theFXMLField : theFXMLObject.getClass().getDeclaredFields()) {
+
+        	for (Class<?> theClass : theDataClasses) {
+
+        		for (Field theJAXBField : theClass.getDeclaredFields()) {
+
+        			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+
+        				try {
+        					if (theFXMLField.get(theFXMLObject) instanceof TextField) {
+        						StringProperty sTemp = (StringProperty) theClass
+        								.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
+        								.invoke(theModel);
+        						((TextField) theFXMLField.get(theFXMLObject)).setText((sTemp == null) ? null : sTemp.getValue());
+        					}
+        				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+        					e.printStackTrace();
+        				}
+
+        			}
+
+        		}
+
+			}
+
+        }
+
+	}
+
+	/**
+	 * Does fxml field match jaxb field?
+	 *
+	 * @param theFXMLField fxml field
+	 * @param theJAXBField jaxb field
+	 *
+	 * @return does fxml field match jaxb field?
 	 *
 	 * @version 0.13.0
 	 * @since 0.13.0

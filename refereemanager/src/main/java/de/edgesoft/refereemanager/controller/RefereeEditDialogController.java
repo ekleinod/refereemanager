@@ -238,69 +238,71 @@ public class RefereeEditDialogController {
 
         currentReferee = (Referee) thePerson;
 
-        for (Field theFXMLField : getClass().getDeclaredFields()) {
+        JAXBMatchUtils.fillFields(this, thePerson, IDType.class, TitledIDType.class, Person.class);
 
-        	Class<?> theClass = IDType.class;
-        	for (Field theJAXBField : theClass.getDeclaredFields()) {
-
-				if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
-
-					try {
-						if (theFXMLField.get(this) instanceof TextField) {
-							StringProperty sTemp = (StringProperty) theClass
-									.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
-									.invoke(currentReferee);
-							((TextField) theFXMLField.get(this)).setText((sTemp == null) ? null : sTemp.getValue());
-						}
-					} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-						e.printStackTrace();
-					}
-
-				}
-
-			}
-
-        	theClass = TitledIDType.class;
-        	for (Field theJAXBField : theClass.getDeclaredFields()) {
-
-				if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
-
-					try {
-						if (theFXMLField.get(this) instanceof TextField) {
-							StringProperty sTemp = (StringProperty) theClass
-									.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
-									.invoke(currentReferee);
-							((TextField) theFXMLField.get(this)).setText((sTemp == null) ? null : sTemp.getValue());
-						}
-					} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-						e.printStackTrace();
-					}
-
-				}
-
-			}
-
-        	theClass = Person.class;
-        	for (Field theJAXBField : theClass.getDeclaredFields()) {
-
-				if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
-
-					try {
-						if (theFXMLField.get(this) instanceof TextField) {
-							StringProperty sTemp = (StringProperty) theClass
-									.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
-									.invoke(currentReferee);
-							((TextField) theFXMLField.get(this)).setText((sTemp == null) ? null : sTemp.getValue());
-						}
-					} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-						e.printStackTrace();
-					}
-
-				}
-
-			}
-
-		}
+//        for (Field theFXMLField : getClass().getDeclaredFields()) {
+//
+//        	Class<?> theClass = IDType.class;
+//        	for (Field theJAXBField : theClass.getDeclaredFields()) {
+//
+//				if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+//
+//					try {
+//						if (theFXMLField.get(this) instanceof TextField) {
+//							StringProperty sTemp = (StringProperty) theClass
+//									.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
+//									.invoke(currentReferee);
+//							((TextField) theFXMLField.get(this)).setText((sTemp == null) ? null : sTemp.getValue());
+//						}
+//					} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+//						e.printStackTrace();
+//					}
+//
+//				}
+//
+//			}
+//
+//        	theClass = TitledIDType.class;
+//        	for (Field theJAXBField : theClass.getDeclaredFields()) {
+//
+//				if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+//
+//					try {
+//						if (theFXMLField.get(this) instanceof TextField) {
+//							StringProperty sTemp = (StringProperty) theClass
+//									.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
+//									.invoke(currentReferee);
+//							((TextField) theFXMLField.get(this)).setText((sTemp == null) ? null : sTemp.getValue());
+//						}
+//					} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+//						e.printStackTrace();
+//					}
+//
+//				}
+//
+//			}
+//
+//        	theClass = Person.class;
+//        	for (Field theJAXBField : theClass.getDeclaredFields()) {
+//
+//				if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+//
+//					try {
+//						if (theFXMLField.get(this) instanceof TextField) {
+//							StringProperty sTemp = (StringProperty) theClass
+//									.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
+//									.invoke(currentReferee);
+//							((TextField) theFXMLField.get(this)).setText((sTemp == null) ? null : sTemp.getValue());
+//						}
+//					} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+//						e.printStackTrace();
+//					}
+//
+//				}
+//
+//			}
+//
+//		}
 
         // person data
 //        txtTitle.setText(
