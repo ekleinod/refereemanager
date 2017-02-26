@@ -2,11 +2,20 @@ package de.edgesoft.refereemanager.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.refereemanager.controller.RefereeEditDialogController;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 
 /**
@@ -38,46 +47,60 @@ import javafx.scene.control.TextField;
 public class JAXBMatchUtils {
 
 	/**
-	 * Fill fields of fxml class with data of data classes?
+	 * Fill field with data of data classes.
 	 *
-	 * @param theFXMLObject calling fxml object
+	 * The for-loop for all fields cannot be called here, because the access
+	 * to the field object is forbidden for private fields.
+	 * In order to maintain separation of concerns I call the
+	 * loop and the get method in the calling class.
+	 * {@link RefereeEditDialogController#setPerson(de.edgesoft.refereemanager.model.PersonModel)}
+	 *
+	 * @param theFXMLField fxml field
+	 * @param theFieldObject object of fxml field
 	 * @param theModel data model object
 	 * @param theDataClasses data classes
 	 *
 	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
-	public static void fillFields(final Object theFXMLObject, final ModelClass theModel, final Class<?>... theDataClasses) {
+	public static void fillField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final Class<?>... theDataClasses) {
 
-		Objects.requireNonNull(theFXMLObject);
+		Objects.requireNonNull(theFXMLField);
+		Objects.requireNonNull(theFieldObject);
 		Objects.requireNonNull(theModel);
 
-        for (Field theFXMLField : theFXMLObject.getClass().getDeclaredFields()) {
+    	for (Class<?> theClass : theDataClasses) {
 
-        	for (Class<?> theClass : theDataClasses) {
+    		for (Field theJAXBField : theClass.getDeclaredFields()) {
 
-        		for (Field theJAXBField : theClass.getDeclaredFields()) {
+    			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
 
-        			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+    				try {
+    					if (theFieldObject instanceof TextField) {
 
-        				try {
-        					if (theFXMLField.get(theFXMLObject) instanceof TextField) {
-        						StringProperty sTemp = (StringProperty) theClass
-        								.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
-        								.invoke(theModel);
-        						((TextField) theFXMLField.get(theFXMLObject)).setText((sTemp == null) ? null : sTemp.getValue());
-        					}
-        				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-        					e.printStackTrace();
-        				}
+    						StringProperty sTemp = (StringProperty) theClass
+    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
+    								.invoke(theModel);
+    						((TextField) theFieldObject).setText((sTemp == null) ? null : sTemp.getValue());
 
-        			}
+    					} else if (theFieldObject instanceof DatePicker) {
 
-        		}
+    						SimpleObjectProperty<LocalDate> sTemp = (SimpleObjectProperty<LocalDate>) theClass
+    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
+    								.invoke(theModel);
+    						((DatePicker) theFieldObject).setValue((sTemp == null) ? null : sTemp.getValue());
 
-			}
+    					}
 
-        }
+    				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+    					e.printStackTrace();
+    				}
+
+    			}
+
+    		}
+
+		}
 
 	}
 
@@ -103,6 +126,107 @@ public class JAXBMatchUtils {
 
 		return (theFXMLField.getAnnotation(JAXBMatch.class).jaxbclass() == theJAXBField.getDeclaringClass()) &&
 				theFXMLField.getAnnotation(JAXBMatch.class).jaxbfield().equals(theJAXBField.getName());
+
+	}
+
+	/**
+	 * Getter for the field.
+	 *
+	 * @todo Is there a built-in Java method (jaxb) for this?
+	 *
+	 * @param theJAXBFieldName jaxb field
+	 *
+	 * @return getter name
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public static String getGetter(final String theJAXBFieldName) {
+
+		Objects.requireNonNull(theJAXBFieldName);
+
+		return String.format("get%s", getSuffix(theJAXBFieldName));
+
+	}
+
+	/**
+	 * Setter for the field.
+	 *
+	 * @todo Is there a built-in Java method (jaxb) for this?
+	 *
+	 * @param theJAXBFieldName jaxb field
+	 *
+	 * @return setter name
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public static String getSetter(final String theJAXBFieldName) {
+
+		Objects.requireNonNull(theJAXBFieldName);
+
+		return String.format("set%s", getSuffix(theJAXBFieldName));
+
+	}
+
+	/**
+	 * Access suffix for the field.
+	 *
+	 * @todo Is there a built-in Java method (jaxb) for this?
+	 *
+	 * @param theJAXBFieldName jaxb field
+	 *
+	 * @return access suffix
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public static String getSuffix(final String theJAXBFieldName) {
+
+		Objects.requireNonNull(theJAXBFieldName);
+
+		return String.format("%s%s", theJAXBFieldName.substring(0, 1).toUpperCase(), theJAXBFieldName.substring(1));
+
+	}
+
+	/**
+	 * Mark required fields.
+	 *
+	 * @param theFXMLField fxml field
+	 * @param theFieldObject object of fxml field
+	 * @param theDataClasses data classes
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public static void markRequired(final Field theFXMLField, final Object theFieldObject, final Class<?>... theDataClasses) {
+
+		Objects.requireNonNull(theFXMLField);
+
+    	for (Class<?> theClass : theDataClasses) {
+
+    		for (Field theJAXBField : theClass.getDeclaredFields()) {
+
+    			if ((theJAXBField.getAnnotation(XmlElement.class) != null) && theJAXBField.getAnnotation(XmlElement.class).required()) {
+
+	    			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+
+	    				try {
+	    					if (theFieldObject instanceof Label) {
+								Font fntTemp = ((Label) theFieldObject).getFont();
+								((Label) theFieldObject).setFont(Font.font(fntTemp.getFamily(), FontWeight.BOLD, fntTemp.getSize()));
+	    					}
+	    				} catch (IllegalArgumentException | SecurityException e) {
+	    					e.printStackTrace();
+	    				}
+
+	    			}
+
+    			}
+
+    		}
+
+		}
 
 	}
 

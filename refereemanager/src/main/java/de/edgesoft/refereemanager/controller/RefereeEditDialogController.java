@@ -1,10 +1,7 @@
 package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.Objects;
-
-import javax.xml.bind.annotation.XmlElement;
 
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
@@ -17,15 +14,12 @@ import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -180,26 +174,18 @@ public class RefereeEditDialogController {
 		});
 
 		// required fields
-		for (Field theJAXBField : Person.class.getDeclaredFields()) {
-			if ((theJAXBField.getAnnotation(XmlElement.class) != null) && theJAXBField.getAnnotation(XmlElement.class).required()) {
+        for (Field theFXMLField : getClass().getDeclaredFields()) {
 
-				for (Field theFXMLField : getClass().getDeclaredFields()) {
-					if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+        	try {
+        		Object fieldObject = theFXMLField.get(this);
 
-						try {
-							if (theFXMLField.get(this) instanceof Label) {
-								Font fntTemp = ((Label) theFXMLField.get(this)).getFont();
-								((Label) theFXMLField.get(this)).setFont(Font.font(fntTemp.getFamily(), FontWeight.BOLD, fntTemp.getSize()));
-							}
-						} catch (IllegalArgumentException | IllegalAccessException e) {
-							e.printStackTrace();
-						}
+        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, IDType.class, TitledIDType.class, Person.class);
 
-					}
-				}
-
+        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
+				e.printStackTrace();
 			}
-		}
+
+        }
 
 		// enable ok button for valid entries only
 		btnOK.disableProperty().bind(
@@ -238,89 +224,18 @@ public class RefereeEditDialogController {
 
         currentReferee = (Referee) thePerson;
 
-        JAXBMatchUtils.fillFields(this, thePerson, IDType.class, TitledIDType.class, Person.class);
+        for (Field theFXMLField : getClass().getDeclaredFields()) {
 
-//        for (Field theFXMLField : getClass().getDeclaredFields()) {
-//
-//        	Class<?> theClass = IDType.class;
-//        	for (Field theJAXBField : theClass.getDeclaredFields()) {
-//
-//				if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
-//
-//					try {
-//						if (theFXMLField.get(this) instanceof TextField) {
-//							StringProperty sTemp = (StringProperty) theClass
-//									.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
-//									.invoke(currentReferee);
-//							((TextField) theFXMLField.get(this)).setText((sTemp == null) ? null : sTemp.getValue());
-//						}
-//					} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-//						e.printStackTrace();
-//					}
-//
-//				}
-//
-//			}
-//
-//        	theClass = TitledIDType.class;
-//        	for (Field theJAXBField : theClass.getDeclaredFields()) {
-//
-//				if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
-//
-//					try {
-//						if (theFXMLField.get(this) instanceof TextField) {
-//							StringProperty sTemp = (StringProperty) theClass
-//									.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
-//									.invoke(currentReferee);
-//							((TextField) theFXMLField.get(this)).setText((sTemp == null) ? null : sTemp.getValue());
-//						}
-//					} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-//						e.printStackTrace();
-//					}
-//
-//				}
-//
-//			}
-//
-//        	theClass = Person.class;
-//        	for (Field theJAXBField : theClass.getDeclaredFields()) {
-//
-//				if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
-//
-//					try {
-//						if (theFXMLField.get(this) instanceof TextField) {
-//							StringProperty sTemp = (StringProperty) theClass
-//									.getDeclaredMethod(String.format("get%s%s", theJAXBField.getName().substring(0, 1).toUpperCase(), theJAXBField.getName().substring(1)))
-//									.invoke(currentReferee);
-//							((TextField) theFXMLField.get(this)).setText((sTemp == null) ? null : sTemp.getValue());
-//						}
-//					} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-//						e.printStackTrace();
-//					}
-//
-//				}
-//
-//			}
-//
-//		}
+        	try {
+        		Object fieldObject = theFXMLField.get(this);
 
-        // person data
-//        txtTitle.setText(
-//        		(currentReferee.getTitle() == null) ?
-//        				null :
-//    					currentReferee.getTitle().getValue());
-//        txtFirstName.setText(
-//        		(currentReferee.getFirstName() == null) ?
-//        				null :
-//    					currentReferee.getFirstName().getValue());
-//        txtName.setText(
-//        		(currentReferee.getName() == null) ?
-//        				null :
-//    					currentReferee.getName().getValue());
-        pckBirthday.setValue(
-        		(currentReferee.getBirthday() == null) ?
-        				null :
-        				(LocalDate) currentReferee.getBirthday().getValue());
+        		JAXBMatchUtils.fillField(theFXMLField, fieldObject, thePerson, IDType.class, TitledIDType.class, Person.class);
+
+        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
+				e.printStackTrace();
+			}
+
+        }
 
     }
 
