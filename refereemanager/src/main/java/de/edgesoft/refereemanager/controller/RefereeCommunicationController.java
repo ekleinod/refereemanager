@@ -990,7 +990,12 @@ public class RefereeCommunicationController {
 
 					if (isBody) {
 
-						lstBody.add(theLine.trim());
+						// only right trim
+						int i = theLine.length() - 1;
+				        while (i >= 0 && Character.isWhitespace(theLine.charAt(i))) {
+				            i--;
+				        }
+				        lstBody.add(theLine.substring(0, i+1));
 
 					} else {
 
