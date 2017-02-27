@@ -7,7 +7,10 @@ import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.model.AppModel;
+import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
@@ -19,9 +22,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 /**
@@ -102,6 +109,36 @@ public class RefereeEditDialogController {
 	@JAXBMatch(jaxbfield = "birthday", jaxbclass = Person.class)
 	private DatePicker pckBirthday;
 
+	/**
+	 * Day of death picker.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "dayOfDeath", jaxbclass = Person.class)
+	private DatePicker pckDayOfDeath;
+
+	/**
+	 * Combobox for sex types.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "sexType", jaxbclass = Person.class)
+	private ComboBox<SexType> cboSexType;
+
+	/**
+	 * Text area for remark.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "remark", jaxbclass = Person.class)
+	private TextArea txtRemark;
+
 
 	/**
 	 * OK button.
@@ -171,6 +208,26 @@ public class RefereeEditDialogController {
 			@Override
 			public LocalDate fromString(String string) {
 				return DateTimeUtils.parseDate(string, "d.M.yyyy");
+			}
+		});
+
+		// fill sex types
+		cboSexType.setItems(((ContentModel) AppModel.getData().getContent()).getObservableSexTypes());
+		cboSexType.setCellFactory(new Callback<ListView<SexType>, ListCell<SexType>>() {
+			@Override
+			public ListCell<SexType> call(ListView<SexType> param) {
+				final ListCell<SexType> cell = new ListCell<SexType>() {
+					@Override
+					public void updateItem(SexType item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item == null) {
+							setText(null);
+						} else {
+							setText(item.getDisplayTitle().getValue());
+						}
+					}
+				};
+				return cell;
 			}
 		});
 

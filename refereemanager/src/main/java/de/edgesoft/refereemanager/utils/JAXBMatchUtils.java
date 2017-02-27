@@ -11,9 +11,10 @@ import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.refereemanager.controller.RefereeEditDialogController;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -76,12 +77,12 @@ public class JAXBMatchUtils {
     			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
 
     				try {
-    					if (theFieldObject instanceof TextField) {
+    					if (theFieldObject instanceof TextInputControl) {
 
     						StringProperty sTemp = (StringProperty) theClass
     								.getDeclaredMethod(getGetter(theJAXBField.getName()))
     								.invoke(theModel);
-    						((TextField) theFieldObject).setText((sTemp == null) ? null : sTemp.getValue());
+    						((TextInputControl) theFieldObject).setText((sTemp == null) ? null : sTemp.getValue());
 
     					} else if (theFieldObject instanceof DatePicker) {
 
@@ -89,6 +90,13 @@ public class JAXBMatchUtils {
     								.getDeclaredMethod(getGetter(theJAXBField.getName()))
     								.invoke(theModel);
     						((DatePicker) theFieldObject).setValue((sTemp == null) ? null : sTemp.getValue());
+
+    					} else if (theFieldObject instanceof ComboBox<?>) {
+
+    						ModelClass objTemp = (ModelClass) theClass
+    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
+    								.invoke(theModel);
+    						((ComboBox<? extends ModelClass>) theFieldObject).setValue(objTemp);
 
     					}
 
