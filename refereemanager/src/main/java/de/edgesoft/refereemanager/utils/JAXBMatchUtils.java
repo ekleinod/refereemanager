@@ -96,7 +96,7 @@ public class JAXBMatchUtils {
     						ModelClass objTemp = (ModelClass) theClass
     								.getDeclaredMethod(getGetter(theJAXBField.getName()))
     								.invoke(theModel);
-    						((ComboBox<? extends ModelClass>) theFieldObject).setValue(objTemp);
+    						((ComboBox<ModelClass>) theFieldObject).setValue(objTemp);
 
     					}
 
