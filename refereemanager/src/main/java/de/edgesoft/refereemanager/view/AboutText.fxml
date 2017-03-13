@@ -11,7 +11,7 @@
       <Label text="Verbesserungen, Fehler, Hinweise bitte per E-Mail an:" wrapText="true" />
       <Hyperlink onAction="#handleEmailLinkAction" text="ekleinod@edgesoft.de" />
       <Label text="Alternativ kann für angemeldete Nutzer auch eine Fehlermeldung bei github eröffnet werden:" wrapText="true" />
-      <Hyperlink onAction="#handleWebLinkAction" text="https://github.com/open-tt/refereemanager/issues" />
+      <Hyperlink onAction="#handleWebLinkAction" text="https://github.com/tt-schiri/refereemanager/issues" />
       <Label />
       <Label text="Die Icons sind aus dem Papirus icon theme entnommen:" wrapText="true" />
       <Hyperlink onAction="#handleWebLinkAction" text="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme-gtk" />
