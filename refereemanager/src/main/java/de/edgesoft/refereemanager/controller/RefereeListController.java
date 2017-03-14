@@ -54,7 +54,7 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.13.0
  * @since 0.10.0
  */
 public class RefereeListController {
@@ -582,19 +582,132 @@ public class RefereeListController {
 	}
 
 	/**
-	 * Returns current selection (visible and non-visible items) as sorted list.
+	 * Returns tab pane.
 	 *
-	 * @return current sorted selection
+	 * @return tab pane
 	 *
-	 * @version 0.12.0
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public TabPane getContentTab() {
+		return tabPaneContent;
+	}
+
+	/**
+	 * Returns referees tab.
+	 *
+	 * @return referees tab
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public Tab getTabReferees() {
+		return tabReferees;
+	}
+
+	/**
+	 * Returns trainees tab.
+	 *
+	 * @return trainees tab
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public Tab getTabTrainees() {
+		return tabTrainees;
+	}
+
+	/**
+	 * Returns people tab.
+	 *
+	 * @return people tab
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public Tab getTabPeople() {
+		return tabPeople;
+	}
+
+	/**
+	 * Returns selection from all tabs as sorted list.
+	 *
+	 * @return sorted selection from all tabs
+	 *
+	 * @version 0.13.0
 	 * @since 0.12.0
 	 */
-	public ObservableList<PersonModel> getCurrentSelection() {
+	public ObservableList<PersonModel> getAllTabSelection() {
 
 		List<PersonModel> lstReturn = new ArrayList<>();
 
-		tblReferees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
-		tblTrainees.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add(person));
+		getTabRefereesSelection().forEach(person -> lstReturn.add(person));
+		getTabTraineesSelection().forEach(person -> lstReturn.add(person));
+		getTabPeopleSelection().forEach(person -> lstReturn.add(person));
+
+		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
+	}
+
+	/**
+	 * Returns selection from visible tab as sorted list.
+	 *
+	 * @return sorted selection from visible tabs
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public ObservableList<PersonModel> getVisibleTabSelection() {
+
+		if (tabReferees.isSelected()) {
+			return getTabRefereesSelection();
+		}
+
+		if (tabTrainees.isSelected()) {
+			return getTabTraineesSelection();
+		}
+
+		if (tabPeople.isSelected()) {
+			return getTabPeopleSelection();
+		}
+
+		return FXCollections.observableList(new ArrayList<>());
+	}
+
+	/**
+	 * Returns selection from referees tab as sorted list.
+	 *
+	 * @return sorted selection from referees tab
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public ObservableList<PersonModel> getTabRefereesSelection() {
+		return FXCollections.observableList(tblReferees.getSelectionModel().getSelectedItems().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
+	}
+
+	/**
+	 * Returns selection from trainees tab as sorted list.
+	 *
+	 * @return sorted selection from trainees tab
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public ObservableList<PersonModel> getTabTraineesSelection() {
+		return FXCollections.observableList(tblTrainees.getSelectionModel().getSelectedItems().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
+	}
+
+	/**
+	 * Returns selection from people tab as sorted list.
+	 *
+	 * @return sorted selection from people tab
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public ObservableList<PersonModel> getTabPeopleSelection() {
+		List<PersonModel> lstReturn = new ArrayList<>();
+
 		tblPeople.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add((PersonModel) person));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));

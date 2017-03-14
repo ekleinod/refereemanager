@@ -58,10 +58,18 @@ import javafx.util.Duration;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.13.0
  * @since 0.10.0
  */
 public class RefereeManager extends Application {
+
+	/**
+	 * Program and doc version.
+	 *
+	 * @version 0.13.0
+	 * @since 0.10.0
+	 */
+	public static final Version VERSION = new VersionExt("0.13.0");
 
 	/**
 	 * Central logger for all classes.
@@ -70,14 +78,6 @@ public class RefereeManager extends Application {
 	 * @since 0.10.0
 	 */
 	public static final Logger logger = LogManager.getLogger(RefereeManager.class.getPackage().getName());
-
-	/**
-	 * Program and doc version.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
-	 */
-	public static final Version VERSION = new VersionExt("0.12.0");
 
 	/**
 	 * Host services delegate.
@@ -101,27 +101,27 @@ public class RefereeManager extends Application {
 		launch(args);
 	}
 
-		/**
-		 * The main entry point for all JavaFX applications.
-		 * The start method is called after the init method has returned,
-		 * and after the system is ready for the application to begin running.
-		 *
-		 * @param primaryStage primary stage
+	/**
+	 * The main entry point for all JavaFX applications.
+	 * The start method is called after the init method has returned,
+	 * and after the system is ready for the application to begin running.
+	 *
+	 * @param primaryStage primary stage
 	 *
 	 * @version 0.10.0
 	 * @since 0.10.0
-		 */
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 
 //		showSplashScreen();
 
 		// load app layout and controller, then delegate control to controller
-			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AppLayout");
-			((AppLayoutController) pneLoad.getValue().getController()).initController(primaryStage);
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AppLayout");
+		((AppLayoutController) pneLoad.getValue().getController()).initController(primaryStage);
 
-				// host services
-				hostServices = HostServicesFactory.getInstance(this);
+		// host services
+		hostServices = HostServicesFactory.getInstance(this);
 
 	}
 

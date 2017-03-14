@@ -3,19 +3,29 @@ package de.edgesoft.refereemanager.controller;
 import java.io.File;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.util.Map;
+import java.util.Objects;
 
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
+import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -26,13 +36,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * Controller for the referee list scene.
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -50,10 +62,19 @@ import javafx.scene.layout.Pane;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.13.0
  * @since 0.10.0
  */
 public class RefereeOverviewController {
+
+	/**
+	 * Heading label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblHeading;
 
 	/**
 	 * Name label.
@@ -65,6 +86,15 @@ public class RefereeOverviewController {
 	private Label lblName;
 
 	/**
+	 * Name label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblNameLabel;
+
+	/**
 	 * First name label.
 	 *
 	 * @version 0.10.0
@@ -72,6 +102,15 @@ public class RefereeOverviewController {
 	 */
 	@FXML
 	private Label lblFirstName;
+
+	/**
+	 * First name label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblFirstNameLabel;
 
 	/**
 	 * Training level label.
@@ -83,6 +122,15 @@ public class RefereeOverviewController {
 	private Label lblTrainingLevel;
 
 	/**
+	 * Training level label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblTrainingLevelLabel;
+
+	/**
 	 * Club label.
 	 *
 	 * @version 0.10.0
@@ -90,6 +138,69 @@ public class RefereeOverviewController {
 	 */
 	@FXML
 	private Label lblClub;
+
+	/**
+	 * Club label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblClubLabel;
+
+	/**
+	 * Birthday label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblBirthday;
+
+	/**
+	 * Birthday label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblBirthdayLabel;
+
+	/**
+	 * Last update label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblLastUpdate;
+
+	/**
+	 * Last update label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblLastUpdateLabel;
+
+	/**
+	 * Next update label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblNextUpdate;
+
+	/**
+	 * Next update label label.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@FXML
+	private Label lblNextUpdateLabel;
 
 	/**
 	 * Referee image.
@@ -159,31 +270,62 @@ public class RefereeOverviewController {
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 *
-	 * @version 0.10.0
+	 * @version 0.13.0
 	 * @since 0.10.0
 	 */
 	@FXML
 	private void initialize() {
 
 		// list
-			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
-			AnchorPane refList = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
+		AnchorPane refList = (AnchorPane) pneLoad.getKey();
 
-				// add referee list to split pane
-				pneSplit.getItems().add(0, refList);
+		// add referee list to split pane
+		pneSplit.getItems().add(0, refList);
 
-				// store referee table controller
-				ctlRefList = pneLoad.getValue().getController();
+		// store referee table controller
+		ctlRefList = pneLoad.getValue().getController();
 
 		// clear event details
 		showDetails(null);
 
-		// listen to selection changes, show event
+		// listen to selection changes, show person
 		ctlRefList.getRefereesSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
+		ctlRefList.getTraineesSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
+		ctlRefList.getPeopleSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
+		ctlRefList.getTabReferees().selectedProperty().addListener((event, oldTab, newTab) -> showDetails());
+		ctlRefList.getTabTrainees().selectedProperty().addListener((event, oldTab, newTab) -> showDetails());
+		ctlRefList.getTabPeople().selectedProperty().addListener((event, oldTab, newTab) -> showDetails());
 
 		// enabling edit/delete buttons only with selection
-		btnEdit.disableProperty().bind(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull());
-		btnDelete.disableProperty().bind(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull());
+		ObservableBooleanValue isOneItemSelected = ctlRefList.getTabReferees().selectedProperty().not().or(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull())
+				.and(ctlRefList.getTabTrainees().selectedProperty().not().or(ctlRefList.getTraineesSelectionModel().selectedItemProperty().isNull()))
+				.and(ctlRefList.getTabPeople().selectedProperty().not().or(ctlRefList.getPeopleSelectionModel().selectedItemProperty().isNull()));
+		btnEdit.disableProperty().bind(isOneItemSelected);
+		btnDelete.disableProperty().bind(isOneItemSelected);
+
+		// disabling labels
+		ObservableBooleanValue isReferee = ctlRefList.getTabReferees().selectedProperty();
+		lblTrainingLevelLabel.visibleProperty().bind(isReferee);
+		lblTrainingLevelLabel.managedProperty().bind(isReferee);
+		lblTrainingLevel.visibleProperty().bind(isReferee);
+		lblTrainingLevel.managedProperty().bind(isReferee);
+		lblLastUpdateLabel.visibleProperty().bind(isReferee);
+		lblLastUpdateLabel.managedProperty().bind(isReferee);
+		lblLastUpdate.visibleProperty().bind(isReferee);
+		lblLastUpdate.managedProperty().bind(isReferee);
+		lblNextUpdateLabel.visibleProperty().bind(isReferee);
+		lblNextUpdateLabel.managedProperty().bind(isReferee);
+		lblNextUpdate.visibleProperty().bind(isReferee);
+		lblNextUpdate.managedProperty().bind(isReferee);
+
+		ObservableBooleanValue isRefereeOrTrainee = ctlRefList.getTabReferees().selectedProperty().or(ctlRefList.getTabTrainees().selectedProperty());
+		lblClubLabel.visibleProperty().bind(isRefereeOrTrainee);
+		lblClubLabel.managedProperty().bind(isRefereeOrTrainee);
+		lblClub.visibleProperty().bind(isRefereeOrTrainee);
+		lblClub.managedProperty().bind(isRefereeOrTrainee);
+		imgReferee.visibleProperty().bind(isRefereeOrTrainee);
+		imgReferee.managedProperty().bind(isRefereeOrTrainee);
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.REFEREE_OVERVIEW_SPLIT)));
@@ -201,7 +343,7 @@ public class RefereeOverviewController {
 	}
 
 	/**
-	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
+	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
 	 *
 	 * @param theAppController app controller
 	 *
@@ -219,73 +361,150 @@ public class RefereeOverviewController {
 	/**
 	 * Shows selected data in detail window.
 	 *
+	 * Checks if an item is selected in visible tab, uses this.
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	private void showDetails() {
+
+		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
+
+		if (lstSelected.size() == 1) {
+			showDetails(lstSelected.get(0));
+		} else {
+			showDetails(null);
+		}
+
+	}
+
+	/**
+	 * Shows selected data in detail window.
+	 *
 	 * @param theDetailData event (null if none is selected)
 	 *
-	 * @version 0.10.0
+	 * @version 0.13.0
 	 * @since 0.10.0
 	 */
-	private void showDetails(final Referee theDetailData) {
+	private void showDetails(final Person theDetailData) {
 
-			if (theDetailData == null) {
+		if (theDetailData == null) {
 
-					lblName.setText("");
-					lblFirstName.setText("");
-					lblTrainingLevel.setText("");
-					lblClub.setText("");
-					imgReferee.setImage(null);
+			lblHeading.setText("Details");
 
-			} else {
+			lblName.setText("");
+			lblFirstName.setText("");
+			lblTrainingLevel.setText("");
+			lblClub.setText("");
+			lblBirthday.setText("");
+			lblLastUpdate.setText("");
+			lblNextUpdate.setText("");
 
-					lblName.setText(
-							(theDetailData.getName() == null) ?
-									null :
-									theDetailData.getName().getValue());
-					lblFirstName.setText(
-							(theDetailData.getFirstName() == null) ?
-									null :
-									theDetailData.getFirstName().getValue());
-					lblTrainingLevel.setText(
-							(((RefereeModel) theDetailData).getHighestTrainingLevel() == null) ?
-									null :
-									((RefereeModel) theDetailData).getHighestTrainingLevel().getType().getDisplayTitle().getValue());
-					lblClub.setText(
-							(theDetailData.getMember() == null) ?
-									null :
-									theDetailData.getMember().getDisplayTitle().getValue());
+			imgReferee.setImage(null);
 
-					try {
-						if (theDetailData.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
-							File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), String.format("%s.jpg", theDetailData.getFileName().getValue())).toFile();
+		} else {
+
+			lblHeading.setText(
+					(theDetailData.getDisplayTitle() == null) ?
+							null :
+							theDetailData.getDisplayTitle().getValue());
+
+			lblName.setText(
+					(theDetailData.getName() == null) ?
+							null :
+							theDetailData.getName().getValue());
+			lblFirstName.setText(
+					(theDetailData.getFirstName() == null) ?
+							null :
+							theDetailData.getFirstName().getValue());
+			lblBirthday.setText(
+					(theDetailData.getBirthday() == null) ?
+							null :
+							DateTimeUtils.formatDate((LocalDate) theDetailData.getBirthday().getValue()));
+
+			if (theDetailData instanceof RefereeModel) {
+				RefereeModel mdlTemp = (RefereeModel) theDetailData;
+
+				lblClub.setText(
+						(mdlTemp.getMember() == null) ?
+								null :
+								mdlTemp.getMember().getDisplayTitle().getValue());
+
+				lblTrainingLevel.setText(
+						(mdlTemp.getHighestTrainingLevel() == null) ?
+								null :
+								mdlTemp.getHighestTrainingLevel().getType().getDisplayTitle().getValue());
+				lblLastUpdate.setText(
+						(mdlTemp.getLastTrainingUpdate() == null) ?
+								null :
+								DateTimeUtils.formatDate(mdlTemp.getLastTrainingUpdate().getValue()));
+				lblNextUpdate.setText(
+						(mdlTemp.getNextTrainingUpdate() == null) ?
+								null :
+								DateTimeUtils.formatDate(mdlTemp.getNextTrainingUpdate().getValue(), "yyyy"));
+				try {
+					if (mdlTemp.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
+						File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), String.format("%s.jpg", mdlTemp.getFileName().getValue())).toFile();
+						imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
+					} else {
+						File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), "missing.jpg").toFile();
+						if (fleImage.exists()) {
 							imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
 						} else {
-							File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), "missing.jpg").toFile();
-							if (fleImage.exists()) {
-								imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
-							} else {
-								imgReferee.setImage(null);
-							}
+							imgReferee.setImage(null);
 						}
-					} catch (Exception e) {
-						imgReferee.setImage(null);
 					}
+				} catch (Exception e) {
+					imgReferee.setImage(null);
+				}
 
 			}
+
+
+		}
 
 	}
 
 	/**
 	 * Opens edit dialog for new data.
 	 *
-	 * @version 0.10.0
+	 * @version 0.13.0
 	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleAdd() {
 
-		RefereeModel newReferee = new RefereeModel();
-		if (showEditDialog(newReferee)) {
-			((ContentModel) AppModel.getData().getContent()).getObservableReferees().add(newReferee);
-			ctlRefList.getRefereesSelectionModel().select(newReferee);
+		PersonModel newPerson = null;
+
+		if (ctlRefList.getTabReferees().isSelected()) {
+			newPerson = new RefereeModel();
+		}
+
+		if (ctlRefList.getTabTrainees().isSelected()) {
+			newPerson = new TraineeModel();
+		}
+
+		if (ctlRefList.getTabPeople().isSelected()) {
+			newPerson = new PersonModel();
+		}
+
+		if (showEditDialog(newPerson)) {
+
+			if (ctlRefList.getTabReferees().isSelected()) {
+				((ContentModel) AppModel.getData().getContent()).getObservableReferees().add((Referee) newPerson);
+				ctlRefList.getRefereesSelectionModel().select((Referee) newPerson);
+			}
+
+			if (ctlRefList.getTabTrainees().isSelected()) {
+				((ContentModel) AppModel.getData().getContent()).getObservableTrainees().add((Trainee) newPerson);
+				ctlRefList.getTraineesSelectionModel().select((Trainee) newPerson);
+			}
+
+			if (ctlRefList.getTabPeople().isSelected()) {
+				((ContentModel) AppModel.getData().getContent()).getObservablePeople().add(newPerson);
+				ctlRefList.getPeopleSelectionModel().select(newPerson);
+			}
+
 			AppModel.setModified(true);
 			appController.setAppTitle();
 		}
@@ -295,91 +514,106 @@ public class RefereeOverviewController {
 	/**
 	 * Opens edit dialog for editing selected data.
 	 *
-	 * @version 0.10.0
+	 * @version 0.13.0
 	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleEdit() {
 
-		RefereeModel editReferee = (RefereeModel) ctlRefList.getRefereesSelectionModel().getSelectedItem();
+		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
 
-			if (editReferee != null) {
-
-			if (showEditDialog(editReferee)) {
-				showDetails(editReferee);
+		if (lstSelected.size() == 1) {
+			if (showEditDialog(lstSelected.get(0))) {
+				showDetails(lstSelected.get(0));
 				AppModel.setModified(true);
 				appController.setAppTitle();
 			}
-
-			}
+		}
 
 	}
 
 	/**
 	 * Deletes selected data from list.
 	 *
-	 * @version 0.10.0
+	 * @version 0.13.0
 	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleDelete() {
 
-		Referee refDelete = ctlRefList.getRefereesSelectionModel().getSelectedItem();
+		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
 
-			if (refDelete != null) {
+		if (lstSelected.size() == 1) {
 
-				Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
-						"Bestätigung Schiedsrichter löschen",
-						MessageFormat.format("Soll ''{0}'' gelöscht werden?", refDelete.getDisplayTitle().get()),
-						null);
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
+					"Löschbestätigung",
+					MessageFormat.format("Soll ''{0}'' gelöscht werden?", lstSelected.get(0).getDisplayTitle().get()),
+					null);
 
-					alert.showAndWait()
-							.filter(response -> response == ButtonType.OK)
-							.ifPresent(response -> {
-								((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(refDelete);
-								AppModel.setModified(true);
-								appController.setAppTitle();
-								});
+			alert.showAndWait()
+					.filter(response -> response == ButtonType.OK)
+					.ifPresent(response -> {
+						((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(lstSelected.get(0));
+						AppModel.setModified(true);
+						appController.setAppTitle();
+						});
 
-			}
+		}
 
 	}
 
 	/**
-	 * Opens the referee edit dialog.
+	 * Opens the data edit dialog.
 	 *
 	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
 	 *
-	 * @param theReferee the referee to be edited
+	 * @param thePerson the person to be edited
 	 * @return true if the user clicked OK, false otherwise.
 	 *
-	 * @version 0.10.0
+	 * @version 0.13.0
 	 * @since 0.10.0
 	 */
-	private boolean showEditDialog(Referee theReferee) {
+	private boolean showEditDialog(PersonModel thePerson) {
 
-//    	Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventEditDialog");
-//    	AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
-//
-//        // Create the dialog Stage.
-//        Stage dialogStage = new Stage();
-//        dialogStage.initModality(Modality.WINDOW_MODAL);
-//        dialogStage.initOwner(appController.getPrimaryStage());
-//        dialogStage.setTitle("Ereignis editieren");
-//
-//        Scene scene = new Scene(editDialog);
-//        dialogStage.setScene(scene);
-//
-//        // Set the event into the controller.
-//        EventEditDialogController editController = pneLoad.getValue().getController();
-//        editController.setDialogStage(dialogStage);
-//        editController.setEvent(theReferee);
-//
-//        // Show the dialog and wait until the user closes it
-//        dialogStage.showAndWait();
-//
-//        return editController.isOkClicked();
-		return false;
+		Objects.requireNonNull(thePerson);
+
+		Map.Entry<Pane, FXMLLoader> pneLoad = null;
+
+		if (ctlRefList.getTabReferees().isSelected()) {
+			pneLoad = Resources.loadPane("RefereeEditDialog");
+		}
+
+		if (ctlRefList.getTabTrainees().isSelected()) {
+			pneLoad = Resources.loadPane("TraineeEditDialog");
+		}
+
+		if (ctlRefList.getTabPeople().isSelected()) {
+			pneLoad = Resources.loadPane("PersonEditDialog");
+		}
+
+		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+
+		// Create the dialog Stage.
+		Stage dialogStage = new Stage();
+		dialogStage.initModality(Modality.WINDOW_MODAL);
+		dialogStage.initOwner(appController.getPrimaryStage());
+		dialogStage.setTitle(String.format("%s editieren",
+				ctlRefList.getTabReferees().isSelected() ? "Schiedsrichter_in" :
+					ctlRefList.getTabTrainees().isSelected() ? "Azubi" :
+						"Person"));
+
+		Scene scene = new Scene(editDialog);
+		dialogStage.setScene(scene);
+
+		// Set the referee
+		RefereeEditDialogController editController = pneLoad.getValue().getController();
+		editController.setDialogStage(dialogStage);
+		editController.setPerson(thePerson);
+
+		// Show the dialog and wait until the user closes it
+		dialogStage.showAndWait();
+
+		return editController.isOkClicked();
 
 	}
 
