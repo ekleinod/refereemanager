@@ -49,7 +49,7 @@ import javafx.collections.ObservableList;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.13.0
  * @since 0.5.0
  */
 public class ContentModel extends Content {
@@ -80,6 +80,15 @@ public class ContentModel extends Content {
 	 */
 	@XmlTransient
 	private ObservableList<Person> observablePeople = null;
+
+	/**
+	 * Observable list of sex types (singleton).
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	@XmlTransient
+	private ObservableList<SexType> observableSexTypes = null;
 
 
 	/**
@@ -125,6 +134,21 @@ public class ContentModel extends Content {
 			observablePeople = FXCollections.observableList(getPerson());
 		}
 		return observablePeople;
+	}
+
+	/**
+	 * Returns observable list of sex types.
+	 *
+	 * @return observable list of sex types
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public ObservableList<SexType> getObservableSexTypes() {
+		if (observableSexTypes == null) {
+			observableSexTypes = FXCollections.observableList(getSexType());
+		}
+		return observableSexTypes;
 	}
 
 

@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
 
   <name>refereemanager</name>
-  <url>https://github.com/ekleinod/refereemanager</url>
+  <url>https://github.com/tt-schiri/refereemanager</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -103,4 +103,5 @@
   	<name>Ekkart Kleinod (edge-soft)</name>
   	<url>http://www.edgesoft.de/</url>
   </organization>
+  <description>Management of table tennis referees and their assigments.</description>
 </project>

@@ -36,7 +36,7 @@ import javafx.beans.property.SimpleObjectProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.13.0
  * @since 0.5.0
  */
 public class RefereeModel extends Referee {
@@ -183,12 +183,15 @@ public class RefereeModel extends Referee {
 	 *
 	 * @return receive docs by letter?
 	 *
-	 * @version 0.12.0
+	 * @version 0.13.0
 	 * @since 0.8.0
 	 */
 	@Override
 	public SimpleBooleanProperty getDocsByLetter() {
-		return new SimpleBooleanProperty(docsByLetter.getValue() || getEMail().isEmpty());
+		if (super.getDocsByLetter() == null) {
+			return new SimpleBooleanProperty(getEMail().isEmpty());
+		}
+		return new SimpleBooleanProperty(super.getDocsByLetter().getValue() || getEMail().isEmpty());
 	}
 
 	/**

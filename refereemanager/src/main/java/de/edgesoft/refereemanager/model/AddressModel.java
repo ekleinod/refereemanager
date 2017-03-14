@@ -42,20 +42,20 @@ public class AddressModel extends Address {
 	 * @since 0.6.0
 	 */
 	@Override
-		public SimpleStringProperty getDisplayTitle() {
+	public SimpleStringProperty getDisplayTitle() {
 
-			if (isPrivateOnly && !isPrivate()) {
+		if (isPrivateOnly && !isPrivate()) {
 			return null;
-			}
-
-			return new SimpleStringProperty(MessageFormat.format("{0} {1}, {2} {3}",
-					(getStreet() == null) ? "" : getStreet().get(),
-					(getNumber() == null) ? "" : getNumber().get(),
-					(getZipCode() == null) ? "" : getZipCode().get(),
-					(getCity() == null) ? "" : getCity().get()
-					));
-
 		}
+
+		return new SimpleStringProperty(MessageFormat.format("{0} {1}, {2} {3}",
+				(getStreet() == null) ? "" : getStreet().get(),
+				(getNumber() == null) ? "" : getNumber().get(),
+				(getZipCode() == null) ? "" : getZipCode().get(),
+				(getCity() == null) ? "" : getCity().get()
+				));
+
+	}
 
 }
 
