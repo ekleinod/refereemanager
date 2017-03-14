@@ -1,10 +1,7 @@
 package de.edgesoft.refereemanager;
 
 import java.io.Writer;
-import java.lang.reflect.Field;
 import java.util.Map;
-
-import javax.xml.bind.annotation.XmlElement;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +20,6 @@ import com.sun.javafx.application.HostServicesDelegate;
 import de.edgesoft.edgeutils.commons.Version;
 import de.edgesoft.edgeutils.commons.ext.VersionExt;
 import de.edgesoft.refereemanager.controller.AppLayoutController;
-import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
@@ -62,10 +58,18 @@ import javafx.util.Duration;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.13.0
  * @since 0.10.0
  */
 public class RefereeManager extends Application {
+
+	/**
+	 * Program and doc version.
+	 *
+	 * @version 0.13.0
+	 * @since 0.10.0
+	 */
+	public static final Version VERSION = new VersionExt("0.13.0");
 
 	/**
 	 * Central logger for all classes.
@@ -74,14 +78,6 @@ public class RefereeManager extends Application {
 	 * @since 0.10.0
 	 */
 	public static final Logger logger = LogManager.getLogger(RefereeManager.class.getPackage().getName());
-
-	/**
-	 * Program and doc version.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
-	 */
-	public static final Version VERSION = new VersionExt("0.12.0");
 
 	/**
 	 * Host services delegate.
