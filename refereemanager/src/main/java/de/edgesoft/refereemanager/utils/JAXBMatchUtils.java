@@ -8,6 +8,7 @@ import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.controller.RefereeEditDialogController;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -93,10 +94,10 @@ public class JAXBMatchUtils {
 
     					} else if (theFieldObject instanceof ComboBox<?>) {
 
-    						ModelClass objTemp = (ModelClass) theClass
+    						ModelClassExt objTemp = (ModelClassExt) theClass
     								.getDeclaredMethod(getGetter(theJAXBField.getName()))
     								.invoke(theModel);
-    						((ComboBox<ModelClass>) theFieldObject).setValue(objTemp);
+    						((ComboBox<ModelClassExt>) theFieldObject).setValue(objTemp);
 
     					}
 

@@ -5,13 +5,14 @@ import java.util.Comparator;
 
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * TitledIDType model, additional methods for jaxb model class.
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -29,7 +30,7 @@ import javafx.beans.property.SimpleStringProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.14.0
  * @since 0.5.0
  */
 public class TitledIDTypeModel extends TitledIDType {
@@ -78,9 +79,20 @@ public class TitledIDTypeModel extends TitledIDType {
 	 * @version 0.10.0
 	 * @since 0.6.0
 	 */
-		public SimpleStringProperty getDisplayTitle() {
-			return (getShorttitle() == null) ? ((getTitle() == null) ? new SimpleStringProperty(getId()) : getTitle()) : getShorttitle();
-		}
+	public SimpleStringProperty getDisplayTitle() {
+		return (getShorttitle() == null) ? ((getTitle() == null) ? new SimpleStringProperty(getId()) : getTitle()) : getShorttitle();
+	}
+
+	/**
+	 * Returns display text.
+	 *
+	 * @version 0.14.0
+	 * @since 0.14.0
+	 */
+	@Override
+	public StringProperty getDisplayText() {
+		return getDisplayTitle();
+	}
 
 }
 

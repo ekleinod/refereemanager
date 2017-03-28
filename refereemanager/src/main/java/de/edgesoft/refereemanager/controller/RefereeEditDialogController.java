@@ -223,7 +223,7 @@ public class RefereeEditDialogController {
 						if (item == null) {
 							setText(null);
 						} else {
-							setText(item.getDisplayTitle().getValue());
+							setText(item.getDisplayText().getValue());
 						}
 					}
 				};
