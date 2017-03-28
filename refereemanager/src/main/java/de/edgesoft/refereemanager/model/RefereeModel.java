@@ -52,7 +52,7 @@ public class RefereeModel extends Referee {
 	/**
 	 * Filter predicate for active status types.
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.5.0
 	 */
 	public static Predicate<Referee> ACTIVE = referee -> (referee.getStatus().getActive().getValue() && (referee.getDayOfDeath() == null));
