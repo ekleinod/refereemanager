@@ -36,7 +36,7 @@ import javafx.beans.property.SimpleObjectProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.13.0
+ * @version 0.14.0
  * @since 0.5.0
  */
 public class RefereeModel extends Referee {
@@ -55,15 +55,15 @@ public class RefereeModel extends Referee {
 	 * @version 0.12.0
 	 * @since 0.5.0
 	 */
-	public static Predicate<Referee> ACTIVE = referee -> referee.getStatus().getActive().getValue();
+	public static Predicate<Referee> ACTIVE = referee -> (referee.getStatus().getActive().getValue() && (referee.getDayOfDeath() == null));
 
 	/**
 	 * Filter predicate for inactive status types.
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.5.0
 	 */
-	public static Predicate<Referee> INACTIVE = referee -> !referee.getStatus().getActive().getValue();
+	public static Predicate<Referee> INACTIVE = ACTIVE.negate();
 
 	/**
 	 * Filter predicate for letter only (docs by letter and no email) referees.
