@@ -219,7 +219,7 @@ public class RefereeEditDialogController {
 		cboSexType.setCellFactory(new Callback<ListView<SexType>, ListCell<SexType>>() {
 			@Override
 			public ListCell<SexType> call(ListView<SexType> param) {
-				final ListCell<SexType> cell = new ListCell<SexType>() {
+				return new ListCell<SexType>() {
 					@Override
 					public void updateItem(SexType item, boolean empty) {
 						super.updateItem(item, empty);
@@ -230,7 +230,6 @@ public class RefereeEditDialogController {
 						}
 					}
 				};
-				return cell;
 			}
 		});
 
