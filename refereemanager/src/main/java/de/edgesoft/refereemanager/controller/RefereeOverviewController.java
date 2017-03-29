@@ -62,7 +62,7 @@ import javafx.stage.Stage;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.13.0
+ * @version 0.14.0
  * @since 0.10.0
  */
 public class RefereeOverviewController {
@@ -201,6 +201,24 @@ public class RefereeOverviewController {
 	 */
 	@FXML
 	private Label lblNextUpdateLabel;
+
+	/**
+	 * Remark label.
+	 *
+	 * @version 0.14.0
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Label lblRemark;
+
+	/**
+	 * Remark label label.
+	 *
+	 * @version 0.14.0
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Label lblRemarkLabel;
 
 	/**
 	 * Referee image.
@@ -399,6 +417,7 @@ public class RefereeOverviewController {
 			lblBirthday.setText("");
 			lblLastUpdate.setText("");
 			lblNextUpdate.setText("");
+			lblRemark.setText("");
 
 			imgReferee.setImage(null);
 
@@ -421,6 +440,10 @@ public class RefereeOverviewController {
 					(theDetailData.getBirthday() == null) ?
 							null :
 							DateTimeUtils.formatDate((LocalDate) theDetailData.getBirthday().getValue()));
+			lblRemark.setText(
+					(theDetailData.getRemark() == null) ?
+							null :
+							theDetailData.getRemark().getValue());
 
 			if (theDetailData instanceof RefereeModel) {
 				RefereeModel mdlTemp = (RefereeModel) theDetailData;
