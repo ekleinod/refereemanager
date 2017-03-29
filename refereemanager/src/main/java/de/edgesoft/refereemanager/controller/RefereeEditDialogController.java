@@ -232,6 +232,17 @@ public class RefereeEditDialogController {
 				};
 			}
 		});
+		cboSexType.setButtonCell(new ListCell<SexType>() {
+			@Override
+			public void updateItem(SexType item, boolean empty) {
+				super.updateItem(item, empty);
+				if (item == null) {
+					setText(null);
+				} else {
+					setText(item.getDisplayText().getValue());
+				}
+			}
+		});
 
 		// required fields
         for (Field theFXMLField : getClass().getDeclaredFields()) {
