@@ -55,6 +55,16 @@ import javafx.stage.Stage;
 public class RefereeEditDialogController {
 
 	/**
+	 * ID text field.
+	 *
+	 * @version 0.14.0
+	 * @since 0.14.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "id", jaxbclass = IDType.class)
+	private TextField txtID;
+
+	/**
 	 * Title text field.
 	 *
 	 * @version 0.13.0

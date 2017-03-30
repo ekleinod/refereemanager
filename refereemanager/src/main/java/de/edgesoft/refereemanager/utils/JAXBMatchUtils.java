@@ -80,10 +80,22 @@ public class JAXBMatchUtils {
     				try {
     					if (theFieldObject instanceof TextInputControl) {
 
-    						StringProperty sTemp = (StringProperty) theClass
-    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
-    								.invoke(theModel);
-    						((TextInputControl) theFieldObject).setText((sTemp == null) ? null : sTemp.getValue());
+    						String sValue = null;
+
+    						if (theClass.getDeclaredMethod(getGetter(theJAXBField.getName())).getReturnType() == String.class) {
+        						sValue = (String) theClass
+        								.getDeclaredMethod(getGetter(theJAXBField.getName()))
+        								.invoke(theModel);
+    						} else {
+
+	    						StringProperty sTemp = (StringProperty) theClass
+	    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
+	    								.invoke(theModel);
+	    						sValue = (sTemp == null) ? null : sTemp.getValue();
+
+    						}
+
+    						((TextInputControl) theFieldObject).setText(sValue);
 
     					} else if (theFieldObject instanceof DatePicker) {
 
