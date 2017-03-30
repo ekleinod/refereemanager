@@ -20,6 +20,7 @@
                      <children>
                         <TableView fx:id="tblReferees" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
+                              <TableColumn fx:id="colRefereesID" prefWidth="-1.0" text="ID" />
                             <TableColumn fx:id="colRefereesName" prefWidth="-1.0" text="Name" />
                             <TableColumn fx:id="colRefereesFirstName" prefWidth="-1.0" text="Vorname" />
                               <TableColumn fx:id="colRefereesTrainingLevel" prefWidth="-1.0" text="Ausbildung" />

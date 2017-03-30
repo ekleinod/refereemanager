@@ -16,6 +16,7 @@ import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.TraineeModel;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -54,7 +55,7 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.13.0
+ * @version 0.14.0
  * @since 0.10.0
  */
 public class RefereeListController {
@@ -101,6 +102,15 @@ public class RefereeListController {
 	 */
 	@FXML
 	private TableView<Referee> tblReferees;
+
+	/**
+	 * ID column.
+	 *
+	 * @version 0.14.0
+	 * @since 0.14.0
+	 */
+	@FXML
+	private TableColumn<RefereeModel, String> colRefereesID;
 
 	/**
 	 * Name column.
@@ -339,6 +349,9 @@ public class RefereeListController {
 	private void initialize() {
 
 		// hook data to columns (referees)
+		colRefereesID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+		colRefereesID.setVisible(false);
+
 		colRefereesName.setCellValueFactory(cellData -> cellData.getValue().getName());
 		colRefereesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
 		colRefereesTrainingLevel.setCellValueFactory(cellData -> cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitle());
