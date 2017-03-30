@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.Trainee;
@@ -15,7 +14,7 @@ import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
-import de.edgesoft.refereemanager.model.TraineeModel;
+import de.edgesoft.refereemanager.utils.TableUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +26,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
@@ -110,7 +108,7 @@ public class RefereeListController {
 	 * @since 0.14.0
 	 */
 	@FXML
-	private TableColumn<RefereeModel, String> colRefereesID;
+	private TableColumn<PersonModel, String> colRefereesID;
 
 	/**
 	 * Name column.
@@ -119,7 +117,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TableColumn<RefereeModel, String> colRefereesName;
+	private TableColumn<PersonModel, String> colRefereesName;
 
 	/**
 	 * First name column.
@@ -128,7 +126,7 @@ public class RefereeListController {
 	 * @since 0.10.0
 	 */
 	@FXML
-	private TableColumn<RefereeModel, String> colRefereesFirstName;
+	private TableColumn<PersonModel, String> colRefereesFirstName;
 
 	/**
 	 * Training level column.
@@ -155,7 +153,7 @@ public class RefereeListController {
 	 * @since 0.12.0
 	 */
 	@FXML
-	private TableColumn<RefereeModel, LocalDate> colRefereesBirthday;
+	private TableColumn<PersonModel, LocalDate> colRefereesBirthday;
 
 	/**
 	 * Next update column.
@@ -245,7 +243,7 @@ public class RefereeListController {
 	 * @since 0.12.0
 	 */
 	@FXML
-	private TableColumn<TraineeModel, String> colTraineesName;
+	private TableColumn<PersonModel, String> colTraineesName;
 
 	/**
 	 * First name column.
@@ -254,7 +252,7 @@ public class RefereeListController {
 	 * @since 0.12.0
 	 */
 	@FXML
-	private TableColumn<TraineeModel, String> colTraineesFirstName;
+	private TableColumn<PersonModel, String> colTraineesFirstName;
 
 	/**
 	 * Club column.
@@ -263,7 +261,7 @@ public class RefereeListController {
 	 * @since 0.12.0
 	 */
 	@FXML
-	private TableColumn<TraineeModel, String> colTraineesClub;
+	private TableColumn<RefereeModel, String> colTraineesClub;
 
 	/**
 	 * Birthday column.
@@ -272,7 +270,7 @@ public class RefereeListController {
 	 * @since 0.12.0
 	 */
 	@FXML
-	private TableColumn<TraineeModel, LocalDate> colTraineesBirthday;
+	private TableColumn<PersonModel, LocalDate> colTraineesBirthday;
 
 	/**
 	 * List of trainees.
@@ -378,62 +376,10 @@ public class RefereeListController {
 		colPeopleBirthday.setVisible(false);
 
 		// format date columns
-		colRefereesBirthday.setCellFactory(column -> {
-		    return new TableCell<RefereeModel, LocalDate>() {
-		        @Override
-		        protected void updateItem(LocalDate item, boolean empty) {
-		            super.updateItem(item, empty);
-
-		            if (item == null || empty) {
-		                setText(null);
-		            } else {
-		                setText(DateTimeUtils.formatDate(item));
-		            }
-		        }
-		    };
-		});
-		colRefereesUpdate.setCellFactory(column -> {
-		    return new TableCell<RefereeModel, LocalDate>() {
-		        @Override
-		        protected void updateItem(LocalDate item, boolean empty) {
-		            super.updateItem(item, empty);
-
-		            if (item == null || empty) {
-		                setText(null);
-		            } else {
-		                setText(DateTimeUtils.formatDate(item, "yyyy"));
-		            }
-		        }
-		    };
-		});
-		colTraineesBirthday.setCellFactory(column -> {
-		    return new TableCell<TraineeModel, LocalDate>() {
-		        @Override
-		        protected void updateItem(LocalDate item, boolean empty) {
-		            super.updateItem(item, empty);
-
-		            if (item == null || empty) {
-		                setText(null);
-		            } else {
-		                setText(DateTimeUtils.formatDate(item));
-		            }
-		        }
-		    };
-		});
-		colPeopleBirthday.setCellFactory(column -> {
-		    return new TableCell<PersonModel, LocalDate>() {
-		        @Override
-		        protected void updateItem(LocalDate item, boolean empty) {
-		            super.updateItem(item, empty);
-
-		            if (item == null || empty) {
-		                setText(null);
-		            } else {
-		                setText(DateTimeUtils.formatDate(item));
-		            }
-		        }
-		    };
-		});
+		colRefereesBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate());
+		colRefereesUpdate.setCellFactory(column -> TableUtils.getTableCellRefereeDate());
+		colTraineesBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate());
+		colPeopleBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate());
 
 		// listen to tab changes
 		tabPaneContent.getSelectionModel().selectedItemProperty().addListener((event, oldTab, newTab) -> {
