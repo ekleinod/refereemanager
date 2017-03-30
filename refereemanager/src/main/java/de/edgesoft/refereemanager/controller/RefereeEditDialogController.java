@@ -10,6 +10,7 @@ import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -21,13 +22,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 /**
  * Controller for the referee edit dialog scene.
@@ -198,33 +196,8 @@ public class RefereeEditDialogController {
 
 		// fill sex types
 		cboSexType.setItems(FXCollections.observableArrayList(AppModel.getData().getContent().getSexType()));
-		cboSexType.setCellFactory(new Callback<ListView<ModelClassExt>, ListCell<ModelClassExt>>() {
-			@Override
-			public ListCell<ModelClassExt> call(ListView<ModelClassExt> param) {
-				return new ListCell<ModelClassExt>() {
-					@Override
-					public void updateItem(ModelClassExt item, boolean empty) {
-						super.updateItem(item, empty);
-						if (item == null) {
-							setText(null);
-						} else {
-							setText(item.getDisplayText().getValue());
-						}
-					}
-				};
-			}
-		});
-		cboSexType.setButtonCell(new ListCell<ModelClassExt>() {
-			@Override
-			public void updateItem(ModelClassExt item, boolean empty) {
-				super.updateItem(item, empty);
-				if (item == null) {
-					setText(null);
-				} else {
-					setText(item.getDisplayText().getValue());
-				}
-			}
-		});
+		cboSexType.setCellFactory(ComboBoxUtils.getCallback());
+		cboSexType.setButtonCell(ComboBoxUtils.getListCell());
 
 		// required fields
         for (Field theFXMLField : getClass().getDeclaredFields()) {
