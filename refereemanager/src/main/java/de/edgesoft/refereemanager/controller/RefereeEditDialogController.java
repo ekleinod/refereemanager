@@ -16,7 +16,6 @@ import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -195,9 +194,7 @@ public class RefereeEditDialogController {
         pckDayOfDeath.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
 
 		// fill sex types
-		cboSexType.setItems(FXCollections.observableArrayList(AppModel.getData().getContent().getSexType()));
-		cboSexType.setCellFactory(ComboBoxUtils.getCallback());
-		cboSexType.setButtonCell(ComboBoxUtils.getListCell());
+        ComboBoxUtils.prepareComboBox(cboSexType, AppModel.getData().getContent().getSexType());
 
 		// required fields
         for (Field theFXMLField : getClass().getDeclaredFields()) {

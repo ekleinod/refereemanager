@@ -1,19 +1,12 @@
 package de.edgesoft.refereemanager.utils;
 
+import java.util.List;
+
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.refereemanager.controller.AppLayoutController;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -45,6 +38,18 @@ import javafx.util.Callback;
 public class ComboBoxUtils {
 
 	/**
+	 * Prepares combobox with data and corresponding cell renderers.
+	 *
+	 * @version 0.14.0
+	 * @since 0.14.0
+	 */
+	public static final void prepareComboBox(ComboBox<ModelClassExt> theComboBox, final List<? extends ModelClassExt> theItems) {
+		theComboBox.setItems(FXCollections.observableArrayList(theItems));
+		theComboBox.setCellFactory(ComboBoxUtils.getCallback());
+		theComboBox.setButtonCell(ComboBoxUtils.getListCell());
+	}
+
+	/**
 	 * Returns {@link Callback} for cell factories.
 	 *
 	 * @return callback for cell factories
@@ -54,6 +59,7 @@ public class ComboBoxUtils {
 	 */
 	public static final Callback<ListView<ModelClassExt>, ListCell<ModelClassExt>> getCallback() {
 		return new Callback<ListView<ModelClassExt>, ListCell<ModelClassExt>>() {
+			@SuppressWarnings("unused")
 			@Override
 			public ListCell<ModelClassExt> call(ListView<ModelClassExt> param) {
 				return new ListCell<ModelClassExt>() {
