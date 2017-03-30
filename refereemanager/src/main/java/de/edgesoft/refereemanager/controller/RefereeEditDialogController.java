@@ -131,7 +131,7 @@ public class RefereeEditDialogController {
 	 * @since 0.13.0
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "remark", jaxbclass = Person.class)
+	@JAXBMatch(jaxbfield = "remark", jaxbclass = TitledIDType.class)
 	private TextArea txtRemark;
 
 
@@ -213,7 +213,7 @@ public class RefereeEditDialogController {
 		// enable ok button for valid entries only
 		btnOK.disableProperty().bind(
 				txtName.textProperty().isEmpty()
-				);
+		);
 
 		// icons
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
