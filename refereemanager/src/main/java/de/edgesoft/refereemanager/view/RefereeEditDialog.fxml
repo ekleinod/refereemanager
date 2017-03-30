@@ -62,7 +62,7 @@
                                        </GridPane.margin></Label>
                                     <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <children>
-                                          <DatePicker fx:id="pckBirthday" promptText="dd.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                          <DatePicker fx:id="pckBirthday" promptText="tt.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
                                     <Label text="Todesdatum" GridPane.rowIndex="4">
@@ -71,7 +71,7 @@
                                        </GridPane.margin></Label>
                                     <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <children>
-                                          <DatePicker fx:id="pckDayOfDeath" promptText="dd.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                          <DatePicker fx:id="pckDayOfDeath" promptText="tt.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
                                     <Label text="Geschlecht" GridPane.rowIndex="5">
