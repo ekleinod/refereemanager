@@ -1,22 +1,21 @@
 package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
-import java.time.LocalDate;
 import java.util.Objects;
 
 import de.edgesoft.edgeutils.commons.IDType;
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
-import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.model.AppModel;
-import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -29,7 +28,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 /**
  * Controller for the referee edit dialog scene.
@@ -127,7 +125,7 @@ public class RefereeEditDialogController {
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "sexType", jaxbclass = Person.class)
-	private ComboBox<SexType> cboSexType;
+	private ComboBox<ModelClassExt> cboSexType;
 
 	/**
 	 * Text area for remark.
@@ -199,13 +197,13 @@ public class RefereeEditDialogController {
         pckDayOfDeath.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
 
 		// fill sex types
-		cboSexType.setItems(((ContentModel) AppModel.getData().getContent()).getObservableSexTypes());
-		cboSexType.setCellFactory(new Callback<ListView<SexType>, ListCell<SexType>>() {
+		cboSexType.setItems(FXCollections.observableArrayList(AppModel.getData().getContent().getSexType()));
+		cboSexType.setCellFactory(new Callback<ListView<ModelClassExt>, ListCell<ModelClassExt>>() {
 			@Override
-			public ListCell<SexType> call(ListView<SexType> param) {
-				return new ListCell<SexType>() {
+			public ListCell<ModelClassExt> call(ListView<ModelClassExt> param) {
+				return new ListCell<ModelClassExt>() {
 					@Override
-					public void updateItem(SexType item, boolean empty) {
+					public void updateItem(ModelClassExt item, boolean empty) {
 						super.updateItem(item, empty);
 						if (item == null) {
 							setText(null);
@@ -216,9 +214,9 @@ public class RefereeEditDialogController {
 				};
 			}
 		});
-		cboSexType.setButtonCell(new ListCell<SexType>() {
+		cboSexType.setButtonCell(new ListCell<ModelClassExt>() {
 			@Override
-			public void updateItem(SexType item, boolean empty) {
+			public void updateItem(ModelClassExt item, boolean empty) {
 				super.updateItem(item, empty);
 				if (item == null) {
 					setText(null);
