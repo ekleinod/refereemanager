@@ -195,24 +195,8 @@ public class RefereeEditDialogController {
 	private void initialize() {
 
 		// set date picker date format
-		StringConverter<LocalDate> theDateConverter = new StringConverter<LocalDate>() {
-
-			@Override
-			public String toString(LocalDate date) {
-				if (date == null) {
-					return "";
-				}
-				return DateTimeUtils.formatDate(date);
-			}
-
-			@Override
-			public LocalDate fromString(String string) {
-				return DateTimeUtils.parseDate(string, "d.M.yyyy");
-			}
-		};
-
-		pckBirthday.setConverter(theDateConverter);
-		pckDayOfDeath.setConverter(theDateConverter);
+		pckBirthday.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
+        pckDayOfDeath.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
 
 		// fill sex types
 		cboSexType.setItems(((ContentModel) AppModel.getData().getContent()).getObservableSexTypes());
