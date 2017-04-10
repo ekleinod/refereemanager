@@ -2,12 +2,13 @@ package de.edgesoft.refereemanager.controller;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.stream.Collectors;
 
 import org.knowm.xchart.CategoryChart;
-import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.PieChart;
-import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.VectorGraphicsEncoder;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
@@ -15,8 +16,7 @@ import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 
-import de.edgesoft.edgeutils.xchart.BaseTheme;
-import de.edgesoft.edgeutils.xchart.PieTheme;
+import de.edgesoft.edgeutils.xchart.ChartFactory;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
@@ -192,11 +192,10 @@ public class StatisticsController {
 		ContentModel theContent = (ContentModel) AppModel.getData().getContent();
 
 		// overview
-	    CategoryChart chartOverview = new CategoryChartBuilder()
-	    		.title(tabOverview.getText())
-	    		.build();
+	    CategoryChart chartOverview = ChartFactory.createCategoryChart(tabOverview.getText(), OptionalInt.empty(), OptionalInt.empty(),
+	    		Optional.of(CategorySeriesRenderStyle.Bar), Optional.empty());
 
-	    chartOverview.getStyler().setTheme(new BaseTheme());
+	    chartOverview.getStyler().setXAxisTicksVisible(true);
 
 	    chartOverview.addSeries("test",
 	    		Arrays.asList(new String[] {"Schiedsrichter", "Auszubildende", "Personen", "Clubs", "Teams", "Ligen"}),
@@ -206,11 +205,8 @@ public class StatisticsController {
 	    nodeOverview.setContent(new XChartPanel<>(chartOverview));
 
 		// gender
-	    PieChart chartGender = new PieChartBuilder()
-	    		.title(tabGender.getText())
-	    		.build();
+	    PieChart chartGender = ChartFactory.createPieChart(tabGender.getText(), OptionalInt.empty(), OptionalInt.empty(), Optional.empty(), Optional.empty());
 
-	    chartGender.getStyler().setTheme(new PieTheme());
 	    chartGender.getStyler().setAnnotationType(AnnotationType.Label);
 	    chartGender.getStyler().setDefaultSeriesRenderStyle(PieSeriesRenderStyle.Donut);
 
@@ -230,11 +226,8 @@ public class StatisticsController {
 	    nodeGender.setContent(new XChartPanel<>(chartGender));
 
 		// level
-	    PieChart chartTrainingLevel = new PieChartBuilder()
-	    		.title(tabTrainingLevel.getText())
-	    		.build();
+	    PieChart chartTrainingLevel = ChartFactory.createPieChart(tabTrainingLevel.getText(), OptionalInt.empty(), OptionalInt.empty(), Optional.empty(), Optional.empty());
 
-	    chartTrainingLevel.getStyler().setTheme(new PieTheme());
 	    chartTrainingLevel.getStyler().setAnnotationType(AnnotationType.Label);
 	    chartTrainingLevel.getStyler().setDefaultSeriesRenderStyle(PieSeriesRenderStyle.Donut);
 
