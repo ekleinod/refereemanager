@@ -218,7 +218,7 @@ public class StatisticsController {
 	    			.size();
 
 	    	if (iSize > 0) {
-	    		chartGender.addSeries(sextype.getDisplayText().getValue(), iSize);
+	    		chartGender.addSeries(String.format("%s (%d)", sextype.getDisplayText().getValue(), iSize), iSize);
 	    	}
 
 	    });
