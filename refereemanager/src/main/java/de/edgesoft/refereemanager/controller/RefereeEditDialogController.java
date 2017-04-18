@@ -273,18 +273,6 @@ public class RefereeEditDialogController {
     }
 
 	/**
-	 * Returns if user clicked ok.
-	 *
-	 * @return did user click ok?
-	 *
-	 * @version 0.13.0
-	 * @since 0.13.0
-	 */
-	public boolean isOkClicked() {
-        return okClicked;
-    }
-
-	/**
 	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
 	 *
 	 * @version 0.13.0
@@ -308,6 +296,18 @@ public class RefereeEditDialogController {
         dialogStage.close();
 
     }
+
+	/**
+	 * Returns if user clicked ok.
+	 *
+	 * @return did user click ok?
+	 *
+	 * @version 0.13.0
+	 * @since 0.13.0
+	 */
+	public boolean isOkClicked() {
+		return okClicked;
+	}
 
 	/**
 	 * Stores non-ok click and closes dialog.
