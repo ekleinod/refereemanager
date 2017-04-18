@@ -17,7 +17,7 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -35,7 +35,7 @@ import javafx.beans.property.SimpleStringProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.14.0
  * @since 0.5.0
  */
 public class PersonModel extends Person {
@@ -43,18 +43,18 @@ public class PersonModel extends Person {
 	/**
 	 * Comparator for people by name.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
-	public static final Comparator<Person> NAME = Comparator.comparing(person -> person.getName().get(), Collator.getInstance());
+	public static final Comparator<Person> NAME = Comparator.comparing(person -> person.getName().getValueSafe(), Collator.getInstance());
 
 	/**
 	 * Comparator for people by name then first ame.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
-	public static final Comparator<Person> NAME_FIRSTNAME = NAME.thenComparing(Comparator.comparing(person -> person.getFirstName().get(), Collator.getInstance()));
+	public static final Comparator<Person> NAME_FIRSTNAME = NAME.thenComparing(Comparator.comparing(person -> person.getFirstName().getValueSafe(), Collator.getInstance()));
 
 	/**
 	 * Filter predicate for people with email addresses.
@@ -90,24 +90,24 @@ public class PersonModel extends Person {
 	 *
 	 * @return full name of the person
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.5.0
 	 */
 	public SimpleStringProperty getFullName() {
 		StringBuilder sbReturn = new StringBuilder();
 
-		if ((getTitle() != null) && !getTitle().get().isEmpty()) {
+		if ((getTitle() != null) && !getTitle().getValueSafe().isEmpty()) {
 			sbReturn.append(getTitle().get());
 		}
 
-		if ((getFirstName() != null) && !getFirstName().get().isEmpty()) {
+		if ((getFirstName() != null) && !getFirstName().getValueSafe().isEmpty()) {
 			if (sbReturn.length() > 0) {
 				sbReturn.append(" ");
 			}
 			sbReturn.append(getFirstName().get());
 		}
 
-		if ((getName() != null) && !getName().get().isEmpty()) {
+		if ((getName() != null) && !getName().getValueSafe().isEmpty()) {
 			if (sbReturn.length() > 0) {
 				sbReturn.append(" ");
 			}
@@ -122,24 +122,24 @@ public class PersonModel extends Person {
 	 *
 	 * @return table name of the person
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.5.0
 	 */
 	public SimpleStringProperty getTableName() {
 		StringBuilder sbReturn = new StringBuilder();
 
-		if ((getName() != null) && !getName().get().isEmpty()) {
+		if ((getName() != null) && !getName().getValueSafe().isEmpty()) {
 			sbReturn.append(getName().get());
 		}
 
-		if ((getTitle() != null) && !getTitle().get().isEmpty()) {
+		if ((getTitle() != null) && !getTitle().getValueSafe().isEmpty()) {
 			if (sbReturn.length() > 0) {
 				sbReturn.append(", ");
 			}
 			sbReturn.append(getTitle().get());
 		}
 
-		if ((getFirstName() != null) && !getFirstName().get().isEmpty()) {
+		if ((getFirstName() != null) && !getFirstName().getValueSafe().isEmpty()) {
 			if (sbReturn.length() > 0) {
 				sbReturn.append(", ");
 			}
@@ -154,17 +154,17 @@ public class PersonModel extends Person {
 	 *
 	 * @return filename name of the person
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	public SimpleStringProperty getFileName() {
 		StringBuilder sbReturn = new StringBuilder();
 
-		if ((getName() != null) && !getName().get().isEmpty()) {
+		if ((getName() != null) && !getName().getValueSafe().isEmpty()) {
 			sbReturn.append(getName().get().toLowerCase());
 		}
 
-		if ((getFirstName() != null) && !getFirstName().get().isEmpty()) {
+		if ((getFirstName() != null) && !getFirstName().getValueSafe().isEmpty()) {
 			if (sbReturn.length() > 0) {
 				sbReturn.append("_");
 			}
@@ -180,12 +180,12 @@ public class PersonModel extends Person {
 	 * @param theImagePath image path
 	 * @return does image file given by image path and filename exist
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public boolean existsImageFile(final String theImagePath) {
 
-		if ((getFileName() == null) || (getFileName().getValue() == null) || getFileName().getValue().isEmpty()) {
+		if ((getFileName() == null) || getFileName().getValueSafe().isEmpty()) {
 			return false;
 		}
 
