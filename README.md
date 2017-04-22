@@ -13,6 +13,12 @@ Several features are working, see changelog.
 Therefore, the referee manager is *not* safe for using in the "real" internet.
 Use it in a closed envorinment (local server etc.) only.
 
+## Templates
+
+Communication with referees is done using templates, you find examples and basic templates in the Referee Manager Templates repository:
+
+- https://github.com/tt-schiri/refereemanager-templates
+
 ## Git-Repository
 
 Short information about the structure of the git repository:
