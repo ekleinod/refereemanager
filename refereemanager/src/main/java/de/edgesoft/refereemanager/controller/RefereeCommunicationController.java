@@ -789,8 +789,8 @@ public class RefereeCommunicationController {
 
 			switch (theTemplateVariable) {
 				case ATTACHMENT:
+					mapDocData.putIfAbsent(theTemplateVariable.value(), new ArrayList<>());
 					tblAttachments.getItems().forEach(attachment -> {
-						mapDocData.putIfAbsent(theTemplateVariable.value(), new ArrayList<>());
 						((List<Attachment>) mapDocData.get(theTemplateVariable.value())).add(attachment);
 					});
 					break;
