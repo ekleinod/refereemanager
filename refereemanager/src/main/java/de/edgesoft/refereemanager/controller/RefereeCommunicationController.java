@@ -418,6 +418,15 @@ public class RefereeCommunicationController {
 	 * @since 0.12.0
 	 */
 	@FXML
+	private RadioButton radDocuments;
+
+	/**
+	 * Radio button texts.
+	 *
+	 * @version 0.12.0
+	 * @since 0.12.0
+	 */
+	@FXML
 	private RadioButton radTexts;
 
 	/**
@@ -654,7 +663,7 @@ public class RefereeCommunicationController {
 						)
 				)
 				.or(
-						radEMails.selectedProperty().or(radLetters.selectedProperty()).or(radDocument.selectedProperty())
+						radEMails.selectedProperty().or(radLetters.selectedProperty()).or(radDocuments.selectedProperty()).or(radDocument.selectedProperty())
 						.and(
 								txtTitle.textProperty().isEmpty()
 						)
@@ -688,7 +697,7 @@ public class RefereeCommunicationController {
 		chkTestMail.managedProperty().bind(isEmail);
 
 		// visible for emails, letters, and documents
-		ObservableBooleanValue isEmailOrLetterOrDocument = radEMails.selectedProperty().or(radLetters.selectedProperty()).or(radDocument.selectedProperty());
+		ObservableBooleanValue isEmailOrLetterOrDocument = radEMails.selectedProperty().or(radLetters.selectedProperty()).or(radDocuments.selectedProperty()).or(radDocument.selectedProperty());
 		txtTitle.visibleProperty().bind(isEmailOrLetterOrDocument);
 		txtTitle.managedProperty().bind(isEmailOrLetterOrDocument);
 		lblTitle.visibleProperty().bind(isEmailOrLetterOrDocument);
@@ -722,14 +731,14 @@ public class RefereeCommunicationController {
 		barAttachments.visibleProperty().bind(isEmailOrLetter);
 
 		// visible for letters and documents
-		ObservableBooleanValue isLetterOrDocument = radLetters.selectedProperty().or(radDocument.selectedProperty());
+		ObservableBooleanValue isLetterOrDocument = radLetters.selectedProperty().or(radDocuments.selectedProperty()).or(radDocument.selectedProperty());
 		txtOptions.visibleProperty().bind(isLetterOrDocument);
 		txtOptions.managedProperty().bind(isLetterOrDocument);
 		lblOptions.visibleProperty().bind(isLetterOrDocument);
 		lblOptions.managedProperty().bind(isLetterOrDocument);
 
 		// visible for letters, texts, documents, and text
-		ObservableBooleanValue isLetterOrDocumentOrText = radLetters.selectedProperty().or(radTexts.selectedProperty()).or(radDocument.selectedProperty()).or(radText.selectedProperty());
+		ObservableBooleanValue isLetterOrDocumentOrText = radLetters.selectedProperty().or(radDocuments.selectedProperty()).or(radTexts.selectedProperty()).or(radDocument.selectedProperty()).or(radText.selectedProperty());
 		txtCommunicationOutputPath.visibleProperty().bind(isLetterOrDocumentOrText);
 		txtCommunicationOutputPath.managedProperty().bind(isLetterOrDocumentOrText);
 		lblCommunicationOutputPath.visibleProperty().bind(isLetterOrDocumentOrText);
@@ -870,8 +879,10 @@ public class RefereeCommunicationController {
 
 		} else if (grpCommKind.getSelectedToggle() == radLetters) {
 			createLetters(mapDocData, tplConfig);
+		} else if (grpCommKind.getSelectedToggle() == radDocuments) {
+			createDocumentsOrTexts(mapDocData, tplConfig, Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
 		} else if (grpCommKind.getSelectedToggle() == radTexts) {
-			createTexts(mapDocData, tplConfig);
+			createDocumentsOrTexts(mapDocData, tplConfig, Prefs.get(PrefKey.TEXTS_TEMPLATE_TEXT));
 		} else if (grpCommKind.getSelectedToggle() == radDocument) {
 			createDocumentOrText(mapDocData, tplConfig, Prefs.get(PrefKey.DOCUMENTS_TEMPLATE_DOCUMENT));
 		} else if (grpCommKind.getSelectedToggle() == radText) {
@@ -1571,15 +1582,15 @@ public class RefereeCommunicationController {
 	}
 
 	/**
-	 * Create texts.
+	 * Create documents or texts.
 	 *
 	 * @param theDocData document data
 	 * @param theConfig template configuration
+	 * @param theTemplate template name
 	 *
 	 * @version 0.12.0
-	 * @since 0.12.0
 	 */
-	private void createTexts(final Map<String, Object> theDocData, Configuration theConfig) {
+	private void createDocumentsOrTexts(final Map<String, Object> theDocData, Configuration theConfig, final String theTemplate) {
 
 		Objects.requireNonNull(theDocData, "document data must not be null");
 		Objects.requireNonNull(theConfig, "template configuration must not be null");
@@ -1603,11 +1614,10 @@ public class RefereeCommunicationController {
 					try {
 
 						// load text template
-						updateMessage("Lade Text-Template.");
-						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATHS_TEMPLATE), Prefs.get(PrefKey.TEXTS_TEMPLATE_TEXT));
-
+						Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATHS_TEMPLATE), theTemplate);
+						updateMessage(MessageFormat.format("Lade Template ''{0}''.", pathTemplateFile.toAbsolutePath().toString()));
 						theConfig.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
-						Template tplLetter = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
+						Template tplDocument = theConfig.getTemplate(pathTemplateFile.getFileName().toString());
 
 
 						// create texts
@@ -1627,7 +1637,7 @@ public class RefereeCommunicationController {
 								// fill document template, write document
 								Path pathOutFile = Paths.get(Prefs.get(PrefKey.REFEREE_COMMUNICATION_OUTPUT_PATH), (String) mapFilled.get(DocumentDataVariable.FILENAME.value()));
 								try (StringWriter wrtContent = new StringWriter()) {
-									tplLetter.process(mapFilled, wrtContent);
+									tplDocument.process(mapFilled, wrtContent);
 									FileAccess.writeFile(pathOutFile, wrtContent.toString());
 								}
 
@@ -1707,9 +1717,9 @@ public class RefereeCommunicationController {
 	 *
 	 * @param theDocData document data
 	 * @param theConfig template configuration
+	 * @param theTemplate template name
 	 *
 	 * @version 0.12.0
-	 * @since 0.12.0
 	 */
 	private void createDocumentOrText(final Map<String, Object> theDocData, Configuration theConfig, final String theTemplate) {
 
@@ -1779,7 +1789,6 @@ public class RefereeCommunicationController {
 	 * @return filled document data
 	 *
 	 * @version 0.12.0
-	 * @since 0.12.0
 	 */
 	private Map<String, Object> fillDocumentData(final Map<String, Object> theDocData, final Configuration theConfig, final Person thePerson) {
 		Map<String, Object> mapReturn = new HashMap<>();
