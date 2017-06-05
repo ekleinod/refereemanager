@@ -594,7 +594,6 @@ public class RefereeOverviewController {
 	 * @return true if the user clicked OK, false otherwise.
 	 *
 	 * @version 0.13.0
-	 * @since 0.10.0
 	 */
 	private boolean showEditDialog(PersonModel thePerson) {
 

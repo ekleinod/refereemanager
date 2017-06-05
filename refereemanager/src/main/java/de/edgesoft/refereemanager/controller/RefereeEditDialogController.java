@@ -14,8 +14,6 @@ import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -58,7 +56,6 @@ public class RefereeEditDialogController {
 	 * ID text field.
 	 *
 	 * @version 0.14.0
-	 * @since 0.14.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "id", jaxbclass = IDType.class)
@@ -68,7 +65,6 @@ public class RefereeEditDialogController {
 	 * Title text field.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "title", jaxbclass = TitledIDType.class)
@@ -78,7 +74,6 @@ public class RefereeEditDialogController {
 	 * First name text field.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "firstName", jaxbclass = Person.class)
@@ -88,7 +83,6 @@ public class RefereeEditDialogController {
 	 * Name text field label.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "name", jaxbclass = Person.class)
@@ -98,7 +92,6 @@ public class RefereeEditDialogController {
 	 * Name text field.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "name", jaxbclass = Person.class)
@@ -108,7 +101,6 @@ public class RefereeEditDialogController {
 	 * Birthday picker.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "birthday", jaxbclass = Person.class)
@@ -118,7 +110,6 @@ public class RefereeEditDialogController {
 	 * Day of death picker.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "dayOfDeath", jaxbclass = Person.class)
@@ -128,7 +119,6 @@ public class RefereeEditDialogController {
 	 * Combobox for sex types.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "sexType", jaxbclass = Person.class)
@@ -138,7 +128,6 @@ public class RefereeEditDialogController {
 	 * Text area for remark.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "remark", jaxbclass = TitledIDType.class)
@@ -149,7 +138,6 @@ public class RefereeEditDialogController {
 	 * OK button.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Button btnOK;
@@ -158,7 +146,6 @@ public class RefereeEditDialogController {
 	 * Cancel button.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Button btnCancel;
@@ -167,7 +154,6 @@ public class RefereeEditDialogController {
 	 * Reference to dialog stage.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	private Stage dialogStage;
 
@@ -175,7 +161,6 @@ public class RefereeEditDialogController {
 	 * Current event.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	private Referee currentReferee;
 
@@ -183,7 +168,6 @@ public class RefereeEditDialogController {
 	 * OK clicked?.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	private boolean okClicked;
 
@@ -194,7 +178,6 @@ public class RefereeEditDialogController {
 	 * This method is automatically called after the fxml file has been loaded.
 	 *
 	 * @version 0.14.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private void initialize() {
@@ -237,7 +220,6 @@ public class RefereeEditDialogController {
 	 * @param theStage dialog stage
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	public void setDialogStage(final Stage theStage) {
         dialogStage = theStage;
@@ -249,7 +231,6 @@ public class RefereeEditDialogController {
 	 * @param thePerson referee
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	public void setPerson(PersonModel thePerson) {
 
@@ -262,7 +243,7 @@ public class RefereeEditDialogController {
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.fillField(theFXMLField, fieldObject, thePerson, IDType.class, TitledIDType.class, Person.class);
+        		JAXBMatchUtils.setField(theFXMLField, fieldObject, thePerson, IDType.class, TitledIDType.class, Person.class);
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -276,21 +257,27 @@ public class RefereeEditDialogController {
 	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
     private void handleOk() {
-        okClicked = false;
 
-    	if (currentReferee.getTitle() == null) {
-    		currentReferee.setTitle(new SimpleStringProperty());
-    	}
-        currentReferee.getTitle().setValue(txtTitle.getText());
+        for (Field theFXMLField : getClass().getDeclaredFields()) {
 
-        if (currentReferee.getBirthday() == null) {
-    		currentReferee.setBirthday(new SimpleObjectProperty<>());
-    	}
-        currentReferee.getBirthday().setValue(pckBirthday.getValue());
+        	try {
+        		Object fieldObject = theFXMLField.get(this);
+
+        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentReferee, IDType.class, TitledIDType.class, Person.class);
+
+        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
+				e.printStackTrace();
+			}
+
+        }
+
+//        if (currentReferee.getBirthday() == null) {
+//    		currentReferee.setBirthday(new SimpleObjectProperty<>());
+//    	}
+//        currentReferee.getBirthday().setValue(pckBirthday.getValue());
 
         okClicked = true;
         dialogStage.close();
@@ -303,7 +290,6 @@ public class RefereeEditDialogController {
 	 * @return did user click ok?
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	public boolean isOkClicked() {
 		return okClicked;
@@ -313,7 +299,6 @@ public class RefereeEditDialogController {
 	 * Stores non-ok click and closes dialog.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
     private void handleCancel() {

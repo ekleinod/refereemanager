@@ -11,6 +11,7 @@ import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.controller.RefereeEditDialogController;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -49,7 +50,7 @@ import javafx.scene.text.FontWeight;
 public class JAXBMatchUtils {
 
 	/**
-	 * Fill field with data of data classes.
+	 * Set field value with data of data classes.
 	 *
 	 * The for-loop for all fields cannot be called here, because the access
 	 * to the field object is forbidden for private fields.
@@ -63,9 +64,8 @@ public class JAXBMatchUtils {
 	 * @param theDataClasses data classes
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
-	public static void fillField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final Class<?>... theDataClasses) {
+	public static void setField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final Class<?>... theDataClasses) {
 
 		Objects.requireNonNull(theFXMLField);
 		Objects.requireNonNull(theFieldObject);
@@ -126,6 +126,92 @@ public class JAXBMatchUtils {
 	}
 
 	/**
+	 * Get field values, fill model object.
+	 *
+	 * The for-loop for all fields cannot be called here, because the access
+	 * to the field object is forbidden for private fields.
+	 * In order to maintain separation of concerns I call the
+	 * loop and the get method in the calling class.
+	 * {@link RefereeEditDialogController#setPerson(de.edgesoft.refereemanager.model.PersonModel)}
+	 *
+	 * @param theFXMLField fxml field
+	 * @param theFieldObject object of fxml field
+	 * @param theModel data model object
+	 * @param theDataClasses data classes
+	 *
+	 * @version 0.14.0
+	 */
+	public static void getField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final Class<?>... theDataClasses) {
+
+		Objects.requireNonNull(theFXMLField);
+		Objects.requireNonNull(theFieldObject);
+		Objects.requireNonNull(theModel);
+
+    	for (Class<?> theClass : theDataClasses) {
+
+    		for (Field theJAXBField : theClass.getDeclaredFields()) {
+
+    			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+
+    				try {
+    					if (theFieldObject instanceof TextInputControl) {
+
+    						String sValue = ((TextInputControl) theFieldObject).getText();
+
+    						if (theClass.getDeclaredMethod(getGetter(theJAXBField.getName())).getReturnType() == String.class) {
+    							theClass
+    									.getDeclaredMethod(getSetter(theJAXBField.getName()))
+    									.invoke(theModel, sValue);
+    						} else {
+    							Object sTemp = theClass
+	    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
+	    								.invoke(theModel);
+    							if (sTemp == null) {
+        							theClass
+        									.getDeclaredMethod(getSetter(theJAXBField.getName()))
+        									.invoke(theModel, new SimpleStringProperty());
+    							}
+    							((StringProperty) theClass
+	    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
+	    								.invoke(theModel)).setValue(sValue);
+    						}
+
+    					} else if (theFieldObject instanceof DatePicker) {
+
+							Object sTemp = theClass
+    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
+    								.invoke(theModel);
+							if (sTemp == null) {
+    							theClass
+    									.getDeclaredMethod(getSetter(theJAXBField.getName()))
+    									.invoke(theModel, new SimpleObjectProperty<>());
+							}
+    						((SimpleObjectProperty<LocalDate>) theClass
+    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
+    								.invoke(theModel)).setValue(((DatePicker) theFieldObject).getValue());
+
+//    					} else if (theFieldObject instanceof ComboBox<?>) {
+//
+//    						ModelClassExt objTemp = (ModelClassExt) theClass
+//    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
+//    								.invoke(theModel);
+//    						((ComboBox<ModelClassExt>) theFieldObject).setValue(objTemp);
+//
+    					}
+
+    				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+    					e.printStackTrace();
+    				}
+
+    			}
+
+    		}
+
+		}
+
+	}
+
+	/**
 	 * Does fxml field match jaxb field?
 	 *
 	 * @param theFXMLField fxml field
@@ -134,7 +220,6 @@ public class JAXBMatchUtils {
 	 * @return does fxml field match jaxb field?
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	public static boolean isMatch(final Field theFXMLField, final Field theJAXBField) {
 
@@ -160,7 +245,6 @@ public class JAXBMatchUtils {
 	 * @return getter name
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	public static String getGetter(final String theJAXBFieldName) {
 
@@ -180,7 +264,6 @@ public class JAXBMatchUtils {
 	 * @return setter name
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	public static String getSetter(final String theJAXBFieldName) {
 
@@ -200,7 +283,6 @@ public class JAXBMatchUtils {
 	 * @return access suffix
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	public static String getSuffix(final String theJAXBFieldName) {
 
@@ -218,7 +300,6 @@ public class JAXBMatchUtils {
 	 * @param theDataClasses data classes
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	public static void markRequired(final Field theFXMLField, final Object theFieldObject, final Class<?>... theDataClasses) {
 
