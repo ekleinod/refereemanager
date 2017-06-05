@@ -3,7 +3,6 @@ package de.edgesoft.refereemanager.controller;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.stream.Collectors;
 
 import org.knowm.xchart.CategoryChart;
@@ -62,7 +61,6 @@ public class StatisticsController {
 	 * Tab pane.
 	 *
 	 * @version 0.14.0
-	 * @since 0.14.0
 	 */
 	@FXML
 	private TabPane pneTabs;
@@ -71,7 +69,6 @@ public class StatisticsController {
 	 * Chart overview.
 	 *
 	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private SwingNode nodeOverview;
@@ -80,7 +77,6 @@ public class StatisticsController {
 	 * Chart gender.
 	 *
 	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private SwingNode nodeGender;
@@ -89,7 +85,6 @@ public class StatisticsController {
 	 * Chart training levels.
 	 *
 	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private SwingNode nodeTrainingLevel;
@@ -98,7 +93,6 @@ public class StatisticsController {
 	 * Tab overview.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Tab tabOverview;
@@ -107,7 +101,6 @@ public class StatisticsController {
 	 * Tab gender.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Tab tabGender;
@@ -116,7 +109,6 @@ public class StatisticsController {
 	 * Tab training levels.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Tab tabTrainingLevel;
@@ -125,7 +117,6 @@ public class StatisticsController {
 	 * OK button.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnOK;
@@ -134,7 +125,6 @@ public class StatisticsController {
 	 * Export button.
 	 *
 	 * @version 0.14.0
-	 * @since 0.14.0
 	 */
 	@FXML
 	private Button btnExport;
@@ -144,7 +134,6 @@ public class StatisticsController {
 	 * Reference to dialog stage.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	private Stage dialogStage;
 
@@ -155,7 +144,6 @@ public class StatisticsController {
 	 * @param theStage dialog stage
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	public void setDialogStage(final Stage theStage) {
 		dialogStage = theStage;
@@ -167,7 +155,6 @@ public class StatisticsController {
 	 * This method is automatically called after the fxml file has been loaded.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void initialize() {
@@ -185,14 +172,13 @@ public class StatisticsController {
 	 * Fills statistics.
 	 *
 	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	public void fillStatistics() {
 
 		ContentModel theContent = (ContentModel) AppModel.getData().getContent();
 
 		// overview
-	    CategoryChart chartOverview = ChartFactory.createCategoryChart(tabOverview.getText(), OptionalInt.empty(), OptionalInt.empty(),
+	    CategoryChart chartOverview = ChartFactory.createCategoryChart(tabOverview.getText(), 30, 30,
 	    		Optional.of(CategorySeriesRenderStyle.Bar), Optional.empty());
 
 	    chartOverview.getStyler().setXAxisTicksVisible(true);
@@ -205,7 +191,7 @@ public class StatisticsController {
 	    nodeOverview.setContent(new XChartPanel<>(chartOverview));
 
 		// gender
-	    PieChart chartGender = ChartFactory.createPieChart(tabGender.getText(), OptionalInt.empty(), OptionalInt.empty(), Optional.empty(), Optional.empty());
+	    PieChart chartGender = ChartFactory.createPieChart(tabGender.getText(), 30, 30, Optional.empty(), Optional.empty());
 
 	    chartGender.getStyler().setAnnotationType(AnnotationType.Label);
 	    chartGender.getStyler().setDefaultSeriesRenderStyle(PieSeriesRenderStyle.Donut);
@@ -226,7 +212,7 @@ public class StatisticsController {
 	    nodeGender.setContent(new XChartPanel<>(chartGender));
 
 		// level
-	    PieChart chartTrainingLevel = ChartFactory.createPieChart(tabTrainingLevel.getText(), OptionalInt.empty(), OptionalInt.empty(), Optional.empty(), Optional.empty());
+	    PieChart chartTrainingLevel = ChartFactory.createPieChart(tabTrainingLevel.getText(), 30, 30, Optional.empty(), Optional.empty());
 
 	    chartTrainingLevel.getStyler().setAnnotationType(AnnotationType.Label);
 	    chartTrainingLevel.getStyler().setDefaultSeriesRenderStyle(PieSeriesRenderStyle.Donut);
@@ -252,7 +238,6 @@ public class StatisticsController {
 	 * Closes dialog.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleOk() {
@@ -263,7 +248,6 @@ public class StatisticsController {
 	 * Exports chart.
 	 *
 	 * @version 0.14.0
-	 * @since 0.14.0
 	 */
 	@FXML
 	private void handleExport() {
