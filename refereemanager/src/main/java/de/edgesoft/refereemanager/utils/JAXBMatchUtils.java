@@ -160,7 +160,7 @@ public class JAXBMatchUtils {
 
     						if (theClass.getDeclaredMethod(getGetter(theJAXBField.getName())).getReturnType() == String.class) {
     							theClass
-    									.getDeclaredMethod(getSetter(theJAXBField.getName()))
+    									.getDeclaredMethod(getSetter(theJAXBField.getName()), String.class)
     									.invoke(theModel, sValue);
     						} else {
     							Object sTemp = theClass
@@ -168,7 +168,7 @@ public class JAXBMatchUtils {
 	    								.invoke(theModel);
     							if (sTemp == null) {
         							theClass
-        									.getDeclaredMethod(getSetter(theJAXBField.getName()))
+        									.getDeclaredMethod(getSetter(theJAXBField.getName()), SimpleStringProperty.class)
         									.invoke(theModel, new SimpleStringProperty());
     							}
     							((StringProperty) theClass
@@ -183,7 +183,7 @@ public class JAXBMatchUtils {
     								.invoke(theModel);
 							if (sTemp == null) {
     							theClass
-    									.getDeclaredMethod(getSetter(theJAXBField.getName()))
+    									.getDeclaredMethod(getSetter(theJAXBField.getName()), SimpleObjectProperty.class)
     									.invoke(theModel, new SimpleObjectProperty<>());
 							}
     						((SimpleObjectProperty<LocalDate>) theClass

@@ -71,7 +71,6 @@ public class RefereeOverviewController {
 	 * Heading label.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Label lblHeading;
@@ -80,7 +79,6 @@ public class RefereeOverviewController {
 	 * Name label.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Label lblName;
@@ -89,7 +87,6 @@ public class RefereeOverviewController {
 	 * Name label label.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Label lblNameLabel;
@@ -98,7 +95,6 @@ public class RefereeOverviewController {
 	 * First name label.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Label lblFirstName;
@@ -107,7 +103,6 @@ public class RefereeOverviewController {
 	 * First name label label.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Label lblFirstNameLabel;
@@ -116,7 +111,6 @@ public class RefereeOverviewController {
 	 * Training level label.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Label lblTrainingLevel;
@@ -125,7 +119,6 @@ public class RefereeOverviewController {
 	 * Training level label label.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Label lblTrainingLevelLabel;
@@ -134,7 +127,6 @@ public class RefereeOverviewController {
 	 * Club label.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Label lblClub;
@@ -143,7 +135,6 @@ public class RefereeOverviewController {
 	 * Club label label.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Label lblClubLabel;
@@ -152,7 +143,6 @@ public class RefereeOverviewController {
 	 * Birthday label.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Label lblBirthday;
@@ -161,7 +151,6 @@ public class RefereeOverviewController {
 	 * Birthday label label.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Label lblBirthdayLabel;
@@ -170,7 +159,6 @@ public class RefereeOverviewController {
 	 * Last update label.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Label lblLastUpdate;
@@ -179,7 +167,6 @@ public class RefereeOverviewController {
 	 * Last update label label.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Label lblLastUpdateLabel;
@@ -188,7 +175,6 @@ public class RefereeOverviewController {
 	 * Next update label.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Label lblNextUpdate;
@@ -197,7 +183,6 @@ public class RefereeOverviewController {
 	 * Next update label label.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Label lblNextUpdateLabel;
@@ -206,7 +191,6 @@ public class RefereeOverviewController {
 	 * Remark label.
 	 *
 	 * @version 0.14.0
-	 * @since 0.14.0
 	 */
 	@FXML
 	private Label lblRemark;
@@ -215,7 +199,6 @@ public class RefereeOverviewController {
 	 * Remark label label.
 	 *
 	 * @version 0.14.0
-	 * @since 0.14.0
 	 */
 	@FXML
 	private Label lblRemarkLabel;
@@ -224,7 +207,6 @@ public class RefereeOverviewController {
 	 * Referee image.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private ImageView imgReferee;
@@ -233,7 +215,6 @@ public class RefereeOverviewController {
 	 * Add button.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnAdd;
@@ -242,7 +223,6 @@ public class RefereeOverviewController {
 	 * Edit button.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnEdit;
@@ -251,7 +231,6 @@ public class RefereeOverviewController {
 	 * Delete button.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnDelete;
@@ -260,7 +239,6 @@ public class RefereeOverviewController {
 	 * Split pane.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private SplitPane pneSplit;
@@ -270,7 +248,6 @@ public class RefereeOverviewController {
 	 * Main app controller.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	private AppLayoutController appController = null;
 
@@ -279,7 +256,6 @@ public class RefereeOverviewController {
 	 * Referee list controller.
 	 *
 	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	private RefereeListController ctlRefList;
 
@@ -289,7 +265,6 @@ public class RefereeOverviewController {
 	 * This method is automatically called after the fxml file has been loaded.
 	 *
 	 * @version 0.13.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void initialize() {
@@ -366,7 +341,6 @@ public class RefereeOverviewController {
 	 * @param theAppController app controller
 	 *
 	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	public void initController(final AppLayoutController theAppController) {
 
@@ -382,7 +356,6 @@ public class RefereeOverviewController {
 	 * Checks if an item is selected in visible tab, uses this.
 	 *
 	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	private void showDetails() {
 
@@ -402,7 +375,6 @@ public class RefereeOverviewController {
 	 * @param theDetailData event (null if none is selected)
 	 *
 	 * @version 0.13.0
-	 * @since 0.10.0
 	 */
 	private void showDetails(final Person theDetailData) {
 
@@ -492,7 +464,6 @@ public class RefereeOverviewController {
 	 * Opens edit dialog for new data.
 	 *
 	 * @version 0.13.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleAdd() {
@@ -538,7 +509,6 @@ public class RefereeOverviewController {
 	 * Opens edit dialog for editing selected data.
 	 *
 	 * @version 0.13.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleEdit() {
@@ -559,7 +529,6 @@ public class RefereeOverviewController {
 	 * Deletes selected data from list.
 	 *
 	 * @version 0.13.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleDelete() {

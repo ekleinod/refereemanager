@@ -274,11 +274,6 @@ public class RefereeEditDialogController {
 
         }
 
-//        if (currentReferee.getBirthday() == null) {
-//    		currentReferee.setBirthday(new SimpleObjectProperty<>());
-//    	}
-//        currentReferee.getBirthday().setValue(pckBirthday.getValue());
-
         okClicked = true;
         dialogStage.close();
 
