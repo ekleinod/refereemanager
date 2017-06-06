@@ -320,8 +320,8 @@ public class RefereeListController {
 
 		colRefereesName.setCellValueFactory(cellData -> cellData.getValue().getName());
 		colRefereesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
-		colRefereesTrainingLevel.setCellValueFactory(cellData -> cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitle());
-		colRefereesClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
+		colRefereesTrainingLevel.setCellValueFactory(cellData -> (cellData.getValue().getHighestTrainingLevel() == null) ? null : cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitle());
+		colRefereesClub.setCellValueFactory(cellData -> (cellData.getValue().getMember() == null) ? null : cellData.getValue().getMember().getDisplayTitle());
 
 		colRefereesBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
 		colRefereesBirthday.setVisible(false);
@@ -331,7 +331,7 @@ public class RefereeListController {
 		// hook data to columns (trainees)
 		colTraineesName.setCellValueFactory(cellData -> cellData.getValue().getName());
 		colTraineesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
-		colTraineesClub.setCellValueFactory(cellData -> cellData.getValue().getMember().getDisplayTitle());
+		colTraineesClub.setCellValueFactory(cellData -> (cellData.getValue().getMember() == null) ? null : cellData.getValue().getMember().getDisplayTitle());
 
 		colTraineesBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
 		colTraineesBirthday.setVisible(false);
