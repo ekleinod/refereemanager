@@ -2,6 +2,7 @@ package de.edgesoft.refereemanager.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -65,6 +66,7 @@ public class JAXBMatchUtils {
 	 *
 	 * @version 0.13.0
 	 */
+	@SuppressWarnings("unchecked")
 	public static void setField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final Class<?>... theDataClasses) {
 
 		Objects.requireNonNull(theFXMLField);
@@ -82,15 +84,11 @@ public class JAXBMatchUtils {
 
     						String sValue = null;
 
-    						if (theClass.getDeclaredMethod(getGetter(theJAXBField.getName())).getReturnType() == String.class) {
-        						sValue = (String) theClass
-        								.getDeclaredMethod(getGetter(theJAXBField.getName()))
-        								.invoke(theModel);
+    						if (getGetterMethod(theClass, theJAXBField.getName()).getReturnType() == String.class) {
+        						sValue = (String) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
     						} else {
 
-	    						StringProperty sTemp = (StringProperty) theClass
-	    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
-	    								.invoke(theModel);
+	    						StringProperty sTemp = (StringProperty) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
 	    						sValue = (sTemp == null) ? null : sTemp.getValue();
 
     						}
@@ -99,16 +97,12 @@ public class JAXBMatchUtils {
 
     					} else if (theFieldObject instanceof DatePicker) {
 
-    						SimpleObjectProperty<LocalDate> sTemp = (SimpleObjectProperty<LocalDate>) theClass
-    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
-    								.invoke(theModel);
+    						SimpleObjectProperty<LocalDate> sTemp = (SimpleObjectProperty<LocalDate>) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
     						((DatePicker) theFieldObject).setValue((sTemp == null) ? null : sTemp.getValue());
 
     					} else if (theFieldObject instanceof ComboBox<?>) {
 
-    						ModelClassExt objTemp = (ModelClassExt) theClass
-    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
-    								.invoke(theModel);
+    						ModelClassExt objTemp = (ModelClassExt) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
     						((ComboBox<ModelClassExt>) theFieldObject).setValue(objTemp);
 
     					}
@@ -141,6 +135,7 @@ public class JAXBMatchUtils {
 	 *
 	 * @version 0.14.0
 	 */
+	@SuppressWarnings("unchecked")
 	public static void getField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final Class<?>... theDataClasses) {
 
 		Objects.requireNonNull(theFXMLField);
@@ -158,45 +153,28 @@ public class JAXBMatchUtils {
 
     						String sValue = ((TextInputControl) theFieldObject).getText();
 
-    						if (theClass.getDeclaredMethod(getGetter(theJAXBField.getName())).getReturnType() == String.class) {
-    							theClass
-    									.getDeclaredMethod(getSetter(theJAXBField.getName()), String.class)
-    									.invoke(theModel, sValue);
+    						if (getGetterMethod(theClass, theJAXBField.getName()).getReturnType() == String.class) {
+    							getSetterMethod(theClass, theJAXBField.getName(), String.class).invoke(theModel, sValue);
     						} else {
-    							Object sTemp = theClass
-	    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
-	    								.invoke(theModel);
+    							Object sTemp = getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
     							if (sTemp == null) {
-        							theClass
-        									.getDeclaredMethod(getSetter(theJAXBField.getName()), SimpleStringProperty.class)
-        									.invoke(theModel, new SimpleStringProperty());
+    								getSetterMethod(theClass, theJAXBField.getName(), SimpleStringProperty.class).invoke(theModel, new SimpleStringProperty());
     							}
-    							((StringProperty) theClass
-	    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
-	    								.invoke(theModel)).setValue(sValue);
+    							((StringProperty) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel)).setValue(sValue);
     						}
 
     					} else if (theFieldObject instanceof DatePicker) {
 
-							Object sTemp = theClass
-    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
-    								.invoke(theModel);
+							Object sTemp = getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
 							if (sTemp == null) {
-    							theClass
-    									.getDeclaredMethod(getSetter(theJAXBField.getName()), SimpleObjectProperty.class)
-    									.invoke(theModel, new SimpleObjectProperty<>());
+								getSetterMethod(theClass, theJAXBField.getName(), SimpleObjectProperty.class).invoke(theModel, new SimpleObjectProperty<>());
 							}
-    						((SimpleObjectProperty<LocalDate>) theClass
-    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
-    								.invoke(theModel)).setValue(((DatePicker) theFieldObject).getValue());
+    						((SimpleObjectProperty<LocalDate>) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel)).setValue(((DatePicker) theFieldObject).getValue());
 
-//    					} else if (theFieldObject instanceof ComboBox<?>) {
-//
-//    						ModelClassExt objTemp = (ModelClassExt) theClass
-//    								.getDeclaredMethod(getGetter(theJAXBField.getName()))
-//    								.invoke(theModel);
-//    						((ComboBox<ModelClassExt>) theFieldObject).setValue(objTemp);
-//
+    					} else if (theFieldObject instanceof ComboBox<?>) {
+
+    						getSetterMethod(theClass, theJAXBField.getName(), ModelClassExt.class).invoke(theModel, ((ComboBox<ModelClassExt>) theFieldObject).getValue());
+
     					}
 
     				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
@@ -232,6 +210,61 @@ public class JAXBMatchUtils {
 
 		return (theFXMLField.getAnnotation(JAXBMatch.class).jaxbclass() == theJAXBField.getDeclaringClass()) &&
 				theFXMLField.getAnnotation(JAXBMatch.class).jaxbfield().equals(theJAXBField.getName());
+
+	}
+
+	/**
+	 * Getter method for the field in the class.
+	 *
+	 * @param theClass class
+	 * @param theJAXBFieldName jaxb field
+	 * @return getter method
+	 *
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
+	 *
+	 * @version 0.13.0
+	 */
+	public static Method getGetterMethod(final Class<?> theClass, final String theJAXBFieldName) throws NoSuchMethodException, SecurityException {
+
+		Objects.requireNonNull(theClass);
+		Objects.requireNonNull(theJAXBFieldName);
+
+		return theClass.getDeclaredMethod(getGetter(theJAXBFieldName));
+
+	}
+
+	/**
+	 * Setter method for the field in the class.
+	 *
+	 * {@link Class#getDeclaredMethod(String, Class...)} does not support
+	 * polymorphism for parameter classes, thus the complicated implementation.
+	 *
+	 * @param theClass class
+	 * @param theJAXBFieldName jaxb field
+	 * @return setter method
+	 *
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
+	 *
+	 * @version 0.13.0
+	 */
+	public static Method getSetterMethod(final Class<?> theClass, final String theJAXBFieldName, final Class<?> theParameterClass) throws NoSuchMethodException, SecurityException {
+
+		Objects.requireNonNull(theClass);
+		Objects.requireNonNull(theJAXBFieldName);
+		Objects.requireNonNull(theParameterClass);
+
+		for (Method method : theClass.getDeclaredMethods()) {
+			if (method.getName().equals(getSetter(theJAXBFieldName)) && (method.getParameterCount() == 1)) {
+				Class<?>[] params = method.getParameterTypes();
+				if (theParameterClass.isAssignableFrom(params[0])) {
+					return method;
+				}
+			}
+		}
+
+		throw new NoSuchMethodException(String.format("%s.%s(%s)", theClass.getCanonicalName(), getSetter(theJAXBFieldName), theParameterClass.getCanonicalName()));
 
 	}
 
