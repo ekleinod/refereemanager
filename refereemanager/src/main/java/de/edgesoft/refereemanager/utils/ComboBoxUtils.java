@@ -40,8 +40,10 @@ public class ComboBoxUtils {
 	/**
 	 * Prepares combobox with data and corresponding cell renderers.
 	 *
+	 * @param theComboBox combobox to prepare
+	 * @param theItems items to fill combobox with
+	 *
 	 * @version 0.14.0
-	 * @since 0.14.0
 	 */
 	public static final void prepareComboBox(ComboBox<ModelClassExt> theComboBox, final List<? extends ModelClassExt> theItems) {
 		theComboBox.setItems(FXCollections.observableArrayList(theItems));
@@ -55,7 +57,6 @@ public class ComboBoxUtils {
 	 * @return callback for cell factories
 	 *
 	 * @version 0.14.0
-	 * @since 0.14.0
 	 */
 	public static final Callback<ListView<ModelClassExt>, ListCell<ModelClassExt>> getCallback() {
 		return new Callback<ListView<ModelClassExt>, ListCell<ModelClassExt>>() {
@@ -83,7 +84,6 @@ public class ComboBoxUtils {
 	 * @return list cell for button cells
 	 *
 	 * @version 0.14.0
-	 * @since 0.14.0
 	 */
 	public static final ListCell<ModelClassExt> getListCell() {
 		return new ListCell<ModelClassExt>() {

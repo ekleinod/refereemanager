@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -14,9 +15,11 @@ import de.edgesoft.refereemanager.controller.RefereeEditDialogController;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -80,6 +83,7 @@ public class JAXBMatchUtils {
     			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
 
     				try {
+
     					if (theFieldObject instanceof TextInputControl) {
 
     						String sValue = null;
@@ -104,6 +108,10 @@ public class JAXBMatchUtils {
 
     						ModelClassExt objTemp = (ModelClassExt) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
     						((ComboBox<ModelClassExt>) theFieldObject).setValue(objTemp);
+
+    					} else if (theFieldObject instanceof ListView<?>) {
+
+    						((ListView<ModelClassExt>) theFieldObject).setItems(FXCollections.observableArrayList((List<ModelClassExt>) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel)));
 
     					}
 
@@ -149,6 +157,7 @@ public class JAXBMatchUtils {
     			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
 
     				try {
+
     					if (theFieldObject instanceof TextInputControl) {
 
     						String sValue = ((TextInputControl) theFieldObject).getText();
@@ -174,6 +183,12 @@ public class JAXBMatchUtils {
     					} else if (theFieldObject instanceof ComboBox<?>) {
 
     						getSetterMethod(theClass, theJAXBField.getName(), ModelClassExt.class).invoke(theModel, ((ComboBox<ModelClassExt>) theFieldObject).getValue());
+
+    					} else if (theFieldObject instanceof ListView<?>) {
+
+//    						List<ModelClassExt> lstItems = (List<ModelClassExt>) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
+//    						lstItems.clear();
+//    						lstItems.addAll(((ListView<ModelClassExt>) theFieldObject).getItems());
 
     					}
 

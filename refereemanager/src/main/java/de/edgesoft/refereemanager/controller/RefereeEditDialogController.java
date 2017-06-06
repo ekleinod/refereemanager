@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -135,6 +136,16 @@ public class RefereeEditDialogController {
 
 
 	/**
+	 * List view for emails.
+	 *
+	 * @version 0.14.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "eMail", jaxbclass = Person.class)
+	private ListView<ModelClassExt> lstEMail;
+
+
+	/**
 	 * OK button.
 	 *
 	 * @version 0.13.0
@@ -188,6 +199,9 @@ public class RefereeEditDialogController {
 
 		// fill sex types
         ComboBoxUtils.prepareComboBox(cboSexType, AppModel.getData().getContent().getSexType());
+
+        // setup list views
+        lstEMail.setCellFactory(ComboBoxUtils.getCallback());
 
 		// required fields
         for (Field theFXMLField : getClass().getDeclaredFields()) {
