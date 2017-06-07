@@ -134,7 +134,14 @@
                                           <Insets bottom="10.0" top="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <ListView fx:id="lstEMail" minHeight="-Infinity" prefHeight="60.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+                                    <ListView fx:id="lstEMail" minHeight="-Infinity" prefHeight="50.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+                                    <ButtonBar buttonMinWidth="20.0" GridPane.columnIndex="1">
+                                      <buttons>
+                                        <Button fx:id="btnEMailAdd" mnemonicParsing="false" onAction="#handleEmailAdd" />
+                                          <Button fx:id="btnEMailEdit" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleEmailEdit" />
+                                          <Button fx:id="btnEMailDelete" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleEmailDelete" />
+                                      </buttons>
+                                    </ButtonBar>
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

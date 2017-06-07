@@ -144,6 +144,30 @@ public class RefereeEditDialogController {
 	@JAXBMatch(jaxbfield = "eMail", jaxbclass = Person.class)
 	private ListView<ModelClassExt> lstEMail;
 
+	/**
+	 * Add emails.
+	 *
+	 * @version 0.14.0
+	 */
+	@FXML
+	private Button btnEMailAdd;
+
+	/**
+	 * Edit emails.
+	 *
+	 * @version 0.14.0
+	 */
+	@FXML
+	private Button btnEMailEdit;
+
+	/**
+	 * Delete emails.
+	 *
+	 * @version 0.14.0
+	 */
+	@FXML
+	private Button btnEMailDelete;
+
 
 	/**
 	 * OK button.
@@ -220,6 +244,14 @@ public class RefereeEditDialogController {
 		// enable ok button for valid entries only
 		btnOK.disableProperty().bind(
 				txtName.textProperty().isEmpty()
+		);
+
+		// enable email buttons
+		btnEMailEdit.disableProperty().bind(
+				lstEMail.getSelectionModel().selectedItemProperty().isNull()
+		);
+		btnEMailDelete.disableProperty().bind(
+				lstEMail.getSelectionModel().selectedItemProperty().isNull()
 		);
 
 		// icons
@@ -314,6 +346,102 @@ public class RefereeEditDialogController {
 		okClicked = false;
         dialogStage.close();
     }
+
+	/**
+	 * Opens edit dialog for new data.
+	 *
+	 * @version 0.13.0
+	 */
+	@FXML
+	private void handleEmailAdd() {
+
+		System.out.println("add");
+
+//		PersonModel newPerson = null;
+//
+//		if (ctlRefList.getTabReferees().isSelected()) {
+//			newPerson = new RefereeModel();
+//		}
+//
+//		if (ctlRefList.getTabTrainees().isSelected()) {
+//			newPerson = new TraineeModel();
+//		}
+//
+//		if (ctlRefList.getTabPeople().isSelected()) {
+//			newPerson = new PersonModel();
+//		}
+//
+//		if (showEditDialog(newPerson)) {
+//
+//			if (ctlRefList.getTabReferees().isSelected()) {
+//				((ContentModel) AppModel.getData().getContent()).getObservableReferees().add((Referee) newPerson);
+//				ctlRefList.getRefereesSelectionModel().select((Referee) newPerson);
+//			}
+//
+//			if (ctlRefList.getTabTrainees().isSelected()) {
+//				((ContentModel) AppModel.getData().getContent()).getObservableTrainees().add((Trainee) newPerson);
+//				ctlRefList.getTraineesSelectionModel().select((Trainee) newPerson);
+//			}
+//
+//			if (ctlRefList.getTabPeople().isSelected()) {
+//				((ContentModel) AppModel.getData().getContent()).getObservablePeople().add(newPerson);
+//				ctlRefList.getPeopleSelectionModel().select(newPerson);
+//			}
+//
+//			AppModel.setModified(true);
+//			appController.setAppTitle();
+//		}
+
+	}
+
+	/**
+	 * Opens edit dialog for editing selected data.
+	 *
+	 * @version 0.14.0
+	 */
+	@FXML
+	private void handleEmailEdit() {
+
+//		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
+//
+//		if (lstSelected.size() == 1) {
+//			if (showEditDialog(lstSelected.get(0))) {
+//				showDetails(lstSelected.get(0));
+//				AppModel.setModified(true);
+//				appController.setAppTitle();
+//			}
+//		}
+
+	}
+
+	/**
+	 * Deletes selected data from list.
+	 *
+	 * @version 0.14.0
+	 */
+	@FXML
+	private void handleEmailDelete() {
+
+//		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
+//
+//		if (lstSelected.size() == 1) {
+//
+//			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
+//					"Löschbestätigung",
+//					MessageFormat.format("Soll ''{0}'' gelöscht werden?", lstSelected.get(0).getDisplayTitle().get()),
+//					null);
+//
+//			alert.showAndWait()
+//					.filter(response -> response == ButtonType.OK)
+//					.ifPresent(response -> {
+//						((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(lstSelected.get(0));
+//						AppModel.setModified(true);
+//						appController.setAppTitle();
+//						});
+//
+//		}
+
+	}
 
 }
 
