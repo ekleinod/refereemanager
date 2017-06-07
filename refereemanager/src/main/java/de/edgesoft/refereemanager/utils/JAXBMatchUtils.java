@@ -203,9 +203,9 @@ public class JAXBMatchUtils {
 
     					} else if (theFieldObject instanceof ListView<?>) {
 
-//    						List<ModelClassExt> lstItems = (List<ModelClassExt>) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
-//    						lstItems.clear();
-//    						lstItems.addAll(((ListView<ModelClassExt>) theFieldObject).getItems());
+    						List<ModelClassExt> lstItems = (List<ModelClassExt>) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
+    						lstItems.clear();
+    						lstItems.addAll(((ListView<ModelClassExt>) theFieldObject).getItems());
 
     					}
 
