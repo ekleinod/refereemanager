@@ -163,26 +163,43 @@ public class JAXBMatchUtils {
     						String sValue = ((TextInputControl) theFieldObject).getText();
 
     						if (getGetterMethod(theClass, theJAXBField.getName()).getReturnType() == String.class) {
+
     							getSetterMethod(theClass, theJAXBField.getName(), String.class).invoke(theModel, sValue);
+
     						} else {
-    							Object sTemp = getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
-    							if (sTemp == null) {
-    								getSetterMethod(theClass, theJAXBField.getName(), SimpleStringProperty.class).invoke(theModel, new SimpleStringProperty());
-    							}
-    							((StringProperty) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel)).setValue(sValue);
+
+        						if (sValue == null) {
+    								getSetterMethod(theClass, theJAXBField.getName(), SimpleStringProperty.class).invoke(theModel, (SimpleStringProperty) null);
+        						} else {
+        							SimpleStringProperty sTemp = (SimpleStringProperty) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
+        							if (sTemp == null) {
+        								sTemp = new SimpleStringProperty();
+        							}
+        							sTemp.setValue(sValue);
+        							getSetterMethod(theClass, theJAXBField.getName(), SimpleStringProperty.class).invoke(theModel, sTemp);
+        						}
+
     						}
 
     					} else if (theFieldObject instanceof DatePicker) {
 
-							Object sTemp = getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
-							if (sTemp == null) {
-								getSetterMethod(theClass, theJAXBField.getName(), SimpleObjectProperty.class).invoke(theModel, new SimpleObjectProperty<>());
-							}
-    						((SimpleObjectProperty<LocalDate>) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel)).setValue(((DatePicker) theFieldObject).getValue());
+    						LocalDate dteValue = ((DatePicker) theFieldObject).getValue();
+
+    						if (dteValue == null) {
+								getSetterMethod(theClass, theJAXBField.getName(), SimpleObjectProperty.class).invoke(theModel, (SimpleObjectProperty<?>) null);
+    						} else {
+    							SimpleObjectProperty<LocalDate> dteTemp = (SimpleObjectProperty<LocalDate>) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
+    							if (dteTemp == null) {
+    								dteTemp = new SimpleObjectProperty<>();
+    							}
+    							dteTemp.setValue(dteValue);
+    							getSetterMethod(theClass, theJAXBField.getName(), SimpleObjectProperty.class).invoke(theModel, dteTemp);
+    						}
 
     					} else if (theFieldObject instanceof ComboBox<?>) {
 
-    						getSetterMethod(theClass, theJAXBField.getName(), ModelClassExt.class).invoke(theModel, ((ComboBox<ModelClassExt>) theFieldObject).getValue());
+    						ModelClassExt mdlTemp = ((ComboBox<ModelClassExt>) theFieldObject).getValue();
+    						getSetterMethod(theClass, theJAXBField.getName(), ModelClassExt.class).invoke(theModel, mdlTemp);
 
     					} else if (theFieldObject instanceof ListView<?>) {
 
