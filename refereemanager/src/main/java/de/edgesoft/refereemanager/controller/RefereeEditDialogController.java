@@ -1,5 +1,6 @@
 package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Objects;
 
 import de.edgesoft.edgeutils.commons.IDType;
@@ -9,12 +10,16 @@ import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.model.AppModel;
+import de.edgesoft.refereemanager.model.ContactModel;
+import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -23,6 +28,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -353,47 +361,33 @@ public class RefereeEditDialogController {
 	/**
 	 * Opens edit dialog for new data.
 	 *
-	 * @version 0.13.0
+	 * @version 0.14.0
 	 */
 	@FXML
 	private void handleEmailAdd() {
 
-		System.out.println("add");
+		ContactModel newContact = new EMailModel();
 
-//		PersonModel newPerson = null;
-//
-//		if (ctlRefList.getTabReferees().isSelected()) {
-//			newPerson = new RefereeModel();
-//		}
-//
-//		if (ctlRefList.getTabTrainees().isSelected()) {
-//			newPerson = new TraineeModel();
-//		}
-//
-//		if (ctlRefList.getTabPeople().isSelected()) {
-//			newPerson = new PersonModel();
-//		}
-//
-//		if (showEditDialog(newPerson)) {
-//
-//			if (ctlRefList.getTabReferees().isSelected()) {
-//				((ContentModel) AppModel.getData().getContent()).getObservableReferees().add((Referee) newPerson);
-//				ctlRefList.getRefereesSelectionModel().select((Referee) newPerson);
-//			}
-//
-//			if (ctlRefList.getTabTrainees().isSelected()) {
-//				((ContentModel) AppModel.getData().getContent()).getObservableTrainees().add((Trainee) newPerson);
-//				ctlRefList.getTraineesSelectionModel().select((Trainee) newPerson);
-//			}
-//
-//			if (ctlRefList.getTabPeople().isSelected()) {
-//				((ContentModel) AppModel.getData().getContent()).getObservablePeople().add(newPerson);
-//				ctlRefList.getPeopleSelectionModel().select(newPerson);
-//			}
-//
-//			AppModel.setModified(true);
-//			appController.setAppTitle();
-//		}
+		if (showContactEditDialog(newContact)) {
+
+			if (ctlRefList.getTabReferees().isSelected()) {
+				((ContentModel) AppModel.getData().getContent()).getObservableReferees().add((Referee) newContact);
+				ctlRefList.getRefereesSelectionModel().select((Referee) newContact);
+			}
+
+			if (ctlRefList.getTabTrainees().isSelected()) {
+				((ContentModel) AppModel.getData().getContent()).getObservableTrainees().add((Trainee) newContact);
+				ctlRefList.getTraineesSelectionModel().select((Trainee) newContact);
+			}
+
+			if (ctlRefList.getTabPeople().isSelected()) {
+				((ContentModel) AppModel.getData().getContent()).getObservablePeople().add(newContact);
+				ctlRefList.getPeopleSelectionModel().select(newContact);
+			}
+
+			AppModel.setModified(true);
+			appController.setAppTitle();
+		}
 
 	}
 
@@ -443,6 +437,48 @@ public class RefereeEditDialogController {
 //						});
 //
 //		}
+
+	}
+
+	/**
+	 * Opens the contact edit dialog.
+	 *
+	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
+	 *
+	 * @param theContact the contact to be edited
+	 * @return true if the user clicked OK, false otherwise.
+	 *
+	 * @version 0.14.0
+	 */
+	private boolean showContactEditDialog(ContactModel theContact) {
+
+		Objects.requireNonNull(theContact);
+
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EMailEditDialog");
+
+		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+
+		// Create the dialog Stage.
+		Stage dialogStage = new Stage();
+		dialogStage.initModality(Modality.WINDOW_MODAL);
+		dialogStage.initOwner(appController.getPrimaryStage());
+		dialogStage.setTitle(String.format("%s editieren",
+				ctlRefList.getTabReferees().isSelected() ? "Schiedsrichter_in" :
+					ctlRefList.getTabTrainees().isSelected() ? "Azubi" :
+						"Person"));
+
+		Scene scene = new Scene(editDialog);
+		dialogStage.setScene(scene);
+
+		// Set the referee
+		RefereeEditDialogController editController = pneLoad.getValue().getController();
+		editController.setDialogStage(dialogStage);
+		editController.setPerson(theContact);
+
+		// Show the dialog and wait until the user closes it
+		dialogStage.showAndWait();
+
+		return editController.isOkClicked();
 
 	}
 
