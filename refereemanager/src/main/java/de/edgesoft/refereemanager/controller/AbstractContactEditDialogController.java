@@ -3,6 +3,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
 
+import de.edgesoft.edgeutils.ClassUtils;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.Contact;
@@ -164,7 +165,7 @@ public abstract class AbstractContactEditDialogController {
         ComboBoxUtils.prepareComboBox(cboContactType, AppModel.getData().getContent().getContactType());
 
 		// declared fields
-        lstDeclaredFields = JAXBMatchUtils.getDeclaredFieldsFirstAbstraction(getClass());
+        lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
 
 		// required fields
         for (Field theFXMLField : lstDeclaredFields) {
