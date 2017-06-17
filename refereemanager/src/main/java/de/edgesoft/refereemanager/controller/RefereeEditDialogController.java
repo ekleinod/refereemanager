@@ -1,5 +1,6 @@
 package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
+import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Objects;
 
@@ -13,6 +14,7 @@ import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContactModel;
 import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
@@ -20,7 +22,10 @@ import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -60,6 +65,13 @@ import javafx.stage.Stage;
  * @since 0.13.0
  */
 public class RefereeEditDialogController {
+
+	/**
+	 * Classes for introspection when setting/getting values.
+	 *
+	 * @version 0.14.0
+	 */
+	private final Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, Person.class};
 
 	/**
 	 * ID text field.
@@ -241,7 +253,7 @@ public class RefereeEditDialogController {
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, IDType.class, TitledIDType.class, Person.class);
+        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, theClasses);
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -300,7 +312,7 @@ public class RefereeEditDialogController {
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.setField(theFXMLField, fieldObject, thePerson, IDType.class, TitledIDType.class, Person.class);
+        		JAXBMatchUtils.setField(theFXMLField, fieldObject, thePerson, theClasses);
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -323,7 +335,7 @@ public class RefereeEditDialogController {
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentReferee, IDType.class, TitledIDType.class, Person.class);
+        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentReferee, theClasses);
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -396,24 +408,20 @@ public class RefereeEditDialogController {
 	@FXML
 	private void handleEmailDelete() {
 
-//		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
-//
-//		if (lstSelected.size() == 1) {
-//
-//			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
-//					"Löschbestätigung",
-//					MessageFormat.format("Soll ''{0}'' gelöscht werden?", lstSelected.get(0).getDisplayTitle().get()),
-//					null);
-//
-//			alert.showAndWait()
-//					.filter(response -> response == ButtonType.OK)
-//					.ifPresent(response -> {
-//						((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(lstSelected.get(0));
-//						AppModel.setModified(true);
-//						appController.setAppTitle();
-//						});
-//
-//		}
+		if (!lstEMail.getSelectionModel().isEmpty()) {
+
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
+					"Löschbestätigung",
+					MessageFormat.format("Soll ''{0}'' gelöscht werden?", lstEMail.getSelectionModel().getSelectedItem().getDisplayText().get()),
+					null);
+
+			alert.showAndWait()
+					.filter(response -> response == ButtonType.OK)
+					.ifPresent(response -> {
+						lstEMail.getItems().remove(lstEMail.getSelectionModel().getSelectedItem());
+			});
+
+		}
 
 	}
 

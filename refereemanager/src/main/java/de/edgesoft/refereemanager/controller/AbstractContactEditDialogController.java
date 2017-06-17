@@ -6,7 +6,6 @@ import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.Contact;
 import de.edgesoft.refereemanager.jaxb.EMail;
-import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContactModel;
@@ -50,6 +49,13 @@ import javafx.stage.Stage;
  * @since 0.14.0
  */
 public abstract class AbstractContactEditDialogController {
+
+	/**
+	 * Classes for introspection when setting/getting values.
+	 *
+	 * @version 0.14.0
+	 */
+	private final Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, Contact.class, EMail.class};
 
 	/**
 	 * ID text field.
@@ -154,7 +160,7 @@ public abstract class AbstractContactEditDialogController {
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, IDType.class, TitledIDType.class, Person.class);
+        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, theClasses);
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -197,7 +203,7 @@ public abstract class AbstractContactEditDialogController {
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.setField(theFXMLField, fieldObject, theContact, IDType.class, TitledIDType.class, Contact.class, EMail.class);
+        		JAXBMatchUtils.setField(theFXMLField, fieldObject, theContact, theClasses);
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -220,7 +226,7 @@ public abstract class AbstractContactEditDialogController {
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentContact, IDType.class, TitledIDType.class, Contact.class, EMail.class);
+        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentContact, theClasses);
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
