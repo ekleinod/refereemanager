@@ -5,6 +5,7 @@ import java.util.Objects;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.Contact;
+import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -196,7 +197,7 @@ public abstract class AbstractContactEditDialogController {
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.setField(theFXMLField, fieldObject, theContact, IDType.class, TitledIDType.class, Person.class);
+        		JAXBMatchUtils.setField(theFXMLField, fieldObject, theContact, IDType.class, TitledIDType.class, Contact.class, EMail.class);
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -219,7 +220,7 @@ public abstract class AbstractContactEditDialogController {
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentContact, IDType.class, TitledIDType.class, Person.class);
+        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentContact, IDType.class, TitledIDType.class, Contact.class, EMail.class);
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();

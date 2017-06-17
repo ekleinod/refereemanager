@@ -38,8 +38,8 @@ public class EMailEditDialogController extends AbstractContactEditDialogControll
 	 * @version 0.14.0
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "EMail", jaxbclass = EMail.class)
-	private TextField txtEMail;
+	@JAXBMatch(jaxbfield = "eMail", jaxbclass = EMail.class)
+	protected TextField txtEMail;
 
 
 	/**
@@ -57,8 +57,7 @@ public class EMailEditDialogController extends AbstractContactEditDialogControll
 
 		// enable ok button for valid entries only
 		btnOK.disableProperty().bind(
-				txtID.textProperty().isEmpty().or(
-						txtEMail.textProperty().isEmpty())
+				txtEMail.textProperty().isEmpty()
 		);
 
 	}

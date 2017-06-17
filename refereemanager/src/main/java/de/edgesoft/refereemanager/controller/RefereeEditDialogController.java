@@ -369,24 +369,7 @@ public class RefereeEditDialogController {
 		ContactModel newContact = new EMailModel();
 
 		if (showContactEditDialog(newContact)) {
-
-			if (ctlRefList.getTabReferees().isSelected()) {
-				((ContentModel) AppModel.getData().getContent()).getObservableReferees().add((Referee) newContact);
-				ctlRefList.getRefereesSelectionModel().select((Referee) newContact);
-			}
-
-			if (ctlRefList.getTabTrainees().isSelected()) {
-				((ContentModel) AppModel.getData().getContent()).getObservableTrainees().add((Trainee) newContact);
-				ctlRefList.getTraineesSelectionModel().select((Trainee) newContact);
-			}
-
-			if (ctlRefList.getTabPeople().isSelected()) {
-				((ContentModel) AppModel.getData().getContent()).getObservablePeople().add(newContact);
-				ctlRefList.getPeopleSelectionModel().select(newContact);
-			}
-
-			AppModel.setModified(true);
-			appController.setAppTitle();
+			lstEMail.getItems().add(newContact);
 		}
 
 	}
@@ -399,15 +382,9 @@ public class RefereeEditDialogController {
 	@FXML
 	private void handleEmailEdit() {
 
-//		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
-//
-//		if (lstSelected.size() == 1) {
-//			if (showEditDialog(lstSelected.get(0))) {
-//				showDetails(lstSelected.get(0));
-//				AppModel.setModified(true);
-//				appController.setAppTitle();
-//			}
-//		}
+		if (!lstEMail.getSelectionModel().isEmpty()) {
+			showContactEditDialog((ContactModel) lstEMail.getSelectionModel().getSelectedItem());
+		}
 
 	}
 
@@ -459,24 +436,21 @@ public class RefereeEditDialogController {
 		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
 
 		// Create the dialog Stage.
-		Stage dialogStage = new Stage();
-		dialogStage.initModality(Modality.WINDOW_MODAL);
-		dialogStage.initOwner(appController.getPrimaryStage());
-		dialogStage.setTitle(String.format("%s editieren",
-				ctlRefList.getTabReferees().isSelected() ? "Schiedsrichter_in" :
-					ctlRefList.getTabTrainees().isSelected() ? "Azubi" :
-						"Person"));
+		Stage editDialogStage = new Stage();
+		editDialogStage.initModality(Modality.WINDOW_MODAL);
+		editDialogStage.initOwner(dialogStage);
+		editDialogStage.setTitle("Kontakt editieren");
 
 		Scene scene = new Scene(editDialog);
-		dialogStage.setScene(scene);
+		editDialogStage.setScene(scene);
 
 		// Set the referee
-		RefereeEditDialogController editController = pneLoad.getValue().getController();
-		editController.setDialogStage(dialogStage);
-		editController.setPerson(theContact);
+		EMailEditDialogController editController = pneLoad.getValue().getController();
+		editController.setDialogStage(editDialogStage);
+		editController.setContact(theContact);
 
 		// Show the dialog and wait until the user closes it
-		dialogStage.showAndWait();
+		editDialogStage.showAndWait();
 
 		return editController.isOkClicked();
 
