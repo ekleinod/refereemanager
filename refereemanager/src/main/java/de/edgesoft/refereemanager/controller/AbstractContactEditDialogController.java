@@ -1,5 +1,9 @@
 package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import de.edgesoft.edgeutils.commons.IDType;
@@ -142,6 +146,14 @@ public abstract class AbstractContactEditDialogController {
 
 
 	/**
+	 * Fields of class and abstract subclasses.
+	 *
+	 * @version 0.14.0
+	 */
+	protected List<Field> lstDeclaredFields = null;
+
+
+	/**
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
@@ -154,8 +166,19 @@ public abstract class AbstractContactEditDialogController {
 		// fill sex types
         ComboBoxUtils.prepareComboBox(cboContactType, AppModel.getData().getContent().getContactType());
 
+		// declared fields
+        lstDeclaredFields = new ArrayList<>();
+
+        Class<?> clsTemp = getClass();
+    	lstDeclaredFields.addAll(Arrays.asList(clsTemp.getDeclaredFields()));
+
+        while (Modifier.isAbstract(clsTemp.getSuperclass().getModifiers())) {
+        	clsTemp = clsTemp.getSuperclass();
+        	lstDeclaredFields.addAll(Arrays.asList(clsTemp.getDeclaredFields()));
+        }
+
 		// required fields
-        for (Field theFXMLField : getClass().getDeclaredFields()) {
+        for (Field theFXMLField : lstDeclaredFields) {
 
         	try {
         		Object fieldObject = theFXMLField.get(this);
@@ -198,7 +221,7 @@ public abstract class AbstractContactEditDialogController {
 
         currentContact = theContact;
 
-        for (Field theFXMLField : getClass().getDeclaredFields()) {
+        for (Field theFXMLField : lstDeclaredFields) {
 
         	try {
         		Object fieldObject = theFXMLField.get(this);
@@ -221,7 +244,7 @@ public abstract class AbstractContactEditDialogController {
 	@FXML
     private void handleOk() {
 
-        for (Field theFXMLField : getClass().getDeclaredFields()) {
+        for (Field theFXMLField : lstDeclaredFields) {
 
         	try {
         		Object fieldObject = theFXMLField.get(this);
