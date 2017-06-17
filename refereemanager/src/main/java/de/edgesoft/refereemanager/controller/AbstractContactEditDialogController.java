@@ -1,8 +1,5 @@
 package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -150,7 +147,7 @@ public abstract class AbstractContactEditDialogController {
 	 *
 	 * @version 0.14.0
 	 */
-	protected List<Field> lstDeclaredFields = null;
+	private List<Field> lstDeclaredFields = null;
 
 
 	/**
@@ -167,15 +164,7 @@ public abstract class AbstractContactEditDialogController {
         ComboBoxUtils.prepareComboBox(cboContactType, AppModel.getData().getContent().getContactType());
 
 		// declared fields
-        lstDeclaredFields = new ArrayList<>();
-
-        Class<?> clsTemp = getClass();
-    	lstDeclaredFields.addAll(Arrays.asList(clsTemp.getDeclaredFields()));
-
-        while (Modifier.isAbstract(clsTemp.getSuperclass().getModifiers())) {
-        	clsTemp = clsTemp.getSuperclass();
-        	lstDeclaredFields.addAll(Arrays.asList(clsTemp.getDeclaredFields()));
-        }
+        lstDeclaredFields = JAXBMatchUtils.getDeclaredFieldsFirstAbstraction(getClass());
 
 		// required fields
         for (Field theFXMLField : lstDeclaredFields) {

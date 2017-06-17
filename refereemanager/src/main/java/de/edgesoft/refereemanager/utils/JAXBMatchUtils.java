@@ -3,7 +3,10 @@ package de.edgesoft.refereemanager.utils;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -394,6 +397,32 @@ public class JAXBMatchUtils {
     		}
 
 		}
+
+	}
+
+	/**
+	 * Returns declared fields including class inheritance up to the last abstract class.
+	 *
+	 * @param theClass the class to get the fields for
+	 * @return list of declared fields
+	 *
+	 * @version 0.14.0
+	 */
+	public static List<Field> getDeclaredFieldsFirstAbstraction(final Class<?> theClass) {
+
+		Objects.requireNonNull(theClass);
+
+		List<Field> lstReturn = new ArrayList<>();
+
+        Class<?> clsTemp = theClass;
+    	lstReturn.addAll(Arrays.asList(clsTemp.getDeclaredFields()));
+
+        while (Modifier.isAbstract(clsTemp.getSuperclass().getModifiers())) {
+        	clsTemp = clsTemp.getSuperclass();
+        	lstReturn.addAll(Arrays.asList(clsTemp.getDeclaredFields()));
+        }
+
+        return lstReturn;
 
 	}
 
