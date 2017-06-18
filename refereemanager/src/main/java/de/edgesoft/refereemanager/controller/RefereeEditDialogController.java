@@ -10,10 +10,13 @@ import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContactModel;
 import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.PhoneNumberModel;
+import de.edgesoft.refereemanager.model.URLModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
@@ -147,7 +150,7 @@ public class RefereeEditDialogController {
 	private ListView<ModelClassExt> lstEMail;
 
 	/**
-	 * Add emails.
+	 * Add email.
 	 *
 	 * @since 0.14.0
 	 */
@@ -155,7 +158,7 @@ public class RefereeEditDialogController {
 	private Button btnEMailAdd;
 
 	/**
-	 * Edit emails.
+	 * Edit email.
 	 *
 	 * @since 0.14.0
 	 */
@@ -163,12 +166,114 @@ public class RefereeEditDialogController {
 	private Button btnEMailEdit;
 
 	/**
-	 * Delete emails.
+	 * Delete email.
 	 *
 	 * @since 0.14.0
 	 */
 	@FXML
 	private Button btnEMailDelete;
+
+
+	/**
+	 * List view for phone numbers.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "phoneNumber", jaxbclass = Person.class)
+	private ListView<ModelClassExt> lstPhoneNumber;
+
+	/**
+	 * Add phone number.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnPhoneNumberAdd;
+
+	/**
+	 * Edit phone number.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnPhoneNumberEdit;
+
+	/**
+	 * Delete phone number.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnPhoneNumberDelete;
+
+
+	/**
+	 * List view for addresses.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "address", jaxbclass = Person.class)
+	private ListView<ModelClassExt> lstAddress;
+
+	/**
+	 * Add address.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnAddressAdd;
+
+	/**
+	 * Edit address.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnAddressEdit;
+
+	/**
+	 * Delete address.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnAddressDelete;
+
+
+	/**
+	 * List view for URLs.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "URL", jaxbclass = Person.class)
+	private ListView<ModelClassExt> lstURL;
+
+	/**
+	 * Add URL.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnURLAdd;
+
+	/**
+	 * Edit URL.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnURLEdit;
+
+	/**
+	 * Delete URL.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnURLDelete;
 
 
 	/**
@@ -216,6 +321,9 @@ public class RefereeEditDialogController {
 
         // setup list views
         lstEMail.setCellFactory(ComboBoxUtils.getCallback());
+        lstPhoneNumber.setCellFactory(ComboBoxUtils.getCallback());
+        lstAddress.setCellFactory(ComboBoxUtils.getCallback());
+        lstURL.setCellFactory(ComboBoxUtils.getCallback());
 
 		// required fields
         for (Field theFXMLField : getClass().getDeclaredFields()) {
@@ -236,20 +344,50 @@ public class RefereeEditDialogController {
 				txtName.textProperty().isEmpty()
 		);
 
-		// enable email buttons
+		// enable buttons
 		btnEMailEdit.disableProperty().bind(
 				lstEMail.getSelectionModel().selectedItemProperty().isNull()
 		);
 		btnEMailDelete.disableProperty().bind(
 				lstEMail.getSelectionModel().selectedItemProperty().isNull()
 		);
+		btnPhoneNumberEdit.disableProperty().bind(
+				lstPhoneNumber.getSelectionModel().selectedItemProperty().isNull()
+		);
+		btnPhoneNumberDelete.disableProperty().bind(
+				lstPhoneNumber.getSelectionModel().selectedItemProperty().isNull()
+		);
+		btnAddressEdit.disableProperty().bind(
+				lstAddress.getSelectionModel().selectedItemProperty().isNull()
+		);
+		btnAddressDelete.disableProperty().bind(
+				lstAddress.getSelectionModel().selectedItemProperty().isNull()
+		);
+		btnURLEdit.disableProperty().bind(
+				lstURL.getSelectionModel().selectedItemProperty().isNull()
+		);
+		btnURLDelete.disableProperty().bind(
+				lstURL.getSelectionModel().selectedItemProperty().isNull()
+		);
 
 		// icons
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
 		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
+
 		btnEMailAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
+		btnPhoneNumberAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
+		btnAddressAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
+		btnURLAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
+
 		btnEMailEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
+		btnPhoneNumberEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
+		btnAddressEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
+		btnURLEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
+
 		btnEMailDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
+		btnPhoneNumberDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
+		btnAddressDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
+		btnURLDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 
 	}
 
@@ -330,20 +468,15 @@ public class RefereeEditDialogController {
         dialogStage.close();
     }
 
+
 	/**
 	 * Opens edit dialog for new data.
 	 *
 	 * @since 0.14.0
 	 */
 	@FXML
-	private void handleEmailAdd() {
-
-		ContactModel newContact = new EMailModel();
-
-		if (showContactEditDialog(newContact)) {
-			lstEMail.getItems().add(newContact);
-		}
-
+	private void handleEMailAdd() {
+		addContact(lstEMail, new EMailModel());
 	}
 
 	/**
@@ -352,12 +485,8 @@ public class RefereeEditDialogController {
 	 * @since 0.14.0
 	 */
 	@FXML
-	private void handleEmailEdit() {
-
-		if (!lstEMail.getSelectionModel().isEmpty()) {
-			showContactEditDialog((ContactModel) lstEMail.getSelectionModel().getSelectedItem());
-		}
-
+	private void handleEMailEdit() {
+		editContact(lstEMail);
 	}
 
 	/**
@@ -366,19 +495,155 @@ public class RefereeEditDialogController {
 	 * @since 0.14.0
 	 */
 	@FXML
-	private void handleEmailDelete() {
+	private void handleEMailDelete() {
+		deleteContact(lstEMail);
+	}
 
-		if (!lstEMail.getSelectionModel().isEmpty()) {
+
+	/**
+	 * Opens edit dialog for new data.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private void handlePhoneNumberAdd() {
+		addContact(lstPhoneNumber, new PhoneNumberModel());
+	}
+
+	/**
+	 * Opens edit dialog for editing selected data.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private void handlePhoneNumberEdit() {
+		editContact(lstPhoneNumber);
+	}
+
+	/**
+	 * Deletes selected data from list.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private void handlePhoneNumberDelete() {
+		deleteContact(lstPhoneNumber);
+	}
+
+
+	/**
+	 * Opens edit dialog for new data.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private void handleAddressAdd() {
+		addContact(lstAddress, new AddressModel());
+	}
+
+	/**
+	 * Opens edit dialog for editing selected data.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private void handleAddressEdit() {
+		editContact(lstAddress);
+	}
+
+	/**
+	 * Deletes selected data from list.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private void handleAddressDelete() {
+		deleteContact(lstAddress);
+	}
+
+
+	/**
+	 * Opens edit dialog for new data.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private void handleURLAdd() {
+		addContact(lstURL, new URLModel());
+	}
+
+	/**
+	 * Opens edit dialog for editing selected data.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private void handleURLEdit() {
+		editContact(lstURL);
+	}
+
+	/**
+	 * Deletes selected data from list.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private void handleURLDelete() {
+		deleteContact(lstURL);
+	}
+
+
+	/**
+	 * Opens edit dialog for new data.
+	 *
+	 * @param theListView list view
+	 * @param newContact new contact
+	 *
+	 * @since 0.14.0
+	 */
+	private void addContact(ListView<ModelClassExt> theListView, ContactModel newContact) {
+
+		if (showContactEditDialog(newContact)) {
+			theListView.getItems().add(newContact);
+		}
+
+	}
+
+	/**
+	 * Opens edit dialog for editing selected data.
+	 *
+	 * @param theListView list view
+	 *
+	 * @since 0.14.0
+	 */
+	private void editContact(ListView<ModelClassExt> theListView) {
+
+		if (!theListView.getSelectionModel().isEmpty()) {
+			showContactEditDialog((ContactModel) theListView.getSelectionModel().getSelectedItem());
+		}
+
+	}
+
+	/**
+	 * Deletes selected data from list.
+	 *
+	 * @param theListView list view
+	 *
+	 * @since 0.14.0
+	 */
+	private void deleteContact(ListView<ModelClassExt> theListView) {
+
+		if (!theListView.getSelectionModel().isEmpty()) {
 
 			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
 					"Löschbestätigung",
-					MessageFormat.format("Soll ''{0}'' gelöscht werden?", lstEMail.getSelectionModel().getSelectedItem().getDisplayText().get()),
+					MessageFormat.format("Soll ''{0}'' gelöscht werden?", theListView.getSelectionModel().getSelectedItem().getDisplayText().get()),
 					null);
 
 			alert.showAndWait()
 					.filter(response -> response == ButtonType.OK)
 					.ifPresent(response -> {
-						lstEMail.getItems().remove(lstEMail.getSelectionModel().getSelectedItem());
+						theListView.getItems().remove(theListView.getSelectionModel().getSelectedItem());
 			});
 
 		}
@@ -399,7 +664,7 @@ public class RefereeEditDialogController {
 
 		Objects.requireNonNull(theContact);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EMailEditDialog");
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane(String.format("%sEditDialog", theContact.getClass().getSimpleName().replace("Model", "")));
 
 		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
 
@@ -413,7 +678,7 @@ public class RefereeEditDialogController {
 		editDialogStage.setScene(scene);
 
 		// Set the referee
-		EMailEditDialogController editController = pneLoad.getValue().getController();
+		AbstractContactEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(editDialogStage);
 		editController.setContact(theContact);
 

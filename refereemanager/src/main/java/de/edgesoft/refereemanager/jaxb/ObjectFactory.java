@@ -126,14 +126,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Picture }
-     * 
-     */
-    public Picture createPicture() {
-        return new Picture();
-    }
-
-    /**
      * Create an instance of {@link TrainingLevel }
      * 
      */

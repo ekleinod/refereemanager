@@ -23,7 +23,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 @author Ekkart Kleinod
-@version 0.12.0
+@version 0.14.0
 @since 0.4.0
 -->
 
@@ -99,7 +99,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="day_of_death" type="LocalDateProperty" minOccurs="0" maxOccurs="1" />
 
 					<!-- 1:n -->
-					<xsd:element name="picture" type="Picture" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="e_mail" type="EMail" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="address" type="Address" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="phone_number" type="PhoneNumber" minOccurs="0" maxOccurs="unbounded" />
@@ -176,16 +175,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="points_practical" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="points_oral" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="passed" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-
-	<xsd:complexType name="Picture">
-		<xsd:complexContent>
-			<xsd:extension base="TitledIDType">
-				<xsd:sequence>
-					<xsd:element name="u_r_l" type="StringProperty" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
