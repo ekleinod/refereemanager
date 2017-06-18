@@ -6,8 +6,11 @@ import java.util.Objects;
 import de.edgesoft.edgeutils.ClassUtils;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.Contact;
 import de.edgesoft.refereemanager.jaxb.EMail;
+import de.edgesoft.refereemanager.jaxb.PhoneNumber;
+import de.edgesoft.refereemanager.jaxb.Picture;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContactModel;
@@ -54,15 +57,11 @@ public abstract class AbstractContactEditDialogController {
 
 	/**
 	 * Classes for introspection when setting/getting values.
-	 *
-	 * @version 0.14.0
 	 */
-	private final Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, Contact.class, EMail.class};
+	private final Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, Contact.class, Address.class, EMail.class, PhoneNumber.class, Picture.class};
 
 	/**
 	 * ID text field.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "id", jaxbclass = IDType.class)
@@ -70,8 +69,6 @@ public abstract class AbstractContactEditDialogController {
 
 	/**
 	 * Checkbox for editor only.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "editorOnly", jaxbclass = Contact.class)
@@ -79,8 +76,6 @@ public abstract class AbstractContactEditDialogController {
 
 	/**
 	 * Combobox for contact types.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "contactType", jaxbclass = Contact.class)
@@ -88,8 +83,6 @@ public abstract class AbstractContactEditDialogController {
 
 	/**
 	 * Checkbox for primary contact.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "isPrimary", jaxbclass = Contact.class)
@@ -97,8 +90,6 @@ public abstract class AbstractContactEditDialogController {
 
 	/**
 	 * Text area for remark.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "remark", jaxbclass = TitledIDType.class)
@@ -107,46 +98,34 @@ public abstract class AbstractContactEditDialogController {
 
 	/**
 	 * OK button.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	protected Button btnOK;
 
 	/**
 	 * Cancel button.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	protected Button btnCancel;
 
 	/**
 	 * Reference to dialog stage.
-	 *
-	 * @version 0.14.0
 	 */
 	protected Stage dialogStage;
 
 	/**
 	 * Current contact.
-	 *
-	 * @version 0.14.0
 	 */
 	protected ContactModel currentContact;
 
 	/**
 	 * OK clicked?.
-	 *
-	 * @version 0.14.0
 	 */
 	protected boolean okClicked;
 
 
 	/**
 	 * Fields of class and abstract subclasses.
-	 *
-	 * @version 0.14.0
 	 */
 	private List<Field> lstDeclaredFields = null;
 
@@ -155,8 +134,6 @@ public abstract class AbstractContactEditDialogController {
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	protected void initialize() {
@@ -191,8 +168,6 @@ public abstract class AbstractContactEditDialogController {
 	 * Sets dialog stage.
 	 *
 	 * @param theStage dialog stage
-	 *
-	 * @version 0.14.0
 	 */
 	public void setDialogStage(final Stage theStage) {
         dialogStage = theStage;
@@ -202,8 +177,6 @@ public abstract class AbstractContactEditDialogController {
 	 * Sets contact to be edited.
 	 *
 	 * @param theContact contact
-	 *
-	 * @version 0.14.0
 	 */
 	public void setContact(ContactModel theContact) {
 
@@ -228,8 +201,6 @@ public abstract class AbstractContactEditDialogController {
 
 	/**
 	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
     private void handleOk() {
@@ -256,8 +227,6 @@ public abstract class AbstractContactEditDialogController {
 	 * Returns if user clicked ok.
 	 *
 	 * @return did user click ok?
-	 *
-	 * @version 0.14.0
 	 */
 	public boolean isOkClicked() {
 		return okClicked;
@@ -265,8 +234,6 @@ public abstract class AbstractContactEditDialogController {
 
 	/**
 	 * Stores non-ok click and closes dialog.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
     private void handleCancel() {

@@ -34,8 +34,6 @@ public class EMailEditDialogController extends AbstractContactEditDialogControll
 
 	/**
 	 * EMail text field.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "eMail", jaxbclass = EMail.class)
@@ -46,8 +44,6 @@ public class EMailEditDialogController extends AbstractContactEditDialogControll
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	@Override
