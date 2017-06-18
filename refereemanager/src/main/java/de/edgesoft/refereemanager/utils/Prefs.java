@@ -132,6 +132,12 @@ public class Prefs {
 			case STAGE_MAXIMIZED:
 				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
 
+			case STATISTICS_TEMPLATE_OVERVIEW:
+				return getPreferences().get(theKey.value(), "statistics/overview.html");
+
+			case TEXTS_TEMPLATE_TEXT:
+				return getPreferences().get(theKey.value(), "text/text.mmd");
+
 			default:
 				return getPreferences().get(theKey.value(), "");
 		}

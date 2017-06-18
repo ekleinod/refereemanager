@@ -1,6 +1,10 @@
 package de.edgesoft.refereemanager.controller;
 
 import java.io.IOException;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,14 +23,24 @@ import de.edgesoft.edgeutils.xchart.ChartFactory;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
+import de.edgesoft.refereemanager.utils.AlertUtils;
+import de.edgesoft.refereemanager.utils.PrefKey;
+import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 /**
@@ -59,32 +73,30 @@ public class StatisticsController {
 
 	/**
 	 * Tab pane.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	private TabPane pneTabs;
 
 	/**
-	 * Chart overview.
-	 *
-	 * @version 0.14.0
+	 * Overview.
 	 */
 	@FXML
-	private SwingNode nodeOverview;
+	private WebView viewOverview;
+
+	/**
+	 * Chart groups.
+	 */
+	@FXML
+	private SwingNode nodeGroups;
 
 	/**
 	 * Chart gender.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	private SwingNode nodeGender;
 
 	/**
 	 * Chart training levels.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	private SwingNode nodeTrainingLevel;
@@ -92,31 +104,31 @@ public class StatisticsController {
 	/**
 	 * Tab overview.
 	 *
-	 * @version 0.10.0
+	 * @since 0.14.0
 	 */
 	@FXML
 	private Tab tabOverview;
 
 	/**
+	 * Tab groups.
+	 */
+	@FXML
+	private Tab tabGroups;
+
+	/**
 	 * Tab gender.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private Tab tabGender;
 
 	/**
 	 * Tab training levels.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private Tab tabTrainingLevel;
 
 	/**
 	 * OK button.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private Button btnOK;
@@ -124,7 +136,7 @@ public class StatisticsController {
 	/**
 	 * Export button.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	@FXML
 	private Button btnExport;
@@ -132,8 +144,6 @@ public class StatisticsController {
 
 	/**
 	 * Reference to dialog stage.
-	 *
-	 * @version 0.10.0
 	 */
 	private Stage dialogStage;
 
@@ -142,8 +152,6 @@ public class StatisticsController {
 	 * Sets dialog stage.
 	 *
 	 * @param theStage dialog stage
-	 *
-	 * @version 0.10.0
 	 */
 	public void setDialogStage(final Stage theStage) {
 		dialogStage = theStage;
@@ -153,8 +161,6 @@ public class StatisticsController {
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private void initialize() {
@@ -162,7 +168,7 @@ public class StatisticsController {
 		// icons
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
 
-		tabOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
+		tabGroups.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
 		tabGender.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-pie.png")));
 		tabTrainingLevel.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-pie.png")));
 
@@ -171,14 +177,41 @@ public class StatisticsController {
 	/**
 	 * Fills statistics.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	public void fillStatistics() {
 
 		ContentModel theContent = (ContentModel) AppModel.getData().getContent();
 
 		// overview
-	    CategoryChart chartOverview = ChartFactory.createCategoryChart(tabOverview.getText(), 30, 30,
+		try {
+
+			Path pathTemplateFile = Paths.get(Prefs.get(PrefKey.PATHS_TEMPLATE), Prefs.get(PrefKey.STATISTICS_TEMPLATE_OVERVIEW));
+
+			Configuration cfgStatistics = new Configuration(Configuration.VERSION_2_3_26);
+			cfgStatistics.setDefaultEncoding(StandardCharsets.UTF_8.name());
+			cfgStatistics.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+			cfgStatistics.setLogTemplateExceptions(false);
+			cfgStatistics.setDirectoryForTemplateLoading(pathTemplateFile.getParent().toFile());
+
+			Template tplOverview = cfgStatistics.getTemplate(pathTemplateFile.getFileName().toString());
+
+			try (StringWriter wrtContent = new StringWriter()) {
+				tplOverview.process(AppModel.getData(), wrtContent);
+				viewOverview.getEngine().loadContent(wrtContent.toString());
+			}
+
+		} catch (IOException | TemplateException e) {
+			Alert alert = AlertUtils.createAlert(AlertType.ERROR, dialogStage,
+					"Fehler",
+					"Die Überblicksstatistik konnte nicht erzeugt werden.",
+					e.getMessage());
+
+			alert.showAndWait();
+		}
+
+		// groups
+	    CategoryChart chartOverview = ChartFactory.createCategoryChart(tabGroups.getText(), 30, 30,
 	    		Optional.of(CategorySeriesRenderStyle.Bar), Optional.empty());
 
 	    chartOverview.getStyler().setXAxisTicksVisible(true);
@@ -188,7 +221,7 @@ public class StatisticsController {
 	    		Arrays.asList(new Number[] {theContent.getReferee().size(), theContent.getTrainee().size(), theContent.getPerson().size(), theContent.getClub().size(), theContent.getTeam().size(), theContent.getLeague().size()})
 				);
 
-	    nodeOverview.setContent(new XChartPanel<>(chartOverview));
+	    nodeGroups.setContent(new XChartPanel<>(chartOverview));
 
 		// gender
 	    PieChart chartGender = ChartFactory.createPieChart(tabGender.getText(), 30, 30, Optional.empty(), Optional.empty());
@@ -236,8 +269,6 @@ public class StatisticsController {
 
 	/**
 	 * Closes dialog.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private void handleOk() {
@@ -247,7 +278,7 @@ public class StatisticsController {
 	/**
 	 * Exports chart.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	@FXML
 	private void handleExport() {

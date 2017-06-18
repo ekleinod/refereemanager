@@ -87,6 +87,8 @@ public enum PrefKey {
 	STAGE_X,
 	STAGE_Y,
 
+	STATISTICS_TEMPLATE_OVERVIEW,
+
 	TEXTS_TEMPLATE_TEXT,
 	;
 

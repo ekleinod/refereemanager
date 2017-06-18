@@ -40,7 +40,7 @@ import javafx.util.Duration;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -58,24 +58,18 @@ import javafx.util.Duration;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.13.0
+ * @version 0.14.0
  * @since 0.10.0
  */
 public class RefereeManager extends Application {
 
 	/**
 	 * Program and doc version.
-	 *
-	 * @version 0.13.0
-	 * @since 0.10.0
 	 */
 	public static final Version VERSION = new VersionExt("0.13.0");
 
 	/**
 	 * Central logger for all classes.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	public static final Logger logger = LogManager.getLogger(RefereeManager.class.getPackage().getName());
 
@@ -83,9 +77,6 @@ public class RefereeManager extends Application {
 	 * Host services delegate.
 	 *
 	 * Needed for opening links in browser etc.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	public static HostServicesDelegate hostServices = null;
 
@@ -93,9 +84,6 @@ public class RefereeManager extends Application {
 	 * Starts the application.
 	 *
 	 * @param args command line arguments
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	public static void main(String[] args) {
 		launch(args);
@@ -107,9 +95,6 @@ public class RefereeManager extends Application {
 	 * and after the system is ready for the application to begin running.
 	 *
 	 * @param primaryStage primary stage
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@Override
 	public void start(Stage primaryStage) {
@@ -129,9 +114,6 @@ public class RefereeManager extends Application {
 	 * Shows splash screen.
 	 *
 	 * Inspired by https://gist.github.com/jewelsea/2305098
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	public void showSplashScreen() {
 
@@ -182,9 +164,6 @@ public class RefereeManager extends Application {
 	 *
 	 * @param theWriter writer
 	 * @param theWriterName name of writer
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	public static void addAppender(final Writer theWriter, final String theWriterName) {
 			final LoggerContext context = LoggerContext.getContext(false);
@@ -201,17 +180,14 @@ public class RefereeManager extends Application {
 	 *
 	 * @param theAppender new appender
 	 * @param theConfig logger configuration
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	private static void updateLoggers(final Appender theAppender, final Configuration theConfig) {
-			final Level level = null;
-			final Filter filter = null;
-			for (final LoggerConfig loggerConfig : theConfig.getLoggers().values()) {
-					loggerConfig.addAppender(theAppender, level, filter);
-			}
-			theConfig.getRootLogger().addAppender(theAppender, level, filter);
+		final Level level = null;
+		final Filter filter = null;
+		for (final LoggerConfig loggerConfig : theConfig.getLoggers().values()) {
+				loggerConfig.addAppender(theAppender, level, filter);
+		}
+		theConfig.getRootLogger().addAppender(theAppender, level, filter);
 	}
 
 }

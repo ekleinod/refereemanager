@@ -853,7 +853,7 @@ public class RefereeCommunicationController {
 			}
 		}
 
-		Configuration tplConfig = new Configuration(Configuration.VERSION_2_3_25);
+		Configuration tplConfig = new Configuration(Configuration.VERSION_2_3_26);
 		tplConfig.setDefaultEncoding(StandardCharsets.UTF_8.name());
 		tplConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 		tplConfig.setLogTemplateExceptions(false);
