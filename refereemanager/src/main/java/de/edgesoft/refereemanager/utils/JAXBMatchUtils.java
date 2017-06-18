@@ -12,10 +12,13 @@ import javax.xml.bind.annotation.XmlElement;
 import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.controller.RefereeEditDialogController;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -113,6 +116,11 @@ public class JAXBMatchUtils {
 
     						((ListView<ModelClassExt>) theFieldObject).setItems(FXCollections.observableArrayList((List<ModelClassExt>) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel)));
 
+    					} else if (theFieldObject instanceof CheckBox) {
+
+    						BooleanProperty bTemp = (BooleanProperty) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
+    						((CheckBox) theFieldObject).setSelected((bTemp == null) ? false : bTemp.getValue());
+
     					}
 
     				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
@@ -206,6 +214,10 @@ public class JAXBMatchUtils {
     						List<ModelClassExt> lstItems = (List<ModelClassExt>) getGetterMethod(theClass, theJAXBField.getName()).invoke(theModel);
     						lstItems.clear();
     						lstItems.addAll(((ListView<ModelClassExt>) theFieldObject).getItems());
+
+    					} else if (theFieldObject instanceof CheckBox) {
+
+							getSetterMethod(theClass, theJAXBField.getName(), BooleanProperty.class).invoke(theModel, new SimpleBooleanProperty(((CheckBox) theFieldObject).isSelected()));
 
     					}
 
