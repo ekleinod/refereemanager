@@ -69,14 +69,12 @@ public class RefereeEditDialogController {
 	/**
 	 * Classes for introspection when setting/getting values.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	private final Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, Person.class};
 
 	/**
 	 * ID text field.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "id", jaxbclass = IDType.class)
@@ -84,8 +82,6 @@ public class RefereeEditDialogController {
 
 	/**
 	 * Title text field.
-	 *
-	 * @version 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "title", jaxbclass = TitledIDType.class)
@@ -93,8 +89,6 @@ public class RefereeEditDialogController {
 
 	/**
 	 * First name text field.
-	 *
-	 * @version 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "firstName", jaxbclass = Person.class)
@@ -102,8 +96,6 @@ public class RefereeEditDialogController {
 
 	/**
 	 * Name text field label.
-	 *
-	 * @version 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "name", jaxbclass = Person.class)
@@ -111,8 +103,6 @@ public class RefereeEditDialogController {
 
 	/**
 	 * Name text field.
-	 *
-	 * @version 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "name", jaxbclass = Person.class)
@@ -120,8 +110,6 @@ public class RefereeEditDialogController {
 
 	/**
 	 * Birthday picker.
-	 *
-	 * @version 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "birthday", jaxbclass = Person.class)
@@ -129,8 +117,6 @@ public class RefereeEditDialogController {
 
 	/**
 	 * Day of death picker.
-	 *
-	 * @version 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "dayOfDeath", jaxbclass = Person.class)
@@ -138,8 +124,6 @@ public class RefereeEditDialogController {
 
 	/**
 	 * Combobox for sex types.
-	 *
-	 * @version 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "sexType", jaxbclass = Person.class)
@@ -147,8 +131,6 @@ public class RefereeEditDialogController {
 
 	/**
 	 * Text area for remark.
-	 *
-	 * @version 0.13.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "remark", jaxbclass = TitledIDType.class)
@@ -158,7 +140,7 @@ public class RefereeEditDialogController {
 	/**
 	 * List view for emails.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "eMail", jaxbclass = Person.class)
@@ -167,7 +149,7 @@ public class RefereeEditDialogController {
 	/**
 	 * Add emails.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	@FXML
 	private Button btnEMailAdd;
@@ -175,7 +157,7 @@ public class RefereeEditDialogController {
 	/**
 	 * Edit emails.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	@FXML
 	private Button btnEMailEdit;
@@ -183,7 +165,7 @@ public class RefereeEditDialogController {
 	/**
 	 * Delete emails.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	@FXML
 	private Button btnEMailDelete;
@@ -191,38 +173,28 @@ public class RefereeEditDialogController {
 
 	/**
 	 * OK button.
-	 *
-	 * @version 0.13.0
 	 */
 	@FXML
 	private Button btnOK;
 
 	/**
 	 * Cancel button.
-	 *
-	 * @version 0.13.0
 	 */
 	@FXML
 	private Button btnCancel;
 
 	/**
 	 * Reference to dialog stage.
-	 *
-	 * @version 0.13.0
 	 */
 	private Stage dialogStage;
 
 	/**
 	 * Current event.
-	 *
-	 * @version 0.13.0
 	 */
 	private Referee currentReferee;
 
 	/**
 	 * OK clicked?.
-	 *
-	 * @version 0.13.0
 	 */
 	private boolean okClicked;
 
@@ -231,8 +203,6 @@ public class RefereeEditDialogController {
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
-	 *
-	 * @version 0.14.0
 	 */
 	@FXML
 	private void initialize() {
@@ -287,8 +257,6 @@ public class RefereeEditDialogController {
 	 * Sets dialog stage.
 	 *
 	 * @param theStage dialog stage
-	 *
-	 * @version 0.13.0
 	 */
 	public void setDialogStage(final Stage theStage) {
         dialogStage = theStage;
@@ -298,8 +266,6 @@ public class RefereeEditDialogController {
 	 * Sets referee to be edited.
 	 *
 	 * @param thePerson referee
-	 *
-	 * @version 0.13.0
 	 */
 	public void setPerson(PersonModel thePerson) {
 
@@ -324,8 +290,6 @@ public class RefereeEditDialogController {
 
 	/**
 	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
-	 *
-	 * @version 0.13.0
 	 */
 	@FXML
     private void handleOk() {
@@ -352,8 +316,6 @@ public class RefereeEditDialogController {
 	 * Returns if user clicked ok.
 	 *
 	 * @return did user click ok?
-	 *
-	 * @version 0.13.0
 	 */
 	public boolean isOkClicked() {
 		return okClicked;
@@ -361,8 +323,6 @@ public class RefereeEditDialogController {
 
 	/**
 	 * Stores non-ok click and closes dialog.
-	 *
-	 * @version 0.13.0
 	 */
 	@FXML
     private void handleCancel() {
@@ -373,7 +333,7 @@ public class RefereeEditDialogController {
 	/**
 	 * Opens edit dialog for new data.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	@FXML
 	private void handleEmailAdd() {
@@ -389,7 +349,7 @@ public class RefereeEditDialogController {
 	/**
 	 * Opens edit dialog for editing selected data.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	@FXML
 	private void handleEmailEdit() {
@@ -403,7 +363,7 @@ public class RefereeEditDialogController {
 	/**
 	 * Deletes selected data from list.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	@FXML
 	private void handleEmailDelete() {
@@ -433,7 +393,7 @@ public class RefereeEditDialogController {
 	 * @param theContact the contact to be edited
 	 * @return true if the user clicked OK, false otherwise.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	private boolean showContactEditDialog(ContactModel theContact) {
 
