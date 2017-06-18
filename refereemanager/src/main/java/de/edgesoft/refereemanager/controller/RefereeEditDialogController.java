@@ -1,9 +1,11 @@
 package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import de.edgesoft.edgeutils.ClassUtils;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
@@ -303,6 +305,13 @@ public class RefereeEditDialogController {
 	 */
 	private boolean okClicked;
 
+	/**
+	 * Fields of class and abstract subclasses.
+	 *
+	 * @since 0.14.0
+	 */
+	private List<Field> lstDeclaredFields = null;
+
 
 	/**
 	 * Initializes the controller class.
@@ -325,8 +334,11 @@ public class RefereeEditDialogController {
         lstAddress.setCellFactory(ComboBoxUtils.getCallback());
         lstURL.setCellFactory(ComboBoxUtils.getCallback());
 
+		// declared fields
+        lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
+
 		// required fields
-        for (Field theFXMLField : getClass().getDeclaredFields()) {
+        for (Field theFXMLField : lstDeclaredFields) {
 
         	try {
         		Object fieldObject = theFXMLField.get(this);
@@ -411,7 +423,7 @@ public class RefereeEditDialogController {
 
         currentReferee = (Referee) thePerson;
 
-        for (Field theFXMLField : getClass().getDeclaredFields()) {
+        for (Field theFXMLField : lstDeclaredFields) {
 
         	try {
         		Object fieldObject = theFXMLField.get(this);
@@ -432,7 +444,7 @@ public class RefereeEditDialogController {
 	@FXML
     private void handleOk() {
 
-        for (Field theFXMLField : getClass().getDeclaredFields()) {
+        for (Field theFXMLField : lstDeclaredFields) {
 
         	try {
         		Object fieldObject = theFXMLField.get(this);

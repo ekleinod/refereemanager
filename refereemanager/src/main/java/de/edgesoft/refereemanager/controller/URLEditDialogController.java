@@ -1,10 +1,11 @@
-package de.edgesoft.refereemanager.model;
-
+package de.edgesoft.refereemanager.controller;
 import de.edgesoft.refereemanager.jaxb.URL;
-import javafx.beans.property.SimpleStringProperty;
+import de.edgesoft.refereemanager.utils.JAXBMatch;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 
 /**
- * URL model, additional methods for jaxb model class.
+ * Controller for the url edit dialog scene.
  *
  * ## Legal stuff
  *
@@ -26,24 +27,34 @@ import javafx.beans.property.SimpleStringProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
- * @since 0.8.0
+ * @version 0.14.0
+ * @since 0.14.0
  */
-public class URLModel extends URL {
+public class URLEditDialogController extends AbstractContactEditDialogController {
 
 	/**
-	 * Display title.
-	 *
-	 * @return display title
+	 * URL text field.
 	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "URL", jaxbclass = URL.class)
+	protected TextField txtURL;
+
+
+	/**
+	 * Initializes the controller class.
+	 *
+	 * This method is automatically called after the fxml file has been loaded.
+	 */
+	@FXML
 	@Override
-	public SimpleStringProperty getDisplayTitle() {
+	protected void initialize() {
 
-		if (isPrivateOnly && !isPrivate()) {
-			return null;
-		}
+		super.initialize();
 
-		return getURL();
+		// enable ok button for valid entries only
+		btnOK.disableProperty().bind(
+				txtURL.textProperty().isEmpty()
+		);
 
 	}
 

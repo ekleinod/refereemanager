@@ -11,6 +11,7 @@ import de.edgesoft.refereemanager.jaxb.Contact;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContactModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
@@ -57,7 +58,7 @@ public abstract class AbstractContactEditDialogController {
 	/**
 	 * Classes for introspection when setting/getting values.
 	 */
-	private final Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, Contact.class, Address.class, EMail.class, PhoneNumber.class};
+	private final Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, Contact.class, Address.class, EMail.class, PhoneNumber.class, URL.class};
 
 	/**
 	 * ID text field.
