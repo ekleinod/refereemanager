@@ -71,135 +71,101 @@ public class AppLayoutController {
 
 	/**
 	 * Application icon.
-	 *
-	 * @version 0.10.0
 	 */
 	public static final Image ICON = Resources.loadImage("images/icon-32.png");
 
 	/**
 	 * App border pane.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private BorderPane appPane;
 
 	/**
 	 * Menu item program -> preferences.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private MenuItem mnuProgramPreferences;
 
 	/**
 	 * Menu item program -> quit.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private MenuItem mnuProgramQuit;
 
 	/**
 	 * Menu item file -> new.
-	 *
-	 * @version 6.0.0
 	 */
 	@FXML
 	private MenuItem mnuFileNew;
 
 	/**
 	 * Menu item file -> open.
-	 *
-	 * @version 6.0.0
 	 */
 	@FXML
 	private MenuItem mnuFileOpen;
 
 	/**
 	 * Menu item file -> save.
-	 *
-	 * @version 6.0.0
 	 */
 	@FXML
 	private MenuItem mnuFileSave;
 
 	/**
 	 * Menu item file -> save as.
-	 *
-	 * @version 6.0.0
 	 */
 	@FXML
 	private MenuItem mnuFileSaveAs;
 
 	/**
 	 * Menu item referee -> overview.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private MenuItem mnuRefereeOverview;
 
 	/**
 	 * Menu item referee -> communication.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private MenuItem mnuRefereeCommunication;
 
 	/**
 	 * Menu item statistics -> data.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private MenuItem mnuStatisticsData;
 
 	/**
 	 * Menu item help -> about.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private MenuItem mnuHelpAbout;
 
 	/**
 	 * Main toolbar.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private ToolBar barMain;
 
 	/**
 	 * Button program -> quit.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private Button btnProgramQuit;
 
 	/**
 	 * Button referee -> overview.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private Button btnRefereeOverview;
 
 	/**
 	 * Button referee -> communication.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private Button btnRefereeCommunication;
 
 	/**
 	 * Button statistics -> data.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private Button btnStatisticsData;
@@ -207,7 +173,7 @@ public class AppLayoutController {
 	/**
 	 * Button program -> preferences.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private Button btnProgramPreferences;
@@ -215,7 +181,7 @@ public class AppLayoutController {
 	/**
 	 * Button help -> about.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	@FXML
 	private Button btnHelpAbout;
@@ -223,8 +189,6 @@ public class AppLayoutController {
 
 	/**
 	 * Primary stage.
-	 *
-	 * @version 0.10.0
 	 */
 	private Stage primaryStage = null;
 
@@ -234,7 +198,7 @@ public class AppLayoutController {
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private void initialize() {
@@ -267,8 +231,6 @@ public class AppLayoutController {
 	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
 	 *
 	 * @param thePrimaryStage primary stage
-	 *
-	 * @version 0.10.0
 	 */
 	public void initController(final Stage thePrimaryStage) {
 
@@ -330,8 +292,6 @@ public class AppLayoutController {
 
 	/**
 	 * Initializes the data.
-	 *
-	 * @version 0.10.0
 	 */
 	private void initData() {
 
@@ -345,8 +305,6 @@ public class AppLayoutController {
 
 	/**
 	 * Creates new data.
-	 *
-	 * @version 0.10.0
 	 */
 	private void newData() {
 
@@ -375,8 +333,6 @@ public class AppLayoutController {
 
 	/**
 	 * Sets the app title.
-	 *
-	 * @version 0.10.0
 	 */
 	public void setAppTitle() {
 
@@ -398,7 +354,7 @@ public class AppLayoutController {
 	 *
 	 * @param theFilename filename
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	private void openData(final String theFilename) {
 
@@ -434,8 +390,6 @@ public class AppLayoutController {
 	 * Program menu preferences.
 	 *
 	 * Opens the preferences edit dialog.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private void handleProgramPreferences() {
@@ -465,8 +419,6 @@ public class AppLayoutController {
 
 	/**
 	 * Program menu exit.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	public void handleProgramExit() {
@@ -477,8 +429,6 @@ public class AppLayoutController {
 
 	/**
 	 * File menu new.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private void handleFileNew() {
@@ -489,8 +439,6 @@ public class AppLayoutController {
 
 	/**
 	 * File menu open.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private void handleFileOpen() {
@@ -520,8 +468,6 @@ public class AppLayoutController {
 
 	/**
 	 * File menu save.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	public void handleFileSave() {
@@ -534,8 +480,6 @@ public class AppLayoutController {
 
 	/**
 	 * File menu save as.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private void handleFileSaveAs() {
@@ -564,8 +508,6 @@ public class AppLayoutController {
 
 	/**
 	 * Help menu about.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private void handleHelpAbout() {
@@ -587,8 +529,6 @@ public class AppLayoutController {
 
 	/**
 	 * Menu referee -> overview.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private void handleRefereeOverview() {
@@ -607,8 +547,6 @@ public class AppLayoutController {
 
 	/**
 	 * Menu referee -> communication.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private void handleRefereeCommunication() {
@@ -629,8 +567,6 @@ public class AppLayoutController {
 	 * Menu statistics -> data.
 	 *
 	 * Shows the data statistics.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private void handleStatisticsData() {
@@ -661,8 +597,6 @@ public class AppLayoutController {
 	 * Check if data is modified, show corresponding dialog, save data if needed.
 	 *
 	 * @return did user select continue (true) or cancel (false)?
-	 *
-	 * @version 0.10.0
 	 */
 	private boolean checkModified() {
 
@@ -701,8 +635,6 @@ public class AppLayoutController {
 	 * Saves the data.
 	 *
 	 * @param theFilename filename
-	 *
-	 * @version 0.10.0
 	 */
 	private void saveData(final String theFilename) {
 
@@ -738,8 +670,6 @@ public class AppLayoutController {
 	 * Returns primary stage.
 	 *
 	 * @return primary stage
-	 *
-	 * @version 0.10.0
 	 */
 	public Stage getPrimaryStage() {
 		return primaryStage;
