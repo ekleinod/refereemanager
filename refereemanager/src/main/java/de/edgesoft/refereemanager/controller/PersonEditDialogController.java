@@ -12,6 +12,7 @@ import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContactModel;
@@ -69,77 +70,77 @@ import javafx.stage.Stage;
  * @version 0.14.0
  * @since 0.13.0
  */
-public class RefereeEditDialogController {
+public class PersonEditDialogController {
 
 	/**
 	 * Classes for introspection when setting/getting values.
 	 *
 	 * @since 0.14.0
 	 */
-	private final Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, Person.class};
+	private final Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class};
 
 	/**
 	 * ID text field.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "id", jaxbclass = IDType.class)
-	private TextField txtID;
+	protected TextField txtID;
 
 	/**
 	 * Title text field.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "title", jaxbclass = TitledIDType.class)
-	private TextField txtTitle;
+	protected TextField txtTitle;
 
 	/**
 	 * First name text field.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "firstName", jaxbclass = Person.class)
-	private TextField txtFirstName;
+	protected TextField txtFirstName;
 
 	/**
 	 * Name text field label.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "name", jaxbclass = Person.class)
-	private Label lblName;
+	protected Label lblName;
 
 	/**
 	 * Name text field.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "name", jaxbclass = Person.class)
-	private TextField txtName;
+	protected TextField txtName;
 
 	/**
 	 * Birthday picker.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "birthday", jaxbclass = Person.class)
-	private DatePicker pckBirthday;
+	protected DatePicker pckBirthday;
 
 	/**
 	 * Day of death picker.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "dayOfDeath", jaxbclass = Person.class)
-	private DatePicker pckDayOfDeath;
+	protected DatePicker pckDayOfDeath;
 
 	/**
 	 * Combobox for sex types.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "sexType", jaxbclass = Person.class)
-	private ComboBox<ModelClassExt> cboSexType;
+	protected ComboBox<ModelClassExt> cboSexType;
 
 	/**
 	 * Text area for remark.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "remark", jaxbclass = TitledIDType.class)
-	private TextArea txtRemark;
+	protected TextArea txtRemark;
 
 
 	/**
@@ -149,7 +150,7 @@ public class RefereeEditDialogController {
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "eMail", jaxbclass = Person.class)
-	private ListView<ModelClassExt> lstEMail;
+	protected ListView<ModelClassExt> lstEMail;
 
 	/**
 	 * Add email.
@@ -183,7 +184,7 @@ public class RefereeEditDialogController {
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "phoneNumber", jaxbclass = Person.class)
-	private ListView<ModelClassExt> lstPhoneNumber;
+	protected ListView<ModelClassExt> lstPhoneNumber;
 
 	/**
 	 * Add phone number.
@@ -217,7 +218,7 @@ public class RefereeEditDialogController {
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "address", jaxbclass = Person.class)
-	private ListView<ModelClassExt> lstAddress;
+	protected ListView<ModelClassExt> lstAddress;
 
 	/**
 	 * Add address.
@@ -251,7 +252,7 @@ public class RefereeEditDialogController {
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "URL", jaxbclass = Person.class)
-	private ListView<ModelClassExt> lstURL;
+	protected ListView<ModelClassExt> lstURL;
 
 	/**
 	 * Add URL.
@@ -296,9 +297,9 @@ public class RefereeEditDialogController {
 	private Stage dialogStage;
 
 	/**
-	 * Current event.
+	 * Current person.
 	 */
-	private Referee currentReferee;
+	private PersonModel currentPerson;
 
 	/**
 	 * OK clicked?.
@@ -421,7 +422,7 @@ public class RefereeEditDialogController {
 
 		Objects.requireNonNull(thePerson);
 
-        currentReferee = (Referee) thePerson;
+        currentPerson = thePerson;
 
         for (Field theFXMLField : lstDeclaredFields) {
 
@@ -449,7 +450,7 @@ public class RefereeEditDialogController {
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentReferee, theClasses);
+        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentPerson, theClasses);
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();

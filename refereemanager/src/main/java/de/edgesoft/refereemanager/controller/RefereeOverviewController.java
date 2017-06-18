@@ -40,7 +40,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * Controller for the referee list scene.
+ * Controller for the referee overview scene.
  *
  * ## Legal stuff
  *
@@ -528,19 +528,7 @@ public class RefereeOverviewController {
 
 		Objects.requireNonNull(thePerson);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = null;
-
-		if (ctlRefList.getTabReferees().isSelected()) {
-			pneLoad = Resources.loadPane("RefereeEditDialog");
-		}
-
-		if (ctlRefList.getTabTrainees().isSelected()) {
-			pneLoad = Resources.loadPane("TraineeEditDialog");
-		}
-
-		if (ctlRefList.getTabPeople().isSelected()) {
-			pneLoad = Resources.loadPane("PersonEditDialog");
-		}
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PersonEditDialog");
 
 		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
 
@@ -557,7 +545,7 @@ public class RefereeOverviewController {
 		dialogStage.setScene(scene);
 
 		// Set the referee
-		RefereeEditDialogController editController = pneLoad.getValue().getController();
+		PersonEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(dialogStage);
 		editController.setPerson(thePerson);
 

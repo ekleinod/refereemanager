@@ -61,21 +61,21 @@ public class RefereeListController {
 	/**
 	 * Text for empty table: no data.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	private static final String TABLE_NO_DATA = "Es wurden noch keine {0} eingegeben.";
 
 	/**
 	 * Text for empty table: filtered.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	private static final String TABLE_FILTERED = "Die Filterung schließt alle {0} aus.";
 
 	/**
 	 * Tab pane content.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private TabPane tabPaneContent;
@@ -83,15 +83,13 @@ public class RefereeListController {
 	/**
 	 * Tab referees.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private Tab tabReferees;
 
 	/**
 	 * Table view referees.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private TableView<Referee> tblReferees;
@@ -99,47 +97,37 @@ public class RefereeListController {
 	/**
 	 * ID column.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	@FXML
 	private TableColumn<PersonModel, String> colRefereesID;
 
 	/**
 	 * Name column.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private TableColumn<PersonModel, String> colRefereesName;
 
 	/**
 	 * First name column.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private TableColumn<PersonModel, String> colRefereesFirstName;
 
 	/**
 	 * Training level column.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private TableColumn<RefereeModel, String> colRefereesTrainingLevel;
 
 	/**
 	 * Club column.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private TableColumn<RefereeModel, String> colRefereesClub;
 
 	/**
 	 * Birthday column.
-	 *
-	 * @version 0.12.0
 	 */
 	@FXML
 	private TableColumn<PersonModel, LocalDate> colRefereesBirthday;
@@ -147,54 +135,42 @@ public class RefereeListController {
 	/**
 	 * Next update column.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private TableColumn<RefereeModel, LocalDate> colRefereesUpdate;
 
 	/**
 	 * List of referees.
-	 *
-	 * @version 0.10.0
 	 */
 	private FilteredList<Referee> lstReferees;
 
 	/**
 	 * Label filter.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private Label lblRefereesFilter;
 
 	/**
 	 * Checkbox filter active.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private CheckBox chkRefereesActive;
 
 	/**
 	 * Checkbox filter inactive.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private CheckBox chkRefereesInactive;
 
 	/**
 	 * Checkbox filter email.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private CheckBox chkRefereesEMail;
 
 	/**
 	 * Checkbox filter letter only.
-	 *
-	 * @version 0.10.0
 	 */
 	@FXML
 	private CheckBox chkRefereesLetterOnly;
@@ -203,7 +179,7 @@ public class RefereeListController {
 	/**
 	 * Tab trainees.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private Tab tabTrainees;
@@ -211,15 +187,23 @@ public class RefereeListController {
 	/**
 	 * Table view trainees.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private TableView<Trainee> tblTrainees;
 
 	/**
+	 * ID column.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private TableColumn<PersonModel, String> colTraineesID;
+
+	/**
 	 * Name column.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private TableColumn<PersonModel, String> colTraineesName;
@@ -227,7 +211,7 @@ public class RefereeListController {
 	/**
 	 * First name column.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private TableColumn<PersonModel, String> colTraineesFirstName;
@@ -235,7 +219,7 @@ public class RefereeListController {
 	/**
 	 * Club column.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private TableColumn<RefereeModel, String> colTraineesClub;
@@ -243,7 +227,7 @@ public class RefereeListController {
 	/**
 	 * Birthday column.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private TableColumn<PersonModel, LocalDate> colTraineesBirthday;
@@ -251,7 +235,7 @@ public class RefereeListController {
 	/**
 	 * List of trainees.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	private FilteredList<Trainee> lstTrainees;
 
@@ -259,7 +243,7 @@ public class RefereeListController {
 	/**
 	 * Tab people.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private Tab tabPeople;
@@ -267,15 +251,23 @@ public class RefereeListController {
 	/**
 	 * Table view trainees.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private TableView<Person> tblPeople;
 
 	/**
+	 * ID column.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private TableColumn<PersonModel, String> colPeopleID;
+
+	/**
 	 * Name column.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private TableColumn<PersonModel, String> colPeopleName;
@@ -283,7 +275,7 @@ public class RefereeListController {
 	/**
 	 * First name column.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private TableColumn<PersonModel, String> colPeopleFirstName;
@@ -291,7 +283,7 @@ public class RefereeListController {
 	/**
 	 * Birthday column.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private TableColumn<PersonModel, LocalDate> colPeopleBirthday;
@@ -299,7 +291,7 @@ public class RefereeListController {
 	/**
 	 * List of people.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	private FilteredList<Person> lstPeople;
 
@@ -308,8 +300,6 @@ public class RefereeListController {
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
-	 *
-	 * @version 0.12.0
 	 */
 	@FXML
 	private void initialize() {
@@ -329,6 +319,9 @@ public class RefereeListController {
 		colRefereesUpdate.setVisible(false);
 
 		// hook data to columns (trainees)
+		colTraineesID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+		colTraineesID.setVisible(false);
+
 		colTraineesName.setCellValueFactory(cellData -> cellData.getValue().getName());
 		colTraineesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
 		colTraineesClub.setCellValueFactory(cellData -> (cellData.getValue().getMember() == null) ? null : cellData.getValue().getMember().getDisplayTitle());
@@ -337,6 +330,9 @@ public class RefereeListController {
 		colTraineesBirthday.setVisible(false);
 
 		// hook data to columns (people)
+		colPeopleID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+		colPeopleID.setVisible(false);
+
 		colPeopleName.setCellValueFactory(cellData -> cellData.getValue().getName());
 		colPeopleFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
 
@@ -360,8 +356,6 @@ public class RefereeListController {
 
 	/**
 	 * Sets table items.
-	 *
-	 * @version 0.12.0
 	 */
 	public void setItems() {
 
@@ -406,8 +400,6 @@ public class RefereeListController {
 
 	/**
 	 * Handles filter change events.
-	 *
-	 * @version 0.12.0
 	 */
 	@SuppressWarnings("unchecked")
 	@FXML
@@ -448,7 +440,7 @@ public class RefereeListController {
 	/**
 	 * Handles tab change events.
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private void handleTabChange() {
@@ -460,7 +452,7 @@ public class RefereeListController {
 	 *
 	 * @param theSelectionMode selection mode
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	public void setSelectionMode(final SelectionMode theSelectionMode) {
 		tblReferees.getSelectionModel().setSelectionMode(theSelectionMode);
@@ -473,7 +465,7 @@ public class RefereeListController {
 	 *
 	 * @return selection model
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	public TableViewSelectionModel<Referee> getRefereesSelectionModel() {
 		return tblReferees.getSelectionModel();
@@ -484,7 +476,7 @@ public class RefereeListController {
 	 *
 	 * @return selection model
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	public TableViewSelectionModel<Trainee> getTraineesSelectionModel() {
 		return tblTrainees.getSelectionModel();
@@ -495,7 +487,7 @@ public class RefereeListController {
 	 *
 	 * @return selection model
 	 *
-	 * @version 0.12.0
+	 * @since 0.12.0
 	 */
 	public TableViewSelectionModel<Person> getPeopleSelectionModel() {
 		return tblPeople.getSelectionModel();
@@ -506,7 +498,7 @@ public class RefereeListController {
 	 *
 	 * @return tab pane
 	 *
-	 * @version 0.13.0
+	 * @since 0.13.0
 	 */
 	public TabPane getContentTab() {
 		return tabPaneContent;
@@ -517,7 +509,7 @@ public class RefereeListController {
 	 *
 	 * @return referees tab
 	 *
-	 * @version 0.13.0
+	 * @since 0.13.0
 	 */
 	public Tab getTabReferees() {
 		return tabReferees;
@@ -528,7 +520,7 @@ public class RefereeListController {
 	 *
 	 * @return trainees tab
 	 *
-	 * @version 0.13.0
+	 * @since 0.13.0
 	 */
 	public Tab getTabTrainees() {
 		return tabTrainees;
@@ -539,7 +531,7 @@ public class RefereeListController {
 	 *
 	 * @return people tab
 	 *
-	 * @version 0.13.0
+	 * @since 0.13.0
 	 */
 	public Tab getTabPeople() {
 		return tabPeople;
@@ -550,7 +542,7 @@ public class RefereeListController {
 	 *
 	 * @return sorted selection from all tabs
 	 *
-	 * @version 0.13.0
+	 * @since 0.13.0
 	 */
 	public ObservableList<PersonModel> getAllTabSelection() {
 
@@ -568,7 +560,7 @@ public class RefereeListController {
 	 *
 	 * @return sorted selection from visible tabs
 	 *
-	 * @version 0.13.0
+	 * @since 0.13.0
 	 */
 	public ObservableList<PersonModel> getVisibleTabSelection() {
 
@@ -592,7 +584,7 @@ public class RefereeListController {
 	 *
 	 * @return sorted selection from referees tab
 	 *
-	 * @version 0.13.0
+	 * @since 0.13.0
 	 */
 	public ObservableList<PersonModel> getTabRefereesSelection() {
 		return FXCollections.observableList(tblReferees.getSelectionModel().getSelectedItems().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
@@ -603,7 +595,7 @@ public class RefereeListController {
 	 *
 	 * @return sorted selection from trainees tab
 	 *
-	 * @version 0.13.0
+	 * @since 0.13.0
 	 */
 	public ObservableList<PersonModel> getTabTraineesSelection() {
 		return FXCollections.observableList(tblTrainees.getSelectionModel().getSelectedItems().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
@@ -614,7 +606,7 @@ public class RefereeListController {
 	 *
 	 * @return sorted selection from people tab
 	 *
-	 * @version 0.13.0
+	 * @since 0.13.0
 	 */
 	public ObservableList<PersonModel> getTabPeopleSelection() {
 		List<PersonModel> lstReturn = new ArrayList<>();
