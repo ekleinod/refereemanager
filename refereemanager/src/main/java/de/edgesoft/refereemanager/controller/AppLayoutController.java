@@ -10,6 +10,7 @@ import java.util.Optional;
 import de.edgesoft.edgeutils.EdgeUtilsException;
 import de.edgesoft.edgeutils.commons.Info;
 import de.edgesoft.edgeutils.files.JAXBFiles;
+import de.edgesoft.edgeutils.javafx.ButtonUtils;
 import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
@@ -63,7 +64,7 @@ import javafx.stage.Stage;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.14.0
  * @since 0.10.0
  */
 public class AppLayoutController {
@@ -211,6 +212,14 @@ public class AppLayoutController {
 	@FXML
 	private Button btnProgramPreferences;
 
+	/**
+	 * Button help -> about.
+	 *
+	 * @version 0.14.0
+	 */
+	@FXML
+	private Button btnHelpAbout;
+
 
 	/**
 	 * Primary stage.
@@ -231,10 +240,10 @@ public class AppLayoutController {
 	private void initialize() {
 
 		// icons
-		mnuProgramPreferences.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/configure.png")));
-		btnProgramPreferences.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/configure.png")));
 		mnuProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/application-exit.png")));
-		btnProgramQuit.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/application-exit.png")));
+		ButtonUtils.adaptButton(btnProgramQuit, mnuProgramQuit);
+		mnuProgramPreferences.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/configure.png")));
+		ButtonUtils.adaptButton(btnProgramPreferences, mnuProgramPreferences);
 
 		mnuFileNew.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-new.png")));
 		mnuFileOpen.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-open.png")));
@@ -242,14 +251,15 @@ public class AppLayoutController {
 		mnuFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-save-as.png")));
 
 		mnuRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
-		btnRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
+		ButtonUtils.adaptButton(btnRefereeOverview, mnuRefereeOverview);
 		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
-		btnRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
+		ButtonUtils.adaptButton(btnRefereeCommunication, mnuRefereeCommunication);
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
-		btnStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
+		ButtonUtils.adaptButton(btnStatisticsData, mnuStatisticsData);
 
 		mnuHelpAbout.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/help-about.png")));
+		ButtonUtils.adaptButton(btnHelpAbout, mnuHelpAbout);
 
 	}
 

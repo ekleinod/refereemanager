@@ -7,12 +7,11 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="appPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.AppLayoutController">
+<BorderPane fx:id="appPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.AppLayoutController">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -93,31 +92,16 @@
             </MenuBar>
             <ToolBar fx:id="barMain" prefHeight="40.0" prefWidth="200.0">
               <items>
-                <Button fx:id="btnProgramQuit" mnemonicParsing="false" onAction="#handleProgramExit">
-                     <tooltip>
-                        <Tooltip text="Programm beenden." />
-                     </tooltip></Button>
+                <Button fx:id="btnProgramQuit" mnemonicParsing="false" onAction="#handleProgramExit" />
                   <Separator prefWidth="10.0" />
-                  <Button fx:id="btnRefereeOverview" mnemonicParsing="false" onAction="#handleRefereeOverview">
-                     <tooltip>
-                        <Tooltip text="SR-Übersicht." />
-                     </tooltip></Button>
-                  <Button fx:id="btnRefereeCommunication" mnemonicParsing="false" onAction="#handleRefereeCommunication">
-                     <tooltip>
-                        <Tooltip text="SR-Kommunikation." />
-                     </tooltip>
-                  </Button>
+                  <Button fx:id="btnRefereeOverview" mnemonicParsing="false" onAction="#handleRefereeOverview" />
+                  <Button fx:id="btnRefereeCommunication" mnemonicParsing="false" onAction="#handleRefereeCommunication" />
                   <Separator prefWidth="10.0" />
-                  <Button fx:id="btnStatisticsData" mnemonicParsing="false" onAction="#handleStatisticsData">
-                     <tooltip>
-                        <Tooltip text="Statistik anzeigen." />
-                     </tooltip></Button>
+                  <Button fx:id="btnStatisticsData" mnemonicParsing="false" onAction="#handleStatisticsData" />
                   <Separator prefWidth="10.0" />
-                  <Button fx:id="btnProgramPreferences" mnemonicParsing="false" onAction="#handleProgramPreferences">
-                     <tooltip>
-                        <Tooltip text="Programmeinstellungen." />
-                     </tooltip>
-                  </Button>
+                  <Button fx:id="btnProgramPreferences" mnemonicParsing="false" onAction="#handleProgramPreferences" />
+                  <Separator prefWidth="10.0" />
+                  <Button fx:id="btnHelpAbout" mnemonicParsing="false" onAction="#handleHelpAbout" />
               </items>
             </ToolBar>
          </children>
