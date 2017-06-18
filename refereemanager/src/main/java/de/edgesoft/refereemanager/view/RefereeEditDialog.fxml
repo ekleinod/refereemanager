@@ -120,13 +120,14 @@
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
                                     <Label text="E-Mail">
@@ -134,7 +135,6 @@
                                           <Insets bottom="10.0" top="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <ListView fx:id="lstEMail" minHeight="-Infinity" prefHeight="50.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
                                     <ButtonBar buttonMinWidth="20.0" GridPane.columnIndex="1">
                                       <buttons>
                                         <Button fx:id="btnEMailAdd" mnemonicParsing="false" onAction="#handleEmailAdd" />
@@ -142,6 +142,59 @@
                                           <Button fx:id="btnEMailDelete" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleEmailDelete" />
                                       </buttons>
                                     </ButtonBar>
+                                    <ListView fx:id="lstEMail" minHeight="-Infinity" prefHeight="50.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+                                    <Label text="Telefon" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <ButtonBar buttonMinWidth="20.0" layoutX="165.0" layoutY="15.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <buttons>
+                                          <Button fx:id="btnPhoneNumberAdd" mnemonicParsing="false" onAction="#handlePhoneNumberAdd" />
+                                          <Button fx:id="btnPhoneNumberEdit" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handlePhoneNumberEdit" />
+                                          <Button fx:id="btnPhoneNumberDelete" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handlePhoneNumberDelete" />
+                                       </buttons>
+                                    </ButtonBar>
+                                    <ListView fx:id="lstPhoneNumber" minHeight="-Infinity" prefHeight="50.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
+                                    <Label text="Adresse" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <ButtonBar buttonMinWidth="20.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <buttons>
+                                          <Button fx:id="btnAddressAdd" mnemonicParsing="false" onAction="#handleAddressAdd" />
+                                          <Button fx:id="btnAddressEdit" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleAddressEdit" />
+                                          <Button fx:id="btnAddressDelete" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleAddressDelete" />
+                                       </buttons>
+                                    </ButtonBar>
+                                    <ListView fx:id="lstAddress" minHeight="-Infinity" prefHeight="50.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" />
+                                    <Label text="Bild" GridPane.rowIndex="6">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <ButtonBar buttonMinWidth="20.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                       <buttons>
+                                          <Button fx:id="btnPictureAdd" mnemonicParsing="false" onAction="#handlePictureAdd" />
+                                          <Button fx:id="btnPictureEdit" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handlePictureEdit" />
+                                          <Button fx:id="btnPictureDelete" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handlePictureDelete" />
+                                       </buttons>
+                                    </ButtonBar>
+                                    <ListView fx:id="lstPicture" minHeight="-Infinity" prefHeight="50.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="7" />
+                                    <Label text="URL" GridPane.rowIndex="8">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <ButtonBar buttonMinWidth="20.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                       <buttons>
+                                          <Button fx:id="btnURLAdd" mnemonicParsing="false" onAction="#handleURLAdd" />
+                                          <Button fx:id="btnURLEdit" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleURLEdit" />
+                                          <Button fx:id="btnURLDelete" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleURLDelete" />
+                                       </buttons>
+                                    </ButtonBar>
+                                    <ListView fx:id="lstURL" minHeight="-Infinity" prefHeight="50.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="9" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

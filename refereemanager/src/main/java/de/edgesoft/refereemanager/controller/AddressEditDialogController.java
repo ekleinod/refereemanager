@@ -1,11 +1,11 @@
 package de.edgesoft.refereemanager.controller;
-import de.edgesoft.refereemanager.jaxb.EMail;
+import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 /**
- * Controller for the email edit dialog scene.
+ * Controller for the address edit dialog scene.
  *
  * ## Legal stuff
  *
@@ -30,14 +30,35 @@ import javafx.scene.control.TextField;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class EMailEditDialogController extends AbstractContactEditDialogController {
+public class AddressEditDialogController extends AbstractContactEditDialogController {
 
 	/**
-	 * EMail text field.
+	 * Street text field.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "eMail", jaxbclass = EMail.class)
-	protected TextField txtEMail;
+	@JAXBMatch(jaxbfield = "street", jaxbclass = Address.class)
+	protected TextField txtStreet;
+
+	/**
+	 * Number text field.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "number", jaxbclass = Address.class)
+	protected TextField txtNumber;
+
+	/**
+	 * Zip code text field.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "zipCode", jaxbclass = Address.class)
+	protected TextField txtZipCode;
+
+	/**
+	 * City text field.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "city", jaxbclass = Address.class)
+	protected TextField txtCity;
 
 
 	/**
@@ -53,7 +74,8 @@ public class EMailEditDialogController extends AbstractContactEditDialogControll
 
 		// enable ok button for valid entries only
 		btnOK.disableProperty().bind(
-				txtEMail.textProperty().isEmpty()
+				txtStreet.textProperty().isEmpty().or(
+						txtCity.textProperty().isEmpty())
 		);
 
 	}
