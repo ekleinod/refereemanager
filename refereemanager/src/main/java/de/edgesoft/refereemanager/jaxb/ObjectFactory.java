@@ -110,14 +110,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RevokeLicense }
-     * 
-     */
-    public RevokeLicense createRevokeLicense() {
-        return new RevokeLicense();
-    }
-
-    /**
      * Create an instance of {@link Trainee }
      * 
      */

@@ -43,32 +43,22 @@ public class RefereeModel extends Referee {
 
 	/**
 	 * Filter predicate for all status types.
-	 *
-	 * @version 0.6.0
-	 * @since 0.5.0
 	 */
 	public static Predicate<Referee> ALL = referee -> true;
 
 	/**
 	 * Filter predicate for active status types.
-	 *
-	 * @version 0.14.0
-	 * @since 0.5.0
 	 */
 	public static Predicate<Referee> ACTIVE = referee -> (referee.getStatus().getActive().getValue() && (referee.getDayOfDeath() == null));
 
 	/**
 	 * Filter predicate for inactive status types.
-	 *
-	 * @version 0.14.0
-	 * @since 0.5.0
 	 */
 	public static Predicate<Referee> INACTIVE = ACTIVE.negate();
 
 	/**
 	 * Filter predicate for letter only (docs by letter and no email) referees.
 	 *
-	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	public static Predicate<Referee> LETTER_ONLY = referee -> referee.getDocsByLetter().getValue();
@@ -77,9 +67,6 @@ public class RefereeModel extends Referee {
 	 * Highest training level.
 	 *
 	 * @return highest training level
-	 *
-	 * @version 0.6.0
-	 * @since 0.5.0
 	 */
 	public TrainingLevel getHighestTrainingLevel() {
 		return getTrainingLevel()
@@ -94,7 +81,6 @@ public class RefereeModel extends Referee {
 	 *
 	 * @return first training level
 	 *
-	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	public TrainingLevel getFirstTrainingLevel() {
@@ -110,7 +96,6 @@ public class RefereeModel extends Referee {
 	 *
 	 * @return local training level
 	 *
-	 * @version 0.12.0
 	 * @since 0.9.0
 	 */
 	public TrainingLevel getLocalTrainingLevel() {
@@ -128,7 +113,6 @@ public class RefereeModel extends Referee {
 	 *
 	 * @return last training update
 	 *
-	 * @version 0.12.0
 	 * @since 0.8.0
 	 */
 	public SimpleObjectProperty<LocalDate> getLastTrainingUpdate() {
@@ -164,7 +148,6 @@ public class RefereeModel extends Referee {
 	 *
 	 * @return next training update
 	 *
-	 * @version 0.12.0
 	 * @since 0.8.0
 	 */
 	public SimpleObjectProperty<LocalDate> getNextTrainingUpdate() {
@@ -183,7 +166,6 @@ public class RefereeModel extends Referee {
 	 *
 	 * @return receive docs by letter?
 	 *
-	 * @version 0.13.0
 	 * @since 0.8.0
 	 */
 	@Override
@@ -192,21 +174,6 @@ public class RefereeModel extends Referee {
 			return new SimpleBooleanProperty(getEMail().isEmpty());
 		}
 		return new SimpleBooleanProperty(super.getDocsByLetter().getValue() || getEMail().isEmpty());
-	}
-
-	/**
-	 * Will license be revoked.
-	 *
-	 * @return Will license be revoked?
-	 *
-	 * @version 0.12.0
-	 * @since 0.12.0
-	 */
-	public SimpleBooleanProperty getRevokingLicense() {
-		if ((getRevokeLicense() == null) || (getRevokeLicense().getRevoke() == null)) {
-			return new SimpleBooleanProperty(false);
-		}
-		return getRevokeLicense().getRevoke();
 	}
 
 }
