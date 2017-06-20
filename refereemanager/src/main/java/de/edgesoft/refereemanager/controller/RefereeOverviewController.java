@@ -507,7 +507,17 @@ public class RefereeOverviewController {
 			alert.showAndWait()
 					.filter(response -> response == ButtonType.OK)
 					.ifPresent(response -> {
-						((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(lstSelected.get(0));
+						if (ctlRefList.getTabReferees().isSelected()) {
+							((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(lstSelected.get(0));
+						}
+
+						if (ctlRefList.getTabTrainees().isSelected()) {
+							((ContentModel) AppModel.getData().getContent()).getObservableTrainees().remove(lstSelected.get(0));
+						}
+
+						if (ctlRefList.getTabPeople().isSelected()) {
+							((ContentModel) AppModel.getData().getContent()).getObservablePeople().remove(lstSelected.get(0));
+						}
 						AppModel.setModified(true);
 						appController.setAppTitle();
 						});
