@@ -192,7 +192,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Schiri">
+            <Tab fx:id="tabRefereeData" text="Schiri">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
@@ -217,45 +217,45 @@
                                           <Insets bottom="10.0" top="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label text="Schiedst für" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets bottom="10.0" top="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                    <Label text="Einsatzhäufigkeit" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="10.0" top="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                    <Label fx:id="lblName1" text="Brief" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets bottom="10.0" top="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                    <Label text="Lizenzentzug" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets bottom="10.0" top="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
                                     <AnchorPane GridPane.columnIndex="1">
                                        <children>
                                           <ComboBox fx:id="cboMember" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
-                                    <TextArea fx:id="txtRevokeLicenseReason" prefHeight="80.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <CheckBox fx:id="chkDocsByLetter" mnemonicParsing="false" text="Nachrichten zusätzlich per Brief" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <CheckBox fx:id="chkRevokeLicense" mnemonicParsing="false" text="Lizenz entziehen" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <Label text="Begründung" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+                                    <Label text="Schiedst für" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
                                     <AnchorPane layoutX="165.0" layoutY="15.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <children>
                                           <ComboBox fx:id="cboReffor" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
+                                    <Label text="Einsatzhäufigkeit" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
                                     <AnchorPane layoutX="165.0" layoutY="45.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <children>
                                           <ComboBox fx:id="cboStatus" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
+                                    <Label text="Brief" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <CheckBox fx:id="chkDocsByLetter" mnemonicParsing="false" text="Nachrichten zusätzlich per Brief" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label text="Lizenzentzug" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <CheckBox fx:id="chkRevokeLicense" mnemonicParsing="false" text="Lizenz entziehen" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label text="Begründung" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+                                    <TextArea fx:id="txtRevokeLicenseReason" prefHeight="80.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -267,7 +267,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Wünsche">
+            <Tab fx:id="tabRefereeWishes" text="Wünsche">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>

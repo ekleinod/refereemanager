@@ -1,6 +1,8 @@
 package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -32,10 +34,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -77,7 +81,10 @@ public class PersonEditDialogController {
 	 *
 	 * @since 0.14.0
 	 */
-	private final Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class};
+	private List<Class<?>> theClasses = Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class});
+
+
+	// person data
 
 	/**
 	 * ID text field.
@@ -142,6 +149,9 @@ public class PersonEditDialogController {
 	@JAXBMatch(jaxbfield = "remark", jaxbclass = TitledIDType.class)
 	protected TextArea txtRemark;
 
+
+
+	// contact data
 
 	/**
 	 * List view for emails.
@@ -279,6 +289,140 @@ public class PersonEditDialogController {
 	private Button btnURLDelete;
 
 
+	// referee data
+
+	/**
+	 * Tab for referee data.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Tab tabRefereeData;
+
+	/**
+	 * Combobox for member clubs.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "member", jaxbclass = Referee.class)
+	protected ComboBox<ModelClassExt> cboMember;
+
+	/**
+	 * Combobox for reffor clubs.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "reffor", jaxbclass = Referee.class)
+	protected ComboBox<ModelClassExt> cboReffor;
+
+	/**
+	 * Combobox for status.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "status", jaxbclass = Referee.class)
+	protected ComboBox<ModelClassExt> cboStatus;
+
+	/**
+	 * Checkbox for docs by letter.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "docsByLetter", jaxbclass = Referee.class)
+	protected CheckBox chkDocsByLetter;
+
+	/**
+	 * Checkbox for revoke license.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "revokeLicense", jaxbclass = Referee.class)
+	protected CheckBox chkRevokeLicense;
+
+	/**
+	 * Text area for revoke license reason.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "revokeLicenseReason", jaxbclass = TitledIDType.class)
+	protected TextArea txtRevokeLicenseReason;
+
+
+
+	// wishes
+
+	/**
+	 * Tab for referee wishes.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Tab tabRefereeWishes;
+
+	/**
+	 * List view for prefers.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "prefer", jaxbclass = Referee.class)
+	protected ListView<ModelClassExt> lstPrefer;
+
+	/**
+	 * Add prefer.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnPreferAdd;
+
+	/**
+	 * Edit prefer.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnPreferEdit;
+
+	/**
+	 * Delete prefer.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnPreferDelete;
+
+
+	/**
+	 * List view for avoids.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "avoid", jaxbclass = Referee.class)
+	protected ListView<ModelClassExt> lstAvoid;
+
+	/**
+	 * Add avoid.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnAvoidAdd;
+
+	/**
+	 * Edit avoid.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnAvoidEdit;
+
+	/**
+	 * Delete avoid.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnAvoidDelete;
+
+
+
+
 	/**
 	 * OK button.
 	 */
@@ -290,6 +434,8 @@ public class PersonEditDialogController {
 	 */
 	@FXML
 	private Button btnCancel;
+
+
 
 	/**
 	 * Reference to dialog stage.
@@ -328,29 +474,20 @@ public class PersonEditDialogController {
 
 		// fill sex types
         ComboBoxUtils.prepareComboBox(cboSexType, AppModel.getData().getContent().getSexType());
+        ComboBoxUtils.prepareComboBox(cboMember, AppModel.getData().getContent().getClub());
+        ComboBoxUtils.prepareComboBox(cboReffor, AppModel.getData().getContent().getClub());
+        ComboBoxUtils.prepareComboBox(cboStatus, AppModel.getData().getContent().getStatusType());
 
         // setup list views
         lstEMail.setCellFactory(ComboBoxUtils.getCallback());
         lstPhoneNumber.setCellFactory(ComboBoxUtils.getCallback());
         lstAddress.setCellFactory(ComboBoxUtils.getCallback());
         lstURL.setCellFactory(ComboBoxUtils.getCallback());
+        lstPrefer.setCellFactory(ComboBoxUtils.getCallback());
+        lstAvoid.setCellFactory(ComboBoxUtils.getCallback());
 
 		// declared fields
         lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
-
-		// required fields
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
 
 		// enable ok button for valid entries only
 		btnOK.disableProperty().bind(
@@ -382,6 +519,18 @@ public class PersonEditDialogController {
 		btnURLDelete.disableProperty().bind(
 				lstURL.getSelectionModel().selectedItemProperty().isNull()
 		);
+		btnPreferEdit.disableProperty().bind(
+				lstPrefer.getSelectionModel().selectedItemProperty().isNull()
+		);
+		btnPreferDelete.disableProperty().bind(
+				lstPrefer.getSelectionModel().selectedItemProperty().isNull()
+		);
+		btnAvoidEdit.disableProperty().bind(
+				lstAvoid.getSelectionModel().selectedItemProperty().isNull()
+		);
+		btnAvoidDelete.disableProperty().bind(
+				lstAvoid.getSelectionModel().selectedItemProperty().isNull()
+		);
 
 		// icons
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
@@ -391,16 +540,26 @@ public class PersonEditDialogController {
 		btnPhoneNumberAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnAddressAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnURLAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
+		btnPreferAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
+		btnAvoidAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 
 		btnEMailEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnPhoneNumberEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnAddressEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnURLEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
+		btnPreferEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
+		btnAvoidEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 
 		btnEMailDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnPhoneNumberDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnAddressDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnURLDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
+		btnPreferDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
+		btnAvoidDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
+
+		// tab visibility
+		tabRefereeData.setDisable(true);
+		tabRefereeWishes.setDisable(true);
 
 	}
 
@@ -424,12 +583,37 @@ public class PersonEditDialogController {
 
         currentPerson = thePerson;
 
+        if (currentPerson instanceof Referee) {
+    		tabRefereeData.setDisable(false);
+    		tabRefereeWishes.setDisable(false);
+    		theClasses.add(Referee.class);
+        }
+
+        if (currentPerson instanceof Trainee) {
+    		theClasses.add(Trainee.class);
+        }
+
+		// required fields
         for (Field theFXMLField : lstDeclaredFields) {
 
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.setField(theFXMLField, fieldObject, thePerson, theClasses);
+        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, theClasses.toArray(new Class<?>[theClasses.size()]));
+
+        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
+				e.printStackTrace();
+			}
+
+        }
+
+        // fill fields
+        for (Field theFXMLField : lstDeclaredFields) {
+
+        	try {
+        		Object fieldObject = theFXMLField.get(this);
+
+        		JAXBMatchUtils.setField(theFXMLField, fieldObject, thePerson, theClasses.toArray(new Class<?>[theClasses.size()]));
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -450,7 +634,7 @@ public class PersonEditDialogController {
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentPerson, theClasses);
+        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentPerson, theClasses.toArray(new Class<?>[theClasses.size()]));
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -701,6 +885,19 @@ public class PersonEditDialogController {
 		return editController.isOkClicked();
 
 	}
+
+	@FXML
+	private void handlePreferAdd() {}
+	@FXML
+	private void handlePreferEdit() {}
+	@FXML
+	private void handlePreferDelete() {}
+	@FXML
+	private void handleAvoidAdd() {}
+	@FXML
+	private void handleAvoidEdit() {}
+	@FXML
+	private void handleAvoidDelete() {}
 
 }
 

@@ -170,6 +170,9 @@ public class RefereeModel extends Referee {
 	 */
 	@Override
 	public SimpleBooleanProperty getDocsByLetter() {
+		if (getId() == null) {
+			return new SimpleBooleanProperty(false);
+		}
 		if (super.getDocsByLetter() == null) {
 			return new SimpleBooleanProperty(getEMail().isEmpty());
 		}
