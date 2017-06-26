@@ -1,8 +1,6 @@
 package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -81,7 +79,7 @@ public class PersonEditDialogController {
 	 *
 	 * @since 0.14.0
 	 */
-	private List<Class<?>> theClasses = Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class});
+	private Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class};
 
 
 	// person data
@@ -489,6 +487,20 @@ public class PersonEditDialogController {
 		// declared fields
         lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
 
+		// required fields
+        for (Field theFXMLField : lstDeclaredFields) {
+
+        	try {
+        		Object fieldObject = theFXMLField.get(this);
+
+        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, theClasses);
+
+        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
+				e.printStackTrace();
+			}
+
+        }
+
 		// enable ok button for valid entries only
 		btnOK.disableProperty().bind(
 				txtName.textProperty().isEmpty()
@@ -586,25 +598,11 @@ public class PersonEditDialogController {
         if (currentPerson instanceof Referee) {
     		tabRefereeData.setDisable(false);
     		tabRefereeWishes.setDisable(false);
-    		theClasses.add(Referee.class);
         }
 
         if (currentPerson instanceof Trainee) {
-    		theClasses.add(Trainee.class);
-        }
-
-		// required fields
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, theClasses.toArray(new Class<?>[theClasses.size()]));
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
+    		tabRefereeData.setDisable(false);
+    		tabRefereeWishes.setDisable(false);
         }
 
         // fill fields
@@ -613,7 +611,7 @@ public class PersonEditDialogController {
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.setField(theFXMLField, fieldObject, thePerson, theClasses.toArray(new Class<?>[theClasses.size()]));
+        		JAXBMatchUtils.setField(theFXMLField, fieldObject, thePerson, theClasses);
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -634,7 +632,7 @@ public class PersonEditDialogController {
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentPerson, theClasses.toArray(new Class<?>[theClasses.size()]));
+        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentPerson, theClasses);
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();

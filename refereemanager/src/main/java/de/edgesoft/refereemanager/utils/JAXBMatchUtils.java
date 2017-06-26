@@ -79,56 +79,59 @@ public class JAXBMatchUtils {
 
     	for (Class<?> theClass : theDataClasses) {
 
-    		for (Field theJAXBField : theClass.getDeclaredFields()) {
+    		if (theClass.isInstance(theModel)) {
 
-    			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+	    		for (Field theJAXBField : theClass.getDeclaredFields()) {
 
-    				String sFieldName = theFXMLField.getAnnotation(JAXBMatch.class).jaxbfield();
+	    			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
 
-    				try {
+	    				String sFieldName = theFXMLField.getAnnotation(JAXBMatch.class).jaxbfield();
 
-    					if (theFieldObject instanceof TextInputControl) {
+	    				try {
 
-    						String sValue = null;
+	    					if (theFieldObject instanceof TextInputControl) {
 
-    						if (getGetterMethod(theClass, sFieldName).getReturnType() == String.class) {
-        						sValue = (String) getGetterMethod(theClass, sFieldName).invoke(theModel);
-    						} else {
+	    						String sValue = null;
 
-	    						StringProperty sTemp = (StringProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
-	    						sValue = (sTemp == null) ? null : sTemp.getValue();
+	    						if (getGetterMethod(theClass, sFieldName).getReturnType() == String.class) {
+	        						sValue = (String) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						} else {
 
-    						}
+		    						StringProperty sTemp = (StringProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
+		    						sValue = (sTemp == null) ? null : sTemp.getValue();
 
-    						((TextInputControl) theFieldObject).setText(sValue);
+	    						}
 
-    					} else if (theFieldObject instanceof DatePicker) {
+	    						((TextInputControl) theFieldObject).setText(sValue);
 
-    						SimpleObjectProperty<LocalDate> sTemp = (SimpleObjectProperty<LocalDate>) getGetterMethod(theClass, sFieldName).invoke(theModel);
-    						((DatePicker) theFieldObject).setValue((sTemp == null) ? null : sTemp.getValue());
+	    					} else if (theFieldObject instanceof DatePicker) {
 
-    					} else if (theFieldObject instanceof ComboBox<?>) {
+	    						SimpleObjectProperty<LocalDate> sTemp = (SimpleObjectProperty<LocalDate>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						((DatePicker) theFieldObject).setValue((sTemp == null) ? null : sTemp.getValue());
 
-    						ModelClassExt objTemp = (ModelClassExt) getGetterMethod(theClass, sFieldName).invoke(theModel);
-    						((ComboBox<ModelClassExt>) theFieldObject).setValue(objTemp);
+	    					} else if (theFieldObject instanceof ComboBox<?>) {
 
-    					} else if (theFieldObject instanceof ListView<?>) {
+	    						ModelClassExt objTemp = (ModelClassExt) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						((ComboBox<ModelClassExt>) theFieldObject).setValue(objTemp);
 
-    						((ListView<ModelClassExt>) theFieldObject).setItems(FXCollections.observableArrayList((List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel)));
+	    					} else if (theFieldObject instanceof ListView<?>) {
 
-    					} else if (theFieldObject instanceof CheckBox) {
+	    						((ListView<ModelClassExt>) theFieldObject).setItems(FXCollections.observableArrayList((List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel)));
 
-    						BooleanProperty bTemp = (BooleanProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
-    						((CheckBox) theFieldObject).setSelected((bTemp == null) ? false : bTemp.getValue());
+	    					} else if (theFieldObject instanceof CheckBox) {
 
-    					}
+	    						BooleanProperty bTemp = (BooleanProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						((CheckBox) theFieldObject).setSelected((bTemp == null) ? false : bTemp.getValue());
 
-    				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-    					e.printStackTrace();
-    				}
+	    					}
 
-    			}
+	    				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+	    					e.printStackTrace();
+	    				}
 
+	    			}
+
+	    		}
     		}
 
 		}
@@ -158,74 +161,78 @@ public class JAXBMatchUtils {
 
     	for (Class<?> theClass : theDataClasses) {
 
-    		for (Field theJAXBField : theClass.getDeclaredFields()) {
+    		if (theClass.isInstance(theModel)) {
 
-    			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
+	    		for (Field theJAXBField : theClass.getDeclaredFields()) {
 
-    				String sFieldName = theFXMLField.getAnnotation(JAXBMatch.class).jaxbfield();
+	    			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
 
-    				try {
+	    				String sFieldName = theFXMLField.getAnnotation(JAXBMatch.class).jaxbfield();
 
-    					if (theFieldObject instanceof TextInputControl) {
+	    				try {
 
-    						String sValue = ((TextInputControl) theFieldObject).getText();
+	    					if (theFieldObject instanceof TextInputControl) {
 
-    						if (getGetterMethod(theClass, sFieldName).getReturnType() == String.class) {
+	    						String sValue = ((TextInputControl) theFieldObject).getText();
 
-    							getSetterMethod(theClass, sFieldName, String.class).invoke(theModel, sValue);
+	    						if (getGetterMethod(theClass, sFieldName).getReturnType() == String.class) {
 
-    						} else {
+	    							getSetterMethod(theClass, sFieldName, String.class).invoke(theModel, sValue);
 
-        						if (sValue == null) {
-    								getSetterMethod(theClass, sFieldName, SimpleStringProperty.class).invoke(theModel, (SimpleStringProperty) null);
-        						} else {
-        							SimpleStringProperty sTemp = (SimpleStringProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
-        							if (sTemp == null) {
-        								sTemp = new SimpleStringProperty();
-        							}
-        							sTemp.setValue(sValue);
-        							getSetterMethod(theClass, sFieldName, SimpleStringProperty.class).invoke(theModel, sTemp);
-        						}
+	    						} else {
 
-    						}
+	        						if (sValue == null) {
+	    								getSetterMethod(theClass, sFieldName, SimpleStringProperty.class).invoke(theModel, (SimpleStringProperty) null);
+	        						} else {
+	        							SimpleStringProperty sTemp = (SimpleStringProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	        							if (sTemp == null) {
+	        								sTemp = new SimpleStringProperty();
+	        							}
+	        							sTemp.setValue(sValue);
+	        							getSetterMethod(theClass, sFieldName, SimpleStringProperty.class).invoke(theModel, sTemp);
+	        						}
 
-    					} else if (theFieldObject instanceof DatePicker) {
+	    						}
 
-    						LocalDate dteValue = ((DatePicker) theFieldObject).getValue();
+	    					} else if (theFieldObject instanceof DatePicker) {
 
-    						if (dteValue == null) {
-								getSetterMethod(theClass, sFieldName, SimpleObjectProperty.class).invoke(theModel, (SimpleObjectProperty<?>) null);
-    						} else {
-    							SimpleObjectProperty<LocalDate> dteTemp = (SimpleObjectProperty<LocalDate>) getGetterMethod(theClass, sFieldName).invoke(theModel);
-    							if (dteTemp == null) {
-    								dteTemp = new SimpleObjectProperty<>();
-    							}
-    							dteTemp.setValue(dteValue);
-    							getSetterMethod(theClass, sFieldName, SimpleObjectProperty.class).invoke(theModel, dteTemp);
-    						}
+	    						LocalDate dteValue = ((DatePicker) theFieldObject).getValue();
 
-    					} else if (theFieldObject instanceof ComboBox<?>) {
+	    						if (dteValue == null) {
+									getSetterMethod(theClass, sFieldName, SimpleObjectProperty.class).invoke(theModel, (SimpleObjectProperty<?>) null);
+	    						} else {
+	    							SimpleObjectProperty<LocalDate> dteTemp = (SimpleObjectProperty<LocalDate>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    							if (dteTemp == null) {
+	    								dteTemp = new SimpleObjectProperty<>();
+	    							}
+	    							dteTemp.setValue(dteValue);
+	    							getSetterMethod(theClass, sFieldName, SimpleObjectProperty.class).invoke(theModel, dteTemp);
+	    						}
 
-    						ModelClassExt mdlTemp = ((ComboBox<ModelClassExt>) theFieldObject).getValue();
-    						getSetterMethod(theClass, sFieldName, ModelClassExt.class).invoke(theModel, mdlTemp);
+	    					} else if (theFieldObject instanceof ComboBox<?>) {
 
-    					} else if (theFieldObject instanceof ListView<?>) {
+	    						ModelClassExt mdlTemp = ((ComboBox<ModelClassExt>) theFieldObject).getValue();
+	    						getSetterMethod(theClass, sFieldName, ModelClassExt.class).invoke(theModel, mdlTemp);
 
-    						List<ModelClassExt> lstItems = (List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel);
-    						lstItems.clear();
-    						lstItems.addAll(((ListView<ModelClassExt>) theFieldObject).getItems());
+	    					} else if (theFieldObject instanceof ListView<?>) {
 
-    					} else if (theFieldObject instanceof CheckBox) {
+	    						List<ModelClassExt> lstItems = (List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						lstItems.clear();
+	    						lstItems.addAll(((ListView<ModelClassExt>) theFieldObject).getItems());
 
-							getSetterMethod(theClass, sFieldName, BooleanProperty.class).invoke(theModel, new SimpleBooleanProperty(((CheckBox) theFieldObject).isSelected()));
+	    					} else if (theFieldObject instanceof CheckBox) {
 
-    					}
+								getSetterMethod(theClass, sFieldName, BooleanProperty.class).invoke(theModel, new SimpleBooleanProperty(((CheckBox) theFieldObject).isSelected()));
 
-    				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-    					e.printStackTrace();
-    				}
+	    					}
 
-    			}
+	    				} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+	    					e.printStackTrace();
+	    				}
+
+	    			}
+
+	    		}
 
     		}
 
