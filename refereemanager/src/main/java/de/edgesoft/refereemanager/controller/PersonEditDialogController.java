@@ -141,6 +141,14 @@ public class PersonEditDialogController {
 	protected ComboBox<ModelClassExt> cboSexType;
 
 	/**
+	 * Clear sex types.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnSexTypeClear;
+
+	/**
 	 * Text area for remark.
 	 */
 	@FXML
@@ -544,6 +552,11 @@ public class PersonEditDialogController {
 				lstAvoid.getSelectionModel().selectedItemProperty().isNull()
 		);
 
+		btnSexTypeClear.disableProperty().bind(
+				cboSexType.getSelectionModel().selectedItemProperty().isNull()
+		);
+
+
 		// icons
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
 		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
@@ -568,6 +581,8 @@ public class PersonEditDialogController {
 		btnURLDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnPreferDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnAvoidDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
+
+		btnSexTypeClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 
 		// tab visibility
 		tabRefereeData.setDisable(true);
@@ -896,6 +911,17 @@ public class PersonEditDialogController {
 	private void handleAvoidEdit() {}
 	@FXML
 	private void handleAvoidDelete() {}
+
+	/**
+	 * Clears sex type selection.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private void handleSexTypeClear() {
+		cboSexType.getSelectionModel().clearSelection();
+		cboSexType.setValue(null);
+	}
 
 }
 

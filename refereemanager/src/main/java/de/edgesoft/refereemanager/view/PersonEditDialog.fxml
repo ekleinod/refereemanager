@@ -88,7 +88,8 @@
                                        </GridPane.margin></Label>
                                     <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="6">
                                        <children>
-                                          <ComboBox fx:id="cboSexType" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                          <ComboBox fx:id="cboSexType" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnSexTypeClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleSexTypeClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
                                     <Label text="Anmerkung" GridPane.rowIndex="7">
