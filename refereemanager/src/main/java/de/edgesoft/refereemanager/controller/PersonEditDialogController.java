@@ -20,6 +20,7 @@ import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.PhoneNumberModel;
 import de.edgesoft.refereemanager.model.URLModel;
+import de.edgesoft.refereemanager.model.WishModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
@@ -899,18 +900,161 @@ public class PersonEditDialogController {
 
 	}
 
+	/**
+	 * Opens edit dialog for new data.
+	 *
+	 * @since 0.14.0
+	 */
 	@FXML
-	private void handlePreferAdd() {}
+	private void handlePreferAdd() {
+		addWish(lstPrefer, new WishModel());
+	}
+
+	/**
+	 * Opens edit dialog for editing selected data.
+	 *
+	 * @since 0.14.0
+	 */
 	@FXML
-	private void handlePreferEdit() {}
+	private void handlePreferEdit() {
+		editWish(lstPrefer);
+	}
+
+	/**
+	 * Deletes selected data from list.
+	 *
+	 * @since 0.14.0
+	 */
 	@FXML
-	private void handlePreferDelete() {}
+	private void handlePreferDelete() {
+		deleteWish(lstPrefer);
+	}
+
+	/**
+	 * Opens edit dialog for new data.
+	 *
+	 * @since 0.14.0
+	 */
 	@FXML
-	private void handleAvoidAdd() {}
+	private void handleAvoidAdd() {
+		addWish(lstAvoid, new WishModel());
+	}
+
+	/**
+	 * Opens edit dialog for editing selected data.
+	 *
+	 * @since 0.14.0
+	 */
 	@FXML
-	private void handleAvoidEdit() {}
+	private void handleAvoidEdit() {
+		editWish(lstAvoid);
+	}
+
+	/**
+	 * Deletes selected data from list.
+	 *
+	 * @since 0.14.0
+	 */
 	@FXML
-	private void handleAvoidDelete() {}
+	private void handleAvoidDelete() {
+		deleteWish(lstAvoid);
+	}
+
+	/**
+	 * Opens edit dialog for new data.
+	 *
+	 * @param theListView list view
+	 * @param newWish new wish
+	 *
+	 * @since 0.14.0
+	 */
+	private void addWish(ListView<ModelClassExt> theListView, WishModel newWish) {
+
+		if (showWishEditDialog(newWish)) {
+			theListView.getItems().add(newWish);
+		}
+
+	}
+
+	/**
+	 * Opens edit dialog for editing selected data.
+	 *
+	 * @param theListView list view
+	 *
+	 * @since 0.14.0
+	 */
+	private void editWish(ListView<ModelClassExt> theListView) {
+
+		if (!theListView.getSelectionModel().isEmpty()) {
+			showWishEditDialog((WishModel) theListView.getSelectionModel().getSelectedItem());
+		}
+
+	}
+
+	/**
+	 * Deletes selected data from list.
+	 *
+	 * @param theListView list view
+	 *
+	 * @since 0.14.0
+	 */
+	private void deleteWish(ListView<ModelClassExt> theListView) {
+
+		if (!theListView.getSelectionModel().isEmpty()) {
+
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
+					"Löschbestätigung",
+					MessageFormat.format("Soll ''{0}'' gelöscht werden?", theListView.getSelectionModel().getSelectedItem().getDisplayText().get()),
+					null);
+
+			alert.showAndWait()
+					.filter(response -> response == ButtonType.OK)
+					.ifPresent(response -> {
+						theListView.getItems().remove(theListView.getSelectionModel().getSelectedItem());
+			});
+
+		}
+
+	}
+
+	/**
+	 * Opens the wiah edit dialog.
+	 *
+	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
+	 *
+	 * @param theWish the wish to be edited
+	 * @return true if the user clicked OK, false otherwise.
+	 *
+	 * @since 0.14.0
+	 */
+	private boolean showWishEditDialog(WishModel theWish) {
+
+		Objects.requireNonNull(theWish);
+
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("WishEditDialog");
+
+		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+
+		// Create the dialog Stage.
+		Stage editDialogStage = new Stage();
+		editDialogStage.initModality(Modality.WINDOW_MODAL);
+		editDialogStage.initOwner(dialogStage);
+		editDialogStage.setTitle("Wunsch editieren");
+
+		Scene scene = new Scene(editDialog);
+		editDialogStage.setScene(scene);
+
+		// Set the referee
+		WishEditDialogController editController = pneLoad.getValue().getController();
+		editController.setDialogStage(editDialogStage);
+		editController.setWish(theWish);
+
+		// Show the dialog and wait until the user closes it
+		editDialogStage.showAndWait();
+
+		return editController.isOkClicked();
+
+	}
 
 	/**
 	 * Clears sex type selection.

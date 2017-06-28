@@ -32,21 +32,34 @@
               </rowConstraints>
                <children>
                   <Label mnemonicParsing="true" text="Club" />
-                  <Label mnemonicParsing="true" text="Liga" GridPane.rowIndex="1" />
-                  <Label mnemonicParsing="true" text="Geschlecht" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="chkTournamentOnly" mnemonicParsing="false" text="nur Turniere" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label layoutX="15.0" layoutY="113.0" mnemonicParsing="true" text="Sonnabend" GridPane.rowIndex="3" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <AnchorPane layoutX="126.0" layoutY="74.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <ComboBox fx:id="cboContactType" layoutX="27.0" layoutY="3.0" prefHeight="30.0" prefWidth="277.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0" />
+                        <ComboBox fx:id="cboClub" layoutX="27.0" layoutY="3.0" prefHeight="30.0" prefWidth="277.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="3.0" />
+                        <Button fx:id="btnClubClear" mnemonicParsing="false" onAction="#handleClubClear" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0" />
                      </children>
                   </AnchorPane>
+                  <Label mnemonicParsing="true" text="Liga" GridPane.rowIndex="1" />
+                  <AnchorPane layoutX="126.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <ComboBox fx:id="cboLeague" layoutX="27.0" layoutY="3.0" prefHeight="30.0" prefWidth="277.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="3.0" />
+                        <Button fx:id="btnLeagueClear" mnemonicParsing="false" onAction="#handleLeagueClear" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0" />
+                     </children>
+                  </AnchorPane>
+                  <Label mnemonicParsing="true" text="Geschlecht" GridPane.rowIndex="2" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <ComboBox fx:id="cboSexType" layoutX="27.0" layoutY="3.0" prefHeight="30.0" prefWidth="277.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="3.0" />
+                        <Button fx:id="btnSexTypeClear" mnemonicParsing="false" onAction="#handleSexTypeClear" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0" />
+                     </children>
+                  </AnchorPane>
+                  <Label layoutX="15.0" layoutY="113.0" mnemonicParsing="true" text="Sonnabend" GridPane.rowIndex="3" />
+                  <CheckBox fx:id="chkSaturday" mnemonicParsing="false" text="nur sonnabends" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label mnemonicParsing="true" text="Sonntag" GridPane.rowIndex="4" />
                   <CheckBox fx:id="chkSunday" mnemonicParsing="false" text="nur sonntags" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label layoutX="15.0" layoutY="143.0" mnemonicParsing="true" text="Turniere" GridPane.rowIndex="5" />
+                  <CheckBox fx:id="chkTournamentOnly" mnemonicParsing="false" text="nur Turniere" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label mnemonicParsing="true" text="Ligaspiele" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="chkSaturday" mnemonicParsing="false" text="nur sonnabends" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="chkTournamentOnly1" mnemonicParsing="false" text="nur Ligaspiele" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <CheckBox fx:id="chkLeagueGamesOnly" mnemonicParsing="false" text="nur Ligaspiele" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
