@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.edgeutils.commons.AbstractModelClass;
 import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
 
 
@@ -21,7 +21,7 @@ import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
  * <pre>
  * &lt;complexType name="Wish">
  *   &lt;complexContent>
- *     &lt;extension base="{}ModelClass">
+ *     &lt;extension base="{}AbstractModelClass">
  *       &lt;sequence>
  *         &lt;element name="saturday" type="{}BooleanProperty" minOccurs="0"/>
  *         &lt;element name="sunday" type="{}BooleanProperty" minOccurs="0"/>
@@ -49,7 +49,7 @@ import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
     "sexType"
 })
 public class Wish
-    extends ModelClass
+    extends AbstractModelClass
 {
 
     @XmlElement(type = String.class)

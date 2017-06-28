@@ -40,7 +40,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="RefereeManager">
 		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
+			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
 					<xsd:element name="info" type="Info" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="content" type="Content" minOccurs="1" maxOccurs="1" />
@@ -52,7 +52,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Content">
 		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
+			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
 					<xsd:element name="season" type="Season" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="exam" type="Exam" minOccurs="1" maxOccurs="1" />
@@ -354,7 +354,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="RefereeQuantity">
 		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
+			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
 					<xsd:element name="quantity" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="referee_assigment_type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
@@ -373,7 +373,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="TrainingLevel">
 		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
+			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
 					<xsd:element name="since" type="LocalDateProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="update" type="LocalDateProperty" minOccurs="0" maxOccurs="unbounded" />
@@ -394,7 +394,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Wish">
 		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
+			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
 					<xsd:element name="saturday" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="sunday" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
@@ -435,7 +435,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Exam">
 		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
+			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
 					<xsd:element name="points_written" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="points_practical" type="IntegerProperty" minOccurs="1" maxOccurs="1" />

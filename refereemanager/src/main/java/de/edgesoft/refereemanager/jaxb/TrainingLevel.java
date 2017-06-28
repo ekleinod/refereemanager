@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.edgeutils.commons.AbstractModelClass;
 import de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateAdapter;
 
 
@@ -23,7 +23,7 @@ import de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateAdapter;
  * <pre>
  * &lt;complexType name="TrainingLevel">
  *   &lt;complexContent>
- *     &lt;extension base="{}ModelClass">
+ *     &lt;extension base="{}AbstractModelClass">
  *       &lt;sequence>
  *         &lt;element name="since" type="{}LocalDateProperty" minOccurs="0"/>
  *         &lt;element name="update" type="{}LocalDateProperty" maxOccurs="unbounded" minOccurs="0"/>
@@ -43,7 +43,7 @@ import de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateAdapter;
     "type"
 })
 public class TrainingLevel
-    extends ModelClass
+    extends AbstractModelClass
 {
 
     @XmlElement(type = String.class)

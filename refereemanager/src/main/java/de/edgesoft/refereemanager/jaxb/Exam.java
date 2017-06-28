@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.edgeutils.commons.AbstractModelClass;
 import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
 
 
@@ -20,7 +20,7 @@ import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
  * <pre>
  * &lt;complexType name="Exam">
  *   &lt;complexContent>
- *     &lt;extension base="{}ModelClass">
+ *     &lt;extension base="{}AbstractModelClass">
  *       &lt;sequence>
  *         &lt;element name="points_written" type="{}IntegerProperty"/>
  *         &lt;element name="points_practical" type="{}IntegerProperty"/>
@@ -42,7 +42,7 @@ import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
     "points"
 })
 public class Exam
-    extends ModelClass
+    extends AbstractModelClass
 {
 
     @XmlElement(name = "points_written", required = true, type = String.class)
