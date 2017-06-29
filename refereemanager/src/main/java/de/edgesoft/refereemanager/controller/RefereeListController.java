@@ -310,8 +310,8 @@ public class RefereeListController {
 
 		colRefereesName.setCellValueFactory(cellData -> cellData.getValue().getName());
 		colRefereesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
-		colRefereesTrainingLevel.setCellValueFactory(cellData -> (cellData.getValue().getHighestTrainingLevel() == null) ? null : cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitle());
-		colRefereesClub.setCellValueFactory(cellData -> (cellData.getValue().getMember() == null) ? null : cellData.getValue().getMember().getDisplayTitle());
+		colRefereesTrainingLevel.setCellValueFactory(cellData -> (cellData.getValue().getHighestTrainingLevel() == null) ? null : cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitleShort());
+		colRefereesClub.setCellValueFactory(cellData -> (cellData.getValue().getMember() == null) ? null : cellData.getValue().getMember().getDisplayText());
 
 		colRefereesBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
 		colRefereesBirthday.setVisible(false);
