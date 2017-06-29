@@ -19,6 +19,7 @@ import de.edgesoft.refereemanager.model.ContactModel;
 import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.PhoneNumberModel;
+import de.edgesoft.refereemanager.model.TrainingLevelModel;
 import de.edgesoft.refereemanager.model.URLModel;
 import de.edgesoft.refereemanager.model.WishModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
@@ -429,6 +430,53 @@ public class PersonEditDialogController {
 
 
 
+	// training levels
+
+	/**
+	 * Tab for referee training levels.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Tab tabRefereeTrainingLevel;
+
+	/**
+	 * List view for training level.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "trainingLevel", jaxbclass = Referee.class)
+	protected ListView<ModelClassExt> lstTrainingLevel;
+
+	/**
+	 * Add training level.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnTrainingLevelAdd;
+
+	/**
+	 * Edit training level.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnTrainingLevelEdit;
+
+	/**
+	 * Delete training level.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Button btnTrainingLevelDelete;
+
+
+
+
+
 
 	/**
 	 * OK button.
@@ -479,7 +527,7 @@ public class PersonEditDialogController {
 		pckBirthday.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
         pckDayOfDeath.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
 
-		// fill sex types
+		// fill combo boxes
         ComboBoxUtils.prepareComboBox(cboSexType, AppModel.getData().getContent().getSexType());
         ComboBoxUtils.prepareComboBox(cboMember, AppModel.getData().getContent().getClub());
         ComboBoxUtils.prepareComboBox(cboReffor, AppModel.getData().getContent().getClub());
@@ -492,6 +540,7 @@ public class PersonEditDialogController {
         lstURL.setCellFactory(ComboBoxUtils.getCallback());
         lstPrefer.setCellFactory(ComboBoxUtils.getCallback());
         lstAvoid.setCellFactory(ComboBoxUtils.getCallback());
+        lstTrainingLevel.setCellFactory(ComboBoxUtils.getCallback());
 
 		// declared fields
         lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
@@ -552,6 +601,12 @@ public class PersonEditDialogController {
 		btnAvoidDelete.disableProperty().bind(
 				lstAvoid.getSelectionModel().selectedItemProperty().isNull()
 		);
+		btnTrainingLevelEdit.disableProperty().bind(
+				lstTrainingLevel.getSelectionModel().selectedItemProperty().isNull()
+		);
+		btnTrainingLevelDelete.disableProperty().bind(
+				lstTrainingLevel.getSelectionModel().selectedItemProperty().isNull()
+		);
 
 		btnSexTypeClear.disableProperty().bind(
 				cboSexType.getSelectionModel().selectedItemProperty().isNull()
@@ -568,6 +623,7 @@ public class PersonEditDialogController {
 		btnURLAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnPreferAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnAvoidAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
+		btnTrainingLevelAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 
 		btnEMailEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnPhoneNumberEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
@@ -575,6 +631,7 @@ public class PersonEditDialogController {
 		btnURLEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnPreferEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnAvoidEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
+		btnTrainingLevelEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 
 		btnEMailDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnPhoneNumberDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
@@ -582,12 +639,9 @@ public class PersonEditDialogController {
 		btnURLDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnPreferDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnAvoidDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
+		btnTrainingLevelDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 
 		btnSexTypeClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
-
-		// tab visibility
-		tabRefereeData.setDisable(true);
-		tabRefereeWishes.setDisable(true);
 
 	}
 
@@ -614,11 +668,13 @@ public class PersonEditDialogController {
         if (currentPerson instanceof Referee) {
     		tabRefereeData.setDisable(false);
     		tabRefereeWishes.setDisable(false);
+    		tabRefereeTrainingLevel.setDisable(false);
         }
 
         if (currentPerson instanceof Trainee) {
     		tabRefereeData.setDisable(false);
     		tabRefereeWishes.setDisable(false);
+    		tabRefereeTrainingLevel.setDisable(false);
         }
 
         // fill fields
@@ -1018,7 +1074,7 @@ public class PersonEditDialogController {
 	}
 
 	/**
-	 * Opens the wiah edit dialog.
+	 * Opens the wish edit dialog.
 	 *
 	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
 	 *
@@ -1065,6 +1121,99 @@ public class PersonEditDialogController {
 	private void handleSexTypeClear() {
 		cboSexType.getSelectionModel().clearSelection();
 		cboSexType.setValue(null);
+	}
+
+	/**
+	 * Opens edit dialog for new data.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private void handleTrainingLevelAdd() {
+
+		TrainingLevelModel newTrainingLevel = new TrainingLevelModel();
+		if (showTrainingLevelEditDialog(newTrainingLevel)) {
+			lstTrainingLevel.getItems().add(newTrainingLevel);
+		}
+
+	}
+
+	/**
+	 * Opens edit dialog for editing selected data.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private void handleTrainingLevelEdit() {
+
+		if (!lstTrainingLevel.getSelectionModel().isEmpty()) {
+			showTrainingLevelEditDialog((TrainingLevelModel) lstTrainingLevel.getSelectionModel().getSelectedItem());
+		}
+
+	}
+
+	/**
+	 * Deletes selected data from list.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private void handleTrainingLevelDelete() {
+
+		if (!lstTrainingLevel.getSelectionModel().isEmpty()) {
+
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
+					"Löschbestätigung",
+					MessageFormat.format("Soll ''{0}'' gelöscht werden?", lstTrainingLevel.getSelectionModel().getSelectedItem().getDisplayText().get()),
+					null);
+
+			alert.showAndWait()
+					.filter(response -> response == ButtonType.OK)
+					.ifPresent(response -> {
+						lstTrainingLevel.getItems().remove(lstTrainingLevel.getSelectionModel().getSelectedItem());
+			});
+
+		}
+
+	}
+
+	/**
+	 * Opens the training level edit dialog.
+	 *
+	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
+	 *
+	 * @param theTrainingLevel the training level to be edited
+	 * @return true if the user clicked OK, false otherwise.
+	 *
+	 * @since 0.14.0
+	 */
+	private boolean showTrainingLevelEditDialog(TrainingLevelModel theTrainingLevel) {
+
+		Objects.requireNonNull(theTrainingLevel);
+
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("TrainingLevelEditDialog");
+
+		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+
+		// Create the dialog Stage.
+		Stage editDialogStage = new Stage();
+		editDialogStage.initModality(Modality.WINDOW_MODAL);
+		editDialogStage.initOwner(dialogStage);
+		editDialogStage.setTitle("Ausbildungsstufe editieren");
+
+		Scene scene = new Scene(editDialog);
+		editDialogStage.setScene(scene);
+
+		// Set the referee
+		TrainingLevelEditDialogController editController = pneLoad.getValue().getController();
+		editController.setDialogStage(editDialogStage);
+		editController.setTrainingLevel(theTrainingLevel);
+
+		// Show the dialog and wait until the user closes it
+		editDialogStage.showAndWait();
+
+		return editController.isOkClicked();
+
 	}
 
 }
