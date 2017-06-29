@@ -2,13 +2,14 @@ package de.edgesoft.refereemanager.model;
 
 import de.edgesoft.refereemanager.jaxb.Wish;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * Wish model, additional methods for jaxb model class.
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -26,70 +27,69 @@ import javafx.beans.property.SimpleStringProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.14.0
  * @since 0.6.0
  */
 public class WishModel extends Wish {
 
 	/**
-	 * Display title.
+	 * Returns display text.
 	 *
-	 * @return display title
-	 *
-	 * @version 0.10.0
-	 * @since 0.6.0
+	 * @return display text
+	 * @version 0.14.0
 	 */
-		public SimpleStringProperty getDisplayTitle() {
-			StringBuilder sbReturn = new StringBuilder();
+	@Override
+	public StringProperty getDisplayText() {
+		StringBuilder sbReturn = new StringBuilder();
 
-			if (getClub() != null) {
-				sbReturn.append(getClub().getDisplayTitle().get());
-			}
-
-			if (getLeague() != null) {
-				if (sbReturn.length() > 0) {
-					sbReturn.append(", ");
-				}
-				sbReturn.append(getLeague().getDisplayTitle().get());
-			}
-
-			if (getSexType() != null) {
-				if (sbReturn.length() > 0) {
-					sbReturn.append(", ");
-				}
-				sbReturn.append(getSexType().getDisplayTitle().get());
-			}
-
-			if ((getSaturday() != null) && getSaturday().get()) {
-				if (sbReturn.length() > 0) {
-					sbReturn.append(", ");
-				}
-				sbReturn.append("sonnabends");
-			}
-
-			if ((getSunday() != null) && getSunday().get()) {
-				if (sbReturn.length() > 0) {
-					sbReturn.append(", ");
-				}
-				sbReturn.append("sonntags");
-			}
-
-			if ((getTournamentOnly() != null) && getTournamentOnly().get()) {
-				if (sbReturn.length() > 0) {
-					sbReturn.append(", ");
-				}
-				sbReturn.append("nur Turniere");
-			}
-
-			if ((getLeagueGamesOnly() != null) && getLeagueGamesOnly().get()) {
-				if (sbReturn.length() > 0) {
-					sbReturn.append(", ");
-				}
-				sbReturn.append("nur Ligaspiele");
-			}
-
-			return new SimpleStringProperty(sbReturn.toString());
+		if (getClub() != null) {
+			sbReturn.append(getClub().getDisplayTitle().get());
 		}
+
+		if (getLeague() != null) {
+			if (sbReturn.length() > 0) {
+				sbReturn.append(", ");
+			}
+			sbReturn.append(getLeague().getDisplayTitle().get());
+		}
+
+		if (getSexType() != null) {
+			if (sbReturn.length() > 0) {
+				sbReturn.append(", ");
+			}
+			sbReturn.append(getSexType().getDisplayTitle().get());
+		}
+
+		if ((getSaturday() != null) && getSaturday().get()) {
+			if (sbReturn.length() > 0) {
+				sbReturn.append(", ");
+			}
+			sbReturn.append("sonnabends");
+		}
+
+		if ((getSunday() != null) && getSunday().get()) {
+			if (sbReturn.length() > 0) {
+				sbReturn.append(", ");
+			}
+			sbReturn.append("sonntags");
+		}
+
+		if ((getTournamentOnly() != null) && getTournamentOnly().get()) {
+			if (sbReturn.length() > 0) {
+				sbReturn.append(", ");
+			}
+			sbReturn.append("nur Turniere");
+		}
+
+		if ((getLeagueGamesOnly() != null) && getLeagueGamesOnly().get()) {
+			if (sbReturn.length() > 0) {
+				sbReturn.append(", ");
+			}
+			sbReturn.append("nur Ligaspiele");
+		}
+
+		return new SimpleStringProperty(sbReturn.toString());
+	}
 
 }
 

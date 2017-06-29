@@ -68,6 +68,8 @@ public class ClubModel extends Club {
 	/**
 	 * Returns display text.
 	 *
+	 * @return display text
+	 *
 	 * @version 0.14.0
 	 */
 	@Override
