@@ -1,5 +1,6 @@
 package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
+import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
@@ -19,7 +21,10 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
@@ -290,10 +295,10 @@ public class TrainingLevelEditDialogController {
 	@FXML
 	private void handleUpdateAdd() {
 
-//		TrainingLevelModel newTrainingLevel = new TrainingLevelModel();
-//		if (showTrainingLevelEditDialog(newTrainingLevel)) {
-//			lstTrainingLevel.getItems().add(newTrainingLevel);
-//		}
+		SimpleObjectProperty<LocalDate> newUpdate = new SimpleObjectProperty<>();
+		if (showTrainingLevelUpdateEditDialog(newUpdate)) {
+			lstUpdate.getItems().add(newUpdate);
+		}
 
 	}
 
@@ -305,9 +310,10 @@ public class TrainingLevelEditDialogController {
 	@FXML
 	private void handleUpdateEdit() {
 
-//		if (!lstTrainingLevel.getSelectionModel().isEmpty()) {
-//			showTrainingLevelEditDialog((TrainingLevelModel) lstTrainingLevel.getSelectionModel().getSelectedItem());
-//		}
+		if (!lstUpdate.getSelectionModel().isEmpty()) {
+			showTrainingLevelUpdateEditDialog(lstUpdate.getSelectionModel().getSelectedItem());
+			lstUpdate.refresh();
+		}
 
 	}
 
@@ -319,20 +325,20 @@ public class TrainingLevelEditDialogController {
 	@FXML
 	private void handleUpdateDelete() {
 
-//		if (!lstTrainingLevel.getSelectionModel().isEmpty()) {
-//
-//			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
-//					"Löschbestätigung",
-//					MessageFormat.format("Soll ''{0}'' gelöscht werden?", lstTrainingLevel.getSelectionModel().getSelectedItem().getDisplayText().get()),
-//					null);
-//
-//			alert.showAndWait()
-//					.filter(response -> response == ButtonType.OK)
-//					.ifPresent(response -> {
-//						lstTrainingLevel.getItems().remove(lstTrainingLevel.getSelectionModel().getSelectedItem());
-//			});
-//
-//		}
+		if (!lstUpdate.getSelectionModel().isEmpty()) {
+
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
+					"Löschbestätigung",
+					MessageFormat.format("Soll ''{0}'' gelöscht werden?", DateTimeUtils.formatDate(lstUpdate.getSelectionModel().getSelectedItem().getValue())),
+					null);
+
+			alert.showAndWait()
+					.filter(response -> response == ButtonType.OK)
+					.ifPresent(response -> {
+						lstUpdate.getItems().remove(lstUpdate.getSelectionModel().getSelectedItem());
+			});
+
+		}
 
 	}
 
@@ -341,16 +347,16 @@ public class TrainingLevelEditDialogController {
 	 *
 	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
 	 *
-	 * @param theTrainingLevel the training level to be edited
+	 * @param theUpdate the update to be edited
 	 * @return true if the user clicked OK, false otherwise.
 	 *
 	 * @since 0.14.0
 	 */
-	private boolean showTrainingLevelEditDialog(TrainingLevelModel theTrainingLevel) {
+	private boolean showTrainingLevelUpdateEditDialog(SimpleObjectProperty<LocalDate> theUpdate) {
 
-		Objects.requireNonNull(theTrainingLevel);
+		Objects.requireNonNull(theUpdate);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("TrainingLevelEditDialog");
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("TrainingLevelUpdateEditDialog");
 
 		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
 
@@ -358,21 +364,20 @@ public class TrainingLevelEditDialogController {
 		Stage editDialogStage = new Stage();
 		editDialogStage.initModality(Modality.WINDOW_MODAL);
 		editDialogStage.initOwner(dialogStage);
-		editDialogStage.setTitle("Ausbildungsstufe editieren");
+		editDialogStage.setTitle("Fortbildung");
 
 		Scene scene = new Scene(editDialog);
 		editDialogStage.setScene(scene);
 
-		// Set the referee
-//		TrainingLevelEditDialogController editController = pneLoad.getValue().getController();
-//		editController.setDialogStage(editDialogStage);
-//		editController.setWish(theTrainingLevel);
-//
-//		// Show the dialog and wait until the user closes it
-//		editDialogStage.showAndWait();
-//
-//		return editController.isOkClicked();
-return false;
+		// Set the update
+		TrainingLevelUpdateEditDialogController editController = pneLoad.getValue().getController();
+		editController.setDialogStage(editDialogStage);
+		editController.setUpdate(theUpdate);
+
+		// Show the dialog and wait until the user closes it
+		editDialogStage.showAndWait();
+
+		return editController.isOkClicked();
 
 	}
 
