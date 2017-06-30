@@ -39,6 +39,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -475,6 +477,66 @@ public class PersonEditDialogController {
 
 
 
+	// exam
+
+	/**
+	 * Tab for trainee exams.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Tab tabTraineeExam;
+
+	/**
+	 * Checkbox for withdrawn.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "withdrawn", jaxbclass = Trainee.class)
+	protected CheckBox chkWithdrawn;
+
+	/**
+	 * Checkbox for did not start.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "didNotStart", jaxbclass = Trainee.class)
+	protected CheckBox chkDidNotStart;
+
+	/**
+	 * Spinner for points written A.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "pointsWrittenA", jaxbclass = Trainee.class)
+	protected Spinner<Integer> spnPointsWrittenA;
+
+	/**
+	 * Spinner for points written B.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "pointsWrittenB", jaxbclass = Trainee.class)
+	protected Spinner<Integer> spnPointsWrittenB;
+
+	/**
+	 * Spinner for points practical.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "pointsPractical", jaxbclass = Trainee.class)
+	protected Spinner<Integer> spnPointsPractical;
+
+	/**
+	 * Spinner for points oral.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "pointsOral", jaxbclass = Trainee.class)
+	protected Spinner<Integer> spnPointsOral;
+
+	/**
+	 * Checkbox for passed.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "passed", jaxbclass = Trainee.class)
+	protected CheckBox chkPassed;
+
+
 
 
 
@@ -541,6 +603,17 @@ public class PersonEditDialogController {
         lstPrefer.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
         lstAvoid.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
         lstTrainingLevel.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
+
+        // setup spinners
+        spnPointsWrittenA.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, AppModel.getData().getContent().getExam().getMaxPointsWrittenA().getValue()));
+        spnPointsWrittenB.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, AppModel.getData().getContent().getExam().getMaxPointsWrittenB().getValue()));
+        spnPointsPractical.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, AppModel.getData().getContent().getExam().getMaxPointsPractical().getValue()));
+        spnPointsOral.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, AppModel.getData().getContent().getExam().getMaxPointsOral().getValue()));
+
+        spnPointsWrittenA.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+        spnPointsWrittenB.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+        spnPointsPractical.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+        spnPointsOral.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
 
 		// declared fields
         lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
@@ -672,9 +745,7 @@ public class PersonEditDialogController {
         }
 
         if (currentPerson instanceof Trainee) {
-    		tabRefereeData.setDisable(false);
-    		tabRefereeWishes.setDisable(false);
-    		tabRefereeTrainingLevel.setDisable(false);
+    		tabTraineeExam.setDisable(false);
         }
 
         // fill fields

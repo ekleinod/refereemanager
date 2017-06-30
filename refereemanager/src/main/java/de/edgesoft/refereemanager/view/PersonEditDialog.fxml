@@ -9,6 +9,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
@@ -352,6 +353,80 @@
                                        </buttons>
                                     </ButtonBar>
                                     <ListView fx:id="lstTrainingLevel" minHeight="-Infinity" prefHeight="100.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="tabTraineeExam" disable="true" text="Prüfung">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <GridPane>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="150.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="Lehrgang">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <CheckBox fx:id="chkWithdrawn" mnemonicParsing="false" text="Lehrgang abgebrochen" GridPane.columnIndex="1" />
+                                    <Label text="Prüfungsantritt" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <CheckBox fx:id="chkDidNotStart" mnemonicParsing="false" text="Nicht zur Prüfung angetreten" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label text="Schriftlich Teil A" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Spinner fx:id="spnPointsWrittenA" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label text="Schriftlich Teil B" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Spinner fx:id="spnPointsWrittenB" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label text="Praktisch" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Spinner fx:id="spnPointsPractical" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label layoutX="15.0" layoutY="163.0" text="Mündlich" GridPane.rowIndex="5">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Spinner fx:id="spnPointsOral" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Label text="Endergebnis" GridPane.rowIndex="6">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <CheckBox fx:id="chkPassed" layoutX="165.0" layoutY="54.0" mnemonicParsing="false" text="Prüfung bestanden" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

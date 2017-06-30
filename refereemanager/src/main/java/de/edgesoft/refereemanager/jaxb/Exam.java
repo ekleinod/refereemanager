@@ -22,10 +22,14 @@ import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
  *   &lt;complexContent>
  *     &lt;extension base="{}AbstractModelClass">
  *       &lt;sequence>
- *         &lt;element name="points_written" type="{}IntegerProperty"/>
- *         &lt;element name="points_practical" type="{}IntegerProperty"/>
- *         &lt;element name="points_oral" type="{}IntegerProperty"/>
- *         &lt;element name="points" type="{}IntegerProperty"/>
+ *         &lt;element name="max_points_written_a" type="{}IntegerProperty"/>
+ *         &lt;element name="max_points_written_b" type="{}IntegerProperty"/>
+ *         &lt;element name="max_points_practical" type="{}IntegerProperty"/>
+ *         &lt;element name="max_points_oral" type="{}IntegerProperty"/>
+ *         &lt;element name="needed_points_written" type="{}IntegerProperty"/>
+ *         &lt;element name="needed_points_practical" type="{}IntegerProperty"/>
+ *         &lt;element name="needed_points_oral" type="{}IntegerProperty"/>
+ *         &lt;element name="needed_points" type="{}IntegerProperty"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -36,126 +40,242 @@ import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Exam", propOrder = {
-    "pointsWritten",
-    "pointsPractical",
-    "pointsOral",
-    "points"
+    "maxPointsWrittenA",
+    "maxPointsWrittenB",
+    "maxPointsPractical",
+    "maxPointsOral",
+    "neededPointsWritten",
+    "neededPointsPractical",
+    "neededPointsOral",
+    "neededPoints"
 })
 public class Exam
     extends AbstractModelClass
 {
 
-    @XmlElement(name = "points_written", required = true, type = String.class)
+    @XmlElement(name = "max_points_written_a", required = true, type = String.class)
     @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
     @XmlSchemaType(name = "int")
-    protected SimpleIntegerProperty pointsWritten;
-    @XmlElement(name = "points_practical", required = true, type = String.class)
+    protected SimpleIntegerProperty maxPointsWrittenA;
+    @XmlElement(name = "max_points_written_b", required = true, type = String.class)
     @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
     @XmlSchemaType(name = "int")
-    protected SimpleIntegerProperty pointsPractical;
-    @XmlElement(name = "points_oral", required = true, type = String.class)
+    protected SimpleIntegerProperty maxPointsWrittenB;
+    @XmlElement(name = "max_points_practical", required = true, type = String.class)
     @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
     @XmlSchemaType(name = "int")
-    protected SimpleIntegerProperty pointsOral;
-    @XmlElement(required = true, type = String.class)
+    protected SimpleIntegerProperty maxPointsPractical;
+    @XmlElement(name = "max_points_oral", required = true, type = String.class)
     @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
     @XmlSchemaType(name = "int")
-    protected SimpleIntegerProperty points;
+    protected SimpleIntegerProperty maxPointsOral;
+    @XmlElement(name = "needed_points_written", required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty neededPointsWritten;
+    @XmlElement(name = "needed_points_practical", required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty neededPointsPractical;
+    @XmlElement(name = "needed_points_oral", required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty neededPointsOral;
+    @XmlElement(name = "needed_points", required = true, type = String.class)
+    @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
+    @XmlSchemaType(name = "int")
+    protected SimpleIntegerProperty neededPoints;
 
     /**
-     * Gets the value of the pointsWritten property.
+     * Gets the value of the maxPointsWrittenA property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public SimpleIntegerProperty getPointsWritten() {
-        return pointsWritten;
+    public SimpleIntegerProperty getMaxPointsWrittenA() {
+        return maxPointsWrittenA;
     }
 
     /**
-     * Sets the value of the pointsWritten property.
+     * Sets the value of the maxPointsWrittenA property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setPointsWritten(SimpleIntegerProperty value) {
-        this.pointsWritten = value;
+    public void setMaxPointsWrittenA(SimpleIntegerProperty value) {
+        this.maxPointsWrittenA = value;
     }
 
     /**
-     * Gets the value of the pointsPractical property.
+     * Gets the value of the maxPointsWrittenB property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public SimpleIntegerProperty getPointsPractical() {
-        return pointsPractical;
+    public SimpleIntegerProperty getMaxPointsWrittenB() {
+        return maxPointsWrittenB;
     }
 
     /**
-     * Sets the value of the pointsPractical property.
+     * Sets the value of the maxPointsWrittenB property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setPointsPractical(SimpleIntegerProperty value) {
-        this.pointsPractical = value;
+    public void setMaxPointsWrittenB(SimpleIntegerProperty value) {
+        this.maxPointsWrittenB = value;
     }
 
     /**
-     * Gets the value of the pointsOral property.
+     * Gets the value of the maxPointsPractical property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public SimpleIntegerProperty getPointsOral() {
-        return pointsOral;
+    public SimpleIntegerProperty getMaxPointsPractical() {
+        return maxPointsPractical;
     }
 
     /**
-     * Sets the value of the pointsOral property.
+     * Sets the value of the maxPointsPractical property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setPointsOral(SimpleIntegerProperty value) {
-        this.pointsOral = value;
+    public void setMaxPointsPractical(SimpleIntegerProperty value) {
+        this.maxPointsPractical = value;
     }
 
     /**
-     * Gets the value of the points property.
+     * Gets the value of the maxPointsOral property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public SimpleIntegerProperty getPoints() {
-        return points;
+    public SimpleIntegerProperty getMaxPointsOral() {
+        return maxPointsOral;
     }
 
     /**
-     * Sets the value of the points property.
+     * Sets the value of the maxPointsOral property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setPoints(SimpleIntegerProperty value) {
-        this.points = value;
+    public void setMaxPointsOral(SimpleIntegerProperty value) {
+        this.maxPointsOral = value;
+    }
+
+    /**
+     * Gets the value of the neededPointsWritten property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public SimpleIntegerProperty getNeededPointsWritten() {
+        return neededPointsWritten;
+    }
+
+    /**
+     * Sets the value of the neededPointsWritten property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNeededPointsWritten(SimpleIntegerProperty value) {
+        this.neededPointsWritten = value;
+    }
+
+    /**
+     * Gets the value of the neededPointsPractical property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public SimpleIntegerProperty getNeededPointsPractical() {
+        return neededPointsPractical;
+    }
+
+    /**
+     * Sets the value of the neededPointsPractical property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNeededPointsPractical(SimpleIntegerProperty value) {
+        this.neededPointsPractical = value;
+    }
+
+    /**
+     * Gets the value of the neededPointsOral property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public SimpleIntegerProperty getNeededPointsOral() {
+        return neededPointsOral;
+    }
+
+    /**
+     * Sets the value of the neededPointsOral property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNeededPointsOral(SimpleIntegerProperty value) {
+        this.neededPointsOral = value;
+    }
+
+    /**
+     * Gets the value of the neededPoints property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public SimpleIntegerProperty getNeededPoints() {
+        return neededPoints;
+    }
+
+    /**
+     * Sets the value of the neededPoints property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNeededPoints(SimpleIntegerProperty value) {
+        this.neededPoints = value;
     }
 
 }
