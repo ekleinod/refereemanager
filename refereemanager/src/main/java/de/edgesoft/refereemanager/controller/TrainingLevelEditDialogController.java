@@ -161,7 +161,7 @@ public class TrainingLevelEditDialogController {
         ComboBoxUtils.prepareComboBox(cboTrainingLevelType, AppModel.getData().getContent().getTrainingLevelType());
 
         // setup list views
-//        lstUpdate.setCellFactory(ComboBoxUtils.getCallback());
+        lstUpdate.setCellFactory(ComboBoxUtils.getCallbackLocalDateProperty());
 
 		// declared fields
         lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());

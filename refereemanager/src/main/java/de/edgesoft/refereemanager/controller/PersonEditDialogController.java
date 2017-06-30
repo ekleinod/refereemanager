@@ -534,13 +534,13 @@ public class PersonEditDialogController {
         ComboBoxUtils.prepareComboBox(cboStatus, AppModel.getData().getContent().getStatusType());
 
         // setup list views
-        lstEMail.setCellFactory(ComboBoxUtils.getCallback());
-        lstPhoneNumber.setCellFactory(ComboBoxUtils.getCallback());
-        lstAddress.setCellFactory(ComboBoxUtils.getCallback());
-        lstURL.setCellFactory(ComboBoxUtils.getCallback());
-        lstPrefer.setCellFactory(ComboBoxUtils.getCallback());
-        lstAvoid.setCellFactory(ComboBoxUtils.getCallback());
-        lstTrainingLevel.setCellFactory(ComboBoxUtils.getCallback());
+        lstEMail.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
+        lstPhoneNumber.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
+        lstAddress.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
+        lstURL.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
+        lstPrefer.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
+        lstAvoid.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
+        lstTrainingLevel.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
 
 		// declared fields
         lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());

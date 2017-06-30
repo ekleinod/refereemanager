@@ -1,8 +1,11 @@
 package de.edgesoft.refereemanager.utils;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
@@ -47,18 +50,18 @@ public class ComboBoxUtils {
 	 */
 	public static final void prepareComboBox(ComboBox<ModelClassExt> theComboBox, final List<? extends ModelClassExt> theItems) {
 		theComboBox.setItems(FXCollections.observableArrayList(theItems));
-		theComboBox.setCellFactory(ComboBoxUtils.getCallback());
+		theComboBox.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
 		theComboBox.setButtonCell(ComboBoxUtils.getListCell());
 	}
 
 	/**
-	 * Returns {@link Callback} for cell factories.
+	 * Returns {@link Callback} for cell factories for lists of {@link ModelClassExt}.
 	 *
 	 * @return callback for cell factories
 	 *
 	 * @version 0.14.0
 	 */
-	public static final Callback<ListView<ModelClassExt>, ListCell<ModelClassExt>> getCallback() {
+	public static final Callback<ListView<ModelClassExt>, ListCell<ModelClassExt>> getCallbackModelClassExt() {
 		return new Callback<ListView<ModelClassExt>, ListCell<ModelClassExt>>() {
 			@SuppressWarnings("unused")
 			@Override
@@ -71,6 +74,33 @@ public class ComboBoxUtils {
 							setText(null);
 						} else {
 							setText(item.getDisplayText().getValue());
+						}
+					}
+				};
+			}
+		};
+	}
+
+	/**
+	 * Returns {@link Callback} for cell factories for lists of {@link SimpleObjectProperty}< {@link LocalDate} >.
+	 *
+	 * @return callback for cell factories
+	 *
+	 * @version 0.14.0
+	 */
+	public static final Callback<ListView<SimpleObjectProperty<LocalDate>>, ListCell<SimpleObjectProperty<LocalDate>>> getCallbackLocalDateProperty() {
+		return new Callback<ListView<SimpleObjectProperty<LocalDate>>, ListCell<SimpleObjectProperty<LocalDate>>>() {
+			@SuppressWarnings("unused")
+			@Override
+			public ListCell<SimpleObjectProperty<LocalDate>> call(ListView<SimpleObjectProperty<LocalDate>> param) {
+				return new ListCell<SimpleObjectProperty<LocalDate>>() {
+					@Override
+					public void updateItem(SimpleObjectProperty<LocalDate> item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item == null) {
+							setText(null);
+						} else {
+							setText(DateTimeUtils.formatDate(item.getValue()));
 						}
 					}
 				};
