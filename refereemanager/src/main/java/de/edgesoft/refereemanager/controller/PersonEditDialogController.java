@@ -502,6 +502,13 @@ public class PersonEditDialogController {
 	protected CheckBox chkDidNotStart;
 
 	/**
+	 * Picker for exam date.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "examDate", jaxbclass = Trainee.class)
+	protected DatePicker pckExamDate;
+
+	/**
 	 * Spinner for points written A.
 	 */
 	@FXML
@@ -588,6 +595,7 @@ public class PersonEditDialogController {
 		// set date picker date format
 		pckBirthday.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
         pckDayOfDeath.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
+        pckExamDate.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
 
 		// fill combo boxes
         ComboBoxUtils.prepareComboBox(cboSexType, AppModel.getData().getContent().getSexType());
@@ -683,6 +691,20 @@ public class PersonEditDialogController {
 
 		btnSexTypeClear.disableProperty().bind(
 				cboSexType.getSelectionModel().selectedItemProperty().isNull()
+		);
+
+		// enable spinners
+		spnPointsWrittenA.disableProperty().bind(
+				pckExamDate.valueProperty().isNull()
+		);
+		spnPointsWrittenB.disableProperty().bind(
+				pckExamDate.valueProperty().isNull()
+		);
+		spnPointsPractical.disableProperty().bind(
+				pckExamDate.valueProperty().isNull()
+		);
+		spnPointsOral.disableProperty().bind(
+				pckExamDate.valueProperty().isNull()
 		);
 
 

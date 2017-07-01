@@ -13,7 +13,9 @@ import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.controller.PersonEditDialogController;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -23,6 +25,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -106,8 +109,8 @@ public class JAXBMatchUtils {
 
 	    					} else if (theFieldObject instanceof DatePicker) {
 
-	    						SimpleObjectProperty<LocalDate> sTemp = (SimpleObjectProperty<LocalDate>) getGetterMethod(theClass, sFieldName).invoke(theModel);
-	    						((DatePicker) theFieldObject).setValue((sTemp == null) ? null : sTemp.getValue());
+	    						SimpleObjectProperty<LocalDate> objTemp = (SimpleObjectProperty<LocalDate>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						((DatePicker) theFieldObject).setValue((objTemp == null) ? null : objTemp.getValue());
 
 	    					} else if (theFieldObject instanceof ComboBox<?>) {
 
@@ -122,6 +125,11 @@ public class JAXBMatchUtils {
 
 	    						BooleanProperty bTemp = (BooleanProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
 	    						((CheckBox) theFieldObject).setSelected((bTemp == null) ? false : bTemp.getValue());
+
+	    					} else if (theFieldObject instanceof Spinner<?>) {
+
+	    						SimpleIntegerProperty objTemp = (SimpleIntegerProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						((Spinner<Integer>) theFieldObject).getValueFactory().setValue((objTemp == null) ? 0 : objTemp.getValue());
 
 	    					}
 
@@ -223,6 +231,11 @@ public class JAXBMatchUtils {
 	    					} else if (theFieldObject instanceof CheckBox) {
 
 								getSetterMethod(theClass, sFieldName, BooleanProperty.class).invoke(theModel, new SimpleBooleanProperty(((CheckBox) theFieldObject).isSelected()));
+
+	    					} else if (theFieldObject instanceof Spinner<?>) {
+
+	    						System.out.println(((Spinner<Integer>) theFieldObject).getValue());
+								getSetterMethod(theClass, sFieldName, IntegerProperty.class).invoke(theModel, new SimpleIntegerProperty(((Spinner<Integer>) theFieldObject).getValue()));
 
 	    					}
 

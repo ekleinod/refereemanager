@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.jaxb;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -11,6 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
+import de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateAdapter;
 import de.edgesoft.refereemanager.model.RefereeModel;
 
 
@@ -26,6 +28,7 @@ import de.edgesoft.refereemanager.model.RefereeModel;
  *       &lt;sequence>
  *         &lt;element name="withdrawn" type="{}BooleanProperty" minOccurs="0"/>
  *         &lt;element name="did_not_start" type="{}BooleanProperty" minOccurs="0"/>
+ *         &lt;element name="exam_date" type="{}LocalDateProperty" minOccurs="0"/>
  *         &lt;element name="points_written_a" type="{}IntegerProperty" minOccurs="0"/>
  *         &lt;element name="points_written_b" type="{}IntegerProperty" minOccurs="0"/>
  *         &lt;element name="points_practical" type="{}IntegerProperty" minOccurs="0"/>
@@ -43,6 +46,7 @@ import de.edgesoft.refereemanager.model.RefereeModel;
 @XmlType(name = "Trainee", propOrder = {
     "withdrawn",
     "didNotStart",
+    "examDate",
     "pointsWrittenA",
     "pointsWrittenB",
     "pointsPractical",
@@ -61,6 +65,10 @@ public class Trainee
     @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
     @XmlSchemaType(name = "boolean")
     protected SimpleBooleanProperty didNotStart;
+    @XmlElement(name = "exam_date", type = String.class)
+    @XmlJavaTypeAdapter(SimpleObjectPropertyLocalDateAdapter.class)
+    @XmlSchemaType(name = "date")
+    protected SimpleObjectProperty examDate;
     @XmlElement(name = "points_written_a", type = String.class)
     @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
     @XmlSchemaType(name = "int")
@@ -128,6 +136,30 @@ public class Trainee
      */
     public void setDidNotStart(SimpleBooleanProperty value) {
         this.didNotStart = value;
+    }
+
+    /**
+     * Gets the value of the examDate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public SimpleObjectProperty getExamDate() {
+        return examDate;
+    }
+
+    /**
+     * Sets the value of the examDate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setExamDate(SimpleObjectProperty value) {
+        this.examDate = value;
     }
 
     /**

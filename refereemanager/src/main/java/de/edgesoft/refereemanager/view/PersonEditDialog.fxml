@@ -383,6 +383,8 @@
                                     <RowConstraints vgrow="SOMETIMES" />
                                     <RowConstraints vgrow="SOMETIMES" />
                                     <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
                                     <Label text="Lehrgang">
@@ -390,43 +392,52 @@
                                           <Insets bottom="10.0" top="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <CheckBox fx:id="chkWithdrawn" mnemonicParsing="false" text="Lehrgang abgebrochen" GridPane.columnIndex="1" />
+                                    <CheckBox fx:id="chkWithdrawn" mnemonicParsing="false" text="Lehrgang nicht angetreten" GridPane.columnIndex="1" />
                                     <Label text="Prüfungsantritt" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets bottom="10.0" top="10.0" />
                                        </GridPane.margin>
                                     </Label>
                                     <CheckBox fx:id="chkDidNotStart" mnemonicParsing="false" text="Nicht zur Prüfung angetreten" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label text="Schriftlich Teil A" GridPane.rowIndex="2">
+                                    <Label text="Prüfungsdatum" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin></Label>
+                                    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <children>
+                                          <DatePicker fx:id="pckExamDate" promptText="tt.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <Label text="Schriftlich Teil A" GridPane.rowIndex="3">
                                        <GridPane.margin>
                                           <Insets bottom="10.0" top="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Spinner fx:id="spnPointsWrittenA" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label text="Schriftlich Teil B" GridPane.rowIndex="3">
+                                    <Spinner fx:id="spnPointsWrittenA" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label text="Schriftlich Teil B" GridPane.rowIndex="4">
                                        <GridPane.margin>
                                           <Insets bottom="10.0" top="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Spinner fx:id="spnPointsWrittenB" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Label text="Praktisch" GridPane.rowIndex="4">
+                                    <Spinner fx:id="spnPointsWrittenB" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label text="Praktisch" GridPane.rowIndex="5">
                                        <GridPane.margin>
                                           <Insets bottom="10.0" top="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Spinner fx:id="spnPointsPractical" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <Label layoutX="15.0" layoutY="163.0" text="Mündlich" GridPane.rowIndex="5">
+                                    <Spinner fx:id="spnPointsPractical" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Label text="Mündlich" GridPane.rowIndex="6">
                                        <GridPane.margin>
                                           <Insets bottom="10.0" top="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Spinner fx:id="spnPointsOral" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <Label text="Endergebnis" GridPane.rowIndex="6">
+                                    <Spinner fx:id="spnPointsOral" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <Label text="Endergebnis" GridPane.rowIndex="7">
                                        <GridPane.margin>
                                           <Insets bottom="10.0" top="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <CheckBox fx:id="chkPassed" layoutX="165.0" layoutY="54.0" mnemonicParsing="false" text="Prüfung bestanden" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <CheckBox disable="true" fx:id="chkPassed" mnemonicParsing="false" text="Prüfung bestanden" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
