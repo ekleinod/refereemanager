@@ -523,6 +523,12 @@ public class PersonEditDialogController {
 	protected Spinner<Integer> spnPointsWrittenB;
 
 	/**
+	 * Checkbox for written passed.
+	 */
+	@FXML
+	private CheckBox chkPassedWritten;
+
+	/**
 	 * Spinner for points practical.
 	 */
 	@FXML
@@ -530,11 +536,23 @@ public class PersonEditDialogController {
 	protected Spinner<Integer> spnPointsPractical;
 
 	/**
+	 * Checkbox for practical passed.
+	 */
+	@FXML
+	private CheckBox chkPassedPractical;
+
+	/**
 	 * Spinner for points oral.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "pointsOral", jaxbclass = Trainee.class)
 	protected Spinner<Integer> spnPointsOral;
+
+	/**
+	 * Checkbox for oral passed.
+	 */
+	@FXML
+	private CheckBox chkPassedOral;
 
 	/**
 	 * Checkbox for passed.
@@ -614,9 +632,13 @@ public class PersonEditDialogController {
 
         // setup spinners
         SpinnerUtils.prepareIntegerSpinner(spnPointsWrittenA, 0, AppModel.getData().getContent().getExam().getMaxPointsWrittenA().getValue());
+        spnPointsWrittenA.valueProperty().addListener((observable, oldValue, newValue) -> computeExam());
         SpinnerUtils.prepareIntegerSpinner(spnPointsWrittenB, 0, AppModel.getData().getContent().getExam().getMaxPointsWrittenB().getValue());
+        spnPointsWrittenB.valueProperty().addListener((observable, oldValue, newValue) -> computeExam());
         SpinnerUtils.prepareIntegerSpinner(spnPointsPractical, 0, AppModel.getData().getContent().getExam().getMaxPointsPractical().getValue());
+        spnPointsPractical.valueProperty().addListener((observable, oldValue, newValue) -> computeExam());
         SpinnerUtils.prepareIntegerSpinner(spnPointsOral, 0, AppModel.getData().getContent().getExam().getMaxPointsOral().getValue());
+        spnPointsOral.valueProperty().addListener((observable, oldValue, newValue) -> computeExam());
 
         spnPointsWrittenA.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
         spnPointsWrittenB.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
@@ -783,6 +805,8 @@ public class PersonEditDialogController {
 			}
 
         }
+
+        computeExam();
 
     }
 
@@ -1306,6 +1330,44 @@ public class PersonEditDialogController {
 		editDialogStage.showAndWait();
 
 		return editController.isOkClicked();
+
+	}
+
+	/**
+	 * Computes if exam is passed.
+	 *
+	 * @since 0.14.0
+	 */
+	private void computeExam() {
+
+		int iPointsWritten = spnPointsWrittenA.getValue() + spnPointsWrittenB.getValue();
+		int iPointsPractical = spnPointsPractical.getValue();
+		int iPointsOral = spnPointsOral.getValue();
+		int iPointsSum = iPointsWritten + iPointsPractical + iPointsOral;
+
+		int iNeededWritten = AppModel.getData().getContent().getExam().getNeededPointsWritten().getValue();
+		int iNeededPractical = AppModel.getData().getContent().getExam().getNeededPointsPractical().getValue();
+		int iNeededOral = AppModel.getData().getContent().getExam().getNeededPointsOral().getValue();
+		int iNeededSum = AppModel.getData().getContent().getExam().getNeededPoints().getValue();
+
+		chkPassedWritten.setSelected(
+				(iPointsWritten >= iNeededWritten)
+		);
+
+		chkPassedPractical.setSelected(
+				(iPointsPractical >= iNeededPractical)
+		);
+
+		chkPassedOral.setSelected(
+				(iPointsOral >= iNeededOral)
+		);
+
+		chkPassed.setSelected(
+				(iPointsWritten >= iNeededWritten) &&
+				(iPointsPractical >= iNeededPractical) &&
+				(iPointsOral >= iNeededOral) &&
+				(iPointsSum >= iNeededSum)
+		);
 
 	}
 
