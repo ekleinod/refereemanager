@@ -27,6 +27,7 @@ import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
+import de.edgesoft.refereemanager.utils.SpinnerUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -40,7 +41,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -613,10 +613,10 @@ public class PersonEditDialogController {
         lstTrainingLevel.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
 
         // setup spinners
-        spnPointsWrittenA.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, AppModel.getData().getContent().getExam().getMaxPointsWrittenA().getValue()));
-        spnPointsWrittenB.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, AppModel.getData().getContent().getExam().getMaxPointsWrittenB().getValue()));
-        spnPointsPractical.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, AppModel.getData().getContent().getExam().getMaxPointsPractical().getValue()));
-        spnPointsOral.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, AppModel.getData().getContent().getExam().getMaxPointsOral().getValue()));
+        SpinnerUtils.prepareIntegerSpinner(spnPointsWrittenA, 0, AppModel.getData().getContent().getExam().getMaxPointsWrittenA().getValue());
+        SpinnerUtils.prepareIntegerSpinner(spnPointsWrittenB, 0, AppModel.getData().getContent().getExam().getMaxPointsWrittenB().getValue());
+        SpinnerUtils.prepareIntegerSpinner(spnPointsPractical, 0, AppModel.getData().getContent().getExam().getMaxPointsPractical().getValue());
+        SpinnerUtils.prepareIntegerSpinner(spnPointsOral, 0, AppModel.getData().getContent().getExam().getMaxPointsOral().getValue());
 
         spnPointsWrittenA.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
         spnPointsWrittenB.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);

@@ -234,7 +234,6 @@ public class JAXBMatchUtils {
 
 	    					} else if (theFieldObject instanceof Spinner<?>) {
 
-	    						System.out.println(((Spinner<Integer>) theFieldObject).getValue());
 								getSetterMethod(theClass, sFieldName, IntegerProperty.class).invoke(theModel, new SimpleIntegerProperty(((Spinner<Integer>) theFieldObject).getValue()));
 
 	    					}
