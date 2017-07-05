@@ -64,11 +64,6 @@ import javafx.util.Duration;
 public class RefereeManager extends Application {
 
 	/**
-	 * Program and doc version.
-	 */
-	public static final Version VERSION = new VersionExt("0.13.0");
-
-	/**
 	 * Central logger for all classes.
 	 */
 	public static final Logger logger = LogManager.getLogger(RefereeManager.class.getPackage().getName());
@@ -188,6 +183,22 @@ public class RefereeManager extends Application {
 				loggerConfig.addAppender(theAppender, level, filter);
 		}
 		theConfig.getRootLogger().addAppender(theAppender, level, filter);
+	}
+
+	/**
+	 * Program and doc version.
+	 *
+	 * @version 0.14.0
+	 */
+	public static Version getVersion() {
+		return new VersionExt(String.format("%s.%s.%s%s",
+				Resources.getProjectProperties().getProperty("version.major"),
+				Resources.getProjectProperties().getProperty("version.minor"),
+				Resources.getProjectProperties().getProperty("version.build"),
+				((Resources.getProjectProperties().getProperty("version.additional") == null) || Resources.getProjectProperties().getProperty("version.additional").isEmpty()) ?
+						"" :
+						String.format(" %s", Resources.getProjectProperties().getProperty("version.additional"))
+				));
 	}
 
 }

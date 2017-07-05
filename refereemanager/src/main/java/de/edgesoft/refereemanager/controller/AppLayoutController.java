@@ -314,8 +314,8 @@ public class AppLayoutController {
 
 		info.setCreated(LocalDateTime.now());
 		info.setModified(LocalDateTime.now());
-		info.setAppversion(RefereeManager.VERSION);
-		info.setDocversion(RefereeManager.VERSION);
+		info.setAppversion(RefereeManager.getVersion());
+		info.setDocversion(RefereeManager.getVersion());
 		info.setCreator(RefereeManager.class.getCanonicalName());
 
 		dtaRefMan.setInfo(info);
@@ -514,7 +514,7 @@ public class AppLayoutController {
 
 		Alert alert = AlertUtils.createAlert(AlertType.INFORMATION, primaryStage,
 				"Über \"Referee-Manager\"",
-				MessageFormat.format("Referee-Manager Version {0}", RefereeManager.VERSION),
+				MessageFormat.format("Referee-Manager Version {0}", RefereeManager.getVersion()),
 				null
 				);
 
@@ -641,8 +641,8 @@ public class AppLayoutController {
 		try {
 
 			AppModel.getData().getInfo().setModified(LocalDateTime.now());
-			AppModel.getData().getInfo().setAppversion(RefereeManager.VERSION);
-			AppModel.getData().getInfo().setDocversion(RefereeManager.VERSION);
+			AppModel.getData().getInfo().setAppversion(RefereeManager.getVersion());
+			AppModel.getData().getInfo().setDocversion(RefereeManager.getVersion());
 			AppModel.getData().getInfo().setCreator(RefereeManager.class.getCanonicalName());
 
 			JAXBFiles.marshal(new ObjectFactory().createRefereemanager(AppModel.getData()), theFilename,

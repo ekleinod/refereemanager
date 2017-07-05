@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.Properties;
 
 import de.edgesoft.refereemanager.RefereeManager;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +17,7 @@ import javafx.scene.layout.Pane;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -34,19 +35,23 @@ import javafx.scene.layout.Pane;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.14.0
  * @since 0.10.0
  */
 public class Resources {
+
+	/**
+	 * Project properties singleton.
+	 *
+	 * @since 0.14.0
+	 */
+	private static Properties prpProject = null;
 
 	/**
 	 * Loads image from resources.
 	 *
 	 * @param theImagePath image path
 	 * @return loaded image
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	public static Image loadImage(final String theImagePath) {
 		return new Image(RefereeManager.class.getClassLoader().getResourceAsStream(theImagePath));
@@ -57,32 +62,27 @@ public class Resources {
 	 *
 	 * @param thePaneName pane name
 	 * @return loaded pane
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	public static Map.Entry<Pane, FXMLLoader> loadPane(final String thePaneName) {
 
-				try {
+		try {
 
-						FXMLLoader loader = new FXMLLoader();
-						loader.setLocation(RefereeManager.class.getResource(String.format("view/%s.fxml", thePaneName)));
-						return new AbstractMap.SimpleImmutableEntry<>((Pane) loader.load(), loader);
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(RefereeManager.class.getResource(String.format("view/%s.fxml", thePaneName)));
+			return new AbstractMap.SimpleImmutableEntry<>((Pane) loader.load(), loader);
 
-				} catch (IOException e) {
-						RefereeManager.logger.catching(e);
-						return null;
-				}
+		} catch (IOException e) {
+			RefereeManager.logger.catching(e);
+			return null;
 		}
+
+	}
 
 	/**
 	 * Loads file from resources.
 	 *
 	 * @param theFileName pane name
 	 * @return loaded file as string
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	public static String loadFile(final String theFileName) {
 
@@ -92,17 +92,55 @@ public class Resources {
 			String sLine = null;
 
 			while ((sLine = reader.readLine()) != null) {
-					sbReturn.append(sLine);
+				sbReturn.append(sLine);
 			}
 
 			return sbReturn.toString();
 
 		} catch (Exception e) {
-						RefereeManager.logger.catching(e);
+			RefereeManager.logger.catching(e);
 			return "";
 		}
 
+	}
+
+	/**
+	 * Loads project properties from resources.
+	 *
+	 * @return project properties
+	 *
+	 * @since 0.14.0
+	 */
+	public static Properties getProjectProperties() {
+		if (prpProject == null) {
+			prpProject = loadProperties("project.properties");
 		}
+		return prpProject;
+    }
+
+	/**
+	 * Loads properties from resources.
+	 *
+	 * @param theFileName pane name
+	 * @return loaded file as properties
+	 *
+	 * @since 0.14.0
+	 */
+	public static Properties loadProperties(final String theFileName) {
+
+		Properties prpReturn = new Properties();
+
+		try {
+
+			prpReturn.load(RefereeManager.class.getClassLoader().getResourceAsStream(theFileName));
+
+		} catch (Exception e) {
+			RefereeManager.logger.catching(e);
+		}
+
+		return prpReturn;
+
+    }
 
 }
 
