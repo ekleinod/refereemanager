@@ -1,4 +1,4 @@
-# Properties for refereemanager.
+# refereemanager install script.
 
 ## Legal stuff
 #
@@ -23,20 +23,19 @@
 # @version 0.14.0
 # @since 0.14.0
 
-version.major=0
-version.minor=13
-version.build=0
-version.additional= beta 1
-version=${version.major}.${version.minor}.${version.build}
-longversion=${version}${version.additional}
+# use encoding: ISO-8859-15
 
-dir.debian=debian
-dir.debiantmp=${dir.debian}-tmp
+!define JAR_NAME Refereemanager
+!define REGKEY "Software\Refereemanager"
+!define VERSION **version**
+!define LONG_VERSION "**longversion**"
+!define COMPANY "Ekkart Kleinod (edge-soft)"
+!define URL http://www.edgesoft.de/
+!define LONGNAME "refman - Der Referee-Manager"
+!define FILENAME "refereemanager"
+!define DIRNAME ${FILENAME}
+!define INSTALLNAME "..\..\files\${FILENAME}-${LONG_VERSION}.exe"
 
-dir.win=win
-dir.wintmp=${dir.win}-tmp
-
-file.nsi=${dir.wintmp}/${ant.project.name}.nsi
-file.log=build.log
+!include ..\..\submodules\edgeutils\nsis\simple-jar.nsi
 
 # EOF
