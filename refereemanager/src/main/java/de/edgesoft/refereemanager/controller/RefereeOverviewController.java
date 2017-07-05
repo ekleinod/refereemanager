@@ -391,12 +391,12 @@ public class RefereeOverviewController {
 				lblClub.setText(
 						(mdlTemp.getMember() == null) ?
 								null :
-								mdlTemp.getMember().getDisplayTitle().getValue());
+								mdlTemp.getMember().getDisplayText().getValue());
 
 				lblTrainingLevel.setText(
 						(mdlTemp.getHighestTrainingLevel() == null) ?
 								null :
-								mdlTemp.getHighestTrainingLevel().getType().getDisplayTitle().getValue());
+								mdlTemp.getHighestTrainingLevel().getType().getDisplayTitleShort().getValue());
 				lblLastUpdate.setText(
 						(mdlTemp.getLastTrainingUpdate() == null) ?
 								null :
