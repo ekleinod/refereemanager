@@ -31,7 +31,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 
-<project name="refereemanager" default="help" basedir=".">
+<project name="refereemanager" default="buildhelp" basedir=".">
 
 	<!-- ant-contrib has to be installed -->
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
@@ -39,9 +39,56 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	<property name="edgeutils:path" value="../submodules/edgeutils" />
 	<import file="${edgeutils:path}/ant/ant-commons.xml"/>
 
-	<property file="../gebu/src/main/resources/project.properties"/>
+	<property file="../refereemanager/src/main/resources/project.properties"/>
 
 	<import file="${edgeutils:path}/ant/ant-nsis.xml"/>
+
+	<target name="buildhelp" description="Help text for build.">
+
+		<echo>Create complete build:
+
+	1. &lt;set version and copyright in project.properties&gt;
+	2. ant setversion
+	3. &lt;create jar in eclipse or with maven&gt;
+	4. sudo ant debinstall
+	5. ant createdeb
+	6. sudo ant clearTmp
+	7. ant wininstall
+		</echo>
+
+		<antcall target="help" />
+
+	</target>
+
+	<target name="setversion" depends="clearLog" description="Set version annotation to ${version} in all files.">
+
+		<replaceregexp
+				encoding="utf-8"
+				match="@version .*"
+				replace="@version ${version}"
+				flags="g">
+
+			<fileset dir="../refereemanager/">
+				<include name="**/*" />
+			</fileset>
+
+		</replaceregexp>
+
+		<replaceregexp
+				encoding="utf-8"
+				match="Copyright .*"
+				replace="Copyright ${copyright}"
+				flags="g">
+
+			<fileset dir="../refereemanager/">
+				<include name="**/*" />
+			</fileset>
+
+		</replaceregexp>
+
+		<echo message="Ready, now create new jar, then call 'sudo ant debinstall'." />
+
+	</target>
 
 	<target name="debinstall" depends="clearLog" description="Create debian installer (run as root).">
 
