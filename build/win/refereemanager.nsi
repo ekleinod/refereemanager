@@ -36,6 +36,8 @@
 !define DIRNAME ${FILENAME}
 !define INSTALLNAME "..\..\files\${FILENAME}-${LONG_VERSION}.exe"
 
+!define RESOURCE_DIR "..\..\refereemanager\src\main\resources\"
+
 !include ..\..\submodules\edgeutils\nsis\simple-jar.nsi
 
 # EOF
