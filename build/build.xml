@@ -177,8 +177,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		/>
 		<replace
 			file="${dir.wintmp}/${ant.project.name}.nsi"
-			token="**version.additional**"
-			value="${version.additional}"
+			token="**longversion**"
+			value="${longversion}"
 		/>
 
 		<!-- call nsis -->
