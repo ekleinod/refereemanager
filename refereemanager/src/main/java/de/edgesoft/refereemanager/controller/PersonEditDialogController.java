@@ -1004,6 +1004,7 @@ public class PersonEditDialogController {
 
 		if (!theListView.getSelectionModel().isEmpty()) {
 			showContactEditDialog((ContactModel) theListView.getSelectionModel().getSelectedItem());
+			theListView.refresh();
 		}
 
 	}
@@ -1160,6 +1161,7 @@ public class PersonEditDialogController {
 
 		if (!theListView.getSelectionModel().isEmpty()) {
 			showWishEditDialog((WishModel) theListView.getSelectionModel().getSelectedItem());
+			theListView.refresh();
 		}
 
 	}
