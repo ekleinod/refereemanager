@@ -31,6 +31,9 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 <project name="refereemanager" default="buildhelp" basedir=".">
 
+	<!-- directories with files to set version in, comma separated -->
+	<property name="paths:setversion" value="../${ant.project.name}/" />
+
 	<!-- your local path to nsis here without exe, empty if exe is in system path -->
 	<property name="path:nsis:windows" value="C:\localapps\NSIS\" />
 
