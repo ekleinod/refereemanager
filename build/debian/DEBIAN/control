@@ -1,5 +1,5 @@
 Package: refman - Refereemanager
-Version: **version**
+Version: **fileversion**
 Section: misc
 Priority: optional
 Architecture: all

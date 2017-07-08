@@ -25,8 +25,7 @@
 
 # use encoding: ISO-8859-15
 
-!define JAR_NAME Refereemanager
-!define REGKEY "Software\Refereemanager"
+!define PROJECT_NAME Refereemanager
 !define VERSION **version**
 !define LONG_VERSION "**longversion**"
 !define FILE_VERSION "**fileversion**"
@@ -34,10 +33,11 @@
 !define URL http://www.edgesoft.de/
 !define LONGNAME "refman - Der Referee-Manager"
 !define FILENAME "refereemanager"
-!define DIRNAME ${FILENAME}
-!define INSTALLNAME "..\..\files\${FILENAME}-${FILE_VERSION}.exe"
 
-!define RESOURCE_DIR "..\..\refereemanager\src\main\resources\"
+!define DIRNAME ${FILENAME}
+
+!define DIR_RESOURCES "..\..\refereemanager\src\main\resources\"
+!define DIR_FILES "..\..\files\"
 
 !include ..\..\submodules\edgeutils\nsis\simple-jar.nsi
 

@@ -60,12 +60,12 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	</target>
 
-	<target name="setversion" depends="clearLog" description="Set version annotation to ${version} in all files.">
+	<target name="setversion" depends="clearLog" description="Set version annotation to ${longversion} in all files.">
 
 		<replaceregexp
 				encoding="utf-8"
 				match="@version .*"
-				replace="@version ${version}"
+				replace="@version ${longversion}"
 				flags="g">
 
 			<fileset dir="../refereemanager/">
@@ -117,8 +117,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<!-- control file -->
 		<replace
 			file="${dir.debiantmp}/DEBIAN/control"
-			token="**version**"
-			value="${version}"
+			token="**fileversion**"
+			value="${fileversion}"
 		/>
 
 		<length property="dirsize">
@@ -145,12 +145,12 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<arg value="${dir.debiantmp}" />
 		</exec>
 
-		<move file="${dir.debiantmp}.deb" tofile="../files/${ant.project.name}-${version}.deb" />
+		<move file="${dir.debiantmp}.deb" tofile="../files/${ant.project.name}-${fileversion}.deb" />
 
 		<!-- link created installer -->
 		<symlink
 			link="../files/${ant.project.name}.deb"
-			resource="${ant.project.name}-${version}.deb"
+			resource="${ant.project.name}-${fileversion}.deb"
 			overwrite="true"
 		/>
 
@@ -180,6 +180,11 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			token="**longversion**"
 			value="${longversion}"
 		/>
+		<replace
+			file="${dir.wintmp}/${ant.project.name}.nsi"
+			token="**fileversion**"
+			value="${fileversion}"
+		/>
 
 		<!-- call nsis -->
 		<antcall target="installer" />
@@ -195,7 +200,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	<target name="symlink" if="isUnix">
 		<symlink
 			link="../files/${ant.project.name}.exe"
-			resource="${ant.project.name}-${longversion}.exe"
+			resource="${ant.project.name}-${fileversion}.exe"
 			overwrite="true"
 		/>
 	</target>
