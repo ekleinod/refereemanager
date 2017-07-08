@@ -94,7 +94,7 @@ public class RefereeManager extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
-//		showSplashScreen();
+		showSplashScreen();
 
 		// load app layout and controller, then delegate control to controller
 		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AppLayout");
@@ -139,14 +139,14 @@ public class RefereeManager extends Application {
 
 		// add listener to succeed state of task, then fade out
 		splashTask.stateProperty().addListener((observableValue, oldState, newState) -> {
-						if (newState == Worker.State.SUCCEEDED) {
-								FadeTransition fadeSplash = new FadeTransition(Duration.seconds(1.2), pane);
-								fadeSplash.setFromValue(1.0);
-								fadeSplash.setToValue(0.0);
-								fadeSplash.setOnFinished(actionEvent -> stage.hide());
-								fadeSplash.play();
-						}
-				});
+				if (newState == Worker.State.SUCCEEDED) {
+						FadeTransition fadeSplash = new FadeTransition(Duration.seconds(1.2), pane);
+						fadeSplash.setFromValue(1.0);
+						fadeSplash.setToValue(0.0);
+						fadeSplash.setOnFinished(actionEvent -> stage.hide());
+						fadeSplash.play();
+				}
+		});
 
 		// show splash screen, then start fading task
 		stage.show();
