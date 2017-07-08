@@ -161,13 +161,13 @@ public class RefereeManager extends Application {
 	 * @param theWriterName name of writer
 	 */
 	public static void addAppender(final Writer theWriter, final String theWriterName) {
-			final LoggerContext context = LoggerContext.getContext(false);
-			final Configuration config = context.getConfiguration();
-			final PatternLayout layout = PatternLayout.createLayout("%d %-5p: %m%n", null, config, null, null, true, false, null, null);
-			final Appender appender = WriterAppender.createAppender(layout, null, theWriter, theWriterName, false, true);
-			appender.start();
-			config.addAppender(appender);
-			updateLoggers(appender, config);
+		final LoggerContext context = LoggerContext.getContext(false);
+		final Configuration config = context.getConfiguration();
+		final PatternLayout layout = PatternLayout.createLayout("%d %-5p: %m%n", null, config, null, null, true, false, null, null);
+		final Appender appender = WriterAppender.createAppender(layout, null, theWriter, theWriterName, false, true);
+		appender.start();
+		config.addAppender(appender);
+		updateLoggers(appender, config);
 	}
 
 	/**
@@ -188,17 +188,10 @@ public class RefereeManager extends Application {
 	/**
 	 * Program and doc version.
 	 *
-	 * @version 0.14.0
+	 * @since 0.14.0
 	 */
 	public static Version getVersion() {
-		return new VersionExt(String.format("%s.%s.%s%s",
-				Resources.getProjectProperties().getProperty("version.major"),
-				Resources.getProjectProperties().getProperty("version.minor"),
-				Resources.getProjectProperties().getProperty("version.build"),
-				((Resources.getProjectProperties().getProperty("version.additional") == null) || Resources.getProjectProperties().getProperty("version.additional").isEmpty()) ?
-						"" :
-						String.format(" %s", Resources.getProjectProperties().getProperty("version.additional"))
-				));
+		return new VersionExt(Resources.getProjectProperties().getProperty("longversion"));
 	}
 
 }

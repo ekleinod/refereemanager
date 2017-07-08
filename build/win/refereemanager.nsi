@@ -29,12 +29,13 @@
 !define REGKEY "Software\Refereemanager"
 !define VERSION **version**
 !define LONG_VERSION "**longversion**"
+!define FILE_VERSION "**fileversion**"
 !define COMPANY "Ekkart Kleinod (edge-soft)"
 !define URL http://www.edgesoft.de/
 !define LONGNAME "refman - Der Referee-Manager"
 !define FILENAME "refereemanager"
 !define DIRNAME ${FILENAME}
-!define INSTALLNAME "..\..\files\${FILENAME}-${LONG_VERSION}.exe"
+!define INSTALLNAME "..\..\files\${FILENAME}-${FILE_VERSION}.exe"
 
 !define RESOURCE_DIR "..\..\refereemanager\src\main\resources\"
 
