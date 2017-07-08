@@ -50,10 +50,11 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	1. &lt;set version and copyright in project.properties&gt;
 	2. ant setversion
 	3. &lt;create jar in eclipse or with maven&gt;
-	4. sudo ant debinstall
-	5. ant createdeb
-	6. sudo ant clearTmp
-	7. ant wininstall
+	4. &lt;edit changelog&gt;
+	5. sudo ant debinstall
+	6. ant createdeb
+	7. sudo ant clearTmp
+	8. ant wininstall
 		</echo>
 
 		<antcall target="help" />
@@ -86,7 +87,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 		</replaceregexp>
 
-		<echo message="Ready, now create new jar, then call 'sudo ant debinstall'." />
+		<echo message="Ready, now create new jar, edit changelog, then call 'sudo ant debinstall' (as root)." />
 
 	</target>
 
@@ -159,7 +160,11 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	</target>
 
 	<target name="clearTmp" description="Delete temporary files.">
+
 		<delete dir="${dir.debiantmp}" />
+
+		<echo message="Ready, now call 'ant wininstall'." />
+
 	</target>
 
 	<target name="wininstall" depends="clearLog" description="Create windows installer.">
