@@ -14,7 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -32,7 +32,7 @@ import javafx.beans.property.SimpleStringProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.14.0
  * @since 0.8.0
  */
 public class TeamModel extends Team {
@@ -42,7 +42,7 @@ public class TeamModel extends Team {
 	 *
 	 * @return display title
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	@Override
@@ -60,7 +60,7 @@ public class TeamModel extends Team {
 	 *
 	 * @return filename
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.9.0
 	 */
 	public SimpleStringProperty getFilename() {
@@ -77,7 +77,7 @@ public class TeamModel extends Team {
 	 *
 	 * @return contact person
 	 *
-	 * @version 0.9.0
+	 * @version 0.14.0
 	 * @since 0.9.0
 	 */
 	@Override
@@ -100,7 +100,7 @@ public class TeamModel extends Team {
 	 *
 	 * @return venues
 	 *
-	 * @version 0.9.0
+	 * @version 0.14.0
 	 * @since 0.9.0
 	 */
 	@Override

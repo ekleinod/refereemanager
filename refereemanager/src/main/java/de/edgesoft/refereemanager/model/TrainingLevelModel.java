@@ -36,7 +36,7 @@ public class TrainingLevelModel extends TrainingLevel {
 	/**
 	 * Comparator rank.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.5.0
 	 */
 	public static final Comparator<TrainingLevel> RANK = Comparator.comparingInt(tl -> tl.getType().getRank().get());

@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlElement.DEFAULT;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.13.0
+ * @version 0.14.0
  * @since 0.13.0
  */
 @Retention(RUNTIME)
@@ -42,7 +42,7 @@ public @interface JAXBMatch {
     /**
      * JAXB class.
 	 *
-	 * @version 0.13.0
+	 * @version 0.14.0
 	 * @since 0.13.0
      */
 	Class<?> jaxbclass() default DEFAULT.class;
@@ -50,7 +50,7 @@ public @interface JAXBMatch {
     /**
      * Name of the JAXB field.
 	 *
-	 * @version 0.13.0
+	 * @version 0.14.0
 	 * @since 0.13.0
      */
     String jaxbfield() default "unknown";

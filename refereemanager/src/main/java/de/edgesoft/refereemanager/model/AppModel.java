@@ -11,7 +11,7 @@ import de.edgesoft.refereemanager.utils.Prefs;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of "Das Gebu-Programm".
  *
@@ -29,7 +29,7 @@ import de.edgesoft.refereemanager.utils.Prefs;
  * along with "Das Gebu-Programm".  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.14.0
  * @since 0.10.0
  */
 public final class AppModel {
@@ -37,7 +37,7 @@ public final class AppModel {
 	/**
 	 * Referee manager data.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	private static RefereeManager dtaRefMan = null;
@@ -45,7 +45,7 @@ public final class AppModel {
 	/**
 	 * Flag, if data is modified.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	private static boolean isModified = false;
@@ -55,7 +55,7 @@ public final class AppModel {
      *
      * @return referee manager data
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
      */
     public static RefereeManager getData() {
@@ -67,7 +67,7 @@ public final class AppModel {
      *
      * @return referee manager data
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
      */
     public static void setData(final RefereeManager theData) {
@@ -79,7 +79,7 @@ public final class AppModel {
      *
      * @return Is data modified?
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
      */
     public static boolean isModified() {
@@ -91,7 +91,7 @@ public final class AppModel {
      *
      * @param modified data modified?
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
      */
     public static void setModified(final boolean modified) {
@@ -103,7 +103,7 @@ public final class AppModel {
 	 *
 	 * @return filename
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	public static String getFilename() {
@@ -115,7 +115,7 @@ public final class AppModel {
 	 *
 	 * @param theFilename filename
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	public static void setFilename(final String theFilename) {

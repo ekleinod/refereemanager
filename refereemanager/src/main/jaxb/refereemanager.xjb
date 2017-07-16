@@ -5,7 +5,7 @@ Bindings for refereemanager.
 
 ## Legal stuff
 
-Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
 
 This file is part of refereemanager.
 
@@ -23,7 +23,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 @author Ekkart Kleinod
-@version 0.9.0
+@version 0.14.0
 @since 0.4.0
 -->
 
