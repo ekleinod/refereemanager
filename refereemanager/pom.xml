@@ -109,4 +109,12 @@
   	<url>http://www.edgesoft.de/</url>
   </organization>
   <description>Management of table tennis referees and their assigments.</description>
+  <issueManagement>
+  	<system>github</system>
+  	<url>https://github.com/tt-schiri/refereemanager/issues</url>
+  </issueManagement>
+  <scm>
+  	<url>https://github.com/tt-schiri/refereemanager</url>
+  	<developerConnection>ekleinod</developerConnection>
+  </scm>
 </project>
