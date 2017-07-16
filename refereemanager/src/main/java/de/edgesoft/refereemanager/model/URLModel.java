@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -35,20 +35,17 @@ public class URLModel extends URL {
 	 * Display title.
 	 *
 	 * @return display title
-	 *
-	 * @version 0.10.0
-	 * @since 0.8.0
 	 */
 	@Override
-		public SimpleStringProperty getDisplayTitle() {
+	public SimpleStringProperty getDisplayTitle() {
 
-			if (isPrivateOnly && !isPrivate()) {
+		if (isPrivateOnly && !isPrivate()) {
 			return null;
-			}
-
-			return getURL();
-
 		}
+
+		return getURL();
+
+	}
 
 }
 

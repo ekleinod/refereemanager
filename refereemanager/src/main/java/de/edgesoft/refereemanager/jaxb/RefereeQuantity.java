@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.edgeutils.commons.AbstractModelClass;
 import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
 
 
@@ -21,7 +21,7 @@ import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
  * <pre>
  * &lt;complexType name="RefereeQuantity">
  *   &lt;complexContent>
- *     &lt;extension base="{}ModelClass">
+ *     &lt;extension base="{}AbstractModelClass">
  *       &lt;sequence>
  *         &lt;element name="quantity" type="{}IntegerProperty"/>
  *         &lt;element name="referee_assigment_type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
@@ -39,7 +39,7 @@ import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
     "refereeAssigmentType"
 })
 public class RefereeQuantity
-    extends ModelClass
+    extends AbstractModelClass
 {
 
     @XmlElement(required = true, type = String.class)

@@ -37,7 +37,6 @@ import de.edgesoft.refereemanager.model.URLModel;
  *         &lt;element name="name" type="{}StringProperty"/>
  *         &lt;element name="birthday" type="{}LocalDateProperty" minOccurs="0"/>
  *         &lt;element name="day_of_death" type="{}LocalDateProperty" minOccurs="0"/>
- *         &lt;element name="picture" type="{}Picture" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="e_mail" type="{}EMail" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="address" type="{}Address" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="phone_number" type="{}PhoneNumber" maxOccurs="unbounded" minOccurs="0"/>
@@ -57,7 +56,6 @@ import de.edgesoft.refereemanager.model.URLModel;
     "name",
     "birthday",
     "dayOfDeath",
-    "picture",
     "eMail",
     "address",
     "phoneNumber",
@@ -85,7 +83,6 @@ public class Person
     @XmlJavaTypeAdapter(SimpleObjectPropertyLocalDateAdapter.class)
     @XmlSchemaType(name = "date")
     protected SimpleObjectProperty dayOfDeath;
-    protected List<Picture> picture;
     @XmlElement(name = "e_mail", type = EMailModel.class)
     protected List<EMail> eMail;
     @XmlElement(type = AddressModel.class)
@@ -193,35 +190,6 @@ public class Person
      */
     public void setDayOfDeath(SimpleObjectProperty value) {
         this.dayOfDeath = value;
-    }
-
-    /**
-     * Gets the value of the picture property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the picture property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getPicture().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Picture }
-     * 
-     * 
-     */
-    public List<Picture> getPicture() {
-        if (picture == null) {
-            picture = new ArrayList<Picture>();
-        }
-        return this.picture;
     }
 
     /**

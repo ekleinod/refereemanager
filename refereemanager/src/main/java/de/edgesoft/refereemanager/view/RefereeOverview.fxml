@@ -36,6 +36,7 @@
                       <RowConstraints vgrow="SOMETIMES" />
                       <RowConstraints vgrow="SOMETIMES" />
                       <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label fx:id="lblNameLabel" text="Name">
@@ -73,6 +74,11 @@
                               <Insets bottom="10.0" top="10.0" />
                            </GridPane.margin></Label>
                         <Label fx:id="lblNextUpdate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label fx:id="lblRemarkLabel" text="Anmerkung" GridPane.rowIndex="7">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </GridPane.margin></Label>
+                        <Label fx:id="lblRemark" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                         <ImageView fx:id="imgReferee" fitHeight="160.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowSpan="2147483647" GridPane.valignment="TOP" />
                      </children>
                   </GridPane>

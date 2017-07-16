@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import de.edgesoft.edgeutils.commons.ModelClass;
+import de.edgesoft.edgeutils.commons.AbstractModelClass;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.LeagueModel;
 import de.edgesoft.refereemanager.model.PersonModel;
@@ -27,7 +27,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
  * <pre>
  * &lt;complexType name="Content">
  *   &lt;complexContent>
- *     &lt;extension base="{}ModelClass">
+ *     &lt;extension base="{}AbstractModelClass">
  *       &lt;sequence>
  *         &lt;element name="season" type="{}Season"/>
  *         &lt;element name="exam" type="{}Exam"/>
@@ -73,7 +73,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
     "trainingLevelType"
 })
 public class Content
-    extends ModelClass
+    extends AbstractModelClass
 {
 
     @XmlElement(required = true, type = SeasonModel.class)

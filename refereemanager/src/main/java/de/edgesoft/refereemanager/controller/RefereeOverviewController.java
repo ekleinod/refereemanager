@@ -40,7 +40,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * Controller for the referee list scene.
+ * Controller for the referee overview scene.
  *
  * ## Legal stuff
  *
@@ -62,7 +62,7 @@ import javafx.stage.Stage;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.13.0
+ * @version 0.14.0
  * @since 0.10.0
  */
 public class RefereeOverviewController {
@@ -70,7 +70,6 @@ public class RefereeOverviewController {
 	/**
 	 * Heading label.
 	 *
-	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
 	@FXML
@@ -78,27 +77,18 @@ public class RefereeOverviewController {
 
 	/**
 	 * Name label.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Label lblName;
 
 	/**
 	 * Name label label.
-	 *
-	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	@FXML
 	private Label lblNameLabel;
 
 	/**
 	 * First name label.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Label lblFirstName;
@@ -106,7 +96,6 @@ public class RefereeOverviewController {
 	/**
 	 * First name label label.
 	 *
-	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
 	@FXML
@@ -114,9 +103,6 @@ public class RefereeOverviewController {
 
 	/**
 	 * Training level label.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Label lblTrainingLevel;
@@ -124,7 +110,6 @@ public class RefereeOverviewController {
 	/**
 	 * Training level label label.
 	 *
-	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
 	@FXML
@@ -132,9 +117,6 @@ public class RefereeOverviewController {
 
 	/**
 	 * Club label.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Label lblClub;
@@ -142,7 +124,6 @@ public class RefereeOverviewController {
 	/**
 	 * Club label label.
 	 *
-	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
 	@FXML
@@ -151,7 +132,6 @@ public class RefereeOverviewController {
 	/**
 	 * Birthday label.
 	 *
-	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
 	@FXML
@@ -160,7 +140,6 @@ public class RefereeOverviewController {
 	/**
 	 * Birthday label label.
 	 *
-	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
 	@FXML
@@ -169,7 +148,6 @@ public class RefereeOverviewController {
 	/**
 	 * Last update label.
 	 *
-	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
 	@FXML
@@ -178,7 +156,6 @@ public class RefereeOverviewController {
 	/**
 	 * Last update label label.
 	 *
-	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
 	@FXML
@@ -187,7 +164,6 @@ public class RefereeOverviewController {
 	/**
 	 * Next update label.
 	 *
-	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
 	@FXML
@@ -196,53 +172,53 @@ public class RefereeOverviewController {
 	/**
 	 * Next update label label.
 	 *
-	 * @version 0.13.0
 	 * @since 0.13.0
 	 */
 	@FXML
 	private Label lblNextUpdateLabel;
 
 	/**
-	 * Referee image.
+	 * Remark label.
 	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Label lblRemark;
+
+	/**
+	 * Remark label label.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Label lblRemarkLabel;
+
+	/**
+	 * Referee image.
 	 */
 	@FXML
 	private ImageView imgReferee;
 
 	/**
 	 * Add button.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnAdd;
 
 	/**
 	 * Edit button.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnEdit;
 
 	/**
 	 * Delete button.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnDelete;
 
 	/**
 	 * Split pane.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private SplitPane pneSplit;
@@ -250,18 +226,12 @@ public class RefereeOverviewController {
 
 	/**
 	 * Main app controller.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	private AppLayoutController appController = null;
 
 
 	/**
 	 * Referee list controller.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	private RefereeListController ctlRefList;
 
@@ -269,9 +239,6 @@ public class RefereeOverviewController {
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
-	 *
-	 * @version 0.13.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void initialize() {
@@ -346,9 +313,6 @@ public class RefereeOverviewController {
 	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
 	 *
 	 * @param theAppController app controller
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	public void initController(final AppLayoutController theAppController) {
 
@@ -362,9 +326,6 @@ public class RefereeOverviewController {
 	 * Shows selected data in detail window.
 	 *
 	 * Checks if an item is selected in visible tab, uses this.
-	 *
-	 * @version 0.13.0
-	 * @since 0.13.0
 	 */
 	private void showDetails() {
 
@@ -382,9 +343,6 @@ public class RefereeOverviewController {
 	 * Shows selected data in detail window.
 	 *
 	 * @param theDetailData event (null if none is selected)
-	 *
-	 * @version 0.13.0
-	 * @since 0.10.0
 	 */
 	private void showDetails(final Person theDetailData) {
 
@@ -399,6 +357,7 @@ public class RefereeOverviewController {
 			lblBirthday.setText("");
 			lblLastUpdate.setText("");
 			lblNextUpdate.setText("");
+			lblRemark.setText("");
 
 			imgReferee.setImage(null);
 
@@ -421,6 +380,10 @@ public class RefereeOverviewController {
 					(theDetailData.getBirthday() == null) ?
 							null :
 							DateTimeUtils.formatDate((LocalDate) theDetailData.getBirthday().getValue()));
+			lblRemark.setText(
+					(theDetailData.getRemark() == null) ?
+							null :
+							theDetailData.getRemark().getValue());
 
 			if (theDetailData instanceof RefereeModel) {
 				RefereeModel mdlTemp = (RefereeModel) theDetailData;
@@ -428,12 +391,12 @@ public class RefereeOverviewController {
 				lblClub.setText(
 						(mdlTemp.getMember() == null) ?
 								null :
-								mdlTemp.getMember().getDisplayTitle().getValue());
+								mdlTemp.getMember().getDisplayText().getValue());
 
 				lblTrainingLevel.setText(
 						(mdlTemp.getHighestTrainingLevel() == null) ?
 								null :
-								mdlTemp.getHighestTrainingLevel().getType().getDisplayTitle().getValue());
+								mdlTemp.getHighestTrainingLevel().getType().getDisplayTitleShort().getValue());
 				lblLastUpdate.setText(
 						(mdlTemp.getLastTrainingUpdate() == null) ?
 								null :
@@ -467,9 +430,6 @@ public class RefereeOverviewController {
 
 	/**
 	 * Opens edit dialog for new data.
-	 *
-	 * @version 0.13.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleAdd() {
@@ -513,9 +473,6 @@ public class RefereeOverviewController {
 
 	/**
 	 * Opens edit dialog for editing selected data.
-	 *
-	 * @version 0.13.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleEdit() {
@@ -534,9 +491,6 @@ public class RefereeOverviewController {
 
 	/**
 	 * Deletes selected data from list.
-	 *
-	 * @version 0.13.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleDelete() {
@@ -553,7 +507,17 @@ public class RefereeOverviewController {
 			alert.showAndWait()
 					.filter(response -> response == ButtonType.OK)
 					.ifPresent(response -> {
-						((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(lstSelected.get(0));
+						if (ctlRefList.getTabReferees().isSelected()) {
+							((ContentModel) AppModel.getData().getContent()).getObservableReferees().remove(lstSelected.get(0));
+						}
+
+						if (ctlRefList.getTabTrainees().isSelected()) {
+							((ContentModel) AppModel.getData().getContent()).getObservableTrainees().remove(lstSelected.get(0));
+						}
+
+						if (ctlRefList.getTabPeople().isSelected()) {
+							((ContentModel) AppModel.getData().getContent()).getObservablePeople().remove(lstSelected.get(0));
+						}
 						AppModel.setModified(true);
 						appController.setAppTitle();
 						});
@@ -569,27 +533,12 @@ public class RefereeOverviewController {
 	 *
 	 * @param thePerson the person to be edited
 	 * @return true if the user clicked OK, false otherwise.
-	 *
-	 * @version 0.13.0
-	 * @since 0.10.0
 	 */
 	private boolean showEditDialog(PersonModel thePerson) {
 
 		Objects.requireNonNull(thePerson);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = null;
-
-		if (ctlRefList.getTabReferees().isSelected()) {
-			pneLoad = Resources.loadPane("RefereeEditDialog");
-		}
-
-		if (ctlRefList.getTabTrainees().isSelected()) {
-			pneLoad = Resources.loadPane("TraineeEditDialog");
-		}
-
-		if (ctlRefList.getTabPeople().isSelected()) {
-			pneLoad = Resources.loadPane("PersonEditDialog");
-		}
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PersonEditDialog");
 
 		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
 
@@ -606,7 +555,7 @@ public class RefereeOverviewController {
 		dialogStage.setScene(scene);
 
 		// Set the referee
-		RefereeEditDialogController editController = pneLoad.getValue().getController();
+		PersonEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(dialogStage);
 		editController.setPerson(thePerson);
 

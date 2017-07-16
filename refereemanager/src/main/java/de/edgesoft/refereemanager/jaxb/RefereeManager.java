@@ -7,8 +7,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import de.edgesoft.edgeutils.commons.AbstractModelClass;
 import de.edgesoft.edgeutils.commons.Info;
-import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.refereemanager.model.ContentModel;
 
 
@@ -20,7 +20,7 @@ import de.edgesoft.refereemanager.model.ContentModel;
  * <pre>
  * &lt;complexType name="RefereeManager">
  *   &lt;complexContent>
- *     &lt;extension base="{}ModelClass">
+ *     &lt;extension base="{}AbstractModelClass">
  *       &lt;sequence>
  *         &lt;element name="info" type="{}Info"/>
  *         &lt;element name="content" type="{}Content"/>
@@ -39,7 +39,7 @@ import de.edgesoft.refereemanager.model.ContentModel;
     "content"
 })
 public class RefereeManager
-    extends ModelClass
+    extends AbstractModelClass
 {
 
     @XmlElement(required = true)
