@@ -1,3 +1,13 @@
+refereemanager (0.14.0) unstable; urgency=low
+
+	* bugfixing in communication panel
+	* editing of people, referees, and trainees
+	* logo and splash screen
+	* win and debian installer
+	* small model changes
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Sun, 16 Jul 2017 23:00:00 +0200
+
 refereemanager (0.13.0) unstable; urgency=low
 
 	* rewrite docsByLetter
