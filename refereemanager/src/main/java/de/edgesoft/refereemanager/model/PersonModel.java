@@ -59,7 +59,7 @@ public class PersonModel extends Person {
 	/**
 	 * Filter predicate for people with email addresses.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	public static Predicate<PersonModel> HAS_EMAIL = person -> (person.getPrimaryEMail() != null);
@@ -67,7 +67,7 @@ public class PersonModel extends Person {
 	/**
 	 * Filter predicate for people with postal addresses.
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public static Predicate<PersonModel> HAS_ADDRESS = person -> (person.getPrimaryAddress() != null);
@@ -77,7 +77,7 @@ public class PersonModel extends Person {
 	 *
 	 * @return display title
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	@Override
@@ -198,7 +198,7 @@ public class PersonModel extends Person {
 	 *
 	 * @return primary address
 	 *
-	 * @version 0.6.0
+	 * @version 0.14.0
 	 * @since 0.6.0
 	 */
 	public Address getPrimaryAddress() {
@@ -214,7 +214,7 @@ public class PersonModel extends Person {
 	 *
 	 * @return primary email
 	 *
-	 * @version 0.8.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	public EMail getPrimaryEMail() {
@@ -230,7 +230,7 @@ public class PersonModel extends Person {
 	 *
 	 * @return primary phone number
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public PhoneNumber getPrimaryPhoneNumber() {

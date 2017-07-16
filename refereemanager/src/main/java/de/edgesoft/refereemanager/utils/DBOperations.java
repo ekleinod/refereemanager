@@ -48,7 +48,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.14.0
  * @since 0.7.0
  */
 public class DBOperations {
@@ -58,7 +58,7 @@ public class DBOperations {
 	 *
 	 * @param theDB database
 	 *
-	 * @version 0.7.0
+	 * @version 0.14.0
 	 * @since 0.7.0
 	 */
 	public static void removeClubs(final de.edgesoft.refereemanager.jaxb.RefereeManager theDB) {

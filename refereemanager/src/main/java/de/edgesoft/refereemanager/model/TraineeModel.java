@@ -28,7 +28,7 @@ import javafx.beans.property.SimpleBooleanProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.14.0
  * @since 0.12.0
  */
 public class TraineeModel extends Trainee {
@@ -36,7 +36,7 @@ public class TraineeModel extends Trainee {
 	/**
 	 * Filter predicate for trainees that passed the exam.
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public static Predicate<Trainee> PASSED = trainee -> trainee.getPassed().getValue();
@@ -46,7 +46,7 @@ public class TraineeModel extends Trainee {
 	 *
 	 * @return has referee passed exam?
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@Override

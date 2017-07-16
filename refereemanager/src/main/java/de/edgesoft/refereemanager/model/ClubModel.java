@@ -39,7 +39,7 @@ public class ClubModel extends Club {
 	 *
 	 * @return is club local club
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.9.0
 	 */
 	@Override
@@ -52,7 +52,7 @@ public class ClubModel extends Club {
 	 *
 	 * @return filename
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@Override

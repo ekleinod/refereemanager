@@ -36,7 +36,7 @@ import javafx.stage.Screen;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.14.0
  * @since 0.8.0
  */
 public class Prefs {
@@ -44,7 +44,7 @@ public class Prefs {
 	/**
 	 * Preferences object.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	private static Preferences preferences = null;
@@ -54,7 +54,7 @@ public class Prefs {
 	 *
 	 * @return preferences
 	 *
-	 * @version 0.8.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	private static Preferences getPreferences() {
@@ -70,7 +70,7 @@ public class Prefs {
 	 * @param theKey preference key
 	 * @return preference value
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	public static String get(final PrefKey theKey) {
@@ -150,7 +150,7 @@ public class Prefs {
 	 * @param theKey preference key
 	 * @param theValue value
 	 *
-	 * @version 0.8.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	public static void put(final PrefKey theKey, final String theValue) {
@@ -163,7 +163,7 @@ public class Prefs {
 	 * @param theKey text key
 	 * @param theValue value
 	 *
-	 * @version 0.8.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	public static void put(final String theKey, final String theValue) {
@@ -178,7 +178,7 @@ public class Prefs {
 	 * @throws BackingStoreException
 	 * @throws IOException
 	 *
-	 * @version 0.8.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	public static void exportPrefs(final OutputStream theStream) throws IOException, BackingStoreException {
@@ -194,7 +194,7 @@ public class Prefs {
 	 * @throws InvalidPreferencesFormatException
 	 * @throws BackingStoreException
 	 *
-	 * @version 0.8.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	public static void importPrefs(final InputStream theStream) throws IOException, InvalidPreferencesFormatException, BackingStoreException {
@@ -207,7 +207,7 @@ public class Prefs {
 	 *
 	 * @return preferences map
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public static Map<String, Object> getPrefMap() {
