@@ -16,7 +16,7 @@ import javafx.stage.Stage;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -34,7 +34,7 @@ import javafx.stage.Stage;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.14.0
  * @since 0.10.0
  */
 public class AlertUtils {
@@ -53,7 +53,7 @@ public class AlertUtils {
 	 *
 	 * @return created alert
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	public static Alert createAlert(final AlertType theAlertType, final Stage theOwner,
@@ -115,7 +115,7 @@ public class AlertUtils {
 	 *
 	 * @return created alert
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	public static Alert createExpandableAlert(final AlertType theAlertType, final Stage theOwner,

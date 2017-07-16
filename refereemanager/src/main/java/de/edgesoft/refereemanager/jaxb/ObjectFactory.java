@@ -110,27 +110,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RevokeLicense }
-     * 
-     */
-    public RevokeLicense createRevokeLicense() {
-        return new RevokeLicense();
-    }
-
-    /**
      * Create an instance of {@link Trainee }
      * 
      */
     public Trainee createTrainee() {
         return new TraineeModel();
-    }
-
-    /**
-     * Create an instance of {@link Picture }
-     * 
-     */
-    public Picture createPicture() {
-        return new Picture();
     }
 
     /**

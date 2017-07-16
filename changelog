@@ -1,98 +1,110 @@
-# v0.13.0
+refereemanager (0.14.0) unstable; urgency=low
 
-*Released:* 2017-03-14
+	* bugfixing in communication panel
+	* editing of people, referees, and trainees
+	* logo and splash screen
+	* win and debian installer
+	* small model changes
 
-- rewrite docsByLetter
-- improved overview
-- started editing features basic work
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Sun, 16 Jul 2017 23:00:00 +0200
 
-# v0.12.0
+refereemanager (0.13.0) unstable; urgency=low
 
-*Released:* 2017-02-07
+	* rewrite docsByLetter
+	* improved overview
+	* started editing features basic work
 
-- communication and document generation using Freemarker templates
-- improved referee lists
-- trainees
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Tue, 14 Mar 2017 12:00:00 +0100
 
-# v0.11.0
+refereemanager (0.12.0) unstable; urgency=low
 
-*Released:* 2016-11-24
+	* communication and document generation using Freemarker templates
+	* improved referee lists
+	* trainees
 
-- Open-TT -> TT-Schiri
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Tue, 7 Feb 2017 12:00:00 +0100
 
-# v0.10.0
+refereemanager (0.11.0) unstable; urgency=low
 
-*Released:* 2016-11-23
+	* Open-TT -> TT-Schiri
 
-- communication
-- code clearance
-- before restructuring to TT-Schiri
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Thu, 24 Nov 2016 12:00:00 +0100
 
-# v0.9.0
+refereemanager (0.10.0) unstable; urgency=low
 
-*Released:* 2016-10-25
+	* communication
+	* code clearance
+	* before restructuring to TT-Schiri
 
-- website exports
-- first assignments, tournaments and venues
-- no predefined templates
-- saving progress before massive cleanup and graphical interface
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Wed, 23 Nov 2016 12:00:00 +0100
 
-# v0.8.0
+refereemanager (0.9.0) unstable; urgency=low
 
-*Released:* 2016-08-23
+	* website exports
+	* first assignments, tournaments and venues
+	* no predefined templates
+	* saving progress before massive cleanup and graphical interface
 
-- improvement of database operations
-- refined template helper functions and template language
-- referee communication by mail and letter
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Tue, 25 Oct 2016 12:00:00 +0100
 
-# v0.7.0
+refereemanager (0.8.0) unstable; urgency=low
 
-*Released:* 2016-08-01
+	* improvement of database operations
+	* refined template helper functions and template language
+	* referee communication by mail and letter
 
-- database operations: sort and remove unused clubs
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Tue, 23 Aug 2016 12:00:00 +0100
 
-# v0.6.0
+refereemanager (0.7.0) unstable; urgency=low
 
-*Released:* 2016-07-31
+	* database operations: sort and remove unused clubs
 
-- export of contact and disposition list in mmd
-- first draft of template language
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Mon, 1 Aug 2016 12:00:00 +0100
 
-# v0.5.0
+refereemanager (0.6.0) unstable; urgency=low
 
-*Released:* 2016-07-27
+	* export of contact and disposition list in mmd
+	* first draft of template language
 
-- working java backend
-- export of anonymous referee list in mmd
-- many improvements and changes in data modeling
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Sun, 31 Jul 2016 12:00:00 +0100
 
-# v0.4.0
+refereemanager (0.5.0) unstable; urgency=low
 
-*Released:* 2016-05-25
+	* working java backend
+	* export of anonymous referee list in mmd
+	* many improvements and changes in data modeling
 
-- extensive rewrite of database and functions
-- giving up because of complexity of database and PHP
-- switch to NoSQL data (XML) and java backend with simplified PHP frontend or static pages
-- saving progress of PHP and database modeling
-- converter database -> XML
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Wed, 27 Jul 2016 12:00:00 +0100
 
-# v0.3
+refereemanager (0.4.0) unstable; urgency=low
 
-*Released:* 2015-07-20
+	* extensive rewrite of database and functions
+	* giving up because of complexity of database and PHP
 
-- many functions working for referees and messages
-- last version before switching to CakePHP 3.*
+	* switch to NoSQL data (XML) and java backend with simplified PHP frontend or static pages
 
-# v0.2
+	* saving progress of PHP and database modeling
+	* converter database -> XML
 
-*Released:* 2014-05-04
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Wed, 25 May 2016 12:00:00 +0100
 
-- database for referees working
-- output of referee lists: HTML, PDF, Excel
+refereemanager (0.3.0) unstable; urgency=low
 
-# v0.1
+	* many functions working for referees and messages
+	* last version before switching to CakePHP 3.*
 
-*Released:* 2013-10-13
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Mon, 20 Jul 2015 12:00:00 +0100
 
-- no special functionality
-- saving the code before introducing the new branching model
+refereemanager (0.2.0) unstable; urgency=low
+
+	* database for referees working
+	* output of referee lists: HTML, PDF, Excel
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Sun, 4 May 2014 12:00:00 +0100
+
+refereemanager (0.1.0) unstable; urgency=low
+
+	* no special functionality
+	* saving the code before introducing the new branching model
+
+-- Ekkart Kleinod <ekleinod@edgesoft.de>  Sun, 13 Oct 2013 12:00:00 +0100

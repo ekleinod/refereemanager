@@ -54,43 +54,31 @@ import javafx.stage.Stage;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.14.0
  * @since 0.10.0
  */
 public class PreferencesDialogController {
 
 	/**
 	 * OK button.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnOK;
 
 	/**
 	 * Cancel button.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnCancel;
 
 	/**
 	 * Import button.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnImport;
 
 	/**
 	 * Export button.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnExport;
@@ -98,9 +86,6 @@ public class PreferencesDialogController {
 
 	/**
 	 * Tab pane.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TabPane pneTabs;
@@ -109,17 +94,13 @@ public class PreferencesDialogController {
 	/**
 	 * Tab other.
 	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
+	 * @since 0.12.0
 	 */
 	@FXML
 	private Tab tabOther;
 
 	/**
 	 * Checkbox: full path in title.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private CheckBox chkTitleFullpath;
@@ -127,7 +108,6 @@ public class PreferencesDialogController {
 	/**
 	 * Checkbox: sort data after loading.
 	 *
-	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -136,45 +116,30 @@ public class PreferencesDialogController {
 
 	/**
 	 * Tab paths.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Tab tabPaths;
 
 	/**
 	 * Template path.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtPathsTemplate;
 
 	/**
 	 * Template path button.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnPathsTemplate;
 
 	/**
 	 * Image path.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtPathsImage;
 
 	/**
 	 * Image path button.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnPathsImage;
@@ -182,7 +147,6 @@ public class PreferencesDialogController {
 	/**
 	 * Schema path.
 	 *
-	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -191,7 +155,6 @@ public class PreferencesDialogController {
 	/**
 	 * Schema path button.
 	 *
-	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -200,81 +163,54 @@ public class PreferencesDialogController {
 
 	/**
 	 * Tab EMail.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Tab tabEMail;
 
 	/**
 	 * EMail - SMTP host.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtEMailSMTPHost;
 
 	/**
 	 * EMail - SMTP username.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtEMailSMTPUsername;
 
 	/**
 	 * EMail - SMTP password.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtEMailSMTPPassword;
 
 	/**
 	 * EMail - From name.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtEMailFromName;
 
 	/**
 	 * EMail - From ameil.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtEMailFromEMail;
 
 	/**
 	 * EMail - To name.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtEMailToName;
 
 	/**
 	 * EMail - To email.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtEMailToEMail;
 
 	/**
 	 * EMail - Templates - EMail.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtEMailTemplateEMail;
@@ -283,7 +219,6 @@ public class PreferencesDialogController {
 	/**
 	 * Tab letters.
 	 *
-	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -292,7 +227,6 @@ public class PreferencesDialogController {
 	/**
 	 * Letters - Templates - Letter.
 	 *
-	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -301,7 +235,6 @@ public class PreferencesDialogController {
 	/**
 	 * Letters - Templates - single merge.
 	 *
-	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -310,7 +243,6 @@ public class PreferencesDialogController {
 	/**
 	 * Letters - Templates - all merge.
 	 *
-	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -320,7 +252,6 @@ public class PreferencesDialogController {
 	/**
 	 * Tab documents.
 	 *
-	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -329,7 +260,6 @@ public class PreferencesDialogController {
 	/**
 	 * Documents - Templates - Document.
 	 *
-	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -339,7 +269,6 @@ public class PreferencesDialogController {
 	/**
 	 * Tab texts.
 	 *
-	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -348,7 +277,6 @@ public class PreferencesDialogController {
 	/**
 	 * Texts - Templates - Text.
 	 *
-	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -356,18 +284,29 @@ public class PreferencesDialogController {
 
 
 	/**
-	 * Reference to dialog stage.
+	 * Tab statistics.
 	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
+	 * @since 0.14.0
+	 */
+	@FXML
+	private Tab tabStatistics;
+
+	/**
+	 * Statistics - Templates - Overview.
+	 *
+	 * @since 0.14.0
+	 */
+	@FXML
+	private TextField txtStatisticsTemplateOverview;
+
+
+	/**
+	 * Reference to dialog stage.
 	 */
 	private Stage dialogStage;
 
 	/**
 	 * OK clicked?.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	private boolean okClicked;
 
@@ -376,9 +315,6 @@ public class PreferencesDialogController {
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void initialize() {
@@ -402,6 +338,8 @@ public class PreferencesDialogController {
 
 		tabTexts.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
 
+		tabStatistics.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+
 		// fill with existing values
 		fillValues();
 
@@ -413,9 +351,6 @@ public class PreferencesDialogController {
 	 * @param theAppController app controller
 	 * @param theStage dialog stage
 	 * @param theTabID tab to open
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	public void initController(final AppLayoutController theAppController, final Stage theStage, final String theTabID) {
 		dialogStage = theStage;
@@ -432,9 +367,6 @@ public class PreferencesDialogController {
 	 * Returns if user clicked ok.
 	 *
 	 * @return did user click ok?
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	public boolean isOkClicked() {
 		return okClicked;
@@ -442,9 +374,6 @@ public class PreferencesDialogController {
 
 	/**
 	 * Fill preference values.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	private void fillValues() {
 
@@ -478,13 +407,13 @@ public class PreferencesDialogController {
 		// tab texts
 		txtTextsTemplateText.setText(Prefs.get(PrefKey.TEXTS_TEMPLATE_TEXT));
 
+		// tab statistics
+		txtStatisticsTemplateOverview.setText(Prefs.get(PrefKey.STATISTICS_TEMPLATE_OVERVIEW));
+
 	}
 
 	/**
 	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleOk() {
@@ -521,6 +450,9 @@ public class PreferencesDialogController {
 			// tab documents
 			Prefs.put(PrefKey.TEXTS_TEMPLATE_TEXT, txtTextsTemplateText.getText());
 
+			// tab statistics
+			Prefs.put(PrefKey.STATISTICS_TEMPLATE_OVERVIEW, txtStatisticsTemplateOverview.getText());
+
 			okClicked = true;
 			dialogStage.close();
 		}
@@ -530,9 +462,6 @@ public class PreferencesDialogController {
 	 * Validates input, shows error message for invalid input.
 	 *
 	 * @return is input valid?
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	private boolean isInputValid() {
 
@@ -569,9 +498,6 @@ public class PreferencesDialogController {
 
 	/**
 	 * Stores non-ok click and closes dialog.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleCancel() {
@@ -581,9 +507,6 @@ public class PreferencesDialogController {
 
 	/**
 	 * Set template path.
-	 *
-	 * @version 0.12.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handlePathsTemplate() {
@@ -606,7 +529,6 @@ public class PreferencesDialogController {
 	/**
 	 * Set image path.
 	 *
-	 * @version 0.12.0
 	 * @since 0.10.0
 	 */
 	@FXML
@@ -630,7 +552,6 @@ public class PreferencesDialogController {
 	/**
 	 * Set XSD path.
 	 *
-	 * @version 0.12.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -659,9 +580,6 @@ public class PreferencesDialogController {
 
 	/**
 	 * Imports preferences.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleImport() {
@@ -713,9 +631,6 @@ public class PreferencesDialogController {
 
 	/**
 	 * Exports preferences.
-	 *
-	 * @version 0.10.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleExport() {

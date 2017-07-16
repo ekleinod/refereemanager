@@ -20,6 +20,7 @@
                      <children>
                         <TableView fx:id="tblReferees" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
+                              <TableColumn fx:id="colRefereesID" prefWidth="-1.0" text="ID" />
                             <TableColumn fx:id="colRefereesName" prefWidth="-1.0" text="Name" />
                             <TableColumn fx:id="colRefereesFirstName" prefWidth="-1.0" text="Vorname" />
                               <TableColumn fx:id="colRefereesTrainingLevel" prefWidth="-1.0" text="Ausbildung" />
@@ -54,6 +55,7 @@
                      <children>
                         <TableView fx:id="tblTrainees" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
+                              <TableColumn fx:id="colTraineesID" prefWidth="-1.0" text="ID" />
                               <TableColumn fx:id="colTraineesName" prefWidth="-1.0" text="Name" />
                               <TableColumn fx:id="colTraineesFirstName" prefWidth="-1.0" text="Vorname" />
                               <TableColumn fx:id="colTraineesClub" prefWidth="-1.0" text="Verein" />
@@ -73,6 +75,7 @@
                      <children>
                         <TableView fx:id="tblPeople" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
+                              <TableColumn fx:id="colPeopleID" prefWidth="-1.0" text="ID" />
                               <TableColumn fx:id="colPeopleName" prefWidth="-1.0" text="Name" />
                               <TableColumn fx:id="colPeopleFirstName" prefWidth="-1.0" text="Vorname" />
                               <TableColumn fx:id="colPeopleBirthday" prefWidth="-1.0" text="Geburtstag" />

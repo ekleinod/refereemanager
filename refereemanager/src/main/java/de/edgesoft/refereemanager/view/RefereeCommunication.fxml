@@ -199,6 +199,7 @@
                                        </toggleGroup>
                                     </RadioButton>
                                     <RadioButton fx:id="radLetters" mnemonicParsing="false" text="Brief (1 pro gewählter Person)" toggleGroup="$grpCommKind" />
+                                    <RadioButton fx:id="radDocuments" mnemonicParsing="false" text="Dokument (1 pro gewählter Person)" toggleGroup="$grpCommKind" />
                                     <RadioButton fx:id="radTexts" mnemonicParsing="false" text="Text (1 pro gewählter Person)" toggleGroup="$grpCommKind" />
                                     <RadioButton fx:id="radDocument" mnemonicParsing="false" text="Dokument (1 unabhängig von Auswahl)" toggleGroup="$grpCommKind" />
                                     <RadioButton fx:id="radText" mnemonicParsing="false" text="Text (1 unabhängig von Auswahl)" toggleGroup="$grpCommKind" />

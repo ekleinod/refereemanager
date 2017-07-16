@@ -23,7 +23,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 @author Ekkart Kleinod
-@version 0.12.0
+@version 0.14.0
 @since 0.4.0
 -->
 
@@ -40,7 +40,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="RefereeManager">
 		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
+			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
 					<xsd:element name="info" type="Info" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="content" type="Content" minOccurs="1" maxOccurs="1" />
@@ -52,7 +52,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Content">
 		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
+			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
 					<xsd:element name="season" type="Season" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="exam" type="Exam" minOccurs="1" maxOccurs="1" />
@@ -99,7 +99,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="day_of_death" type="LocalDateProperty" minOccurs="0" maxOccurs="1" />
 
 					<!-- 1:n -->
-					<xsd:element name="picture" type="Picture" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="e_mail" type="EMail" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="address" type="Address" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="phone_number" type="PhoneNumber" minOccurs="0" maxOccurs="unbounded" />
@@ -125,7 +124,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:extension base="Person">
 				<xsd:sequence>
 					<xsd:element name="docs_by_letter" type="BooleanProperty" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="revoke_license" type="RevokeLicense" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="revoke_license" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="revoke_license_reason" type="StringProperty" minOccurs="0" maxOccurs="1" />
 
 					<!-- 1:n -->
 					<xsd:element name="training_level" type="TrainingLevel" minOccurs="0" maxOccurs="unbounded" />
@@ -171,21 +171,12 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 				<xsd:sequence>
 					<xsd:element name="withdrawn" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="did_not_start" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="exam_date" type="LocalDateProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="points_written_a" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="points_written_b" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="points_practical" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="points_oral" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="passed" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-
-	<xsd:complexType name="Picture">
-		<xsd:complexContent>
-			<xsd:extension base="TitledIDType">
-				<xsd:sequence>
-					<xsd:element name="u_r_l" type="StringProperty" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -364,7 +355,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="RefereeQuantity">
 		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
+			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
 					<xsd:element name="quantity" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="referee_assigment_type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
@@ -383,7 +374,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="TrainingLevel">
 		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
+			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
 					<xsd:element name="since" type="LocalDateProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="update" type="LocalDateProperty" minOccurs="0" maxOccurs="unbounded" />
@@ -404,7 +395,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Wish">
 		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
+			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
 					<xsd:element name="saturday" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="sunday" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
@@ -445,12 +436,16 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Exam">
 		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
+			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
-					<xsd:element name="points_written" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="points_practical" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="points_oral" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="points" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="max_points_written_a" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="max_points_written_b" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="max_points_practical" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="max_points_oral" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="needed_points_written" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="needed_points_practical" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="needed_points_oral" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="needed_points" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -523,17 +518,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 							</xsd:appinfo>
 						</xsd:annotation>
 					</xsd:element>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-
-	<xsd:complexType name="RevokeLicense">
-		<xsd:complexContent>
-			<xsd:extension base="ModelClass">
-				<xsd:sequence>
-					<xsd:element name="revoke" type="BooleanProperty" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="reason" type="StringProperty" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

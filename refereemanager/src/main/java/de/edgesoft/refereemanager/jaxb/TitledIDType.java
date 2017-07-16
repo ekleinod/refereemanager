@@ -51,7 +51,6 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 @XmlSeeAlso({
     ContactType.class,
     TrainingLevelTypeModel.class,
-    Picture.class,
     TeamModel.class,
     SeasonModel.class,
     SexType.class,

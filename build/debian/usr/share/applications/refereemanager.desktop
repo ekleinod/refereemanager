@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=refman - Der Referee-Manager
+Comment=Manages table tennis referees.
+Comment[de]=Verwaltet Tischtennis-Schiedsrichter.
+Exec=/bin/refereemanager
+Icon=/usr/share/refereemanager/icon.svg
+Terminal=false
+Type=Application
+Categories=Java;Application;Office
+StartupNotify=true
