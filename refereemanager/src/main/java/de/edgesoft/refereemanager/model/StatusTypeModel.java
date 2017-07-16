@@ -9,7 +9,7 @@ import de.edgesoft.refereemanager.jaxb.StatusType;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -27,7 +27,7 @@ import de.edgesoft.refereemanager.jaxb.StatusType;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.14.0
  * @since 0.6.0
  */
 public class StatusTypeModel extends StatusType {
@@ -35,7 +35,7 @@ public class StatusTypeModel extends StatusType {
 	/**
 	 * Filter predicate for all status types.
 	 *
-	 * @version 0.6.0
+	 * @version 0.14.0
 	 * @since 0.6.0
 	 */
 	public static Predicate<StatusType> ALL = type -> true;
@@ -43,7 +43,7 @@ public class StatusTypeModel extends StatusType {
 	/**
 	 * Filter predicate for active status types.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.6.0
 	 */
 	public static Predicate<StatusType> ACTIVE = type -> type.getActive().get();
@@ -51,7 +51,7 @@ public class StatusTypeModel extends StatusType {
 	/**
 	 * Filter predicate for inactive status types.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.6.0
 	 */
 	public static Predicate<StatusType> INACTIVE = type -> !type.getActive().get();

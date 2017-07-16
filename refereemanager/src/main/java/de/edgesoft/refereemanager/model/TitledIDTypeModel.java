@@ -38,7 +38,7 @@ public class TitledIDTypeModel extends TitledIDType {
 	/**
 	 * Comparator title.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 */
 	public static final Comparator<TitledIDType> TITLE = Comparator.comparing(titled -> titled.getTitle().get(), Collator.getInstance());
 
@@ -47,7 +47,7 @@ public class TitledIDTypeModel extends TitledIDType {
 	 *
 	 * @todo not sorted with collator
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 */
 	public static final Comparator<TitledIDType> SHORTTITLE = Comparator.comparing(titled -> titled.getShorttitle().get(), Comparator.nullsFirst(String::compareTo));
 
@@ -56,14 +56,14 @@ public class TitledIDTypeModel extends TitledIDType {
 	 *
 	 * @todo does not work with shorttitle == null
 	 *
-	 * @version 0.9.0
+	 * @version 0.14.0
 	 */
 	public static final Comparator<TitledIDType> SHORTTITLE_TITLE = SHORTTITLE.thenComparing(TITLE);
 
 	/**
 	 * Comparator displaytitle.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 */
 	public static final Comparator<TitledIDTypeModel> DISPLAYTITLE = Comparator.comparing(titled -> titled.getDisplayTitleShort().get(), Collator.getInstance());
 
@@ -72,7 +72,7 @@ public class TitledIDTypeModel extends TitledIDType {
 	 *
 	 * @return display title
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 */
 	public SimpleStringProperty getDisplayTitleShort() {
 		return (getShorttitle() == null) ? getDisplayTitle() : getShorttitle();
@@ -83,7 +83,7 @@ public class TitledIDTypeModel extends TitledIDType {
 	 *
 	 * @return display title
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 */
 	public SimpleStringProperty getDisplayTitle() {
 		return (getTitle() == null) ? new SimpleStringProperty(getId()) : getTitle();

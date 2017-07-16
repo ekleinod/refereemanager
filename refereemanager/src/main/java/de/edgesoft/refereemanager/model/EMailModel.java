@@ -26,7 +26,7 @@ import javafx.beans.property.SimpleStringProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.14.0
  * @since 0.6.0
  */
 public class EMailModel extends EMail {
@@ -36,7 +36,7 @@ public class EMailModel extends EMail {
 	 *
 	 * @return display title
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.6.0
 	 */
 	@Override

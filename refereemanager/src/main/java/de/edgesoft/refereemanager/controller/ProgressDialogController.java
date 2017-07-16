@@ -10,7 +10,7 @@ import javafx.scene.control.ProgressBar;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -28,7 +28,7 @@ import javafx.scene.control.ProgressBar;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.14.0
  * @since 0.10.0
  */
 public class ProgressDialogController {
@@ -36,7 +36,7 @@ public class ProgressDialogController {
 	/**
 	 * Title label
 	 *
-	 * @version 6.0.0
+	 * @version 0.14.0
 	 * @since 6.0.0
 	 */
 	@FXML
@@ -45,7 +45,7 @@ public class ProgressDialogController {
 	/**
 	 * Message label.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	@FXML
@@ -54,7 +54,7 @@ public class ProgressDialogController {
 	/**
 	 * Progress bar.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	@FXML
@@ -65,7 +65,7 @@ public class ProgressDialogController {
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	@FXML
@@ -83,7 +83,7 @@ public class ProgressDialogController {
 	 * @param theTitle title
 	 * @param theTask task to bind
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	public void initController(final String theTitle, final Task<?> theTask) {

@@ -29,7 +29,7 @@ import javafx.beans.property.SimpleStringProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.12.0
+ * @version 0.14.0
  * @since 0.6.0
  */
 public class PhoneNumberModel extends PhoneNumber {
@@ -40,7 +40,7 @@ public class PhoneNumberModel extends PhoneNumber {
 	 * @return number
 	 *  @retval null if private number
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@Override
@@ -59,7 +59,7 @@ public class PhoneNumberModel extends PhoneNumber {
 	 *
 	 * @return country code
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@Override
@@ -72,7 +72,7 @@ public class PhoneNumberModel extends PhoneNumber {
 	 *
 	 * @return area code
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@Override
@@ -85,7 +85,7 @@ public class PhoneNumberModel extends PhoneNumber {
 	 *
 	 * @return display title
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.6.0
 	 */
 	@Override
@@ -116,7 +116,7 @@ public class PhoneNumberModel extends PhoneNumber {
 	 *
 	 * @return standard representation
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public SimpleStringProperty getStandard() {
@@ -137,7 +137,7 @@ public class PhoneNumberModel extends PhoneNumber {
 	 *
 	 * @return vcard representation
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public SimpleStringProperty getVCard() {
@@ -155,7 +155,7 @@ public class PhoneNumberModel extends PhoneNumber {
 	 *
 	 * @return is cell phone?
 	 *
-	 * @version 0.12.0
+	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@Override

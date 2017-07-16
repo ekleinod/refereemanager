@@ -11,7 +11,7 @@ import de.edgesoft.refereemanager.utils.Prefs;
  *
  * ## Legal stuff
  *
- * Copyright 2016-2016 Ekkart Kleinod <ekleinod@edgesoft.de>
+ * Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
  *
  * This file is part of TT-Schiri: Referee Manager.
  *
@@ -29,7 +29,7 @@ import de.edgesoft.refereemanager.utils.Prefs;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.10.0
+ * @version 0.14.0
  * @since 0.6.0
  */
 public class ContactModel extends Contact {
@@ -37,7 +37,7 @@ public class ContactModel extends Contact {
 	/**
 	 * Filter predicate for primary contacts.
 	 *
-	 * @version 0.10.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	public static final Predicate<Contact> ISPRIMARY = (contact -> (contact.getIsPrimary() == null) || contact.getIsPrimary().get());
@@ -50,7 +50,7 @@ public class ContactModel extends Contact {
 	 *
 	 * @todo check if there is a better way of implementing this
 	 *
-	 * @version 0.8.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	public static boolean isPrivateOnly = false;
@@ -60,7 +60,7 @@ public class ContactModel extends Contact {
 	 *
 	 * @return is contact private
 	 *
-	 * @version 0.8.0
+	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	public boolean isPrivate() {
