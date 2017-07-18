@@ -12,7 +12,9 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateTimeAdapter;
 import de.edgesoft.refereemanager.model.LeagueGameModel;
+import de.edgesoft.refereemanager.model.OtherEventModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
+import de.edgesoft.refereemanager.model.TournamentModel;
 
 
 /**
@@ -43,9 +45,9 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
     "venue"
 })
 @XmlSeeAlso({
-    OtherEvent.class,
+    OtherEventModel.class,
     LeagueGameModel.class,
-    Tournament.class
+    TournamentModel.class
 })
 public class EventDate
     extends TitledIDTypeModel

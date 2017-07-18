@@ -129,6 +129,14 @@ public class AppLayoutController {
 	private MenuItem mnuRefereeCommunication;
 
 	/**
+	 * Menu item referee -> overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private MenuItem mnuEventOverview;
+
+	/**
 	 * Menu item statistics -> data.
 	 */
 	@FXML
@@ -153,6 +161,18 @@ public class AppLayoutController {
 	private Button btnProgramQuit;
 
 	/**
+	 * Button file -> open.
+	 */
+	@FXML
+	private Button btnFileOpen;
+
+	/**
+	 * Button file -> save.
+	 */
+	@FXML
+	private Button btnFileSave;
+
+	/**
 	 * Button referee -> overview.
 	 */
 	@FXML
@@ -163,6 +183,12 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private Button btnRefereeCommunication;
+
+	/**
+	 * Button event -> overview.
+	 */
+	@FXML
+	private Button btnEventOverview;
 
 	/**
 	 * Button statistics -> data.
@@ -211,13 +237,18 @@ public class AppLayoutController {
 
 		mnuFileNew.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-new.png")));
 		mnuFileOpen.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-open.png")));
+		ButtonUtils.adaptButton(btnFileOpen, mnuFileOpen);
 		mnuFileSave.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-save.png")));
+		ButtonUtils.adaptButton(btnFileSave, mnuFileSave);
 		mnuFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-save-as.png")));
 
 		mnuRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
 		ButtonUtils.adaptButton(btnRefereeOverview, mnuRefereeOverview);
 		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
 		ButtonUtils.adaptButton(btnRefereeCommunication, mnuRefereeCommunication);
+
+		mnuEventOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		ButtonUtils.adaptButton(btnEventOverview, mnuEventOverview);
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
 		ButtonUtils.adaptButton(btnStatisticsData, mnuStatisticsData);
@@ -560,6 +591,24 @@ public class AppLayoutController {
 		// Give the controller access to the app.
 		RefereeCommunicationController ctlRefCommunication = pneLoad.getValue().getController();
 		ctlRefCommunication.initController(this);
+
+	}
+
+	/**
+	 * Menu event -> overview.
+	 */
+	@FXML
+	private void handleEventOverview() {
+
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeOverview");
+		AnchorPane refOverview = (AnchorPane) pneLoad.getKey();
+
+		// Set event overview into the center of root layout.
+		appPane.setCenter(refOverview);
+
+		// Give the controller access to the app.
+		RefereeOverviewController ctlRefOverview = pneLoad.getValue().getController();
+		ctlRefOverview.initController(this);
 
 	}
 

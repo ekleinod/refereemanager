@@ -13,12 +13,14 @@ import de.edgesoft.refereemanager.model.EMailModel;
 import de.edgesoft.refereemanager.model.EventDateModel;
 import de.edgesoft.refereemanager.model.LeagueGameModel;
 import de.edgesoft.refereemanager.model.LeagueModel;
+import de.edgesoft.refereemanager.model.OtherEventModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.PhoneNumberModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
 import de.edgesoft.refereemanager.model.TeamModel;
+import de.edgesoft.refereemanager.model.TournamentModel;
 import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
@@ -107,7 +109,7 @@ public class ObjectFactory {
      * 
      */
     public OtherEvent createOtherEvent() {
-        return new OtherEvent();
+        return new OtherEventModel();
     }
 
     /**
@@ -275,7 +277,7 @@ public class ObjectFactory {
      * 
      */
     public Tournament createTournament() {
-        return new Tournament();
+        return new TournamentModel();
     }
 
     /**

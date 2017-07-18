@@ -11,11 +11,13 @@ import de.edgesoft.edgeutils.commons.AbstractModelClass;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.LeagueGameModel;
 import de.edgesoft.refereemanager.model.LeagueModel;
+import de.edgesoft.refereemanager.model.OtherEventModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
 import de.edgesoft.refereemanager.model.TeamModel;
+import de.edgesoft.refereemanager.model.TournamentModel;
 import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 
@@ -97,7 +99,9 @@ public class Content
     protected List<Team> team;
     @XmlElement(name = "league_game", type = LeagueGameModel.class)
     protected List<LeagueGame> leagueGame;
+    @XmlElement(type = TournamentModel.class)
     protected List<Tournament> tournament;
+    @XmlElement(type = OtherEventModel.class)
     protected List<OtherEvent> otherevent;
     protected List<Venue> venue;
     @XmlElement(name = "sex_type")
