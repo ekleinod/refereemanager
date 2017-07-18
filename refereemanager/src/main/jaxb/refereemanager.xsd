@@ -64,8 +64,9 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="club" type="Club" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="team" type="Team" minOccurs="0" maxOccurs="unbounded" />
 
+					<xsd:element name="league_game" type="LeagueGame" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="tournament" type="Tournament" minOccurs="0" maxOccurs="unbounded" />
-					<xsd:element name="otherdate" type="OtherDate" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="otherevent" type="OtherEvent" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="venue" type="Venue" minOccurs="0" maxOccurs="unbounded" />
 
 					<!-- types -->
@@ -291,6 +292,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="venue" type="Venue" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="u_r_l" type="URL" minOccurs="0" maxOccurs="unbounded" />
 
+					<!-- references -->
 					<xsd:element name="contact_person" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
@@ -372,6 +374,34 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:complexContent>
 	</xsd:complexType>
 
+	<xsd:complexType name="RefereeAssignment">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractModelClass">
+				<xsd:sequence>
+					<!-- references -->
+					<xsd:element name="referee" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Referee" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="referee_assigment_type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="RefereeAssignmentType" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 	<xsd:complexType name="TrainingLevel">
 		<xsd:complexContent>
 			<xsd:extension base="AbstractModelClass">
@@ -379,6 +409,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="since" type="LocalDateProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="update" type="LocalDateProperty" minOccurs="0" maxOccurs="unbounded" />
 
+					<!-- references -->
 					<xsd:element name="type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
@@ -402,6 +433,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="tournament_only" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="league_games_only" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 
+					<!-- references -->
 					<xsd:element name="club" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
@@ -462,15 +494,48 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:complexContent>
 	</xsd:complexType>
 
+	<xsd:complexType name="LeagueGame">
+		<xsd:complexContent>
+			<xsd:extension base="EventDate">
+				<xsd:sequence>
+					<xsd:element name="game_number" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="referee_assignment" type="RefereeAssignment" minOccurs="1" maxOccurs="unbounded" />
+
+					<!-- references -->
+					<xsd:element name="home_team" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Team" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="off_team" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Team" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 	<xsd:complexType name="Tournament">
 		<xsd:complexContent>
-			<xsd:extension base="Date">
+			<xsd:extension base="EventDate">
 				<xsd:sequence>
 					<xsd:element name="announcement_u_r_l" type="StringProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="information_u_r_l" type="StringProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="result_u_r_l" type="StringProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="referee_quantity" type="RefereeQuantity" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="referee_assignment" type="RefereeAssignment" minOccurs="1" maxOccurs="unbounded" />
 
+					<!-- references -->
 					<xsd:element name="organizing_club" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
@@ -494,14 +559,14 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<xsd:complexType name="OtherDate">
+	<xsd:complexType name="OtherEvent">
 		<xsd:complexContent>
-			<xsd:extension base="Date">
+			<xsd:extension base="EventDate">
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<xsd:complexType name="Date">
+	<xsd:complexType name="EventDate">
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>

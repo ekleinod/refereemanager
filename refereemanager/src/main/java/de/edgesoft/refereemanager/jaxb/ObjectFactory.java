@@ -9,8 +9,9 @@ import javax.xml.namespace.QName;
 import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.DateModel;
 import de.edgesoft.refereemanager.model.EMailModel;
+import de.edgesoft.refereemanager.model.EventDateModel;
+import de.edgesoft.refereemanager.model.LeagueGameModel;
 import de.edgesoft.refereemanager.model.LeagueModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.PhoneNumberModel;
@@ -43,8 +44,8 @@ import de.edgesoft.refereemanager.model.WishModel;
 public class ObjectFactory {
 
     private final static QName _Refereemanager_QNAME = new QName("", "refereemanager");
-    private final static QName _LeagueRefereeReportRecipient_QNAME = new QName("", "referee_report_recipient");
     private final static QName _TeamVenue_QNAME = new QName("", "venue");
+    private final static QName _LeagueRefereeReportRecipient_QNAME = new QName("", "referee_report_recipient");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.edgesoft.refereemanager.jaxb
@@ -59,6 +60,14 @@ public class ObjectFactory {
      */
     public RefereeManager createRefereeManager() {
         return new RefereeManager();
+    }
+
+    /**
+     * Create an instance of {@link EventDate }
+     * 
+     */
+    public EventDate createEventDate() {
+        return new EventDateModel();
     }
 
     /**
@@ -94,19 +103,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link OtherEvent }
+     * 
+     */
+    public OtherEvent createOtherEvent() {
+        return new OtherEvent();
+    }
+
+    /**
      * Create an instance of {@link URL }
      * 
      */
     public URL createURL() {
         return new URLModel();
-    }
-
-    /**
-     * Create an instance of {@link OtherDate }
-     * 
-     */
-    public OtherDate createOtherDate() {
-        return new OtherDate();
     }
 
     /**
@@ -166,6 +175,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link RefereeAssignment }
+     * 
+     */
+    public RefereeAssignment createRefereeAssignment() {
+        return new RefereeAssignment();
+    }
+
+    /**
      * Create an instance of {@link Venue }
      * 
      */
@@ -198,14 +215,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Date }
-     * 
-     */
-    public Date createDate() {
-        return new DateModel();
-    }
-
-    /**
      * Create an instance of {@link Content }
      * 
      */
@@ -227,6 +236,14 @@ public class ObjectFactory {
      */
     public StatusType createStatusType() {
         return new StatusTypeModel();
+    }
+
+    /**
+     * Create an instance of {@link LeagueGame }
+     * 
+     */
+    public LeagueGame createLeagueGame() {
+        return new LeagueGameModel();
     }
 
     /**
@@ -274,20 +291,20 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "referee_report_recipient", scope = League.class)
+    @XmlElementDecl(namespace = "", name = "venue", scope = Team.class)
     @XmlIDREF
-    public JAXBElement<Object> createLeagueRefereeReportRecipient(Object value) {
-        return new JAXBElement<Object>(_LeagueRefereeReportRecipient_QNAME, Object.class, League.class, value);
+    public JAXBElement<Object> createTeamVenue(Object value) {
+        return new JAXBElement<Object>(_TeamVenue_QNAME, Object.class, Team.class, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "venue", scope = Team.class)
+    @XmlElementDecl(namespace = "", name = "referee_report_recipient", scope = League.class)
     @XmlIDREF
-    public JAXBElement<Object> createTeamVenue(Object value) {
-        return new JAXBElement<Object>(_TeamVenue_QNAME, Object.class, Team.class, value);
+    public JAXBElement<Object> createLeagueRefereeReportRecipient(Object value) {
+        return new JAXBElement<Object>(_LeagueRefereeReportRecipient_QNAME, Object.class, League.class, value);
     }
 
 }

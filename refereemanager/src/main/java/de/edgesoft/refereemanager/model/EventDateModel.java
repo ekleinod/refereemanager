@@ -1,12 +1,12 @@
-package de.edgesoft.refereemanager.utils;
+package de.edgesoft.refereemanager.model;
 
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 
-import de.edgesoft.refereemanager.RefereeManager;
-import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.jaxb.EventDate;
 
 /**
- * Database operations.
+ * Date model, additional methods for jaxb model class.
  *
  * ## Legal stuff
  *
@@ -29,31 +29,14 @@ import de.edgesoft.refereemanager.model.ContentModel;
  *
  * @author Ekkart Kleinod
  * @version 0.14.0
- * @since 0.7.0
+ * @since 0.9.0
  */
-public class DBOperations {
+public class EventDateModel extends EventDate {
 
 	/**
-	 * Removes unused clubs.
-	 *
-	 * @param theDB database
+	 * Comparator start date/time.
 	 */
-	public static void removeClubs(final de.edgesoft.refereemanager.jaxb.RefereeManager theDB) {
-
-		Objects.requireNonNull(theDB, "database must not be null");
-
-		ContentModel theContent = ((ContentModel) theDB.getContent());
-
-		int iBefore = theContent.getClub().size();
-
-		theContent.getClub().removeAll(theContent.getNonReferencedClubs());
-
-		int iAfter = theContent.getClub().size();
-
-		RefereeManager.logger.info(String.format("Removed %d of %d clubs, %d clubs remaining.", iBefore - iAfter, iBefore, iAfter));
-
-
-	}
+	public static final Comparator<EventDate> RANK_START = Comparator.comparing(date -> (LocalDateTime) date.getStart().getValue());
 
 }
 

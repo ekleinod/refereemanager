@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import de.edgesoft.edgeutils.commons.AbstractModelClass;
 import de.edgesoft.refereemanager.model.ClubModel;
+import de.edgesoft.refereemanager.model.LeagueGameModel;
 import de.edgesoft.refereemanager.model.LeagueModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
@@ -37,8 +38,9 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
  *         &lt;element name="league" type="{}League" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="club" type="{}Club" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="team" type="{}Team" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="league_game" type="{}LeagueGame" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="tournament" type="{}Tournament" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="otherdate" type="{}OtherDate" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="otherevent" type="{}OtherEvent" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="venue" type="{}Venue" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sex_type" type="{}SexType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contact_type" type="{}ContactType" maxOccurs="unbounded" minOccurs="0"/>
@@ -63,8 +65,9 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
     "league",
     "club",
     "team",
+    "leagueGame",
     "tournament",
-    "otherdate",
+    "otherevent",
     "venue",
     "sexType",
     "contactType",
@@ -92,8 +95,10 @@ public class Content
     protected List<Club> club;
     @XmlElement(type = TeamModel.class)
     protected List<Team> team;
+    @XmlElement(name = "league_game", type = LeagueGameModel.class)
+    protected List<LeagueGame> leagueGame;
     protected List<Tournament> tournament;
-    protected List<OtherDate> otherdate;
+    protected List<OtherEvent> otherevent;
     protected List<Venue> venue;
     @XmlElement(name = "sex_type")
     protected List<SexType> sexType;
@@ -329,6 +334,35 @@ public class Content
     }
 
     /**
+     * Gets the value of the leagueGame property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the leagueGame property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getLeagueGame().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link LeagueGame }
+     * 
+     * 
+     */
+    public List<LeagueGame> getLeagueGame() {
+        if (leagueGame == null) {
+            leagueGame = new ArrayList<LeagueGame>();
+        }
+        return this.leagueGame;
+    }
+
+    /**
      * Gets the value of the tournament property.
      * 
      * <p>
@@ -358,32 +392,32 @@ public class Content
     }
 
     /**
-     * Gets the value of the otherdate property.
+     * Gets the value of the otherevent property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the otherdate property.
+     * This is why there is not a <CODE>set</CODE> method for the otherevent property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getOtherdate().add(newItem);
+     *    getOtherevent().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link OtherDate }
+     * {@link OtherEvent }
      * 
      * 
      */
-    public List<OtherDate> getOtherdate() {
-        if (otherdate == null) {
-            otherdate = new ArrayList<OtherDate>();
+    public List<OtherEvent> getOtherevent() {
+        if (otherevent == null) {
+            otherevent = new ArrayList<OtherEvent>();
         }
-        return this.otherdate;
+        return this.otherevent;
     }
 
     /**

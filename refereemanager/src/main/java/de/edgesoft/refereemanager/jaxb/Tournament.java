@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
-import de.edgesoft.refereemanager.model.DateModel;
+import de.edgesoft.refereemanager.model.EventDateModel;
 
 
 /**
@@ -23,12 +23,13 @@ import de.edgesoft.refereemanager.model.DateModel;
  * <pre>
  * &lt;complexType name="Tournament">
  *   &lt;complexContent>
- *     &lt;extension base="{}Date">
+ *     &lt;extension base="{}EventDate">
  *       &lt;sequence>
  *         &lt;element name="announcement_u_r_l" type="{}StringProperty" minOccurs="0"/>
  *         &lt;element name="information_u_r_l" type="{}StringProperty" minOccurs="0"/>
  *         &lt;element name="result_u_r_l" type="{}StringProperty" minOccurs="0"/>
  *         &lt;element name="referee_quantity" type="{}RefereeQuantity" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="referee_assignment" type="{}RefereeAssignment" maxOccurs="unbounded"/>
  *         &lt;element name="organizing_club" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *         &lt;element name="organizer" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
@@ -45,11 +46,12 @@ import de.edgesoft.refereemanager.model.DateModel;
     "informationURL",
     "resultURL",
     "refereeQuantity",
+    "refereeAssignment",
     "organizingClub",
     "organizer"
 })
 public class Tournament
-    extends DateModel
+    extends EventDateModel
 {
 
     @XmlElement(name = "announcement_u_r_l", type = String.class)
@@ -63,6 +65,8 @@ public class Tournament
     protected SimpleStringProperty resultURL;
     @XmlElement(name = "referee_quantity")
     protected List<RefereeQuantity> refereeQuantity;
+    @XmlElement(name = "referee_assignment", required = true)
+    protected List<RefereeAssignment> refereeAssignment;
     @XmlElement(name = "organizing_club", type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -171,6 +175,35 @@ public class Tournament
             refereeQuantity = new ArrayList<RefereeQuantity>();
         }
         return this.refereeQuantity;
+    }
+
+    /**
+     * Gets the value of the refereeAssignment property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the refereeAssignment property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getRefereeAssignment().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link RefereeAssignment }
+     * 
+     * 
+     */
+    public List<RefereeAssignment> getRefereeAssignment() {
+        if (refereeAssignment == null) {
+            refereeAssignment = new ArrayList<RefereeAssignment>();
+        }
+        return this.refereeAssignment;
     }
 
     /**

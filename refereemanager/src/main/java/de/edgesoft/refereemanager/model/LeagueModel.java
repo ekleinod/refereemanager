@@ -11,7 +11,7 @@ import de.edgesoft.refereemanager.jaxb.Person;
 import javafx.beans.property.SimpleBooleanProperty;
 
 /**
- * Person model, additional methods for jaxb model class.
+ * League model, additional methods for jaxb model class.
  *
  * ## Legal stuff
  *
@@ -40,16 +40,12 @@ public class LeagueModel extends League {
 
 	/**
 	 * Comparator rank.
-	 *
-	 * @version 0.14.0
-	 * @since 0.9.0
 	 */
 	public static final Comparator<League> RANK = Comparator.comparingInt(league -> league.getRank().get());
 
 	/**
 	 * Comparator rank and display title.
 	 *
-	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	public static final Comparator<League> RANK_DISPLAYTITLE = RANK.thenComparing(TitledIDTypeModel.DISPLAYTITLE);
@@ -58,28 +54,23 @@ public class LeagueModel extends League {
 	 * Returns if league is national league.
 	 *
 	 * @return is league national league
-	 *
-	 * @version 0.14.0
-	 * @since 0.9.0
 	 */
 	@Override
 	public SimpleBooleanProperty getNational() {
 		return (super.getNational() == null) ? new SimpleBooleanProperty(Boolean.FALSE) : super.getNational();
 	}
 
-		/**
-		 * Gets the value of the refereeReportRecipient property.
-		 *
-		 * For some reason, the generated code is correct but there is a list of {@link JAXBElement} in
-		 * the refereeReportRecipient property.
-		 *
-		 * Until the issue is solved, this method converts this to the correct list of {@link Person}
-		 *
-	 * @version 0.14.0
-	 * @since 0.9.0
-		 */
+	/**
+	 * Gets the value of the refereeReportRecipient property.
+	 *
+	 * For some reason, the generated code is correct but there is a list of {@link JAXBElement} in
+	 * the refereeReportRecipient property.
+	 *
+	 * Until the issue is solved, this method converts this to the correct list of {@link Person}
+	 *
+	 */
 	@Override
-		public List<Person> getRefereeReportRecipient() {
+	public List<Person> getRefereeReportRecipient() {
 		List<Person> lstReturn = new ArrayList<>();
 
 		for (Object personObject : super.getRefereeReportRecipient()) {
@@ -87,7 +78,7 @@ public class LeagueModel extends League {
 		}
 
 		return lstReturn;
-		}
+	}
 
 }
 

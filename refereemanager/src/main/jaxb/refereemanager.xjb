@@ -51,8 +51,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<jxb:class implClass="de.edgesoft.refereemanager.model.ContentModel" />
 		</jxb:bindings>
 
-		<jxb:bindings node="//xsd:complexType[@name='Date']">
-			<jxb:class implClass="de.edgesoft.refereemanager.model.DateModel" />
+		<jxb:bindings node="//xsd:complexType[@name='EventDate']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.EventDateModel" />
 		</jxb:bindings>
 
 		<jxb:bindings node="//xsd:complexType[@name='EMail']">
@@ -61,6 +61,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 		<jxb:bindings node="//xsd:complexType[@name='League']">
 			<jxb:class implClass="de.edgesoft.refereemanager.model.LeagueModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='LeagueGame']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.LeagueGameModel" />
 		</jxb:bindings>
 
 		<jxb:bindings node="//xsd:complexType[@name='Person']">

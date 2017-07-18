@@ -12,7 +12,7 @@ import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.League;
-import de.edgesoft.refereemanager.jaxb.OtherDate;
+import de.edgesoft.refereemanager.jaxb.OtherEvent;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeAssignmentType;
@@ -57,7 +57,6 @@ public class ContentModel extends Content {
 	/**
 	 * Observable list of referees (singleton).
 	 *
-	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	@XmlTransient
@@ -66,7 +65,6 @@ public class ContentModel extends Content {
 	/**
 	 * Observable list of trainees (singleton).
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@XmlTransient
@@ -75,7 +73,6 @@ public class ContentModel extends Content {
 	/**
 	 * Observable list of people (singleton).
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@XmlTransient
@@ -84,7 +81,6 @@ public class ContentModel extends Content {
 	/**
 	 * Observable list of sex types (singleton).
 	 *
-	 * @version 0.14.0
 	 * @since 0.13.0
 	 */
 	@XmlTransient
@@ -96,7 +92,6 @@ public class ContentModel extends Content {
 	 *
 	 * @return observable list of referees
 	 *
-	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	public ObservableList<Referee> getObservableReferees() {
@@ -111,7 +106,6 @@ public class ContentModel extends Content {
 	 *
 	 * @return observable list of trainees
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public ObservableList<Trainee> getObservableTrainees() {
@@ -126,7 +120,6 @@ public class ContentModel extends Content {
 	 *
 	 * @return observable list of people
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public ObservableList<Person> getObservablePeople() {
@@ -141,7 +134,6 @@ public class ContentModel extends Content {
 	 *
 	 * @return observable list of sex types
 	 *
-	 * @version 0.14.0
 	 * @since 0.13.0
 	 */
 	public ObservableList<SexType> getObservableSexTypes() {
@@ -157,7 +149,6 @@ public class ContentModel extends Content {
 	 *
 	 * @return referenced clubs (empty if there are none)
 	 *
-	 * @version 0.14.0
 	 * @since 0.7.0
 	 */
 	public Set<Club> getReferencedClubs() {
@@ -197,7 +188,6 @@ public class ContentModel extends Content {
 	 *
 	 * @return non-referenced clubs (empty if there are none)
 	 *
-	 * @version 0.14.0
 	 * @since 0.7.0
 	 */
 	public Set<Club> getNonReferencedClubs() {
@@ -218,7 +208,6 @@ public class ContentModel extends Content {
 	 *
 	 * @return used leagues (empty if there are none)
 	 *
-	 * @version 0.14.0
 	 * @since 0.9.0
 	 */
 	public List<League> getUsedLeagues() {
@@ -244,7 +233,6 @@ public class ContentModel extends Content {
 	 * @param theLeague league
 	 * @return used home teams (empty if there are none)
 	 *
-	 * @version 0.14.0
 	 * @since 0.9.0
 	 */
 	public List<Team> getLocalHomeTeams(final League theLeague) {
@@ -266,7 +254,6 @@ public class ContentModel extends Content {
 	/**
 	 * Sorts all data in model.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public void sortData() {
@@ -295,9 +282,9 @@ public class ContentModel extends Content {
 		getTeam().clear();
 		getTeam().addAll(lstTeam);
 
-		List<OtherDate> lstOtherDate = getOtherdate().stream().sorted(DateModel.RANK_START).collect(Collectors.toList());
-		getOtherdate().clear();
-		getOtherdate().addAll(lstOtherDate);
+		List<OtherEvent> lstOtherDate = getOtherevent().stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList());
+		getOtherevent().clear();
+		getOtherevent().addAll(lstOtherDate);
 
 		List<Venue> lstVenue = getVenue().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
 		getVenue().clear();

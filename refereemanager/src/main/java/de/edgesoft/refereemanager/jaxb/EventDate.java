@@ -11,16 +11,17 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateTimeAdapter;
+import de.edgesoft.refereemanager.model.LeagueGameModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
 /**
- * <p>Java class for Date complex type.
+ * <p>Java class for EventDate complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Date">
+ * &lt;complexType name="EventDate">
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
@@ -36,16 +37,17 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Date", propOrder = {
+@XmlType(name = "EventDate", propOrder = {
     "start",
     "end",
     "venue"
 })
 @XmlSeeAlso({
-    OtherDate.class,
+    OtherEvent.class,
+    LeagueGameModel.class,
     Tournament.class
 })
-public class Date
+public class EventDate
     extends TitledIDTypeModel
 {
 

@@ -1,12 +1,9 @@
 package de.edgesoft.refereemanager.model;
 
-import java.time.LocalDateTime;
-import java.util.Comparator;
-
-import de.edgesoft.refereemanager.jaxb.Date;
+import de.edgesoft.refereemanager.jaxb.LeagueGame;
 
 /**
- * Date model, additional methods for jaxb model class.
+ * League game model, additional methods for jaxb model class.
  *
  * ## Legal stuff
  *
@@ -28,18 +25,12 @@ import de.edgesoft.refereemanager.jaxb.Date;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.14.0
- * @since 0.9.0
+ * @version 0.15.0
+ * @since 0.15.0
  */
-public class DateModel extends Date {
+public class LeagueGameModel extends LeagueGame {
 
-	/**
-	 * Comparator start date/time.
-	 *
-	 * @version 0.14.0
-	 * @since 0.9.0
-	 */
-	public static final Comparator<Date> RANK_START = Comparator.comparing(date -> (LocalDateTime) date.getStart().getValue());
+	// to do
 
 }
 
