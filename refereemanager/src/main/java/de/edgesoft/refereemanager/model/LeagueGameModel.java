@@ -1,6 +1,10 @@
 package de.edgesoft.refereemanager.model;
 
+import java.text.MessageFormat;
+
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * League game model, additional methods for jaxb model class.
@@ -30,7 +34,16 @@ import de.edgesoft.refereemanager.jaxb.LeagueGame;
  */
 public class LeagueGameModel extends LeagueGame {
 
-	// to do
+	/**
+	 * Returns team text "home - off".
+	 *
+	 * @return team text
+	 */
+	public StringProperty getTeamText() {
+		return new SimpleStringProperty(MessageFormat.format("{0} - {1}",
+				getHomeTeam().getDisplayTitleShort().getValue(),
+				getOffTeam().getDisplayTitleShort().getValue()));
+	}
 
 }
 

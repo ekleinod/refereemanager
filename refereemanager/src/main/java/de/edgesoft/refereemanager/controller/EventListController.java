@@ -103,7 +103,7 @@ public class EventListController {
 	 * Number column.
 	 */
 	@FXML
-	private TableColumn<LeagueGameModel, String> colLeagueGameNumber;
+	private TableColumn<LeagueGameModel, Integer> colLeagueGameNumber;
 
 	/**
 	 * Date column.
@@ -233,40 +233,30 @@ public class EventListController {
 	@FXML
 	private void initialize() {
 
-		// hook data to columns (referees)
-		colRefereesID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
-		colRefereesID.setVisible(false);
+		// hook data to columns (league games)
+		colLeagueGameID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+		colLeagueGameID.setVisible(false);
 
-		colRefereesName.setCellValueFactory(cellData -> cellData.getValue().getName());
-		colRefereesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
-		colRefereesTrainingLevel.setCellValueFactory(cellData -> (cellData.getValue().getHighestTrainingLevel() == null) ? null : cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitleShort());
-		colRefereesClub.setCellValueFactory(cellData -> (cellData.getValue().getMember() == null) ? null : cellData.getValue().getMember().getDisplayText());
+		colLeagueGameNumber.setCellValueFactory(cellData -> cellData.getValue().getGameNumber().asObject());
+		colLeagueGameDate.setCellValueFactory(cellData -> cellData.getValue().getStart());
+		colLeagueGameTime.setCellValueFactory(cellData -> cellData.getValue().getStart());
+		colLeagueGameLeague.setCellValueFactory(cellData -> cellData.getValue().getHomeTeam().getLeague().getDisplayText());
+		colLeagueGameTeams.setCellValueFactory(cellData -> cellData.getValue().getTeamText());
 
-		colRefereesBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
-		colRefereesBirthday.setVisible(false);
-		colRefereesUpdate.setCellValueFactory(cellData -> cellData.getValue().getNextTrainingUpdate());
-		colRefereesUpdate.setVisible(false);
+		// hook data to columns (tournaments)
+		colTournamentID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+		colTournamentID.setVisible(false);
 
-		// hook data to columns (trainees)
-		colTraineesID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
-		colTraineesID.setVisible(false);
+		colTournamentDate.setCellValueFactory(cellData -> cellData.getValue().getStart());
+		colTournamentTitle.setCellValueFactory(cellData -> cellData.getValue().getDisplayTitleShort());
 
-		colTraineesName.setCellValueFactory(cellData -> cellData.getValue().getName());
-		colTraineesFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
-		colTraineesClub.setCellValueFactory(cellData -> (cellData.getValue().getMember() == null) ? null : cellData.getValue().getMember().getDisplayTitle());
+		// hook data to columns (other events)
+		colOtherEventID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+		colOtherEventID.setVisible(false);
 
-		colTraineesBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
-		colTraineesBirthday.setVisible(false);
-
-		// hook data to columns (people)
-		colPeopleID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
-		colPeopleID.setVisible(false);
-
-		colPeopleName.setCellValueFactory(cellData -> cellData.getValue().getName());
-		colPeopleFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
-
-		colPeopleBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
-		colPeopleBirthday.setVisible(false);
+		colOtherEventDate.setCellValueFactory(cellData -> cellData.getValue().getStart());
+		colOtherEventTime.setCellValueFactory(cellData -> cellData.getValue().getStart());
+		colOtherEventTitle.setCellValueFactory(cellData -> cellData.getValue().getDisplayTitleShort());
 
 		// format date columns
 		colRefereesBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate());
