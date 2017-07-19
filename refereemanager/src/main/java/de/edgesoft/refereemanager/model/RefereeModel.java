@@ -42,7 +42,7 @@ import javafx.beans.property.SimpleObjectProperty;
 public class RefereeModel extends Referee {
 
 	/**
-	 * Filter predicate for all status types.
+	 * Filter predicate for all referees.
 	 */
 	public static Predicate<Referee> ALL = referee -> true;
 

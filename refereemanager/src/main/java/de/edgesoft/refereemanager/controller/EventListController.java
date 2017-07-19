@@ -1,25 +1,19 @@
 package de.edgesoft.refereemanager.controller;
 
 import java.text.MessageFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import de.edgesoft.refereemanager.jaxb.OtherEvent;
-import de.edgesoft.refereemanager.jaxb.Person;
-import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.Tournament;
-import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.EventDateModel;
 import de.edgesoft.refereemanager.model.LeagueGameModel;
 import de.edgesoft.refereemanager.model.OtherEventModel;
-import de.edgesoft.refereemanager.model.PersonModel;
-import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.TournamentModel;
 import de.edgesoft.refereemanager.utils.TableUtils;
 import javafx.beans.property.SimpleStringProperty;
@@ -109,13 +103,13 @@ public class EventListController {
 	 * Date column.
 	 */
 	@FXML
-	private TableColumn<LeagueGameModel, LocalDate> colLeagueGameDate;
+	private TableColumn<LeagueGameModel, LocalDateTime> colLeagueGameDate;
 
 	/**
 	 * Time column.
 	 */
 	@FXML
-	private TableColumn<LeagueGameModel, LocalTime> colLeagueGameTime;
+	private TableColumn<LeagueGameModel, LocalDateTime> colLeagueGameTime;
 
 	/**
 	 * League column.
@@ -169,7 +163,7 @@ public class EventListController {
 	 * Date column.
 	 */
 	@FXML
-	private TableColumn<TournamentModel, LocalDate> colTournamentDate;
+	private TableColumn<TournamentModel, LocalDateTime> colTournamentDate;
 
 	/**
 	 * Title column.
@@ -205,13 +199,13 @@ public class EventListController {
 	 * Date column.
 	 */
 	@FXML
-	private TableColumn<OtherEventModel, String> colOtherEventDate;
+	private TableColumn<OtherEventModel, LocalDateTime> colOtherEventDate;
 
 	/**
 	 * Time column.
 	 */
 	@FXML
-	private TableColumn<OtherEventModel, LocalTime> colOtherEventTime;
+	private TableColumn<OtherEventModel, LocalDateTime> colOtherEventTime;
 
 	/**
 	 * Title column.
@@ -259,10 +253,13 @@ public class EventListController {
 		colOtherEventTitle.setCellValueFactory(cellData -> cellData.getValue().getDisplayTitleShort());
 
 		// format date columns
-		colRefereesBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate());
-		colRefereesUpdate.setCellFactory(column -> TableUtils.getTableCellRefereeDate());
-		colTraineesBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate());
-		colPeopleBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate());
+		colLeagueGameDate.setCellFactory(column -> TableUtils.getTableCellLeagueGameDate());
+		colLeagueGameTime.setCellFactory(column -> TableUtils.getTableCellLeagueGameTime());
+
+		colTournamentDate.setCellFactory(column -> TableUtils.getTableCellTournamentDate());
+
+		colOtherEventDate.setCellFactory(column -> TableUtils.getTableCellOtherEventDate());
+		colOtherEventTime.setCellFactory(column -> TableUtils.getTableCellOtherEventTime());
 
 		// listen to tab changes
 		tabPaneContent.getSelectionModel().selectedItemProperty().addListener((event, oldTab, newTab) -> {
@@ -283,35 +280,35 @@ public class EventListController {
 			lstTournaments = null;
 			lstOtherEvents = null;
 		} else {
-			lstLeagueGame = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableReferees(), referee -> true);
-			lstTournaments = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableTrainees(), trainee -> true);
-			lstOtherEvents = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservablePeople(), person -> true);
+			lstLeagueGame = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableLeagueGames(), leaguegame -> true);
+			lstTournaments = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableTournaments(), tournament -> true);
+			lstOtherEvents = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableOtherEvents(), otherevent -> true);
 		}
 
-		SortedList<Referee> lstSortedRefs = new SortedList<>(lstLeagueGame);
-		lstSortedRefs.comparatorProperty().bind(tblReferees.comparatorProperty());
-		tblReferees.setItems(lstSortedRefs);
+		SortedList<LeagueGame> lstSortedLeagueGames = new SortedList<>(lstLeagueGame);
+		lstSortedLeagueGames.comparatorProperty().bind(tblLeagueGames.comparatorProperty());
+		tblLeagueGames.setItems(lstSortedLeagueGames);
 
-		SortedList<Trainee> lstSortedTrainees = new SortedList<>(lstTournaments);
-		lstSortedTrainees.comparatorProperty().bind(tblTrainees.comparatorProperty());
-		tblTrainees.setItems(lstSortedTrainees);
+		SortedList<Tournament> lstSortedTournaments = new SortedList<>(lstTournaments);
+		lstSortedTournaments.comparatorProperty().bind(tblTournaments.comparatorProperty());
+		tblTournaments.setItems(lstSortedTournaments);
 
-		SortedList<Person> lstSortedPeople = new SortedList<>(lstOtherEvents);
-		lstSortedPeople.comparatorProperty().bind(tblPeople.comparatorProperty());
-		tblPeople.setItems(lstSortedPeople);
+		SortedList<OtherEvent> lstSortedOtherEvents = new SortedList<>(lstOtherEvents);
+		lstSortedOtherEvents.comparatorProperty().bind(tblOtherEvents.comparatorProperty());
+		tblOtherEvents.setItems(lstSortedOtherEvents);
 
 		// set "empty data" text
-		Label lblPlaceholder = new Label(MessageFormat.format(((lstLeagueGame == null) || lstLeagueGame.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Schiedsrichter"));
+		Label lblPlaceholder = new Label(MessageFormat.format(((lstLeagueGame == null) || lstLeagueGame.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Ligaspiele"));
 		lblPlaceholder.setWrapText(true);
-		tblReferees.setPlaceholder(lblPlaceholder);
+		tblLeagueGames.setPlaceholder(lblPlaceholder);
 
-		lblPlaceholder = new Label(MessageFormat.format(((lstTournaments == null) || lstTournaments.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Azubis"));
+		lblPlaceholder = new Label(MessageFormat.format(((lstTournaments == null) || lstTournaments.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Turniere"));
 		lblPlaceholder.setWrapText(true);
-		tblTrainees.setPlaceholder(lblPlaceholder);
+		tblTournaments.setPlaceholder(lblPlaceholder);
 
-		lblPlaceholder = new Label(MessageFormat.format(((lstOtherEvents == null) || lstOtherEvents.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Personen"));
+		lblPlaceholder = new Label(MessageFormat.format(((lstOtherEvents == null) || lstOtherEvents.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "sonstigen Termine"));
 		lblPlaceholder.setWrapText(true);
-		tblPeople.setPlaceholder(lblPlaceholder);
+		tblOtherEvents.setPlaceholder(lblPlaceholder);
 
 		handleFilterChange();
 
@@ -320,46 +317,31 @@ public class EventListController {
 	/**
 	 * Handles filter change events.
 	 */
-	@SuppressWarnings("unchecked")
 	@FXML
 	private void handleFilterChange() {
 
 		// filter for referees
 		if (lstLeagueGame == null) {
-			lblRefereesFilter.setText("Filter");
+			lblLeagueGameFilter.setText("Filter");
 		} else {
 
-			lstLeagueGame.setPredicate(RefereeModel.ALL);
+			lstLeagueGame.setPredicate(LeagueGameModel.ALL);
 
-			if (chkRefereesActive.isSelected()) {
-				lstLeagueGame.setPredicate(((Predicate<Referee>) lstLeagueGame.getPredicate()).and(RefereeModel.ACTIVE));
-			}
+//			if (chkRefereesActive.isSelected()) {
+//				lstLeagueGame.setPredicate(((Predicate<Referee>) lstLeagueGame.getPredicate()).and(RefereeModel.ACTIVE));
+//			}
 
-			if (chkRefereesInactive.isSelected()) {
-				lstLeagueGame.setPredicate(((Predicate<Referee>) lstLeagueGame.getPredicate()).and(RefereeModel.INACTIVE));
-			}
-
-			if (chkRefereesEMail.isSelected()) {
-				lstLeagueGame.setPredicate(((Predicate<Referee>) lstLeagueGame.getPredicate()).and(PersonModel.HAS_EMAIL));
-			}
-
-			if (chkRefereesLetterOnly.isSelected()) {
-				lstLeagueGame.setPredicate(((Predicate<Referee>) lstLeagueGame.getPredicate()).and(RefereeModel.LETTER_ONLY));
-			}
-
-			lblRefereesFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstLeagueGame.size()));
+			lblLeagueGameFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstLeagueGame.size()));
 		}
 
-		tblReferees.refresh();
-		tblTrainees.refresh();
-		tblPeople.refresh();
+		tblLeagueGames.refresh();
+		tblTournaments.refresh();
+		tblOtherEvents.refresh();
 
 	}
 
 	/**
 	 * Handles tab change events.
-	 *
-	 * @since 0.12.0
 	 */
 	@FXML
 	private void handleTabChange() {
@@ -370,169 +352,139 @@ public class EventListController {
 	 * Sets selection mode.
 	 *
 	 * @param theSelectionMode selection mode
-	 *
-	 * @since 0.12.0
 	 */
 	public void setSelectionMode(final SelectionMode theSelectionMode) {
-		tblReferees.getSelectionModel().setSelectionMode(theSelectionMode);
-		tblTrainees.getSelectionModel().setSelectionMode(theSelectionMode);
-		tblPeople.getSelectionModel().setSelectionMode(theSelectionMode);
+		tblLeagueGames.getSelectionModel().setSelectionMode(theSelectionMode);
+		tblTournaments.getSelectionModel().setSelectionMode(theSelectionMode);
+		tblOtherEvents.getSelectionModel().setSelectionMode(theSelectionMode);
 	}
 
 	/**
-	 * Returns selection model of referees table.
+	 * Returns selection model of league games table.
 	 *
 	 * @return selection model
-	 *
-	 * @since 0.12.0
 	 */
-	public TableViewSelectionModel<Referee> getRefereesSelectionModel() {
-		return tblReferees.getSelectionModel();
+	public TableViewSelectionModel<LeagueGame> getLeagueGamesSelectionModel() {
+		return tblLeagueGames.getSelectionModel();
 	}
 
 	/**
-	 * Returns selection model of trainees table.
+	 * Returns selection model of tournaments table.
 	 *
 	 * @return selection model
-	 *
-	 * @since 0.12.0
 	 */
-	public TableViewSelectionModel<Trainee> getTraineesSelectionModel() {
-		return tblTrainees.getSelectionModel();
+	public TableViewSelectionModel<Tournament> getTournamentsSelectionModel() {
+		return tblTournaments.getSelectionModel();
 	}
 
 	/**
-	 * Returns selection model of people table.
+	 * Returns selection model of other events table.
 	 *
 	 * @return selection model
-	 *
-	 * @since 0.12.0
 	 */
-	public TableViewSelectionModel<Person> getPeopleSelectionModel() {
-		return tblPeople.getSelectionModel();
+	public TableViewSelectionModel<OtherEvent> getOtherEventsSelectionModel() {
+		return tblOtherEvents.getSelectionModel();
 	}
 
 	/**
 	 * Returns tab pane.
 	 *
 	 * @return tab pane
-	 *
-	 * @since 0.13.0
 	 */
 	public TabPane getContentTab() {
 		return tabPaneContent;
 	}
 
 	/**
-	 * Returns referees tab.
+	 * Returns league games tab.
 	 *
-	 * @return referees tab
-	 *
-	 * @since 0.13.0
+	 * @return league games tab
 	 */
-	public Tab getTabReferees() {
-		return tabReferees;
+	public Tab getTabLeagueGames() {
+		return tabLeagueGames;
 	}
 
 	/**
-	 * Returns trainees tab.
+	 * Returns tournaments tab.
 	 *
-	 * @return trainees tab
-	 *
-	 * @since 0.13.0
+	 * @return tournaments tab
 	 */
-	public Tab getTabTrainees() {
-		return tabTrainees;
+	public Tab getTabTournaments() {
+		return tabTournaments;
 	}
 
 	/**
-	 * Returns people tab.
+	 * Returns other events tab.
 	 *
-	 * @return people tab
-	 *
-	 * @since 0.13.0
+	 * @return other events tab
 	 */
-	public Tab getTabPeople() {
-		return tabPeople;
+	public Tab getTabOtherEvents() {
+		return tabOtherEvents;
 	}
 
 	/**
 	 * Returns selection from all tabs as sorted list.
 	 *
 	 * @return sorted selection from all tabs
-	 *
-	 * @since 0.13.0
 	 */
-	public ObservableList<PersonModel> getAllTabSelection() {
+	public ObservableList<EventDateModel> getAllTabSelection() {
 
-		List<PersonModel> lstReturn = new ArrayList<>();
+		List<EventDateModel> lstReturn = new ArrayList<>();
 
-		getTabRefereesSelection().forEach(person -> lstReturn.add(person));
-		getTabTraineesSelection().forEach(person -> lstReturn.add(person));
-		getTabPeopleSelection().forEach(person -> lstReturn.add(person));
+		getTabLeagueGamesSelection().forEach(event -> lstReturn.add(event));
+		getTabTournamentsSelection().forEach(event -> lstReturn.add(event));
+		getTabOtherEventsSelection().forEach(event -> lstReturn.add(event));
 
-		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
+		return FXCollections.observableList(lstReturn.stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList()));
 	}
 
 	/**
 	 * Returns selection from visible tab as sorted list.
 	 *
 	 * @return sorted selection from visible tabs
-	 *
-	 * @since 0.13.0
 	 */
-	public ObservableList<PersonModel> getVisibleTabSelection() {
+	public ObservableList<EventDateModel> getVisibleTabSelection() {
 
-		if (tabReferees.isSelected()) {
-			return getTabRefereesSelection();
+		if (tabLeagueGames.isSelected()) {
+			return getTabLeagueGamesSelection();
 		}
 
-		if (tabTrainees.isSelected()) {
-			return getTabTraineesSelection();
+		if (tabTournaments.isSelected()) {
+			return getTabTournamentsSelection();
 		}
 
-		if (tabPeople.isSelected()) {
-			return getTabPeopleSelection();
+		if (tabOtherEvents.isSelected()) {
+			return getTabOtherEventsSelection();
 		}
 
 		return FXCollections.observableList(new ArrayList<>());
 	}
 
 	/**
-	 * Returns selection from referees tab as sorted list.
+	 * Returns selection from league games tab as sorted list.
 	 *
-	 * @return sorted selection from referees tab
-	 *
-	 * @since 0.13.0
+	 * @return sorted selection from league games tab
 	 */
-	public ObservableList<PersonModel> getTabRefereesSelection() {
-		return FXCollections.observableList(tblReferees.getSelectionModel().getSelectedItems().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
+	public ObservableList<EventDateModel> getTabLeagueGamesSelection() {
+		return FXCollections.observableList(tblLeagueGames.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList()));
 	}
 
 	/**
-	 * Returns selection from trainees tab as sorted list.
+	 * Returns selection from tournaments tab as sorted list.
 	 *
-	 * @return sorted selection from trainees tab
-	 *
-	 * @since 0.13.0
+	 * @return sorted selection from tournaments tab
 	 */
-	public ObservableList<PersonModel> getTabTraineesSelection() {
-		return FXCollections.observableList(tblTrainees.getSelectionModel().getSelectedItems().stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
+	public ObservableList<EventDateModel> getTabTournamentsSelection() {
+		return FXCollections.observableList(tblTournaments.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList()));
 	}
 
 	/**
-	 * Returns selection from people tab as sorted list.
+	 * Returns selection from other events tab as sorted list.
 	 *
-	 * @return sorted selection from people tab
-	 *
-	 * @since 0.13.0
+	 * @return sorted selection from other events tab
 	 */
-	public ObservableList<PersonModel> getTabPeopleSelection() {
-		List<PersonModel> lstReturn = new ArrayList<>();
-
-		tblPeople.getSelectionModel().getSelectedItems().forEach(person -> lstReturn.add((PersonModel) person));
-
-		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
+	public ObservableList<EventDateModel> getTabOtherEventsSelection() {
+		return FXCollections.observableList(tblOtherEvents.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList()));
 	}
 
 }

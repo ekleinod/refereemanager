@@ -600,14 +600,14 @@ public class AppLayoutController {
 	@FXML
 	private void handleEventOverview() {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeOverview");
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventOverview");
 		AnchorPane refOverview = (AnchorPane) pneLoad.getKey();
 
 		// Set event overview into the center of root layout.
 		appPane.setCenter(refOverview);
 
 		// Give the controller access to the app.
-		RefereeOverviewController ctlRefOverview = pneLoad.getValue().getController();
+		EventOverviewController ctlRefOverview = pneLoad.getValue().getController();
 		ctlRefOverview.initController(this);
 
 	}

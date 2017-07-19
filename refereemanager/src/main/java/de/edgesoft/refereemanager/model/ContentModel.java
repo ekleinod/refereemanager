@@ -12,6 +12,7 @@ import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.League;
+import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import de.edgesoft.refereemanager.jaxb.OtherEvent;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
@@ -19,6 +20,7 @@ import de.edgesoft.refereemanager.jaxb.RefereeAssignmentType;
 import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.Team;
+import de.edgesoft.refereemanager.jaxb.Tournament;
 import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
 import de.edgesoft.refereemanager.jaxb.Venue;
@@ -86,6 +88,30 @@ public class ContentModel extends Content {
 	@XmlTransient
 	private ObservableList<SexType> observableSexTypes = null;
 
+	/**
+	 * Observable list of league games (singleton).
+	 *
+	 * @since 0.15.0
+	 */
+	@XmlTransient
+	private ObservableList<LeagueGame> observableLeagueGames = null;
+
+	/**
+	 * Observable list of tournaments (singleton).
+	 *
+	 * @since 0.15.0
+	 */
+	@XmlTransient
+	private ObservableList<Tournament> observableTournaments = null;
+
+	/**
+	 * Observable list of other events (singleton).
+	 *
+	 * @since 0.15.0
+	 */
+	@XmlTransient
+	private ObservableList<OtherEvent> observableOtherEvents = null;
+
 
 	/**
 	 * Returns observable list of referees.
@@ -141,6 +167,48 @@ public class ContentModel extends Content {
 			observableSexTypes = FXCollections.observableList(getSexType());
 		}
 		return observableSexTypes;
+	}
+
+	/**
+	 * Returns observable list of league games.
+	 *
+	 * @return observable list of league games
+	 *
+	 * @since 0.15.0
+	 */
+	public ObservableList<LeagueGame> getObservableLeagueGames() {
+		if (observableLeagueGames == null) {
+			observableLeagueGames = FXCollections.observableList(getLeagueGame());
+		}
+		return observableLeagueGames;
+	}
+
+	/**
+	 * Returns observable list of tournaments.
+	 *
+	 * @return observable list of tournaments
+	 *
+	 * @since 0.15.0
+	 */
+	public ObservableList<Tournament> getObservableTournaments() {
+		if (observableTournaments == null) {
+			observableTournaments = FXCollections.observableList(getTournament());
+		}
+		return observableTournaments;
+	}
+
+	/**
+	 * Returns observable list of other events.
+	 *
+	 * @return observable list of other events
+	 *
+	 * @since 0.15.0
+	 */
+	public ObservableList<OtherEvent> getObservableOtherEvents() {
+		if (observableOtherEvents == null) {
+			observableOtherEvents = FXCollections.observableList(getOtherEvent());
+		}
+		return observableOtherEvents;
 	}
 
 
@@ -282,9 +350,9 @@ public class ContentModel extends Content {
 		getTeam().clear();
 		getTeam().addAll(lstTeam);
 
-		List<OtherEvent> lstOtherDate = getOtherevent().stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList());
-		getOtherevent().clear();
-		getOtherevent().addAll(lstOtherDate);
+		List<OtherEvent> lstOtherEvent = getOtherEvent().stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList());
+		getOtherEvent().clear();
+		getOtherEvent().addAll(lstOtherEvent);
 
 		List<Venue> lstVenue = getVenue().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
 		getVenue().clear();

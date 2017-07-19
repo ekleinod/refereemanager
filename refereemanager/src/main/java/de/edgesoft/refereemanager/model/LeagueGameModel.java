@@ -1,6 +1,7 @@
 package de.edgesoft.refereemanager.model;
 
 import java.text.MessageFormat;
+import java.util.function.Predicate;
 
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import javafx.beans.property.SimpleStringProperty;
@@ -33,6 +34,11 @@ import javafx.beans.property.StringProperty;
  * @since 0.15.0
  */
 public class LeagueGameModel extends LeagueGame {
+
+	/**
+	 * Filter predicate for all league games.
+	 */
+	public static Predicate<LeagueGame> ALL = leaguegame -> true;
 
 	/**
 	 * Returns team text "home - off".

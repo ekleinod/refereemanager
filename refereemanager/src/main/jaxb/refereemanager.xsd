@@ -66,7 +66,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 					<xsd:element name="league_game" type="LeagueGame" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="tournament" type="Tournament" minOccurs="0" maxOccurs="unbounded" />
-					<xsd:element name="otherevent" type="OtherEvent" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="other_event" type="OtherEvent" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="venue" type="Venue" minOccurs="0" maxOccurs="unbounded" />
 
 					<!-- types -->
