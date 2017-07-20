@@ -160,10 +160,16 @@ public class EventListController {
 	private TableColumn<TournamentModel, String> colTournamentID;
 
 	/**
-	 * Date column.
+	 * Start date column.
 	 */
 	@FXML
-	private TableColumn<TournamentModel, LocalDateTime> colTournamentDate;
+	private TableColumn<TournamentModel, LocalDateTime> colTournamentDateStart;
+
+	/**
+	 * End date column.
+	 */
+	@FXML
+	private TableColumn<TournamentModel, LocalDateTime> colTournamentDateEnd;
 
 	/**
 	 * Title column.
@@ -196,16 +202,28 @@ public class EventListController {
 	private TableColumn<OtherEventModel, String> colOtherEventID;
 
 	/**
-	 * Date column.
+	 * Start date column.
 	 */
 	@FXML
-	private TableColumn<OtherEventModel, LocalDateTime> colOtherEventDate;
+	private TableColumn<OtherEventModel, LocalDateTime> colOtherEventDateStart;
 
 	/**
-	 * Time column.
+	 * End date column.
 	 */
 	@FXML
-	private TableColumn<OtherEventModel, LocalDateTime> colOtherEventTime;
+	private TableColumn<OtherEventModel, LocalDateTime> colOtherEventDateEnd;
+
+	/**
+	 * Start time column.
+	 */
+	@FXML
+	private TableColumn<OtherEventModel, LocalDateTime> colOtherEventTimeStart;
+
+	/**
+	 * Start time column.
+	 */
+	@FXML
+	private TableColumn<OtherEventModel, LocalDateTime> colOtherEventTimeEnd;
 
 	/**
 	 * Title column.
@@ -241,25 +259,31 @@ public class EventListController {
 		colTournamentID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
 		colTournamentID.setVisible(false);
 
-		colTournamentDate.setCellValueFactory(cellData -> cellData.getValue().getStart());
+		colTournamentDateStart.setCellValueFactory(cellData -> cellData.getValue().getStart());
+		colTournamentDateEnd.setCellValueFactory(cellData -> cellData.getValue().getEnd());
 		colTournamentTitle.setCellValueFactory(cellData -> cellData.getValue().getDisplayTitleShort());
 
 		// hook data to columns (other events)
 		colOtherEventID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
 		colOtherEventID.setVisible(false);
 
-		colOtherEventDate.setCellValueFactory(cellData -> cellData.getValue().getStart());
-		colOtherEventTime.setCellValueFactory(cellData -> cellData.getValue().getStart());
+		colOtherEventDateStart.setCellValueFactory(cellData -> cellData.getValue().getStart());
+		colOtherEventDateEnd.setCellValueFactory(cellData -> cellData.getValue().getEnd());
+		colOtherEventTimeStart.setCellValueFactory(cellData -> cellData.getValue().getStart());
+		colOtherEventTimeEnd.setCellValueFactory(cellData -> cellData.getValue().getEnd());
 		colOtherEventTitle.setCellValueFactory(cellData -> cellData.getValue().getDisplayTitleShort());
 
 		// format date columns
 		colLeagueGameDate.setCellFactory(column -> TableUtils.getTableCellLeagueGameDate());
 		colLeagueGameTime.setCellFactory(column -> TableUtils.getTableCellLeagueGameTime());
 
-		colTournamentDate.setCellFactory(column -> TableUtils.getTableCellTournamentDate());
+		colTournamentDateStart.setCellFactory(column -> TableUtils.getTableCellTournamentDate());
+		colTournamentDateEnd.setCellFactory(column -> TableUtils.getTableCellTournamentDate());
 
-		colOtherEventDate.setCellFactory(column -> TableUtils.getTableCellOtherEventDate());
-		colOtherEventTime.setCellFactory(column -> TableUtils.getTableCellOtherEventTime());
+		colOtherEventDateStart.setCellFactory(column -> TableUtils.getTableCellOtherEventDate());
+		colOtherEventDateEnd.setCellFactory(column -> TableUtils.getTableCellOtherEventDate());
+		colOtherEventTimeStart.setCellFactory(column -> TableUtils.getTableCellOtherEventTime());
+		colOtherEventTimeEnd.setCellFactory(column -> TableUtils.getTableCellOtherEventTime());
 
 		// listen to tab changes
 		tabPaneContent.getSelectionModel().selectedItemProperty().addListener((event, oldTab, newTab) -> {

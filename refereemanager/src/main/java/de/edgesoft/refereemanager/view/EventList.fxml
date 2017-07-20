@@ -52,7 +52,8 @@
                         <TableView fx:id="tblTournaments" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
                               <TableColumn fx:id="colTournamentID" prefWidth="-1.0" text="ID" />
-                              <TableColumn fx:id="colTournamentDate" prefWidth="-1.0" text="Datum" />
+                              <TableColumn fx:id="colTournamentDateStart" prefWidth="-1.0" text="Start" />
+                              <TableColumn fx:id="colTournamentDateEnd" prefWidth="-1.0" text="Ende" />
                               <TableColumn fx:id="colTournamentTitle" prefWidth="-1.0" text="Titel" />
                            </columns>
                            <columnResizePolicy>
@@ -70,8 +71,10 @@
                         <TableView fx:id="tblOtherEvents" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
                               <TableColumn fx:id="colOtherEventID" prefWidth="-1.0" text="ID" />
-                              <TableColumn fx:id="colOtherEventDate" prefWidth="-1.0" text="Datum" />
-                              <TableColumn fx:id="colOtherEventTime" prefWidth="-1.0" text="Zeit" />
+                              <TableColumn fx:id="colOtherEventDateStart" prefWidth="-1.0" text="Startdatum" />
+                              <TableColumn fx:id="colOtherEventDateEnd" prefWidth="-1.0" text="Enddatum" />
+                              <TableColumn fx:id="colOtherEventTimeStart" prefWidth="-1.0" text="Startzeit" />
+                              <TableColumn fx:id="colOtherEventTimeEnd" prefWidth="-1.0" text="Endzeit" />
                               <TableColumn fx:id="colOtherEventTitle" prefWidth="-1.0" text="Titel" />
                            </columns>
                            <columnResizePolicy>

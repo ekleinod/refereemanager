@@ -2,6 +2,7 @@ package de.edgesoft.refereemanager.utils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.model.LeagueGameModel;
@@ -170,7 +171,7 @@ public class TableUtils {
 	        protected void updateItem(LocalDateTime item, boolean empty) {
 	            super.updateItem(item, empty);
 
-	            if (item == null || empty) {
+	            if (item == null || empty || (item.toLocalTime() == LocalTime.MIDNIGHT)) {
 	                setText(null);
 	            } else {
 	                setText(DateTimeUtils.formatDateTimeAsTime(item));
