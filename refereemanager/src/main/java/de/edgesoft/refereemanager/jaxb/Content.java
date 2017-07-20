@@ -42,7 +42,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
  *         &lt;element name="team" type="{}Team" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="league_game" type="{}LeagueGame" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="tournament" type="{}Tournament" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="otherevent" type="{}OtherEvent" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="other_event" type="{}OtherEvent" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="venue" type="{}Venue" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sex_type" type="{}SexType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contact_type" type="{}ContactType" maxOccurs="unbounded" minOccurs="0"/>
@@ -69,7 +69,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
     "team",
     "leagueGame",
     "tournament",
-    "otherevent",
+    "otherEvent",
     "venue",
     "sexType",
     "contactType",
@@ -101,8 +101,8 @@ public class Content
     protected List<LeagueGame> leagueGame;
     @XmlElement(type = TournamentModel.class)
     protected List<Tournament> tournament;
-    @XmlElement(type = OtherEventModel.class)
-    protected List<OtherEvent> otherevent;
+    @XmlElement(name = "other_event", type = OtherEventModel.class)
+    protected List<OtherEvent> otherEvent;
     protected List<Venue> venue;
     @XmlElement(name = "sex_type")
     protected List<SexType> sexType;
@@ -396,18 +396,18 @@ public class Content
     }
 
     /**
-     * Gets the value of the otherevent property.
+     * Gets the value of the otherEvent property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the otherevent property.
+     * This is why there is not a <CODE>set</CODE> method for the otherEvent property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getOtherevent().add(newItem);
+     *    getOtherEvent().add(newItem);
      * </pre>
      * 
      * 
@@ -417,11 +417,11 @@ public class Content
      * 
      * 
      */
-    public List<OtherEvent> getOtherevent() {
-        if (otherevent == null) {
-            otherevent = new ArrayList<OtherEvent>();
+    public List<OtherEvent> getOtherEvent() {
+        if (otherEvent == null) {
+            otherEvent = new ArrayList<OtherEvent>();
         }
-        return this.otherevent;
+        return this.otherEvent;
     }
 
     /**
