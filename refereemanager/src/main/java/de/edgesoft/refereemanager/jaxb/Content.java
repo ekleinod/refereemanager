@@ -49,6 +49,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
  *         &lt;element name="status_type" type="{}StatusType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="referee_assignment_type" type="{}RefereeAssignmentType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="training_level_type" type="{}TrainingLevelType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="role_type" type="{}PersonRoleType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -75,7 +76,8 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
     "contactType",
     "statusType",
     "refereeAssignmentType",
-    "trainingLevelType"
+    "trainingLevelType",
+    "roleType"
 })
 public class Content
     extends AbstractModelClass
@@ -114,6 +116,8 @@ public class Content
     protected List<RefereeAssignmentType> refereeAssignmentType;
     @XmlElement(name = "training_level_type", type = TrainingLevelTypeModel.class)
     protected List<TrainingLevelType> trainingLevelType;
+    @XmlElement(name = "role_type")
+    protected List<PersonRoleType> roleType;
 
     /**
      * Gets the value of the season property.
@@ -596,6 +600,35 @@ public class Content
             trainingLevelType = new ArrayList<TrainingLevelType>();
         }
         return this.trainingLevelType;
+    }
+
+    /**
+     * Gets the value of the roleType property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the roleType property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getRoleType().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link PersonRoleType }
+     * 
+     * 
+     */
+    public List<PersonRoleType> getRoleType() {
+        if (roleType == null) {
+            roleType = new ArrayList<PersonRoleType>();
+        }
+        return this.roleType;
     }
 
 }

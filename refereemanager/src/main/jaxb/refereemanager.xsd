@@ -75,6 +75,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="status_type" type="StatusType" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="referee_assignment_type" type="RefereeAssignmentType" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="training_level_type" type="TrainingLevelType" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="role_type" type="PersonRoleType" minOccurs="0" maxOccurs="unbounded" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -115,7 +116,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 							</xsd:appinfo>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element name="role_type" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+					<xsd:element name="role" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>
 								<jxb:property>
