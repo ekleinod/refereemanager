@@ -289,6 +289,14 @@ public class RefereeListController {
 	private TableColumn<PersonModel, LocalDate> colPeopleBirthday;
 
 	/**
+	 * Role column.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private TableColumn<PersonModel, String> colPeopleRole;
+
+	/**
 	 * List of people.
 	 *
 	 * @since 0.12.0
@@ -338,6 +346,8 @@ public class RefereeListController {
 
 		colPeopleBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
 		colPeopleBirthday.setVisible(false);
+
+		colPeopleRole.setCellValueFactory(cellData -> (cellData.getValue().getRole() == null) ? null : cellData.getValue().getRole().getDisplayTitleShort());
 
 		// format date columns
 		colRefereesBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate());

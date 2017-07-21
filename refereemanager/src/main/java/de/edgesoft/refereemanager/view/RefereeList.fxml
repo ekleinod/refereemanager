@@ -79,6 +79,7 @@
                               <TableColumn fx:id="colPeopleName" prefWidth="-1.0" text="Name" />
                               <TableColumn fx:id="colPeopleFirstName" prefWidth="-1.0" text="Vorname" />
                               <TableColumn fx:id="colPeopleBirthday" prefWidth="-1.0" text="Geburtstag" />
+                              <TableColumn fx:id="colPeopleRole" prefWidth="-1.0" text="Rolle" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

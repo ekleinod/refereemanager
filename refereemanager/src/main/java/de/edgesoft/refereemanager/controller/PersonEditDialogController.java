@@ -153,6 +153,23 @@ public class PersonEditDialogController {
 	private Button btnSexTypeClear;
 
 	/**
+	 * Combobox for roles.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "role", jaxbclass = Person.class)
+	protected ComboBox<ModelClassExt> cboRole;
+
+	/**
+	 * Clear roles.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnRoleClear;
+
+	/**
 	 * Text area for remark.
 	 */
 	@FXML
@@ -617,6 +634,7 @@ public class PersonEditDialogController {
 
 		// fill combo boxes
         ComboBoxUtils.prepareComboBox(cboSexType, AppModel.getData().getContent().getSexType());
+        ComboBoxUtils.prepareComboBox(cboRole, AppModel.getData().getContent().getRoleType());
         ComboBoxUtils.prepareComboBox(cboMember, AppModel.getData().getContent().getClub());
         ComboBoxUtils.prepareComboBox(cboReffor, AppModel.getData().getContent().getClub());
         ComboBoxUtils.prepareComboBox(cboStatus, AppModel.getData().getContent().getStatusType());
@@ -714,6 +732,9 @@ public class PersonEditDialogController {
 		btnSexTypeClear.disableProperty().bind(
 				cboSexType.getSelectionModel().selectedItemProperty().isNull()
 		);
+		btnRoleClear.disableProperty().bind(
+				cboRole.getSelectionModel().selectedItemProperty().isNull()
+		);
 
 		// enable spinners
 		spnPointsWrittenA.disableProperty().bind(
@@ -759,6 +780,7 @@ public class PersonEditDialogController {
 		btnTrainingLevelDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 
 		btnSexTypeClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
+		btnRoleClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 
 	}
 
@@ -1240,6 +1262,17 @@ public class PersonEditDialogController {
 	private void handleSexTypeClear() {
 		cboSexType.getSelectionModel().clearSelection();
 		cboSexType.setValue(null);
+	}
+
+	/**
+	 * Clears role selection.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleRoleClear() {
+		cboRole.getSelectionModel().clearSelection();
+		cboRole.setValue(null);
 	}
 
 	/**
