@@ -38,26 +38,26 @@ public class TitledIDTypeModel extends TitledIDType {
 	/**
 	 * Comparator title.
 	 */
-	public static final Comparator<TitledIDType> TITLE = Comparator.comparing(titled -> titled.getTitle().get(), Collator.getInstance());
+	public static final Comparator<TitledIDTypeModel> TITLE = Comparator.comparing(titled -> titled.getTitle().getValueSafe(), Collator.getInstance());
 
 	/**
 	 * Comparator shorttitle.
 	 *
 	 * @todo not sorted with collator
 	 */
-	public static final Comparator<TitledIDType> SHORTTITLE = Comparator.comparing(titled -> titled.getShorttitle().get(), Comparator.nullsFirst(String::compareTo));
+	public static final Comparator<TitledIDTypeModel> SHORTTITLE = Comparator.comparing(titled -> titled.getDisplayTitleShort().getValueSafe(), Comparator.nullsFirst(String::compareTo));
 
 	/**
 	 * Comparator shorttitle then title.
 	 *
 	 * @todo does not work with shorttitle == null
 	 */
-	public static final Comparator<TitledIDType> SHORTTITLE_TITLE = SHORTTITLE.thenComparing(TITLE);
+	public static final Comparator<TitledIDTypeModel> SHORTTITLE_TITLE = SHORTTITLE.thenComparing(TITLE);
 
 	/**
 	 * Comparator displaytitle.
 	 */
-	public static final Comparator<TitledIDTypeModel> DISPLAYTITLE = Comparator.comparing(titled -> titled.getDisplayTitleShort().get(), Collator.getInstance());
+	public static final Comparator<TitledIDTypeModel> DISPLAYTITLE = Comparator.comparing(titled -> titled.getDisplayTitleShort().getValueSafe(), Collator.getInstance());
 
 	/**
 	 * Short display title.

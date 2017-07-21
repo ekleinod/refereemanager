@@ -393,7 +393,7 @@ public class RefereeListController {
 		mapChkRoles = new HashMap<>();
 		AppModel.getData().getContent().getRoleType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
 				roleType -> {
-					CheckBox chkTemp = new CheckBox(roleType.getDisplayTitleShort().getValue());
+					CheckBox chkTemp = new CheckBox(roleType.getDisplayTitleShort().getValueSafe());
 					chkTemp.setOnAction(e -> handleFilterChange());
 					boxFilterRole.getChildren().add(chkTemp);
 					mapChkRoles.put(chkTemp, roleType);
