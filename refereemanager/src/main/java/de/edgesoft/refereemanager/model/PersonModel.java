@@ -9,6 +9,7 @@ import de.edgesoft.edgeutils.files.FileUtils;
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Person;
+import de.edgesoft.refereemanager.jaxb.PersonRoleType;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -43,7 +44,6 @@ public class PersonModel extends Person {
 	/**
 	 * Comparator for people by name.
 	 *
-	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	public static final Comparator<Person> NAME = Comparator.comparing(person -> person.getName().getValueSafe(), Collator.getInstance());
@@ -51,15 +51,32 @@ public class PersonModel extends Person {
 	/**
 	 * Comparator for people by name then first ame.
 	 *
-	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	public static final Comparator<Person> NAME_FIRSTNAME = NAME.thenComparing(Comparator.comparing(person -> person.getFirstName().getValueSafe(), Collator.getInstance()));
 
 	/**
+	 * Filter predicate for all people.
+	 *
+	 * @since 0.15.0
+	 */
+	public static Predicate<Person> ALL = person -> true;
+
+	/**
+	 * Returns filter predicate for given role.
+	 *
+	 * @param theRole role
+	 * @return predicate
+	 *
+	 * @since 0.15.0
+	 */
+	public static Predicate<Person> getRolePredicate(PersonRoleType theRole) {
+		return person -> person.getRole() == theRole;
+	}
+
+	/**
 	 * Filter predicate for people with email addresses.
 	 *
-	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	public static Predicate<PersonModel> HAS_EMAIL = person -> (person.getPrimaryEMail() != null);
@@ -67,7 +84,6 @@ public class PersonModel extends Person {
 	/**
 	 * Filter predicate for people with postal addresses.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public static Predicate<PersonModel> HAS_ADDRESS = person -> (person.getPrimaryAddress() != null);
@@ -77,7 +93,6 @@ public class PersonModel extends Person {
 	 *
 	 * @return display title
 	 *
-	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	@Override
@@ -89,9 +104,6 @@ public class PersonModel extends Person {
 	 * Full name of person.
 	 *
 	 * @return full name of the person
-	 *
-	 * @version 0.14.0
-	 * @since 0.5.0
 	 */
 	public SimpleStringProperty getFullName() {
 		StringBuilder sbReturn = new StringBuilder();
@@ -121,9 +133,6 @@ public class PersonModel extends Person {
 	 * Table name of person.
 	 *
 	 * @return table name of the person
-	 *
-	 * @version 0.14.0
-	 * @since 0.5.0
 	 */
 	public SimpleStringProperty getTableName() {
 		StringBuilder sbReturn = new StringBuilder();
@@ -154,7 +163,6 @@ public class PersonModel extends Person {
 	 *
 	 * @return filename name of the person
 	 *
-	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	public SimpleStringProperty getFileName() {
@@ -180,7 +188,6 @@ public class PersonModel extends Person {
 	 * @param theImagePath image path
 	 * @return does image file given by image path and filename exist
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public boolean existsImageFile(final String theImagePath) {
@@ -198,7 +205,6 @@ public class PersonModel extends Person {
 	 *
 	 * @return primary address
 	 *
-	 * @version 0.14.0
 	 * @since 0.6.0
 	 */
 	public Address getPrimaryAddress() {
@@ -214,7 +220,6 @@ public class PersonModel extends Person {
 	 *
 	 * @return primary email
 	 *
-	 * @version 0.14.0
 	 * @since 0.8.0
 	 */
 	public EMail getPrimaryEMail() {
@@ -230,7 +235,6 @@ public class PersonModel extends Person {
 	 *
 	 * @return primary phone number
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public PhoneNumber getPrimaryPhoneNumber() {

@@ -3,17 +3,22 @@ package de.edgesoft.refereemanager.controller;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import de.edgesoft.refereemanager.jaxb.Person;
+import de.edgesoft.refereemanager.jaxb.PersonRoleType;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.utils.TableUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -29,6 +34,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
+import javafx.scene.layout.HBox;
 
 /**
  * Controller for the referee list scene.
@@ -297,6 +303,29 @@ public class RefereeListController {
 	private TableColumn<PersonModel, String> colPeopleRole;
 
 	/**
+	 * Label filter.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Label lblPeopleFilter;
+
+	/**
+	 * HBox filter role.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private HBox boxFilterRole;
+
+	/**
+	 * Filter storage.
+	 *
+	 * @since 0.15.0
+	 */
+	private Map<CheckBox, PersonRoleType> mapChkRoles;
+
+	/**
 	 * List of people.
 	 *
 	 * @since 0.12.0
@@ -359,6 +388,17 @@ public class RefereeListController {
 		tabPaneContent.getSelectionModel().selectedItemProperty().addListener((event, oldTab, newTab) -> {
 	        handleTabChange();
 	    });
+
+		// setup role filter
+		mapChkRoles = new HashMap<>();
+		AppModel.getData().getContent().getRoleType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
+				roleType -> {
+					CheckBox chkTemp = new CheckBox(roleType.getDisplayTitleShort().getValue());
+					chkTemp.setOnAction(e -> handleFilterChange());
+					boxFilterRole.getChildren().add(chkTemp);
+					mapChkRoles.put(chkTemp, roleType);
+				}
+		);
 
 		setItems();
 
@@ -439,6 +479,24 @@ public class RefereeListController {
 			}
 
 			lblRefereesFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstReferees.size()));
+		}
+
+		// filter for people
+		if (lstPeople == null) {
+			lblPeopleFilter.setText("Filter");
+		} else {
+
+			lstPeople.setPredicate(PersonModel.ALL);
+
+			for (Entry<CheckBox, PersonRoleType> entryChkRole : mapChkRoles.entrySet()) {
+
+				if (entryChkRole.getKey().isSelected()) {
+					lstPeople.setPredicate(((Predicate<Person>) lstPeople.getPredicate()).and(PersonModel.getRolePredicate(entryChkRole.getValue())));
+				}
+
+			}
+
+			lblPeopleFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstPeople.size()));
 		}
 
 		tblReferees.refresh();

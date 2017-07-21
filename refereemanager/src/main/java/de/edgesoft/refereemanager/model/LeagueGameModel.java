@@ -47,7 +47,7 @@ public class LeagueGameModel extends LeagueGame {
 	 * @return predicate
 	 */
 	public static Predicate<LeagueGame> getLeaguePredicate(League theLeague) {
-		return leaguegame -> leaguegame.getHomeTeam().getLeague() == theLeague	;
+		return leaguegame -> leaguegame.getHomeTeam().getLeague() == theLeague;
 	}
 
 	/**

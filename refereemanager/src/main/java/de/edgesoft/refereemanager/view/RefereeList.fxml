@@ -73,7 +73,7 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tblPeople" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="tblPeople" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
                               <TableColumn fx:id="colPeopleID" prefWidth="-1.0" text="ID" />
                               <TableColumn fx:id="colPeopleName" prefWidth="-1.0" text="Name" />
@@ -85,6 +85,13 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
+                        <Label fx:id="lblPeopleFilter" text="Filter" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="5.0">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="boxFilterRole" alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="30.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                        </HBox>
                      </children>
                   </AnchorPane>
                </content>

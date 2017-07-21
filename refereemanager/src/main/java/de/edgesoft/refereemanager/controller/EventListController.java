@@ -150,7 +150,6 @@ public class EventListController {
 	/**
 	 * Filter storage.
 	 */
-	@FXML
 	private Map<CheckBox, League> mapChkLeagues;
 
 
@@ -303,7 +302,7 @@ public class EventListController {
 	        handleTabChange();
 	    });
 
-		// fill filter
+		// setup league filter
 		mapChkLeagues = new HashMap<>();
 		AppModel.getData().getContent().getLeague().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
 				league -> {
@@ -368,7 +367,7 @@ public class EventListController {
 	@SuppressWarnings("unchecked")
 	private void handleFilterChange() {
 
-		// filter for referees
+		// filter for events
 		if (lstLeagueGame == null) {
 			lblLeagueGameFilter.setText("Filter");
 		} else {
