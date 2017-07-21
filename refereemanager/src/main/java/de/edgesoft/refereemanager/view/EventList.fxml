@@ -36,10 +36,7 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="30.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
-                           <children>
-                              <CheckBox fx:id="chkLeagueGameLeague" mnemonicParsing="false" onAction="#handleFilterChange" text="Liga A" />
-                           </children>
+                        <HBox fx:id="boxFilterLeague" alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="30.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                         </HBox>
                      </children>
                   </AnchorPane>

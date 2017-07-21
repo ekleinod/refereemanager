@@ -3,9 +3,9 @@ package de.edgesoft.refereemanager.model;
 import java.text.MessageFormat;
 import java.util.function.Predicate;
 
+import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 /**
  * League game model, additional methods for jaxb model class.
@@ -41,14 +41,48 @@ public class LeagueGameModel extends LeagueGame {
 	public static Predicate<LeagueGame> ALL = leaguegame -> true;
 
 	/**
+	 * Returns filter predicate for given league.
+	 *
+	 * @param theLeague league
+	 * @return predicate
+	 */
+	public static Predicate<LeagueGame> getLeaguePredicate(League theLeague) {
+		return leaguegame -> leaguegame.getHomeTeam().getLeague() == theLeague	;
+	}
+
+	/**
 	 * Returns team text "home - off".
 	 *
 	 * @return team text
 	 */
-	public StringProperty getTeamText() {
+	public SimpleStringProperty getTeamText() {
 		return new SimpleStringProperty(MessageFormat.format("{0} - {1}",
 				getHomeTeam().getDisplayTitleShort().getValue(),
 				getOffTeam().getDisplayTitleShort().getValue()));
+	}
+
+	/**
+	 * Returns game number as formatted string.
+	 *
+	 * @return game number
+	 */
+	public SimpleStringProperty getGameNumberString() {
+
+		if (getGameNumber() == null) {
+			return null;
+		}
+
+		return new SimpleStringProperty(String.format("%03d", getGameNumber().getValue()));
+	}
+
+	/**
+	 * Display title.
+	 *
+	 * @return display title
+	 */
+	@Override
+	public SimpleStringProperty getDisplayTitle() {
+		return getTeamText();
 	}
 
 }

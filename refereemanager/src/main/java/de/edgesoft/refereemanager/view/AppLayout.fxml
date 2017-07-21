@@ -74,7 +74,7 @@
                    <items>
                       <MenuItem fx:id="mnuEventOverview" onAction="#handleEventOverview" text="Terminü_bersicht">
                          <accelerator>
-                            <KeyCodeCombination alt="DOWN" code="T" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            <KeyCodeCombination alt="DOWN" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                          </accelerator>
                       </MenuItem>
                    </items>

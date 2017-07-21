@@ -4,7 +4,6 @@ import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Objects;
 
-import de.edgesoft.refereemanager.jaxb.EventDate;
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import de.edgesoft.refereemanager.jaxb.OtherEvent;
 import de.edgesoft.refereemanager.jaxb.Tournament;
@@ -71,88 +70,88 @@ public class EventOverviewController {
 	private Label lblHeading;
 
 	/**
-	 * Name label.
+	 * Number label.
 	 */
 	@FXML
-	private Label lblName;
+	private Label lblNumber;
 
 	/**
-	 * Name label label.
+	 * Number label label.
 	 */
 	@FXML
-	private Label lblNameLabel;
+	private Label lblNumberLabel;
 
 	/**
-	 * First name label.
+	 * Date label.
 	 */
 	@FXML
-	private Label lblFirstName;
+	private Label lblDate;
 
 	/**
-	 * First name label label.
+	 * Date label label.
 	 */
 	@FXML
-	private Label lblFirstNameLabel;
+	private Label lblDateLabel;
 
 	/**
-	 * Training level label.
+	 * Time label.
 	 */
 	@FXML
-	private Label lblTrainingLevel;
+	private Label lblTime;
 
 	/**
-	 * Training level label label.
+	 * Time label label.
 	 */
 	@FXML
-	private Label lblTrainingLevelLabel;
+	private Label lblTimeLabel;
 
 	/**
-	 * Club label.
+	 * Teams label.
 	 */
 	@FXML
-	private Label lblClub;
+	private Label lblTeams;
 
 	/**
-	 * Club label label.
+	 * Teams label label.
 	 */
 	@FXML
-	private Label lblClubLabel;
+	private Label lblTeamsLabel;
 
 	/**
-	 * Birthday label.
+	 * League label.
 	 */
 	@FXML
-	private Label lblBirthday;
+	private Label lblLeague;
 
 	/**
-	 * Birthday label label.
+	 * League label label.
 	 */
 	@FXML
-	private Label lblBirthdayLabel;
+	private Label lblLeagueLabel;
 
 	/**
-	 * Last update label.
+	 * Organizer label.
 	 */
 	@FXML
-	private Label lblLastUpdate;
+	private Label lblOrganizer;
 
 	/**
-	 * Last update label label.
+	 * Organizer label label.
 	 */
 	@FXML
-	private Label lblLastUpdateLabel;
+	private Label lblOrganizerLabel;
 
 	/**
-	 * Next update label.
+	 * Venue label.
 	 */
 	@FXML
-	private Label lblNextUpdate;
+	private Label lblVenue;
 
 	/**
-	 * Next update label label.
+	 * Venue label label.
 	 */
 	@FXML
-	private Label lblNextUpdateLabel;
+	private Label lblVenueLabel;
 
 	/**
 	 * Remark label.
@@ -240,24 +239,24 @@ public class EventOverviewController {
 
 		// disabling labels
 		ObservableBooleanValue isLeagueGame = ctlEventList.getTabLeagueGames().selectedProperty();
-		lblTrainingLevelLabel.visibleProperty().bind(isLeagueGame);
-		lblTrainingLevelLabel.managedProperty().bind(isLeagueGame);
-		lblTrainingLevel.visibleProperty().bind(isLeagueGame);
-		lblTrainingLevel.managedProperty().bind(isLeagueGame);
-		lblLastUpdateLabel.visibleProperty().bind(isLeagueGame);
-		lblLastUpdateLabel.managedProperty().bind(isLeagueGame);
-		lblLastUpdate.visibleProperty().bind(isLeagueGame);
-		lblLastUpdate.managedProperty().bind(isLeagueGame);
-		lblNextUpdateLabel.visibleProperty().bind(isLeagueGame);
-		lblNextUpdateLabel.managedProperty().bind(isLeagueGame);
-		lblNextUpdate.visibleProperty().bind(isLeagueGame);
-		lblNextUpdate.managedProperty().bind(isLeagueGame);
+		lblNumberLabel.visibleProperty().bind(isLeagueGame);
+		lblNumberLabel.managedProperty().bind(isLeagueGame);
+		lblNumber.visibleProperty().bind(isLeagueGame);
+		lblNumber.managedProperty().bind(isLeagueGame);
+		lblTeamsLabel.visibleProperty().bind(isLeagueGame);
+		lblTeamsLabel.managedProperty().bind(isLeagueGame);
+		lblTeams.visibleProperty().bind(isLeagueGame);
+		lblTeams.managedProperty().bind(isLeagueGame);
+		lblLeagueLabel.visibleProperty().bind(isLeagueGame);
+		lblLeagueLabel.managedProperty().bind(isLeagueGame);
+		lblLeague.visibleProperty().bind(isLeagueGame);
+		lblLeague.managedProperty().bind(isLeagueGame);
 
 		ObservableBooleanValue isTournament = ctlEventList.getTabTournaments().selectedProperty();
-		lblClubLabel.visibleProperty().bind(isTournament);
-		lblClubLabel.managedProperty().bind(isTournament);
-		lblClub.visibleProperty().bind(isTournament);
-		lblClub.managedProperty().bind(isTournament);
+		lblOrganizerLabel.visibleProperty().bind(isTournament);
+		lblOrganizerLabel.managedProperty().bind(isTournament);
+		lblOrganizer.visibleProperty().bind(isTournament);
+		lblOrganizer.managedProperty().bind(isTournament);
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.EVENT_OVERVIEW_SPLIT)));
@@ -309,19 +308,19 @@ public class EventOverviewController {
 	 *
 	 * @param theDetailData event (null if none is selected)
 	 */
-	private void showDetails(final EventDate theDetailData) {
+	private void showDetails(final EventDateModel theDetailData) {
 
 		if (theDetailData == null) {
 
 			lblHeading.setText("Details");
 
-			lblName.setText("");
-			lblFirstName.setText("");
-			lblTrainingLevel.setText("");
-			lblClub.setText("");
-			lblBirthday.setText("");
-			lblLastUpdate.setText("");
-			lblNextUpdate.setText("");
+			lblNumber.setText("");
+			lblDate.setText("");
+			lblTime.setText("");
+			lblTeams.setText("");
+			lblLeague.setText("");
+			lblOrganizer.setText("");
+			lblVenue.setText("");
 			lblRemark.setText("");
 
 		} else {
@@ -331,61 +330,40 @@ public class EventOverviewController {
 							null :
 							theDetailData.getDisplayTitle().getValue());
 
-//			lblName.setText(
-//					(theDetailData.getName() == null) ?
-//							null :
-//							theDetailData.getName().getValue());
-//			lblFirstName.setText(
-//					(theDetailData.getFirstName() == null) ?
-//							null :
-//							theDetailData.getFirstName().getValue());
-//			lblBirthday.setText(
-//					(theDetailData.getBirthday() == null) ?
-//							null :
-//							DateTimeUtils.formatDate((LocalDate) theDetailData.getBirthday().getValue()));
-//			lblRemark.setText(
-//					(theDetailData.getRemark() == null) ?
-//							null :
-//							theDetailData.getRemark().getValue());
-//
-//			if (theDetailData instanceof RefereeModel) {
-//				RefereeModel mdlTemp = (RefereeModel) theDetailData;
-//
-//				lblClub.setText(
-//						(mdlTemp.getMember() == null) ?
-//								null :
-//								mdlTemp.getMember().getDisplayText().getValue());
-//
-//				lblTrainingLevel.setText(
-//						(mdlTemp.getHighestTrainingLevel() == null) ?
-//								null :
-//								mdlTemp.getHighestTrainingLevel().getType().getDisplayTitleShort().getValue());
-//				lblLastUpdate.setText(
-//						(mdlTemp.getLastTrainingUpdate() == null) ?
-//								null :
-//								DateTimeUtils.formatDate(mdlTemp.getLastTrainingUpdate().getValue()));
-//				lblNextUpdate.setText(
-//						(mdlTemp.getNextTrainingUpdate() == null) ?
-//								null :
-//								DateTimeUtils.formatDate(mdlTemp.getNextTrainingUpdate().getValue(), "yyyy"));
-//				try {
-//					if (mdlTemp.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
-//						File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), String.format("%s.jpg", mdlTemp.getFileName().getValue())).toFile();
-//						imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
-//					} else {
-//						File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), "missing.jpg").toFile();
-//						if (fleImage.exists()) {
-//							imgReferee.setImage(new Image(fleImage.toURI().toURL().toString()));
-//						} else {
-//							imgReferee.setImage(null);
-//						}
-//					}
-//				} catch (Exception e) {
-//					imgReferee.setImage(null);
-//				}
-//
-//			}
-//
+			lblDate.setText(
+					(theDetailData.getDateText() == null) ?
+							null :
+							theDetailData.getDateText().getValue());
+
+			lblTime.setText(
+					(theDetailData.getTimeText() == null) ?
+							null :
+							theDetailData.getTimeText().getValue());
+
+			lblRemark.setText(
+					(theDetailData.getRemark() == null) ?
+							null :
+							theDetailData.getRemark().getValue());
+
+			if (theDetailData instanceof LeagueGameModel) {
+				LeagueGameModel mdlTemp = (LeagueGameModel) theDetailData;
+
+				lblNumber.setText(
+						(mdlTemp.getGameNumber() == null) ?
+								null :
+								mdlTemp.getGameNumberString().getValue());
+
+				lblTeams.setText(
+						(mdlTemp.getTeamText() == null) ?
+								null :
+								mdlTemp.getTeamText().getValue());
+
+				lblLeague.setText(
+						(mdlTemp.getHomeTeam() == null) ?
+								null :
+								mdlTemp.getHomeTeam().getLeague().getDisplayTitle().getValue());
+
+			}
 
 		}
 

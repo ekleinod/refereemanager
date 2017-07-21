@@ -3,9 +3,14 @@ package de.edgesoft.refereemanager.controller;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import de.edgesoft.refereemanager.jaxb.OtherEvent;
 import de.edgesoft.refereemanager.jaxb.Tournament;
@@ -14,6 +19,7 @@ import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.EventDateModel;
 import de.edgesoft.refereemanager.model.LeagueGameModel;
 import de.edgesoft.refereemanager.model.OtherEventModel;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.model.TournamentModel;
 import de.edgesoft.refereemanager.utils.TableUtils;
 import javafx.beans.property.SimpleStringProperty;
@@ -30,6 +36,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
+import javafx.scene.layout.HBox;
 
 /**
  * Controller for the event list scene.
@@ -97,7 +104,7 @@ public class EventListController {
 	 * Number column.
 	 */
 	@FXML
-	private TableColumn<LeagueGameModel, Integer> colLeagueGameNumber;
+	private TableColumn<LeagueGameModel, String> colLeagueGameNumber;
 
 	/**
 	 * Date column.
@@ -135,10 +142,16 @@ public class EventListController {
 	private Label lblLeagueGameFilter;
 
 	/**
-	 * Checkbox filter league.
+	 * HBox filter league.
 	 */
 	@FXML
-	private CheckBox chkLeagueGameLeague;
+	private HBox boxFilterLeague;
+
+	/**
+	 * Filter storage.
+	 */
+	@FXML
+	private Map<CheckBox, League> mapChkLeagues;
 
 
 	/**
@@ -249,10 +262,10 @@ public class EventListController {
 		colLeagueGameID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
 		colLeagueGameID.setVisible(false);
 
-		colLeagueGameNumber.setCellValueFactory(cellData -> cellData.getValue().getGameNumber().asObject());
+		colLeagueGameNumber.setCellValueFactory(cellData -> cellData.getValue().getGameNumberString());
 		colLeagueGameDate.setCellValueFactory(cellData -> cellData.getValue().getStart());
 		colLeagueGameTime.setCellValueFactory(cellData -> cellData.getValue().getStart());
-		colLeagueGameLeague.setCellValueFactory(cellData -> cellData.getValue().getHomeTeam().getLeague().getDisplayText());
+		colLeagueGameLeague.setCellValueFactory(cellData -> cellData.getValue().getHomeTeam().getLeague().getDisplayTitleShort());
 		colLeagueGameTeams.setCellValueFactory(cellData -> cellData.getValue().getTeamText());
 
 		// hook data to columns (tournaments)
@@ -289,6 +302,17 @@ public class EventListController {
 		tabPaneContent.getSelectionModel().selectedItemProperty().addListener((event, oldTab, newTab) -> {
 	        handleTabChange();
 	    });
+
+		// fill filter
+		mapChkLeagues = new HashMap<>();
+		AppModel.getData().getContent().getLeague().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
+				league -> {
+					CheckBox chkTemp = new CheckBox(league.getDisplayTitleShort().getValue());
+					chkTemp.setOnAction(e -> handleFilterChange());
+					boxFilterLeague.getChildren().add(chkTemp);
+					mapChkLeagues.put(chkTemp, league);
+				}
+		);
 
 		setItems();
 
@@ -341,7 +365,7 @@ public class EventListController {
 	/**
 	 * Handles filter change events.
 	 */
-	@FXML
+	@SuppressWarnings("unchecked")
 	private void handleFilterChange() {
 
 		// filter for referees
@@ -351,11 +375,15 @@ public class EventListController {
 
 			lstLeagueGame.setPredicate(LeagueGameModel.ALL);
 
-//			if (chkRefereesActive.isSelected()) {
-//				lstLeagueGame.setPredicate(((Predicate<Referee>) lstLeagueGame.getPredicate()).and(RefereeModel.ACTIVE));
-//			}
+			for (Entry<CheckBox, League> entryChkLeague : mapChkLeagues.entrySet()) {
 
-			lblLeagueGameFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstLeagueGame.size()));
+				if (entryChkLeague.getKey().isSelected()) {
+					lstLeagueGame.setPredicate(((Predicate<LeagueGame>) lstLeagueGame.getPredicate()).and(LeagueGameModel.getLeaguePredicate(entryChkLeague.getValue())));
+				}
+
+			}
+
+			lblLeagueGameFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstLeagueGame.size()));
 		}
 
 		tblLeagueGames.refresh();

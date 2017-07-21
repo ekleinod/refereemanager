@@ -1,9 +1,13 @@
 package de.edgesoft.refereemanager.model;
 
+import java.text.MessageFormat;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Comparator;
 
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.EventDate;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  * Date model, additional methods for jaxb model class.
@@ -37,6 +41,51 @@ public class EventDateModel extends EventDate {
 	 * Comparator start date/time.
 	 */
 	public static final Comparator<EventDate> RANK_START = Comparator.comparing(date -> (LocalDateTime) date.getStart().getValue());
+
+	/**
+	 * Returns date text.
+	 *
+	 * @return date text
+	 */
+	public SimpleStringProperty getDateText() {
+
+		if (getStart() == null) {
+			return null;
+		}
+
+		if ((getEnd() == null) ||
+				(((LocalDateTime) getStart().getValue()).toLocalDate().isEqual(((LocalDateTime) getEnd().getValue()).toLocalDate()))) {
+			return new SimpleStringProperty(DateTimeUtils.formatDateTimeAsDate((LocalDateTime) getStart().getValue()));
+		}
+
+		return new SimpleStringProperty(MessageFormat.format("{0} - {1}",
+				DateTimeUtils.formatDateTimeAsDate((LocalDateTime) getStart().getValue()),
+				DateTimeUtils.formatDateTimeAsDate((LocalDateTime) getEnd().getValue())));
+
+	}
+
+	/**
+	 * Returns time text.
+	 *
+	 * @return time text
+	 */
+	public SimpleStringProperty getTimeText() {
+
+		if ((getStart() == null) ||
+				(((LocalDateTime) getStart().getValue()).toLocalTime() == LocalTime.MIDNIGHT)) {
+			return null;
+		}
+
+		if ((getEnd() == null) ||
+				(((LocalDateTime) getEnd().getValue()).toLocalTime() == LocalTime.MIDNIGHT)) {
+			return new SimpleStringProperty(DateTimeUtils.formatDateTimeAsTime((LocalDateTime) getStart().getValue()));
+		}
+
+		return new SimpleStringProperty(MessageFormat.format("{0} - {1}",
+				DateTimeUtils.formatDateTimeAsTime((LocalDateTime) getStart().getValue()),
+				DateTimeUtils.formatDateTimeAsTime((LocalDateTime) getEnd().getValue())));
+
+	}
 
 }
 
