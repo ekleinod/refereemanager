@@ -55,6 +55,7 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
     SeasonModel.class,
     SexType.class,
     LeagueModel.class,
+    PersonRoleType.class,
     ClubModel.class,
     StatusTypeModel.class,
     ContactModel.class,

@@ -115,6 +115,15 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 							</xsd:appinfo>
 						</xsd:annotation>
 					</xsd:element>
+					<xsd:element name="role_type" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="PersonRoleType" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -595,6 +604,13 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<!-- Types -->
 	<xsd:complexType name="SexType">
+		<xsd:complexContent>
+			<xsd:extension base="TitledIDType">
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="PersonRoleType">
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 			</xsd:extension>
