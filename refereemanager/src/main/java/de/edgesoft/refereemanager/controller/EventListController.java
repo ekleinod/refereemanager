@@ -22,6 +22,7 @@ import de.edgesoft.refereemanager.model.OtherEventModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.model.TournamentModel;
 import de.edgesoft.refereemanager.utils.TableUtils;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -131,6 +132,12 @@ public class EventListController {
 	private TableColumn<LeagueGameModel, String> colLeagueGameTeams;
 
 	/**
+	 * Referee report column.
+	 */
+	@FXML
+	private TableColumn<LeagueGameModel, Boolean> colLeagueGameRefereeReport;
+
+	/**
 	 * List of league games.
 	 */
 	private FilteredList<LeagueGame> lstLeagueGame;
@@ -188,6 +195,12 @@ public class EventListController {
 	 */
 	@FXML
 	private TableColumn<TournamentModel, String> colTournamentTitle;
+
+	/**
+	 * Referee report column.
+	 */
+	@FXML
+	private TableColumn<TournamentModel, Boolean> colTournamentRefereeReport;
 
 	/**
 	 * List of tournaments.
@@ -266,6 +279,7 @@ public class EventListController {
 		colLeagueGameTime.setCellValueFactory(cellData -> cellData.getValue().getStart());
 		colLeagueGameLeague.setCellValueFactory(cellData -> cellData.getValue().getHomeTeam().getLeague().getDisplayTitleShort());
 		colLeagueGameTeams.setCellValueFactory(cellData -> cellData.getValue().getTeamText());
+		colLeagueGameRefereeReport.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().existsRefereeReportFile()));
 
 		// hook data to columns (tournaments)
 		colTournamentID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
@@ -274,6 +288,7 @@ public class EventListController {
 		colTournamentDateStart.setCellValueFactory(cellData -> cellData.getValue().getStart());
 		colTournamentDateEnd.setCellValueFactory(cellData -> cellData.getValue().getEnd());
 		colTournamentTitle.setCellValueFactory(cellData -> cellData.getValue().getDisplayTitleShort());
+		colTournamentRefereeReport.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().existsRefereeReportFile()));
 
 		// hook data to columns (other events)
 		colOtherEventID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
@@ -296,6 +311,10 @@ public class EventListController {
 		colOtherEventDateEnd.setCellFactory(column -> TableUtils.getTableCellOtherEventDate());
 		colOtherEventTimeStart.setCellFactory(column -> TableUtils.getTableCellOtherEventTime());
 		colOtherEventTimeEnd.setCellFactory(column -> TableUtils.getTableCellOtherEventTime());
+
+		// format referee report columns
+		colLeagueGameRefereeReport.setCellFactory(column -> TableUtils.getTableCellLeagueGameRefereeReport());
+		colTournamentRefereeReport.setCellFactory(column -> TableUtils.getTableCellTournamentRefereeReport());
 
 		// listen to tab changes
 		tabPaneContent.getSelectionModel().selectedItemProperty().addListener((event, oldTab, newTab) -> {

@@ -11,6 +11,7 @@ import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.TournamentModel;
 import javafx.scene.control.TableCell;
+import javafx.scene.image.ImageView;
 
 /**
  * Utility methods for {@link Table}.
@@ -84,6 +85,8 @@ public class TableUtils {
 	 * Returns {@link TableCell} for cell factories (league game model, date).
 	 *
 	 * @return table cell for cell factories
+	 *
+	 * @since 0.15.0
 	 */
 	public static final TableCell<LeagueGameModel, LocalDateTime> getTableCellLeagueGameDate() {
 		return new TableCell<LeagueGameModel, LocalDateTime>() {
@@ -104,6 +107,8 @@ public class TableUtils {
 	 * Returns {@link TableCell} for cell factories (league game model, time).
 	 *
 	 * @return table cell for cell factories
+	 *
+	 * @since 0.15.0
 	 */
 	public static final TableCell<LeagueGameModel, LocalDateTime> getTableCellLeagueGameTime() {
 		return new TableCell<LeagueGameModel, LocalDateTime>() {
@@ -124,6 +129,8 @@ public class TableUtils {
 	 * Returns {@link TableCell} for cell factories (tournament model, date).
 	 *
 	 * @return table cell for cell factories
+	 *
+	 * @since 0.15.0
 	 */
 	public static final TableCell<TournamentModel, LocalDateTime> getTableCellTournamentDate() {
 		return new TableCell<TournamentModel, LocalDateTime>() {
@@ -144,6 +151,8 @@ public class TableUtils {
 	 * Returns {@link TableCell} for cell factories (other event model, date).
 	 *
 	 * @return table cell for cell factories
+	 *
+	 * @since 0.15.0
 	 */
 	public static final TableCell<OtherEventModel, LocalDateTime> getTableCellOtherEventDate() {
 		return new TableCell<OtherEventModel, LocalDateTime>() {
@@ -164,6 +173,8 @@ public class TableUtils {
 	 * Returns {@link TableCell} for cell factories (other event model, time).
 	 *
 	 * @return table cell for cell factories
+	 *
+	 * @since 0.15.0
 	 */
 	public static final TableCell<OtherEventModel, LocalDateTime> getTableCellOtherEventTime() {
 		return new TableCell<OtherEventModel, LocalDateTime>() {
@@ -175,6 +186,54 @@ public class TableUtils {
 	                setText(null);
 	            } else {
 	                setText(DateTimeUtils.formatDateTimeAsTime(item));
+	            }
+	        }
+	    };
+	}
+
+	/**
+	 * Returns {@link TableCell} for cell factories.
+	 *
+	 * @return table cell for cell factories
+	 *
+	 * @since 0.15.0
+	 */
+	public static final TableCell<LeagueGameModel, Boolean> getTableCellLeagueGameRefereeReport() {
+		return new TableCell<LeagueGameModel, Boolean>() {
+	        @Override
+	        protected void updateItem(Boolean item, boolean empty) {
+	            super.updateItem(item, empty);
+
+	            if (empty) {
+	                setGraphic(null);
+	            } else if (item == null || !item) {
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-error.png")));
+	            } else {
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-success.png")));
+	            }
+	        }
+	    };
+	}
+
+	/**
+	 * Returns {@link TableCell} for cell factories.
+	 *
+	 * @return table cell for cell factories
+	 *
+	 * @since 0.15.0
+	 */
+	public static final TableCell<TournamentModel, Boolean> getTableCellTournamentRefereeReport() {
+		return new TableCell<TournamentModel, Boolean>() {
+	        @Override
+	        protected void updateItem(Boolean item, boolean empty) {
+	            super.updateItem(item, empty);
+
+	            if (empty) {
+	                setGraphic(null);
+	            } else if (item == null || !item) {
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-error.png")));
+	            } else {
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-success.png")));
 	            }
 	        }
 	    };

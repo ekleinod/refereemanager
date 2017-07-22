@@ -26,6 +26,7 @@
                             <TableColumn fx:id="colLeagueGameTime" prefWidth="-1.0" text="Zeit" />
                             <TableColumn fx:id="colLeagueGameLeague" prefWidth="-1.0" text="Liga" />
                             <TableColumn fx:id="colLeagueGameTeams" prefWidth="-1.0" text="Teams" />
+                            <TableColumn fx:id="colLeagueGameRefereeReport" prefWidth="-1.0" text="OSR-Bericht" />
                           </columns>
                           <columnResizePolicy>
                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -52,6 +53,7 @@
                               <TableColumn fx:id="colTournamentDateStart" prefWidth="-1.0" text="Start" />
                               <TableColumn fx:id="colTournamentDateEnd" prefWidth="-1.0" text="Ende" />
                               <TableColumn fx:id="colTournamentTitle" prefWidth="-1.0" text="Titel" />
+                              <TableColumn fx:id="colTournamentRefereeReport" prefWidth="-1.0" text="OSR-Bericht" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
