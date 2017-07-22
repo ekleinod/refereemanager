@@ -22,6 +22,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -33,7 +34,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -429,6 +434,12 @@ public class EventOverviewController {
 								null :
 								mdlTemp.getRefereeReportFilename().getValueSafe());
 
+				if (mdlTemp.existsRefereeReportFile()) {
+					lblRefereeReportLabel.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+				} else {
+					lblRefereeReportLabel.setBackground(new Background(new BackgroundFill(Color.INDIANRED, CornerRadii.EMPTY, Insets.EMPTY)));
+				}
+
 			}
 
 			if (theDetailData instanceof TournamentModel) {
@@ -449,6 +460,8 @@ public class EventOverviewController {
 						(mdlTemp.getRefereeReportFilename() == null) ?
 								null :
 								mdlTemp.getRefereeReportFilename().getValueSafe());
+
+				System.out.println(mdlTemp.existsRefereeReportFile());
 
 			}
 

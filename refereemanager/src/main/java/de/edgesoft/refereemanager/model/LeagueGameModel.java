@@ -104,6 +104,20 @@ public class LeagueGameModel extends LeagueGame {
 				));
     }
 
+	/**
+	 * Returns if referee report file exists.
+	 *
+	 * @return does referee report file exist?
+	 */
+	public boolean existsRefereeReportFile() {
+
+		return FileUtils.existsFile(
+				String.format(Prefs.get(PrefKey.REFEREE_REPORT_PATH), AppModel.getData().getContent().getSeason().getDisplayText().getValueSafe()),
+				getRefereeReportFilename()
+				);
+
+	}
+
 }
 
 /* EOF */
