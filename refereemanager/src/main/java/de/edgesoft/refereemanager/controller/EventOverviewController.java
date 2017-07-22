@@ -22,7 +22,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -34,11 +33,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -201,6 +196,12 @@ public class EventOverviewController {
 	 */
 	@FXML
 	private Label lblRefereeReportLabel;
+
+	/**
+	 * Referee report indicator label.
+	 */
+	@FXML
+	private Label lblRefereeReportIndicator;
 
 	/**
 	 * Referee report copy button.
@@ -381,6 +382,7 @@ public class EventOverviewController {
 			lblOrganizer.setText("");
 			lblVenue.setText("");
 			lblRefereeReport.setText("");
+			lblRefereeReportIndicator.setGraphic(null);
 			lblRemark.setText("");
 
 		} else {
@@ -435,9 +437,9 @@ public class EventOverviewController {
 								mdlTemp.getRefereeReportFilename().getValueSafe());
 
 				if (mdlTemp.existsRefereeReportFile()) {
-					lblRefereeReportLabel.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+					lblRefereeReportIndicator.setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-success.png")));
 				} else {
-					lblRefereeReportLabel.setBackground(new Background(new BackgroundFill(Color.INDIANRED, CornerRadii.EMPTY, Insets.EMPTY)));
+					lblRefereeReportIndicator.setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-error.png")));
 				}
 
 			}
@@ -461,7 +463,11 @@ public class EventOverviewController {
 								null :
 								mdlTemp.getRefereeReportFilename().getValueSafe());
 
-				System.out.println(mdlTemp.existsRefereeReportFile());
+				if (mdlTemp.existsRefereeReportFile()) {
+					lblRefereeReportIndicator.setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-success.png")));
+				} else {
+					lblRefereeReportIndicator.setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-error.png")));
+				}
 
 			}
 
