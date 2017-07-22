@@ -30,6 +30,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -178,6 +180,12 @@ public class EventOverviewController {
 	private Label lblRemarkLabel;
 
 	/**
+	 * Referee report anchor pane.
+	 */
+	@FXML
+	private AnchorPane pneRefereeReport;
+
+	/**
 	 * Referee report label.
 	 */
 	@FXML
@@ -188,6 +196,13 @@ public class EventOverviewController {
 	 */
 	@FXML
 	private Label lblRefereeReportLabel;
+
+	/**
+	 * Referee report copy button.
+	 */
+	@FXML
+	private Button btnRefereeReportCopy;
+
 
 	/**
 	 * Add button.
@@ -254,6 +269,9 @@ public class EventOverviewController {
 		ctlEventList.getTabTournaments().selectedProperty().addListener((event, oldTab, newTab) -> showDetails());
 		ctlEventList.getTabOtherEvents().selectedProperty().addListener((event, oldTab, newTab) -> showDetails());
 
+		// enabling report copy button
+		btnRefereeReportCopy.disableProperty().bind(lblRefereeReport.textProperty().isEmpty());
+
 		// enabling edit/delete buttons only with selection
 		ObservableBooleanValue isOneItemSelected = ctlEventList.getTabLeagueGames().selectedProperty().not().or(ctlEventList.getLeagueGamesSelectionModel().selectedItemProperty().isNull())
 				.and(ctlEventList.getTabTournaments().selectedProperty().not().or(ctlEventList.getTournamentsSelectionModel().selectedItemProperty().isNull()))
@@ -289,8 +307,8 @@ public class EventOverviewController {
 		ObservableBooleanValue isLeagueGameOrTournament = ctlEventList.getTabLeagueGames().selectedProperty().or(ctlEventList.getTabTournaments().selectedProperty());
 		lblRefereeReportLabel.visibleProperty().bind(isLeagueGameOrTournament);
 		lblRefereeReportLabel.managedProperty().bind(isLeagueGameOrTournament);
-		lblRefereeReport.visibleProperty().bind(isLeagueGameOrTournament);
-		lblRefereeReport.managedProperty().bind(isLeagueGameOrTournament);
+		pneRefereeReport.visibleProperty().bind(isLeagueGameOrTournament);
+		pneRefereeReport.managedProperty().bind(isLeagueGameOrTournament);
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.EVENT_OVERVIEW_SPLIT)));
@@ -301,6 +319,7 @@ public class EventOverviewController {
 		});
 
 		// icons
+		btnRefereeReportCopy.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-copy.png")));
 		btnAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
@@ -435,6 +454,16 @@ public class EventOverviewController {
 
 		}
 
+	}
+
+	/**
+	 * Copies referee report filename to clipboard.
+	 */
+	@FXML
+	private void handleRefereeReportCopy() {
+		ClipboardContent clpContent = new ClipboardContent();
+		clpContent.putString(lblRefereeReport.getText());
+		Clipboard.getSystemClipboard().setContent(clpContent);
 	}
 
 	/**
