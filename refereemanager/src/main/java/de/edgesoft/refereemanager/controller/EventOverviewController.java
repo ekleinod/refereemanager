@@ -130,6 +130,18 @@ public class EventOverviewController {
 	private Label lblLeagueLabel;
 
 	/**
+	 * Club label.
+	 */
+	@FXML
+	private Label lblClub;
+
+	/**
+	 * Club label label.
+	 */
+	@FXML
+	private Label lblClubLabel;
+
+	/**
 	 * Organizer label.
 	 */
 	@FXML
@@ -164,6 +176,18 @@ public class EventOverviewController {
 	 */
 	@FXML
 	private Label lblRemarkLabel;
+
+	/**
+	 * Referee report label.
+	 */
+	@FXML
+	private Label lblRefereeReport;
+
+	/**
+	 * Referee report label label.
+	 */
+	@FXML
+	private Label lblRefereeReportLabel;
 
 	/**
 	 * Add button.
@@ -253,10 +277,20 @@ public class EventOverviewController {
 		lblLeague.managedProperty().bind(isLeagueGame);
 
 		ObservableBooleanValue isTournament = ctlEventList.getTabTournaments().selectedProperty();
+		lblClubLabel.visibleProperty().bind(isTournament);
+		lblClubLabel.managedProperty().bind(isTournament);
+		lblClub.visibleProperty().bind(isTournament);
+		lblClub.managedProperty().bind(isTournament);
 		lblOrganizerLabel.visibleProperty().bind(isTournament);
 		lblOrganizerLabel.managedProperty().bind(isTournament);
 		lblOrganizer.visibleProperty().bind(isTournament);
 		lblOrganizer.managedProperty().bind(isTournament);
+
+		ObservableBooleanValue isLeagueGameOrTournament = ctlEventList.getTabLeagueGames().selectedProperty().or(ctlEventList.getTabTournaments().selectedProperty());
+		lblRefereeReportLabel.visibleProperty().bind(isLeagueGameOrTournament);
+		lblRefereeReportLabel.managedProperty().bind(isLeagueGameOrTournament);
+		lblRefereeReport.visibleProperty().bind(isLeagueGameOrTournament);
+		lblRefereeReport.managedProperty().bind(isLeagueGameOrTournament);
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.EVENT_OVERVIEW_SPLIT)));
@@ -319,8 +353,10 @@ public class EventOverviewController {
 			lblTime.setText("");
 			lblTeams.setText("");
 			lblLeague.setText("");
+			lblClub.setText("");
 			lblOrganizer.setText("");
 			lblVenue.setText("");
+			lblRefereeReport.setText("");
 			lblRemark.setText("");
 
 		} else {
@@ -328,40 +364,72 @@ public class EventOverviewController {
 			lblHeading.setText(
 					(theDetailData.getDisplayTitle() == null) ?
 							null :
-							theDetailData.getDisplayTitle().getValue());
+							theDetailData.getDisplayTitle().getValueSafe());
 
 			lblDate.setText(
 					(theDetailData.getDateText() == null) ?
 							null :
-							theDetailData.getDateText().getValue());
+							theDetailData.getDateText().getValueSafe());
 
 			lblTime.setText(
 					(theDetailData.getTimeText() == null) ?
 							null :
-							theDetailData.getTimeText().getValue());
+							theDetailData.getTimeText().getValueSafe());
+
+			lblVenue.setText(
+					(theDetailData.getVenue() == null) ?
+							null :
+							theDetailData.getVenue().getDisplayTitle().getValueSafe());
 
 			lblRemark.setText(
 					(theDetailData.getRemark() == null) ?
 							null :
-							theDetailData.getRemark().getValue());
+							theDetailData.getRemark().getValueSafe());
 
 			if (theDetailData instanceof LeagueGameModel) {
+
 				LeagueGameModel mdlTemp = (LeagueGameModel) theDetailData;
 
 				lblNumber.setText(
 						(mdlTemp.getGameNumber() == null) ?
 								null :
-								mdlTemp.getGameNumberString().getValue());
+								mdlTemp.getGameNumberString().getValueSafe());
 
 				lblTeams.setText(
 						(mdlTemp.getTeamText() == null) ?
 								null :
-								mdlTemp.getTeamText().getValue());
+								mdlTemp.getTeamText().getValueSafe());
 
 				lblLeague.setText(
 						(mdlTemp.getHomeTeam() == null) ?
 								null :
-								mdlTemp.getHomeTeam().getLeague().getDisplayTitle().getValue());
+								mdlTemp.getHomeTeam().getLeague().getDisplayTitle().getValueSafe());
+
+				lblRefereeReport.setText(
+						(mdlTemp.getRefereeReportFilename() == null) ?
+								null :
+								mdlTemp.getRefereeReportFilename().getValueSafe());
+
+			}
+
+			if (theDetailData instanceof TournamentModel) {
+
+				TournamentModel mdlTemp = (TournamentModel) theDetailData;
+
+				lblClub.setText(
+						(mdlTemp.getOrganizingClub() == null) ?
+								null :
+								mdlTemp.getOrganizingClub().getDisplayTitleShort().getValueSafe());
+
+				lblOrganizer.setText(
+						(mdlTemp.getOrganizer() == null) ?
+								null :
+								mdlTemp.getOrganizer().getDisplayText().getValueSafe());
+
+				lblRefereeReport.setText(
+						(mdlTemp.getRefereeReportFilename() == null) ?
+								null :
+								mdlTemp.getRefereeReportFilename().getValueSafe());
 
 			}
 

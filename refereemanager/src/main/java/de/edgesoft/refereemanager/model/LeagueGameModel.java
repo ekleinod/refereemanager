@@ -3,8 +3,11 @@ package de.edgesoft.refereemanager.model;
 import java.text.MessageFormat;
 import java.util.function.Predicate;
 
+import de.edgesoft.edgeutils.files.FileUtils;
 import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
+import de.edgesoft.refereemanager.utils.PrefKey;
+import de.edgesoft.refereemanager.utils.Prefs;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -84,6 +87,22 @@ public class LeagueGameModel extends LeagueGame {
 	public SimpleStringProperty getDisplayTitle() {
 		return getTeamText();
 	}
+
+    /**
+     * Returns referee report filename.
+     *
+     * @return referee report filename
+     */
+    public SimpleStringProperty getRefereeReportFilename() {
+		return new SimpleStringProperty(FileUtils.cleanFilename(
+				String.format(Prefs.get(PrefKey.REFEREE_REPORT_LEAGUE_GAMES),
+						getHomeTeam().getLeague().getDisplayTitleShort().getValueSafe(),
+						getGameNumberString().getValueSafe(),
+						((TeamModel) getHomeTeam()).getFilename().getValueSafe(),
+						((TeamModel) getOffTeam()).getFilename().getValueSafe()
+						)
+				));
+    }
 
 }
 

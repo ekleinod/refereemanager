@@ -115,6 +115,11 @@ public class Prefs {
 			case REFEREE_OVERVIEW_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 
+			case REFEREE_REPORT_LEAGUE_GAMES:
+				return getPreferences().get(theKey.value(), "OSR_%1$s_%2$s_%3$s-%4$s.pdf");
+			case REFEREE_REPORT_TOURNAMENTS:
+				return getPreferences().get(theKey.value(), "OSR_%1$s_%2$s.pdf");
+
 			case STAGE_WIDTH:
 				return getPreferences().get(theKey.value(), Double.toString(800));
 			case STAGE_X:

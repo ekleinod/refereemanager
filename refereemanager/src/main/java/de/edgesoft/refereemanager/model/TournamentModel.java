@@ -1,6 +1,13 @@
 package de.edgesoft.refereemanager.model;
 
+import java.time.LocalDateTime;
+
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.edgeutils.files.FileUtils;
 import de.edgesoft.refereemanager.jaxb.Tournament;
+import de.edgesoft.refereemanager.utils.PrefKey;
+import de.edgesoft.refereemanager.utils.Prefs;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  * Tournament model, additional methods for jaxb model class.
@@ -30,7 +37,19 @@ import de.edgesoft.refereemanager.jaxb.Tournament;
  */
 public class TournamentModel extends Tournament {
 
-	// to do
+    /**
+     * Returns referee report filename.
+     *
+     * @return referee report filename
+     */
+    public SimpleStringProperty getRefereeReportFilename() {
+		return new SimpleStringProperty(FileUtils.cleanFilename(
+				String.format(Prefs.get(PrefKey.REFEREE_REPORT_TOURNAMENTS),
+						DateTimeUtils.formatDateTime((LocalDateTime) getStart().getValue(), "yyyy-MM-dd"),
+						getDisplayTitleShort().getValueSafe()
+						)
+				));
+    }
 
 }
 

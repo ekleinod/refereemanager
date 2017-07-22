@@ -35,6 +35,8 @@
                       <RowConstraints vgrow="SOMETIMES" />
                       <RowConstraints vgrow="SOMETIMES" />
                       <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label fx:id="lblNumberLabel" text="Spielnummer">
@@ -62,21 +64,31 @@
                               <Insets bottom="10.0" top="10.0" />
                            </GridPane.margin></Label>
                         <Label fx:id="lblTeams" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label fx:id="lblOrganizerLabel" text="Organisator" GridPane.rowIndex="5">
+                        <Label fx:id="lblClubLabel" text="Ausrichter" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </GridPane.margin></Label>
-                        <Label fx:id="lblOrganizer" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Label fx:id="lblVenueLabel" text="Ort" GridPane.rowIndex="6">
+                        <Label fx:id="lblClub" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="lblOrganizerLabel" text="Organisator" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </GridPane.margin></Label>
-                        <Label fx:id="lblVenue" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label fx:id="lblRemarkLabel" text="Anmerkung" GridPane.rowIndex="7">
+                        <Label fx:id="lblOrganizer" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label fx:id="lblVenueLabel" text="Ort" GridPane.rowIndex="7">
                            <GridPane.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </GridPane.margin></Label>
-                        <Label fx:id="lblRemark" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label fx:id="lblVenue" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label fx:id="lblRemarkLabel" text="Anmerkung" GridPane.rowIndex="8">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </GridPane.margin></Label>
+                        <Label fx:id="lblRemark" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Label fx:id="lblRefereeReportLabel" text="OSR-Bericht" GridPane.rowIndex="9">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </GridPane.margin></Label>
+                        <Label fx:id="lblRefereeReport" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                      </children>
                   </GridPane>
                   <ButtonBar layoutX="152.0" layoutY="458.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
