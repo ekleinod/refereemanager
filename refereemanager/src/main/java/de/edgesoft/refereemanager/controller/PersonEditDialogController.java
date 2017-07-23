@@ -365,7 +365,7 @@ public class PersonEditDialogController {
 	 * Text area for revoke license reason.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "revokeLicenseReason", jaxbclass = TitledIDType.class)
+	@JAXBMatch(jaxbfield = "revokeLicenseReason", jaxbclass = Referee.class)
 	protected TextArea txtRevokeLicenseReason;
 
 
