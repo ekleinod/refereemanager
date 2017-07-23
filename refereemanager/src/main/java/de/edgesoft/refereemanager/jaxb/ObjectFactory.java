@@ -25,6 +25,7 @@ import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 import de.edgesoft.refereemanager.model.URLModel;
+import de.edgesoft.refereemanager.model.VenueModel;
 import de.edgesoft.refereemanager.model.WishModel;
 
 
@@ -189,7 +190,7 @@ public class ObjectFactory {
      * 
      */
     public Venue createVenue() {
-        return new Venue();
+        return new VenueModel();
     }
 
     /**

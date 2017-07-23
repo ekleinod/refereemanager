@@ -15,6 +15,7 @@ import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import de.edgesoft.refereemanager.jaxb.OtherEvent;
 import de.edgesoft.refereemanager.jaxb.Person;
+import de.edgesoft.refereemanager.jaxb.PersonRoleType;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeAssignmentType;
 import de.edgesoft.refereemanager.jaxb.SexType;
@@ -350,6 +351,14 @@ public class ContentModel extends Content {
 		getTeam().clear();
 		getTeam().addAll(lstTeam);
 
+		List<LeagueGame> lstLeagueGame = getLeagueGame().stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList());
+		getLeagueGame().clear();
+		getLeagueGame().addAll(lstLeagueGame);
+
+		List<Tournament> lstTournament = getTournament().stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList());
+		getTournament().clear();
+		getTournament().addAll(lstTournament);
+
 		List<OtherEvent> lstOtherEvent = getOtherEvent().stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList());
 		getOtherEvent().clear();
 		getOtherEvent().addAll(lstOtherEvent);
@@ -373,6 +382,10 @@ public class ContentModel extends Content {
 		List<RefereeAssignmentType> lstRefereeAssignmentType = getRefereeAssignmentType().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
 		getRefereeAssignmentType().clear();
 		getRefereeAssignmentType().addAll(lstRefereeAssignmentType);
+
+		List<PersonRoleType> lstPersonRoleType = getRoleType().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
+		getRoleType().clear();
+		getRoleType().addAll(lstPersonRoleType);
 
 		List<TrainingLevelType> lstTrainingLevelType = getTrainingLevelType().stream().sorted(TrainingLevelTypeModel.RANK).collect(Collectors.toList());
 		getTrainingLevelType().clear();

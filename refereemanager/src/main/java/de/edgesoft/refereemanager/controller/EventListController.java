@@ -277,7 +277,7 @@ public class EventListController {
 		colLeagueGameNumber.setCellValueFactory(cellData -> cellData.getValue().getGameNumberString());
 		colLeagueGameDate.setCellValueFactory(cellData -> cellData.getValue().getStart());
 		colLeagueGameTime.setCellValueFactory(cellData -> cellData.getValue().getStart());
-		colLeagueGameLeague.setCellValueFactory(cellData -> cellData.getValue().getHomeTeam().getLeague().getDisplayTitleShort());
+		colLeagueGameLeague.setCellValueFactory(cellData -> cellData.getValue().getLeague().getDisplayTitleShort());
 		colLeagueGameTeams.setCellValueFactory(cellData -> cellData.getValue().getTeamText());
 		colLeagueGameRefereeReport.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().existsRefereeReportFile()));
 

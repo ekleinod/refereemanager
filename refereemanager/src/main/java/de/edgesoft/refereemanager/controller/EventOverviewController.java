@@ -612,15 +612,14 @@ public class EventOverviewController {
 		dialogStage.setScene(scene);
 
 		// Set the referee
-//		EventEditDialogController editController = pneLoad.getValue().getController();
-//		editController.setDialogStage(dialogStage);
-//		editController.setEvent(theEventDate);
+		EventEditDialogController editController = pneLoad.getValue().getController();
+		editController.setDialogStage(dialogStage);
+		editController.setEvent(theEventDate);
 
 		// Show the dialog and wait until the user closes it
 		dialogStage.showAndWait();
 
-//		return editController.isOkClicked();
-		return false;
+		return editController.isOkClicked();
 
 	}
 

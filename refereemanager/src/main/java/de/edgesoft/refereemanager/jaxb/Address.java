@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.ContactModel;
+import de.edgesoft.refereemanager.model.VenueModel;
 
 
 /**
@@ -42,7 +43,7 @@ import de.edgesoft.refereemanager.model.ContactModel;
     "city"
 })
 @XmlSeeAlso({
-    Venue.class
+    VenueModel.class
 })
 public class Address
     extends ContactModel

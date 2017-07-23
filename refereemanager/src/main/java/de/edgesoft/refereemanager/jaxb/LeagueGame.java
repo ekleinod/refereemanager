@@ -27,6 +27,7 @@ import de.edgesoft.refereemanager.model.EventDateModel;
  *       &lt;sequence>
  *         &lt;element name="game_number" type="{}IntegerProperty"/>
  *         &lt;element name="referee_assignment" type="{}RefereeAssignment" maxOccurs="unbounded"/>
+ *         &lt;element name="league" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="home_team" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="off_team" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *       &lt;/sequence>
@@ -41,6 +42,7 @@ import de.edgesoft.refereemanager.model.EventDateModel;
 @XmlType(name = "LeagueGame", propOrder = {
     "gameNumber",
     "refereeAssignment",
+    "league",
     "homeTeam",
     "offTeam"
 })
@@ -54,6 +56,10 @@ public class LeagueGame
     protected SimpleIntegerProperty gameNumber;
     @XmlElement(name = "referee_assignment", required = true)
     protected List<RefereeAssignment> refereeAssignment;
+    @XmlElement(required = true, type = Object.class)
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    protected League league;
     @XmlElement(name = "home_team", required = true, type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -114,6 +120,30 @@ public class LeagueGame
             refereeAssignment = new ArrayList<RefereeAssignment>();
         }
         return this.refereeAssignment;
+    }
+
+    /**
+     * Gets the value of the league property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Object }
+     *     
+     */
+    public League getLeague() {
+        return league;
+    }
+
+    /**
+     * Sets the value of the league property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Object }
+     *     
+     */
+    public void setLeague(League value) {
+        this.league = value;
     }
 
     /**

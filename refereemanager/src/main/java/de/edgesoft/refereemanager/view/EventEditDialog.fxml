@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.EventEditDialogController">
+   <children>
+      <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+        <tabs>
+          <Tab text="Allgemein">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <GridPane>
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="150.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="ID">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin></Label>
+                                    <TextField fx:id="txtID" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                    <Label text="Titel" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin></Label>
+                                    <TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label text="Kurztitel" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin></Label>
+                                    <TextField fx:id="txtShorttitle" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label text="Start" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin></Label>
+                                    <AnchorPane fx:id="pneStart" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                    </AnchorPane>
+                                    <Label text="Ende" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin></Label>
+                                    <AnchorPane fx:id="pneEnd" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                    </AnchorPane>
+                                    <Label text="Ort" GridPane.rowIndex="5">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin></Label>
+                                    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       <children>
+                                          <ComboBox fx:id="cboVenue" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnVenueClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleVenueClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <Label text="Anmerkung" GridPane.rowIndex="6">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin></Label>
+                                    <TextArea fx:id="txtRemark" prefHeight="80.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="tabLeagueGame" disable="true" text="Spieldaten">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <GridPane>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="150.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="Liga">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin></Label>
+                                    <AnchorPane GridPane.columnIndex="1">
+                                       <children>
+                                          <ComboBox fx:id="cboLeague" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnLeagueClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleLeagueClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <Label text="Spielnummer" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Spinner fx:id="spnGameNumber" editable="true" minWidth="-Infinity" prefWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label text="Heimteam" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin></Label>
+                                    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <children>
+                                          <ComboBox fx:id="cboHomeTeam" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnHomeTeamClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleHomeTeamClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <Label text="Auswärtsteam" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin></Label>
+                                    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <children>
+                                          <ComboBox fx:id="cboOffTeam" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnOffTeamClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleOffTeamClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <Label text="OSR" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <!-- ButtonBar buttonMinWidth="20.0" layoutX="165.0" layoutY="15.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <buttons>
+                                          <Button fx:id="btnRefereeAdd" mnemonicParsing="false" onAction="#handleRefereeAdd" />
+                                          <Button fx:id="btnRefereeEdit" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleRefereeEdit" />
+                                          <Button fx:id="btnRefereeDelete" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleRefereeDelete" />
+                                       </buttons>
+                                    </ButtonBar>
+                                    <ListView fx:id="lstReferee" minHeight="-Infinity" prefHeight="50.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" /-->
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="tabTournament" disable="true" text="Turnierdaten">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <GridPane>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="150.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="Ankündigung">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <TextField fx:id="txtAnnouncementURL" GridPane.columnIndex="1" />
+                                    <Label text="Informationen" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <TextField fx:id="txtInformationURL" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label text="Resultate" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <TextField fx:id="txtResultURL" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label text="Ausrichter" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <AnchorPane layoutX="165.0" layoutY="15.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <children>
+                                          <ComboBox fx:id="cboOrganizingClub" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnOrganizingClubClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleOrganizingClubClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <Label text="Organisator_in" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <AnchorPane layoutX="165.0" layoutY="15.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <children>
+                                          <ComboBox fx:id="cboOrganizer" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnOrganizerClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleOrganizerClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <ButtonBar layoutX="286.0" layoutY="346.0" prefHeight="40.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
+        <buttons>
+          <Button fx:id="btnOK" defaultButton="true" onAction="#handleOk" text="_OK" />
+            <Button fx:id="btnCancel" cancelButton="true" onAction="#handleCancel" prefWidth="140.0" text="A_bbrechen" />
+        </buttons>
+      </ButtonBar>
+   </children>
+</AnchorPane>

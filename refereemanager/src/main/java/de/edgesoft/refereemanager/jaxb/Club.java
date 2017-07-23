@@ -16,6 +16,7 @@ import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.model.URLModel;
+import de.edgesoft.refereemanager.model.VenueModel;
 
 
 /**
@@ -60,6 +61,7 @@ public class Club
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
     protected SimpleStringProperty filename;
+    @XmlElement(type = VenueModel.class)
     protected List<Venue> venue;
     @XmlElement(name = "u_r_l", type = URLModel.class)
     protected List<URL> url;

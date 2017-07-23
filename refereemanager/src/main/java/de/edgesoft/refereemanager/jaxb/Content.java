@@ -20,6 +20,7 @@ import de.edgesoft.refereemanager.model.TeamModel;
 import de.edgesoft.refereemanager.model.TournamentModel;
 import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
+import de.edgesoft.refereemanager.model.VenueModel;
 
 
 /**
@@ -105,6 +106,7 @@ public class Content
     protected List<Tournament> tournament;
     @XmlElement(name = "other_event", type = OtherEventModel.class)
     protected List<OtherEvent> otherEvent;
+    @XmlElement(type = VenueModel.class)
     protected List<Venue> venue;
     @XmlElement(name = "sex_type")
     protected List<SexType> sexType;
