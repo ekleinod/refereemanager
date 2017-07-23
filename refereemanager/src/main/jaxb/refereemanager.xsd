@@ -135,8 +135,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:extension base="Person">
 				<xsd:sequence>
 					<xsd:element name="docs_by_letter" type="BooleanProperty" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="revoke_license" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="revoke_license_reason" type="StringProperty" minOccurs="0" maxOccurs="1" />
 
 					<!-- 1:n -->
 					<xsd:element name="training_level" type="TrainingLevel" minOccurs="0" maxOccurs="unbounded" />

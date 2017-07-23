@@ -354,20 +354,6 @@ public class PersonEditDialogController {
 	@JAXBMatch(jaxbfield = "docsByLetter", jaxbclass = Referee.class)
 	protected CheckBox chkDocsByLetter;
 
-	/**
-	 * Checkbox for revoke license.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "revokeLicense", jaxbclass = Referee.class)
-	protected CheckBox chkRevokeLicense;
-
-	/**
-	 * Text area for revoke license reason.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "revokeLicenseReason", jaxbclass = Referee.class)
-	protected TextArea txtRevokeLicenseReason;
-
 
 
 	// wishes
