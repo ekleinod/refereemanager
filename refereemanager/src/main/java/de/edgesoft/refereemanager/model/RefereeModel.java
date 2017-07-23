@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
@@ -42,11 +43,6 @@ import javafx.beans.property.SimpleObjectProperty;
 public class RefereeModel extends Referee {
 
 	/**
-	 * Filter predicate for all referees.
-	 */
-	public static Predicate<Referee> ALL = referee -> true;
-
-	/**
 	 * Filter predicate for active status types.
 	 */
 	public static Predicate<Referee> ACTIVE = referee -> (referee.getStatus().getActive().getValue() && (referee.getDayOfDeath() == null));
@@ -62,6 +58,18 @@ public class RefereeModel extends Referee {
 	 * @since 0.10.0
 	 */
 	public static Predicate<Referee> LETTER_ONLY = referee -> referee.getDocsByLetter().getValue();
+
+	/**
+	 * Returns filter predicate for given status.
+	 *
+	 * @param theStatus status
+	 * @return predicate
+	 *
+	 * @since 0.15.0
+	 */
+	public static Predicate<Referee> getStatusPredicate(StatusType theStatus) {
+		return referee -> referee.getStatus() == theStatus;
+	}
 
 	/**
 	 * Highest training level.

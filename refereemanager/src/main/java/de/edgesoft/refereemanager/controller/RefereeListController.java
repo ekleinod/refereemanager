@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.PersonRoleType;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
@@ -181,6 +182,21 @@ public class RefereeListController {
 	@FXML
 	private CheckBox chkRefereesLetterOnly;
 
+	/**
+	 * HBox filter status.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private HBox boxRefereesFilterStatus;
+
+	/**
+	 * Filter storage.
+	 *
+	 * @since 0.15.0
+	 */
+	private Map<CheckBox, StatusType> mapRefereesFilterStatus;
+
 
 	/**
 	 * Tab trainees.
@@ -316,14 +332,14 @@ public class RefereeListController {
 	 * @since 0.15.0
 	 */
 	@FXML
-	private HBox boxFilterRole;
+	private HBox boxPeopleFilterRole;
 
 	/**
 	 * Filter storage.
 	 *
 	 * @since 0.15.0
 	 */
-	private Map<CheckBox, PersonRoleType> mapChkRoles;
+	private Map<CheckBox, PersonRoleType> mapPeopleFilterRoles;
 
 	/**
 	 * List of people.
@@ -389,14 +405,25 @@ public class RefereeListController {
 	        handleTabChange();
 	    });
 
+		// setup status filter
+		mapRefereesFilterStatus = new HashMap<>();
+		AppModel.getData().getContent().getStatusType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
+				statusType -> {
+					CheckBox chkTemp = new CheckBox(statusType.getDisplayTitleShort().getValueSafe());
+					chkTemp.setOnAction(e -> handleFilterChange());
+					boxRefereesFilterStatus.getChildren().add(chkTemp);
+					mapRefereesFilterStatus.put(chkTemp, statusType);
+				}
+		);
+
 		// setup role filter
-		mapChkRoles = new HashMap<>();
+		mapPeopleFilterRoles = new HashMap<>();
 		AppModel.getData().getContent().getRoleType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
 				roleType -> {
 					CheckBox chkTemp = new CheckBox(roleType.getDisplayTitleShort().getValueSafe());
 					chkTemp.setOnAction(e -> handleFilterChange());
-					boxFilterRole.getChildren().add(chkTemp);
-					mapChkRoles.put(chkTemp, roleType);
+					boxPeopleFilterRole.getChildren().add(chkTemp);
+					mapPeopleFilterRoles.put(chkTemp, roleType);
 				}
 		);
 
@@ -460,7 +487,7 @@ public class RefereeListController {
 			lblRefereesFilter.setText("Filter");
 		} else {
 
-			lstReferees.setPredicate(RefereeModel.ALL);
+			lstReferees.setPredicate(PersonModel.ALL);
 
 			if (chkRefereesActive.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.ACTIVE));
@@ -478,6 +505,14 @@ public class RefereeListController {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.LETTER_ONLY));
 			}
 
+			for (Entry<CheckBox, StatusType> entryChkStatus : mapRefereesFilterStatus.entrySet()) {
+
+				if (entryChkStatus.getKey().isSelected()) {
+					lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.getStatusPredicate(entryChkStatus.getValue())));
+				}
+
+			}
+
 			lblRefereesFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstReferees.size()));
 		}
 
@@ -488,7 +523,7 @@ public class RefereeListController {
 
 			lstPeople.setPredicate(PersonModel.ALL);
 
-			for (Entry<CheckBox, PersonRoleType> entryChkRole : mapChkRoles.entrySet()) {
+			for (Entry<CheckBox, PersonRoleType> entryChkRole : mapPeopleFilterRoles.entrySet()) {
 
 				if (entryChkRole.getKey().isSelected()) {
 					lstPeople.setPredicate(((Predicate<Person>) lstPeople.getPredicate()).and(PersonModel.getRolePredicate(entryChkRole.getValue())));

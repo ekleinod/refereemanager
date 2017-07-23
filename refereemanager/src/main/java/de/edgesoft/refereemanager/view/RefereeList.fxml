@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -18,7 +19,7 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tblReferees" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="tblReferees" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                               <TableColumn fx:id="colRefereesID" prefWidth="-1.0" text="ID" />
                             <TableColumn fx:id="colRefereesName" prefWidth="-1.0" text="Name" />
@@ -32,18 +33,21 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Label fx:id="lblRefereesFilter" text="Filter" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="5.0">
+                        <Label fx:id="lblRefereesFilter" text="Filter" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="5.0">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="30.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                        <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="30.0" spacing="5.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                            <children>
                               <CheckBox fx:id="chkRefereesActive" mnemonicParsing="false" onAction="#handleFilterChange" text="Aktiv" />
                               <CheckBox fx:id="chkRefereesInactive" mnemonicParsing="false" onAction="#handleFilterChange" text="Inaktiv" />
                               <CheckBox fx:id="chkRefereesEMail" mnemonicParsing="false" onAction="#handleFilterChange" text="E-Mail" />
                               <CheckBox fx:id="chkRefereesLetterOnly" mnemonicParsing="false" onAction="#handleFilterChange" text="Nur Brief" />
                            </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                        <HBox fx:id="boxRefereesFilterStatus" alignment="CENTER_LEFT" layoutX="15.0" layoutY="732.0" minHeight="-Infinity" prefHeight="30.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                         </HBox>
                      </children>
                   </AnchorPane>
@@ -90,7 +94,7 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <HBox fx:id="boxFilterRole" alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="30.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                        <HBox fx:id="boxPeopleFilterRole" alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="30.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                         </HBox>
                      </children>
                   </AnchorPane>
