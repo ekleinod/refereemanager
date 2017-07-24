@@ -28,6 +28,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import jfxtras.scene.control.LocalDateTimeTextField;
 
 /**
  * Controller for the event edit dialog scene.
@@ -90,15 +91,27 @@ public class EventEditDialogController {
 	 * Start datetime picker pane.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "start", jaxbclass = EventDate.class)
 	protected AnchorPane pneStart;
+
+	/**
+	 * Start datetime text field/picker.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "start", jaxbclass = EventDate.class)
+	protected LocalDateTimeTextField pckStart;
 
 	/**
 	 * End datetime picker pane.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "end", jaxbclass = EventDate.class)
 	protected AnchorPane pneEnd;
+
+	/**
+	 * End datetime text field/picker.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "end", jaxbclass = EventDate.class)
+	protected LocalDateTimeTextField pckEnd;
 
 	/**
 	 * Combobox for venue.
@@ -280,7 +293,11 @@ public class EventEditDialogController {
 	@FXML
 	private void initialize() {
 
-		// set date/time picker date format
+		// init date/time picker
+		pckStart = new LocalDateTimeTextField();
+		pneStart.getChildren().add(pckStart);
+		pckEnd = new LocalDateTimeTextField();
+		pneEnd.getChildren().add(pckEnd);
 
 		// fill combo boxes
         ComboBoxUtils.prepareComboBox(cboVenue, AppModel.getData().getContent().getVenue());
