@@ -1273,6 +1273,7 @@ public class RefereeCommunicationController {
 
 							// fill variables in generated content
 							Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, person);
+							RefereeManager.logger.info(MessageFormat.format("Subject: ''{0}''.", (String) mapFilled.get(DocumentDataVariable.SUBJECT.value())));
 
 							try {
 
