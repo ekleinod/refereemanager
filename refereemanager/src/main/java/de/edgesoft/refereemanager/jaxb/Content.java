@@ -51,6 +51,7 @@ import de.edgesoft.refereemanager.model.VenueModel;
  *         &lt;element name="referee_assignment_type" type="{}RefereeAssignmentType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="training_level_type" type="{}TrainingLevelType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="role_type" type="{}PersonRoleType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="event_date_type" type="{}EventDateType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -78,7 +79,8 @@ import de.edgesoft.refereemanager.model.VenueModel;
     "statusType",
     "refereeAssignmentType",
     "trainingLevelType",
-    "roleType"
+    "roleType",
+    "eventDateType"
 })
 public class Content
     extends AbstractModelClass
@@ -120,6 +122,8 @@ public class Content
     protected List<TrainingLevelType> trainingLevelType;
     @XmlElement(name = "role_type")
     protected List<PersonRoleType> roleType;
+    @XmlElement(name = "event_date_type")
+    protected List<EventDateType> eventDateType;
 
     /**
      * Gets the value of the season property.
@@ -631,6 +635,35 @@ public class Content
             roleType = new ArrayList<PersonRoleType>();
         }
         return this.roleType;
+    }
+
+    /**
+     * Gets the value of the eventDateType property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the eventDateType property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getEventDateType().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link EventDateType }
+     * 
+     * 
+     */
+    public List<EventDateType> getEventDateType() {
+        if (eventDateType == null) {
+            eventDateType = new ArrayList<EventDateType>();
+        }
+        return this.eventDateType;
     }
 
 }

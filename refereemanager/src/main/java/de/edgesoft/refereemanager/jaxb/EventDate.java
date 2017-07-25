@@ -30,6 +30,7 @@ import de.edgesoft.refereemanager.model.TournamentModel;
  *         &lt;element name="start" type="{}LocalDateTimeProperty"/>
  *         &lt;element name="end" type="{}LocalDateTimeProperty" minOccurs="0"/>
  *         &lt;element name="venue" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
+ *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -42,7 +43,8 @@ import de.edgesoft.refereemanager.model.TournamentModel;
 @XmlType(name = "EventDate", propOrder = {
     "start",
     "end",
-    "venue"
+    "venue",
+    "type"
 })
 @XmlSeeAlso({
     OtherEventModel.class,
@@ -65,6 +67,10 @@ public class EventDate
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected Venue venue;
+    @XmlElement(type = Object.class)
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    protected EventDateType type;
 
     /**
      * Gets the value of the start property.
@@ -136,6 +142,30 @@ public class EventDate
      */
     public void setVenue(Venue value) {
         this.venue = value;
+    }
+
+    /**
+     * Gets the value of the type property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Object }
+     *     
+     */
+    public EventDateType getType() {
+        return type;
+    }
+
+    /**
+     * Sets the value of the type property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Object }
+     *     
+     */
+    public void setType(EventDateType value) {
+        this.type = value;
     }
 
 }

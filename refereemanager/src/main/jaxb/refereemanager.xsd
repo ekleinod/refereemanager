@@ -76,6 +76,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="referee_assignment_type" type="RefereeAssignmentType" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="training_level_type" type="TrainingLevelType" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="role_type" type="PersonRoleType" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="event_date_type" type="EventDateType" minOccurs="0" maxOccurs="unbounded" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -603,6 +604,15 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 							</xsd:appinfo>
 						</xsd:annotation>
 					</xsd:element>
+					<xsd:element name="type" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="EventDateType" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -611,6 +621,13 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 
 	<!-- Types -->
+	<xsd:complexType name="EventDateType">
+		<xsd:complexContent>
+			<xsd:extension base="TitledIDType">
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 	<xsd:complexType name="SexType">
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">

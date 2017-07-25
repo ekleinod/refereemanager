@@ -114,14 +114,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link URL }
-     * 
-     */
-    public URL createURL() {
-        return new URLModel();
-    }
-
-    /**
      * Create an instance of {@link Trainee }
      * 
      */
@@ -130,11 +122,67 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link EventDateType }
+     * 
+     */
+    public EventDateType createEventDateType() {
+        return new EventDateType();
+    }
+
+    /**
      * Create an instance of {@link TrainingLevel }
      * 
      */
     public TrainingLevel createTrainingLevel() {
         return new TrainingLevelModel();
+    }
+
+    /**
+     * Create an instance of {@link Exam }
+     * 
+     */
+    public Exam createExam() {
+        return new Exam();
+    }
+
+    /**
+     * Create an instance of {@link League }
+     * 
+     */
+    public League createLeague() {
+        return new LeagueModel();
+    }
+
+    /**
+     * Create an instance of {@link Venue }
+     * 
+     */
+    public Venue createVenue() {
+        return new VenueModel();
+    }
+
+    /**
+     * Create an instance of {@link Content }
+     * 
+     */
+    public Content createContent() {
+        return new ContentModel();
+    }
+
+    /**
+     * Create an instance of {@link Person }
+     * 
+     */
+    public Person createPerson() {
+        return new PersonModel();
+    }
+
+    /**
+     * Create an instance of {@link URL }
+     * 
+     */
+    public URL createURL() {
+        return new URLModel();
     }
 
     /**
@@ -154,14 +202,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Exam }
-     * 
-     */
-    public Exam createExam() {
-        return new Exam();
-    }
-
-    /**
      * Create an instance of {@link SexType }
      * 
      */
@@ -170,27 +210,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link League }
-     * 
-     */
-    public League createLeague() {
-        return new LeagueModel();
-    }
-
-    /**
      * Create an instance of {@link RefereeAssignment }
      * 
      */
     public RefereeAssignment createRefereeAssignment() {
         return new RefereeAssignment();
-    }
-
-    /**
-     * Create an instance of {@link Venue }
-     * 
-     */
-    public Venue createVenue() {
-        return new VenueModel();
     }
 
     /**
@@ -223,14 +247,6 @@ public class ObjectFactory {
      */
     public Wish createWish() {
         return new WishModel();
-    }
-
-    /**
-     * Create an instance of {@link Content }
-     * 
-     */
-    public Content createContent() {
-        return new ContentModel();
     }
 
     /**
@@ -271,14 +287,6 @@ public class ObjectFactory {
      */
     public RefereeAssignmentType createRefereeAssignmentType() {
         return new RefereeAssignmentType();
-    }
-
-    /**
-     * Create an instance of {@link Person }
-     * 
-     */
-    public Person createPerson() {
-        return new PersonModel();
     }
 
     /**

@@ -51,16 +51,17 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 @XmlSeeAlso({
     ContactType.class,
     TrainingLevelTypeModel.class,
+    EventDateType.class,
+    LeagueModel.class,
     TeamModel.class,
     SeasonModel.class,
     SexType.class,
-    LeagueModel.class,
+    PersonModel.class,
     PersonRoleType.class,
     ClubModel.class,
     StatusTypeModel.class,
     ContactModel.class,
     RefereeAssignmentType.class,
-    PersonModel.class,
     EventDateModel.class
 })
 public abstract class TitledIDType
