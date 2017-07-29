@@ -1,6 +1,7 @@
 package de.edgesoft.refereemanager.model;
 
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Comparator;
@@ -10,7 +11,7 @@ import de.edgesoft.refereemanager.jaxb.EventDate;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Date model, additional methods for jaxb model class.
+ * Event date model, additional methods for jaxb model class.
  *
  * ## Legal stuff
  *
@@ -46,6 +47,8 @@ public class EventDateModel extends EventDate {
 	 * Returns date text.
 	 *
 	 * @return date text
+	 *
+	 * @since 0.15.0
 	 */
 	public SimpleStringProperty getDateText() {
 
@@ -68,6 +71,8 @@ public class EventDateModel extends EventDate {
 	 * Returns time text.
 	 *
 	 * @return time text
+	 *
+	 * @since 0.15.0
 	 */
 	public SimpleStringProperty getTimeText() {
 
@@ -84,6 +89,44 @@ public class EventDateModel extends EventDate {
 		return new SimpleStringProperty(MessageFormat.format("{0} - {1}",
 				DateTimeUtils.formatDateTimeAsTime((LocalDateTime) getStart().getValue()),
 				DateTimeUtils.formatDateTimeAsTime((LocalDateTime) getEnd().getValue())));
+
+	}
+
+	/**
+	 * Returns start date.
+	 *
+	 * @return start date
+	 *
+	 * @since 0.15.0
+	 */
+	public LocalDate getStartDate() {
+
+		if ((getStart() == null) || (getStart().getValue() == null)) {
+			return null;
+		}
+
+		return ((LocalDateTime) getStart().getValue()).toLocalDate();
+
+	}
+
+	/**
+	 * Returns end date if different from start date.
+	 *
+	 * @return end date
+	 *
+	 * @since 0.15.0
+	 */
+	public LocalDate getEndDate() {
+
+		if ((getEnd() == null) || (getEnd().getValue() == null)) {
+			return null;
+		}
+
+		if ((getStartDate() != null) && (getStartDate().isEqual(((LocalDateTime) getEnd().getValue()).toLocalDate()))) {
+			return null;
+		}
+
+		return ((LocalDateTime) getEnd().getValue()).toLocalDate();
 
 	}
 
