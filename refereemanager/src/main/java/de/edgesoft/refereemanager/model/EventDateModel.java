@@ -33,7 +33,7 @@ import javafx.beans.property.SimpleStringProperty;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.14.0
+ * @version 0.15.0
  * @since 0.9.0
  */
 public class EventDateModel extends EventDate {
@@ -41,7 +41,7 @@ public class EventDateModel extends EventDate {
 	/**
 	 * Comparator start date/time.
 	 */
-	public static final Comparator<EventDate> RANK_START = Comparator.comparing(date -> (LocalDateTime) date.getStart().getValue());
+	public static final Comparator<EventDate> DATE_START = Comparator.comparing(date -> (LocalDateTime) date.getDay().get(0).getDate().getValue());
 
 	/**
 	 * Returns date text.
@@ -98,11 +98,11 @@ public class EventDateModel extends EventDate {
 	 */
 	public LocalDate getStartDate() {
 
-		if ((getStart() == null) || (getStart().getValue() == null)) {
+		if (getDay().isEmpty()) {
 			return null;
 		}
 
-		return ((LocalDateTime) getStart().getValue()).toLocalDate();
+		return ((LocalDateTime) getDay().get(0).getDate().getValue()).toLocalDate();
 
 	}
 
@@ -115,17 +115,11 @@ public class EventDateModel extends EventDate {
 	 */
 	public LocalDate getEndDate() {
 
-		if ((getEnd() == null) || (getEnd().getValue() == null) || (getStartDate() == null)) {
+		if (getDay().size() < 2) {
 			return null;
 		}
 
-		LocalDate dteReturn = ((LocalDateTime) getEnd().getValue()).toLocalDate();
-
-		if (getStartDate().isEqual(dteReturn)) {
-			return null;
-		}
-
-		return dteReturn;
+		return ((LocalDateTime) getDay().get(getDay().size() - 1).getDate().getValue()).toLocalDate();
 
 	}
 

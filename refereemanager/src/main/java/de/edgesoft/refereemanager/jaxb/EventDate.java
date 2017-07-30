@@ -1,7 +1,8 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
-import javafx.beans.property.SimpleObjectProperty;
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -9,12 +10,10 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateTimeAdapter;
-import de.edgesoft.refereemanager.model.LeagueGameModel;
+import de.edgesoft.refereemanager.model.EventDayModel;
 import de.edgesoft.refereemanager.model.OtherEventModel;
+import de.edgesoft.refereemanager.model.RefereeEventModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
-import de.edgesoft.refereemanager.model.TournamentModel;
 
 
 /**
@@ -27,8 +26,7 @@ import de.edgesoft.refereemanager.model.TournamentModel;
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
- *         &lt;element name="start" type="{}LocalDateTimeProperty"/>
- *         &lt;element name="end" type="{}LocalDateTimeProperty" minOccurs="0"/>
+ *         &lt;element name="day" type="{}EventDay" maxOccurs="unbounded"/>
  *         &lt;element name="venue" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
@@ -41,28 +39,20 @@ import de.edgesoft.refereemanager.model.TournamentModel;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "EventDate", propOrder = {
-    "start",
-    "end",
+    "day",
     "venue",
     "type"
 })
 @XmlSeeAlso({
     OtherEventModel.class,
-    LeagueGameModel.class,
-    TournamentModel.class
+    RefereeEventModel.class
 })
-public class EventDate
+public abstract class EventDate
     extends TitledIDTypeModel
 {
 
-    @XmlElement(required = true, type = String.class)
-    @XmlJavaTypeAdapter(SimpleObjectPropertyLocalDateTimeAdapter.class)
-    @XmlSchemaType(name = "dateTime")
-    protected SimpleObjectProperty start;
-    @XmlElement(type = String.class)
-    @XmlJavaTypeAdapter(SimpleObjectPropertyLocalDateTimeAdapter.class)
-    @XmlSchemaType(name = "dateTime")
-    protected SimpleObjectProperty end;
+    @XmlElement(required = true, type = EventDayModel.class)
+    protected List<EventDay> day;
     @XmlElement(type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -73,51 +63,32 @@ public class EventDate
     protected EventDateType type;
 
     /**
-     * Gets the value of the start property.
+     * Gets the value of the day property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public SimpleObjectProperty getStart() {
-        return start;
-    }
-
-    /**
-     * Sets the value of the start property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the day property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setStart(SimpleObjectProperty value) {
-        this.start = value;
-    }
-
-    /**
-     * Gets the value of the end property.
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getDay().add(newItem);
+     * </pre>
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public SimpleObjectProperty getEnd() {
-        return end;
-    }
-
-    /**
-     * Sets the value of the end property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link EventDay }
+     * 
+     * 
      */
-    public void setEnd(SimpleObjectProperty value) {
-        this.end = value;
+    public List<EventDay> getDay() {
+        if (day == null) {
+            day = new ArrayList<EventDay>();
+        }
+        return this.day;
     }
 
     /**

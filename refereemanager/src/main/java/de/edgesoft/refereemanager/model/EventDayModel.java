@@ -1,14 +1,14 @@
 package de.edgesoft.refereemanager.model;
 
+import java.text.MessageFormat;
+import java.time.LocalTime;
+
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
-import de.edgesoft.edgeutils.files.FileUtils;
-import de.edgesoft.refereemanager.jaxb.Tournament;
-import de.edgesoft.refereemanager.utils.PrefKey;
-import de.edgesoft.refereemanager.utils.Prefs;
+import de.edgesoft.refereemanager.jaxb.EventDay;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Tournament model, additional methods for jaxb model class.
+ * Event day model, additional methods for jaxb model class.
  *
  * ## Legal stuff
  *
@@ -33,35 +33,26 @@ import javafx.beans.property.SimpleStringProperty;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class TournamentModel extends Tournament {
-
-    /**
-     * Returns referee report filename.
-     *
-     * @return referee report filename
-     */
-    @Override
-    public SimpleStringProperty getRefereeReportFilename() {
-		return new SimpleStringProperty(FileUtils.cleanFilename(
-				String.format(Prefs.get(PrefKey.REFEREE_REPORT_TOURNAMENTS),
-						DateTimeUtils.formatDate(getStartDate(), "yyyy-MM-dd"),
-						getDisplayTitleShort().getValueSafe()
-						)
-				));
-    }
+public class EventDayModel extends EventDay {
 
 	/**
-	 * Returns if referee report file exists.
+	 * Returns time text.
 	 *
-	 * @return does referee report file exist?
+	 * @return time text
 	 */
-    @Override
-	public boolean existsRefereeReportFile() {
+	public SimpleStringProperty getTimeText() {
 
-		return FileUtils.existsFile(
-				String.format(Prefs.get(PrefKey.REFEREE_REPORT_PATH), AppModel.getData().getContent().getSeason().getDisplayText().getValueSafe()),
-				getRefereeReportFilename()
-				);
+		if (getStartTime() == null) {
+			return null;
+		}
+
+		if (getEndTime() == null) {
+			return new SimpleStringProperty(DateTimeUtils.formatTime((LocalTime) getStartTime().getValue()));
+		}
+
+		return new SimpleStringProperty(MessageFormat.format("{0} - {1}",
+				DateTimeUtils.formatTime((LocalTime) getStartTime().getValue()),
+				DateTimeUtils.formatTime((LocalTime) getEndTime().getValue())));
 
 	}
 

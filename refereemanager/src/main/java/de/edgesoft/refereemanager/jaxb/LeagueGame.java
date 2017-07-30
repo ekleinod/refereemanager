@@ -1,8 +1,6 @@
 
 package de.edgesoft.refereemanager.jaxb;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.beans.property.SimpleIntegerProperty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -12,7 +10,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
-import de.edgesoft.refereemanager.model.EventDateModel;
+import de.edgesoft.refereemanager.model.RefereeEventModel;
 
 
 /**
@@ -23,10 +21,9 @@ import de.edgesoft.refereemanager.model.EventDateModel;
  * <pre>
  * &lt;complexType name="LeagueGame">
  *   &lt;complexContent>
- *     &lt;extension base="{}EventDate">
+ *     &lt;extension base="{}RefereeEvent">
  *       &lt;sequence>
  *         &lt;element name="game_number" type="{}IntegerProperty"/>
- *         &lt;element name="referee_assignment" type="{}RefereeAssignment" maxOccurs="unbounded"/>
  *         &lt;element name="league" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="home_team" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="off_team" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
@@ -41,21 +38,18 @@ import de.edgesoft.refereemanager.model.EventDateModel;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "LeagueGame", propOrder = {
     "gameNumber",
-    "refereeAssignment",
     "league",
     "homeTeam",
     "offTeam"
 })
 public class LeagueGame
-    extends EventDateModel
+    extends RefereeEventModel
 {
 
     @XmlElement(name = "game_number", required = true, type = String.class)
     @XmlJavaTypeAdapter(SimpleIntegerPropertyAdapter.class)
     @XmlSchemaType(name = "int")
     protected SimpleIntegerProperty gameNumber;
-    @XmlElement(name = "referee_assignment", required = true)
-    protected List<RefereeAssignment> refereeAssignment;
     @XmlElement(required = true, type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -91,35 +85,6 @@ public class LeagueGame
      */
     public void setGameNumber(SimpleIntegerProperty value) {
         this.gameNumber = value;
-    }
-
-    /**
-     * Gets the value of the refereeAssignment property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the refereeAssignment property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getRefereeAssignment().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link RefereeAssignment }
-     * 
-     * 
-     */
-    public List<RefereeAssignment> getRefereeAssignment() {
-        if (refereeAssignment == null) {
-            refereeAssignment = new ArrayList<RefereeAssignment>();
-        }
-        return this.refereeAssignment;
     }
 
     /**

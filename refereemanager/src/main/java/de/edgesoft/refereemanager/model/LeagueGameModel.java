@@ -93,6 +93,7 @@ public class LeagueGameModel extends LeagueGame {
      *
      * @return referee report filename
      */
+    @Override
     public SimpleStringProperty getRefereeReportFilename() {
 		return new SimpleStringProperty(FileUtils.cleanFilename(
 				String.format(Prefs.get(PrefKey.REFEREE_REPORT_LEAGUE_GAMES),
@@ -109,6 +110,7 @@ public class LeagueGameModel extends LeagueGame {
 	 *
 	 * @return does referee report file exist?
 	 */
+    @Override
 	public boolean existsRefereeReportFile() {
 
 		return FileUtils.existsFile(

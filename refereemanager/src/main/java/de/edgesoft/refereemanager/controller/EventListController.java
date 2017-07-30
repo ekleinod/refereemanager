@@ -505,7 +505,7 @@ public class EventListController {
 		getTabTournamentsSelection().forEach(event -> lstReturn.add(event));
 		getTabOtherEventsSelection().forEach(event -> lstReturn.add(event));
 
-		return FXCollections.observableList(lstReturn.stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList()));
+		return FXCollections.observableList(lstReturn.stream().sorted(EventDateModel.DATE_START).collect(Collectors.toList()));
 	}
 
 	/**
@@ -536,7 +536,7 @@ public class EventListController {
 	 * @return sorted selection from league games tab
 	 */
 	public ObservableList<EventDateModel> getTabLeagueGamesSelection() {
-		return FXCollections.observableList(tblLeagueGames.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList()));
+		return FXCollections.observableList(tblLeagueGames.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.DATE_START).collect(Collectors.toList()));
 	}
 
 	/**
@@ -545,7 +545,7 @@ public class EventListController {
 	 * @return sorted selection from tournaments tab
 	 */
 	public ObservableList<EventDateModel> getTabTournamentsSelection() {
-		return FXCollections.observableList(tblTournaments.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList()));
+		return FXCollections.observableList(tblTournaments.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.DATE_START).collect(Collectors.toList()));
 	}
 
 	/**
@@ -554,7 +554,7 @@ public class EventListController {
 	 * @return sorted selection from other events tab
 	 */
 	public ObservableList<EventDateModel> getTabOtherEventsSelection() {
-		return FXCollections.observableList(tblOtherEvents.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.RANK_START).collect(Collectors.toList()));
+		return FXCollections.observableList(tblOtherEvents.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.DATE_START).collect(Collectors.toList()));
 	}
 
 }

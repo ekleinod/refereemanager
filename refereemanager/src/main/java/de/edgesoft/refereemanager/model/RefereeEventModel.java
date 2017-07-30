@@ -1,14 +1,10 @@
 package de.edgesoft.refereemanager.model;
 
-import de.edgesoft.edgeutils.datetime.DateTimeUtils;
-import de.edgesoft.edgeutils.files.FileUtils;
-import de.edgesoft.refereemanager.jaxb.Tournament;
-import de.edgesoft.refereemanager.utils.PrefKey;
-import de.edgesoft.refereemanager.utils.Prefs;
+import de.edgesoft.refereemanager.jaxb.RefereeEvent;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Tournament model, additional methods for jaxb model class.
+ * Referee event model, additional methods for jaxb model class.
  *
  * ## Legal stuff
  *
@@ -33,21 +29,15 @@ import javafx.beans.property.SimpleStringProperty;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class TournamentModel extends Tournament {
+public class RefereeEventModel extends RefereeEvent {
 
     /**
      * Returns referee report filename.
      *
      * @return referee report filename
      */
-    @Override
     public SimpleStringProperty getRefereeReportFilename() {
-		return new SimpleStringProperty(FileUtils.cleanFilename(
-				String.format(Prefs.get(PrefKey.REFEREE_REPORT_TOURNAMENTS),
-						DateTimeUtils.formatDate(getStartDate(), "yyyy-MM-dd"),
-						getDisplayTitleShort().getValueSafe()
-						)
-				));
+		return null;
     }
 
 	/**
@@ -55,14 +45,8 @@ public class TournamentModel extends Tournament {
 	 *
 	 * @return does referee report file exist?
 	 */
-    @Override
 	public boolean existsRefereeReportFile() {
-
-		return FileUtils.existsFile(
-				String.format(Prefs.get(PrefKey.REFEREE_REPORT_PATH), AppModel.getData().getContent().getSeason().getDisplayText().getValueSafe()),
-				getRefereeReportFilename()
-				);
-
+		return false;
 	}
 
 }
