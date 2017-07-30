@@ -2,8 +2,6 @@ package de.edgesoft.refereemanager.model;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Comparator;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
@@ -41,7 +39,7 @@ public class EventDateModel extends EventDate {
 	/**
 	 * Comparator start date/time.
 	 */
-	public static final Comparator<EventDate> DATE_START = Comparator.comparing(date -> (LocalDateTime) date.getDay().get(0).getDate().getValue());
+	public static final Comparator<EventDateModel> DATE_FIRST = Comparator.comparing(date -> (LocalDate) date.getFirstDay().getDate().getValue());
 
 	/**
 	 * Returns date text.
@@ -52,17 +50,17 @@ public class EventDateModel extends EventDate {
 	 */
 	public SimpleStringProperty getDateText() {
 
-		if (getStartDate() == null) {
+		if (getFirstDay() == null) {
 			return null;
 		}
 
-		if (getEndDate() == null)  {
-			return new SimpleStringProperty(DateTimeUtils.formatDate(getStartDate()));
+		if (getLastDay() == null)  {
+			return new SimpleStringProperty(DateTimeUtils.formatDate((LocalDate) getFirstDay().getDate().getValue()));
 		}
 
 		return new SimpleStringProperty(MessageFormat.format("{0} - {1}",
-				DateTimeUtils.formatDate(getStartDate()),
-				DateTimeUtils.formatDate(getEndDate())));
+				DateTimeUtils.formatDate((LocalDate) getFirstDay().getDate().getValue()),
+				DateTimeUtils.formatDate((LocalDate) getLastDay().getDate().getValue())));
 
 	}
 
@@ -75,97 +73,45 @@ public class EventDateModel extends EventDate {
 	 */
 	public SimpleStringProperty getTimeText() {
 
-		if (getStartTime() == null) {
+		if ((getFirstDay() == null) || (getLastDay() != null)) {
 			return null;
 		}
 
-		if (getEndTime() == null) {
-			return new SimpleStringProperty(DateTimeUtils.formatTime(getStartTime()));
-		}
-
-		return new SimpleStringProperty(MessageFormat.format("{0} - {1}",
-				DateTimeUtils.formatTime(getStartTime()),
-				DateTimeUtils.formatTime(getEndTime())));
+		return getFirstDay().getTimeText();
 
 	}
 
 	/**
-	 * Returns start date.
+	 * Returns first day.
 	 *
-	 * @return start date
+	 * @return first day
 	 *
 	 * @since 0.15.0
 	 */
-	public LocalDate getStartDate() {
+	public EventDayModel getFirstDay() {
 
 		if (getDay().isEmpty()) {
 			return null;
 		}
 
-		return ((LocalDateTime) getDay().get(0).getDate().getValue()).toLocalDate();
+		return (EventDayModel) getDay().get(0);
 
 	}
 
 	/**
-	 * Returns end date if different from start date.
+	 * Returns last day if different from first day.
 	 *
-	 * @return end date
+	 * @return last day
 	 *
 	 * @since 0.15.0
 	 */
-	public LocalDate getEndDate() {
+	public EventDayModel getLastDay() {
 
 		if (getDay().size() < 2) {
 			return null;
 		}
 
-		return ((LocalDateTime) getDay().get(getDay().size() - 1).getDate().getValue()).toLocalDate();
-
-	}
-
-	/**
-	 * Returns start time.
-	 *
-	 * @return start time
-	 *
-	 * @since 0.15.0
-	 */
-	public LocalTime getStartTime() {
-
-		if ((getStart() == null) || (getStart().getValue() == null)) {
-			return null;
-		}
-
-		LocalTime tmeReturn = ((LocalDateTime) getStart().getValue()).toLocalTime();
-
-		if (tmeReturn == LocalTime.MIDNIGHT) {
-			return null;
-		}
-
-		return tmeReturn;
-
-	}
-
-	/**
-	 * Returns end time.
-	 *
-	 * @return end time
-	 *
-	 * @since 0.15.0
-	 */
-	public LocalTime getEndTime() {
-
-		if ((getEnd() == null) || (getEnd().getValue() == null) || (getStartTime() == null)) {
-			return null;
-		}
-
-		LocalTime tmeReturn = ((LocalDateTime) getEnd().getValue()).toLocalTime();
-
-		if (tmeReturn == LocalTime.MIDNIGHT) {
-			return null;
-		}
-
-		return tmeReturn;
+		return (EventDayModel) getDay().get(getDay().size() - 1);
 
 	}
 

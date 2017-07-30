@@ -351,15 +351,15 @@ public class ContentModel extends Content {
 		getTeam().clear();
 		getTeam().addAll(lstTeam);
 
-		List<LeagueGame> lstLeagueGame = getLeagueGame().stream().sorted(EventDateModel.DATE_START).collect(Collectors.toList());
+		List<LeagueGame> lstLeagueGame = getLeagueGame().stream().sorted(EventDateModel.DATE_FIRST).collect(Collectors.toList());
 		getLeagueGame().clear();
 		getLeagueGame().addAll(lstLeagueGame);
 
-		List<Tournament> lstTournament = getTournament().stream().sorted(EventDateModel.DATE_START).collect(Collectors.toList());
+		List<Tournament> lstTournament = getTournament().stream().sorted(EventDateModel.DATE_FIRST).collect(Collectors.toList());
 		getTournament().clear();
 		getTournament().addAll(lstTournament);
 
-		List<OtherEvent> lstOtherEvent = getOtherEvent().stream().sorted(EventDateModel.DATE_START).collect(Collectors.toList());
+		List<OtherEvent> lstOtherEvent = getOtherEvent().stream().sorted(EventDateModel.DATE_FIRST).collect(Collectors.toList());
 		getOtherEvent().clear();
 		getOtherEvent().addAll(lstOtherEvent);
 

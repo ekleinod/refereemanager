@@ -1,7 +1,9 @@
 package de.edgesoft.refereemanager.controller;
 
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -111,13 +113,13 @@ public class EventListController {
 	 * Date column.
 	 */
 	@FXML
-	private TableColumn<LeagueGameModel, LocalDateTime> colLeagueGameDate;
+	private TableColumn<LeagueGameModel, LocalDate> colLeagueGameDate;
 
 	/**
 	 * Time column.
 	 */
 	@FXML
-	private TableColumn<LeagueGameModel, LocalDateTime> colLeagueGameTime;
+	private TableColumn<LeagueGameModel, LocalTime> colLeagueGameTime;
 
 	/**
 	 * League column.
@@ -182,13 +184,13 @@ public class EventListController {
 	 * Start date column.
 	 */
 	@FXML
-	private TableColumn<TournamentModel, LocalDateTime> colTournamentDateStart;
+	private TableColumn<TournamentModel, LocalDate> colTournamentDateStart;
 
 	/**
 	 * End date column.
 	 */
 	@FXML
-	private TableColumn<TournamentModel, LocalDateTime> colTournamentDateEnd;
+	private TableColumn<TournamentModel, LocalDate> colTournamentDateEnd;
 
 	/**
 	 * Title column.
@@ -230,25 +232,25 @@ public class EventListController {
 	 * Start date column.
 	 */
 	@FXML
-	private TableColumn<OtherEventModel, LocalDateTime> colOtherEventDateStart;
+	private TableColumn<OtherEventModel, LocalDate> colOtherEventDateStart;
 
 	/**
 	 * End date column.
 	 */
 	@FXML
-	private TableColumn<OtherEventModel, LocalDateTime> colOtherEventDateEnd;
+	private TableColumn<OtherEventModel, LocalDate> colOtherEventDateEnd;
 
 	/**
 	 * Start time column.
 	 */
 	@FXML
-	private TableColumn<OtherEventModel, LocalDateTime> colOtherEventTimeStart;
+	private TableColumn<OtherEventModel, LocalTime> colOtherEventTimeStart;
 
 	/**
 	 * Start time column.
 	 */
 	@FXML
-	private TableColumn<OtherEventModel, LocalDateTime> colOtherEventTimeEnd;
+	private TableColumn<OtherEventModel, LocalTime> colOtherEventTimeEnd;
 
 	/**
 	 * Title column.
@@ -275,8 +277,8 @@ public class EventListController {
 		colLeagueGameID.setVisible(false);
 
 		colLeagueGameNumber.setCellValueFactory(cellData -> cellData.getValue().getGameNumberString());
-		colLeagueGameDate.setCellValueFactory(cellData -> cellData.getValue().getStart());
-		colLeagueGameTime.setCellValueFactory(cellData -> cellData.getValue().getStart());
+		colLeagueGameDate.setCellValueFactory(cellData -> cellData.getValue().getFirstDay().getDate());
+		colLeagueGameTime.setCellValueFactory(cellData -> cellData.getValue().getFirstDay().getStartTime());
 		colLeagueGameLeague.setCellValueFactory(cellData -> cellData.getValue().getLeague().getDisplayTitleShort());
 		colLeagueGameTeams.setCellValueFactory(cellData -> cellData.getValue().getTeamText());
 		colLeagueGameRefereeReport.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().existsRefereeReportFile()));
@@ -285,8 +287,8 @@ public class EventListController {
 		colTournamentID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
 		colTournamentID.setVisible(false);
 
-		colTournamentDateStart.setCellValueFactory(cellData -> cellData.getValue().getStart());
-		colTournamentDateEnd.setCellValueFactory(cellData -> cellData.getValue().getEnd());
+		colTournamentDateStart.setCellValueFactory(cellData -> cellData.getValue().getFirstDay().getDate());
+		colTournamentDateEnd.setCellValueFactory(cellData -> (cellData.getValue().getLastDay() == null) ? null : cellData.getValue().getLastDay().getDate());
 		colTournamentTitle.setCellValueFactory(cellData -> cellData.getValue().getDisplayTitleShort());
 		colTournamentRefereeReport.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().existsRefereeReportFile()));
 
@@ -294,10 +296,10 @@ public class EventListController {
 		colOtherEventID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
 		colOtherEventID.setVisible(false);
 
-		colOtherEventDateStart.setCellValueFactory(cellData -> cellData.getValue().getStart());
-		colOtherEventDateEnd.setCellValueFactory(cellData -> cellData.getValue().getEnd());
-		colOtherEventTimeStart.setCellValueFactory(cellData -> cellData.getValue().getStart());
-		colOtherEventTimeEnd.setCellValueFactory(cellData -> cellData.getValue().getEnd());
+		colOtherEventDateStart.setCellValueFactory(cellData -> cellData.getValue().getFirstDay().getDate());
+		colOtherEventDateEnd.setCellValueFactory(cellData -> (cellData.getValue().getLastDay() == null) ? null : cellData.getValue().getLastDay().getDate());
+		colOtherEventTimeStart.setCellValueFactory(cellData -> cellData.getValue().getFirstDay().getStartTime());
+		colOtherEventTimeEnd.setCellValueFactory(cellData -> cellData.getValue().getFirstDay().getEndTime());
 		colOtherEventTitle.setCellValueFactory(cellData -> cellData.getValue().getDisplayTitleShort());
 
 		// format date columns
@@ -505,7 +507,7 @@ public class EventListController {
 		getTabTournamentsSelection().forEach(event -> lstReturn.add(event));
 		getTabOtherEventsSelection().forEach(event -> lstReturn.add(event));
 
-		return FXCollections.observableList(lstReturn.stream().sorted(EventDateModel.DATE_START).collect(Collectors.toList()));
+		return FXCollections.observableList(lstReturn.stream().sorted(EventDateModel.DATE_FIRST).collect(Collectors.toList()));
 	}
 
 	/**
@@ -536,7 +538,7 @@ public class EventListController {
 	 * @return sorted selection from league games tab
 	 */
 	public ObservableList<EventDateModel> getTabLeagueGamesSelection() {
-		return FXCollections.observableList(tblLeagueGames.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.DATE_START).collect(Collectors.toList()));
+		return FXCollections.observableList(tblLeagueGames.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.DATE_FIRST).collect(Collectors.toList()));
 	}
 
 	/**
@@ -545,7 +547,7 @@ public class EventListController {
 	 * @return sorted selection from tournaments tab
 	 */
 	public ObservableList<EventDateModel> getTabTournamentsSelection() {
-		return FXCollections.observableList(tblTournaments.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.DATE_START).collect(Collectors.toList()));
+		return FXCollections.observableList(tblTournaments.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.DATE_FIRST).collect(Collectors.toList()));
 	}
 
 	/**
@@ -554,7 +556,7 @@ public class EventListController {
 	 * @return sorted selection from other events tab
 	 */
 	public ObservableList<EventDateModel> getTabOtherEventsSelection() {
-		return FXCollections.observableList(tblOtherEvents.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.DATE_START).collect(Collectors.toList()));
+		return FXCollections.observableList(tblOtherEvents.getSelectionModel().getSelectedItems().stream().sorted(EventDateModel.DATE_FIRST).collect(Collectors.toList()));
 	}
 
 }

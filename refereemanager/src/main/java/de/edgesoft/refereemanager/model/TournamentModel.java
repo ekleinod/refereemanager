@@ -1,5 +1,7 @@
 package de.edgesoft.refereemanager.model;
 
+import java.time.LocalDate;
+
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.edgeutils.files.FileUtils;
 import de.edgesoft.refereemanager.jaxb.Tournament;
@@ -44,7 +46,7 @@ public class TournamentModel extends Tournament {
     public SimpleStringProperty getRefereeReportFilename() {
 		return new SimpleStringProperty(FileUtils.cleanFilename(
 				String.format(Prefs.get(PrefKey.REFEREE_REPORT_TOURNAMENTS),
-						DateTimeUtils.formatDate(getStartDate(), "yyyy-MM-dd"),
+						DateTimeUtils.formatDate((LocalDate) getFirstDay().getDate().getValue(), "yyyy-MM-dd"),
 						getDisplayTitleShort().getValueSafe()
 						)
 				));

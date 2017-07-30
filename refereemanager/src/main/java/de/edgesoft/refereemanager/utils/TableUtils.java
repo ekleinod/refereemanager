@@ -1,7 +1,6 @@
 package de.edgesoft.refereemanager.utils;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
@@ -88,16 +87,16 @@ public class TableUtils {
 	 *
 	 * @since 0.15.0
 	 */
-	public static final TableCell<LeagueGameModel, LocalDateTime> getTableCellLeagueGameDate() {
-		return new TableCell<LeagueGameModel, LocalDateTime>() {
+	public static final TableCell<LeagueGameModel, LocalDate> getTableCellLeagueGameDate() {
+		return new TableCell<LeagueGameModel, LocalDate>() {
 	        @Override
-	        protected void updateItem(LocalDateTime item, boolean empty) {
+	        protected void updateItem(LocalDate item, boolean empty) {
 	            super.updateItem(item, empty);
 
 	            if (item == null || empty) {
 	                setText(null);
 	            } else {
-	                setText(DateTimeUtils.formatDateTimeAsDate(item));
+	                setText(DateTimeUtils.formatDate(item));
 	            }
 	        }
 	    };
@@ -110,16 +109,16 @@ public class TableUtils {
 	 *
 	 * @since 0.15.0
 	 */
-	public static final TableCell<LeagueGameModel, LocalDateTime> getTableCellLeagueGameTime() {
-		return new TableCell<LeagueGameModel, LocalDateTime>() {
+	public static final TableCell<LeagueGameModel, LocalTime> getTableCellLeagueGameTime() {
+		return new TableCell<LeagueGameModel, LocalTime>() {
 	        @Override
-	        protected void updateItem(LocalDateTime item, boolean empty) {
+	        protected void updateItem(LocalTime item, boolean empty) {
 	            super.updateItem(item, empty);
 
 	            if (item == null || empty) {
 	                setText(null);
 	            } else {
-	                setText(DateTimeUtils.formatDateTimeAsTime(item));
+	                setText(DateTimeUtils.formatTime(item));
 	            }
 	        }
 	    };
@@ -132,16 +131,16 @@ public class TableUtils {
 	 *
 	 * @since 0.15.0
 	 */
-	public static final TableCell<TournamentModel, LocalDateTime> getTableCellTournamentDate() {
-		return new TableCell<TournamentModel, LocalDateTime>() {
+	public static final TableCell<TournamentModel, LocalDate> getTableCellTournamentDate() {
+		return new TableCell<TournamentModel, LocalDate>() {
 	        @Override
-	        protected void updateItem(LocalDateTime item, boolean empty) {
+	        protected void updateItem(LocalDate item, boolean empty) {
 	            super.updateItem(item, empty);
 
 	            if (item == null || empty) {
 	                setText(null);
 	            } else {
-	                setText(DateTimeUtils.formatDateTimeAsDate(item));
+	                setText(DateTimeUtils.formatDate(item));
 	            }
 	        }
 	    };
@@ -154,16 +153,16 @@ public class TableUtils {
 	 *
 	 * @since 0.15.0
 	 */
-	public static final TableCell<OtherEventModel, LocalDateTime> getTableCellOtherEventDate() {
-		return new TableCell<OtherEventModel, LocalDateTime>() {
+	public static final TableCell<OtherEventModel, LocalDate> getTableCellOtherEventDate() {
+		return new TableCell<OtherEventModel, LocalDate>() {
 	        @Override
-	        protected void updateItem(LocalDateTime item, boolean empty) {
+	        protected void updateItem(LocalDate item, boolean empty) {
 	            super.updateItem(item, empty);
 
 	            if (item == null || empty) {
 	                setText(null);
 	            } else {
-	                setText(DateTimeUtils.formatDateTimeAsDate(item));
+	                setText(DateTimeUtils.formatDate(item));
 	            }
 	        }
 	    };
@@ -176,16 +175,16 @@ public class TableUtils {
 	 *
 	 * @since 0.15.0
 	 */
-	public static final TableCell<OtherEventModel, LocalDateTime> getTableCellOtherEventTime() {
-		return new TableCell<OtherEventModel, LocalDateTime>() {
+	public static final TableCell<OtherEventModel, LocalTime> getTableCellOtherEventTime() {
+		return new TableCell<OtherEventModel, LocalTime>() {
 	        @Override
-	        protected void updateItem(LocalDateTime item, boolean empty) {
+	        protected void updateItem(LocalTime item, boolean empty) {
 	            super.updateItem(item, empty);
 
-	            if (item == null || empty || (item.toLocalTime() == LocalTime.MIDNIGHT)) {
+	            if (item == null || empty || (item == LocalTime.MIDNIGHT)) {
 	                setText(null);
 	            } else {
-	                setText(DateTimeUtils.formatDateTimeAsTime(item));
+	                setText(DateTimeUtils.formatTime(item));
 	            }
 	        }
 	    };
