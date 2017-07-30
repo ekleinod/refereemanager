@@ -52,18 +52,17 @@ public class EventDateModel extends EventDate {
 	 */
 	public SimpleStringProperty getDateText() {
 
-		if (getStart() == null) {
+		if (getStartDate() == null) {
 			return null;
 		}
 
-		if ((getEnd() == null) ||
-				(((LocalDateTime) getStart().getValue()).toLocalDate().isEqual(((LocalDateTime) getEnd().getValue()).toLocalDate()))) {
-			return new SimpleStringProperty(DateTimeUtils.formatDateTimeAsDate((LocalDateTime) getStart().getValue()));
+		if (getEndDate() == null)  {
+			return new SimpleStringProperty(DateTimeUtils.formatDate(getStartDate()));
 		}
 
 		return new SimpleStringProperty(MessageFormat.format("{0} - {1}",
-				DateTimeUtils.formatDateTimeAsDate((LocalDateTime) getStart().getValue()),
-				DateTimeUtils.formatDateTimeAsDate((LocalDateTime) getEnd().getValue())));
+				DateTimeUtils.formatDate(getStartDate()),
+				DateTimeUtils.formatDate(getEndDate())));
 
 	}
 
@@ -76,19 +75,17 @@ public class EventDateModel extends EventDate {
 	 */
 	public SimpleStringProperty getTimeText() {
 
-		if ((getStart() == null) ||
-				(((LocalDateTime) getStart().getValue()).toLocalTime() == LocalTime.MIDNIGHT)) {
+		if (getStartTime() == null) {
 			return null;
 		}
 
-		if ((getEnd() == null) ||
-				(((LocalDateTime) getEnd().getValue()).toLocalTime() == LocalTime.MIDNIGHT)) {
-			return new SimpleStringProperty(DateTimeUtils.formatDateTimeAsTime((LocalDateTime) getStart().getValue()));
+		if (getEndTime() == null) {
+			return new SimpleStringProperty(DateTimeUtils.formatTime(getStartTime()));
 		}
 
 		return new SimpleStringProperty(MessageFormat.format("{0} - {1}",
-				DateTimeUtils.formatDateTimeAsTime((LocalDateTime) getStart().getValue()),
-				DateTimeUtils.formatDateTimeAsTime((LocalDateTime) getEnd().getValue())));
+				DateTimeUtils.formatTime(getStartTime()),
+				DateTimeUtils.formatTime(getEndTime())));
 
 	}
 
@@ -118,15 +115,63 @@ public class EventDateModel extends EventDate {
 	 */
 	public LocalDate getEndDate() {
 
-		if ((getEnd() == null) || (getEnd().getValue() == null)) {
+		if ((getEnd() == null) || (getEnd().getValue() == null) || (getStartDate() == null)) {
 			return null;
 		}
 
-		if ((getStartDate() != null) && (getStartDate().isEqual(((LocalDateTime) getEnd().getValue()).toLocalDate()))) {
+		LocalDate dteReturn = ((LocalDateTime) getEnd().getValue()).toLocalDate();
+
+		if (getStartDate().isEqual(dteReturn)) {
 			return null;
 		}
 
-		return ((LocalDateTime) getEnd().getValue()).toLocalDate();
+		return dteReturn;
+
+	}
+
+	/**
+	 * Returns start time.
+	 *
+	 * @return start time
+	 *
+	 * @since 0.15.0
+	 */
+	public LocalTime getStartTime() {
+
+		if ((getStart() == null) || (getStart().getValue() == null)) {
+			return null;
+		}
+
+		LocalTime tmeReturn = ((LocalDateTime) getStart().getValue()).toLocalTime();
+
+		if (tmeReturn == LocalTime.MIDNIGHT) {
+			return null;
+		}
+
+		return tmeReturn;
+
+	}
+
+	/**
+	 * Returns end time.
+	 *
+	 * @return end time
+	 *
+	 * @since 0.15.0
+	 */
+	public LocalTime getEndTime() {
+
+		if ((getEnd() == null) || (getEnd().getValue() == null) || (getStartTime() == null)) {
+			return null;
+		}
+
+		LocalTime tmeReturn = ((LocalDateTime) getEnd().getValue()).toLocalTime();
+
+		if (tmeReturn == LocalTime.MIDNIGHT) {
+			return null;
+		}
+
+		return tmeReturn;
 
 	}
 
