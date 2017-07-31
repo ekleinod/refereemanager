@@ -2,6 +2,7 @@ package de.edgesoft.refereemanager.model;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
@@ -112,6 +113,27 @@ public class EventDateModel extends EventDate {
 		}
 
 		return (EventDayModel) getDay().get(getDay().size() - 1);
+
+	}
+
+	/**
+	 * Returns day period between first and last date.
+	 *
+	 * @return day period
+	 *
+	 * @since 0.15.0
+	 */
+	public long getDayPeriod() {
+
+		if (getFirstDay() == null) {
+			return -1;
+		}
+
+		if (getLastDay() == null) {
+			return 1;
+		}
+
+		return ChronoUnit.DAYS.between((LocalDate) getLastDay().getDate().getValue(), (LocalDate) getFirstDay().getDate().getValue());
 
 	}
 
