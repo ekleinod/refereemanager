@@ -1,11 +1,9 @@
 package de.edgesoft.refereemanager.model;
 
 import java.text.MessageFormat;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.Objects;
 
 import de.edgesoft.refereemanager.jaxb.Season;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -36,66 +34,29 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class SeasonModel extends Season {
 
-	/**
-	 * Start month of a new season.
-	 *
-	 * @version 0.14.0
-	 * @since 0.5.0
-	 */
-	public static final Month NEWSEASON = Month.JUNE;
+    /**
+     * Returns the end year of the season.
+     *
+     * @return end year
+     *
+     * @since 0.15.0
+     */
+    public SimpleIntegerProperty getEndYear() {
+        return new SimpleIntegerProperty(getStartYear().getValue() + 1);
+    }
 
 	/**
-	 * Returns start year for current season.
+	 * Gets the value of the title property.
 	 *
-	 * A season runs from june to may.
-	 *
-	 * @return start year of current season
-	 *
-	 * @version 0.14.0
-	 * @since 0.5.0
+	 * @return title
 	 */
-		public static Integer getCurrentStartYear() {
-			return getStartYearForDate(LocalDate.now());
+	@Override
+	public SimpleStringProperty getTitle() {
+		if (title == null) {
+			return new SimpleStringProperty(MessageFormat.format("{0,number,####}-{1,number,####}", getStartYear().getValue(), getEndYear().getValue()));
 		}
-
-	/**
-	 * Returns start year of a season for a given date.
-	 *
-	 * A season runs from june to may.
-	 *
-	 * @param theDate date
-	 * @return start year of season for date
-	 *
-	 * @version 0.14.0
-	 * @since 0.5.0
-	 */
-		public static Integer getStartYearForDate(final LocalDate theDate) {
-
-		Objects.requireNonNull(theDate, "date must not be null");
-
-			int iReturn = theDate.getYear();
-			if (theDate.getMonth().ordinal() < NEWSEASON.ordinal()) {
-				iReturn--;
-			}
-
-				return Integer.valueOf(iReturn);
-		}
-
-		/**
-		 * Gets the value of the title property.
-		 *
-		 * @return title
-	 *
-	 * @version 0.14.0
-	 * @since 0.5.0
-		 */
-		@Override
-		public SimpleStringProperty getTitle() {
-			if (title == null) {
-				return new SimpleStringProperty(MessageFormat.format("{0,number,####}-{1,number,####}", getStartYear().get(), getStartYear().get() + 1));
-			}
-				return title;
-		}
+		return title;
+	}
 
 }
 
