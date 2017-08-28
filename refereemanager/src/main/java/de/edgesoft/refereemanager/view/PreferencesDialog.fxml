@@ -196,6 +196,8 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
@@ -222,24 +224,28 @@
                               <TextField fx:id="txtEMailFromName" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                               <Label text="E-Mail" GridPane.rowIndex="8" />
                               <TextField fx:id="txtEMailFromEMail" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                              <Label text="Empfänger" GridPane.columnSpan="2147483647" GridPane.rowIndex="9">
+                              <Label text="Antworten (zusätlich zu Absender)" GridPane.columnSpan="2147483647" GridPane.rowIndex="9">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
                               <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="10" />
-                              <Label text="Name" GridPane.rowIndex="11" />
-                              <TextField fx:id="txtEMailToName" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                              <Label text="E-Mail" GridPane.rowIndex="12" />
-                              <TextField fx:id="txtEMailToEMail" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                              <Label text="Vorlagen (relativ zu Vorlagenverzeichnis)" GridPane.columnSpan="2147483647" GridPane.rowIndex="13">
+                              <Label text="Name 1" GridPane.rowIndex="11" />
+                              <TextField fx:id="txtEMailReplyToName1" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                              <Label text="E-Mail 1" GridPane.rowIndex="12" />
+                              <TextField fx:id="txtEMailReplyToEMail1" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                              <Label text="Name 2" GridPane.rowIndex="13" />
+                              <TextField fx:id="txtEMailReplyToName2" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                              <Label text="E-Mail 2" GridPane.rowIndex="14" />
+                              <TextField fx:id="txtEMailReplyToEMail2" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                              <Label text="Vorlagen (relativ zu Vorlagenverzeichnis)" GridPane.columnSpan="2147483647" GridPane.rowIndex="15">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="14" />
-                              <Label text="E-Mail" GridPane.rowIndex="15" />
-                              <TextField fx:id="txtEMailTemplateEMail" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                              <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="16" />
+                              <Label text="E-Mail" GridPane.rowIndex="17" />
+                              <TextField fx:id="txtEMailTemplateEMail" GridPane.columnIndex="1" GridPane.rowIndex="17" />
                            </children>
                         </GridPane>
                      </children>

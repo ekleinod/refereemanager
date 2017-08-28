@@ -239,16 +239,32 @@ public class PreferencesDialogController {
 	private TextField txtEMailFromEMail;
 
 	/**
-	 * EMail - To name.
+	 * EMail - Reply To name 1.
 	 */
 	@FXML
-	private TextField txtEMailToName;
+	private TextField txtEMailReplyToName1;
 
 	/**
-	 * EMail - To email.
+	 * EMail - Reply To email 1.
 	 */
 	@FXML
-	private TextField txtEMailToEMail;
+	private TextField txtEMailReplyToEMail1;
+
+	/**
+	 * EMail - Reply To name 2.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private TextField txtEMailReplyToName2;
+
+	/**
+	 * EMail - Reply To email 2.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private TextField txtEMailReplyToEMail2;
 
 	/**
 	 * EMail - Templates - EMail.
@@ -439,8 +455,10 @@ public class PreferencesDialogController {
 		txtEMailSMTPPassword.setText(Prefs.get(PrefKey.EMAIL_SMTP_PASSWORD));
 		txtEMailFromName.setText(Prefs.get(PrefKey.EMAIL_FROM_NAME));
 		txtEMailFromEMail.setText(Prefs.get(PrefKey.EMAIL_FROM_EMAIL));
-		txtEMailToName.setText(Prefs.get(PrefKey.EMAIL_TO_NAME));
-		txtEMailToEMail.setText(Prefs.get(PrefKey.EMAIL_TO_EMAIL));
+		txtEMailReplyToName1.setText(Prefs.get(PrefKey.EMAIL_REPLY_TO_NAME1));
+		txtEMailReplyToEMail1.setText(Prefs.get(PrefKey.EMAIL_REPLY_TO_EMAIL1));
+		txtEMailReplyToName2.setText(Prefs.get(PrefKey.EMAIL_REPLY_TO_NAME2));
+		txtEMailReplyToEMail2.setText(Prefs.get(PrefKey.EMAIL_REPLY_TO_EMAIL2));
 		txtEMailTemplateEMail.setText(Prefs.get(PrefKey.EMAIL_TEMPLATE_EMAIL));
 
 		// tab letters
@@ -487,8 +505,10 @@ public class PreferencesDialogController {
 			Prefs.put(PrefKey.EMAIL_SMTP_PASSWORD, txtEMailSMTPPassword.getText());
 			Prefs.put(PrefKey.EMAIL_FROM_NAME, txtEMailFromName.getText());
 			Prefs.put(PrefKey.EMAIL_FROM_EMAIL, txtEMailFromEMail.getText());
-			Prefs.put(PrefKey.EMAIL_TO_NAME, txtEMailToName.getText());
-			Prefs.put(PrefKey.EMAIL_TO_EMAIL, txtEMailToEMail.getText());
+			Prefs.put(PrefKey.EMAIL_REPLY_TO_NAME1, txtEMailReplyToName1.getText());
+			Prefs.put(PrefKey.EMAIL_REPLY_TO_EMAIL1, txtEMailReplyToEMail1.getText());
+			Prefs.put(PrefKey.EMAIL_REPLY_TO_NAME2, txtEMailReplyToName2.getText());
+			Prefs.put(PrefKey.EMAIL_REPLY_TO_EMAIL2, txtEMailReplyToEMail2.getText());
 			Prefs.put(PrefKey.EMAIL_TEMPLATE_EMAIL, txtEMailTemplateEMail.getText());
 
 			// tab letters

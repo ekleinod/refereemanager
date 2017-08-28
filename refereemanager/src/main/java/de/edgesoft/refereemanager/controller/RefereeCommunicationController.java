@@ -1278,19 +1278,36 @@ public class RefereeCommunicationController {
 							try {
 
 								Message msgMail = new MimeMessage(session);
+
+								// from
 								msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM_EMAIL), Prefs.get(PrefKey.EMAIL_FROM_NAME), StandardCharsets.UTF_8.name()));
 
+								// reply to
+								List<InternetAddress> lstReplyTo = new ArrayList<>();
+								lstReplyTo.add(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM_EMAIL), Prefs.get(PrefKey.EMAIL_FROM_NAME), StandardCharsets.UTF_8.name()));
+								if (!Prefs.get(PrefKey.EMAIL_REPLY_TO_EMAIL1).isEmpty()) {
+									lstReplyTo.add(new InternetAddress(Prefs.get(PrefKey.EMAIL_REPLY_TO_EMAIL1), Prefs.get(PrefKey.EMAIL_REPLY_TO_NAME1), StandardCharsets.UTF_8.name()));
+								}
+								if (!Prefs.get(PrefKey.EMAIL_REPLY_TO_EMAIL2).isEmpty()) {
+									lstReplyTo.add(new InternetAddress(Prefs.get(PrefKey.EMAIL_REPLY_TO_EMAIL2), Prefs.get(PrefKey.EMAIL_REPLY_TO_NAME2), StandardCharsets.UTF_8.name()));
+								}
+								msgMail.setReplyTo(lstReplyTo.toArray(new InternetAddress[lstReplyTo.size()]));
+
+								// date
 								if (mapFilled.get(DocumentDataVariable.DATE.value()) instanceof LocalDateTime) {
 									msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE.value())));
 								} else {
 									msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.parseDateTime((String) mapFilled.get(DocumentDataVariable.DATE.value()))));
 								}
 
+								// subject
 								msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
 
+								// recipient
 								EMail theEMail = person.getPrimaryEMail();
 								msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().getValue(), person.getFullName().getValue(), StandardCharsets.UTF_8.name()));
 
+								// content
 								MimeMultipart msgContent = new MimeMultipart();
 
 								try (StringWriter wrtContent = new StringWriter()) {
