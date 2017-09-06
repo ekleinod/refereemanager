@@ -384,7 +384,9 @@ public class PreferencesDialogController {
 		btnPathsTemplate.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
 		btnPathsImage.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
 		btnPathsXSD.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-open.png")));
-		btnRefereeReportPath.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-open.png")));
+
+		tabRefereeReports.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+		btnRefereeReportPath.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
 
 		tabPaths.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
 
