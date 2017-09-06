@@ -334,6 +334,14 @@ public class PersonEditDialogController {
 	protected ComboBox<ModelClassExt> cboMember;
 
 	/**
+	 * Clear member clubs.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnMemberClear;
+
+	/**
 	 * Combobox for reffor clubs.
 	 */
 	@FXML
@@ -341,11 +349,27 @@ public class PersonEditDialogController {
 	protected ComboBox<ModelClassExt> cboReffor;
 
 	/**
+	 * Clear reffor clubs.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnRefforClear;
+
+	/**
 	 * Combobox for status.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "status", jaxbclass = Referee.class)
 	protected ComboBox<ModelClassExt> cboStatus;
+
+	/**
+	 * Clear status.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnStatusClear;
 
 	/**
 	 * Checkbox for docs by letter.
@@ -767,6 +791,9 @@ public class PersonEditDialogController {
 
 		btnSexTypeClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 		btnRoleClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
+		btnMemberClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
+		btnRefforClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
+		btnStatusClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 
 	}
 
@@ -1246,8 +1273,7 @@ public class PersonEditDialogController {
 	 */
 	@FXML
 	private void handleSexTypeClear() {
-		cboSexType.getSelectionModel().clearSelection();
-		cboSexType.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboSexType);
 	}
 
 	/**
@@ -1257,8 +1283,37 @@ public class PersonEditDialogController {
 	 */
 	@FXML
 	private void handleRoleClear() {
-		cboRole.getSelectionModel().clearSelection();
-		cboRole.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboRole);
+	}
+
+	/**
+	 * Clears member selection.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleMemberClear() {
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboMember);
+	}
+
+	/**
+	 * Clears reffor selection.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleRefforClear() {
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboReffor);
+	}
+
+	/**
+	 * Clears status selection.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleStatusClear() {
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboStatus);
 	}
 
 	/**
