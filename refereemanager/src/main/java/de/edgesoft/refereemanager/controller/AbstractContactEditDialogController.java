@@ -82,6 +82,14 @@ public abstract class AbstractContactEditDialogController {
 	protected ComboBox<ModelClassExt> cboContactType;
 
 	/**
+	 * Clear contact type.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnContactTypeClear;
+
+	/**
 	 * Checkbox for primary contact.
 	 */
 	@FXML
@@ -158,9 +166,16 @@ public abstract class AbstractContactEditDialogController {
 
         }
 
+		// enable buttons
+		btnContactTypeClear.disableProperty().bind(
+				cboContactType.getSelectionModel().selectedItemProperty().isNull()
+		);
+
 		// icons
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
 		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
+
+		btnContactTypeClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 
 	}
 
@@ -240,6 +255,16 @@ public abstract class AbstractContactEditDialogController {
 		okClicked = false;
         dialogStage.close();
     }
+
+	/**
+	 * Clears contact type selection.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleContactTypeClear() {
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboContactType);
+	}
 
 }
 

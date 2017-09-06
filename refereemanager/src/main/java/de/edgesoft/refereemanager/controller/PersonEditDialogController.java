@@ -745,6 +745,15 @@ public class PersonEditDialogController {
 		btnRoleClear.disableProperty().bind(
 				cboRole.getSelectionModel().selectedItemProperty().isNull()
 		);
+		btnMemberClear.disableProperty().bind(
+				cboMember.getSelectionModel().selectedItemProperty().isNull()
+		);
+		btnRefforClear.disableProperty().bind(
+				cboReffor.getSelectionModel().selectedItemProperty().isNull()
+		);
+		btnStatusClear.disableProperty().bind(
+				cboStatus.getSelectionModel().selectedItemProperty().isNull()
+		);
 
 		// enable spinners
 		spnPointsWrittenA.disableProperty().bind(
