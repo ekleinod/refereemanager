@@ -83,6 +83,14 @@ public class TrainingLevelEditDialogController {
 	protected ComboBox<ModelClassExt> cboTrainingLevelType;
 
 	/**
+	 * Clear training level type.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnTrainingLevelTypeClear;
+
+	/**
 	 * List view for updates.
 	 */
 	@FXML
@@ -197,6 +205,9 @@ public class TrainingLevelEditDialogController {
 		btnUpdateDelete.disableProperty().bind(
 				lstUpdate.getSelectionModel().selectedItemProperty().isNull()
 		);
+		btnTrainingLevelTypeClear.disableProperty().bind(
+				cboTrainingLevelType.getSelectionModel().selectedItemProperty().isNull()
+		);
 
 		// icons
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
@@ -205,6 +216,8 @@ public class TrainingLevelEditDialogController {
 		btnUpdateAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnUpdateEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnUpdateDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
+
+		btnTrainingLevelTypeClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 
 	}
 
@@ -379,6 +392,16 @@ public class TrainingLevelEditDialogController {
 
 		return editController.isOkClicked();
 
+	}
+
+	/**
+	 * Clears training level type selection.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleTrainingLevelTypeClear() {
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboTrainingLevelType);
 	}
 
 }

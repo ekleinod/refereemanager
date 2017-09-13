@@ -230,7 +230,8 @@
                                     </Label>
                                     <AnchorPane GridPane.columnIndex="1">
                                        <children>
-                                          <ComboBox fx:id="cboMember" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                          <ComboBox fx:id="cboMember" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnMemberClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleMemberClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
                                     <Label text="Schiedst für" GridPane.rowIndex="1">
@@ -240,7 +241,8 @@
                                     </Label>
                                     <AnchorPane layoutX="165.0" layoutY="15.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <children>
-                                          <ComboBox fx:id="cboReffor" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                          <ComboBox fx:id="cboReffor" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnRefforClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleRefforClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
                                     <Label text="Einsatzhäufigkeit" GridPane.rowIndex="2">
@@ -250,7 +252,8 @@
                                     </Label>
                                     <AnchorPane layoutX="165.0" layoutY="45.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <children>
-                                          <ComboBox fx:id="cboStatus" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                          <ComboBox fx:id="cboStatus" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnStatusClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleStatusClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
                                     <Label text="Brief" GridPane.rowIndex="3">
