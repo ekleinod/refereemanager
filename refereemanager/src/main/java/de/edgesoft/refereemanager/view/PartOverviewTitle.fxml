@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="200.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints fillHeight="false" minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+    <RowConstraints fillHeight="false" minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+    <RowConstraints fillHeight="false" minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+    <RowConstraints fillHeight="false" minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+  </rowConstraints>
+   <children>
+      <Label fx:id="lblLabelID" text="ID" />
+      <Label fx:id="lblID" text="Label" GridPane.columnIndex="1" />
+      <Label fx:id="lblLabelTitle" text="Titel" GridPane.rowIndex="1" />
+      <Label fx:id="lblTitle" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label fx:id="lblLabelShorttitle" text="Kurztitel" GridPane.rowIndex="2" />
+      <Label fx:id="lblShorttitle" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label fx:id="lblLabelRemark" text="Anmerkung" GridPane.rowIndex="3" />
+      <Label fx:id="lblRemark" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+   </children>
+</GridPane>

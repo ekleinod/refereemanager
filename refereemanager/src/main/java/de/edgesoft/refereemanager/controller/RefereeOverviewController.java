@@ -207,7 +207,7 @@ public class RefereeOverviewController {
 	 * @since 0.14.0
 	 */
 	@FXML
-	private Label lblRemarkLabel;
+	private Label lblLabelRemark;
 
 	/**
 	 * Referee image.
