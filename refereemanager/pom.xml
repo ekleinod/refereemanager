@@ -8,7 +8,21 @@
   <packaging>jar</packaging>
 
   <name>refereemanager</name>
+  <description>Management of table tennis referees and their assignments.</description>
   <url>https://github.com/tt-schiri/refereemanager</url>
+  <organization>
+  	<name>Ekkart Kleinod (edge-soft)</name>
+  	<url>http://www.edgesoft.de/</url>
+  </organization>
+
+  <issueManagement>
+  	<system>github</system>
+  	<url>https://github.com/tt-schiri/refereemanager/issues</url>
+  </issueManagement>
+  <scm>
+  	<url>https://github.com/tt-schiri/refereemanager</url>
+  	<developerConnection>ekleinod</developerConnection>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -57,7 +71,7 @@
 	<dependency>
 	    <groupId>org.knowm.xchart</groupId>
 	    <artifactId>xchart</artifactId>
-	    <version>3.3.1</version>
+	    <version>3.5.0</version>
 	</dependency>
 	<dependency>
 	    <groupId>org.jfxtras</groupId>
@@ -117,18 +131,4 @@
       </plugin>
   	</plugins>
   </build>
-
-  <organization>
-  	<name>Ekkart Kleinod (edge-soft)</name>
-  	<url>http://www.edgesoft.de/</url>
-  </organization>
-  <description>Management of table tennis referees and their assignments.</description>
-  <issueManagement>
-  	<system>github</system>
-  	<url>https://github.com/tt-schiri/refereemanager/issues</url>
-  </issueManagement>
-  <scm>
-  	<url>https://github.com/tt-schiri/refereemanager</url>
-  	<developerConnection>ekleinod</developerConnection>
-  </scm>
 </project>
