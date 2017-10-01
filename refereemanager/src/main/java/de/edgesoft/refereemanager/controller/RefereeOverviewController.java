@@ -178,6 +178,22 @@ public class RefereeOverviewController {
 	private Label lblNextUpdateLabel;
 
 	/**
+	 * Role label.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Label lblRole;
+
+	/**
+	 * Role label label.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Label lblRoleLabel;
+
+	/**
 	 * Remark label.
 	 *
 	 * @since 0.14.0
@@ -357,6 +373,7 @@ public class RefereeOverviewController {
 			lblBirthday.setText("");
 			lblLastUpdate.setText("");
 			lblNextUpdate.setText("");
+			lblRole.setText("");
 			lblRemark.setText("");
 
 			imgReferee.setImage(null);
@@ -376,10 +393,17 @@ public class RefereeOverviewController {
 					(theDetailData.getFirstName() == null) ?
 							null :
 							theDetailData.getFirstName().getValue());
+
 			lblBirthday.setText(
 					(theDetailData.getBirthday() == null) ?
 							null :
 							DateTimeUtils.formatDate((LocalDate) theDetailData.getBirthday().getValue()));
+
+			lblRole.setText(
+					(theDetailData.getRole() == null) ?
+							null :
+							theDetailData.getRole().getDisplayText().getValue());
+
 			lblRemark.setText(
 					(theDetailData.getRemark() == null) ?
 							null :

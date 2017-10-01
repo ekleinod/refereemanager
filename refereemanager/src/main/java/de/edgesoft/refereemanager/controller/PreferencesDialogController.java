@@ -162,6 +162,47 @@ public class PreferencesDialogController {
 
 
 	/**
+	 * Tab referee report.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Tab tabRefereeReports;
+
+	/**
+	 * Report path.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private TextField txtRefereeReportPath;
+
+	/**
+	 * Report path button.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnRefereeReportPath;
+
+	/**
+	 * Report filename league games.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private TextField txtRefereeReportLeagueGame;
+
+	/**
+	 * Report filename tournaments.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private TextField txtRefereeReportTournament;
+
+
+	/**
 	 * Tab EMail.
 	 */
 	@FXML
@@ -198,16 +239,32 @@ public class PreferencesDialogController {
 	private TextField txtEMailFromEMail;
 
 	/**
-	 * EMail - To name.
+	 * EMail - Reply To name 1.
 	 */
 	@FXML
-	private TextField txtEMailToName;
+	private TextField txtEMailReplyToName1;
 
 	/**
-	 * EMail - To email.
+	 * EMail - Reply To email 1.
 	 */
 	@FXML
-	private TextField txtEMailToEMail;
+	private TextField txtEMailReplyToEMail1;
+
+	/**
+	 * EMail - Reply To name 2.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private TextField txtEMailReplyToName2;
+
+	/**
+	 * EMail - Reply To email 2.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private TextField txtEMailReplyToEMail2;
 
 	/**
 	 * EMail - Templates - EMail.
@@ -328,6 +385,9 @@ public class PreferencesDialogController {
 		btnPathsImage.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
 		btnPathsXSD.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/document-open.png")));
 
+		tabRefereeReports.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+		btnRefereeReportPath.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/folder-open.png")));
+
 		tabPaths.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
 
 		tabEMail.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
@@ -382,6 +442,11 @@ public class PreferencesDialogController {
 		chkDataSortLoading.setSelected(Boolean.parseBoolean(Prefs.get(PrefKey.OTHER_DATA_SORT_LOADING)));
 
 		// tab templates
+		txtRefereeReportPath.setText(Prefs.get(PrefKey.REFEREE_REPORT_PATH));
+		txtRefereeReportLeagueGame.setText(Prefs.get(PrefKey.REFEREE_REPORT_LEAGUE_GAMES));
+		txtRefereeReportTournament.setText(Prefs.get(PrefKey.REFEREE_REPORT_TOURNAMENTS));
+
+		// tab paths
 		txtPathsImage.setText(Prefs.get(PrefKey.PATHS_IMAGE));
 		txtPathsTemplate.setText(Prefs.get(PrefKey.PATHS_TEMPLATE));
 		txtPathsXSD.setText(Prefs.get(PrefKey.PATHS_XSD));
@@ -392,8 +457,10 @@ public class PreferencesDialogController {
 		txtEMailSMTPPassword.setText(Prefs.get(PrefKey.EMAIL_SMTP_PASSWORD));
 		txtEMailFromName.setText(Prefs.get(PrefKey.EMAIL_FROM_NAME));
 		txtEMailFromEMail.setText(Prefs.get(PrefKey.EMAIL_FROM_EMAIL));
-		txtEMailToName.setText(Prefs.get(PrefKey.EMAIL_TO_NAME));
-		txtEMailToEMail.setText(Prefs.get(PrefKey.EMAIL_TO_EMAIL));
+		txtEMailReplyToName1.setText(Prefs.get(PrefKey.EMAIL_REPLY_TO_NAME1));
+		txtEMailReplyToEMail1.setText(Prefs.get(PrefKey.EMAIL_REPLY_TO_EMAIL1));
+		txtEMailReplyToName2.setText(Prefs.get(PrefKey.EMAIL_REPLY_TO_NAME2));
+		txtEMailReplyToEMail2.setText(Prefs.get(PrefKey.EMAIL_REPLY_TO_EMAIL2));
 		txtEMailTemplateEMail.setText(Prefs.get(PrefKey.EMAIL_TEMPLATE_EMAIL));
 
 		// tab letters
@@ -424,6 +491,11 @@ public class PreferencesDialogController {
 			Prefs.put(PrefKey.OTHER_TITLE_FULLPATH, Boolean.toString(chkTitleFullpath.isSelected()));
 			Prefs.put(PrefKey.OTHER_DATA_SORT_LOADING, Boolean.toString(chkDataSortLoading.isSelected()));
 
+			// tab referee report
+			Prefs.put(PrefKey.REFEREE_REPORT_PATH, txtRefereeReportPath.getText());
+			Prefs.put(PrefKey.REFEREE_REPORT_LEAGUE_GAMES, txtRefereeReportLeagueGame.getText());
+			Prefs.put(PrefKey.REFEREE_REPORT_TOURNAMENTS, txtRefereeReportTournament.getText());
+
 			// tab paths
 			Prefs.put(PrefKey.PATHS_IMAGE, txtPathsImage.getText());
 			Prefs.put(PrefKey.PATHS_TEMPLATE, txtPathsTemplate.getText());
@@ -435,8 +507,10 @@ public class PreferencesDialogController {
 			Prefs.put(PrefKey.EMAIL_SMTP_PASSWORD, txtEMailSMTPPassword.getText());
 			Prefs.put(PrefKey.EMAIL_FROM_NAME, txtEMailFromName.getText());
 			Prefs.put(PrefKey.EMAIL_FROM_EMAIL, txtEMailFromEMail.getText());
-			Prefs.put(PrefKey.EMAIL_TO_NAME, txtEMailToName.getText());
-			Prefs.put(PrefKey.EMAIL_TO_EMAIL, txtEMailToEMail.getText());
+			Prefs.put(PrefKey.EMAIL_REPLY_TO_NAME1, txtEMailReplyToName1.getText());
+			Prefs.put(PrefKey.EMAIL_REPLY_TO_EMAIL1, txtEMailReplyToEMail1.getText());
+			Prefs.put(PrefKey.EMAIL_REPLY_TO_NAME2, txtEMailReplyToName2.getText());
+			Prefs.put(PrefKey.EMAIL_REPLY_TO_EMAIL2, txtEMailReplyToEMail2.getText());
 			Prefs.put(PrefKey.EMAIL_TEMPLATE_EMAIL, txtEMailTemplateEMail.getText());
 
 			// tab letters
@@ -510,20 +584,7 @@ public class PreferencesDialogController {
 	 */
 	@FXML
 	private void handlePathsTemplate() {
-
-		DirectoryChooser dirChooser = new DirectoryChooser();
-
-		dirChooser.setTitle("Template-Pfad auswählen");
-		if (!Prefs.get(PrefKey.PATHS_TEMPLATE).isEmpty()) {
-			dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATHS_TEMPLATE)));
-		}
-
-		File dir = dirChooser.showDialog(dialogStage);
-
-		if (dir != null) {
-			txtPathsTemplate.setText(dir.getPath());
-		}
-
+		selectDirectory("Template-Pfad auswählen", PrefKey.PATHS_TEMPLATE, txtPathsTemplate);
 	}
 
 	/**
@@ -533,18 +594,40 @@ public class PreferencesDialogController {
 	 */
 	@FXML
 	private void handlePathsImage() {
+		selectDirectory("Bilder-Pfad auswählen", PrefKey.PATHS_IMAGE, txtPathsImage);
+	}
+
+	/**
+	 * Set referee report path.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleRefereeReportPath() {
+		selectDirectory("OSR-Bericht-Pfad auswählen", PrefKey.REFEREE_REPORT_PATH, txtRefereeReportPath);
+	}
+
+	/**
+	 * Get directory, set text field.
+	 *
+	 * @since 0.15.0
+	 */
+	private void selectDirectory(final String theTitle, final PrefKey thePrefKey, final TextField theField) {
 
 		DirectoryChooser dirChooser = new DirectoryChooser();
 
-		dirChooser.setTitle("Bilder-Pfad auswählen");
-		if (!Prefs.get(PrefKey.PATHS_IMAGE).isEmpty()) {
-			dirChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATHS_IMAGE)));
+		dirChooser.setTitle(theTitle);
+
+		if (!theField.getText().trim().isEmpty()) {
+			dirChooser.setInitialDirectory(new File(theField.getText().trim()));
+		} else if (!Prefs.get(thePrefKey).isEmpty()) {
+			dirChooser.setInitialDirectory(new File(Prefs.get(thePrefKey)));
 		}
 
 		File dir = dirChooser.showDialog(dialogStage);
 
 		if (dir != null) {
-			txtPathsImage.setText(dir.getPath());
+			theField.setText(dir.getPath());
 		}
 
 	}

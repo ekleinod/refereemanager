@@ -123,26 +123,17 @@ public class RefereeCommunicationController {
 
 	/**
 	 * A message variable token.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	public static final String MESSAGE_VARIABLE_TOKEN = "%s:";
 
 	/**
 	 * Attachment separator.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	public static final String ATTACHMENT_SEPARATOR = "::";
 
 
 	/**
 	 * Split pane.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private SplitPane pneSplit;
@@ -150,18 +141,12 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Send button.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnSend;
 
 	/**
 	 * Prefs button.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnPrefs;
@@ -169,7 +154,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Label title.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -177,9 +161,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Textfield title.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtTitle;
@@ -187,7 +168,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Label subtitle.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -195,9 +175,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Textfield subtitle.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtSubtitle;
@@ -205,7 +182,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Label opening.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -213,18 +189,12 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Textfield opening.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtOpening;
 
 	/**
 	 * Textarea body.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextArea txtBody;
@@ -232,7 +202,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Label closing.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -240,9 +209,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Textfield closing.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtClosing;
@@ -250,7 +216,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Label signature.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -258,9 +223,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Textfield signature.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtSignature;
@@ -268,7 +230,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Label date.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -277,7 +238,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Textfield date.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -286,7 +246,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Label filename.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -294,9 +253,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Textfield filename.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtFilename;
@@ -305,7 +261,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Label attachments.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -314,7 +269,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Buttonbar attachments.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -322,63 +276,42 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Attachment add button.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnAttachmentAdd;
 
 	/**
 	 * Attachment edit button.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnAttachmentEdit;
 
 	/**
 	 * Attachment delete button.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnAttachmentDelete;
 
 	/**
 	 * Attachment table view.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TableView<Attachment> tblAttachments;
 
 	/**
 	 * Filename column.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TableColumn<Attachment, String> colFilename;
 
 	/**
 	 * Title column.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TableColumn<Attachment, String> colTitle;
 
 	/**
 	 * Landscape paper format column.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TableColumn<Attachment, Boolean> colLandscape;
@@ -386,27 +319,18 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Toggle group communication kind.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private ToggleGroup grpCommKind;
 
 	/**
 	 * Radio button email.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private RadioButton radEMails;
 
 	/**
 	 * Radio button letter.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private RadioButton radLetters;
@@ -414,7 +338,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Radio button texts.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -423,7 +346,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Radio button texts.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -431,9 +353,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Radio button document.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private RadioButton radDocument;
@@ -441,7 +360,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Radio button text.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -450,36 +368,24 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Textfield message file.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private TextField txtCommunicationFile;
 
 	/**
 	 * Button message file select.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnMessageFileSelect;
 
 	/**
 	 * Button message file load.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnMessageFileLoad;
 
 	/**
 	 * Button message file save.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private Button btnMessageFileSave;
@@ -488,7 +394,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Label output.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -497,7 +402,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Separator output.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -506,7 +410,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Label output path.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -515,7 +418,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Text field output path.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -524,7 +426,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Label options.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -533,7 +434,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Text field options.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -543,7 +443,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Label other.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -552,7 +451,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Separator other.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -561,7 +459,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Label test mail.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -570,7 +467,6 @@ public class RefereeCommunicationController {
 	/**
 	 * Checkbox test mail.
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@FXML
@@ -579,18 +475,12 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Main app controller.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	private AppLayoutController appController = null;
 
 
 	/**
 	 * Referee list controller.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	private RefereeListController ctlRefList;
 
@@ -599,9 +489,6 @@ public class RefereeCommunicationController {
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void initialize() {
@@ -772,9 +659,6 @@ public class RefereeCommunicationController {
 	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
 	 *
 	 * @param theAppController app controller
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	public void initController(final AppLayoutController theAppController) {
 
@@ -786,9 +670,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Send email or create letter/document.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleSendCreate() {
@@ -899,9 +780,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Open preferences.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handlePrefs() {
@@ -934,9 +812,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Message file selection.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleMessageFileSelect() {
@@ -965,9 +840,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Message file load.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleMessageFileLoad() {
@@ -1022,6 +894,7 @@ public class RefereeCommunicationController {
 										String[] arrAttachmentParts = theLineContent.split(ATTACHMENT_SEPARATOR);
 
 										Attachment attNew = new Attachment();
+										attNew.setLandscape(new SimpleBooleanProperty(false));
 
 										attNew.setFilename(new SimpleStringProperty(arrAttachmentParts[0].trim()));
 
@@ -1094,9 +967,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Message file save.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleMessageFileSave() {
@@ -1105,9 +975,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Attachment addition.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleAttachmentAdd() {
@@ -1122,9 +989,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Attachment edit.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleAttachmentEdit() {
@@ -1139,9 +1003,6 @@ public class RefereeCommunicationController {
 
 	/**
 	 * Attachment deletion.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	@FXML
 	private void handleAttachmentDelete() {
@@ -1170,9 +1031,6 @@ public class RefereeCommunicationController {
 	 *
 	 * @param theAttachment the attachment to be edited
 	 * @return true if the user clicked OK, false otherwise.
-	 *
-	 * @version 0.14.0
-	 * @since 6.0.0
 	 */
 	private boolean showAttachmentEditDialog(Attachment theAttachment) {
 
@@ -1217,9 +1075,6 @@ public class RefereeCommunicationController {
 	 *
 	 * @param theDocData document data
 	 * @param theConfig template configuration
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	private void sendEMails(final Map<String, Object> theDocData, Configuration theConfig) {
 
@@ -1273,23 +1128,41 @@ public class RefereeCommunicationController {
 
 							// fill variables in generated content
 							Map<String, Object> mapFilled = fillDocumentData(theDocData, theConfig, person);
+							RefereeManager.logger.info(MessageFormat.format("Subject: ''{0}''.", (String) mapFilled.get(DocumentDataVariable.SUBJECT.value())));
 
 							try {
 
 								Message msgMail = new MimeMessage(session);
+
+								// from
 								msgMail.setFrom(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM_EMAIL), Prefs.get(PrefKey.EMAIL_FROM_NAME), StandardCharsets.UTF_8.name()));
 
+								// reply to
+								List<InternetAddress> lstReplyTo = new ArrayList<>();
+								lstReplyTo.add(new InternetAddress(Prefs.get(PrefKey.EMAIL_FROM_EMAIL), Prefs.get(PrefKey.EMAIL_FROM_NAME), StandardCharsets.UTF_8.name()));
+								if (!Prefs.get(PrefKey.EMAIL_REPLY_TO_EMAIL1).isEmpty()) {
+									lstReplyTo.add(new InternetAddress(Prefs.get(PrefKey.EMAIL_REPLY_TO_EMAIL1), Prefs.get(PrefKey.EMAIL_REPLY_TO_NAME1), StandardCharsets.UTF_8.name()));
+								}
+								if (!Prefs.get(PrefKey.EMAIL_REPLY_TO_EMAIL2).isEmpty()) {
+									lstReplyTo.add(new InternetAddress(Prefs.get(PrefKey.EMAIL_REPLY_TO_EMAIL2), Prefs.get(PrefKey.EMAIL_REPLY_TO_NAME2), StandardCharsets.UTF_8.name()));
+								}
+								msgMail.setReplyTo(lstReplyTo.toArray(new InternetAddress[lstReplyTo.size()]));
+
+								// date
 								if (mapFilled.get(DocumentDataVariable.DATE.value()) instanceof LocalDateTime) {
 									msgMail.setSentDate(DateTimeUtils.toDate((LocalDateTime) mapFilled.get(DocumentDataVariable.DATE.value())));
 								} else {
 									msgMail.setSentDate(DateTimeUtils.toDate(DateTimeUtils.parseDateTime((String) mapFilled.get(DocumentDataVariable.DATE.value()))));
 								}
 
+								// subject
 								msgMail.setSubject((String) mapFilled.get(DocumentDataVariable.SUBJECT.value()));
 
+								// recipient
 								EMail theEMail = person.getPrimaryEMail();
 								msgMail.setRecipient(RecipientType.TO, new InternetAddress(theEMail.getEMail().getValue(), person.getFullName().getValue(), StandardCharsets.UTF_8.name()));
 
+								// content
 								MimeMultipart msgContent = new MimeMultipart();
 
 								try (StringWriter wrtContent = new StringWriter()) {
@@ -1408,7 +1281,6 @@ public class RefereeCommunicationController {
 	 * @param theDocData document data
 	 * @param theConfig template configuration
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	private void createLetters(final Map<String, Object> theDocData, Configuration theConfig) {
@@ -1588,7 +1460,7 @@ public class RefereeCommunicationController {
 	 * @param theConfig template configuration
 	 * @param theTemplate template name
 	 *
-	 * @version 0.14.0
+	 * @since 0.12.0
 	 */
 	private void createDocumentsOrTexts(final Map<String, Object> theDocData, Configuration theConfig, final String theTemplate) {
 
@@ -1719,7 +1591,7 @@ public class RefereeCommunicationController {
 	 * @param theConfig template configuration
 	 * @param theTemplate template name
 	 *
-	 * @version 0.14.0
+	 * @since 0.12.0
 	 */
 	private void createDocumentOrText(final Map<String, Object> theDocData, Configuration theConfig, final String theTemplate) {
 
@@ -1788,7 +1660,7 @@ public class RefereeCommunicationController {
 	 *
 	 * @return filled document data
 	 *
-	 * @version 0.14.0
+	 * @since 0.12.0
 	 */
 	private Map<String, Object> fillDocumentData(final Map<String, Object> theDocData, final Configuration theConfig, final Person thePerson) {
 		Map<String, Object> mapReturn = new HashMap<>();

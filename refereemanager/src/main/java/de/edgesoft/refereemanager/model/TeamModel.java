@@ -41,9 +41,6 @@ public class TeamModel extends Team {
 	 * Display title.
 	 *
 	 * @return display title
-	 *
-	 * @version 0.14.0
-	 * @since 0.8.0
 	 */
 	@Override
 	public SimpleStringProperty getDisplayTitle() {
@@ -52,7 +49,24 @@ public class TeamModel extends Team {
 			return getClub().getDisplayTitle();
 		}
 
-		return new SimpleStringProperty(MessageFormat.format("{0} {1}", getClub().getDisplayTitle().get(), getNumber().get()));
+		return new SimpleStringProperty(MessageFormat.format("{0} {1}", getClub().getDisplayTitle().getValue(), getNumber().getValue()));
+	}
+
+	/**
+	 * Short display title.
+	 *
+	 * @return Short display title
+	 *
+	 * @since 0.15.0
+	 */
+	@Override
+	public SimpleStringProperty getDisplayTitleShort() {
+
+		if (getNumber() == null) {
+			return getClub().getDisplayTitleShort();
+		}
+
+		return new SimpleStringProperty(MessageFormat.format("{0} {1}", getClub().getDisplayTitleShort().getValue(), getNumber().getValue()));
 	}
 
 	/**
@@ -60,7 +74,6 @@ public class TeamModel extends Team {
 	 *
 	 * @return filename
 	 *
-	 * @version 0.14.0
 	 * @since 0.9.0
 	 */
 	public SimpleStringProperty getFilename() {
@@ -77,7 +90,6 @@ public class TeamModel extends Team {
 	 *
 	 * @return contact person
 	 *
-	 * @version 0.14.0
 	 * @since 0.9.0
 	 */
 	@Override
@@ -100,7 +112,6 @@ public class TeamModel extends Team {
 	 *
 	 * @return venues
 	 *
-	 * @version 0.14.0
 	 * @since 0.9.0
 	 */
 	@Override

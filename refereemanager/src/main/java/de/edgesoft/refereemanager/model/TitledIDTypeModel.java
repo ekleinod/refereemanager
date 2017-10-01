@@ -37,42 +37,32 @@ public class TitledIDTypeModel extends TitledIDType {
 
 	/**
 	 * Comparator title.
-	 *
-	 * @version 0.14.0
 	 */
-	public static final Comparator<TitledIDType> TITLE = Comparator.comparing(titled -> titled.getTitle().get(), Collator.getInstance());
+	public static final Comparator<TitledIDTypeModel> TITLE = Comparator.comparing(titled -> titled.getTitle().getValueSafe(), Collator.getInstance());
 
 	/**
 	 * Comparator shorttitle.
 	 *
 	 * @todo not sorted with collator
-	 *
-	 * @version 0.14.0
 	 */
-	public static final Comparator<TitledIDType> SHORTTITLE = Comparator.comparing(titled -> titled.getShorttitle().get(), Comparator.nullsFirst(String::compareTo));
+	public static final Comparator<TitledIDTypeModel> SHORTTITLE = Comparator.comparing(titled -> titled.getDisplayTitleShort().getValueSafe(), Comparator.nullsFirst(String::compareTo));
 
 	/**
 	 * Comparator shorttitle then title.
 	 *
 	 * @todo does not work with shorttitle == null
-	 *
-	 * @version 0.14.0
 	 */
-	public static final Comparator<TitledIDType> SHORTTITLE_TITLE = SHORTTITLE.thenComparing(TITLE);
+	public static final Comparator<TitledIDTypeModel> SHORTTITLE_TITLE = SHORTTITLE.thenComparing(TITLE);
 
 	/**
 	 * Comparator displaytitle.
-	 *
-	 * @version 0.14.0
 	 */
-	public static final Comparator<TitledIDTypeModel> DISPLAYTITLE = Comparator.comparing(titled -> titled.getDisplayTitleShort().get(), Collator.getInstance());
+	public static final Comparator<TitledIDTypeModel> DISPLAYTITLE = Comparator.comparing(titled -> titled.getDisplayTitleShort().getValueSafe(), Collator.getInstance());
 
 	/**
-	 * Display title.
+	 * Short display title.
 	 *
-	 * @return display title
-	 *
-	 * @version 0.14.0
+	 * @return short display title
 	 */
 	public SimpleStringProperty getDisplayTitleShort() {
 		return (getShorttitle() == null) ? getDisplayTitle() : getShorttitle();
@@ -82,8 +72,6 @@ public class TitledIDTypeModel extends TitledIDType {
 	 * Display title.
 	 *
 	 * @return display title
-	 *
-	 * @version 0.14.0
 	 */
 	public SimpleStringProperty getDisplayTitle() {
 		return (getTitle() == null) ? new SimpleStringProperty(getId()) : getTitle();
@@ -91,8 +79,6 @@ public class TitledIDTypeModel extends TitledIDType {
 
 	/**
 	 * Returns display text.
-	 *
-	 * @version 0.14.0
 	 */
 	@Override
 	public StringProperty getDisplayText() {

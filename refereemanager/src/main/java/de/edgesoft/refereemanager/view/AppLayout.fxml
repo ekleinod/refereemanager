@@ -57,19 +57,28 @@
                         </MenuItem>
                      </items>
                 </Menu>
-                  <Menu text="_Schiedsrichter">
-                    <items>
-                      <MenuItem fx:id="mnuRefereeOverview" onAction="#handleRefereeOverview" text="Ü_bersicht">
-                           <accelerator>
-                              <KeyCodeCombination alt="DOWN" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                           </accelerator></MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="mnuRefereeCommunication" onAction="#handleRefereeCommunication" text="_Kommunikation">
-                           <accelerator>
-                              <KeyCodeCombination alt="DOWN" code="K" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                           </accelerator></MenuItem>
-                    </items>
-                  </Menu>
+                <Menu text="_Schiedsrichter">
+                  <items>
+                    <MenuItem fx:id="mnuRefereeOverview" onAction="#handleRefereeOverview" text="Schiriü_bersicht">
+                         <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                         </accelerator></MenuItem>
+                      <SeparatorMenuItem mnemonicParsing="false" />
+                      <MenuItem fx:id="mnuRefereeCommunication" onAction="#handleRefereeCommunication" text="Schiri_kommunikation">
+                         <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="K" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                         </accelerator></MenuItem>
+                  </items>
+                </Menu>
+                <Menu text="_Termine">
+                   <items>
+                      <MenuItem fx:id="mnuEventOverview" onAction="#handleEventOverview" text="Terminü_bersicht">
+                         <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                         </accelerator>
+                      </MenuItem>
+                   </items>
+                </Menu>
                 <Menu text="S_tatistik">
                   <items>
                     <MenuItem fx:id="mnuStatisticsData" onAction="#handleStatisticsData" text="_Daten">
@@ -93,9 +102,14 @@
             <ToolBar fx:id="barMain" prefHeight="40.0" prefWidth="200.0">
               <items>
                 <Button fx:id="btnProgramQuit" mnemonicParsing="false" onAction="#handleProgramExit" />
+                  <Separator layoutX="32.0" layoutY="10.0" prefWidth="10.0" />
+                  <Button fx:id="btnFileOpen" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleFileOpen" />
+                  <Button fx:id="btnFileSave" layoutX="46.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleFileSave" />
                   <Separator prefWidth="10.0" />
                   <Button fx:id="btnRefereeOverview" mnemonicParsing="false" onAction="#handleRefereeOverview" />
                   <Button fx:id="btnRefereeCommunication" mnemonicParsing="false" onAction="#handleRefereeCommunication" />
+                  <Separator layoutX="90.0" layoutY="10.0" prefWidth="10.0" />
+                  <Button fx:id="btnEventOverview" mnemonicParsing="false" onAction="#handleEventOverview" />
                   <Separator prefWidth="10.0" />
                   <Button fx:id="btnStatisticsData" mnemonicParsing="false" onAction="#handleStatisticsData" />
                   <Separator prefWidth="10.0" />

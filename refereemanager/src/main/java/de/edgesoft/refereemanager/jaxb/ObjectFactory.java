@@ -9,19 +9,23 @@ import javax.xml.namespace.QName;
 import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.DateModel;
 import de.edgesoft.refereemanager.model.EMailModel;
+import de.edgesoft.refereemanager.model.EventDayModel;
+import de.edgesoft.refereemanager.model.LeagueGameModel;
 import de.edgesoft.refereemanager.model.LeagueModel;
+import de.edgesoft.refereemanager.model.OtherEventModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.PhoneNumberModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
 import de.edgesoft.refereemanager.model.TeamModel;
+import de.edgesoft.refereemanager.model.TournamentModel;
 import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 import de.edgesoft.refereemanager.model.URLModel;
+import de.edgesoft.refereemanager.model.VenueModel;
 import de.edgesoft.refereemanager.model.WishModel;
 
 
@@ -94,19 +98,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link URL }
+     * Create an instance of {@link OtherEvent }
      * 
      */
-    public URL createURL() {
-        return new URLModel();
-    }
-
-    /**
-     * Create an instance of {@link OtherDate }
-     * 
-     */
-    public OtherDate createOtherDate() {
-        return new OtherDate();
+    public OtherEvent createOtherEvent() {
+        return new OtherEventModel();
     }
 
     /**
@@ -118,11 +114,75 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link EventDateType }
+     * 
+     */
+    public EventDateType createEventDateType() {
+        return new EventDateType();
+    }
+
+    /**
      * Create an instance of {@link TrainingLevel }
      * 
      */
     public TrainingLevel createTrainingLevel() {
         return new TrainingLevelModel();
+    }
+
+    /**
+     * Create an instance of {@link Exam }
+     * 
+     */
+    public Exam createExam() {
+        return new Exam();
+    }
+
+    /**
+     * Create an instance of {@link League }
+     * 
+     */
+    public League createLeague() {
+        return new LeagueModel();
+    }
+
+    /**
+     * Create an instance of {@link Venue }
+     * 
+     */
+    public Venue createVenue() {
+        return new VenueModel();
+    }
+
+    /**
+     * Create an instance of {@link EventDay }
+     * 
+     */
+    public EventDay createEventDay() {
+        return new EventDayModel();
+    }
+
+    /**
+     * Create an instance of {@link Content }
+     * 
+     */
+    public Content createContent() {
+        return new ContentModel();
+    }
+
+    /**
+     * Create an instance of {@link Person }
+     * 
+     */
+    public Person createPerson() {
+        return new PersonModel();
+    }
+
+    /**
+     * Create an instance of {@link URL }
+     * 
+     */
+    public URL createURL() {
+        return new URLModel();
     }
 
     /**
@@ -142,14 +202,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Exam }
-     * 
-     */
-    public Exam createExam() {
-        return new Exam();
-    }
-
-    /**
      * Create an instance of {@link SexType }
      * 
      */
@@ -158,19 +210,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link League }
+     * Create an instance of {@link RefereeAssignment }
      * 
      */
-    public League createLeague() {
-        return new LeagueModel();
-    }
-
-    /**
-     * Create an instance of {@link Venue }
-     * 
-     */
-    public Venue createVenue() {
-        return new Venue();
+    public RefereeAssignment createRefereeAssignment() {
+        return new RefereeAssignment();
     }
 
     /**
@@ -179,6 +223,14 @@ public class ObjectFactory {
      */
     public Referee createReferee() {
         return new RefereeModel();
+    }
+
+    /**
+     * Create an instance of {@link PersonRoleType }
+     * 
+     */
+    public PersonRoleType createPersonRoleType() {
+        return new PersonRoleType();
     }
 
     /**
@@ -198,22 +250,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Date }
-     * 
-     */
-    public Date createDate() {
-        return new DateModel();
-    }
-
-    /**
-     * Create an instance of {@link Content }
-     * 
-     */
-    public Content createContent() {
-        return new ContentModel();
-    }
-
-    /**
      * Create an instance of {@link Club }
      * 
      */
@@ -227,6 +263,14 @@ public class ObjectFactory {
      */
     public StatusType createStatusType() {
         return new StatusTypeModel();
+    }
+
+    /**
+     * Create an instance of {@link LeagueGame }
+     * 
+     */
+    public LeagueGame createLeagueGame() {
+        return new LeagueGameModel();
     }
 
     /**
@@ -246,19 +290,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Person }
-     * 
-     */
-    public Person createPerson() {
-        return new PersonModel();
-    }
-
-    /**
      * Create an instance of {@link Tournament }
      * 
      */
     public Tournament createTournament() {
-        return new Tournament();
+        return new TournamentModel();
     }
 
     /**

@@ -1,12 +1,14 @@
 package de.edgesoft.refereemanager.model;
 
-import java.time.LocalDateTime;
-import java.util.Comparator;
+import java.text.MessageFormat;
+import java.time.LocalTime;
 
-import de.edgesoft.refereemanager.jaxb.Date;
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.refereemanager.jaxb.EventDay;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Date model, additional methods for jaxb model class.
+ * Event day model, additional methods for jaxb model class.
  *
  * ## Legal stuff
  *
@@ -28,18 +30,31 @@ import de.edgesoft.refereemanager.jaxb.Date;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.14.0
- * @since 0.9.0
+ * @version 0.15.0
+ * @since 0.15.0
  */
-public class DateModel extends Date {
+public class EventDayModel extends EventDay {
 
 	/**
-	 * Comparator start date/time.
+	 * Returns time text.
 	 *
-	 * @version 0.14.0
-	 * @since 0.9.0
+	 * @return time text
 	 */
-	public static final Comparator<Date> RANK_START = Comparator.comparing(date -> (LocalDateTime) date.getStart().getValue());
+	public SimpleStringProperty getTimeText() {
+
+		if (getStartTime() == null) {
+			return null;
+		}
+
+		if (getEndTime() == null) {
+			return new SimpleStringProperty(DateTimeUtils.formatTime((LocalTime) getStartTime().getValue()));
+		}
+
+		return new SimpleStringProperty(MessageFormat.format("{0} - {1}",
+				DateTimeUtils.formatTime((LocalTime) getStartTime().getValue()),
+				DateTimeUtils.formatTime((LocalTime) getEndTime().getValue())));
+
+	}
 
 }
 

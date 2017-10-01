@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.ClubOverviewController">
+   <children>
+      <SplitPane fx:id="pneSplit" layoutX="100.0" layoutY="150.0" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="lblHeading" layoutX="51.0" layoutY="38.0" text="Details" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+                  <GridPane layoutX="23.0" layoutY="62.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="200.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="ID">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </GridPane.margin></Label>
+                        <Label fx:id="lblID" text="Label" GridPane.columnIndex="1" />
+                        <Label text="Titel" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </GridPane.margin></Label>
+                        <Label fx:id="lblTitle" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Kurztitel" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </GridPane.margin></Label>
+                        <Label fx:id="lblTitleshort" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Dateiname" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </GridPane.margin></Label>
+                        <Label fx:id="lblFilename" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Lokal?" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </GridPane.margin></Label>
+                        <Label fx:id="lblLocal" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="URL" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </GridPane.margin></Label>
+                        <Label fx:id="lblURL" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label text="Spielorte" GridPane.rowIndex="6">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </GridPane.margin></Label>
+                        <Label fx:id="lblVenue" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="Kontakt" GridPane.rowIndex="7">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </GridPane.margin></Label>
+                        <Label fx:id="lblContact" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label fx:id="lblRemarkLabel" text="Anmerkung" GridPane.rowIndex="8">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </GridPane.margin></Label>
+                        <Label fx:id="lblRemark" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                     </children>
+                  </GridPane>
+                  <ButtonBar layoutX="152.0" layoutY="458.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                    <buttons>
+                      <Button fx:id="btnAdd" onAction="#handleAdd" text="_Neu..." />
+                        <Button fx:id="btnEdit" onAction="#handleEdit" prefWidth="140.0" text="Ände_rn..." />
+                        <Button fx:id="btnDelete" onAction="#handleDelete" text="_Löschen" />
+                    </buttons>
+                  </ButtonBar>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

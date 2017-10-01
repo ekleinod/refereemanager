@@ -41,7 +41,8 @@
                   <Label layoutX="15.0" layoutY="113.0" mnemonicParsing="true" text="Kontaktart" GridPane.rowIndex="3" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <ComboBox fx:id="cboContactType" layoutX="27.0" layoutY="3.0" prefHeight="30.0" prefWidth="277.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0" />
+                        <ComboBox fx:id="cboContactType" layoutX="27.0" layoutY="3.0" prefHeight="30.0" prefWidth="277.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="3.0" />
+                        <Button fx:id="btnContactTypeClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleContactTypeClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                      </children>
                   </AnchorPane>
                   <Label mnemonicParsing="true" text="Primärkontakt" GridPane.rowIndex="4" />

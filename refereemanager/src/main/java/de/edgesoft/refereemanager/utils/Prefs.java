@@ -44,7 +44,6 @@ public class Prefs {
 	/**
 	 * Preferences object.
 	 *
-	 * @version 0.14.0
 	 * @since 0.10.0
 	 */
 	private static Preferences preferences = null;
@@ -53,9 +52,6 @@ public class Prefs {
 	 * Returns preferences.
 	 *
 	 * @return preferences
-	 *
-	 * @version 0.14.0
-	 * @since 0.8.0
 	 */
 	private static Preferences getPreferences() {
 		if (preferences == null) {
@@ -69,9 +65,6 @@ public class Prefs {
 	 *
 	 * @param theKey preference key
 	 * @return preference value
-	 *
-	 * @version 0.14.0
-	 * @since 0.8.0
 	 */
 	public static String get(final PrefKey theKey) {
 
@@ -86,6 +79,9 @@ public class Prefs {
 
 			case EMAIL_TEMPLATE_EMAIL:
 				return getPreferences().get(theKey.value(), "email/email.mmd");
+
+			case EVENT_OVERVIEW_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
 
 			case FILENAME_PATTERN_DATABASE:
 				return getPreferences().get(theKey.value(), "refereemanager_%04d.xml");
@@ -119,6 +115,11 @@ public class Prefs {
 			case REFEREE_OVERVIEW_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 
+			case REFEREE_REPORT_LEAGUE_GAMES:
+				return getPreferences().get(theKey.value(), "OSR_%1$s_%2$s_%3$s-%4$s.pdf");
+			case REFEREE_REPORT_TOURNAMENTS:
+				return getPreferences().get(theKey.value(), "OSR_%1$s_%2$s.pdf");
+
 			case STAGE_WIDTH:
 				return getPreferences().get(theKey.value(), Double.toString(800));
 			case STAGE_X:
@@ -149,9 +150,6 @@ public class Prefs {
 	 *
 	 * @param theKey preference key
 	 * @param theValue value
-	 *
-	 * @version 0.14.0
-	 * @since 0.8.0
 	 */
 	public static void put(final PrefKey theKey, final String theValue) {
 		put(theKey.value(), theValue);
@@ -162,9 +160,6 @@ public class Prefs {
 	 *
 	 * @param theKey text key
 	 * @param theValue value
-	 *
-	 * @version 0.14.0
-	 * @since 0.8.0
 	 */
 	public static void put(final String theKey, final String theValue) {
 		getPreferences().put(theKey, theValue);
@@ -177,9 +172,6 @@ public class Prefs {
 	 *
 	 * @throws BackingStoreException
 	 * @throws IOException
-	 *
-	 * @version 0.14.0
-	 * @since 0.8.0
 	 */
 	public static void exportPrefs(final OutputStream theStream) throws IOException, BackingStoreException {
 		getPreferences().exportNode(theStream);
@@ -193,9 +185,6 @@ public class Prefs {
 	 * @throws IOException
 	 * @throws InvalidPreferencesFormatException
 	 * @throws BackingStoreException
-	 *
-	 * @version 0.14.0
-	 * @since 0.8.0
 	 */
 	public static void importPrefs(final InputStream theStream) throws IOException, InvalidPreferencesFormatException, BackingStoreException {
 		getPreferences().clear();
@@ -207,7 +196,6 @@ public class Prefs {
 	 *
 	 * @return preferences map
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	public static Map<String, Object> getPrefMap() {

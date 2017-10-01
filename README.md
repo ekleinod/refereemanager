@@ -10,8 +10,13 @@ At the moment, there is no stable, productive version available.
 Several features are working, see changelog.
 
 **Important:** the focus of development at the moment is *features*, not safety.
-Therefore, the referee manager is *not* safe for using in the "real" internet.
-Use it in a closed envorinment (local server etc.) only.
+Backup your files regularly, please.
+
+## Downloads
+
+- Ubuntu installer &rarr; <https://github.com/tt-schiri/refereemanager/raw/master/files/refereemanager-0.14.0.deb>
+- Windows installer &rarr; <https://github.com/tt-schiri/refereemanager/raw/master/files/refereemanager-0.14.0.exe>
+- jar file &rarr; <https://github.com/tt-schiri/refereemanager/raw/master/files/refereemanager-0.14.0.jar>
 
 ## Templates
 

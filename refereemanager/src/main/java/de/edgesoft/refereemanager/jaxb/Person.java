@@ -42,6 +42,7 @@ import de.edgesoft.refereemanager.model.URLModel;
  *         &lt;element name="phone_number" type="{}PhoneNumber" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="sex_type" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
+ *         &lt;element name="role" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -60,7 +61,8 @@ import de.edgesoft.refereemanager.model.URLModel;
     "address",
     "phoneNumber",
     "url",
-    "sexType"
+    "sexType",
+    "role"
 })
 @XmlSeeAlso({
     RefereeModel.class
@@ -95,6 +97,10 @@ public class Person
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected SexType sexType;
+    @XmlElement(type = Object.class)
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    protected PersonRoleType role;
 
     /**
      * Gets the value of the firstName property.
@@ -330,6 +336,30 @@ public class Person
      */
     public void setSexType(SexType value) {
         this.sexType = value;
+    }
+
+    /**
+     * Gets the value of the role property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Object }
+     *     
+     */
+    public PersonRoleType getRole() {
+        return role;
+    }
+
+    /**
+     * Sets the value of the role property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Object }
+     *     
+     */
+    public void setRole(PersonRoleType value) {
+        this.role = value;
     }
 
 }

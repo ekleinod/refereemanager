@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
-import de.edgesoft.refereemanager.model.DateModel;
+import de.edgesoft.refereemanager.model.RefereeEventModel;
 
 
 /**
@@ -23,7 +23,7 @@ import de.edgesoft.refereemanager.model.DateModel;
  * <pre>
  * &lt;complexType name="Tournament">
  *   &lt;complexContent>
- *     &lt;extension base="{}Date">
+ *     &lt;extension base="{}RefereeEvent">
  *       &lt;sequence>
  *         &lt;element name="announcement_u_r_l" type="{}StringProperty" minOccurs="0"/>
  *         &lt;element name="information_u_r_l" type="{}StringProperty" minOccurs="0"/>
@@ -49,7 +49,7 @@ import de.edgesoft.refereemanager.model.DateModel;
     "organizer"
 })
 public class Tournament
-    extends DateModel
+    extends RefereeEventModel
 {
 
     @XmlElement(name = "announcement_u_r_l", type = String.class)

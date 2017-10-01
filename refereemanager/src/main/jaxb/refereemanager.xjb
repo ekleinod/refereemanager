@@ -51,16 +51,28 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<jxb:class implClass="de.edgesoft.refereemanager.model.ContentModel" />
 		</jxb:bindings>
 
-		<jxb:bindings node="//xsd:complexType[@name='Date']">
-			<jxb:class implClass="de.edgesoft.refereemanager.model.DateModel" />
-		</jxb:bindings>
-
 		<jxb:bindings node="//xsd:complexType[@name='EMail']">
 			<jxb:class implClass="de.edgesoft.refereemanager.model.EMailModel" />
 		</jxb:bindings>
 
+		<jxb:bindings node="//xsd:complexType[@name='EventDate']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.EventDateModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='EventDay']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.EventDayModel" />
+		</jxb:bindings>
+
 		<jxb:bindings node="//xsd:complexType[@name='League']">
 			<jxb:class implClass="de.edgesoft.refereemanager.model.LeagueModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='LeagueGame']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.LeagueGameModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='OtherEvent']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.OtherEventModel" />
 		</jxb:bindings>
 
 		<jxb:bindings node="//xsd:complexType[@name='Person']">
@@ -73,6 +85,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 		<jxb:bindings node="//xsd:complexType[@name='Referee']">
 			<jxb:class implClass="de.edgesoft.refereemanager.model.RefereeModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='RefereeEvent']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.RefereeEventModel" />
 		</jxb:bindings>
 
 		<jxb:bindings node="//xsd:complexType[@name='Season']">
@@ -89,6 +105,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 		<jxb:bindings node="//xsd:complexType[@name='TitledIDType']">
 			<jxb:class implClass="de.edgesoft.refereemanager.model.TitledIDTypeModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='Tournament']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.TournamentModel" />
 		</jxb:bindings>
 
 		<jxb:bindings node="//xsd:complexType[@name='Trainee']">
@@ -109,6 +129,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 		<jxb:bindings node="//xsd:complexType[@name='Wish']">
 			<jxb:class implClass="de.edgesoft.refereemanager.model.WishModel" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xsd:complexType[@name='Venue']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.VenueModel" />
 		</jxb:bindings>
 
 	</jxb:bindings>

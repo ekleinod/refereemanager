@@ -35,7 +35,8 @@
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="150.0" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints vgrow="SOMETIMES" />
                                   <RowConstraints vgrow="SOMETIMES" />
                                   <RowConstraints vgrow="SOMETIMES" />
                                   <RowConstraints vgrow="SOMETIMES" />
@@ -93,11 +94,21 @@
                                           <Button fx:id="btnSexTypeClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleSexTypeClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
-                                    <Label text="Anmerkung" GridPane.rowIndex="7">
+                                    <Label text="Rolle" GridPane.rowIndex="7">
                                        <GridPane.margin>
                                           <Insets bottom="10.0" top="10.0" />
                                        </GridPane.margin></Label>
-                                    <TextArea fx:id="txtRemark" prefHeight="80.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                       <children>
+                                          <ComboBox fx:id="cboRole" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnRoleClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleRoleClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <Label text="Anmerkung" GridPane.rowIndex="8">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </GridPane.margin></Label>
+                                    <TextArea fx:id="txtRemark" prefHeight="80.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -210,8 +221,6 @@
                                     <RowConstraints vgrow="SOMETIMES" />
                                     <RowConstraints vgrow="SOMETIMES" />
                                     <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
                                     <Label text="Mitglied">
@@ -221,7 +230,8 @@
                                     </Label>
                                     <AnchorPane GridPane.columnIndex="1">
                                        <children>
-                                          <ComboBox fx:id="cboMember" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                          <ComboBox fx:id="cboMember" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnMemberClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleMemberClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
                                     <Label text="Schiedst für" GridPane.rowIndex="1">
@@ -231,7 +241,8 @@
                                     </Label>
                                     <AnchorPane layoutX="165.0" layoutY="15.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <children>
-                                          <ComboBox fx:id="cboReffor" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                          <ComboBox fx:id="cboReffor" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnRefforClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleRefforClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
                                     <Label text="Einsatzhäufigkeit" GridPane.rowIndex="2">
@@ -241,7 +252,8 @@
                                     </Label>
                                     <AnchorPane layoutX="165.0" layoutY="45.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <children>
-                                          <ComboBox fx:id="cboStatus" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                          <ComboBox fx:id="cboStatus" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnStatusClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleStatusClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                        </children>
                                     </AnchorPane>
                                     <Label text="Brief" GridPane.rowIndex="3">
@@ -250,14 +262,6 @@
                                        </GridPane.margin>
                                     </Label>
                                     <CheckBox fx:id="chkDocsByLetter" mnemonicParsing="false" text="Nachrichten zusätzlich per Brief" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Label text="Lizenzentzug" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets bottom="10.0" top="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                    <CheckBox fx:id="chkRevokeLicense" mnemonicParsing="false" text="Lizenz entziehen" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <Label text="Begründung" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="TOP" />
-                                    <TextArea fx:id="txtRevokeLicenseReason" prefHeight="80.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

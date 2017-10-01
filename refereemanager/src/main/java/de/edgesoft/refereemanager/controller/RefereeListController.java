@@ -3,17 +3,23 @@ package de.edgesoft.refereemanager.controller;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import de.edgesoft.refereemanager.jaxb.Person;
+import de.edgesoft.refereemanager.jaxb.PersonRoleType;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.utils.TableUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -29,6 +35,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
+import javafx.scene.layout.HBox;
 
 /**
  * Controller for the referee list scene.
@@ -175,6 +182,21 @@ public class RefereeListController {
 	@FXML
 	private CheckBox chkRefereesLetterOnly;
 
+	/**
+	 * HBox filter status.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private HBox boxRefereesFilterStatus;
+
+	/**
+	 * Filter storage.
+	 *
+	 * @since 0.15.0
+	 */
+	private Map<CheckBox, StatusType> mapRefereesFilterStatus;
+
 
 	/**
 	 * Tab trainees.
@@ -289,6 +311,37 @@ public class RefereeListController {
 	private TableColumn<PersonModel, LocalDate> colPeopleBirthday;
 
 	/**
+	 * Role column.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private TableColumn<PersonModel, String> colPeopleRole;
+
+	/**
+	 * Label filter.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Label lblPeopleFilter;
+
+	/**
+	 * HBox filter role.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private HBox boxPeopleFilterRole;
+
+	/**
+	 * Filter storage.
+	 *
+	 * @since 0.15.0
+	 */
+	private Map<CheckBox, PersonRoleType> mapPeopleFilterRoles;
+
+	/**
 	 * List of people.
 	 *
 	 * @since 0.12.0
@@ -339,6 +392,8 @@ public class RefereeListController {
 		colPeopleBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
 		colPeopleBirthday.setVisible(false);
 
+		colPeopleRole.setCellValueFactory(cellData -> (cellData.getValue().getRole() == null) ? null : cellData.getValue().getRole().getDisplayTitleShort());
+
 		// format date columns
 		colRefereesBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate());
 		colRefereesUpdate.setCellFactory(column -> TableUtils.getTableCellRefereeDate());
@@ -349,6 +404,28 @@ public class RefereeListController {
 		tabPaneContent.getSelectionModel().selectedItemProperty().addListener((event, oldTab, newTab) -> {
 	        handleTabChange();
 	    });
+
+		// setup status filter
+		mapRefereesFilterStatus = new HashMap<>();
+		AppModel.getData().getContent().getStatusType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
+				statusType -> {
+					CheckBox chkTemp = new CheckBox(statusType.getDisplayTitleShort().getValueSafe());
+					chkTemp.setOnAction(e -> handleFilterChange());
+					boxRefereesFilterStatus.getChildren().add(chkTemp);
+					mapRefereesFilterStatus.put(chkTemp, statusType);
+				}
+		);
+
+		// setup role filter
+		mapPeopleFilterRoles = new HashMap<>();
+		AppModel.getData().getContent().getRoleType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
+				roleType -> {
+					CheckBox chkTemp = new CheckBox(roleType.getDisplayTitleShort().getValueSafe());
+					chkTemp.setOnAction(e -> handleFilterChange());
+					boxPeopleFilterRole.getChildren().add(chkTemp);
+					mapPeopleFilterRoles.put(chkTemp, roleType);
+				}
+		);
 
 		setItems();
 
@@ -410,7 +487,7 @@ public class RefereeListController {
 			lblRefereesFilter.setText("Filter");
 		} else {
 
-			lstReferees.setPredicate(RefereeModel.ALL);
+			lstReferees.setPredicate(PersonModel.ALL);
 
 			if (chkRefereesActive.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.ACTIVE));
@@ -428,7 +505,33 @@ public class RefereeListController {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.LETTER_ONLY));
 			}
 
+			for (Entry<CheckBox, StatusType> entryChkStatus : mapRefereesFilterStatus.entrySet()) {
+
+				if (entryChkStatus.getKey().isSelected()) {
+					lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.getStatusPredicate(entryChkStatus.getValue())));
+				}
+
+			}
+
 			lblRefereesFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstReferees.size()));
+		}
+
+		// filter for people
+		if (lstPeople == null) {
+			lblPeopleFilter.setText("Filter");
+		} else {
+
+			lstPeople.setPredicate(PersonModel.ALL);
+
+			for (Entry<CheckBox, PersonRoleType> entryChkRole : mapPeopleFilterRoles.entrySet()) {
+
+				if (entryChkRole.getKey().isSelected()) {
+					lstPeople.setPredicate(((Predicate<Person>) lstPeople.getPredicate()).and(PersonModel.getRolePredicate(entryChkRole.getValue())));
+				}
+
+			}
+
+			lblPeopleFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstPeople.size()));
 		}
 
 		tblReferees.refresh();
