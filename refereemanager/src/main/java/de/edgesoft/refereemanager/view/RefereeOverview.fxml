@@ -89,17 +89,10 @@
                         <ImageView fx:id="imgReferee" fitHeight="160.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowSpan="2147483647" GridPane.valignment="TOP" />
                      </children>
                   </GridPane>
-                  <ButtonBar layoutX="152.0" layoutY="458.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
-                    <buttons>
-                      <Button fx:id="btnAdd" onAction="#handleAdd" text="_Neu..." />
-                        <Button fx:id="btnEdit" onAction="#handleEdit" prefWidth="140.0" text="Ände_rn..." />
-                        <Button fx:id="btnDelete" onAction="#handleDelete" text="_Löschen" />
-                    </buttons>
-                  </ButtonBar>
                   <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                      <children>
                         <Label text="Label" />
-                        <fx:include source="PartOverviewButtons.fxml" />
+                        <fx:include fx:id="embeddedButtonsPart" source="PartOverviewButtons.fxml" />
                      </children>
                   </VBox>
                </children>
