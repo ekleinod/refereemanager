@@ -31,7 +31,7 @@ import javafx.scene.image.ImageView;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class PartOverviewButtonsController {
+public class PartCRUDButtonsController {
 
 	/**
 	 * Add button.

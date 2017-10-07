@@ -86,7 +86,7 @@
                         <ImageView fx:id="imgReferee" fitHeight="160.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowSpan="2147483647" GridPane.valignment="TOP" />
                      </children>
                   </GridPane>
-                  <fx:include fx:id="embeddedButtonsPart" source="PartOverviewButtons.fxml" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                  <fx:include fx:id="embeddedCRUDButtons" source="PartCRUDButtons.fxml" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                </children>
             </AnchorPane>
         </items>

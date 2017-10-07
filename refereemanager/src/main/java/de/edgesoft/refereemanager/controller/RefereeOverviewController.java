@@ -26,7 +26,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -66,7 +65,7 @@ import javafx.stage.Stage;
  * @version 0.14.0
  * @since 0.10.0
  */
-public class RefereeOverviewController {
+public class RefereeOverviewController extends AbstractCRUDController {
 
 	/**
 	 * Heading label.
@@ -217,22 +216,6 @@ public class RefereeOverviewController {
 	private ImageView imgReferee;
 
 	/**
-	 * Button view part.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private Parent embeddedButtonsPart;
-
-	/**
-	 * Button view part controller.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private PartOverviewButtonsController embeddedButtonsPartController;
-
-	/**
 	 * Split pane.
 	 */
 	@FXML
@@ -310,17 +293,11 @@ public class RefereeOverviewController {
 			Prefs.put(PrefKey.REFEREE_OVERVIEW_SPLIT, Double.toString(newValue.doubleValue()));
 		});
 
-		// buttons setup
-		embeddedButtonsPartController.btnAdd.setOnAction(this::handleAdd);
-		embeddedButtonsPartController.btnEdit.setOnAction(this::handleEdit);
-		embeddedButtonsPartController.btnDelete.setOnAction(this::handleDelete);
-
-		// enabling edit/delete buttons only with selection
+		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = ctlRefList.getTabReferees().selectedProperty().not().or(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull())
 				.and(ctlRefList.getTabTrainees().selectedProperty().not().or(ctlRefList.getTraineesSelectionModel().selectedItemProperty().isNull()))
 				.and(ctlRefList.getTabPeople().selectedProperty().not().or(ctlRefList.getPeopleSelectionModel().selectedItemProperty().isNull()));
-		embeddedButtonsPartController.btnEdit.disableProperty().bind(isOneItemSelected);
-		embeddedButtonsPartController.btnDelete.disableProperty().bind(isOneItemSelected);
+		initCRUDButtons(isOneItemSelected, isOneItemSelected);
 
 	}
 
@@ -457,7 +434,8 @@ public class RefereeOverviewController {
 	 * @param event calling action event
 	 */
 	@FXML
-	private void handleAdd(ActionEvent event) {
+	@Override
+	public void handleAdd(ActionEvent event) {
 
 		PersonModel newPerson = null;
 
@@ -502,7 +480,8 @@ public class RefereeOverviewController {
 	 * @param event calling action event
 	 */
 	@FXML
-	private void handleEdit(ActionEvent event) {
+	@Override
+	public void handleEdit(ActionEvent event) {
 
 		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
 
@@ -522,7 +501,8 @@ public class RefereeOverviewController {
 	 * @param event calling action event
 	 */
 	@FXML
-	private void handleDelete(ActionEvent event) {
+	@Override
+	public void handleDelete(ActionEvent event) {
 
 		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
 
