@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.PersonRoleType;
 import de.edgesoft.refereemanager.jaxb.Referee;
@@ -27,15 +28,19 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.FontWeight;
 
 /**
  * Controller for the referee list scene.
@@ -94,6 +99,14 @@ public class RefereeListController {
 	 */
 	@FXML
 	private Tab tabReferees;
+
+	/**
+	 * HBox referees.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private VBox boxReferees;
 
 	/**
 	 * Table view referees.
@@ -181,14 +194,6 @@ public class RefereeListController {
 	 */
 	@FXML
 	private CheckBox chkRefereesLetterOnly;
-
-	/**
-	 * HBox filter status.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private HBox boxRefereesFilterStatus;
 
 	/**
 	 * Filter storage.
@@ -406,12 +411,16 @@ public class RefereeListController {
 	    });
 
 		// setup status filter
+		HBox boxTemp = new HBox(5);
+		boxReferees.getChildren().add(new Separator(Orientation.HORIZONTAL));
+		boxReferees.getChildren().add(boxTemp);
+
 		mapRefereesFilterStatus = new HashMap<>();
 		AppModel.getData().getContent().getStatusType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
 				statusType -> {
 					CheckBox chkTemp = new CheckBox(statusType.getDisplayTitleShort().getValueSafe());
 					chkTemp.setOnAction(e -> handleFilterChange());
-					boxRefereesFilterStatus.getChildren().add(chkTemp);
+					boxTemp.getChildren().add(chkTemp);
 					mapRefereesFilterStatus.put(chkTemp, statusType);
 				}
 		);
@@ -428,6 +437,9 @@ public class RefereeListController {
 		);
 
 		setItems();
+
+		// headings
+		lblRefereesFilter.setFont(FontUtils.getDerived(lblRefereesFilter.getFont(), FontWeight.BOLD));
 
 	}
 

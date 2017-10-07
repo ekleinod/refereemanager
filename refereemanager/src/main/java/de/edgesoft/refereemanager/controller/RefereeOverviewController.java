@@ -6,6 +6,7 @@ import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Objects;
 
+import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Person;
@@ -36,7 +37,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -294,9 +294,8 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 		initCRUDButtons(isOneItemSelected, isOneItemSelected);
 
 		// headings
-		Font fntTemp = lblHeading.getFont();
-		lblHeading.setFont(Font.font(fntTemp.getFamily(), FontWeight.BOLD, fntTemp.getSize() + 2));
-		lblHeadingPerson.setFont(Font.font(fntTemp.getFamily(), FontWeight.BOLD, fntTemp.getSize()));
+		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD, 2));
+		lblHeadingPerson.setFont(FontUtils.getDerived(lblHeadingPerson.getFont(), FontWeight.BOLD));
 
 	}
 

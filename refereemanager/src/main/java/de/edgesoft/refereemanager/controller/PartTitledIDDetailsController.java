@@ -1,10 +1,10 @@
 package de.edgesoft.refereemanager.controller;
 
+import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 /**
@@ -96,10 +96,7 @@ public class PartTitledIDDetailsController {
 	 */
 	@FXML
 	private void initialize() {
-
-		Font fntTemp = lblHeading.getFont();
-		lblHeading.setFont(Font.font(fntTemp.getFamily(), FontWeight.BOLD, fntTemp.getSize()));
-
+		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD));
 	}
 
 	/**
