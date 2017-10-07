@@ -3,11 +3,11 @@ package de.edgesoft.refereemanager.controller;
 import java.io.File;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.time.LocalDate;
 import java.util.Map;
 import java.util.Objects;
 
-import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.edgeutils.javafx.LabelUtils;
+import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.Trainee;
@@ -36,6 +36,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -65,7 +67,7 @@ import javafx.stage.Stage;
  * @version 0.14.0
  * @since 0.10.0
  */
-public class RefereeOverviewController extends AbstractCRUDController {
+public class RefereeOverviewController extends AbstractTitledIDDetailsController {
 
 	/**
 	 * Heading label.
@@ -74,6 +76,14 @@ public class RefereeOverviewController extends AbstractCRUDController {
 	 */
 	@FXML
 	private Label lblHeading;
+
+	/**
+	 * Heading label person data.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Label lblHeadingPerson;
 
 	/**
 	 * Name label.
@@ -194,22 +204,6 @@ public class RefereeOverviewController extends AbstractCRUDController {
 	private Label lblRoleLabel;
 
 	/**
-	 * Remark label.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Label lblRemark;
-
-	/**
-	 * Remark label label.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Label lblRemarkLabel;
-
-	/**
 	 * Referee image.
 	 */
 	@FXML
@@ -299,6 +293,11 @@ public class RefereeOverviewController extends AbstractCRUDController {
 				.and(ctlRefList.getTabPeople().selectedProperty().not().or(ctlRefList.getPeopleSelectionModel().selectedItemProperty().isNull()));
 		initCRUDButtons(isOneItemSelected, isOneItemSelected);
 
+		// headings
+		Font fntTemp = lblHeading.getFont();
+		lblHeading.setFont(Font.font(fntTemp.getFamily(), FontWeight.BOLD, fntTemp.getSize() + 2));
+		lblHeadingPerson.setFont(Font.font(fntTemp.getFamily(), FontWeight.BOLD, fntTemp.getSize()));
+
 	}
 
 	/**
@@ -336,75 +335,54 @@ public class RefereeOverviewController extends AbstractCRUDController {
 	 *
 	 * @param theDetailData event (null if none is selected)
 	 */
-	private void showDetails(final Person theDetailData) {
+	public void showDetails(final Person theDetailData) {
+
+		super.showDetails(theDetailData);
 
 		if (theDetailData == null) {
 
 			lblHeading.setText("Details");
 
-			lblName.setText("");
-			lblFirstName.setText("");
-			lblTrainingLevel.setText("");
-			lblClub.setText("");
-			lblBirthday.setText("");
-			lblLastUpdate.setText("");
-			lblNextUpdate.setText("");
-			lblRole.setText("");
-			lblRemark.setText("");
+			LabelUtils.setText(lblName, null);
+			LabelUtils.setText(lblFirstName, null);
+			LabelUtils.setText(lblTrainingLevel, null);
+			LabelUtils.setText(lblClub, null);
+			LabelUtils.setText(lblBirthday, null);
+			LabelUtils.setText(lblLastUpdate, null);
+			LabelUtils.setText(lblNextUpdate, null);
+			LabelUtils.setText(lblRole, null);
 
 			imgReferee.setImage(null);
 
 		} else {
 
-			lblHeading.setText(
-					(theDetailData.getDisplayTitle() == null) ?
-							null :
-							theDetailData.getDisplayTitle().getValue());
+			LabelUtils.setText(lblHeading, theDetailData.getDisplayTitle());
 
-			lblName.setText(
-					(theDetailData.getName() == null) ?
-							null :
-							theDetailData.getName().getValue());
-			lblFirstName.setText(
-					(theDetailData.getFirstName() == null) ?
-							null :
-							theDetailData.getFirstName().getValue());
-
-			lblBirthday.setText(
-					(theDetailData.getBirthday() == null) ?
-							null :
-							DateTimeUtils.formatDate((LocalDate) theDetailData.getBirthday().getValue()));
+			LabelUtils.setText(lblName, theDetailData.getName());
+			LabelUtils.setText(lblFirstName, theDetailData.getFirstName());
+			LabelUtils.setText(lblBirthday, theDetailData.getBirthday(), null);
 
 			lblRole.setText(
 					(theDetailData.getRole() == null) ?
 							null :
 							theDetailData.getRole().getDisplayText().getValue());
 
-			lblRemark.setText(
-					(theDetailData.getRemark() == null) ?
-							null :
-							theDetailData.getRemark().getValue());
-
 			if (theDetailData instanceof RefereeModel) {
 				RefereeModel mdlTemp = (RefereeModel) theDetailData;
+
+				lblTrainingLevel.setText(
+						(mdlTemp.getHighestTrainingLevel() == null) ?
+								null :
+								mdlTemp.getHighestTrainingLevel().getType().getDisplayTitleShort().getValue());
 
 				lblClub.setText(
 						(mdlTemp.getMember() == null) ?
 								null :
 								mdlTemp.getMember().getDisplayText().getValue());
 
-				lblTrainingLevel.setText(
-						(mdlTemp.getHighestTrainingLevel() == null) ?
-								null :
-								mdlTemp.getHighestTrainingLevel().getType().getDisplayTitleShort().getValue());
-				lblLastUpdate.setText(
-						(mdlTemp.getLastTrainingUpdate() == null) ?
-								null :
-								DateTimeUtils.formatDate(mdlTemp.getLastTrainingUpdate().getValue()));
-				lblNextUpdate.setText(
-						(mdlTemp.getNextTrainingUpdate() == null) ?
-								null :
-								DateTimeUtils.formatDate(mdlTemp.getNextTrainingUpdate().getValue(), "yyyy"));
+				LabelUtils.setText(lblLastUpdate, mdlTemp.getLastTrainingUpdate(), null);
+				LabelUtils.setText(lblNextUpdate, mdlTemp.getNextTrainingUpdate(), "yyyy");
+
 				try {
 					if (mdlTemp.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
 						File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), String.format("%s.jpg", mdlTemp.getFileName().getValue())).toFile();
@@ -418,6 +396,7 @@ public class RefereeOverviewController extends AbstractCRUDController {
 						}
 					}
 				} catch (Exception e) {
+					RefereeManager.logger.throwing(e);
 					imgReferee.setImage(null);
 				}
 
