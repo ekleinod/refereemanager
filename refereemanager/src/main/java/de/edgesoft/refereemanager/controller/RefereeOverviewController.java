@@ -23,12 +23,12 @@ import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
@@ -65,7 +65,7 @@ import javafx.stage.Stage;
  * @version 0.14.0
  * @since 0.10.0
  */
-public class RefereeOverviewController {
+public class RefereeOverviewController extends AbstractCRUDController {
 
 	/**
 	 * Heading label.
@@ -216,24 +216,6 @@ public class RefereeOverviewController {
 	private ImageView imgReferee;
 
 	/**
-	 * Add button.
-	 */
-	@FXML
-	private Button btnAdd;
-
-	/**
-	 * Edit button.
-	 */
-	@FXML
-	private Button btnEdit;
-
-	/**
-	 * Delete button.
-	 */
-	@FXML
-	private Button btnDelete;
-
-	/**
 	 * Split pane.
 	 */
 	@FXML
@@ -280,13 +262,6 @@ public class RefereeOverviewController {
 		ctlRefList.getTabTrainees().selectedProperty().addListener((event, oldTab, newTab) -> showDetails());
 		ctlRefList.getTabPeople().selectedProperty().addListener((event, oldTab, newTab) -> showDetails());
 
-		// enabling edit/delete buttons only with selection
-		ObservableBooleanValue isOneItemSelected = ctlRefList.getTabReferees().selectedProperty().not().or(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull())
-				.and(ctlRefList.getTabTrainees().selectedProperty().not().or(ctlRefList.getTraineesSelectionModel().selectedItemProperty().isNull()))
-				.and(ctlRefList.getTabPeople().selectedProperty().not().or(ctlRefList.getPeopleSelectionModel().selectedItemProperty().isNull()));
-		btnEdit.disableProperty().bind(isOneItemSelected);
-		btnDelete.disableProperty().bind(isOneItemSelected);
-
 		// disabling labels
 		ObservableBooleanValue isReferee = ctlRefList.getTabReferees().selectedProperty();
 		lblTrainingLevelLabel.visibleProperty().bind(isReferee);
@@ -318,10 +293,11 @@ public class RefereeOverviewController {
 			Prefs.put(PrefKey.REFEREE_OVERVIEW_SPLIT, Double.toString(newValue.doubleValue()));
 		});
 
-		// icons
-		btnAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
-		btnEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
-		btnDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
+		// CRUD buttons setup
+		ObservableBooleanValue isOneItemSelected = ctlRefList.getTabReferees().selectedProperty().not().or(ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull())
+				.and(ctlRefList.getTabTrainees().selectedProperty().not().or(ctlRefList.getTraineesSelectionModel().selectedItemProperty().isNull()))
+				.and(ctlRefList.getTabPeople().selectedProperty().not().or(ctlRefList.getPeopleSelectionModel().selectedItemProperty().isNull()));
+		initCRUDButtons(isOneItemSelected, isOneItemSelected);
 
 	}
 
@@ -454,9 +430,12 @@ public class RefereeOverviewController {
 
 	/**
 	 * Opens edit dialog for new data.
+	 *
+	 * @param event calling action event
 	 */
 	@FXML
-	private void handleAdd() {
+	@Override
+	public void handleAdd(ActionEvent event) {
 
 		PersonModel newPerson = null;
 
@@ -497,9 +476,12 @@ public class RefereeOverviewController {
 
 	/**
 	 * Opens edit dialog for editing selected data.
+	 *
+	 * @param event calling action event
 	 */
 	@FXML
-	private void handleEdit() {
+	@Override
+	public void handleEdit(ActionEvent event) {
 
 		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
 
@@ -515,9 +497,12 @@ public class RefereeOverviewController {
 
 	/**
 	 * Deletes selected data from list.
+	 *
+	 * @param event calling action event
 	 */
 	@FXML
-	private void handleDelete() {
+	@Override
+	public void handleDelete(ActionEvent event) {
 
 		ObservableList<PersonModel> lstSelected = ctlRefList.getVisibleTabSelection();
 
