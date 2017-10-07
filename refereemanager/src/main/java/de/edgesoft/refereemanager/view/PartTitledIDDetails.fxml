@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.PartTitledIDDetailsController">
+<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.PartTitledIDDetailsController">
    <children>
       <Label fx:id="lblHeading" text="Allgemeines" />
       <GridPane vgap="10.0">
@@ -15,21 +15,21 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="200.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints valignment="TOP" vgrow="SOMETIMES" />
-          <RowConstraints valignment="TOP" vgrow="SOMETIMES" />
-          <RowConstraints valignment="TOP" vgrow="SOMETIMES" />
-          <RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+          <RowConstraints valignment="TOP" />
+          <RowConstraints valignment="TOP" />
+          <RowConstraints valignment="TOP" />
+          <RowConstraints valignment="TOP" />
         </rowConstraints>
-         <children>
-            <Label fx:id="lblLabelID" text="ID" />
-            <Label fx:id="lblID" text="Label" GridPane.columnIndex="1" />
-            <Label fx:id="lblLabelTitle" text="Titel" GridPane.rowIndex="1" />
-            <Label fx:id="lblTitle" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="lblLabelShorttitle" text="Kurztitel" GridPane.rowIndex="2" />
-            <Label fx:id="lblShorttitle" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="lblLabelRemark" text="Anmerkung" GridPane.rowIndex="3" />
-            <Label fx:id="lblRemark" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-         </children>
+        <children>
+           <Label fx:id="lblLabelID" text="ID" />
+           <Label fx:id="lblID" text="Label" GridPane.columnIndex="1" />
+           <Label fx:id="lblLabelTitle" text="Titel" GridPane.rowIndex="1" />
+           <Label fx:id="lblTitle" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+           <Label fx:id="lblLabelShorttitle" text="Kurztitel" GridPane.rowIndex="2" />
+           <Label fx:id="lblShorttitle" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+           <Label fx:id="lblLabelRemark" text="Anmerkung" GridPane.rowIndex="3" />
+           <Label fx:id="lblRemark" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        </children>
       </GridPane>
    </children>
 </VBox>

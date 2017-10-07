@@ -95,7 +95,7 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 	 * Name label label.
 	 */
 	@FXML
-	private Label lblNameLabel;
+	private Label lblLabelName;
 
 	/**
 	 * First name label.
@@ -109,7 +109,7 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 	 * @since 0.13.0
 	 */
 	@FXML
-	private Label lblFirstNameLabel;
+	private Label lblLabelFirstName;
 
 	/**
 	 * Training level label.
@@ -123,7 +123,7 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 	 * @since 0.13.0
 	 */
 	@FXML
-	private Label lblTrainingLevelLabel;
+	private Label lblLabelTrainingLevel;
 
 	/**
 	 * Club label.
@@ -137,7 +137,7 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 	 * @since 0.13.0
 	 */
 	@FXML
-	private Label lblClubLabel;
+	private Label lblLabelClub;
 
 	/**
 	 * Birthday label.
@@ -153,7 +153,7 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 	 * @since 0.13.0
 	 */
 	@FXML
-	private Label lblBirthdayLabel;
+	private Label lblLabelBirthday;
 
 	/**
 	 * Last update label.
@@ -169,7 +169,7 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 	 * @since 0.13.0
 	 */
 	@FXML
-	private Label lblLastUpdateLabel;
+	private Label lblLabelLastUpdate;
 
 	/**
 	 * Next update label.
@@ -185,7 +185,7 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 	 * @since 0.13.0
 	 */
 	@FXML
-	private Label lblNextUpdateLabel;
+	private Label lblLabelNextUpdate;
 
 	/**
 	 * Role label.
@@ -201,7 +201,7 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 	 * @since 0.15.0
 	 */
 	@FXML
-	private Label lblRoleLabel;
+	private Label lblLabelRole;
 
 	/**
 	 * Referee image.
@@ -258,22 +258,22 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 
 		// disabling labels
 		ObservableBooleanValue isReferee = ctlRefList.getTabReferees().selectedProperty();
-		lblTrainingLevelLabel.visibleProperty().bind(isReferee);
-		lblTrainingLevelLabel.managedProperty().bind(isReferee);
+		lblLabelTrainingLevel.visibleProperty().bind(isReferee);
+		lblLabelTrainingLevel.managedProperty().bind(isReferee);
 		lblTrainingLevel.visibleProperty().bind(isReferee);
 		lblTrainingLevel.managedProperty().bind(isReferee);
-		lblLastUpdateLabel.visibleProperty().bind(isReferee);
-		lblLastUpdateLabel.managedProperty().bind(isReferee);
+		lblLabelLastUpdate.visibleProperty().bind(isReferee);
+		lblLabelLastUpdate.managedProperty().bind(isReferee);
 		lblLastUpdate.visibleProperty().bind(isReferee);
 		lblLastUpdate.managedProperty().bind(isReferee);
-		lblNextUpdateLabel.visibleProperty().bind(isReferee);
-		lblNextUpdateLabel.managedProperty().bind(isReferee);
+		lblLabelNextUpdate.visibleProperty().bind(isReferee);
+		lblLabelNextUpdate.managedProperty().bind(isReferee);
 		lblNextUpdate.visibleProperty().bind(isReferee);
 		lblNextUpdate.managedProperty().bind(isReferee);
 
 		ObservableBooleanValue isRefereeOrTrainee = ctlRefList.getTabReferees().selectedProperty().or(ctlRefList.getTabTrainees().selectedProperty());
-		lblClubLabel.visibleProperty().bind(isRefereeOrTrainee);
-		lblClubLabel.managedProperty().bind(isRefereeOrTrainee);
+		lblLabelClub.visibleProperty().bind(isRefereeOrTrainee);
+		lblLabelClub.managedProperty().bind(isRefereeOrTrainee);
 		lblClub.visibleProperty().bind(isRefereeOrTrainee);
 		lblClub.managedProperty().bind(isRefereeOrTrainee);
 		imgReferee.visibleProperty().bind(isRefereeOrTrainee);
