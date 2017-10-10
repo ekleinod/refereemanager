@@ -4,6 +4,8 @@ import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Objects;
 
+import de.edgesoft.edgeutils.javafx.FontUtils;
+import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import de.edgesoft.refereemanager.jaxb.OtherEvent;
 import de.edgesoft.refereemanager.jaxb.Tournament;
@@ -20,6 +22,7 @@ import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -34,6 +37,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -63,13 +67,19 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class EventOverviewController {
+public class EventOverviewController extends AbstractTitledIDDetailsController {
 
 	/**
-	 * Heading label.
+	 * Heading.
 	 */
 	@FXML
 	private Label lblHeading;
+
+	/**
+	 * Heading event data.
+	 */
+	@FXML
+	private Label lblHeadingEvent;
 
 	/**
 	 * Number label.
@@ -168,18 +178,6 @@ public class EventOverviewController {
 	private Label lblVenueLabel;
 
 	/**
-	 * Remark label.
-	 */
-	@FXML
-	private Label lblRemark;
-
-	/**
-	 * Remark label label.
-	 */
-	@FXML
-	private Label lblRemarkLabel;
-
-	/**
 	 * Referee report anchor pane.
 	 */
 	@FXML
@@ -209,24 +207,6 @@ public class EventOverviewController {
 	@FXML
 	private Button btnRefereeReportCopy;
 
-
-	/**
-	 * Add button.
-	 */
-	@FXML
-	private Button btnAdd;
-
-	/**
-	 * Edit button.
-	 */
-	@FXML
-	private Button btnEdit;
-
-	/**
-	 * Delete button.
-	 */
-	@FXML
-	private Button btnDelete;
 
 	/**
 	 * Split pane.
@@ -278,13 +258,6 @@ public class EventOverviewController {
 		// enabling report copy button
 		btnRefereeReportCopy.disableProperty().bind(lblRefereeReport.textProperty().isEmpty());
 
-		// enabling edit/delete buttons only with selection
-		ObservableBooleanValue isOneItemSelected = ctlEventList.getTabLeagueGames().selectedProperty().not().or(ctlEventList.getLeagueGamesSelectionModel().selectedItemProperty().isNull())
-				.and(ctlEventList.getTabTournaments().selectedProperty().not().or(ctlEventList.getTournamentsSelectionModel().selectedItemProperty().isNull()))
-				.and(ctlEventList.getTabOtherEvents().selectedProperty().not().or(ctlEventList.getOtherEventsSelectionModel().selectedItemProperty().isNull()));
-		btnEdit.disableProperty().bind(isOneItemSelected);
-		btnDelete.disableProperty().bind(isOneItemSelected);
-
 		// disabling labels
 		ObservableBooleanValue isLeagueGame = ctlEventList.getTabLeagueGames().selectedProperty();
 		lblNumberLabel.visibleProperty().bind(isLeagueGame);
@@ -326,9 +299,16 @@ public class EventOverviewController {
 
 		// icons
 		btnRefereeReportCopy.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-copy.png")));
-		btnAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
-		btnEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
-		btnDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
+
+		// CRUD buttons setup
+		ObservableBooleanValue isOneItemSelected = ctlEventList.getTabLeagueGames().selectedProperty().not().or(ctlEventList.getLeagueGamesSelectionModel().selectedItemProperty().isNull())
+				.and(ctlEventList.getTabTournaments().selectedProperty().not().or(ctlEventList.getTournamentsSelectionModel().selectedItemProperty().isNull()))
+				.and(ctlEventList.getTabOtherEvents().selectedProperty().not().or(ctlEventList.getOtherEventsSelectionModel().selectedItemProperty().isNull()));
+		initCRUDButtons(isOneItemSelected, isOneItemSelected);
+
+		// headings
+		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD, 2));
+		lblHeadingEvent.setFont(FontUtils.getDerived(lblHeadingEvent.getFont(), FontWeight.BOLD));
 
 	}
 
@@ -367,74 +347,51 @@ public class EventOverviewController {
 	 *
 	 * @param theDetailData event (null if none is selected)
 	 */
-	private void showDetails(final EventDateModel theDetailData) {
+	public void showDetails(final EventDateModel theDetailData) {
+
+		super.showDetails(theDetailData);
 
 		if (theDetailData == null) {
 
 			lblHeading.setText("Details");
 
-			lblNumber.setText("");
-			lblDate.setText("");
-			lblTime.setText("");
-			lblTeams.setText("");
-			lblLeague.setText("");
-			lblClub.setText("");
-			lblOrganizer.setText("");
-			lblVenue.setText("");
-			lblRefereeReport.setText("");
+			LabelUtils.setText(lblNumber, null);
+			LabelUtils.setText(lblDate, null);
+			LabelUtils.setText(lblTime, null);
+			LabelUtils.setText(lblTeams, null);
+			LabelUtils.setText(lblLeague, null);
+			LabelUtils.setText(lblClub, null);
+			LabelUtils.setText(lblOrganizer, null);
+			LabelUtils.setText(lblVenue, null);
+			LabelUtils.setText(lblRefereeReport, null);
+
 			lblRefereeReportIndicator.setGraphic(null);
-			lblRemark.setText("");
 
 		} else {
 
-			lblHeading.setText(
-					(theDetailData.getDisplayTitle() == null) ?
-							null :
-							theDetailData.getDisplayTitle().getValueSafe());
+			LabelUtils.setText(lblHeading, theDetailData.getDisplayTitle());
 
-			lblDate.setText(
-					(theDetailData.getDateText() == null) ?
-							null :
-							theDetailData.getDateText().getValueSafe());
-
-			lblTime.setText(
-					(theDetailData.getTimeText() == null) ?
-							null :
-							theDetailData.getTimeText().getValueSafe());
+			LabelUtils.setText(lblDate, theDetailData.getDateText());
+			LabelUtils.setText(lblTime, theDetailData.getTimeText());
 
 			lblVenue.setText(
 					(theDetailData.getVenue() == null) ?
 							null :
 							theDetailData.getVenue().getDisplayTitle().getValueSafe());
 
-			lblRemark.setText(
-					(theDetailData.getRemark() == null) ?
-							null :
-							theDetailData.getRemark().getValueSafe());
-
 			if (theDetailData instanceof LeagueGameModel) {
 
 				LeagueGameModel mdlTemp = (LeagueGameModel) theDetailData;
 
-				lblNumber.setText(
-						(mdlTemp.getGameNumber() == null) ?
-								null :
-								mdlTemp.getGameNumberString().getValueSafe());
-
-				lblTeams.setText(
-						(mdlTemp.getTeamText() == null) ?
-								null :
-								mdlTemp.getTeamText().getValueSafe());
+				LabelUtils.setText(lblNumber, mdlTemp.getGameNumberString());
+				LabelUtils.setText(lblTeams, mdlTemp.getTeamText());
 
 				lblLeague.setText(
 						(mdlTemp.getHomeTeam() == null) ?
 								null :
 								mdlTemp.getHomeTeam().getLeague().getDisplayTitle().getValueSafe());
 
-				lblRefereeReport.setText(
-						(mdlTemp.getRefereeReportFilename() == null) ?
-								null :
-								mdlTemp.getRefereeReportFilename().getValueSafe());
+				LabelUtils.setText(lblRefereeReport, mdlTemp.getRefereeReportFilename());
 
 				if (mdlTemp.existsRefereeReportFile()) {
 					lblRefereeReportIndicator.setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-success.png")));
@@ -458,10 +415,7 @@ public class EventOverviewController {
 								null :
 								mdlTemp.getOrganizer().getDisplayText().getValueSafe());
 
-				lblRefereeReport.setText(
-						(mdlTemp.getRefereeReportFilename() == null) ?
-								null :
-								mdlTemp.getRefereeReportFilename().getValueSafe());
+				LabelUtils.setText(lblRefereeReport, mdlTemp.getRefereeReportFilename());
 
 				if (mdlTemp.existsRefereeReportFile()) {
 					lblRefereeReportIndicator.setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-success.png")));
@@ -487,9 +441,12 @@ public class EventOverviewController {
 
 	/**
 	 * Opens edit dialog for new data.
+	 *
+	 * @param event calling action event
 	 */
 	@FXML
-	private void handleAdd() {
+	@Override
+	public void handleAdd(ActionEvent event) {
 
 		EventDateModel newEventDate = null;
 
@@ -530,9 +487,12 @@ public class EventOverviewController {
 
 	/**
 	 * Opens edit dialog for editing selected data.
+	 *
+	 * @param event calling action event
 	 */
 	@FXML
-	private void handleEdit() {
+	@Override
+	public void handleEdit(ActionEvent event) {
 
 		ObservableList<EventDateModel> lstSelected = ctlEventList.getVisibleTabSelection();
 
@@ -548,9 +508,12 @@ public class EventOverviewController {
 
 	/**
 	 * Deletes selected data from list.
+	 *
+	 * @param event calling action event
 	 */
 	@FXML
-	private void handleDelete() {
+	@Override
+	public void handleDelete(ActionEvent event) {
 
 		ObservableList<EventDateModel> lstSelected = ctlEventList.getVisibleTabSelection();
 
