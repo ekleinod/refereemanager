@@ -452,6 +452,7 @@ public class RefereeListController {
 
 		// headings
 		lblRefereesFilter.setFont(FontUtils.getDerived(lblRefereesFilter.getFont(), FontWeight.BOLD));
+		lblPeopleFilter.setFont(FontUtils.getDerived(lblRefereesFilter.getFont(), FontWeight.BOLD));
 
 	}
 
