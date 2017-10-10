@@ -418,6 +418,10 @@ public class RefereeListController {
 	        handleTabChange();
 	    });
 
+		// headings
+		lblRefereesFilter.setFont(FontUtils.getDerived(lblRefereesFilter.getFont(), FontWeight.BOLD));
+		lblPeopleFilter.setFont(FontUtils.getDerived(lblPeopleFilter.getFont(), FontWeight.BOLD));
+
 		// setup status filter
 		HBox boxStatusFilter = new HBox(5);
 		boxReferees.getChildren().add(new Separator(Orientation.HORIZONTAL));
@@ -449,10 +453,6 @@ public class RefereeListController {
 		);
 
 		setItems();
-
-		// headings
-		lblRefereesFilter.setFont(FontUtils.getDerived(lblRefereesFilter.getFont(), FontWeight.BOLD));
-		lblPeopleFilter.setFont(FontUtils.getDerived(lblRefereesFilter.getFont(), FontWeight.BOLD));
 
 	}
 
