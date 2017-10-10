@@ -101,7 +101,7 @@ public class RefereeListController {
 	private Tab tabReferees;
 
 	/**
-	 * HBox referees.
+	 * VBox referees.
 	 *
 	 * @since 0.15.0
 	 */
@@ -212,6 +212,14 @@ public class RefereeListController {
 	private Tab tabTrainees;
 
 	/**
+	 * VBox trainees.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private VBox boxTrainees;
+
+	/**
 	 * Table view trainees.
 	 *
 	 * @since 0.12.0
@@ -276,6 +284,14 @@ public class RefereeListController {
 	private Tab tabPeople;
 
 	/**
+	 * VBox people.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private VBox boxPeople;
+
+	/**
 	 * Table view trainees.
 	 *
 	 * @since 0.12.0
@@ -330,14 +346,6 @@ public class RefereeListController {
 	 */
 	@FXML
 	private Label lblPeopleFilter;
-
-	/**
-	 * HBox filter role.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private HBox boxPeopleFilterRole;
 
 	/**
 	 * Filter storage.
@@ -411,27 +419,31 @@ public class RefereeListController {
 	    });
 
 		// setup status filter
-		HBox boxTemp = new HBox(5);
+		HBox boxStatusFilter = new HBox(5);
 		boxReferees.getChildren().add(new Separator(Orientation.HORIZONTAL));
-		boxReferees.getChildren().add(boxTemp);
+		boxReferees.getChildren().add(boxStatusFilter);
 
 		mapRefereesFilterStatus = new HashMap<>();
 		AppModel.getData().getContent().getStatusType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
 				statusType -> {
 					CheckBox chkTemp = new CheckBox(statusType.getDisplayTitleShort().getValueSafe());
 					chkTemp.setOnAction(e -> handleFilterChange());
-					boxTemp.getChildren().add(chkTemp);
+					boxStatusFilter.getChildren().add(chkTemp);
 					mapRefereesFilterStatus.put(chkTemp, statusType);
 				}
 		);
 
 		// setup role filter
+		HBox boxRoleFilter = new HBox(5);
+		boxPeople.getChildren().add(new Separator(Orientation.HORIZONTAL));
+		boxPeople.getChildren().add(boxRoleFilter);
+
 		mapPeopleFilterRoles = new HashMap<>();
 		AppModel.getData().getContent().getRoleType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
 				roleType -> {
 					CheckBox chkTemp = new CheckBox(roleType.getDisplayTitleShort().getValueSafe());
 					chkTemp.setOnAction(e -> handleFilterChange());
-					boxPeopleFilterRole.getChildren().add(chkTemp);
+					boxRoleFilter.getChildren().add(chkTemp);
 					mapPeopleFilterRoles.put(chkTemp, roleType);
 				}
 		);

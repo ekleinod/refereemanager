@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -10,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.RefereeListController">
    <children>
@@ -49,9 +47,9 @@
             </Tab>
             <Tab fx:id="tabTrainees" text="Azubis">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <VBox fx:id="boxTrainees" spacing="10.0">
                      <children>
-                        <TableView fx:id="tblTrainees" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="tblTrainees" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                            <columns>
                               <TableColumn fx:id="colTraineesID" text="ID" />
                               <TableColumn fx:id="colTraineesName" text="Name" />
@@ -64,14 +62,14 @@
                            </columnResizePolicy>
                         </TableView>
                      </children>
-                  </AnchorPane>
+                  </VBox>
                </content>
             </Tab>
             <Tab fx:id="tabPeople" text="Personen">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <VBox fx:id="boxPeople" spacing="10.0">
                      <children>
-                        <TableView fx:id="tblPeople" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="tblPeople" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                            <columns>
                               <TableColumn fx:id="colPeopleID" text="ID" />
                               <TableColumn fx:id="colPeopleName" text="Name" />
@@ -83,15 +81,9 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Label fx:id="lblPeopleFilter" text="Filter" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="5.0">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <HBox fx:id="boxPeopleFilterRole" alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="30.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
-                        </HBox>
+                        <Label fx:id="lblPeopleFilter" text="Filter" />
                      </children>
-                  </AnchorPane>
+                  </VBox>
                </content>
             </Tab>
         </tabs>
