@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import de.edgesoft.refereemanager.jaxb.OtherEvent;
@@ -30,15 +31,19 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.FontWeight;
 
 /**
  * Controller for the event list scene.
@@ -89,6 +94,12 @@ public class EventListController {
 	 */
 	@FXML
 	private Tab tabLeagueGames;
+
+	/**
+	 * League games box.
+	 */
+	@FXML
+	private VBox boxLeagueGames;
 
 	/**
 	 * Table view league games.
@@ -150,15 +161,9 @@ public class EventListController {
 	private Label lblLeagueGameFilter;
 
 	/**
-	 * HBox filter league.
-	 */
-	@FXML
-	private HBox boxFilterLeague;
-
-	/**
 	 * Filter storage.
 	 */
-	private Map<CheckBox, League> mapChkLeagues;
+	private Map<CheckBox, League> mapLeagueGamesLeagues;
 
 
 	/**
@@ -166,6 +171,12 @@ public class EventListController {
 	 */
 	@FXML
 	private Tab tabTournaments;
+
+	/**
+	 * Tournaments box.
+	 */
+	@FXML
+	private VBox boxTournaments;
 
 	/**
 	 * Table view tournaments.
@@ -214,6 +225,12 @@ public class EventListController {
 	 */
 	@FXML
 	private Tab tabOtherEvents;
+
+	/**
+	 * Other events box.
+	 */
+	@FXML
+	private VBox boxOtherEvents;
 
 	/**
 	 * Table other events.
@@ -322,14 +339,21 @@ public class EventListController {
 	        handleTabChange();
 	    });
 
+		// headings
+		lblLeagueGameFilter.setFont(FontUtils.getDerived(lblLeagueGameFilter.getFont(), FontWeight.BOLD));
+
 		// setup league filter
-		mapChkLeagues = new HashMap<>();
+		HBox boxLeagueFilter = new HBox(5);
+		boxLeagueGames.getChildren().add(new Separator(Orientation.HORIZONTAL));
+		boxLeagueGames.getChildren().add(boxLeagueFilter);
+
+		mapLeagueGamesLeagues = new HashMap<>();
 		AppModel.getData().getContent().getLeague().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
 				league -> {
 					CheckBox chkTemp = new CheckBox(league.getDisplayTitleShort().getValue());
 					chkTemp.setOnAction(e -> handleFilterChange());
-					boxFilterLeague.getChildren().add(chkTemp);
-					mapChkLeagues.put(chkTemp, league);
+					boxLeagueFilter.getChildren().add(chkTemp);
+					mapLeagueGamesLeagues.put(chkTemp, league);
 				}
 		);
 
@@ -394,7 +418,7 @@ public class EventListController {
 
 			lstLeagueGame.setPredicate(LeagueGameModel.ALL);
 
-			for (Entry<CheckBox, League> entryChkLeague : mapChkLeagues.entrySet()) {
+			for (Entry<CheckBox, League> entryChkLeague : mapLeagueGamesLeagues.entrySet()) {
 
 				if (entryChkLeague.getKey().isSelected()) {
 					lstLeagueGame.setPredicate(((Predicate<LeagueGame>) lstLeagueGame.getPredicate()).and(LeagueGameModel.getLeaguePredicate(entryChkLeague.getValue())));

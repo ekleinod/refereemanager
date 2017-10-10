@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -8,80 +7,74 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.EventListController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.EventListController">
    <children>
-      <TabPane fx:id="tabPaneContent" layoutX="200.0" layoutY="-100.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <TabPane fx:id="tabPaneContent" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
         <tabs>
           <Tab fx:id="tabLeagueGames" text="Ligaspiele">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <VBox fx:id="boxLeagueGames" spacing="10.0">
                      <children>
-                        <TableView fx:id="tblLeagueGames" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="tblLeagueGames" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn fx:id="colLeagueGameID" prefWidth="-1.0" text="ID" />
-                            <TableColumn fx:id="colLeagueGameNumber" prefWidth="-1.0" text="Nummer" />
-                            <TableColumn fx:id="colLeagueGameDate" prefWidth="-1.0" text="Datum" />
-                            <TableColumn fx:id="colLeagueGameTime" prefWidth="-1.0" text="Zeit" />
-                            <TableColumn fx:id="colLeagueGameLeague" prefWidth="-1.0" text="Liga" />
-                            <TableColumn fx:id="colLeagueGameTeams" prefWidth="-1.0" text="Teams" />
-                            <TableColumn fx:id="colLeagueGameRefereeReport" prefWidth="-1.0" text="OSR-Bericht" />
+                            <TableColumn fx:id="colLeagueGameID" text="ID" />
+                            <TableColumn fx:id="colLeagueGameNumber" text="Nummer" />
+                            <TableColumn fx:id="colLeagueGameDate" text="Datum" />
+                            <TableColumn fx:id="colLeagueGameTime" text="Zeit" />
+                            <TableColumn fx:id="colLeagueGameLeague" text="Liga" />
+                            <TableColumn fx:id="colLeagueGameTeams" text="Teams" />
+                            <TableColumn fx:id="colLeagueGameRefereeReport" text="OSR-Bericht" />
                           </columns>
                           <columnResizePolicy>
                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                           </columnResizePolicy>
                         </TableView>
-                        <Label fx:id="lblLeagueGameFilter" text="Filter" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="5.0">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <HBox fx:id="boxFilterLeague" alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="30.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
-                        </HBox>
+                        <Label fx:id="lblLeagueGameFilter" text="Filter" />
                      </children>
-                  </AnchorPane>
+                  </VBox>
                </content>
             </Tab>
             <Tab fx:id="tabTournaments" text="Turniere">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <VBox fx:id="boxTournaments" spacing="10.0">
                      <children>
-                        <TableView fx:id="tblTournaments" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="tblTournaments" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                            <columns>
-                              <TableColumn fx:id="colTournamentID" prefWidth="-1.0" text="ID" />
-                              <TableColumn fx:id="colTournamentDateStart" prefWidth="-1.0" text="Start" />
-                              <TableColumn fx:id="colTournamentDateEnd" prefWidth="-1.0" text="Ende" />
-                              <TableColumn fx:id="colTournamentTitle" prefWidth="-1.0" text="Titel" />
-                              <TableColumn fx:id="colTournamentRefereeReport" prefWidth="-1.0" text="OSR-Bericht" />
+                              <TableColumn fx:id="colTournamentID" text="ID" />
+                              <TableColumn fx:id="colTournamentDateStart" text="Start" />
+                              <TableColumn fx:id="colTournamentDateEnd" text="Ende" />
+                              <TableColumn fx:id="colTournamentTitle" text="Titel" />
+                              <TableColumn fx:id="colTournamentRefereeReport" text="OSR-Bericht" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
                      </children>
-                  </AnchorPane>
+                  </VBox>
                </content>
             </Tab>
             <Tab fx:id="tabOtherEvents" text="Sonstige Termine">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <VBox fx:id="boxOtherEvents" spacing="10.0">
                      <children>
-                        <TableView fx:id="tblOtherEvents" prefHeight="200.0" prefWidth="350.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="tblOtherEvents" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                            <columns>
-                              <TableColumn fx:id="colOtherEventID" prefWidth="-1.0" text="ID" />
-                              <TableColumn fx:id="colOtherEventDateStart" prefWidth="-1.0" text="Startdatum" />
-                              <TableColumn fx:id="colOtherEventDateEnd" prefWidth="-1.0" text="Enddatum" />
-                              <TableColumn fx:id="colOtherEventTimeStart" prefWidth="-1.0" text="Startzeit" />
-                              <TableColumn fx:id="colOtherEventTimeEnd" prefWidth="-1.0" text="Endzeit" />
-                              <TableColumn fx:id="colOtherEventTitle" prefWidth="-1.0" text="Titel" />
+                              <TableColumn fx:id="colOtherEventID" text="ID" />
+                              <TableColumn fx:id="colOtherEventDateStart" text="Startdatum" />
+                              <TableColumn fx:id="colOtherEventDateEnd" text="Enddatum" />
+                              <TableColumn fx:id="colOtherEventTimeStart" text="Startzeit" />
+                              <TableColumn fx:id="colOtherEventTimeEnd" text="Endzeit" />
+                              <TableColumn fx:id="colOtherEventTitle" text="Titel" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
                      </children>
-                  </AnchorPane>
+                  </VBox>
                </content>
             </Tab>
         </tabs>
