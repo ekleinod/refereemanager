@@ -36,6 +36,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
@@ -178,10 +179,10 @@ public class EventOverviewController extends AbstractTitledIDDetailsController {
 	private Label lblVenueLabel;
 
 	/**
-	 * Referee report anchor pane.
+	 * Referee report box.
 	 */
 	@FXML
-	private AnchorPane pneRefereeReport;
+	private HBox boxRefereeReport;
 
 	/**
 	 * Referee report label.
@@ -286,8 +287,8 @@ public class EventOverviewController extends AbstractTitledIDDetailsController {
 		ObservableBooleanValue isLeagueGameOrTournament = ctlEventList.getTabLeagueGames().selectedProperty().or(ctlEventList.getTabTournaments().selectedProperty());
 		lblRefereeReportLabel.visibleProperty().bind(isLeagueGameOrTournament);
 		lblRefereeReportLabel.managedProperty().bind(isLeagueGameOrTournament);
-		pneRefereeReport.visibleProperty().bind(isLeagueGameOrTournament);
-		pneRefereeReport.managedProperty().bind(isLeagueGameOrTournament);
+		boxRefereeReport.visibleProperty().bind(isLeagueGameOrTournament);
+		boxRefereeReport.managedProperty().bind(isLeagueGameOrTournament);
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.EVENT_OVERVIEW_SPLIT)));
