@@ -71,20 +71,6 @@ import javafx.scene.text.FontWeight;
 public class RefereeListController {
 
 	/**
-	 * Text for empty table: no data.
-	 *
-	 * @since 0.12.0
-	 */
-	private static final String TABLE_NO_DATA = "Es wurden noch keine {0} eingegeben.";
-
-	/**
-	 * Text for empty table: filtered.
-	 *
-	 * @since 0.12.0
-	 */
-	private static final String TABLE_FILTERED = "Die Filterung schließt alle {0} aus.";
-
-	/**
 	 * Tab pane content.
 	 *
 	 * @since 0.12.0
@@ -484,15 +470,21 @@ public class RefereeListController {
 		tblPeople.setItems(lstSortedPeople);
 
 		// set "empty data" text
-		Label lblPlaceholder = new Label(MessageFormat.format(((lstReferees == null) || lstReferees.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Schiedsrichter"));
+		Label lblPlaceholder = new Label(MessageFormat.format(
+				((lstReferees == null) || lstReferees.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				"Schiedsrichter"));
 		lblPlaceholder.setWrapText(true);
 		tblReferees.setPlaceholder(lblPlaceholder);
 
-		lblPlaceholder = new Label(MessageFormat.format(((lstTrainees == null) || lstTrainees.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Azubis"));
+		lblPlaceholder = new Label(MessageFormat.format(
+				((lstTrainees == null) || lstTrainees.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				"Azubis"));
 		lblPlaceholder.setWrapText(true);
 		tblTrainees.setPlaceholder(lblPlaceholder);
 
-		lblPlaceholder = new Label(MessageFormat.format(((lstPeople == null) || lstPeople.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Personen"));
+		lblPlaceholder = new Label(MessageFormat.format(
+				((lstPeople == null) || lstPeople.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				"Personen"));
 		lblPlaceholder.setWrapText(true);
 		tblPeople.setPlaceholder(lblPlaceholder);
 

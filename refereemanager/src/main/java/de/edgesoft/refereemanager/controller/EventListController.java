@@ -74,16 +74,6 @@ import javafx.scene.text.FontWeight;
 public class EventListController {
 
 	/**
-	 * Text for empty table: no data.
-	 */
-	private static final String TABLE_NO_DATA = "Es wurden noch keine {0} eingegeben.";
-
-	/**
-	 * Text for empty table: filtered.
-	 */
-	private static final String TABLE_FILTERED = "Die Filterung schließt alle {0} aus.";
-
-	/**
 	 * Tab pane content.
 	 */
 	@FXML
@@ -389,15 +379,21 @@ public class EventListController {
 		tblOtherEvents.setItems(lstSortedOtherEvents);
 
 		// set "empty data" text
-		Label lblPlaceholder = new Label(MessageFormat.format(((lstLeagueGame == null) || lstLeagueGame.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Ligaspiele"));
+		Label lblPlaceholder = new Label(MessageFormat.format(
+				((lstLeagueGame == null) || lstLeagueGame.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				"Ligaspiele"));
 		lblPlaceholder.setWrapText(true);
 		tblLeagueGames.setPlaceholder(lblPlaceholder);
 
-		lblPlaceholder = new Label(MessageFormat.format(((lstTournaments == null) || lstTournaments.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Turniere"));
+		lblPlaceholder = new Label(MessageFormat.format(((lstTournaments == null) || lstTournaments.isEmpty()) ?
+				TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				"Turniere"));
 		lblPlaceholder.setWrapText(true);
 		tblTournaments.setPlaceholder(lblPlaceholder);
 
-		lblPlaceholder = new Label(MessageFormat.format(((lstOtherEvents == null) || lstOtherEvents.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "sonstigen Termine"));
+		lblPlaceholder = new Label(MessageFormat.format(
+				((lstOtherEvents == null) || lstOtherEvents.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				"sonstigen Termine"));
 		lblPlaceholder.setWrapText(true);
 		tblOtherEvents.setPlaceholder(lblPlaceholder);
 

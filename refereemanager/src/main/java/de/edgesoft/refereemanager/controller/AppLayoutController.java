@@ -129,12 +129,20 @@ public class AppLayoutController {
 	private MenuItem mnuRefereeCommunication;
 
 	/**
-	 * Menu item referee -> overview.
+	 * Menu item event overview.
 	 *
 	 * @since 0.15.0
 	 */
 	@FXML
 	private MenuItem mnuEventOverview;
+
+	/**
+	 * Menu item club overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private MenuItem mnuClubOverview;
 
 	/**
 	 * Menu item statistics -> data.
@@ -185,10 +193,20 @@ public class AppLayoutController {
 	private Button btnRefereeCommunication;
 
 	/**
-	 * Button event -> overview.
+	 * Button event overview.
+	 *
+	 * @since 0.15.0
 	 */
 	@FXML
 	private Button btnEventOverview;
+
+	/**
+	 * Button club overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnClubOverview;
 
 	/**
 	 * Button statistics -> data.
@@ -249,6 +267,9 @@ public class AppLayoutController {
 
 		mnuEventOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		ButtonUtils.adaptButton(btnEventOverview, mnuEventOverview);
+
+		mnuClubOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		ButtonUtils.adaptButton(btnClubOverview, mnuClubOverview);
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
 		ButtonUtils.adaptButton(btnStatisticsData, mnuStatisticsData);
@@ -595,7 +616,9 @@ public class AppLayoutController {
 	}
 
 	/**
-	 * Menu event -> overview.
+	 * Menu event overview.
+	 *
+	 * @since 0.15.0
 	 */
 	@FXML
 	private void handleEventOverview() {
@@ -607,8 +630,28 @@ public class AppLayoutController {
 		appPane.setCenter(refOverview);
 
 		// Give the controller access to the app.
-		EventOverviewController ctlRefOverview = pneLoad.getValue().getController();
-		ctlRefOverview.initController(this);
+		EventOverviewController ctlOverview = pneLoad.getValue().getController();
+		ctlOverview.initController(this);
+
+	}
+
+	/**
+	 * Menu club overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleClubOverview() {
+
+		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ClubOverview");
+		AnchorPane refOverview = (AnchorPane) pneLoad.getKey();
+
+		// Set event overview into the center of root layout.
+		appPane.setCenter(refOverview);
+
+		// Give the controller access to the app.
+		ClubOverviewController ctlOverview = pneLoad.getValue().getController();
+		ctlOverview.initController(this);
 
 	}
 
