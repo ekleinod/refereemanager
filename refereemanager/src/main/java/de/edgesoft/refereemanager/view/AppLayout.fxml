@@ -23,7 +23,7 @@
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                            </accelerator></MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <SeparatorMenuItem />
                     <MenuItem fx:id="mnuProgramQuit" onAction="#handleProgramExit" text="_Beenden">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -38,13 +38,13 @@
                               <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <SeparatorMenuItem />
                         <MenuItem fx:id="mnuFileOpen" onAction="#handleFileOpen" text="Ö_ffnen...">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <SeparatorMenuItem />
                         <MenuItem fx:id="mnuFileSave" onAction="#handleFileSave" text="_Speichern">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -63,18 +63,24 @@
                          <accelerator>
                             <KeyCodeCombination alt="DOWN" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                          </accelerator></MenuItem>
-                      <SeparatorMenuItem mnemonicParsing="false" />
+                      <SeparatorMenuItem />
                       <MenuItem fx:id="mnuRefereeCommunication" onAction="#handleRefereeCommunication" text="Schiri_kommunikation">
                          <accelerator>
                             <KeyCodeCombination alt="DOWN" code="K" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                          </accelerator></MenuItem>
                   </items>
                 </Menu>
-                <Menu text="_Termine">
+                <Menu text="_Anderes">
                    <items>
-                      <MenuItem fx:id="mnuEventOverview" onAction="#handleEventOverview" text="Terminü_bersicht">
+                      <MenuItem fx:id="mnuEventOverview" onAction="#handleEventOverview" text="_Termine">
                          <accelerator>
                             <KeyCodeCombination alt="DOWN" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                         </accelerator>
+                      </MenuItem>
+                      <SeparatorMenuItem />
+                      <MenuItem fx:id="mnuClubOverview" onAction="#handleClubOverview" text="_Clubs">
+                         <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                          </accelerator>
                       </MenuItem>
                    </items>
@@ -101,21 +107,22 @@
             </MenuBar>
             <ToolBar fx:id="barMain" prefHeight="40.0" prefWidth="200.0">
               <items>
-                <Button fx:id="btnProgramQuit" mnemonicParsing="false" onAction="#handleProgramExit" />
+                <Button fx:id="btnProgramQuit" onAction="#handleProgramExit" />
                   <Separator layoutX="32.0" layoutY="10.0" prefWidth="10.0" />
-                  <Button fx:id="btnFileOpen" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleFileOpen" />
-                  <Button fx:id="btnFileSave" layoutX="46.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleFileSave" />
+                  <Button fx:id="btnFileOpen" layoutX="10.0" layoutY="11.0" onAction="#handleFileOpen" />
+                  <Button fx:id="btnFileSave" layoutX="46.0" layoutY="11.0" onAction="#handleFileSave" />
                   <Separator prefWidth="10.0" />
-                  <Button fx:id="btnRefereeOverview" mnemonicParsing="false" onAction="#handleRefereeOverview" />
-                  <Button fx:id="btnRefereeCommunication" mnemonicParsing="false" onAction="#handleRefereeCommunication" />
+                  <Button fx:id="btnRefereeOverview" onAction="#handleRefereeOverview" />
+                  <Button fx:id="btnRefereeCommunication" onAction="#handleRefereeCommunication" />
                   <Separator layoutX="90.0" layoutY="10.0" prefWidth="10.0" />
-                  <Button fx:id="btnEventOverview" mnemonicParsing="false" onAction="#handleEventOverview" />
+                  <Button fx:id="btnEventOverview" onAction="#handleEventOverview" />
+                  <Button fx:id="btnClubOverview" onAction="#handleClubOverview" />
                   <Separator prefWidth="10.0" />
-                  <Button fx:id="btnStatisticsData" mnemonicParsing="false" onAction="#handleStatisticsData" />
+                  <Button fx:id="btnStatisticsData" onAction="#handleStatisticsData" />
                   <Separator prefWidth="10.0" />
-                  <Button fx:id="btnProgramPreferences" mnemonicParsing="false" onAction="#handleProgramPreferences" />
+                  <Button fx:id="btnProgramPreferences" onAction="#handleProgramPreferences" />
                   <Separator prefWidth="10.0" />
-                  <Button fx:id="btnHelpAbout" mnemonicParsing="false" onAction="#handleHelpAbout" />
+                  <Button fx:id="btnHelpAbout" onAction="#handleHelpAbout" />
               </items>
             </ToolBar>
          </children>

@@ -163,7 +163,10 @@ public class RefereeManager extends Application {
 	public static void addAppender(final Writer theWriter, final String theWriterName) {
 		final LoggerContext context = LoggerContext.getContext(false);
 		final Configuration config = context.getConfiguration();
-		final PatternLayout layout = PatternLayout.createLayout("%d %-5p: %m%n", null, config, null, null, true, false, null, null);
+		final PatternLayout layout = PatternLayout.newBuilder()
+				.withPattern("%d %-5p: %m%n")
+				.withConfiguration(config)
+				.build();
 		final Appender appender = WriterAppender.createAppender(layout, null, theWriter, theWriterName, false, true);
 		appender.start();
 		config.addAppender(appender);

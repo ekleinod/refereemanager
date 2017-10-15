@@ -13,7 +13,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.image.ImageView;
 
 /**
- * Utility methods for {@link Table}.
+ * Utility methods and constants for {@link Table}.
  *
  * ## Legal stuff
  *
@@ -39,6 +39,20 @@ import javafx.scene.image.ImageView;
  * @since 0.14.0
  */
 public class TableUtils {
+
+	/**
+	 * Text for empty table: no data.
+	 *
+	 * @since 0.15.0
+	 */
+	public static final String TABLE_NO_DATA = "Es wurden noch keine {0} eingegeben.";
+
+	/**
+	 * Text for empty table: filtered.
+	 *
+	 * @since 0.15.0
+	 */
+	public static final String TABLE_FILTERED = "Die Filterung schließt alle {0} aus.";
 
 	/**
 	 * Returns {@link TableCell} for cell factories (person model, local date).

@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import de.edgesoft.refereemanager.jaxb.OtherEvent;
@@ -30,15 +31,19 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.FontWeight;
 
 /**
  * Controller for the event list scene.
@@ -69,16 +74,6 @@ import javafx.scene.layout.HBox;
 public class EventListController {
 
 	/**
-	 * Text for empty table: no data.
-	 */
-	private static final String TABLE_NO_DATA = "Es wurden noch keine {0} eingegeben.";
-
-	/**
-	 * Text for empty table: filtered.
-	 */
-	private static final String TABLE_FILTERED = "Die Filterung schließt alle {0} aus.";
-
-	/**
 	 * Tab pane content.
 	 */
 	@FXML
@@ -89,6 +84,12 @@ public class EventListController {
 	 */
 	@FXML
 	private Tab tabLeagueGames;
+
+	/**
+	 * League games box.
+	 */
+	@FXML
+	private VBox boxLeagueGames;
 
 	/**
 	 * Table view league games.
@@ -150,15 +151,9 @@ public class EventListController {
 	private Label lblLeagueGameFilter;
 
 	/**
-	 * HBox filter league.
-	 */
-	@FXML
-	private HBox boxFilterLeague;
-
-	/**
 	 * Filter storage.
 	 */
-	private Map<CheckBox, League> mapChkLeagues;
+	private Map<CheckBox, League> mapLeagueGamesLeagues;
 
 
 	/**
@@ -166,6 +161,12 @@ public class EventListController {
 	 */
 	@FXML
 	private Tab tabTournaments;
+
+	/**
+	 * Tournaments box.
+	 */
+	@FXML
+	private VBox boxTournaments;
 
 	/**
 	 * Table view tournaments.
@@ -214,6 +215,12 @@ public class EventListController {
 	 */
 	@FXML
 	private Tab tabOtherEvents;
+
+	/**
+	 * Other events box.
+	 */
+	@FXML
+	private VBox boxOtherEvents;
 
 	/**
 	 * Table other events.
@@ -322,14 +329,21 @@ public class EventListController {
 	        handleTabChange();
 	    });
 
+		// headings
+		lblLeagueGameFilter.setFont(FontUtils.getDerived(lblLeagueGameFilter.getFont(), FontWeight.BOLD));
+
 		// setup league filter
-		mapChkLeagues = new HashMap<>();
+		HBox boxLeagueFilter = new HBox(5);
+		boxLeagueGames.getChildren().add(new Separator(Orientation.HORIZONTAL));
+		boxLeagueGames.getChildren().add(boxLeagueFilter);
+
+		mapLeagueGamesLeagues = new HashMap<>();
 		AppModel.getData().getContent().getLeague().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
 				league -> {
 					CheckBox chkTemp = new CheckBox(league.getDisplayTitleShort().getValue());
 					chkTemp.setOnAction(e -> handleFilterChange());
-					boxFilterLeague.getChildren().add(chkTemp);
-					mapChkLeagues.put(chkTemp, league);
+					boxLeagueFilter.getChildren().add(chkTemp);
+					mapLeagueGamesLeagues.put(chkTemp, league);
 				}
 		);
 
@@ -365,15 +379,21 @@ public class EventListController {
 		tblOtherEvents.setItems(lstSortedOtherEvents);
 
 		// set "empty data" text
-		Label lblPlaceholder = new Label(MessageFormat.format(((lstLeagueGame == null) || lstLeagueGame.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Ligaspiele"));
+		Label lblPlaceholder = new Label(MessageFormat.format(
+				((lstLeagueGame == null) || lstLeagueGame.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				"Ligaspiele"));
 		lblPlaceholder.setWrapText(true);
 		tblLeagueGames.setPlaceholder(lblPlaceholder);
 
-		lblPlaceholder = new Label(MessageFormat.format(((lstTournaments == null) || lstTournaments.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Turniere"));
+		lblPlaceholder = new Label(MessageFormat.format(((lstTournaments == null) || lstTournaments.isEmpty()) ?
+				TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				"Turniere"));
 		lblPlaceholder.setWrapText(true);
 		tblTournaments.setPlaceholder(lblPlaceholder);
 
-		lblPlaceholder = new Label(MessageFormat.format(((lstOtherEvents == null) || lstOtherEvents.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "sonstigen Termine"));
+		lblPlaceholder = new Label(MessageFormat.format(
+				((lstOtherEvents == null) || lstOtherEvents.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				"sonstigen Termine"));
 		lblPlaceholder.setWrapText(true);
 		tblOtherEvents.setPlaceholder(lblPlaceholder);
 
@@ -394,7 +414,7 @@ public class EventListController {
 
 			lstLeagueGame.setPredicate(LeagueGameModel.ALL);
 
-			for (Entry<CheckBox, League> entryChkLeague : mapChkLeagues.entrySet()) {
+			for (Entry<CheckBox, League> entryChkLeague : mapLeagueGamesLeagues.entrySet()) {
 
 				if (entryChkLeague.getKey().isSelected()) {
 					lstLeagueGame.setPredicate(((Predicate<LeagueGame>) lstLeagueGame.getPredicate()).and(LeagueGameModel.getLeaguePredicate(entryChkLeague.getValue())));
