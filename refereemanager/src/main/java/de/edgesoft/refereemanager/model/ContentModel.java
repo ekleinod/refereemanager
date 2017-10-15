@@ -113,6 +113,14 @@ public class ContentModel extends Content {
 	@XmlTransient
 	private ObservableList<OtherEvent> observableOtherEvents = null;
 
+	/**
+	 * Observable list of clubs (singleton).
+	 *
+	 * @since 0.15.0
+	 */
+	@XmlTransient
+	private ObservableList<Club> observableClubs = null;
+
 
 	/**
 	 * Returns observable list of referees.
@@ -210,6 +218,20 @@ public class ContentModel extends Content {
 			observableOtherEvents = FXCollections.observableList(getOtherEvent());
 		}
 		return observableOtherEvents;
+	}
+
+	/**
+	 * Returns observable list of clubs.
+	 *
+	 * @return observable list of clubs
+	 *
+	 * @since 0.15.0
+	 */
+	public ObservableList<Club> getObservableClubs() {
+		if (observableClubs == null) {
+			observableClubs = FXCollections.observableList(getClub());
+		}
+		return observableClubs;
 	}
 
 

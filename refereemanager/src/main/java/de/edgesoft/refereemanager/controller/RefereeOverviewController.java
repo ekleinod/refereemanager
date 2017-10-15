@@ -3,11 +3,12 @@ package de.edgesoft.refereemanager.controller;
 import java.io.File;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.time.LocalDate;
 import java.util.Map;
 import java.util.Objects;
 
-import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.edgeutils.javafx.FontUtils;
+import de.edgesoft.edgeutils.javafx.LabelUtils;
+import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.Trainee;
@@ -36,6 +37,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -65,7 +67,7 @@ import javafx.stage.Stage;
  * @version 0.14.0
  * @since 0.10.0
  */
-public class RefereeOverviewController extends AbstractCRUDController {
+public class RefereeOverviewController extends AbstractTitledIDDetailsController {
 
 	/**
 	 * Heading label.
@@ -74,6 +76,14 @@ public class RefereeOverviewController extends AbstractCRUDController {
 	 */
 	@FXML
 	private Label lblHeading;
+
+	/**
+	 * Heading label person data.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Label lblHeadingPerson;
 
 	/**
 	 * Name label.
@@ -85,7 +95,7 @@ public class RefereeOverviewController extends AbstractCRUDController {
 	 * Name label label.
 	 */
 	@FXML
-	private Label lblNameLabel;
+	private Label lblLabelName;
 
 	/**
 	 * First name label.
@@ -99,7 +109,7 @@ public class RefereeOverviewController extends AbstractCRUDController {
 	 * @since 0.13.0
 	 */
 	@FXML
-	private Label lblFirstNameLabel;
+	private Label lblLabelFirstName;
 
 	/**
 	 * Training level label.
@@ -113,7 +123,7 @@ public class RefereeOverviewController extends AbstractCRUDController {
 	 * @since 0.13.0
 	 */
 	@FXML
-	private Label lblTrainingLevelLabel;
+	private Label lblLabelTrainingLevel;
 
 	/**
 	 * Club label.
@@ -127,7 +137,7 @@ public class RefereeOverviewController extends AbstractCRUDController {
 	 * @since 0.13.0
 	 */
 	@FXML
-	private Label lblClubLabel;
+	private Label lblLabelClub;
 
 	/**
 	 * Birthday label.
@@ -143,7 +153,7 @@ public class RefereeOverviewController extends AbstractCRUDController {
 	 * @since 0.13.0
 	 */
 	@FXML
-	private Label lblBirthdayLabel;
+	private Label lblLabelBirthday;
 
 	/**
 	 * Last update label.
@@ -159,7 +169,7 @@ public class RefereeOverviewController extends AbstractCRUDController {
 	 * @since 0.13.0
 	 */
 	@FXML
-	private Label lblLastUpdateLabel;
+	private Label lblLabelLastUpdate;
 
 	/**
 	 * Next update label.
@@ -175,7 +185,7 @@ public class RefereeOverviewController extends AbstractCRUDController {
 	 * @since 0.13.0
 	 */
 	@FXML
-	private Label lblNextUpdateLabel;
+	private Label lblLabelNextUpdate;
 
 	/**
 	 * Role label.
@@ -191,23 +201,7 @@ public class RefereeOverviewController extends AbstractCRUDController {
 	 * @since 0.15.0
 	 */
 	@FXML
-	private Label lblRoleLabel;
-
-	/**
-	 * Remark label.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Label lblRemark;
-
-	/**
-	 * Remark label label.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Label lblRemarkLabel;
+	private Label lblLabelRole;
 
 	/**
 	 * Referee image.
@@ -264,22 +258,22 @@ public class RefereeOverviewController extends AbstractCRUDController {
 
 		// disabling labels
 		ObservableBooleanValue isReferee = ctlRefList.getTabReferees().selectedProperty();
-		lblTrainingLevelLabel.visibleProperty().bind(isReferee);
-		lblTrainingLevelLabel.managedProperty().bind(isReferee);
+		lblLabelTrainingLevel.visibleProperty().bind(isReferee);
+		lblLabelTrainingLevel.managedProperty().bind(isReferee);
 		lblTrainingLevel.visibleProperty().bind(isReferee);
 		lblTrainingLevel.managedProperty().bind(isReferee);
-		lblLastUpdateLabel.visibleProperty().bind(isReferee);
-		lblLastUpdateLabel.managedProperty().bind(isReferee);
+		lblLabelLastUpdate.visibleProperty().bind(isReferee);
+		lblLabelLastUpdate.managedProperty().bind(isReferee);
 		lblLastUpdate.visibleProperty().bind(isReferee);
 		lblLastUpdate.managedProperty().bind(isReferee);
-		lblNextUpdateLabel.visibleProperty().bind(isReferee);
-		lblNextUpdateLabel.managedProperty().bind(isReferee);
+		lblLabelNextUpdate.visibleProperty().bind(isReferee);
+		lblLabelNextUpdate.managedProperty().bind(isReferee);
 		lblNextUpdate.visibleProperty().bind(isReferee);
 		lblNextUpdate.managedProperty().bind(isReferee);
 
 		ObservableBooleanValue isRefereeOrTrainee = ctlRefList.getTabReferees().selectedProperty().or(ctlRefList.getTabTrainees().selectedProperty());
-		lblClubLabel.visibleProperty().bind(isRefereeOrTrainee);
-		lblClubLabel.managedProperty().bind(isRefereeOrTrainee);
+		lblLabelClub.visibleProperty().bind(isRefereeOrTrainee);
+		lblLabelClub.managedProperty().bind(isRefereeOrTrainee);
 		lblClub.visibleProperty().bind(isRefereeOrTrainee);
 		lblClub.managedProperty().bind(isRefereeOrTrainee);
 		imgReferee.visibleProperty().bind(isRefereeOrTrainee);
@@ -298,6 +292,10 @@ public class RefereeOverviewController extends AbstractCRUDController {
 				.and(ctlRefList.getTabTrainees().selectedProperty().not().or(ctlRefList.getTraineesSelectionModel().selectedItemProperty().isNull()))
 				.and(ctlRefList.getTabPeople().selectedProperty().not().or(ctlRefList.getPeopleSelectionModel().selectedItemProperty().isNull()));
 		initCRUDButtons(isOneItemSelected, isOneItemSelected);
+
+		// headings
+		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD, 2));
+		lblHeadingPerson.setFont(FontUtils.getDerived(lblHeadingPerson.getFont(), FontWeight.BOLD));
 
 	}
 
@@ -336,75 +334,54 @@ public class RefereeOverviewController extends AbstractCRUDController {
 	 *
 	 * @param theDetailData event (null if none is selected)
 	 */
-	private void showDetails(final Person theDetailData) {
+	public void showDetails(final Person theDetailData) {
+
+		super.showDetails(theDetailData);
 
 		if (theDetailData == null) {
 
 			lblHeading.setText("Details");
 
-			lblName.setText("");
-			lblFirstName.setText("");
-			lblTrainingLevel.setText("");
-			lblClub.setText("");
-			lblBirthday.setText("");
-			lblLastUpdate.setText("");
-			lblNextUpdate.setText("");
-			lblRole.setText("");
-			lblRemark.setText("");
+			LabelUtils.setText(lblName, null);
+			LabelUtils.setText(lblFirstName, null);
+			LabelUtils.setText(lblTrainingLevel, null);
+			LabelUtils.setText(lblClub, null);
+			LabelUtils.setText(lblBirthday, null);
+			LabelUtils.setText(lblLastUpdate, null);
+			LabelUtils.setText(lblNextUpdate, null);
+			LabelUtils.setText(lblRole, null);
 
 			imgReferee.setImage(null);
 
 		} else {
 
-			lblHeading.setText(
-					(theDetailData.getDisplayTitle() == null) ?
-							null :
-							theDetailData.getDisplayTitle().getValue());
+			LabelUtils.setText(lblHeading, theDetailData.getDisplayTitle());
 
-			lblName.setText(
-					(theDetailData.getName() == null) ?
-							null :
-							theDetailData.getName().getValue());
-			lblFirstName.setText(
-					(theDetailData.getFirstName() == null) ?
-							null :
-							theDetailData.getFirstName().getValue());
-
-			lblBirthday.setText(
-					(theDetailData.getBirthday() == null) ?
-							null :
-							DateTimeUtils.formatDate((LocalDate) theDetailData.getBirthday().getValue()));
+			LabelUtils.setText(lblName, theDetailData.getName());
+			LabelUtils.setText(lblFirstName, theDetailData.getFirstName());
+			LabelUtils.setText(lblBirthday, theDetailData.getBirthday(), null);
 
 			lblRole.setText(
 					(theDetailData.getRole() == null) ?
 							null :
 							theDetailData.getRole().getDisplayText().getValue());
 
-			lblRemark.setText(
-					(theDetailData.getRemark() == null) ?
-							null :
-							theDetailData.getRemark().getValue());
-
 			if (theDetailData instanceof RefereeModel) {
 				RefereeModel mdlTemp = (RefereeModel) theDetailData;
+
+				lblTrainingLevel.setText(
+						(mdlTemp.getHighestTrainingLevel() == null) ?
+								null :
+								mdlTemp.getHighestTrainingLevel().getType().getDisplayTitleShort().getValue());
 
 				lblClub.setText(
 						(mdlTemp.getMember() == null) ?
 								null :
 								mdlTemp.getMember().getDisplayText().getValue());
 
-				lblTrainingLevel.setText(
-						(mdlTemp.getHighestTrainingLevel() == null) ?
-								null :
-								mdlTemp.getHighestTrainingLevel().getType().getDisplayTitleShort().getValue());
-				lblLastUpdate.setText(
-						(mdlTemp.getLastTrainingUpdate() == null) ?
-								null :
-								DateTimeUtils.formatDate(mdlTemp.getLastTrainingUpdate().getValue()));
-				lblNextUpdate.setText(
-						(mdlTemp.getNextTrainingUpdate() == null) ?
-								null :
-								DateTimeUtils.formatDate(mdlTemp.getNextTrainingUpdate().getValue(), "yyyy"));
+				LabelUtils.setText(lblLastUpdate, mdlTemp.getLastTrainingUpdate(), null);
+				LabelUtils.setText(lblNextUpdate, mdlTemp.getNextTrainingUpdate(), "yyyy");
+
 				try {
 					if (mdlTemp.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
 						File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), String.format("%s.jpg", mdlTemp.getFileName().getValue())).toFile();
@@ -418,6 +395,7 @@ public class RefereeOverviewController extends AbstractCRUDController {
 						}
 					}
 				} catch (Exception e) {
+					RefereeManager.logger.throwing(e);
 					imgReferee.setImage(null);
 				}
 

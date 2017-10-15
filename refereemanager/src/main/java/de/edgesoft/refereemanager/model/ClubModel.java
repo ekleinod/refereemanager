@@ -1,5 +1,7 @@
 package de.edgesoft.refereemanager.model;
 
+import java.util.function.Predicate;
+
 import de.edgesoft.edgeutils.files.FileUtils;
 import de.edgesoft.refereemanager.jaxb.Club;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -33,6 +35,21 @@ import javafx.beans.property.StringProperty;
  * @since 0.5.0
  */
 public class ClubModel extends Club {
+
+	/**
+	 * Filter predicate for all clubs.
+	 */
+	public static Predicate<Club> ALL = club -> true;
+
+	/**
+	 * Filter predicate for local clubs.
+	 */
+	public static Predicate<Club> LOCAL = club -> club.getLocal().getValue();
+
+	/**
+	 * Filter predicate for non-local clubs.
+	 */
+	public static Predicate<Club> NON_LOCAL = LOCAL.negate();
 
 	/**
 	 * Returns if club is local club.

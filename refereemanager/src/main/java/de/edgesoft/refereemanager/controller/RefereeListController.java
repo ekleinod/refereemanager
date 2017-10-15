@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.PersonRoleType;
 import de.edgesoft.refereemanager.jaxb.Referee;
@@ -27,15 +28,19 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.FontWeight;
 
 /**
  * Controller for the referee list scene.
@@ -66,20 +71,6 @@ import javafx.scene.layout.HBox;
 public class RefereeListController {
 
 	/**
-	 * Text for empty table: no data.
-	 *
-	 * @since 0.12.0
-	 */
-	private static final String TABLE_NO_DATA = "Es wurden noch keine {0} eingegeben.";
-
-	/**
-	 * Text for empty table: filtered.
-	 *
-	 * @since 0.12.0
-	 */
-	private static final String TABLE_FILTERED = "Die Filterung schließt alle {0} aus.";
-
-	/**
 	 * Tab pane content.
 	 *
 	 * @since 0.12.0
@@ -94,6 +85,14 @@ public class RefereeListController {
 	 */
 	@FXML
 	private Tab tabReferees;
+
+	/**
+	 * VBox referees.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private VBox boxReferees;
 
 	/**
 	 * Table view referees.
@@ -183,14 +182,6 @@ public class RefereeListController {
 	private CheckBox chkRefereesLetterOnly;
 
 	/**
-	 * HBox filter status.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private HBox boxRefereesFilterStatus;
-
-	/**
 	 * Filter storage.
 	 *
 	 * @since 0.15.0
@@ -205,6 +196,14 @@ public class RefereeListController {
 	 */
 	@FXML
 	private Tab tabTrainees;
+
+	/**
+	 * VBox trainees.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private VBox boxTrainees;
 
 	/**
 	 * Table view trainees.
@@ -271,6 +270,14 @@ public class RefereeListController {
 	private Tab tabPeople;
 
 	/**
+	 * VBox people.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private VBox boxPeople;
+
+	/**
 	 * Table view trainees.
 	 *
 	 * @since 0.12.0
@@ -325,14 +332,6 @@ public class RefereeListController {
 	 */
 	@FXML
 	private Label lblPeopleFilter;
-
-	/**
-	 * HBox filter role.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private HBox boxPeopleFilterRole;
 
 	/**
 	 * Filter storage.
@@ -405,24 +404,36 @@ public class RefereeListController {
 	        handleTabChange();
 	    });
 
+		// headings
+		lblRefereesFilter.setFont(FontUtils.getDerived(lblRefereesFilter.getFont(), FontWeight.BOLD));
+		lblPeopleFilter.setFont(FontUtils.getDerived(lblPeopleFilter.getFont(), FontWeight.BOLD));
+
 		// setup status filter
+		HBox boxStatusFilter = new HBox(5);
+		boxReferees.getChildren().add(new Separator(Orientation.HORIZONTAL));
+		boxReferees.getChildren().add(boxStatusFilter);
+
 		mapRefereesFilterStatus = new HashMap<>();
 		AppModel.getData().getContent().getStatusType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
 				statusType -> {
 					CheckBox chkTemp = new CheckBox(statusType.getDisplayTitleShort().getValueSafe());
 					chkTemp.setOnAction(e -> handleFilterChange());
-					boxRefereesFilterStatus.getChildren().add(chkTemp);
+					boxStatusFilter.getChildren().add(chkTemp);
 					mapRefereesFilterStatus.put(chkTemp, statusType);
 				}
 		);
 
 		// setup role filter
+		HBox boxRoleFilter = new HBox(5);
+		boxPeople.getChildren().add(new Separator(Orientation.HORIZONTAL));
+		boxPeople.getChildren().add(boxRoleFilter);
+
 		mapPeopleFilterRoles = new HashMap<>();
 		AppModel.getData().getContent().getRoleType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
 				roleType -> {
 					CheckBox chkTemp = new CheckBox(roleType.getDisplayTitleShort().getValueSafe());
 					chkTemp.setOnAction(e -> handleFilterChange());
-					boxPeopleFilterRole.getChildren().add(chkTemp);
+					boxRoleFilter.getChildren().add(chkTemp);
 					mapPeopleFilterRoles.put(chkTemp, roleType);
 				}
 		);
@@ -459,15 +470,21 @@ public class RefereeListController {
 		tblPeople.setItems(lstSortedPeople);
 
 		// set "empty data" text
-		Label lblPlaceholder = new Label(MessageFormat.format(((lstReferees == null) || lstReferees.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Schiedsrichter"));
+		Label lblPlaceholder = new Label(MessageFormat.format(
+				((lstReferees == null) || lstReferees.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				"Schiedsrichter"));
 		lblPlaceholder.setWrapText(true);
 		tblReferees.setPlaceholder(lblPlaceholder);
 
-		lblPlaceholder = new Label(MessageFormat.format(((lstTrainees == null) || lstTrainees.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Azubis"));
+		lblPlaceholder = new Label(MessageFormat.format(
+				((lstTrainees == null) || lstTrainees.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				"Azubis"));
 		lblPlaceholder.setWrapText(true);
 		tblTrainees.setPlaceholder(lblPlaceholder);
 
-		lblPlaceholder = new Label(MessageFormat.format(((lstPeople == null) || lstPeople.isEmpty()) ? TABLE_NO_DATA : TABLE_FILTERED, "Personen"));
+		lblPlaceholder = new Label(MessageFormat.format(
+				((lstPeople == null) || lstPeople.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				"Personen"));
 		lblPlaceholder.setWrapText(true);
 		tblPeople.setPlaceholder(lblPlaceholder);
 

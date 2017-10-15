@@ -2,114 +2,83 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.EventOverviewController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.EventOverviewController">
    <children>
       <SplitPane fx:id="pneSplit" layoutX="100.0" layoutY="150.0" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+            <VBox spacing="5.0">
                <children>
-                  <Label fx:id="lblHeading" layoutX="51.0" layoutY="38.0" text="Details" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font></Label>
-                  <GridPane layoutX="23.0" layoutY="62.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0">
+                  <Label fx:id="lblHeading" text="Label" />
+                  <Separator orientation="VERTICAL" prefHeight="10.0" visible="false" />
+                  <fx:include fx:id="embeddedPartTitledIDDetails" source="PartTitledIDDetails.fxml" />
+                  <Separator orientation="VERTICAL" prefHeight="10.0" visible="false" />
+                  <Label fx:id="lblHeadingEvent" text="Ereignisdaten" />
+                  <GridPane vgap="10.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="200.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints vgrow="SOMETIMES" />
-                      <RowConstraints vgrow="SOMETIMES" />
-                      <RowConstraints vgrow="SOMETIMES" />
-                      <RowConstraints vgrow="SOMETIMES" />
-                      <RowConstraints vgrow="SOMETIMES" />
-                      <RowConstraints vgrow="SOMETIMES" />
-                      <RowConstraints vgrow="SOMETIMES" />
-                      <RowConstraints vgrow="SOMETIMES" />
-                      <RowConstraints vgrow="SOMETIMES" />
-                      <RowConstraints vgrow="SOMETIMES" />
+			          <RowConstraints valignment="TOP" />
+			          <RowConstraints valignment="TOP" />
+			          <RowConstraints valignment="TOP" />
+			          <RowConstraints valignment="TOP" />
+			          <RowConstraints valignment="TOP" />
+			          <RowConstraints valignment="TOP" />
+			          <RowConstraints valignment="TOP" />
+			          <RowConstraints valignment="TOP" />
+			          <RowConstraints valignment="TOP" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="lblNumberLabel" text="Spielnummer">
-                           <GridPane.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </GridPane.margin></Label>
+                        <Label fx:id="lblNumberLabel" text="Spielnummer" />
                         <Label fx:id="lblNumber" text="Label" GridPane.columnIndex="1" />
-                        <Label fx:id="lblDateLabel" text="Datum" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </GridPane.margin></Label>
+                        <Label fx:id="lblDateLabel" text="Datum" GridPane.rowIndex="1" />
                         <Label fx:id="lblDate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="lblTimeLabel" text="Zeit" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </GridPane.margin></Label>
+                        <Label fx:id="lblTimeLabel" text="Zeit" GridPane.rowIndex="2" />
                         <Label fx:id="lblTime" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="lblLeagueLabel" text="Liga" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </GridPane.margin></Label>
+                        <Label fx:id="lblLeagueLabel" text="Liga" GridPane.rowIndex="3" />
                         <Label fx:id="lblLeague" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label fx:id="lblTeamsLabel" text="Teams" GridPane.rowIndex="4">
-                           <GridPane.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </GridPane.margin></Label>
+                        <Label fx:id="lblTeamsLabel" text="Teams" GridPane.rowIndex="4" />
                         <Label fx:id="lblTeams" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label fx:id="lblClubLabel" text="Ausrichter" GridPane.rowIndex="5">
-                           <GridPane.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </GridPane.margin></Label>
+                        <Label fx:id="lblClubLabel" text="Ausrichter" GridPane.rowIndex="5" />
                         <Label fx:id="lblClub" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Label fx:id="lblOrganizerLabel" text="Organisator" GridPane.rowIndex="6">
-                           <GridPane.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </GridPane.margin></Label>
+                        <Label fx:id="lblOrganizerLabel" text="Organisator" GridPane.rowIndex="6" />
                         <Label fx:id="lblOrganizer" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label fx:id="lblVenueLabel" text="Ort" GridPane.rowIndex="7">
-                           <GridPane.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </GridPane.margin></Label>
+                        <Label fx:id="lblVenueLabel" text="Ort" GridPane.rowIndex="7" />
                         <Label fx:id="lblVenue" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Label fx:id="lblRemarkLabel" text="Anmerkung" GridPane.rowIndex="8">
-                           <GridPane.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </GridPane.margin></Label>
-                        <Label fx:id="lblRemark" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                        <Label fx:id="lblRefereeReportLabel" text="OSR-Bericht" GridPane.rowIndex="9">
-                           <GridPane.margin>
-                              <Insets bottom="10.0" top="10.0" />
-                           </GridPane.margin></Label>
-                        <AnchorPane fx:id="pneRefereeReport" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                        <Label fx:id="lblRefereeReportLabel" text="OSR-Bericht" GridPane.rowIndex="8" />
+                        <HBox fx:id="boxRefereeReport" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                            <children>
-		                      <Label fx:id="lblRefereeReport" text="Label" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0" />
-                              <Label fx:id="lblRefereeReportIndicator" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0" />
-                              <Button fx:id="btnRefereeReportCopy" layoutX="204.0" mnemonicParsing="false" onAction="#handleRefereeReportCopy" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Label fx:id="lblRefereeReportIndicator" minWidth="20.0" />
+		                      <Label fx:id="lblRefereeReport" text="Label" />
+                              <Separator prefWidth="200.0" visible="false" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="btnRefereeReportCopy" onAction="#handleRefereeReportCopy">
                                  <tooltip>
                                     <Tooltip text="Dateiname in Zwischenablage kopieren" />
-                                 </tooltip></Button>
+                                 </tooltip>
+                              </Button>
                            </children>
-                        </AnchorPane>
+                        </HBox>
                      </children>
                   </GridPane>
-                  <ButtonBar layoutX="152.0" layoutY="458.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
-                    <buttons>
-                      <Button fx:id="btnAdd" onAction="#handleAdd" text="_Neu..." />
-                        <Button fx:id="btnEdit" onAction="#handleEdit" prefWidth="140.0" text="Ände_rn..." />
-                        <Button fx:id="btnDelete" onAction="#handleDelete" text="_Löschen" />
-                    </buttons>
-                  </ButtonBar>
+                  <Separator orientation="VERTICAL" prefHeight="10.0" visible="false" VBox.vgrow="ALWAYS" />
+                  <fx:include fx:id="embeddedCRUDButtons" source="PartCRUDButtons.fxml" />
                </children>
-            </AnchorPane>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
         </items>
       </SplitPane>
    </children>
