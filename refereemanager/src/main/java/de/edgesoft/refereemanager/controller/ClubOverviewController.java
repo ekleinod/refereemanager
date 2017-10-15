@@ -121,7 +121,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 	 * List view part controller.
 	 */
 	@FXML
-	private ClubListController embeddedListController;
+	private IListController embeddedListController;
 
 
 	/**
@@ -142,7 +142,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 		showDetails(null);
 
 		// listen to selection changes, show person
-		embeddedListController.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
+		((ClubListController) embeddedListController).getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.EVENT_OVERVIEW_SPLIT)));
@@ -222,7 +222,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 		if (showEditDialog(newClub)) {
 
 			((ContentModel) AppModel.getData().getContent()).getObservableClubs().add(newClub);
-			embeddedListController.getSelectionModel().select(newClub);
+			((ClubListController) embeddedListController).getSelectionModel().select(newClub);
 
 			AppModel.setModified(true);
 			appController.setAppTitle();
@@ -239,7 +239,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 	@Override
 	public void handleEdit(ActionEvent event) {
 
-		ObservableList<ClubModel> lstSelected = embeddedListController.getSelection();
+		ObservableList<ClubModel> lstSelected = ((ClubListController) embeddedListController).getSelection();
 
 		if (lstSelected.size() == 1) {
 			if (showEditDialog(lstSelected.get(0))) {
@@ -260,7 +260,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 	@Override
 	public void handleDelete(ActionEvent event) {
 
-		ObservableList<ClubModel> lstSelected = embeddedListController.getSelection();
+		ObservableList<ClubModel> lstSelected = ((ClubListController) embeddedListController).getSelection();
 
 		if (lstSelected.size() == 1) {
 

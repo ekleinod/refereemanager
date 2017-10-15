@@ -55,7 +55,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ClubListController {
+public class ClubListController implements IListController {
 
 	/**
 	 * Club box.
@@ -139,6 +139,7 @@ public class ClubListController {
 	/**
 	 * Sets table items.
 	 */
+	@Override
 	public void setItems() {
 
 		lstClubs = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableClubs(), club -> true);
@@ -163,7 +164,8 @@ public class ClubListController {
 	 */
 	@SuppressWarnings("unchecked")
 	@FXML
-	private void handleFilterChange() {
+	@Override
+	public void handleFilterChange() {
 
 		// filter for events
 		if (lstClubs == null) {
@@ -192,6 +194,7 @@ public class ClubListController {
 	 *
 	 * @param theSelectionMode selection mode
 	 */
+	@Override
 	public void setSelectionMode(final SelectionMode theSelectionMode) {
 		tblData.getSelectionModel().setSelectionMode(theSelectionMode);
 	}
@@ -201,6 +204,7 @@ public class ClubListController {
 	 *
 	 * @return selection model
 	 */
+	@Override
 	public TableViewSelectionModel<Club> getSelectionModel() {
 		return tblData.getSelectionModel();
 	}
@@ -210,6 +214,7 @@ public class ClubListController {
 	 *
 	 * @return sorted selection from table
 	 */
+	@Override
 	public ObservableList<ClubModel> getSelection() {
 		List<ClubModel> lstReturn = new ArrayList<>();
 
