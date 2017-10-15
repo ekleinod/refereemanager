@@ -21,6 +21,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -29,7 +30,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -112,15 +112,23 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 
 
 	/**
+	 * List view part.
+	 */
+	@FXML
+	private Parent embeddedList;
+
+	/**
+	 * List view part controller.
+	 */
+	@FXML
+	private ClubListController embeddedListController;
+
+
+	/**
 	 * Main app controller.
 	 */
 	private AppLayoutController appController = null;
 
-
-	/**
-	 * Club list controller.
-	 */
-	private ClubListController ctlClubList;
 
 	/**
 	 * Initializes the controller class.
@@ -130,21 +138,11 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 	@FXML
 	private void initialize() {
 
-		// list
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ClubList");
-		VBox refList = (VBox) pneLoad.getKey();
-
-		// add referee list to split pane
-		pneSplit.getItems().add(0, refList);
-
-		// store referee table controller
-		ctlClubList = pneLoad.getValue().getController();
-
 		// clear event details
 		showDetails(null);
 
 		// listen to selection changes, show person
-		ctlClubList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
+		embeddedListController.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.EVENT_OVERVIEW_SPLIT)));
@@ -155,7 +153,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 		});
 
 		// CRUD buttons setup
-		ObservableBooleanValue isOneItemSelected = ctlClubList.getSelectionModel().selectedItemProperty().isNull();
+		ObservableBooleanValue isOneItemSelected = embeddedListController.getSelectionModel().selectedItemProperty().isNull();
 		initCRUDButtons(isOneItemSelected, isOneItemSelected);
 
 		// headings
@@ -173,7 +171,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 
 		appController = theAppController;
 
-		ctlClubList.setItems();
+		embeddedListController.setItems();
 
 	}
 
@@ -224,7 +222,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 		if (showEditDialog(newClub)) {
 
 			((ContentModel) AppModel.getData().getContent()).getObservableClubs().add(newClub);
-			ctlClubList.getSelectionModel().select(newClub);
+			embeddedListController.getSelectionModel().select(newClub);
 
 			AppModel.setModified(true);
 			appController.setAppTitle();
@@ -241,7 +239,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 	@Override
 	public void handleEdit(ActionEvent event) {
 
-		ObservableList<ClubModel> lstSelected = ctlClubList.getSelection();
+		ObservableList<ClubModel> lstSelected = embeddedListController.getSelection();
 
 		if (lstSelected.size() == 1) {
 			if (showEditDialog(lstSelected.get(0))) {
@@ -262,7 +260,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 	@Override
 	public void handleDelete(ActionEvent event) {
 
-		ObservableList<ClubModel> lstSelected = ctlClubList.getSelection();
+		ObservableList<ClubModel> lstSelected = embeddedListController.getSelection();
 
 		if (lstSelected.size() == 1) {
 

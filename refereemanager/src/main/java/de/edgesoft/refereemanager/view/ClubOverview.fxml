@@ -14,6 +14,7 @@
    <children>
       <SplitPane fx:id="pneSplit" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
+            <fx:include fx:id="embeddedList" source="ClubList.fxml" />
             <VBox spacing="5.0">
                <children>
                   <Label fx:id="lblHeading" text="Label" />
