@@ -27,6 +27,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -35,8 +36,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -236,11 +235,10 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 	private void initialize() {
 
 		// list
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
-		AnchorPane refList = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("RefereeList");
 
 		// add referee list to split pane
-		pneSplit.getItems().add(0, refList);
+		pneSplit.getItems().add(0, pneLoad.getKey());
 
 		// store referee table controller
 		ctlRefList = pneLoad.getValue().getController();
@@ -525,9 +523,7 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 
 		Objects.requireNonNull(thePerson);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PersonEditDialog");
-
-		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("PersonEditDialog");
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
@@ -538,8 +534,7 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 					ctlRefList.getTabTrainees().isSelected() ? "Azubi" :
 						"Person"));
 
-		Scene scene = new Scene(editDialog);
-		dialogStage.setScene(scene);
+		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the referee
 		PersonEditDialogController editController = pneLoad.getValue().getController();

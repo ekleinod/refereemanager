@@ -20,6 +20,7 @@ import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -29,8 +30,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -369,9 +368,7 @@ public class TrainingLevelEditDialogController {
 
 		Objects.requireNonNull(theUpdate);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("TrainingLevelUpdateEditDialog");
-
-		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("TrainingLevelUpdateEditDialog");
 
 		// Create the dialog Stage.
 		Stage editDialogStage = new Stage();
@@ -379,8 +376,7 @@ public class TrainingLevelEditDialogController {
 		editDialogStage.initOwner(dialogStage);
 		editDialogStage.setTitle("Fortbildung");
 
-		Scene scene = new Scene(editDialog);
-		editDialogStage.setScene(scene);
+		editDialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the update
 		TrainingLevelUpdateEditDialogController editController = pneLoad.getValue().getController();

@@ -66,6 +66,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -86,8 +87,6 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -494,11 +493,10 @@ public class RefereeCommunicationController {
 	private void initialize() {
 
 		// list
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
-		AnchorPane refList = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("RefereeList");
 
 		// add referee list to split pane
-		pneSplit.getItems().add(refList);
+		pneSplit.getItems().add(pneLoad.getKey());
 
 		// store referee table controller
 		ctlRefList = pneLoad.getValue().getController();
@@ -784,8 +782,7 @@ public class RefereeCommunicationController {
 	@FXML
 	private void handlePrefs() {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PreferencesDialog");
-		AnchorPane preferencesDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("PreferencesDialog");
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
@@ -793,8 +790,7 @@ public class RefereeCommunicationController {
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initOwner(appController.getPrimaryStage());
 
-		Scene scene = new Scene(preferencesDialog);
-		dialogStage.setScene(scene);
+		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// initialize controller
 		PreferencesDialogController controller = pneLoad.getValue().getController();
@@ -1034,8 +1030,7 @@ public class RefereeCommunicationController {
 	 */
 	private boolean showAttachmentEditDialog(Attachment theAttachment) {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AttachmentEditDialog");
-		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AttachmentEditDialog");
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
@@ -1043,8 +1038,7 @@ public class RefereeCommunicationController {
 		dialogStage.initOwner(appController.getPrimaryStage());
 		dialogStage.setTitle("Dateianhang editieren");
 
-		Scene scene = new Scene(editDialog);
-		dialogStage.setScene(scene);
+		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the attachment
 		AttachmentEditDialogController editController = pneLoad.getValue().getController();
@@ -1232,7 +1226,7 @@ public class RefereeCommunicationController {
 			};
 
             // progress dialog
-			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
+			Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ProgressDialog");
 
 			Stage dialogStage = new Stage(StageStyle.UTILITY);
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
@@ -1410,7 +1404,7 @@ public class RefereeCommunicationController {
 			};
 
             // progress dialog
-			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
+			Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ProgressDialog");
 
 			Stage dialogStage = new Stage(StageStyle.UTILITY);
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
@@ -1541,7 +1535,7 @@ public class RefereeCommunicationController {
 			};
 
             // progress dialog
-			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
+			Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ProgressDialog");
 
 			Stage dialogStage = new Stage(StageStyle.UTILITY);
 			dialogStage.initModality(Modality.APPLICATION_MODAL);

@@ -26,9 +26,8 @@ import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -97,7 +96,7 @@ public class RefereeManager extends Application {
 		showSplashScreen();
 
 		// load app layout and controller, then delegate control to controller
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AppLayout");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AppLayout");
 		((AppLayoutController) pneLoad.getValue().getController()).initController(primaryStage);
 
 		// host services
@@ -113,8 +112,7 @@ public class RefereeManager extends Application {
 	public void showSplashScreen() {
 
 		// Load splash screen.
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("SplashScreen");
-		final AnchorPane pane = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("SplashScreen");
 
 		// Create and fill splash screen stage.
 		Stage stage = new Stage();
@@ -122,8 +120,7 @@ public class RefereeManager extends Application {
 		stage.setAlwaysOnTop(true);
 		stage.initStyle(StageStyle.TRANSPARENT);
 
-		Scene scene = new Scene(pane, new Color(1, 1, 1, .5));
-		stage.setScene(scene);
+		stage.setScene(new Scene(pneLoad.getKey(), new Color(1, 1, 1, .5)));
 		stage.sizeToScene();
 		stage.centerOnScreen();
 
@@ -140,7 +137,7 @@ public class RefereeManager extends Application {
 		// add listener to succeed state of task, then fade out
 		splashTask.stateProperty().addListener((observableValue, oldState, newState) -> {
 				if (newState == Worker.State.SUCCEEDED) {
-						FadeTransition fadeSplash = new FadeTransition(Duration.seconds(1.2), pane);
+						FadeTransition fadeSplash = new FadeTransition(Duration.seconds(1.2), pneLoad.getKey());
 						fadeSplash.setFromValue(1.0);
 						fadeSplash.setToValue(0.0);
 						fadeSplash.setOnFinished(actionEvent -> stage.hide());

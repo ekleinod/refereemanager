@@ -4,15 +4,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.ClubOverviewController">
-   <children>
-      <SplitPane fx:id="pneSplit" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<SplitPane fx:id="pneSplit" dividerPositions="0.5" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.ClubOverviewController">
         <items>
             <fx:include fx:id="embeddedList" source="ClubList.fxml" />
             <VBox spacing="5.0">
@@ -56,5 +53,3 @@
             </VBox>
         </items>
       </SplitPane>
-   </children>
-</AnchorPane>

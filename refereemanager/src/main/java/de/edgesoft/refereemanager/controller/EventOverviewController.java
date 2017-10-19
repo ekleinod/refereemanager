@@ -25,6 +25,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -35,9 +36,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -236,11 +235,10 @@ public class EventOverviewController extends AbstractTitledIDDetailsController {
 	private void initialize() {
 
 		// list
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventList");
-		AnchorPane refList = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("EventList");
 
 		// add referee list to split pane
-		pneSplit.getItems().add(0, refList);
+		pneSplit.getItems().add(0, pneLoad.getKey());
 
 		// store referee table controller
 		ctlEventList = pneLoad.getValue().getController();
@@ -559,9 +557,7 @@ public class EventOverviewController extends AbstractTitledIDDetailsController {
 
 		Objects.requireNonNull(theEventDate);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventEditDialog");
-
-		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("EventEditDialog");
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
@@ -572,8 +568,7 @@ public class EventOverviewController extends AbstractTitledIDDetailsController {
 					ctlEventList.getTabTournaments().isSelected() ? "Turnier" :
 						"Sonstigen Termin"));
 
-		Scene scene = new Scene(editDialog);
-		dialogStage.setScene(scene);
+		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the referee
 		EventEditDialogController editController = pneLoad.getValue().getController();

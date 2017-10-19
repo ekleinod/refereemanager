@@ -21,14 +21,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -280,9 +279,7 @@ public class ClubOverviewController extends AbstractOverviewController {
 
 		Objects.requireNonNull(theData);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ClubEditDialog");
-
-		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ClubEditDialog");
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
@@ -290,8 +287,7 @@ public class ClubOverviewController extends AbstractOverviewController {
 		dialogStage.initOwner(appController.getPrimaryStage());
 		dialogStage.setTitle("Club editieren");
 
-		Scene scene = new Scene(editDialog);
-		dialogStage.setScene(scene);
+		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the data
 //		ClubEditDialogController editController = pneLoad.getValue().getController();

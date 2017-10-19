@@ -24,6 +24,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -35,8 +36,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -292,8 +291,7 @@ public class AppLayoutController {
 		primaryStage.getIcons().add(ICON);
 
 		// Show the scene containing the root layout.
-		Scene scene = new Scene(appPane);
-		primaryStage.setScene(scene);
+		primaryStage.setScene(new Scene(appPane));
 		primaryStage.show();
 
 		// resize to last dimensions
@@ -446,8 +444,7 @@ public class AppLayoutController {
 	@FXML
 	private void handleProgramPreferences() {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PreferencesDialog");
-		AnchorPane preferencesDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("PreferencesDialog");
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
@@ -455,8 +452,7 @@ public class AppLayoutController {
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initOwner(primaryStage);
 
-		Scene scene = new Scene(preferencesDialog);
-		dialogStage.setScene(scene);
+		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// initialize controller
 		PreferencesDialogController controller = pneLoad.getValue().getController();
@@ -570,9 +566,8 @@ public class AppLayoutController {
 				null
 				);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AboutText");
-		VBox aboutText = (VBox) pneLoad.getKey();
-		alert.getDialogPane().contentProperty().set(aboutText);
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AboutText");
+		alert.getDialogPane().contentProperty().set(pneLoad.getKey());
 
 		alert.setGraphic(new ImageView(Resources.loadImage("images/icon-64.png")));
 		alert.showAndWait();
@@ -585,11 +580,9 @@ public class AppLayoutController {
 	@FXML
 	private void handleRefereeOverview() {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeOverview");
-		AnchorPane refOverview = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("RefereeOverview");
 
-		// Set event overview into the center of root layout.
-		appPane.setCenter(refOverview);
+		appPane.setCenter(pneLoad.getKey());
 
 		// Give the controller access to the app.
 		RefereeOverviewController ctlRefOverview = pneLoad.getValue().getController();
@@ -603,7 +596,7 @@ public class AppLayoutController {
 	@FXML
 	private void handleRefereeCommunication() {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeCommunication");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("RefereeCommunication");
 		BorderPane pneCommunication = (BorderPane) pneLoad.getKey();
 
 		// Set event overview into the center of root layout.
@@ -623,7 +616,7 @@ public class AppLayoutController {
 	@FXML
 	private void handleEventOverview() {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventOverview");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("EventOverview");
 		AnchorPane refOverview = (AnchorPane) pneLoad.getKey();
 
 		// Set event overview into the center of root layout.
@@ -643,11 +636,9 @@ public class AppLayoutController {
 	@FXML
 	private void handleClubOverview() {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ClubOverview");
-		AnchorPane refOverview = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ClubOverview");
 
-		// Set event overview into the center of root layout.
-		appPane.setCenter(refOverview);
+		appPane.setCenter(pneLoad.getKey());
 
 		// Give the controller access to the app.
 		ClubOverviewController ctlOverview = pneLoad.getValue().getController();
@@ -663,8 +654,7 @@ public class AppLayoutController {
 	@FXML
 	private void handleStatisticsData() {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("Statistics");
-		AnchorPane statistics = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("Statistics");
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
@@ -672,8 +662,7 @@ public class AppLayoutController {
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initOwner(primaryStage);
 
-		Scene scene = new Scene(statistics);
-		dialogStage.setScene(scene);
+		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the events into the controller.
 		StatisticsController controller = pneLoad.getValue().getController();

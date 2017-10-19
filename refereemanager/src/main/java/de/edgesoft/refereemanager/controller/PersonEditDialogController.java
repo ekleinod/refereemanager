@@ -30,6 +30,7 @@ import de.edgesoft.refereemanager.utils.Resources;
 import de.edgesoft.refereemanager.utils.SpinnerUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -45,8 +46,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -1093,9 +1092,7 @@ public class PersonEditDialogController {
 
 		Objects.requireNonNull(theContact);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane(String.format("%sEditDialog", theContact.getClass().getSimpleName().replace("Model", "")));
-
-		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode(String.format("%sEditDialog", theContact.getClass().getSimpleName().replace("Model", "")));
 
 		// Create the dialog Stage.
 		Stage editDialogStage = new Stage();
@@ -1103,8 +1100,7 @@ public class PersonEditDialogController {
 		editDialogStage.initOwner(dialogStage);
 		editDialogStage.setTitle("Kontakt editieren");
 
-		Scene scene = new Scene(editDialog);
-		editDialogStage.setScene(scene);
+		editDialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the referee
 		AbstractContactEditDialogController editController = pneLoad.getValue().getController();
@@ -1250,9 +1246,7 @@ public class PersonEditDialogController {
 
 		Objects.requireNonNull(theWish);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("WishEditDialog");
-
-		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("WishEditDialog");
 
 		// Create the dialog Stage.
 		Stage editDialogStage = new Stage();
@@ -1260,8 +1254,7 @@ public class PersonEditDialogController {
 		editDialogStage.initOwner(dialogStage);
 		editDialogStage.setTitle("Wunsch editieren");
 
-		Scene scene = new Scene(editDialog);
-		editDialogStage.setScene(scene);
+		editDialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the referee
 		WishEditDialogController editController = pneLoad.getValue().getController();
@@ -1393,9 +1386,7 @@ public class PersonEditDialogController {
 
 		Objects.requireNonNull(theTrainingLevel);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("TrainingLevelEditDialog");
-
-		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("TrainingLevelEditDialog");
 
 		// Create the dialog Stage.
 		Stage editDialogStage = new Stage();
@@ -1403,8 +1394,7 @@ public class PersonEditDialogController {
 		editDialogStage.initOwner(dialogStage);
 		editDialogStage.setTitle("Ausbildungsstufe editieren");
 
-		Scene scene = new Scene(editDialog);
-		editDialogStage.setScene(scene);
+		editDialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the referee
 		TrainingLevelEditDialogController editController = pneLoad.getValue().getController();
