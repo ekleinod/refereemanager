@@ -1,12 +1,17 @@
 package de.edgesoft.refereemanager.controller;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import javafx.collections.ObservableList;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableView.TableViewSelectionModel;
+import javafx.fxml.FXML;
+import javafx.scene.Parent;
 
 /**
- * Interface for the list scene controller.
+ * Abstract controller for overview scenes.
+ *
+ * I would rather have {@link AbstractOverviewController}, {@link AbstractTitledIDDetailsController} and
+ * {@link AbstractCRUDController} separated, but since Java forbids multiple
+ * inheritance, this is not possible.
+ *
+ * Therefore, this class extends {@link AbstractCRUDController}, limiting
+ * the reuse a little bit, but practically not very much.
  *
  * ## Legal stuff
  *
@@ -31,38 +36,29 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IListController {
+public abstract class AbstractOverviewController extends AbstractTitledIDDetailsController {
 
 	/**
-	 * Sets table items.
+	 * List view part.
 	 */
-	public void setItems();
+	@FXML
+	private Parent embeddedList;
 
 	/**
-	 * Handles filter change events.
+	 * List view part controller.
 	 */
-	public void handleFilterChange();
+	@FXML
+	private IListController embeddedListController;
 
 	/**
-	 * Sets selection mode.
+	 * Returns list controller.
 	 *
-	 * @param theSelectionMode selection mode
+	 * @return list controller
 	 */
-	public void setSelectionMode(final SelectionMode theSelectionMode);
+	protected IListController getListController() {
+		return embeddedListController;
+	}
 
-	/**
-	 * Returns selection model of data table.
-	 *
-	 * @return selection model
-	 */
-	public TableViewSelectionModel<? extends ModelClassExt> getSelectionModel();
-
-	/**
-	 * Returns selection from table as sorted list.
-	 *
-	 * @return sorted selection from table
-	 */
-	public ObservableList<? extends ModelClassExt> getSelection();
 
 }
 

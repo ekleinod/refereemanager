@@ -21,7 +21,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -60,7 +59,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ClubOverviewController extends AbstractTitledIDDetailsController {
+public class ClubOverviewController extends AbstractOverviewController {
 
 	/**
 	 * Heading.
@@ -112,19 +111,6 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 
 
 	/**
-	 * List view part.
-	 */
-	@FXML
-	private Parent embeddedList;
-
-	/**
-	 * List view part controller.
-	 */
-	@FXML
-	private IListController embeddedListController;
-
-
-	/**
 	 * Main app controller.
 	 */
 	private AppLayoutController appController = null;
@@ -142,7 +128,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 		showDetails(null);
 
 		// listen to selection changes, show person
-		((ClubListController) embeddedListController).getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
+		((ClubListController) getListController()).getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.EVENT_OVERVIEW_SPLIT)));
@@ -153,7 +139,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 		});
 
 		// CRUD buttons setup
-		ObservableBooleanValue isOneItemSelected = embeddedListController.getSelectionModel().selectedItemProperty().isNull();
+		ObservableBooleanValue isOneItemSelected = getListController().getSelectionModel().selectedItemProperty().isNull();
 		initCRUDButtons(isOneItemSelected, isOneItemSelected);
 
 		// headings
@@ -171,7 +157,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 
 		appController = theAppController;
 
-		embeddedListController.setItems();
+		getListController().setItems();
 
 	}
 
@@ -222,7 +208,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 		if (showEditDialog(newClub)) {
 
 			((ContentModel) AppModel.getData().getContent()).getObservableClubs().add(newClub);
-			((ClubListController) embeddedListController).getSelectionModel().select(newClub);
+			((ClubListController) getListController()).getSelectionModel().select(newClub);
 
 			AppModel.setModified(true);
 			appController.setAppTitle();
@@ -239,7 +225,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 	@Override
 	public void handleEdit(ActionEvent event) {
 
-		ObservableList<ClubModel> lstSelected = ((ClubListController) embeddedListController).getSelection();
+		ObservableList<ClubModel> lstSelected = ((ClubListController) getListController()).getSelection();
 
 		if (lstSelected.size() == 1) {
 			if (showEditDialog(lstSelected.get(0))) {
@@ -260,7 +246,7 @@ public class ClubOverviewController extends AbstractTitledIDDetailsController {
 	@Override
 	public void handleDelete(ActionEvent event) {
 
-		ObservableList<ClubModel> lstSelected = ((ClubListController) embeddedListController).getSelection();
+		ObservableList<ClubModel> lstSelected = ((ClubListController) getListController()).getSelection();
 
 		if (lstSelected.size() == 1) {
 

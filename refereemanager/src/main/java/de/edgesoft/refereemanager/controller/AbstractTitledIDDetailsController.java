@@ -56,7 +56,7 @@ public abstract class AbstractTitledIDDetailsController extends AbstractCRUDCont
 	 *
 	 * @param theDetailData (null if no data to show)
 	 */
-	public void showDetails(final TitledIDType theDetailData) {
+	public <T extends TitledIDType> void showDetails(final T theDetailData) {
 		embeddedPartTitledIDDetailsController.showDetails(theDetailData);
 	}
 
