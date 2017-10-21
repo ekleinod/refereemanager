@@ -1,19 +1,9 @@
 package de.edgesoft.refereemanager.controller;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.refereemanager.jaxb.TitledIDType;
-import javafx.fxml.FXML;
-import javafx.scene.Parent;
 
 /**
- * Abstract controller scenes with included titled ID details and CRUD buttons.
- *
- * I would rather have {@link AbstractTitledIDDetailsController} and
- * {@link AbstractCRUDController} separated, but since Java forbids multiple
- * inheritance, this is not possible.
- *
- * Therefore, this class extends {@link AbstractCRUDController}, limiting
- * the reuse a little bit, but practically not very much.
+ * Interface for details controllers.
  *
  * ## Legal stuff
  *
@@ -38,29 +28,14 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractTitledIDDetailsController extends AbstractCRUDController implements IDetailsController {
-
-	/**
-	 * Titled ID details view part.
-	 */
-	@FXML
-	private Parent embeddedPartTitledIDDetails;
-
-	/**
-	 * Titled ID details view part controller.
-	 */
-	@FXML
-	private PartTitledIDDetailsController embeddedPartTitledIDDetailsController;
+public interface IDetailsController {
 
 	/**
 	 * Shows detail data.
 	 *
 	 * @param theDetailData (null if no data to show)
 	 */
-	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
-		embeddedPartTitledIDDetailsController.showDetails((TitledIDType) theDetailData);
-	}
+	public <T extends ModelClassExt> void showDetails(final T theDetailData);
 
 }
 

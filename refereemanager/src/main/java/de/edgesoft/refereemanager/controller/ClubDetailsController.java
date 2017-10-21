@@ -3,13 +3,14 @@ package de.edgesoft.refereemanager.controller;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
-import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.jaxb.Club;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.text.FontWeight;
 
 /**
- * Controller for the details part: title id.
+ * Controller for the club details scene.
  *
  * ## Legal stuff
  *
@@ -34,61 +35,44 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class PartTitledIDDetailsController implements IDetailsController {
+public class ClubDetailsController implements IDetailsController {
 
 	/**
-	 * Heading label.
+	 * Heading club data.
 	 */
 	@FXML
-	private Label lblHeading;
+	private Label lblHeadingClub;
 
 	/**
-	 * ID label for output.
+	 * Filename.
 	 */
 	@FXML
-	private Label lblID;
+	private Label lblFilename;
 
 	/**
-	 * "ID" label.
+	 * Local club?.
 	 */
 	@FXML
-	private Label lblLabelID;
+	private Label lblLocal;
 
 	/**
-	 * Title label for output.
+	 * URL.
 	 */
 	@FXML
-	private Label lblTitle;
+	private Label lblURL;
 
 	/**
-	 * "Title" label.
+	 * Venue.
 	 */
 	@FXML
-	private Label lblLabelTitle;
+	private Label lblVenue;
 
 	/**
-	 * Short title label for output.
+	 * Contact.
 	 */
 	@FXML
-	private Label lblShorttitle;
+	private Label lblContact;
 
-	/**
-	 * "Short title" label.
-	 */
-	@FXML
-	private Label lblLabelShorttitle;
-
-	/**
-	 * Remark label for output.
-	 */
-	@FXML
-	private Label lblRemark;
-
-	/**
-	 * "Remark" label.
-	 */
-	@FXML
-	private Label lblLabelRemark;
 
 	/**
 	 * Initializes the controller class.
@@ -97,7 +81,10 @@ public class PartTitledIDDetailsController implements IDetailsController {
 	 */
 	@FXML
 	private void initialize() {
-		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD));
+
+		// headings
+		lblHeadingClub.setFont(FontUtils.getDerived(lblHeadingClub.getFont(), FontWeight.BOLD));
+
 	}
 
 	/**
@@ -108,23 +95,23 @@ public class PartTitledIDDetailsController implements IDetailsController {
 	@Override
 	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
 
-		if ((theDetailData == null) || !(theDetailData instanceof TitledIDType)) {
+		if ((theDetailData == null) || !(theDetailData instanceof Club)) {
 
-			LabelUtils.setText(lblID, null);
-
-			LabelUtils.setText(lblTitle, null);
-			LabelUtils.setText(lblShorttitle, null);
-			LabelUtils.setText(lblRemark, null);
+			LabelUtils.setText(lblFilename, null);
+			LabelUtils.setText(lblLocal, null);
+			LabelUtils.setText(lblURL, null);
+			LabelUtils.setText(lblVenue, null);
+			LabelUtils.setText(lblContact, null);
 
 		} else {
 
-			TitledIDType theData = (TitledIDType) theDetailData;
+			Club theData = (Club) theDetailData;
 
-			lblID.setText(theData.getId());
-
-			LabelUtils.setText(lblTitle, theData.getTitle());
-			LabelUtils.setText(lblShorttitle, theData.getShorttitle());
-			LabelUtils.setText(lblRemark, theData.getRemark());
+			LabelUtils.setText(lblFilename, theData.getFilename());
+			LabelUtils.setText(lblLocal, new SimpleStringProperty("ToDo"));
+			LabelUtils.setText(lblURL, new SimpleStringProperty("ToDo"));
+			LabelUtils.setText(lblVenue, new SimpleStringProperty("ToDo"));
+			LabelUtils.setText(lblContact, new SimpleStringProperty("ToDo"));
 
 		}
 
