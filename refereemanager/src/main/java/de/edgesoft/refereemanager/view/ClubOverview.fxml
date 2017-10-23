@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -12,44 +13,57 @@
 <SplitPane fx:id="pneSplit" dividerPositions="0.5" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.ClubOverviewController">
   <items>
     <fx:include fx:id="embeddedList" source="ClubList.fxml" />
-    <VBox spacing="5.0">
-       <children>
-          <Label fx:id="lblHeading" text="Label" />
-          <Separator orientation="VERTICAL" prefHeight="10.0" visible="false" />
-          <fx:include fx:id="embeddedPartTitledIDDetails" source="PartTitledIDDetails.fxml" />
-          <Separator orientation="VERTICAL" prefHeight="10.0" visible="false" />
-          <Label fx:id="lblHeadingClub" text="Weitere Daten" />
-          <GridPane vgap="10.0">
-            <columnConstraints>
-              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
-              <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="200.0" />
-            </columnConstraints>
-            <rowConstraints>
-			<RowConstraints valignment="TOP" />
-			<RowConstraints valignment="TOP" />
-			<RowConstraints valignment="TOP" />
-			<RowConstraints valignment="TOP" />
-			<RowConstraints valignment="TOP" />
-            </rowConstraints>
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <top>
+          <VBox spacing="5.0" BorderPane.alignment="TOP_LEFT">
              <children>
-                <Label text="Dateiname" />
-                <Label fx:id="lblFilename" text="Label" GridPane.columnIndex="1" />
-                <Label text="Lokal?" GridPane.rowIndex="1" />
-                <Label fx:id="lblLocal" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Label text="URL" GridPane.rowIndex="2" />
-                <Label fx:id="lblURL" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Label text="Spielorte" GridPane.rowIndex="3" />
-                <Label fx:id="lblVenue" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <Label text="Kontakt" GridPane.rowIndex="4" />
-                <Label fx:id="lblContact" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label fx:id="lblHeading" text="Label" />
+                <Separator orientation="VERTICAL" prefHeight="10.0" visible="false" />
+                <fx:include fx:id="embeddedPartTitledIDDetails" source="PartTitledIDDetails.fxml" />
              </children>
-          </GridPane>
-          <Separator orientation="VERTICAL" prefHeight="10.0" visible="false" VBox.vgrow="ALWAYS" />
+          </VBox>
+         </top>
+         <bottom>
           <fx:include fx:id="embeddedCRUDButtons" source="PartCRUDButtons.fxml" />
-       </children>
-       <padding>
-          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-       </padding>
-    </VBox>
+         </bottom>
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                <Label fx:id="lblHeadingClub" text="Weitere Daten" />
+                <GridPane vgap="10.0">
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="200.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+      			<RowConstraints valignment="TOP" />
+      			<RowConstraints valignment="TOP" />
+      			<RowConstraints valignment="TOP" />
+      			<RowConstraints valignment="TOP" />
+      			<RowConstraints valignment="TOP" />
+                  </rowConstraints>
+                   <children>
+                      <Label text="Dateiname" />
+                      <Label fx:id="lblFilename" text="Label" GridPane.columnIndex="1" />
+                      <Label text="Lokal?" GridPane.rowIndex="1" />
+                      <Label fx:id="lblLocal" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                      <Label text="URL" GridPane.rowIndex="2" />
+                      <Label fx:id="lblURL" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                      <Label text="Spielorte" GridPane.rowIndex="3" />
+                      <Label fx:id="lblVenue" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                      <Label text="Kontakt" GridPane.rowIndex="4" />
+                      <Label fx:id="lblContact" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                   </children>
+                </GridPane>
+               </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </VBox>
+         </center>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </BorderPane>
   </items>
 </SplitPane>
