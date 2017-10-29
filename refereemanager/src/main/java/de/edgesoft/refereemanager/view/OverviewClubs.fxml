@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane fx:id="pneSplit" dividerPositions="0.5" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.ClubOverviewController">
+<SplitPane fx:id="pneSplit" dividerPositions="0.5" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.OverviewClubsController">
   <items>
-    <fx:include fx:id="embeddedList" source="ClubList.fxml" />
+    <fx:include fx:id="embeddedList" source="ListClubs.fxml" />
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <top>
           <VBox spacing="5.0" BorderPane.alignment="TOP_LEFT">

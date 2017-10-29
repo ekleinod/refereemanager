@@ -580,12 +580,12 @@ public class AppLayoutController {
 	@FXML
 	private void handleRefereeOverview() {
 
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("RefereeOverview");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("OverviewReferees");
 
 		appPane.setCenter(pneLoad.getKey());
 
 		// Give the controller access to the app.
-		RefereeOverviewController ctlRefOverview = pneLoad.getValue().getController();
+		OverviewRefereesController ctlRefOverview = pneLoad.getValue().getController();
 		ctlRefOverview.initController(this);
 
 	}
@@ -616,14 +616,14 @@ public class AppLayoutController {
 	@FXML
 	private void handleEventOverview() {
 
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("EventOverview");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("OverviewEvents");
 		AnchorPane refOverview = (AnchorPane) pneLoad.getKey();
 
 		// Set event overview into the center of root layout.
 		appPane.setCenter(refOverview);
 
 		// Give the controller access to the app.
-		EventOverviewController ctlOverview = pneLoad.getValue().getController();
+		OverviewEventsController ctlOverview = pneLoad.getValue().getController();
 		ctlOverview.initController(this);
 
 	}
@@ -636,12 +636,12 @@ public class AppLayoutController {
 	@FXML
 	private void handleClubOverview() {
 
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ClubOverview");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("OverviewClubs");
 
 		appPane.setCenter(pneLoad.getKey());
 
 		// Give the controller access to the app.
-		ClubOverviewController ctlOverview = pneLoad.getValue().getController();
+		OverviewClubsController ctlOverview = pneLoad.getValue().getController();
 		ctlOverview.initController(this);
 
 	}

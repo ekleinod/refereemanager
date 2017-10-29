@@ -55,7 +55,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ClubListController implements IListController {
+public class ListClubsController implements IListController {
 
 	/**
 	 * Club box.

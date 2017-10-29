@@ -68,7 +68,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.14.0
  * @since 0.10.0
  */
-public class RefereeListController {
+public class ListRefereesController {
 
 	/**
 	 * Tab pane content.

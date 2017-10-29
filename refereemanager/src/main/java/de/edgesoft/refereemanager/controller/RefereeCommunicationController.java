@@ -481,7 +481,7 @@ public class RefereeCommunicationController {
 	/**
 	 * Referee list controller.
 	 */
-	private RefereeListController ctlRefList;
+	private ListRefereesController ctlRefList;
 
 
 	/**
@@ -493,7 +493,7 @@ public class RefereeCommunicationController {
 	private void initialize() {
 
 		// list
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("RefereeList");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ListReferees");
 
 		// add referee list to split pane
 		pneSplit.getItems().add(pneLoad.getKey());

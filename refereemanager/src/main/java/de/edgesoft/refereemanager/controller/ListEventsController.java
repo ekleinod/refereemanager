@@ -71,7 +71,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class EventListController {
+public class ListEventsController {
 
 	/**
 	 * Tab pane content.

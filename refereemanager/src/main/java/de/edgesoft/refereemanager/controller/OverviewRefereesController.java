@@ -66,7 +66,7 @@ import javafx.stage.Stage;
  * @version 0.14.0
  * @since 0.10.0
  */
-public class RefereeOverviewController extends AbstractTitledIDDetailsController {
+public class OverviewRefereesController extends AbstractTitledIDDetailsController {
 
 	/**
 	 * Heading label.
@@ -224,7 +224,7 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 	/**
 	 * Referee list controller.
 	 */
-	private RefereeListController ctlRefList;
+	private ListRefereesController ctlRefList;
 
 	/**
 	 * Initializes the controller class.
@@ -235,7 +235,7 @@ public class RefereeOverviewController extends AbstractTitledIDDetailsController
 	private void initialize() {
 
 		// list
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("RefereeList");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ListReferees");
 
 		// add referee list to split pane
 		pneSplit.getItems().add(0, pneLoad.getKey());

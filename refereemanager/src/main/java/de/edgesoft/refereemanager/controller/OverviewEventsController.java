@@ -67,7 +67,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class EventOverviewController extends AbstractTitledIDDetailsController {
+public class OverviewEventsController extends AbstractTitledIDDetailsController {
 
 	/**
 	 * Heading.
@@ -224,7 +224,7 @@ public class EventOverviewController extends AbstractTitledIDDetailsController {
 	/**
 	 * Event list controller.
 	 */
-	private EventListController ctlEventList;
+	private ListEventsController ctlEventList;
 
 	/**
 	 * Initializes the controller class.
@@ -235,7 +235,7 @@ public class EventOverviewController extends AbstractTitledIDDetailsController {
 	private void initialize() {
 
 		// list
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("EventList");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ListEvents");
 
 		// add referee list to split pane
 		pneSplit.getItems().add(0, pneLoad.getKey());

@@ -58,7 +58,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ClubOverviewController extends AbstractOverviewController {
+public class OverviewClubsController extends AbstractOverviewController {
 
 	/**
 	 * Heading.
@@ -127,7 +127,7 @@ public class ClubOverviewController extends AbstractOverviewController {
 		showDetails(null);
 
 		// listen to selection changes, show person
-		((ClubListController) getListController()).getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
+		((ListClubsController) getListController()).getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
 
 		// set divider position
 		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.EVENT_OVERVIEW_SPLIT)));
@@ -207,7 +207,7 @@ public class ClubOverviewController extends AbstractOverviewController {
 		if (showEditDialog(newClub)) {
 
 			((ContentModel) AppModel.getData().getContent()).getObservableClubs().add(newClub);
-			((ClubListController) getListController()).getSelectionModel().select(newClub);
+			((ListClubsController) getListController()).getSelectionModel().select(newClub);
 
 			AppModel.setModified(true);
 			appController.setAppTitle();
@@ -224,7 +224,7 @@ public class ClubOverviewController extends AbstractOverviewController {
 	@Override
 	public void handleEdit(ActionEvent event) {
 
-		ObservableList<ClubModel> lstSelected = ((ClubListController) getListController()).getSelection();
+		ObservableList<ClubModel> lstSelected = ((ListClubsController) getListController()).getSelection();
 
 		if (lstSelected.size() == 1) {
 			if (showEditDialog(lstSelected.get(0))) {
@@ -245,7 +245,7 @@ public class ClubOverviewController extends AbstractOverviewController {
 	@Override
 	public void handleDelete(ActionEvent event) {
 
-		ObservableList<ClubModel> lstSelected = ((ClubListController) getListController()).getSelection();
+		ObservableList<ClubModel> lstSelected = ((ListClubsController) getListController()).getSelection();
 
 		if (lstSelected.size() == 1) {
 
