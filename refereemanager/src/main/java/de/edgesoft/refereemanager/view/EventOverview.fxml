@@ -73,7 +73,7 @@
                      </children>
                   </GridPane>
                   <Separator orientation="VERTICAL" prefHeight="10.0" visible="false" VBox.vgrow="ALWAYS" />
-                  <fx:include fx:id="embeddedCRUDButtons" source="PartCRUDButtons.fxml" />
+                  <fx:include fx:id="embeddedCRUDButtons" source="CRUDButtons.fxml" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

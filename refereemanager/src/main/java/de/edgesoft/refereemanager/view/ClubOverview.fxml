@@ -24,7 +24,7 @@
           </VBox>
          </top>
          <bottom>
-          <fx:include fx:id="embeddedCRUDButtons" source="PartCRUDButtons.fxml" />
+          <fx:include fx:id="embeddedCRUDButtons" source="CRUDButtons.fxml" />
          </bottom>
          <center>
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">

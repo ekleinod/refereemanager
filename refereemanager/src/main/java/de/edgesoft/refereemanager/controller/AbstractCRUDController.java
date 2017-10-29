@@ -42,7 +42,7 @@ public abstract class AbstractCRUDController implements ICRUDController {
 	 * CRUD button view part controller.
 	 */
 	@FXML
-	private PartCRUDButtonsController embeddedCRUDButtonsController;
+	private CRUDButtonsController embeddedCRUDButtonsController;
 
 	/**
 	 * Initializes the CRUD buttons.
