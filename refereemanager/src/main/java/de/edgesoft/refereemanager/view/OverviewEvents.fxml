@@ -21,7 +21,7 @@
                <children>
                   <Label fx:id="lblHeading" text="Label" />
                   <Separator orientation="VERTICAL" prefHeight="10.0" visible="false" />
-                  <fx:include fx:id="embeddedPartTitledIDDetails" source="PartTitledIDDetails.fxml" />
+                  <fx:include fx:id="embeddedDetailsTitledID" source="DetailsTitledID.fxml" />
                   <Separator orientation="VERTICAL" prefHeight="10.0" visible="false" />
                   <Label fx:id="lblHeadingEvent" text="Ereignisdaten" />
                   <GridPane vgap="10.0">

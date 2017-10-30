@@ -44,13 +44,13 @@ public abstract class AbstractTitledIDDetailsController extends AbstractCRUDCont
 	 * Titled ID details view part.
 	 */
 	@FXML
-	private Parent embeddedPartTitledIDDetails;
+	private Parent embeddedDetailsTitledID;
 
 	/**
 	 * Titled ID details view part controller.
 	 */
 	@FXML
-	private PartTitledIDDetailsController embeddedPartTitledIDDetailsController;
+	private DetailsTitledIDController embeddedDetailsTitledIDController;
 
 	/**
 	 * Shows detail data.
@@ -59,7 +59,7 @@ public abstract class AbstractTitledIDDetailsController extends AbstractCRUDCont
 	 */
 	@Override
 	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
-		embeddedPartTitledIDDetailsController.showDetails((TitledIDType) theDetailData);
+		embeddedDetailsTitledIDController.showDetails((TitledIDType) theDetailData);
 	}
 
 }

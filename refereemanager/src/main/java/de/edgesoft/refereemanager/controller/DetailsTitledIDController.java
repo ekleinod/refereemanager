@@ -34,7 +34,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class PartTitledIDDetailsController implements IDetailsController {
+public class DetailsTitledIDController implements IDetailsController {
 
 	/**
 	 * Heading label.
