@@ -14,7 +14,6 @@ import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -28,6 +27,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -67,46 +67,23 @@ public class OverviewClubsController extends AbstractOverviewController {
 	private Label lblHeading;
 
 	/**
-	 * Heading club data.
-	 */
-	@FXML
-	private Label lblHeadingClub;
-
-	/**
-	 * Filename.
-	 */
-	@FXML
-	private Label lblFilename;
-
-	/**
-	 * Local club?.
-	 */
-	@FXML
-	private Label lblLocal;
-
-	/**
-	 * URL.
-	 */
-	@FXML
-	private Label lblURL;
-
-	/**
-	 * Venue.
-	 */
-	@FXML
-	private Label lblVenue;
-
-	/**
-	 * Contact.
-	 */
-	@FXML
-	private Label lblContact;
-
-	/**
 	 * Split pane.
 	 */
 	@FXML
 	private SplitPane pneSplit;
+
+	/**
+	 * Details pane.
+	 */
+	@FXML
+	private BorderPane pneDetails;
+
+
+	/**
+	 * Details controller.
+	 */
+	@FXML
+	private IDetailsController detailsController;
 
 
 	/**
@@ -123,8 +100,12 @@ public class OverviewClubsController extends AbstractOverviewController {
 	@FXML
 	private void initialize() {
 
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("DetailsClub");
+		detailsController = pneLoad.getValue().getController();
+		pneDetails.setCenter(pneLoad.getKey());
+
 		// clear event details
-		showDetails(null);
+		//showDetails(null);
 
 		// listen to selection changes, show person
 		((ListClubsController) getListController()).getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
@@ -143,7 +124,6 @@ public class OverviewClubsController extends AbstractOverviewController {
 
 		// headings
 		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD, 2));
-		lblHeadingClub.setFont(FontUtils.getDerived(lblHeadingClub.getFont(), FontWeight.BOLD));
 
 	}
 
@@ -168,26 +148,15 @@ public class OverviewClubsController extends AbstractOverviewController {
 	public void showDetails(final Club theDetailData) {
 
 		super.showDetails(theDetailData);
+		detailsController.showDetails(theDetailData);
 
 		if (theDetailData == null) {
 
 			lblHeading.setText("Details");
 
-			LabelUtils.setText(lblFilename, null);
-			LabelUtils.setText(lblLocal, null);
-			LabelUtils.setText(lblURL, null);
-			LabelUtils.setText(lblVenue, null);
-			LabelUtils.setText(lblContact, null);
-
 		} else {
 
 			LabelUtils.setText(lblHeading, theDetailData.getDisplayText());
-
-			LabelUtils.setText(lblFilename, theDetailData.getFilename());
-			LabelUtils.setText(lblLocal, new SimpleStringProperty("ToDo"));
-			LabelUtils.setText(lblURL, new SimpleStringProperty("ToDo"));
-			LabelUtils.setText(lblVenue, new SimpleStringProperty("ToDo"));
-			LabelUtils.setText(lblContact, new SimpleStringProperty("ToDo"));
 
 		}
 
