@@ -56,7 +56,6 @@ public class ClubModel extends Club {
 	 *
 	 * @return is club local club
 	 *
-	 * @version 0.14.0
 	 * @since 0.9.0
 	 */
 	@Override
@@ -69,14 +68,13 @@ public class ClubModel extends Club {
 	 *
 	 * @return filename
 	 *
-	 * @version 0.14.0
 	 * @since 0.12.0
 	 */
 	@Override
 	public SimpleStringProperty getFilename() {
 
 		if ((super.getFilename() == null) || (super.getFilename().getValue() == null)) {
-			return super.getFilename();
+			return new SimpleStringProperty(FileUtils.cleanFilename(getDisplayText().getValue()));
 		}
 
 		return new SimpleStringProperty(FileUtils.cleanFilename(super.getFilename().getValue()));
@@ -86,8 +84,6 @@ public class ClubModel extends Club {
 	 * Returns display text.
 	 *
 	 * @return display text
-	 *
-	 * @version 0.14.0
 	 */
 	@Override
 	public StringProperty getDisplayText() {
