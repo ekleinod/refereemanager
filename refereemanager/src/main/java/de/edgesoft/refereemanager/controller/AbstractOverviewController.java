@@ -7,10 +7,10 @@ import javafx.scene.Parent;
  * Abstract controller for overview scenes.
  *
  * I would rather have {@link AbstractOverviewController}, {@link AbstractTitledIDDetailsController} and
- * {@link AbstractCRUDController} separated, but since Java forbids multiple
+ * {@link AbstractEmbedCRUDButtonsController} separated, but since Java forbids multiple
  * inheritance, this is not possible.
  *
- * Therefore, this class extends {@link AbstractCRUDController}, limiting
+ * Therefore, this class extends {@link AbstractEmbedCRUDButtonsController}, limiting
  * the reuse a little bit, but practically not very much.
  *
  * ## Legal stuff

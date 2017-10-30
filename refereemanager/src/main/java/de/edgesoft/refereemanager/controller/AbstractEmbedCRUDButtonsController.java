@@ -30,7 +30,7 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractCRUDController implements ICRUDController {
+public abstract class AbstractEmbedCRUDButtonsController implements IEmbedCRUDButtonsController {
 
 	/**
 	 * CRUD button view part.

@@ -9,10 +9,10 @@ import javafx.scene.Parent;
  * Abstract controller scenes with included titled ID details and CRUD buttons.
  *
  * I would rather have {@link AbstractTitledIDDetailsController} and
- * {@link AbstractCRUDController} separated, but since Java forbids multiple
+ * {@link AbstractEmbedCRUDButtonsController} separated, but since Java forbids multiple
  * inheritance, this is not possible.
  *
- * Therefore, this class extends {@link AbstractCRUDController}, limiting
+ * Therefore, this class extends {@link AbstractEmbedCRUDButtonsController}, limiting
  * the reuse a little bit, but practically not very much.
  *
  * ## Legal stuff
@@ -38,7 +38,7 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractTitledIDDetailsController extends AbstractCRUDController implements IDetailsController {
+public abstract class AbstractTitledIDDetailsController extends AbstractEmbedCRUDButtonsController implements IDetailsController {
 
 	/**
 	 * Titled ID details view part.

@@ -28,7 +28,7 @@ import javafx.event.ActionEvent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface ICRUDController {
+public interface IEmbedCRUDButtonsController {
 
 	/**
 	 * Handles add action.
