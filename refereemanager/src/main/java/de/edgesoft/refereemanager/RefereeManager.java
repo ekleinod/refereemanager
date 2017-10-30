@@ -124,7 +124,7 @@ public class RefereeManager extends Application {
 		stage.sizeToScene();
 		stage.centerOnScreen();
 
-		// define task, that waits 4 seconds, then returns null, i.e. succeeds
+		// define task, wait 4 seconds, then return null, i.e. succeed
 		// if needed, some progress bar output could be defined here
 		final Task<Void> splashTask = new Task<Void>() {
 			@Override
