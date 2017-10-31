@@ -108,6 +108,8 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_EVENT_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
+			case OVERVIEW_PERSON_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_REFEREE_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 

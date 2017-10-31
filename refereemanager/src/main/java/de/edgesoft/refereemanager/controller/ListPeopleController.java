@@ -1,16 +1,21 @@
 package de.edgesoft.refereemanager.controller;
 
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.javafx.FontUtils;
-import de.edgesoft.refereemanager.jaxb.Club;
+import de.edgesoft.refereemanager.jaxb.Person;
+import de.edgesoft.refereemanager.jaxb.PersonRoleType;
 import de.edgesoft.refereemanager.model.AppModel;
-import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.utils.TableUtils;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,17 +24,20 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 
 /**
- * Controller for the club list scene.
+ * Controller for the person list scene.
  *
  * ## Legal stuff
  *
@@ -54,7 +62,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListClubsController implements IListController {
+public class ListPeopleController implements IListController {
 
 	/**
 	 * List box.
@@ -66,30 +74,38 @@ public class ListClubsController implements IListController {
 	 * Table.
 	 */
 	@FXML
-	private TableView<Club> tblData;
+	private TableView<Person> tblData;
 
 	/**
 	 * ID column.
 	 */
 	@FXML
-	private TableColumn<ClubModel, String> colID;
+	private TableColumn<PersonModel, String> colID;
 
 	/**
-	 * Title column.
+	 * Name column.
 	 */
 	@FXML
-	private TableColumn<ClubModel, String> colTitle;
+	private TableColumn<PersonModel, String> colName;
 
 	/**
-	 * Short title column.
+	 * First name column.
 	 */
 	@FXML
-	private TableColumn<ClubModel, String> colShorttitle;
+	private TableColumn<PersonModel, String> colFirstName;
 
 	/**
-	 * List of clubs.
+	 * Birthday column.
 	 */
-	private FilteredList<Club> lstClubs;
+	@FXML
+	private TableColumn<PersonModel, LocalDate> colBirthday;
+
+	/**
+	 * Role column.
+	 */
+	@FXML
+	private TableColumn<PersonModel, String> colRole;
+
 
 	/**
 	 * Label filter.
@@ -98,16 +114,15 @@ public class ListClubsController implements IListController {
 	private Label lblFilter;
 
 	/**
-	 * Checkbox filter local.
+	 * Filter storage.
 	 */
-	@FXML
-	private CheckBox chkLocal;
+	private Map<CheckBox, PersonRoleType> mapPeopleFilterRoles;
+
 
 	/**
-	 * Checkbox filter non-local.
+	 * List of people.
 	 */
-	@FXML
-	private CheckBox chkNonLocal;
+	private FilteredList<Person> lstPeople;
 
 	/**
 	 * Initializes the controller class.
@@ -121,12 +136,34 @@ public class ListClubsController implements IListController {
 		colID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
 		colID.setVisible(false);
 
-		colTitle.setCellValueFactory(cellData -> cellData.getValue().getTitle());
-		colShorttitle.setCellValueFactory(cellData -> cellData.getValue().getShorttitle());
+		colName.setCellValueFactory(cellData -> cellData.getValue().getName());
+		colFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
+
+		colBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
+		colBirthday.setVisible(false);
+		colBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate());
+
+		colRole.setCellValueFactory(cellData -> (cellData.getValue().getRole() == null) ? null : cellData.getValue().getRole().getDisplayTitleShort());
 
 		// headings
 		lblFilter.setFont(FontUtils.getDerived(lblFilter.getFont(), FontWeight.BOLD));
 
+		// setup role filter
+		HBox boxRoleFilter = new HBox(5);
+		boxList.getChildren().add(new Separator(Orientation.HORIZONTAL));
+		boxList.getChildren().add(boxRoleFilter);
+
+		mapPeopleFilterRoles = new HashMap<>();
+		AppModel.getData().getContent().getRoleType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
+				roleType -> {
+					CheckBox chkTemp = new CheckBox(roleType.getDisplayTitleShort().getValueSafe());
+					chkTemp.setOnAction(e -> handleFilterChange());
+					boxRoleFilter.getChildren().add(chkTemp);
+					mapPeopleFilterRoles.put(chkTemp, roleType);
+				}
+		);
+
+		// init items
 		setItems();
 
 	}
@@ -137,16 +174,16 @@ public class ListClubsController implements IListController {
 	@Override
 	public void setItems() {
 
-		lstClubs = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableClubs(), club -> true);
+		lstPeople = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservablePeople(), person -> true);
 
-		SortedList<Club> lstSortedClubs = new SortedList<>(lstClubs);
-		lstSortedClubs.comparatorProperty().bind(tblData.comparatorProperty());
-		tblData.setItems(lstSortedClubs);
+		SortedList<Person> lstSortedPeople = new SortedList<>(lstPeople);
+		lstSortedPeople.comparatorProperty().bind(tblData.comparatorProperty());
+		tblData.setItems(lstSortedPeople);
 
 		// set "empty data" text
 		Label lblPlaceholder = new Label(MessageFormat.format(
-				((lstClubs == null) || lstClubs.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
-				"Clubs"));
+				((lstPeople == null) || lstPeople.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				"Personen"));
 		lblPlaceholder.setWrapText(true);
 		tblData.setPlaceholder(lblPlaceholder);
 
@@ -163,21 +200,21 @@ public class ListClubsController implements IListController {
 	public void handleFilterChange() {
 
 		// filter for events
-		if (lstClubs == null) {
+		if (lstPeople == null) {
 			lblFilter.setText("Filter");
 		} else {
 
-			lstClubs.setPredicate(ClubModel.ALL);
+			lstPeople.setPredicate(PersonModel.ALL);
 
-			if (chkLocal.isSelected()) {
-				lstClubs.setPredicate(((Predicate<Club>) lstClubs.getPredicate()).and(ClubModel.LOCAL));
+			for (Entry<CheckBox, PersonRoleType> entryChkRole : mapPeopleFilterRoles.entrySet()) {
+
+				if (entryChkRole.getKey().isSelected()) {
+					lstPeople.setPredicate(((Predicate<Person>) lstPeople.getPredicate()).and(PersonModel.getRolePredicate(entryChkRole.getValue())));
+				}
+
 			}
 
-			if (chkNonLocal.isSelected()) {
-				lstClubs.setPredicate(((Predicate<Club>) lstClubs.getPredicate()).and(ClubModel.NON_LOCAL));
-			}
-
-			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstClubs.size()));
+			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstPeople.size()));
 		}
 
 		tblData.refresh();
@@ -200,7 +237,7 @@ public class ListClubsController implements IListController {
 	 * @return selection model
 	 */
 	@Override
-	public TableViewSelectionModel<Club> getSelectionModel() {
+	public TableViewSelectionModel<Person> getSelectionModel() {
 		return tblData.getSelectionModel();
 	}
 
@@ -210,12 +247,12 @@ public class ListClubsController implements IListController {
 	 * @return sorted selection from table
 	 */
 	@Override
-	public ObservableList<ClubModel> getSelection() {
-		List<ClubModel> lstReturn = new ArrayList<>();
+	public ObservableList<PersonModel> getSelection() {
+		List<PersonModel> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((ClubModel) data));
+		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((PersonModel) data));
 
-		return FXCollections.observableList(lstReturn.stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).collect(Collectors.toList()));
+		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
 	}
 
 }

@@ -57,11 +57,15 @@
                         </MenuItem>
                      </items>
                 </Menu>
-                <Menu text="_Schiedsrichter">
+                <Menu text="_Menschen">
                   <items>
-                    <MenuItem fx:id="mnuRefereeOverview" onAction="#handleRefereeOverview" text="Schiriü_bersicht">
+                    <MenuItem fx:id="mnuRefereeOverview" onAction="#handleRefereeOverview" text="_Schiriübersicht">
                          <accelerator>
                             <KeyCodeCombination alt="DOWN" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                         </accelerator></MenuItem>
+                    <MenuItem fx:id="mnuOverviewPeople" onAction="#handleOverviewPeople" text="_Personen">
+                         <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                          </accelerator></MenuItem>
                       <SeparatorMenuItem />
                       <MenuItem fx:id="mnuRefereeCommunication" onAction="#handleRefereeCommunication" text="Schiri_kommunikation">
@@ -113,6 +117,7 @@
                   <Button fx:id="btnFileSave" layoutX="46.0" layoutY="11.0" onAction="#handleFileSave" />
                   <Separator prefWidth="10.0" />
                   <Button fx:id="btnRefereeOverview" onAction="#handleRefereeOverview" />
+                  <Button fx:id="btnOverviewPeople" onAction="#handleOverviewPeople" />
                   <Button fx:id="btnRefereeCommunication" onAction="#handleRefereeCommunication" />
                   <Separator layoutX="90.0" layoutY="10.0" prefWidth="10.0" />
                   <Button fx:id="btnEventOverview" onAction="#handleEventOverview" />

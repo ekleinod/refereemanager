@@ -122,6 +122,12 @@ public class AppLayoutController {
 	private MenuItem mnuRefereeOverview;
 
 	/**
+	 * Menu item overview -> people.
+	 */
+	@FXML
+	private MenuItem mnuOverviewPeople;
+
+	/**
 	 * Menu item referee -> communication.
 	 */
 	@FXML
@@ -184,6 +190,12 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private Button btnRefereeOverview;
+
+	/**
+	 * Button overview -> people.
+	 */
+	@FXML
+	private Button btnOverviewPeople;
 
 	/**
 	 * Button referee -> communication.
@@ -261,6 +273,8 @@ public class AppLayoutController {
 
 		mnuRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
 		ButtonUtils.adaptButton(btnRefereeOverview, mnuRefereeOverview);
+		mnuOverviewPeople.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
+		ButtonUtils.adaptButton(btnOverviewPeople, mnuOverviewPeople);
 		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
 		ButtonUtils.adaptButton(btnRefereeCommunication, mnuRefereeCommunication);
 
@@ -587,6 +601,29 @@ public class AppLayoutController {
 		// Give the controller access to the app.
 		OverviewRefereesController ctlRefOverview = pneLoad.getValue().getController();
 		ctlRefOverview.initController(this);
+
+	}
+
+	/**
+	 * Menu overview -> people.
+	 */
+	@FXML
+	private void handleOverviewPeople() {
+		handleOverview(new OverviewPeopleController());
+	}
+
+	/**
+	 * Load overview view.
+	 *
+	 * @param theOverviewController overview controller
+	 */
+	private void handleOverview(final IOverviewController theOverviewController) {
+
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AbstractOverview");
+
+		appPane.setCenter(pneLoad.getKey());
+
+		theOverviewController.initController(pneLoad.getValue().getController());
 
 	}
 
