@@ -58,13 +58,13 @@ import javafx.scene.text.FontWeight;
 public class ListClubsController implements IListController {
 
 	/**
-	 * Club box.
+	 * List box.
 	 */
 	@FXML
-	private VBox boxClubs;
+	private VBox boxList;
 
 	/**
-	 * Table clubs.
+	 * Table.
 	 */
 	@FXML
 	private TableView<Club> tblData;
@@ -130,7 +130,7 @@ public class ListClubsController implements IListController {
 
 		// setup local filter
 		HBox boxLocalFilter = new HBox(5);
-		boxClubs.getChildren().add(boxLocalFilter);
+		boxList.getChildren().add(boxLocalFilter);
 
 		setItems();
 
