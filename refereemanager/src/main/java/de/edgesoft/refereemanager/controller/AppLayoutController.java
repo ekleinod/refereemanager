@@ -147,7 +147,7 @@ public class AppLayoutController {
 	 * @since 0.15.0
 	 */
 	@FXML
-	private MenuItem mnuClubOverview;
+	private MenuItem mnuOverviewClubs;
 
 	/**
 	 * Menu item statistics -> data.
@@ -217,7 +217,7 @@ public class AppLayoutController {
 	 * @since 0.15.0
 	 */
 	@FXML
-	private Button btnClubOverview;
+	private Button btnOverviewClubs;
 
 	/**
 	 * Button statistics -> data.
@@ -281,8 +281,8 @@ public class AppLayoutController {
 		mnuEventOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		ButtonUtils.adaptButton(btnEventOverview, mnuEventOverview);
 
-		mnuClubOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
-		ButtonUtils.adaptButton(btnClubOverview, mnuClubOverview);
+		mnuOverviewClubs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		ButtonUtils.adaptButton(btnOverviewClubs, mnuOverviewClubs);
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
 		ButtonUtils.adaptButton(btnStatisticsData, mnuStatisticsData);
@@ -606,6 +606,8 @@ public class AppLayoutController {
 
 	/**
 	 * Menu overview -> people.
+	 *
+	 * @since 0.15.0
 	 */
 	@FXML
 	private void handleOverviewPeople() {
@@ -616,6 +618,8 @@ public class AppLayoutController {
 	 * Load overview view.
 	 *
 	 * @param theOverviewController overview controller
+	 *
+	 * @since 0.15.0
 	 */
 	private void handleOverview(final IOverviewController theOverviewController) {
 
@@ -666,20 +670,13 @@ public class AppLayoutController {
 	}
 
 	/**
-	 * Menu club overview.
+	 * Menu overview -> people.
 	 *
 	 * @since 0.15.0
 	 */
 	@FXML
-	private void handleClubOverview() {
-
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AbstractOverview");
-
-		appPane.setCenter(pneLoad.getKey());
-
-		OverviewClubsController ctlOverview = new OverviewClubsController();
-		ctlOverview.initController(pneLoad.getValue().getController());
-
+	private void handleOverviewClubs() {
+		handleOverview(new OverviewClubsController());
 	}
 
 	/**

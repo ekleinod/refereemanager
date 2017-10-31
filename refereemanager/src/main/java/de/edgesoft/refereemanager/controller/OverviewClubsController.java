@@ -52,7 +52,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class OverviewClubsController implements ICRUDActionsController, IDetailsController {
+public class OverviewClubsController implements ICRUDActionsController, IDetailsController, IOverviewController {
 
 	/**
 	 * Overview controller of the underlying view.
@@ -64,6 +64,7 @@ public class OverviewClubsController implements ICRUDActionsController, IDetails
 	 *
 	 * @param theOverviewController overview controller
 	 */
+	@Override
 	public void initController(final OverviewController theOverviewController) {
 
 		overviewController = theOverviewController;
