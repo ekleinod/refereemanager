@@ -1,6 +1,6 @@
 package de.edgesoft.refereemanager.controller;
 
-import javafx.event.ActionEvent;
+import javafx.beans.value.ObservableBooleanValue;
 
 /**
  * Interface for controller scenes with included CRUD buttons.
@@ -31,25 +31,13 @@ import javafx.event.ActionEvent;
 public interface IEmbedCRUDButtonsController {
 
 	/**
-	 * Handles add action.
+	 * Initializes the CRUD buttons.
 	 *
-	 * @param event calling action event
+	 * @param theActionsController CRUD actions controller
+	 * @param disableEdit when to disable edit button
+	 * @param disableDelete when to disable delete button
 	 */
-	public void handleAdd(ActionEvent event);
-
-	/**
-	 * Handles edit action.
-	 *
-	 * @param event calling action event
-	 */
-	public void handleEdit(ActionEvent event);
-
-	/**
-	 * Handles delete action.
-	 *
-	 * @param event calling action event
-	 */
-	public void handleDelete(ActionEvent event);
+	public void initCRUDButtons(final ICRUDActionsController theActionsController, ObservableBooleanValue disableEdit, ObservableBooleanValue disableDelete);
 
 }
 

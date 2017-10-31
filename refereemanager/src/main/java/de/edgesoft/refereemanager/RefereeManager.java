@@ -75,6 +75,12 @@ public class RefereeManager extends Application {
 	public static HostServicesDelegate hostServices = null;
 
 	/**
+	 * Main app controller.
+	 */
+	private static AppLayoutController appController = null;
+
+
+	/**
 	 * Starts the application.
 	 *
 	 * @param args command line arguments
@@ -96,8 +102,7 @@ public class RefereeManager extends Application {
 		showSplashScreen();
 
 		// load app layout and controller, then delegate control to controller
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AppLayout");
-		((AppLayoutController) pneLoad.getValue().getController()).initController(primaryStage);
+		getAppController().initController(primaryStage);
 
 		// host services
 		hostServices = HostServicesFactory.getInstance(this);
@@ -192,6 +197,22 @@ public class RefereeManager extends Application {
 	 */
 	public static Version getVersion() {
 		return new VersionExt(Resources.getProjectProperties().getProperty("longversion"));
+	}
+
+	/**
+	 * Returns app controller (singleton).
+	 *
+	 * @since 0.15.0
+	 */
+	public static AppLayoutController getAppController() {
+
+		if (appController == null) {
+			Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AppLayout");
+			appController = (AppLayoutController) pneLoad.getValue().getController();
+		}
+
+		return appController;
+
 	}
 
 }

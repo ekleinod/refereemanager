@@ -47,15 +47,17 @@ public abstract class AbstractEmbedCRUDButtonsController implements IEmbedCRUDBu
 	/**
 	 * Initializes the CRUD buttons.
 	 *
+	 * @param theActionsController CRUD actions controller
 	 * @param disableEdit when to disable edit button
 	 * @param disableDelete when to disable delete button
 	 */
-	public void initCRUDButtons(ObservableBooleanValue disableEdit, ObservableBooleanValue disableDelete) {
+	@Override
+	public void initCRUDButtons(final ICRUDActionsController theActionsController, ObservableBooleanValue disableEdit, ObservableBooleanValue disableDelete) {
 
 		// buttons setup
-		embeddedCRUDButtonsController.btnAdd.setOnAction(this::handleAdd);
-		embeddedCRUDButtonsController.btnEdit.setOnAction(this::handleEdit);
-		embeddedCRUDButtonsController.btnDelete.setOnAction(this::handleDelete);
+		embeddedCRUDButtonsController.btnAdd.setOnAction(theActionsController::handleAdd);
+		embeddedCRUDButtonsController.btnEdit.setOnAction(theActionsController::handleEdit);
+		embeddedCRUDButtonsController.btnDelete.setOnAction(theActionsController::handleDelete);
 
 		// enabling edit/delete buttons only with selection
 		embeddedCRUDButtonsController.btnEdit.disableProperty().bind(disableEdit);

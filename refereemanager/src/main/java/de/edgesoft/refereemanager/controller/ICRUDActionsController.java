@@ -1,17 +1,9 @@
 package de.edgesoft.refereemanager.controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.Parent;
+import javafx.event.ActionEvent;
 
 /**
- * Abstract controller for overview scenes.
- *
- * I would rather have {@link AbstractOverviewController}, {@link AbstractTitledIDDetailsController} and
- * {@link AbstractEmbedCRUDButtonsController} separated, but since Java forbids multiple
- * inheritance, this is not possible.
- *
- * Therefore, this class extends {@link AbstractEmbedCRUDButtonsController}, limiting
- * the reuse a little bit, but practically not very much.
+ * Interface for CRUD actions.
  *
  * ## Legal stuff
  *
@@ -36,29 +28,28 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractOverviewController extends AbstractTitledIDDetailsController {
+public interface ICRUDActionsController {
 
 	/**
-	 * List view part.
-	 */
-	@FXML
-	private Parent embeddedList;
-
-	/**
-	 * List view part controller.
-	 */
-	@FXML
-	private IListController embeddedListController;
-
-	/**
-	 * Returns list controller.
+	 * Handles add action.
 	 *
-	 * @return list controller
+	 * @param event calling action event
 	 */
-	protected IListController getListController() {
-		return embeddedListController;
-	}
+	public void handleAdd(ActionEvent event);
 
+	/**
+	 * Handles edit action.
+	 *
+	 * @param event calling action event
+	 */
+	public void handleEdit(ActionEvent event);
+
+	/**
+	 * Handles delete action.
+	 *
+	 * @param event calling action event
+	 */
+	public void handleDelete(ActionEvent event);
 
 }
 

@@ -35,7 +35,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ClubDetailsController implements IDetailsController {
+public class DetailsClubController implements IDetailsController {
 
 	/**
 	 * Heading club data.

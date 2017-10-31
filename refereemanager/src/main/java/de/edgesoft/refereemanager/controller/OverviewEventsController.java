@@ -289,11 +289,11 @@ public class OverviewEventsController extends AbstractTitledIDDetailsController 
 		boxRefereeReport.managedProperty().bind(isLeagueGameOrTournament);
 
 		// set divider position
-		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.EVENT_OVERVIEW_SPLIT)));
+		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.OVERVIEW_EVENT_SPLIT)));
 
 		// if changed, save divider position to preferences
 		pneSplit.getDividers().get(0).positionProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			Prefs.put(PrefKey.EVENT_OVERVIEW_SPLIT, Double.toString(newValue.doubleValue()));
+			Prefs.put(PrefKey.OVERVIEW_EVENT_SPLIT, Double.toString(newValue.doubleValue()));
 		});
 
 		// icons

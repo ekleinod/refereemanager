@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.ClubDetailsController">
+<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.DetailsClubController">
    <children>
       <Label fx:id="lblHeadingClub" text="Weitere Daten" />
       <GridPane vgap="10.0">
@@ -37,6 +37,6 @@
       </GridPane>
    </children>
    <padding>
-      <Insets top="15.0" />
+      <Insets top="20.0" />
    </padding>
 </VBox>

@@ -4,18 +4,16 @@ import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Objects;
 
-import de.edgesoft.edgeutils.javafx.FontUtils;
-import de.edgesoft.edgeutils.javafx.LabelUtils;
-import de.edgesoft.refereemanager.jaxb.Club;
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
-import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,10 +23,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -58,106 +52,44 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class OverviewClubsController extends AbstractOverviewController {
+public class OverviewClubsController implements ICRUDActionsController, IDetailsController {
 
 	/**
-	 * Heading.
+	 * Overview controller of the underlying view.
 	 */
-	@FXML
-	private Label lblHeading;
-
-	/**
-	 * Split pane.
-	 */
-	@FXML
-	private SplitPane pneSplit;
-
-	/**
-	 * Details pane.
-	 */
-	@FXML
-	private BorderPane pneDetails;
-
-
-	/**
-	 * Details controller.
-	 */
-	@FXML
-	private IDetailsController detailsController;
-
-
-	/**
-	 * Main app controller.
-	 */
-	private AppLayoutController appController = null;
-
-
-	/**
-	 * Initializes the controller class.
-	 *
-	 * This method is automatically called after the fxml file has been loaded.
-	 */
-	@FXML
-	private void initialize() {
-
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("DetailsClub");
-		detailsController = pneLoad.getValue().getController();
-		pneDetails.setCenter(pneLoad.getKey());
-
-		// clear event details
-		//showDetails(null);
-
-		// listen to selection changes, show person
-		((ListClubsController) getListController()).getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
-
-		// set divider position
-		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.EVENT_OVERVIEW_SPLIT)));
-
-		// if changed, save divider position to preferences
-		pneSplit.getDividers().get(0).positionProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			Prefs.put(PrefKey.EVENT_OVERVIEW_SPLIT, Double.toString(newValue.doubleValue()));
-		});
-
-		// CRUD buttons setup
-		ObservableBooleanValue isOneItemSelected = getListController().getSelectionModel().selectedItemProperty().isNull();
-		initCRUDButtons(isOneItemSelected, isOneItemSelected);
-
-		// headings
-		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD, 2));
-
-	}
+	OverviewController overviewController = null;
 
 	/**
 	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
 	 *
-	 * @param theAppController app controller
+	 * @param theOverviewController overview controller
 	 */
-	public void initController(final AppLayoutController theAppController) {
+	public void initController(final OverviewController theOverviewController) {
 
-		appController = theAppController;
+		overviewController = theOverviewController;
 
-		getListController().setItems();
+		overviewController.initController(this, PrefKey.OVERVIEW_CLUB_SPLIT, "ListClubs", "DetailsClub");
+
+		// CRUD buttons setup
+		ObservableBooleanValue isOneItemSelected = overviewController.getListController().getSelectionModel().selectedItemProperty().isNull();
+		overviewController.initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
 	}
 
 	/**
 	 * Shows selected data in detail window.
 	 *
-	 * @param theDetailData club (null if none is selected)
+	 * @param theDetailData detail data (null if none is selected)
 	 */
-	public void showDetails(final Club theDetailData) {
+	@Override
+	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
 
-		super.showDetails(theDetailData);
-		detailsController.showDetails(theDetailData);
+		overviewController.showDetails(theDetailData);
 
 		if (theDetailData == null) {
-
-			lblHeading.setText("Details");
-
+			overviewController.setHeading(new SimpleStringProperty("Details"));
 		} else {
-
-			LabelUtils.setText(lblHeading, theDetailData.getDisplayText());
-
+			overviewController.setHeading(theDetailData.getDisplayText());
 		}
 
 	}
@@ -176,10 +108,10 @@ public class OverviewClubsController extends AbstractOverviewController {
 		if (showEditDialog(newClub)) {
 
 			((ContentModel) AppModel.getData().getContent()).getObservableClubs().add(newClub);
-			((ListClubsController) getListController()).getSelectionModel().select(newClub);
+			((ListClubsController) overviewController.getListController()).getSelectionModel().select(newClub);
 
 			AppModel.setModified(true);
-			appController.setAppTitle();
+			RefereeManager.getAppController().setAppTitle();
 		}
 
 	}
@@ -193,13 +125,13 @@ public class OverviewClubsController extends AbstractOverviewController {
 	@Override
 	public void handleEdit(ActionEvent event) {
 
-		ObservableList<ClubModel> lstSelected = ((ListClubsController) getListController()).getSelection();
+		ObservableList<ClubModel> lstSelected = ((ListClubsController) overviewController.getListController()).getSelection();
 
 		if (lstSelected.size() == 1) {
 			if (showEditDialog(lstSelected.get(0))) {
 				showDetails(lstSelected.get(0));
 				AppModel.setModified(true);
-				appController.setAppTitle();
+				RefereeManager.getAppController().setAppTitle();
 			}
 		}
 
@@ -214,11 +146,11 @@ public class OverviewClubsController extends AbstractOverviewController {
 	@Override
 	public void handleDelete(ActionEvent event) {
 
-		ObservableList<ClubModel> lstSelected = ((ListClubsController) getListController()).getSelection();
+		ObservableList<ClubModel> lstSelected = ((ListClubsController) overviewController.getListController()).getSelection();
 
 		if (lstSelected.size() == 1) {
 
-			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, appController.getPrimaryStage(),
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, RefereeManager.getAppController().getPrimaryStage(),
 					"Löschbestätigung",
 					MessageFormat.format("Soll ''{0}'' gelöscht werden?", lstSelected.get(0).getDisplayTitle().get()),
 					null);
@@ -229,7 +161,7 @@ public class OverviewClubsController extends AbstractOverviewController {
 						((ContentModel) AppModel.getData().getContent()).getObservableClubs().remove(lstSelected.get(0));
 
 						AppModel.setModified(true);
-						appController.setAppTitle();
+						RefereeManager.getAppController().setAppTitle();
 						});
 
 		}
@@ -253,7 +185,7 @@ public class OverviewClubsController extends AbstractOverviewController {
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
 		dialogStage.initModality(Modality.WINDOW_MODAL);
-		dialogStage.initOwner(appController.getPrimaryStage());
+		dialogStage.initOwner(RefereeManager.getAppController().getPrimaryStage());
 		dialogStage.setTitle("Club editieren");
 
 		dialogStage.setScene(new Scene(pneLoad.getKey()));

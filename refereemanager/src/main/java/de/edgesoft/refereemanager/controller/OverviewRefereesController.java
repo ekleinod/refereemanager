@@ -278,11 +278,11 @@ public class OverviewRefereesController extends AbstractTitledIDDetailsControlle
 		imgReferee.managedProperty().bind(isRefereeOrTrainee);
 
 		// set divider position
-		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.REFEREE_OVERVIEW_SPLIT)));
+		pneSplit.setDividerPositions(Double.parseDouble(Prefs.get(PrefKey.OVERVIEW_REFEREE_SPLIT)));
 
 		// if changed, save divider position to preferences
 		pneSplit.getDividers().get(0).positionProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-			Prefs.put(PrefKey.REFEREE_OVERVIEW_SPLIT, Double.toString(newValue.doubleValue()));
+			Prefs.put(PrefKey.OVERVIEW_REFEREE_SPLIT, Double.toString(newValue.doubleValue()));
 		});
 
 		// CRUD buttons setup

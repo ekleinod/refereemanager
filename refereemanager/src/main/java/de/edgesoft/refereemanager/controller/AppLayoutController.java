@@ -636,13 +636,12 @@ public class AppLayoutController {
 	@FXML
 	private void handleClubOverview() {
 
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("OverviewClubs");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AbstractOverview");
 
 		appPane.setCenter(pneLoad.getKey());
 
-		// Give the controller access to the app.
-		OverviewClubsController ctlOverview = pneLoad.getValue().getController();
-		ctlOverview.initController(this);
+		OverviewClubsController ctlOverview = new OverviewClubsController();
+		ctlOverview.initController(pneLoad.getValue().getController());
 
 	}
 
