@@ -119,7 +119,7 @@ public class AppLayoutController {
 	 * Menu item referee -> overview.
 	 */
 	@FXML
-	private MenuItem mnuRefereeOverview;
+	private MenuItem mnuOverviewReferees;
 
 	/**
 	 * Menu item overview -> people.
@@ -139,7 +139,7 @@ public class AppLayoutController {
 	 * @since 0.15.0
 	 */
 	@FXML
-	private MenuItem mnuEventOverview;
+	private MenuItem mnuOverviewEvents;
 
 	/**
 	 * Menu item club overview.
@@ -189,7 +189,7 @@ public class AppLayoutController {
 	 * Button referee -> overview.
 	 */
 	@FXML
-	private Button btnRefereeOverview;
+	private Button btnOverviewReferees;
 
 	/**
 	 * Button overview -> people.
@@ -209,7 +209,7 @@ public class AppLayoutController {
 	 * @since 0.15.0
 	 */
 	@FXML
-	private Button btnEventOverview;
+	private Button btnOverviewEvents;
 
 	/**
 	 * Button club overview.
@@ -271,15 +271,15 @@ public class AppLayoutController {
 		ButtonUtils.adaptButton(btnFileSave, mnuFileSave);
 		mnuFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-save-as.png")));
 
-		mnuRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
-		ButtonUtils.adaptButton(btnRefereeOverview, mnuRefereeOverview);
+		mnuOverviewReferees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
+		ButtonUtils.adaptButton(btnOverviewReferees, mnuOverviewReferees);
 		mnuOverviewPeople.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
 		ButtonUtils.adaptButton(btnOverviewPeople, mnuOverviewPeople);
 		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
 		ButtonUtils.adaptButton(btnRefereeCommunication, mnuRefereeCommunication);
 
-		mnuEventOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
-		ButtonUtils.adaptButton(btnEventOverview, mnuEventOverview);
+		mnuOverviewEvents.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		ButtonUtils.adaptButton(btnOverviewEvents, mnuOverviewEvents);
 
 		mnuOverviewClubs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		ButtonUtils.adaptButton(btnOverviewClubs, mnuOverviewClubs);
@@ -592,16 +592,8 @@ public class AppLayoutController {
 	 * Menu referee -> overview.
 	 */
 	@FXML
-	private void handleRefereeOverview() {
-
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("OverviewReferees");
-
-		appPane.setCenter(pneLoad.getKey());
-
-		// Give the controller access to the app.
-		OverviewRefereesController ctlRefOverview = pneLoad.getValue().getController();
-		ctlRefOverview.initController(this);
-
+	private void handleOverviewReferees() {
+		handleOverview(new OverviewRefereesController());
 	}
 
 	/**
@@ -655,7 +647,7 @@ public class AppLayoutController {
 	 * @since 0.15.0
 	 */
 	@FXML
-	private void handleEventOverview() {
+	private void handleOverviewEvents() {
 
 		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("OverviewEvents");
 		AnchorPane refOverview = (AnchorPane) pneLoad.getKey();
