@@ -8,35 +8,35 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox spacing="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.DetailsClubController">
-   <children>
-      <Label fx:id="lblHeading" text="Weitere Daten" />
-      <GridPane vgap="10.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="200.0" />
-        </columnConstraints>
-        <rowConstraints>
-		<RowConstraints valignment="TOP" />
-		<RowConstraints valignment="TOP" />
-		<RowConstraints valignment="TOP" />
-		<RowConstraints valignment="TOP" />
-		<RowConstraints valignment="TOP" />
-        </rowConstraints>
-         <children>
-            <Label text="Dateiname" />
-            <Label fx:id="lblFilename" text="Label" GridPane.columnIndex="1" />
-            <Label text="Lokal?" GridPane.rowIndex="1" />
-            <Label fx:id="lblLocal" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="URL" GridPane.rowIndex="2" />
-            <Label fx:id="lblURL" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Spielorte" GridPane.rowIndex="3" />
-            <Label fx:id="lblVenue" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="Kontakt" GridPane.rowIndex="4" />
-            <Label fx:id="lblContact" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-         </children>
-      </GridPane>
-   </children>
-   <padding>
-      <Insets top="20.0" />
-   </padding>
+	<children>
+		<Label fx:id="lblHeading" text="Weitere Daten" />
+		<GridPane vgap="10.0">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+				<ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="200.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+			</rowConstraints>
+			<children>
+				<Label text="Dateiname" />
+				<Label fx:id="lblFilename" text="Label" GridPane.columnIndex="1" />
+				<Label text="Lokal?" GridPane.rowIndex="1" />
+				<Label fx:id="lblLocal" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Label text="URL" GridPane.rowIndex="2" />
+				<Label fx:id="lblURL" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label text="Spielorte" GridPane.rowIndex="3" />
+				<Label fx:id="lblVenue" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<Label text="Kontakt" GridPane.rowIndex="4" />
+				<Label fx:id="lblContact" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+			</children>
+		</GridPane>
+	</children>
+	<padding>
+		<Insets top="20.0" />
+	</padding>
 </VBox>
