@@ -38,10 +38,10 @@ import javafx.scene.text.FontWeight;
 public class DetailsClubController implements IDetailsController {
 
 	/**
-	 * Heading club data.
+	 * Heading.
 	 */
 	@FXML
-	private Label lblHeadingClub;
+	private Label lblHeading;
 
 	/**
 	 * Filename.
@@ -83,7 +83,7 @@ public class DetailsClubController implements IDetailsController {
 	private void initialize() {
 
 		// headings
-		lblHeadingClub.setFont(FontUtils.getDerived(lblHeadingClub.getFont(), FontWeight.BOLD));
+		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD));
 
 	}
 
