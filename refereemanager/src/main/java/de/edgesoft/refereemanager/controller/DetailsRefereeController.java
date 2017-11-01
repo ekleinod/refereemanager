@@ -1,20 +1,10 @@
 package de.edgesoft.refereemanager.controller;
 
-import java.io.File;
-import java.nio.file.Paths;
-
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
-import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.model.RefereeModel;
-import de.edgesoft.refereemanager.utils.PrefKey;
-import de.edgesoft.refereemanager.utils.Prefs;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.FontWeight;
 
 /**
  * Controller for the referee details scene.
@@ -42,25 +32,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsRefereeController implements IDetailsController {
-
-	/**
-	 * Heading.
-	 */
-	@FXML
-	private Label lblHeading;
-
-	/**
-	 * Name.
-	 */
-	@FXML
-	private Label lblName;
-
-	/**
-	 * First name.
-	 */
-	@FXML
-	private Label lblFirstName;
+public class DetailsRefereeController extends DetailsPersonController implements IDetailsController {
 
 	/**
 	 * Training level.
@@ -75,12 +47,6 @@ public class DetailsRefereeController implements IDetailsController {
 	private Label lblClub;
 
 	/**
-	 * Birthday.
-	 */
-	@FXML
-	private Label lblBirthday;
-
-	/**
 	 * Last update.
 	 */
 	@FXML
@@ -92,18 +58,6 @@ public class DetailsRefereeController implements IDetailsController {
 	@FXML
 	private Label lblNextUpdate;
 
-	/**
-	 * Role.
-	 */
-	@FXML
-	private Label lblRole;
-
-	/**
-	 * Image.
-	 */
-	@FXML
-	private ImageView imgView;
-
 
 	/**
 	 * Initializes the controller class.
@@ -111,11 +65,9 @@ public class DetailsRefereeController implements IDetailsController {
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
-	private void initialize() {
-
-		// headings
-		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD));
-
+	@Override
+	protected void initialize() {
+		super.initialize();
 	}
 
 	/**
@@ -126,25 +78,18 @@ public class DetailsRefereeController implements IDetailsController {
 	@Override
 	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
 
+		super.showDetails(theDetailData);
+
 		if ((theDetailData == null) || !(theDetailData instanceof RefereeModel)) {
 
-			LabelUtils.setText(lblName, null);
-			LabelUtils.setText(lblFirstName, null);
 			LabelUtils.setText(lblTrainingLevel, null);
 			LabelUtils.setText(lblClub, null);
-			LabelUtils.setText(lblBirthday, null);
 			LabelUtils.setText(lblLastUpdate, null);
 			LabelUtils.setText(lblNextUpdate, null);
-			LabelUtils.setText(lblRole, null);
-
-			imgView.setImage(null);
 
 		} else {
 
 			RefereeModel theData = (RefereeModel) theDetailData;
-
-			LabelUtils.setText(lblName, theData.getName());
-			LabelUtils.setText(lblFirstName, theData.getFirstName());
 
 			lblTrainingLevel.setText(
 					(theData.getHighestTrainingLevel() == null) ?
@@ -156,33 +101,8 @@ public class DetailsRefereeController implements IDetailsController {
 							null :
 							theData.getMember().getDisplayText().getValue());
 
-			LabelUtils.setText(lblBirthday, theData.getBirthday(), null);
-
 			LabelUtils.setText(lblLastUpdate, theData.getLastTrainingUpdate(), null);
 			LabelUtils.setText(lblNextUpdate, theData.getNextTrainingUpdate(), "yyyy");
-
-			lblRole.setText(
-					(theData.getRole() == null) ?
-							null :
-							theData.getRole().getDisplayText().getValue());
-
-			try {
-				if (theData.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
-					File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), String.format("%s.jpg", theData.getFileName().getValue())).toFile();
-					imgView.setImage(new Image(fleImage.toURI().toURL().toString()));
-				} else {
-					File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), "missing.jpg").toFile();
-					if (fleImage.exists()) {
-						imgView.setImage(new Image(fleImage.toURI().toURL().toString()));
-					} else {
-						imgView.setImage(null);
-					}
-				}
-			} catch (Exception e) {
-				RefereeManager.logger.throwing(e);
-				imgView.setImage(null);
-			}
-
 
 		}
 

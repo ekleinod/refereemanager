@@ -87,7 +87,7 @@ public class DetailsPersonController implements IDetailsController {
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
-	private void initialize() {
+	protected void initialize() {
 
 		// headings
 		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD));
