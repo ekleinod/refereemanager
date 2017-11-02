@@ -249,7 +249,7 @@ public class ListPeopleController implements IListController {
 	 * @return selected item property
 	 */
 	@Override
-	public ReadOnlyObjectProperty<? extends ModelClassExt> selectedItemProperty() {
+	public ReadOnlyObjectProperty<Person> selectedItemProperty() {
 		return tblData.getSelectionModel().selectedItemProperty();
 	}
 
