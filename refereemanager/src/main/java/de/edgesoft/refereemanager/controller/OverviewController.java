@@ -132,7 +132,7 @@ public class OverviewController extends AbstractEmbedCRUDButtonsController imple
 		});
 
 		// listen to selection changes, show details
-		getListController().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> theDetailsController.showDetails(newValue));
+		getListController().selectedItemProperty().addListener((observable, oldValue, newValue) -> theDetailsController.showDetails(newValue));
 
 		// clear event details
 		theDetailsController.showDetails(null);

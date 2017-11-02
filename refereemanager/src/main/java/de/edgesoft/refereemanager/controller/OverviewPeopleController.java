@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.controller;
 import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.RefereeManager;
@@ -15,7 +16,6 @@ import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,7 +73,7 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 		overviewController.initController(this, PrefKey.OVERVIEW_PERSON_SPLIT, "ListPeople", "DetailsPerson");
 
 		// CRUD buttons setup
-		ObservableBooleanValue isOneItemSelected = overviewController.getListController().getSelectionModel().selectedItemProperty().isNull();
+		ObservableBooleanValue isOneItemSelected = overviewController.getListController().selectedItemProperty().isNull();
 		overviewController.initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
 	}
@@ -116,7 +116,7 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 		if (showEditDialog(newPerson)) {
 
 			((ContentModel) AppModel.getData().getContent()).getObservablePeople().add(newPerson);
-			((ListPeopleController) overviewController.getListController()).getSelectionModel().select(newPerson);
+			overviewController.getListController().select(newPerson);
 
 			AppModel.setModified(true);
 			RefereeManager.getAppController().setAppTitle();
@@ -133,11 +133,11 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 	@Override
 	public void handleEdit(ActionEvent event) {
 
-		ObservableList<PersonModel> lstSelected = ((ListPeopleController) overviewController.getListController()).getSelection();
+		Optional<Person> theData = ((ListPeopleController) overviewController.getListController()).getSelectedItem();
 
-		if (lstSelected.size() == 1) {
-			if (showEditDialog(lstSelected.get(0))) {
-				showDetails(lstSelected.get(0));
+		if (theData.isPresent()) {
+			if (showEditDialog(theData.get())) {
+				showDetails(theData.get());
 				AppModel.setModified(true);
 				RefereeManager.getAppController().setAppTitle();
 			}
@@ -154,19 +154,19 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 	@Override
 	public void handleDelete(ActionEvent event) {
 
-		ObservableList<PersonModel> lstSelected = ((ListPeopleController) overviewController.getListController()).getSelection();
+		Optional<Person> theData = ((ListPeopleController) overviewController.getListController()).getSelectedItem();
 
-		if (lstSelected.size() == 1) {
+		if (theData.isPresent()) {
 
 			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, RefereeManager.getAppController().getPrimaryStage(),
 					"Löschbestätigung",
-					MessageFormat.format("Soll ''{0}'' gelöscht werden?", lstSelected.get(0).getDisplayTitle().get()),
+					MessageFormat.format("Soll ''{0}'' gelöscht werden?", theData.get().getDisplayTitle().get()),
 					null);
 
 			alert.showAndWait()
 					.filter(response -> response == ButtonType.OK)
 					.ifPresent(response -> {
-						((ContentModel) AppModel.getData().getContent()).getObservablePeople().remove(lstSelected.get(0));
+						((ContentModel) AppModel.getData().getContent()).getObservablePeople().remove(theData.get());
 						AppModel.setModified(true);
 						RefereeManager.getAppController().setAppTitle();
 						});
@@ -183,7 +183,7 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 	 * @param theData the data to be edited
 	 * @return true if the user clicked OK, false otherwise.
 	 */
-	private static boolean showEditDialog(PersonModel theData) {
+	private static boolean showEditDialog(Person theData) {
 
 		Objects.requireNonNull(theData);
 

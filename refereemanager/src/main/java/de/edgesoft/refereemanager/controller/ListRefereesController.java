@@ -326,7 +326,7 @@ public class ListRefereesController implements IListController {
 	 * @since 0.12.0
 	 */
 	@Override
-	public ObservableList<RefereeModel> getSelection() {
+	public ObservableList<RefereeModel> getSortedSelectedItems() {
 		List<RefereeModel> lstReturn = new ArrayList<>();
 
 		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((RefereeModel) data));

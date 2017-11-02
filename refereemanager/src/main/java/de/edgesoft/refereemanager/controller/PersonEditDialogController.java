@@ -815,15 +815,15 @@ public class PersonEditDialogController {
     }
 
 	/**
-	 * Sets referee to be edited.
+	 * Sets person to be edited.
 	 *
-	 * @param thePerson referee
+	 * @param thePerson person
 	 */
-	public void setPerson(PersonModel thePerson) {
+	public void setPerson(Person thePerson) {
 
 		Objects.requireNonNull(thePerson);
 
-        currentPerson = thePerson;
+        currentPerson = (PersonModel) thePerson;
 
         if (currentPerson instanceof Referee) {
     		tabRefereeData.setDisable(false);

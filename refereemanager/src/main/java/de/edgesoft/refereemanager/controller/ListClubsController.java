@@ -210,7 +210,7 @@ public class ListClubsController implements IListController {
 	 * @return sorted selection from table
 	 */
 	@Override
-	public ObservableList<ClubModel> getSelection() {
+	public ObservableList<ClubModel> getSortedSelectedItems() {
 		List<ClubModel> lstReturn = new ArrayList<>();
 
 		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((ClubModel) data));

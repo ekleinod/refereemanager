@@ -7,9 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.PersonRoleType;
@@ -18,6 +20,7 @@ import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.utils.TableUtils;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,7 +34,6 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
@@ -232,13 +234,23 @@ public class ListPeopleController implements IListController {
 	}
 
 	/**
-	 * Returns selection model of data table.
+	 * Sets selected item.
 	 *
-	 * @return selection model
+	 * @param theItem item to select
 	 */
 	@Override
-	public TableViewSelectionModel<Person> getSelectionModel() {
-		return tblData.getSelectionModel();
+	public <T extends ModelClassExt> void select(final T theItem) {
+		tblData.getSelectionModel().select((Person) theItem);
+	}
+
+	/**
+	 * Returns selected item property.
+	 *
+	 * @return selected item property
+	 */
+	@Override
+	public ReadOnlyObjectProperty<? extends ModelClassExt> selectedItemProperty() {
+		return tblData.getSelectionModel().selectedItemProperty();
 	}
 
 	/**
@@ -247,12 +259,28 @@ public class ListPeopleController implements IListController {
 	 * @return sorted selection from table
 	 */
 	@Override
-	public ObservableList<PersonModel> getSelection() {
+	public ObservableList<PersonModel> getSortedSelectedItems() {
 		List<PersonModel> lstReturn = new ArrayList<>();
 
 		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((PersonModel) data));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
+	}
+
+	/**
+	 * Returns selected item if there is only one.
+	 *
+	 * @return selected item
+	 */
+	@Override
+	public Optional<Person> getSelectedItem() {
+
+		if (tblData.getSelectionModel().getSelectedItems().size() != 1) {
+			return Optional.empty();
+		}
+
+		return Optional.of(tblData.getSelectionModel().getSelectedItem());
+
 	}
 
 }

@@ -126,7 +126,7 @@ public class OverviewClubsController implements ICRUDActionsController, IDetails
 	@Override
 	public void handleEdit(ActionEvent event) {
 
-		ObservableList<ClubModel> lstSelected = ((ListClubsController) overviewController.getListController()).getSelection();
+		ObservableList<ClubModel> lstSelected = ((ListClubsController) overviewController.getListController()).getSortedSelectedItems();
 
 		if (lstSelected.size() == 1) {
 			if (showEditDialog(lstSelected.get(0))) {
@@ -147,7 +147,7 @@ public class OverviewClubsController implements ICRUDActionsController, IDetails
 	@Override
 	public void handleDelete(ActionEvent event) {
 
-		ObservableList<ClubModel> lstSelected = ((ListClubsController) overviewController.getListController()).getSelection();
+		ObservableList<ClubModel> lstSelected = ((ListClubsController) overviewController.getListController()).getSortedSelectedItems();
 
 		if (lstSelected.size() == 1) {
 

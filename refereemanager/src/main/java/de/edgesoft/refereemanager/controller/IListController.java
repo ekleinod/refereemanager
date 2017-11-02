@@ -1,9 +1,11 @@
 package de.edgesoft.refereemanager.controller;
 
+import java.util.Optional;
+
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 
 /**
  * Interface for the list scene controller.
@@ -51,18 +53,32 @@ public interface IListController {
 	public void setSelectionMode(final SelectionMode theSelectionMode);
 
 	/**
-	 * Returns selection model of data table.
+	 * Sets selected item.
 	 *
-	 * @return selection model
+	 * @param theItem item to select
 	 */
-	public TableViewSelectionModel<? extends ModelClassExt> getSelectionModel();
+	public <T extends ModelClassExt> void select(final T theItem);
+
+	/**
+	 * Returns selected item property.
+	 *
+	 * @return selected item property
+	 */
+	public ReadOnlyObjectProperty<? extends ModelClassExt> selectedItemProperty();
 
 	/**
 	 * Returns selection from table as sorted list.
 	 *
 	 * @return sorted selection from table
 	 */
-	public ObservableList<? extends ModelClassExt> getSelection();
+	public ObservableList<? extends ModelClassExt> getSortedSelectedItems();
+
+	/**
+	 * Returns selected item if there is only one.
+	 *
+	 * @return selected item
+	 */
+	public Optional<? extends ModelClassExt> getSelectedItem();
 
 }
 

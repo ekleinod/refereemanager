@@ -134,7 +134,7 @@ public class OverviewRefereesController implements ICRUDActionsController, IDeta
 	@Override
 	public void handleEdit(ActionEvent event) {
 
-		ObservableList<RefereeModel> lstSelected = ((ListRefereesController) overviewController.getListController()).getSelection();
+		ObservableList<RefereeModel> lstSelected = ((ListRefereesController) overviewController.getListController()).getSortedSelectedItems();
 
 		if (lstSelected.size() == 1) {
 			if (showEditDialog(lstSelected.get(0))) {
@@ -155,7 +155,7 @@ public class OverviewRefereesController implements ICRUDActionsController, IDeta
 	@Override
 	public void handleDelete(ActionEvent event) {
 
-		ObservableList<RefereeModel> lstSelected = ((ListRefereesController) overviewController.getListController()).getSelection();
+		ObservableList<RefereeModel> lstSelected = ((ListRefereesController) overviewController.getListController()).getSortedSelectedItems();
 
 		if (lstSelected.size() == 1) {
 
