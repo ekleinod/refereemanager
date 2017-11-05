@@ -123,9 +123,19 @@ public class AppLayoutController {
 
 	/**
 	 * Menu item overview -> people.
+	 *
+	 * @since 0.15.0
 	 */
 	@FXML
 	private MenuItem mnuOverviewPeople;
+
+	/**
+	 * Menu item trainee -> overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private MenuItem mnuOverviewTrainees;
 
 	/**
 	 * Menu item referee -> communication.
@@ -193,9 +203,19 @@ public class AppLayoutController {
 
 	/**
 	 * Button overview -> people.
+	 *
+	 * @since 0.15.0
 	 */
 	@FXML
 	private Button btnOverviewPeople;
+
+	/**
+	 * Button overview -> trainees.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnOverviewTrainees;
 
 	/**
 	 * Button referee -> communication.
@@ -275,6 +295,8 @@ public class AppLayoutController {
 		ButtonUtils.adaptButton(btnOverviewReferees, mnuOverviewReferees);
 		mnuOverviewPeople.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
 		ButtonUtils.adaptButton(btnOverviewPeople, mnuOverviewPeople);
+		mnuOverviewTrainees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
+		ButtonUtils.adaptButton(btnOverviewTrainees, mnuOverviewTrainees);
 		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
 		ButtonUtils.adaptButton(btnRefereeCommunication, mnuRefereeCommunication);
 
@@ -604,6 +626,16 @@ public class AppLayoutController {
 	@FXML
 	private void handleOverviewPeople() {
 		handleOverview(new OverviewPeopleController());
+	}
+
+	/**
+	 * Menu overview -> trainees.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleOverviewTrainees() {
+		handleOverview(new OverviewTraineesController());
 	}
 
 	/**

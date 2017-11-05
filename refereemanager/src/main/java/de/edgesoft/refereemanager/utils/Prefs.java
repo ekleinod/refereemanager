@@ -112,6 +112,8 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_REFEREE_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
+			case OVERVIEW_TRAINEE_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
 
 			case REFEREE_COMMUNICATION_SPLIT_0:
 				return getPreferences().get(theKey.value(), Double.toString(0.5));

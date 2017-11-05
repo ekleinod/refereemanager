@@ -9,6 +9,7 @@ import de.edgesoft.refereemanager.model.OtherEventModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.RefereeModel;
 import de.edgesoft.refereemanager.model.TournamentModel;
+import de.edgesoft.refereemanager.model.TraineeModel;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.ImageView;
 
@@ -83,6 +84,27 @@ public class TableUtils {
 	 */
 	public static final TableCell<RefereeModel, LocalDate> getTableCellRefereeDate(final String thePattern) {
 		return new TableCell<RefereeModel, LocalDate>() {
+	        @Override
+	        protected void updateItem(LocalDate item, boolean empty) {
+	            super.updateItem(item, empty);
+
+	            if (item == null || empty) {
+	                setText(null);
+	            } else {
+	                setText(DateTimeUtils.formatDate(item, thePattern));
+	            }
+	        }
+	    };
+	}
+
+	/**
+	 * Returns {@link TableCell} for cell factories (trainee model, local date).
+	 *
+	 * @param thePattern pattern (null = standard pattern)
+	 * @return table cell for cell factories
+	 */
+	public static final TableCell<TraineeModel, LocalDate> getTableCellTraineeDate(final String thePattern) {
+		return new TableCell<TraineeModel, LocalDate>() {
 	        @Override
 	        protected void updateItem(LocalDate item, boolean empty) {
 	            super.updateItem(item, empty);

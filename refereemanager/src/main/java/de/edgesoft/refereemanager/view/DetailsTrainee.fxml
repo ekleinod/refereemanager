@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.DetailsPersonController">
+<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.DetailsTraineeController">
 	<children>
 		<Label fx:id="lblHeading" text="Weitere Daten" />
 		<GridPane vgap="10.0">
@@ -23,27 +23,18 @@
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
 			</rowConstraints>
 			<children>
 				<Label text="Name" />
 				<Label fx:id="lblName" text="Label" GridPane.columnIndex="1" />
 				<Label text="Vorname" GridPane.rowIndex="1" />
 				<Label fx:id="lblFirstName" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-				<Label text="Ausbildung" GridPane.rowIndex="2" />
-				<Label fx:id="lblTrainingLevel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-				<Label text="Verein" GridPane.rowIndex="3" />
-				<Label fx:id="lblClub" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-				<Label text="Geburtstag" GridPane.rowIndex="4" />
-				<Label fx:id="lblBirthday" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-				<Label text="Letzte Fortbildung" GridPane.rowIndex="5" />
-				<Label fx:id="lblLastUpdate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-				<Label text="Nächste Fortbildung" GridPane.rowIndex="6" />
-				<Label fx:id="lblNextUpdate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-				<Label text="Rolle" GridPane.rowIndex="7" />
-				<Label fx:id="lblRole" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+				<Label text="Verein" GridPane.rowIndex="2" />
+				<Label fx:id="lblClub" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label text="Geburtstag" GridPane.rowIndex="3" />
+				<Label fx:id="lblBirthday" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<Label text="Rolle" GridPane.rowIndex="4" />
+				<Label fx:id="lblRole" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 				<ImageView fx:id="imgView" fitHeight="160.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowSpan="2147483647" GridPane.valignment="TOP" />
 			</children>
 		</GridPane>

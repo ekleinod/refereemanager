@@ -67,6 +67,10 @@
                          <accelerator>
                             <KeyCodeCombination alt="DOWN" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                          </accelerator></MenuItem>
+                    <MenuItem fx:id="mnuOverviewTrainees" onAction="#handleOverviewTrainees" text="_Azubis">
+                         <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                         </accelerator></MenuItem>
                       <SeparatorMenuItem />
                       <MenuItem fx:id="mnuRefereeCommunication" onAction="#handleRefereeCommunication" text="Schiri_kommunikation">
                          <accelerator>
@@ -121,6 +125,7 @@
                   <Separator prefWidth="10.0" />
                   <Button fx:id="btnOverviewReferees" onAction="#handleOverviewReferees" />
                   <Button fx:id="btnOverviewPeople" onAction="#handleOverviewPeople" />
+                  <Button fx:id="btnOverviewTrainees" onAction="#handleOverviewTrainees" />
                   <Separator layoutX="90.0" layoutY="10.0" prefWidth="10.0" />
                   <Button fx:id="btnRefereeCommunication" onAction="#handleRefereeCommunication" />
                   <Separator layoutX="90.0" layoutY="10.0" prefWidth="10.0" />
