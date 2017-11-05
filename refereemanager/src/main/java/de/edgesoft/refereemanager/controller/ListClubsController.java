@@ -127,7 +127,7 @@ public class ListClubsController implements IListController {
 		// headings
 		lblFilter.setFont(FontUtils.getDerived(lblFilter.getFont(), FontWeight.BOLD));
 
-		setItems();
+		setDataTableItems();
 
 	}
 
@@ -135,7 +135,7 @@ public class ListClubsController implements IListController {
 	 * Sets table items.
 	 */
 	@Override
-	public void setItems() {
+	public void setDataTableItems() {
 
 		lstClubs = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableClubs(), club -> true);
 

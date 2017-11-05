@@ -133,7 +133,7 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 	@Override
 	public void handleEdit(ActionEvent event) {
 
-		Optional<Person> theData = ((ListPeopleController) overviewController.getListController()).getSelectedItem();
+		Optional<? extends ModelClassExt> theData = overviewController.getListController().getSelectedItem();
 
 		if (theData.isPresent()) {
 			if (showEditDialog(theData.get())) {
@@ -154,13 +154,13 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 	@Override
 	public void handleDelete(ActionEvent event) {
 
-		Optional<Person> theData = ((ListPeopleController) overviewController.getListController()).getSelectedItem();
+		Optional<? extends ModelClassExt> theData = overviewController.getListController().getSelectedItem();
 
 		if (theData.isPresent()) {
 
 			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, RefereeManager.getAppController().getPrimaryStage(),
 					"Löschbestätigung",
-					MessageFormat.format("Soll ''{0}'' gelöscht werden?", theData.get().getDisplayTitle().get()),
+					MessageFormat.format("Soll ''{0}'' gelöscht werden?", ((Person) theData.get()).getDisplayTitle().get()),
 					null);
 
 			alert.showAndWait()
@@ -183,7 +183,7 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 	 * @param theData the data to be edited
 	 * @return true if the user clicked OK, false otherwise.
 	 */
-	private static boolean showEditDialog(Person theData) {
+	private static <T extends ModelClassExt> boolean showEditDialog(T theData) {
 
 		Objects.requireNonNull(theData);
 
@@ -200,7 +200,7 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 		// Set data
 		PersonEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(dialogStage);
-		editController.setPerson(theData);
+		editController.setPerson((Person) theData);
 
 		// Show the dialog and wait until the user closes it
 		dialogStage.showAndWait();

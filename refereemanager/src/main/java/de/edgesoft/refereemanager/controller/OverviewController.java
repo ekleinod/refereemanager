@@ -138,7 +138,7 @@ public class OverviewController extends AbstractEmbedCRUDButtonsController imple
 		theDetailsController.showDetails(null);
 
 		// set list items
-		getListController().setItems();
+		getListController().setDataTableItems();
 
 	}
 

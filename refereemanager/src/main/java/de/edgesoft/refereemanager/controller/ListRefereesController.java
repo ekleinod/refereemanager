@@ -212,7 +212,7 @@ public class ListRefereesController implements IListController {
 		);
 
 		// init items
-		setItems();
+		setDataTableItems();
 
 	}
 
@@ -220,7 +220,7 @@ public class ListRefereesController implements IListController {
 	 * Sets table items.
 	 */
 	@Override
-	public void setItems() {
+	public void setDataTableItems() {
 
 		lstReferees = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableReferees(), referee -> true);
 

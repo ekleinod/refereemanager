@@ -662,7 +662,7 @@ public class RefereeCommunicationController {
 
 		appController = theAppController;
 
-		ctlRefList.setItems();
+		ctlRefList.setDataTableItems();
 
 	}
 

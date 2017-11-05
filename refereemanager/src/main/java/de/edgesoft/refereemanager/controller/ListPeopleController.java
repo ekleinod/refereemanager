@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -20,7 +19,6 @@ import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.utils.TableUtils;
-import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +28,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -64,7 +61,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListPeopleController implements IListController {
+public class ListPeopleController extends AbstractListController {
 
 	/**
 	 * List box.
@@ -166,15 +163,23 @@ public class ListPeopleController implements IListController {
 		);
 
 		// init items
-		setItems();
+		setDataTableItems();
 
+	}
+
+	/**
+	 * Returns data table.
+	 */
+	@Override
+	public TableView<? extends ModelClassExt> getDataTable() {
+		return tblData;
 	}
 
 	/**
 	 * Sets table items.
 	 */
 	@Override
-	public void setItems() {
+	public void setDataTableItems() {
 
 		lstPeople = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservablePeople(), person -> true);
 
@@ -182,12 +187,7 @@ public class ListPeopleController implements IListController {
 		lstSortedPeople.comparatorProperty().bind(tblData.comparatorProperty());
 		tblData.setItems(lstSortedPeople);
 
-		// set "empty data" text
-		Label lblPlaceholder = new Label(MessageFormat.format(
-				((lstPeople == null) || lstPeople.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
-				"Personen"));
-		lblPlaceholder.setWrapText(true);
-		tblData.setPlaceholder(lblPlaceholder);
+		setDataTablePlaceholderNoun("Personen");
 
 		handleFilterChange();
 
@@ -219,18 +219,8 @@ public class ListPeopleController implements IListController {
 			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstPeople.size()));
 		}
 
-		tblData.refresh();
+		getDataTable().refresh();
 
-	}
-
-	/**
-	 * Sets selection mode.
-	 *
-	 * @param theSelectionMode selection mode
-	 */
-	@Override
-	public void setSelectionMode(final SelectionMode theSelectionMode) {
-		tblData.getSelectionModel().setSelectionMode(theSelectionMode);
 	}
 
 	/**
@@ -241,16 +231,6 @@ public class ListPeopleController implements IListController {
 	@Override
 	public <T extends ModelClassExt> void select(final T theItem) {
 		tblData.getSelectionModel().select((Person) theItem);
-	}
-
-	/**
-	 * Returns selected item property.
-	 *
-	 * @return selected item property
-	 */
-	@Override
-	public ReadOnlyObjectProperty<Person> selectedItemProperty() {
-		return tblData.getSelectionModel().selectedItemProperty();
 	}
 
 	/**
@@ -265,22 +245,6 @@ public class ListPeopleController implements IListController {
 		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((PersonModel) data));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
-	}
-
-	/**
-	 * Returns selected item if there is only one.
-	 *
-	 * @return selected item
-	 */
-	@Override
-	public Optional<Person> getSelectedItem() {
-
-		if (tblData.getSelectionModel().getSelectedItems().size() != 1) {
-			return Optional.empty();
-		}
-
-		return Optional.of(tblData.getSelectionModel().getSelectedItem());
-
 	}
 
 }
