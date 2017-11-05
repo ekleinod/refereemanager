@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.StatusType;
@@ -28,11 +29,9 @@ import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
@@ -63,7 +62,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.14.0
  * @since 0.10.0
  */
-public class ListRefereesController implements IListController {
+public class ListRefereesController extends AbstractListController {
 
 	/**
 	 * List box.
@@ -85,19 +84,19 @@ public class ListRefereesController implements IListController {
 	 * @since 0.14.0
 	 */
 	@FXML
-	private TableColumn<PersonModel, String> colID;
+	private TableColumn<RefereeModel, String> colID;
 
 	/**
 	 * Name column.
 	 */
 	@FXML
-	private TableColumn<PersonModel, String> colName;
+	private TableColumn<RefereeModel, String> colName;
 
 	/**
 	 * First name column.
 	 */
 	@FXML
-	private TableColumn<PersonModel, String> colFirstName;
+	private TableColumn<RefereeModel, String> colFirstName;
 
 	/**
 	 * Training level column.
@@ -115,7 +114,7 @@ public class ListRefereesController implements IListController {
 	 * Birthday column.
 	 */
 	@FXML
-	private TableColumn<PersonModel, LocalDate> colBirthday;
+	private TableColumn<RefereeModel, LocalDate> colBirthday;
 
 	/**
 	 * Next update column.
@@ -188,10 +187,10 @@ public class ListRefereesController implements IListController {
 
 		colBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
 		colBirthday.setVisible(false);
-		colBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate());
+		colBirthday.setCellFactory(column -> TableUtils.getTableCellRefereeDate(null));
 		colUpdate.setCellValueFactory(cellData -> cellData.getValue().getNextTrainingUpdate());
 		colUpdate.setVisible(false);
-		colUpdate.setCellFactory(column -> TableUtils.getTableCellRefereeDate());
+		colUpdate.setCellFactory(column -> TableUtils.getTableCellRefereeDate("yyyy"));
 
 		// headings
 		lblFilter.setFont(FontUtils.getDerived(lblFilter.getFont(), FontWeight.BOLD));
@@ -217,6 +216,14 @@ public class ListRefereesController implements IListController {
 	}
 
 	/**
+	 * Returns data table.
+	 */
+	@Override
+	public TableView<? extends ModelClassExt> getDataTable() {
+		return tblData;
+	}
+
+	/**
 	 * Sets table items.
 	 */
 	@Override
@@ -228,12 +235,7 @@ public class ListRefereesController implements IListController {
 		lstSortedRefs.comparatorProperty().bind(tblData.comparatorProperty());
 		tblData.setItems(lstSortedRefs);
 
-		// set "empty data" text
-		Label lblPlaceholder = new Label(MessageFormat.format(
-				((lstReferees == null) || lstReferees.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
-				"Schiedsrichter"));
-		lblPlaceholder.setWrapText(true);
-		tblData.setPlaceholder(lblPlaceholder);
+		setDataTablePlaceholderNoun("Schiedsrichter");
 
 		handleFilterChange();
 
@@ -277,7 +279,7 @@ public class ListRefereesController implements IListController {
 
 			}
 
-			lblFilter.setText(MessageFormat.format("Filter ({0} ausgewählt)", lstReferees.size()));
+			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstReferees.size()));
 		}
 
 		tblData.refresh();
@@ -285,37 +287,13 @@ public class ListRefereesController implements IListController {
 	}
 
 	/**
-	 * Handles tab change events.
+	 * Sets selected item.
 	 *
-	 * @since 0.12.0
-	 */
-	@FXML
-	private void handleTabChange() {
-		handleFilterChange();
-	}
-
-	/**
-	 * Sets selection mode.
-	 *
-	 * @param theSelectionMode selection mode
-	 *
-	 * @since 0.12.0
+	 * @param theItem item to select
 	 */
 	@Override
-	public void setSelectionMode(final SelectionMode theSelectionMode) {
-		tblData.getSelectionModel().setSelectionMode(theSelectionMode);
-	}
-
-	/**
-	 * Returns selection model of data table.
-	 *
-	 * @return selection model
-	 *
-	 * @since 0.12.0
-	 */
-	@Override
-	public TableViewSelectionModel<Referee> getSelectionModel() {
-		return tblData.getSelectionModel();
+	public <T extends ModelClassExt> void select(final T theItem) {
+		tblData.getSelectionModel().select((Referee) theItem);
 	}
 
 	/**

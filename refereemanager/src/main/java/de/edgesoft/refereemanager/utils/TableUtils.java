@@ -57,9 +57,10 @@ public class TableUtils {
 	/**
 	 * Returns {@link TableCell} for cell factories (person model, local date).
 	 *
+	 * @param thePattern pattern (null = standard pattern)
 	 * @return table cell for cell factories
 	 */
-	public static final TableCell<PersonModel, LocalDate> getTableCellPersonDate() {
+	public static final TableCell<PersonModel, LocalDate> getTableCellPersonDate(final String thePattern) {
 		return new TableCell<PersonModel, LocalDate>() {
 	        @Override
 	        protected void updateItem(LocalDate item, boolean empty) {
@@ -68,7 +69,7 @@ public class TableUtils {
 	            if (item == null || empty) {
 	                setText(null);
 	            } else {
-	                setText(DateTimeUtils.formatDate(item));
+	                setText(DateTimeUtils.formatDate(item, thePattern));
 	            }
 	        }
 	    };
@@ -77,9 +78,10 @@ public class TableUtils {
 	/**
 	 * Returns {@link TableCell} for cell factories (referee model, local date).
 	 *
+	 * @param thePattern pattern (null = standard pattern)
 	 * @return table cell for cell factories
 	 */
-	public static final TableCell<RefereeModel, LocalDate> getTableCellRefereeDate() {
+	public static final TableCell<RefereeModel, LocalDate> getTableCellRefereeDate(final String thePattern) {
 		return new TableCell<RefereeModel, LocalDate>() {
 	        @Override
 	        protected void updateItem(LocalDate item, boolean empty) {
@@ -88,7 +90,7 @@ public class TableUtils {
 	            if (item == null || empty) {
 	                setText(null);
 	            } else {
-	                setText(DateTimeUtils.formatDate(item, "yyyy"));
+	                setText(DateTimeUtils.formatDate(item, thePattern));
 	            }
 	        }
 	    };
@@ -99,9 +101,10 @@ public class TableUtils {
 	 *
 	 * @return table cell for cell factories
 	 *
+	 * @param thePattern pattern (null = standard pattern)
 	 * @since 0.15.0
 	 */
-	public static final TableCell<LeagueGameModel, LocalDate> getTableCellLeagueGameDate() {
+	public static final TableCell<LeagueGameModel, LocalDate> getTableCellLeagueGameDate(final String thePattern) {
 		return new TableCell<LeagueGameModel, LocalDate>() {
 	        @Override
 	        protected void updateItem(LocalDate item, boolean empty) {
@@ -110,7 +113,7 @@ public class TableUtils {
 	            if (item == null || empty) {
 	                setText(null);
 	            } else {
-	                setText(DateTimeUtils.formatDate(item));
+	                setText(DateTimeUtils.formatDate(item, thePattern));
 	            }
 	        }
 	    };
@@ -119,11 +122,12 @@ public class TableUtils {
 	/**
 	 * Returns {@link TableCell} for cell factories (league game model, time).
 	 *
+	 * @param thePattern pattern (null = standard pattern)
 	 * @return table cell for cell factories
 	 *
 	 * @since 0.15.0
 	 */
-	public static final TableCell<LeagueGameModel, LocalTime> getTableCellLeagueGameTime() {
+	public static final TableCell<LeagueGameModel, LocalTime> getTableCellLeagueGameTime(final String thePattern) {
 		return new TableCell<LeagueGameModel, LocalTime>() {
 	        @Override
 	        protected void updateItem(LocalTime item, boolean empty) {
@@ -132,7 +136,7 @@ public class TableUtils {
 	            if (item == null || empty) {
 	                setText(null);
 	            } else {
-	                setText(DateTimeUtils.formatTime(item));
+	                setText(DateTimeUtils.formatTime(item, thePattern));
 	            }
 	        }
 	    };
@@ -141,11 +145,12 @@ public class TableUtils {
 	/**
 	 * Returns {@link TableCell} for cell factories (tournament model, date).
 	 *
+	 * @param thePattern pattern (null = standard pattern)
 	 * @return table cell for cell factories
 	 *
 	 * @since 0.15.0
 	 */
-	public static final TableCell<TournamentModel, LocalDate> getTableCellTournamentDate() {
+	public static final TableCell<TournamentModel, LocalDate> getTableCellTournamentDate(final String thePattern) {
 		return new TableCell<TournamentModel, LocalDate>() {
 	        @Override
 	        protected void updateItem(LocalDate item, boolean empty) {
@@ -154,7 +159,7 @@ public class TableUtils {
 	            if (item == null || empty) {
 	                setText(null);
 	            } else {
-	                setText(DateTimeUtils.formatDate(item));
+	                setText(DateTimeUtils.formatDate(item, thePattern));
 	            }
 	        }
 	    };
@@ -165,9 +170,10 @@ public class TableUtils {
 	 *
 	 * @return table cell for cell factories
 	 *
+	 * @param thePattern pattern (null = standard pattern)
 	 * @since 0.15.0
 	 */
-	public static final TableCell<OtherEventModel, LocalDate> getTableCellOtherEventDate() {
+	public static final TableCell<OtherEventModel, LocalDate> getTableCellOtherEventDate(final String thePattern) {
 		return new TableCell<OtherEventModel, LocalDate>() {
 	        @Override
 	        protected void updateItem(LocalDate item, boolean empty) {
@@ -176,7 +182,7 @@ public class TableUtils {
 	            if (item == null || empty) {
 	                setText(null);
 	            } else {
-	                setText(DateTimeUtils.formatDate(item));
+	                setText(DateTimeUtils.formatDate(item, thePattern));
 	            }
 	        }
 	    };
@@ -187,9 +193,10 @@ public class TableUtils {
 	 *
 	 * @return table cell for cell factories
 	 *
+	 * @param thePattern pattern (null = standard pattern)
 	 * @since 0.15.0
 	 */
-	public static final TableCell<OtherEventModel, LocalTime> getTableCellOtherEventTime() {
+	public static final TableCell<OtherEventModel, LocalTime> getTableCellOtherEventTime(final String thePattern) {
 		return new TableCell<OtherEventModel, LocalTime>() {
 	        @Override
 	        protected void updateItem(LocalTime item, boolean empty) {
@@ -198,7 +205,7 @@ public class TableUtils {
 	            if (item == null || empty || (item == LocalTime.MIDNIGHT)) {
 	                setText(null);
 	            } else {
-	                setText(DateTimeUtils.formatTime(item));
+	                setText(DateTimeUtils.formatTime(item, thePattern));
 	            }
 	        }
 	    };

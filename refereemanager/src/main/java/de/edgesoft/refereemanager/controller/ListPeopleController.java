@@ -140,7 +140,7 @@ public class ListPeopleController extends AbstractListController {
 
 		colBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
 		colBirthday.setVisible(false);
-		colBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate());
+		colBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate(null));
 
 		colRole.setCellValueFactory(cellData -> (cellData.getValue().getRole() == null) ? null : cellData.getValue().getRole().getDisplayTitleShort());
 
@@ -219,7 +219,7 @@ public class ListPeopleController extends AbstractListController {
 			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstPeople.size()));
 		}
 
-		getDataTable().refresh();
+		tblData.refresh();
 
 	}
 
