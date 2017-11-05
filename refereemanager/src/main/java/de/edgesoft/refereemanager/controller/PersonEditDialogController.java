@@ -315,7 +315,7 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 	 * @since 0.14.0
 	 */
 	@FXML
-	private Tab tabRefereeData;
+	protected Tab tabRefereeData;
 
 	/**
 	 * Combobox for member clubs.
@@ -379,7 +379,7 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 	 * @since 0.14.0
 	 */
 	@FXML
-	private Tab tabRefereeWishes;
+	protected Tab tabRefereeWishes;
 
 	/**
 	 * List view for prefers.
@@ -458,7 +458,7 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 	 * @since 0.14.0
 	 */
 	@FXML
-	private Tab tabRefereeTrainingLevel;
+	protected Tab tabRefereeTrainingLevel;
 
 	/**
 	 * List view for training level.
@@ -503,7 +503,7 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 	 * @since 0.14.0
 	 */
 	@FXML
-	private Tab tabTraineeExam;
+	protected Tab tabTraineeExam;
 
 	/**
 	 * Checkbox for withdrawn.
@@ -544,7 +544,7 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 	 * Checkbox for written passed.
 	 */
 	@FXML
-	private CheckBox chkPassedWritten;
+	protected CheckBox chkPassedWritten;
 
 	/**
 	 * Spinner for points practical.
@@ -557,7 +557,7 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 	 * Checkbox for practical passed.
 	 */
 	@FXML
-	private CheckBox chkPassedPractical;
+	protected CheckBox chkPassedPractical;
 
 	/**
 	 * Spinner for points oral.
@@ -570,7 +570,7 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 	 * Checkbox for oral passed.
 	 */
 	@FXML
-	private CheckBox chkPassedOral;
+	protected CheckBox chkPassedOral;
 
 	/**
 	 * Checkbox for passed.
