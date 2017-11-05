@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
-import de.edgesoft.refereemanager.utils.TableUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,10 +21,8 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 
@@ -54,7 +52,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListClubsController implements IListController {
+public class ListClubsController extends AbstractListController {
 
 	/**
 	 * List box.
@@ -132,6 +130,14 @@ public class ListClubsController implements IListController {
 	}
 
 	/**
+	 * Returns data table.
+	 */
+	@Override
+	public TableView<? extends ModelClassExt> getDataTable() {
+		return tblData;
+	}
+
+	/**
 	 * Sets table items.
 	 */
 	@Override
@@ -143,12 +149,7 @@ public class ListClubsController implements IListController {
 		lstSortedClubs.comparatorProperty().bind(tblData.comparatorProperty());
 		tblData.setItems(lstSortedClubs);
 
-		// set "empty data" text
-		Label lblPlaceholder = new Label(MessageFormat.format(
-				((lstClubs == null) || lstClubs.isEmpty()) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
-				"Clubs"));
-		lblPlaceholder.setWrapText(true);
-		tblData.setPlaceholder(lblPlaceholder);
+		setDataTablePlaceholderNoun("Clubs");
 
 		handleFilterChange();
 
@@ -185,23 +186,13 @@ public class ListClubsController implements IListController {
 	}
 
 	/**
-	 * Sets selection mode.
+	 * Sets selected item.
 	 *
-	 * @param theSelectionMode selection mode
+	 * @param theItem item to select
 	 */
 	@Override
-	public void setSelectionMode(final SelectionMode theSelectionMode) {
-		tblData.getSelectionModel().setSelectionMode(theSelectionMode);
-	}
-
-	/**
-	 * Returns selection model of data table.
-	 *
-	 * @return selection model
-	 */
-	@Override
-	public TableViewSelectionModel<Club> getSelectionModel() {
-		return tblData.getSelectionModel();
+	public <T extends ModelClassExt> void select(final T theItem) {
+		tblData.getSelectionModel().select((Club) theItem);
 	}
 
 	/**
