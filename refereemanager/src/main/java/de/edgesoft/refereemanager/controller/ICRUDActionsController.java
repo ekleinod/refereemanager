@@ -1,6 +1,7 @@
 package de.edgesoft.refereemanager.controller;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 /**
@@ -29,28 +30,49 @@ import javafx.event.ActionEvent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface ICRUDActionsController {
+public interface ICRUDActionsController<T extends ModelClassExt> {
 
 	/**
 	 * Handles add action.
 	 *
 	 * @param event calling action event
 	 */
-	public void handleAdd(ActionEvent event);
+	public void handleAdd(final ActionEvent event);
+
+	/**
+	 * Handles add action.
+	 *
+	 * @param theData data element
+	 * @param theDataList data list to add data to
+	 */
+	public void handleAdd(T theData, ObservableList<T> theDataList);
 
 	/**
 	 * Handles edit action.
 	 *
 	 * @param event calling action event
 	 */
-	public void handleEdit(ActionEvent event);
+	public void handleEdit(final ActionEvent event);
+
+	/**
+	 * Handles edit action.
+	 */
+	public void handleEdit();
 
 	/**
 	 * Handles delete action.
 	 *
 	 * @param event calling action event
 	 */
-	public void handleDelete(ActionEvent event);
+	public void handleDelete(final ActionEvent event);
+
+	/**
+	 * Handles delete action.
+	 *
+	 * @param theData data element
+	 * @param theDataList data list to delete data from
+	 */
+	public void handleDelete(T theData, ObservableList<T> theDataList);
 
 	/**
 	 * Opens the data edit dialog.
@@ -60,7 +82,7 @@ public interface ICRUDActionsController {
 	 * @param theData the data to be edited
 	 * @return true if the user clicked OK, false otherwise.
 	 */
-	public <T extends ModelClassExt> boolean showEditDialog(T theData);
+	public boolean showEditDialog(T theData);
 
 }
 

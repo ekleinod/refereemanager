@@ -52,7 +52,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class OverviewPeopleController extends AbstractOverviewController implements ICRUDActionsController, IDetailsController, IOverviewController {
+public class OverviewPeopleController extends AbstractOverviewController<Person> {
 
 	/**
 	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
@@ -80,17 +80,17 @@ public class OverviewPeopleController extends AbstractOverviewController impleme
 	@Override
 	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
 
-		overviewController.showDetails(theDetailData);
+		getController().showDetails(theDetailData);
 
 		if ((theDetailData == null) || !(theDetailData instanceof Person)) {
 
-			overviewController.setHeading(new SimpleStringProperty("Details"));
+			getController().setHeading(new SimpleStringProperty("Details"));
 
 		} else {
 
 			Person theData = (Person) theDetailData;
 
-			overviewController.setHeading(theData.getDisplayTitle());
+			getController().setHeading(theData.getDisplayTitle());
 
 		}
 
@@ -103,18 +103,7 @@ public class OverviewPeopleController extends AbstractOverviewController impleme
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-
-		PersonModel newPerson = new PersonModel();
-
-		if (showEditDialog(newPerson)) {
-
-			((ContentModel) AppModel.getData().getContent()).getObservablePeople().add(newPerson);
-			overviewController.getListController().select(newPerson);
-
-			AppModel.setModified(true);
-			RefereeManager.getAppController().setAppTitle();
-		}
-
+		super.handleAdd(new PersonModel(), ((ContentModel) AppModel.getData().getContent()).getObservablePeople());
 	}
 
 	/**
@@ -125,10 +114,10 @@ public class OverviewPeopleController extends AbstractOverviewController impleme
 	@Override
 	public void handleEdit(ActionEvent event) {
 
-		Optional<? extends ModelClassExt> theData = overviewController.getListController().getSelectedItem();
+		Optional<? extends ModelClassExt> theData = getController().getListController().getSelectedItem();
 
 		if (theData.isPresent()) {
-			if (showEditDialog(theData.get())) {
+			if (showEditDialog((Person) theData.get())) {
 				showDetails(theData.get());
 				AppModel.setModified(true);
 				RefereeManager.getAppController().setAppTitle();
@@ -145,7 +134,7 @@ public class OverviewPeopleController extends AbstractOverviewController impleme
 	@Override
 	public void handleDelete(ActionEvent event) {
 
-		Optional<? extends ModelClassExt> theData = overviewController.getListController().getSelectedItem();
+		Optional<? extends ModelClassExt> theData = getController().getListController().getSelectedItem();
 
 		if (theData.isPresent()) {
 
@@ -175,7 +164,7 @@ public class OverviewPeopleController extends AbstractOverviewController impleme
 	 * @return true if the user clicked OK, false otherwise.
 	 */
 	@Override
-	public <T extends ModelClassExt> boolean showEditDialog(T theData) {
+	public boolean showEditDialog(Person theData) {
 
 		Objects.requireNonNull(theData);
 
@@ -192,7 +181,7 @@ public class OverviewPeopleController extends AbstractOverviewController impleme
 		// Set data
 		PersonEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(dialogStage);
-		editController.setData((Person) theData);
+		editController.setData(theData);
 
 		// Show the dialog and wait until the user closes it
 		dialogStage.showAndWait();

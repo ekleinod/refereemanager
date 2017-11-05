@@ -1,6 +1,5 @@
 package de.edgesoft.refereemanager.controller;
 
-import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -9,17 +8,12 @@ import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.model.AppModel;
-import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.PersonModel;
-import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.Resources;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -49,7 +43,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractOverviewController implements ICRUDActionsController, IDetailsController, IOverviewController {
+public abstract class AbstractOverviewController<T extends ModelClassExt> implements ICRUDActionsController<T>, IDetailsController, IOverviewController {
 
 	/**
 	 * Overview controller of the underlying view.
@@ -77,19 +71,18 @@ public abstract class AbstractOverviewController implements ICRUDActionsControll
 	}
 
 	/**
-	 * Opens edit dialog for new data.
+	 * Handles add action.
 	 *
-	 * @param event calling action event
+	 * @param theData data element
+	 * @param theDataList data list to add data to
 	 */
 	@Override
-	public void handleAdd(ActionEvent event) {
+	public void handleAdd(T theData, ObservableList<T> theDataList) {
 
-		PersonModel newPerson = new PersonModel();
+		if (showEditDialog(theData)) {
 
-		if (showEditDialog(newPerson)) {
-
-			((ContentModel) AppModel.getData().getContent()).getObservablePeople().add(newPerson);
-			overviewController.getListController().select(newPerson);
+			theDataList.add(theData);
+			overviewController.getListController().select(theData);
 
 			AppModel.setModified(true);
 			RefereeManager.getAppController().setAppTitle();
@@ -99,13 +92,11 @@ public abstract class AbstractOverviewController implements ICRUDActionsControll
 
 	/**
 	 * Opens edit dialog for editing selected data.
-	 *
-	 * @param event calling action event
 	 */
 	@Override
-	public void handleEdit(ActionEvent event) {
+	public void handleEdit() {
 
-		Optional<? extends ModelClassExt> theData = overviewController.getListController().getSelectedItem();
+		Optional<? extends ModelClassExt> theData = getController().getListController().getSelectedItem();
 
 		if (theData.isPresent()) {
 			if (showEditDialog(theData.get())) {
@@ -113,35 +104,6 @@ public abstract class AbstractOverviewController implements ICRUDActionsControll
 				AppModel.setModified(true);
 				RefereeManager.getAppController().setAppTitle();
 			}
-		}
-
-	}
-
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @param event calling action event
-	 */
-	@Override
-	public void handleDelete(ActionEvent event) {
-
-		Optional<? extends ModelClassExt> theData = overviewController.getListController().getSelectedItem();
-
-		if (theData.isPresent()) {
-
-			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, RefereeManager.getAppController().getPrimaryStage(),
-					"Löschbestätigung",
-					MessageFormat.format("Soll ''{0}'' gelöscht werden?", ((Person) theData.get()).getDisplayTitle().get()),
-					null);
-
-			alert.showAndWait()
-					.filter(response -> response == ButtonType.OK)
-					.ifPresent(response -> {
-						((ContentModel) AppModel.getData().getContent()).getObservablePeople().remove(theData.get());
-						AppModel.setModified(true);
-						RefereeManager.getAppController().setAppTitle();
-						});
-
 		}
 
 	}
@@ -155,7 +117,7 @@ public abstract class AbstractOverviewController implements ICRUDActionsControll
 	 * @return true if the user clicked OK, false otherwise.
 	 */
 	@Override
-	public <T extends ModelClassExt> boolean showEditDialog(T theData) {
+	public boolean showEditDialog(T theData) {
 
 		Objects.requireNonNull(theData);
 
