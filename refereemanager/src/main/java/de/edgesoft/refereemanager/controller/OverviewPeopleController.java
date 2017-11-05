@@ -17,7 +17,6 @@ import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -53,12 +52,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class OverviewPeopleController implements ICRUDActionsController, IDetailsController, IOverviewController {
-
-	/**
-	 * Overview controller of the underlying view.
-	 */
-	OverviewController overviewController = null;
+public class OverviewPeopleController extends AbstractOverviewController implements ICRUDActionsController, IDetailsController, IOverviewController {
 
 	/**
 	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
@@ -68,13 +62,13 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 	@Override
 	public void initController(final OverviewController theOverviewController) {
 
-		overviewController = theOverviewController;
+		super.initController(theOverviewController);
 
-		overviewController.initController(this, PrefKey.OVERVIEW_PERSON_SPLIT, "ListPeople", "DetailsPerson");
+		getController().initController(this, PrefKey.OVERVIEW_PERSON_SPLIT, "ListPeople", "DetailsPerson");
 
 		// CRUD buttons setup
-		ObservableBooleanValue isOneItemSelected = overviewController.getListController().selectedItemProperty().isNull();
-		overviewController.initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
+		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
+		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
 	}
 
@@ -107,7 +101,6 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 	 *
 	 * @param event calling action event
 	 */
-	@FXML
 	@Override
 	public void handleAdd(ActionEvent event) {
 
@@ -129,7 +122,6 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 	 *
 	 * @param event calling action event
 	 */
-	@FXML
 	@Override
 	public void handleEdit(ActionEvent event) {
 
@@ -150,7 +142,6 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 	 *
 	 * @param event calling action event
 	 */
-	@FXML
 	@Override
 	public void handleDelete(ActionEvent event) {
 
@@ -183,7 +174,8 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 	 * @param theData the data to be edited
 	 * @return true if the user clicked OK, false otherwise.
 	 */
-	private static <T extends ModelClassExt> boolean showEditDialog(T theData) {
+	@Override
+	public <T extends ModelClassExt> boolean showEditDialog(T theData) {
 
 		Objects.requireNonNull(theData);
 
@@ -200,7 +192,7 @@ public class OverviewPeopleController implements ICRUDActionsController, IDetail
 		// Set data
 		PersonEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(dialogStage);
-		editController.setPerson((Person) theData);
+		editController.setData((Person) theData);
 
 		// Show the dialog and wait until the user closes it
 		dialogStage.showAndWait();

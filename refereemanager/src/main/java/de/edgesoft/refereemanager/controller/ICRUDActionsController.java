@@ -1,5 +1,6 @@
 package de.edgesoft.refereemanager.controller;
 
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import javafx.event.ActionEvent;
 
 /**
@@ -50,6 +51,16 @@ public interface ICRUDActionsController {
 	 * @param event calling action event
 	 */
 	public void handleDelete(ActionEvent event);
+
+	/**
+	 * Opens the data edit dialog.
+	 *
+	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
+	 *
+	 * @param theData the data to be edited
+	 * @return true if the user clicked OK, false otherwise.
+	 */
+	public <T extends ModelClassExt> boolean showEditDialog(T theData);
 
 }
 

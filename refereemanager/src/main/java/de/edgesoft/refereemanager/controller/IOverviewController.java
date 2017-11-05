@@ -29,6 +29,13 @@ package de.edgesoft.refereemanager.controller;
 public interface IOverviewController {
 
 	/**
+	 * Returns overview controller.
+	 *
+	 * @return overview controller
+	 */
+	public OverviewController getController();
+
+	/**
 	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
 	 *
 	 * @param theOverviewController overview controller

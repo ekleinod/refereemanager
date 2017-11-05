@@ -819,7 +819,7 @@ public class PersonEditDialogController {
 	 *
 	 * @param thePerson person
 	 */
-	public void setPerson(Person thePerson) {
+	public void setData(Person thePerson) {
 
 		Objects.requireNonNull(thePerson);
 
