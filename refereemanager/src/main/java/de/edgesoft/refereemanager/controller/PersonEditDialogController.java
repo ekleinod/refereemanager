@@ -584,25 +584,15 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 
 
 	/**
-	 * OK button.
-	 */
-	@FXML
-	private Button btnOK;
-
-	/**
-	 * Cancel button.
-	 */
-	@FXML
-	private Button btnCancel;
-
-
-	/**
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
-	private void initialize() {
+	@Override
+	protected void initialize() {
+
+		super.initialize();
 
 		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class})));
 
@@ -740,9 +730,6 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 
 
 		// icons
-		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
-		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
-
 		btnEMailAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnPhoneNumberAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnAddressAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));

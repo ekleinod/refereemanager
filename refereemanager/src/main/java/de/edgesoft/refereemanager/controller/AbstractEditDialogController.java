@@ -6,7 +6,10 @@ import java.util.Objects;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
+import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -61,6 +64,32 @@ public abstract class AbstractEditDialogController<T extends ModelClassExt> impl
 	 * Classes for introspection when setting/getting values.
 	 */
 	private List<Class<?>> lstClasses = null;
+
+
+	/**
+	 * OK button.
+	 */
+	@FXML
+	protected Button btnOK;
+
+	/**
+	 * Cancel button.
+	 */
+	@FXML
+	protected Button btnCancel;
+
+
+
+	/**
+	 * Initializes the controller class.
+	 *
+	 * This method is automatically called after the fxml file has been loaded.
+	 */
+	@FXML
+	protected void initialize() {
+		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
+		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
+	}
 
 
 	/**
