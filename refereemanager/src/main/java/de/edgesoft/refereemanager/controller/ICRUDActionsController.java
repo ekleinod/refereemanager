@@ -42,10 +42,12 @@ public interface ICRUDActionsController<T extends ModelClassExt> {
 	/**
 	 * Handles add action.
 	 *
+	 * @param theViewName name of the edit view
+	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
 	 * @param theData data element
 	 * @param theDataList data list to add data to
 	 */
-	public void handleAdd(T theData, ObservableList<T> theDataList);
+	public void handleAdd(final String theViewName, final String theViewTitleNoun, T theData, ObservableList<T> theDataList);
 
 	/**
 	 * Handles edit action.
@@ -56,8 +58,11 @@ public interface ICRUDActionsController<T extends ModelClassExt> {
 
 	/**
 	 * Handles edit action.
+	 *
+	 * @param theViewName name of the edit view
+	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
 	 */
-	public void handleEdit();
+	public void handleEdit(final String theViewName, final String theViewTitleNoun);
 
 	/**
 	 * Handles delete action.
@@ -69,20 +74,21 @@ public interface ICRUDActionsController<T extends ModelClassExt> {
 	/**
 	 * Handles delete action.
 	 *
-	 * @param theData data element
 	 * @param theDataList data list to delete data from
 	 */
-	public void handleDelete(T theData, ObservableList<T> theDataList);
+	public void handleDelete(ObservableList<T> theDataList);
 
 	/**
 	 * Opens the data edit dialog.
 	 *
 	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
 	 *
+	 * @param theViewName name of the edit view
+	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
 	 * @param theData the data to be edited
 	 * @return true if the user clicked OK, false otherwise.
 	 */
-	public boolean showEditDialog(T theData);
+	public <S extends ModelClassExt> boolean showEditDialog(final String theViewName, final String theViewTitleNoun, S theData);
 
 }
 

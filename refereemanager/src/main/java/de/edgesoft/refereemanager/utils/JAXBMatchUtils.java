@@ -74,7 +74,7 @@ public class JAXBMatchUtils {
 	 * @param theDataClasses data classes
 	 */
 	@SuppressWarnings("unchecked")
-	public static void setField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final Class<?>... theDataClasses) {
+	public static void setField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final List<Class<?>> theDataClasses) {
 
 		Objects.requireNonNull(theFXMLField);
 		Objects.requireNonNull(theFieldObject);
@@ -161,7 +161,7 @@ public class JAXBMatchUtils {
 	 * @param theDataClasses data classes
 	 */
 	@SuppressWarnings("unchecked")
-	public static void getField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final Class<?>... theDataClasses) {
+	public static void getField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final List<Class<?>> theDataClasses) {
 
 		Objects.requireNonNull(theFXMLField);
 		Objects.requireNonNull(theFieldObject);
@@ -385,7 +385,7 @@ public class JAXBMatchUtils {
 	 * @param theFieldObject object of fxml field
 	 * @param theDataClasses data classes
 	 */
-	public static void markRequired(final Field theFXMLField, final Object theFieldObject, final Class<?>... theDataClasses) {
+	public static void markRequired(final Field theFXMLField, final Object theFieldObject, final List<Class<?>> theDataClasses) {
 
 		Objects.requireNonNull(theFXMLField);
 

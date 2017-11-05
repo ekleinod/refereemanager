@@ -1,19 +1,22 @@
 package de.edgesoft.refereemanager.controller;
 
+import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.RefereeManager;
-import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.model.AppModel;
+import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -77,9 +80,9 @@ public abstract class AbstractOverviewController<T extends ModelClassExt> implem
 	 * @param theDataList data list to add data to
 	 */
 	@Override
-	public void handleAdd(T theData, ObservableList<T> theDataList) {
+	public void handleAdd(final String theViewName, final String theViewTitleNoun, T theData, ObservableList<T> theDataList) {
 
-		if (showEditDialog(theData)) {
+		if (showEditDialog(theViewName, theViewTitleNoun, theData)) {
 
 			theDataList.add(theData);
 			overviewController.getListController().select(theData);
@@ -94,12 +97,12 @@ public abstract class AbstractOverviewController<T extends ModelClassExt> implem
 	 * Opens edit dialog for editing selected data.
 	 */
 	@Override
-	public void handleEdit() {
+	public void handleEdit(final String theViewName, final String theViewTitleNoun) {
 
 		Optional<? extends ModelClassExt> theData = getController().getListController().getSelectedItem();
 
 		if (theData.isPresent()) {
-			if (showEditDialog(theData.get())) {
+			if (showEditDialog(theViewName, theViewTitleNoun, theData.get())) {
 				showDetails(theData.get());
 				AppModel.setModified(true);
 				RefereeManager.getAppController().setAppTitle();
@@ -109,32 +112,64 @@ public abstract class AbstractOverviewController<T extends ModelClassExt> implem
 	}
 
 	/**
+	 * Handles delete action.
+	 *
+	 * @param theData data element
+	 * @param theDataList data list to delete data from
+	 */
+	@Override
+	public void handleDelete(ObservableList<T> theDataList) {
+
+		Optional<? extends ModelClassExt> theData = getController().getListController().getSelectedItem();
+
+		if (theData.isPresent()) {
+
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, RefereeManager.getAppController().getPrimaryStage(),
+					"Löschbestätigung",
+					MessageFormat.format("Soll ''{0}'' gelöscht werden?", theData.get().getDisplayText().get()),
+					null);
+
+			alert.showAndWait()
+					.filter(response -> response == ButtonType.OK)
+					.ifPresent(response -> {
+						theDataList.remove(theData.get());
+						AppModel.setModified(true);
+						RefereeManager.getAppController().setAppTitle();
+						});
+
+		}
+
+	}
+
+	/**
 	 * Opens the data edit dialog.
 	 *
 	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
 	 *
+	 * @param theViewName name of the edit view
+	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
 	 * @param theData the data to be edited
 	 * @return true if the user clicked OK, false otherwise.
 	 */
 	@Override
-	public boolean showEditDialog(T theData) {
+	public <S extends ModelClassExt> boolean showEditDialog(final String theViewName, final String theViewTitleNoun, S theData) {
 
 		Objects.requireNonNull(theData);
 
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("PersonEditDialog");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode(theViewName);
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initOwner(RefereeManager.getAppController().getPrimaryStage());
-		dialogStage.setTitle("Person editieren");
+		dialogStage.setTitle(MessageFormat.format("{0} editieren", theViewTitleNoun));
 
 		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set data
-		PersonEditDialogController editController = pneLoad.getValue().getController();
+		IEditDialogController<S> editController = pneLoad.getValue().getController();
 		editController.setDialogStage(dialogStage);
-		editController.setData((Person) theData);
+		editController.setData(theData);
 
 		// Show the dialog and wait until the user closes it
 		dialogStage.showAndWait();

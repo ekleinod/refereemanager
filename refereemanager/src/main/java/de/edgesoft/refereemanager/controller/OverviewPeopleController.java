@@ -1,30 +1,14 @@
 package de.edgesoft.refereemanager.controller;
 
-import java.text.MessageFormat;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
-import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.PrefKey;
-import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 /**
  * Controller for the people overview scene.
@@ -103,7 +87,7 @@ public class OverviewPeopleController extends AbstractOverviewController<Person>
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd(new PersonModel(), ((ContentModel) AppModel.getData().getContent()).getObservablePeople());
+		super.handleAdd("PersonEditDialog", "Person", new PersonModel(), ((ContentModel) AppModel.getData().getContent()).getObservablePeople());
 	}
 
 	/**
@@ -113,17 +97,7 @@ public class OverviewPeopleController extends AbstractOverviewController<Person>
 	 */
 	@Override
 	public void handleEdit(ActionEvent event) {
-
-		Optional<? extends ModelClassExt> theData = getController().getListController().getSelectedItem();
-
-		if (theData.isPresent()) {
-			if (showEditDialog((Person) theData.get())) {
-				showDetails(theData.get());
-				AppModel.setModified(true);
-				RefereeManager.getAppController().setAppTitle();
-			}
-		}
-
+		handleEdit("PersonEditDialog", "Person");
 	}
 
 	/**
@@ -133,61 +107,7 @@ public class OverviewPeopleController extends AbstractOverviewController<Person>
 	 */
 	@Override
 	public void handleDelete(ActionEvent event) {
-
-		Optional<? extends ModelClassExt> theData = getController().getListController().getSelectedItem();
-
-		if (theData.isPresent()) {
-
-			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, RefereeManager.getAppController().getPrimaryStage(),
-					"Löschbestätigung",
-					MessageFormat.format("Soll ''{0}'' gelöscht werden?", ((Person) theData.get()).getDisplayTitle().get()),
-					null);
-
-			alert.showAndWait()
-					.filter(response -> response == ButtonType.OK)
-					.ifPresent(response -> {
-						((ContentModel) AppModel.getData().getContent()).getObservablePeople().remove(theData.get());
-						AppModel.setModified(true);
-						RefereeManager.getAppController().setAppTitle();
-						});
-
-		}
-
-	}
-
-	/**
-	 * Opens the data edit dialog.
-	 *
-	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
-	 *
-	 * @param theData the data to be edited
-	 * @return true if the user clicked OK, false otherwise.
-	 */
-	@Override
-	public boolean showEditDialog(Person theData) {
-
-		Objects.requireNonNull(theData);
-
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("PersonEditDialog");
-
-		// Create the dialog Stage.
-		Stage dialogStage = new Stage();
-		dialogStage.initModality(Modality.WINDOW_MODAL);
-		dialogStage.initOwner(RefereeManager.getAppController().getPrimaryStage());
-		dialogStage.setTitle("Person editieren");
-
-		dialogStage.setScene(new Scene(pneLoad.getKey()));
-
-		// Set data
-		PersonEditDialogController editController = pneLoad.getValue().getController();
-		editController.setDialogStage(dialogStage);
-		editController.setData(theData);
-
-		// Show the dialog and wait until the user closes it
-		dialogStage.showAndWait();
-
-		return editController.isOkClicked();
-
+		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservablePeople());
 	}
 
 }
