@@ -106,11 +106,15 @@ public class Prefs {
 
 			case OVERVIEW_CLUB_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
-			case OVERVIEW_EVENT_SPLIT:
+			case OVERVIEW_LEAGUE_GAME_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
+			case OVERVIEW_OTHER_EVENT_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_PERSON_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_REFEREE_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
+			case OVERVIEW_TOURNAMENT_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_TRAINEE_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));

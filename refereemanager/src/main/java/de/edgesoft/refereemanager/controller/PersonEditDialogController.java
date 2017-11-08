@@ -77,8 +77,6 @@ import javafx.stage.Stage;
  */
 public class PersonEditDialogController extends AbstractEditDialogController<Person> {
 
-	// person data
-
 	/**
 	 * ID text field.
 	 */
