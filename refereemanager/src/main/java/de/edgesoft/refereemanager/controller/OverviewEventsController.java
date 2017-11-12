@@ -224,7 +224,7 @@ public class OverviewEventsController extends AbstractTitledIDDetailsController 
 	/**
 	 * Event list controller.
 	 */
-	private ListEventsController ctlEventList;
+	private ListTournamentsController ctlEventList;
 
 	/**
 	 * Initializes the controller class.

@@ -67,13 +67,13 @@ import javafx.scene.text.FontWeight;
 public class ListLeagueGamesController extends AbstractListController {
 
 	/**
-	 * Other events box.
+	 * List.
 	 */
 	@FXML
 	private VBox boxList;
 
 	/**
-	 * Table other events.
+	 * Table league games.
 	 */
 	@FXML
 	private TableView<LeagueGame> tblData;
@@ -127,7 +127,6 @@ public class ListLeagueGamesController extends AbstractListController {
 	@FXML
 	private Label lblFilter;
 
-
 	/**
 	 * List of league games.
 	 */
@@ -157,7 +156,7 @@ public class ListLeagueGamesController extends AbstractListController {
 		colLeague.setCellValueFactory(cellData -> cellData.getValue().getLeague().getDisplayTitleShort());
 		colTeams.setCellValueFactory(cellData -> cellData.getValue().getTeamText());
 		colRefereeReport.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().existsRefereeReportFile()));
-		
+
 		// format date columns
 		colDate.setCellFactory(column -> TableUtils.getTableCellLeagueGameDate(null));
 		colTime.setCellFactory(column -> TableUtils.getTableCellLeagueGameTime(null));
@@ -223,7 +222,7 @@ public class ListLeagueGamesController extends AbstractListController {
 		if (lstLeagueGames == null) {
 			lblFilter.setText("Filter");
 		} else {
-			
+
 			lstLeagueGames.setPredicate(LeagueGameModel.ALL);
 
 			for (Entry<CheckBox, League> entryChkLeague : mapLeagueGamesLeagues.entrySet()) {
@@ -233,9 +232,9 @@ public class ListLeagueGamesController extends AbstractListController {
 				}
 
 			}
-			
+
 			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstLeagueGames.size()));
-			
+
 		}
 
 		tblData.refresh();

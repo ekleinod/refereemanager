@@ -46,7 +46,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 
 /**
- * Controller for the event list scene.
+ * Controller for the tournaments list scene.
  *
  * ## Legal stuff
  *
@@ -71,203 +71,61 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListEventsController {
+public class ListTournamentsController extends AbstractListController {
 
 	/**
-	 * Tab pane content.
+	 * List.
 	 */
 	@FXML
-	private TabPane tabPaneContent;
+	private VBox boxList;
 
 	/**
-	 * Tab league games.
+	 * Table tournaments.
 	 */
 	@FXML
-	private Tab tabLeagueGames;
-
-	/**
-	 * League games box.
-	 */
-	@FXML
-	private VBox boxLeagueGames;
-
-	/**
-	 * Table view league games.
-	 */
-	@FXML
-	private TableView<LeagueGame> tblLeagueGames;
+	private TableView<Tournament> tblDate;
 
 	/**
 	 * ID column.
 	 */
 	@FXML
-	private TableColumn<LeagueGameModel, String> colLeagueGameID;
+	private TableColumn<TournamentModel, String> colID;
 
 	/**
-	 * Number column.
+	 * Start date column.
 	 */
 	@FXML
-	private TableColumn<LeagueGameModel, String> colLeagueGameNumber;
+	private TableColumn<TournamentModel, LocalDate> colDateStart;
 
 	/**
-	 * Date column.
+	 * End date column.
 	 */
 	@FXML
-	private TableColumn<LeagueGameModel, LocalDate> colLeagueGameDate;
+	private TableColumn<TournamentModel, LocalDate> colDateEnd;
 
 	/**
-	 * Time column.
+	 * Title column.
 	 */
 	@FXML
-	private TableColumn<LeagueGameModel, LocalTime> colLeagueGameTime;
-
-	/**
-	 * League column.
-	 */
-	@FXML
-	private TableColumn<LeagueGameModel, String> colLeagueGameLeague;
-
-	/**
-	 * Teams column.
-	 */
-	@FXML
-	private TableColumn<LeagueGameModel, String> colLeagueGameTeams;
+	private TableColumn<TournamentModel, String> colTitle;
 
 	/**
 	 * Referee report column.
 	 */
 	@FXML
-	private TableColumn<LeagueGameModel, Boolean> colLeagueGameRefereeReport;
+	private TableColumn<TournamentModel, Boolean> colRefereeReport;
 
-	/**
-	 * List of league games.
-	 */
-	private FilteredList<LeagueGame> lstLeagueGame;
 
 	/**
 	 * Label filter.
 	 */
 	@FXML
-	private Label lblLeagueGameFilter;
-
-	/**
-	 * Filter storage.
-	 */
-	private Map<CheckBox, League> mapLeagueGamesLeagues;
-
-
-	/**
-	 * Tab tournaments.
-	 */
-	@FXML
-	private Tab tabTournaments;
-
-	/**
-	 * Tournaments box.
-	 */
-	@FXML
-	private VBox boxTournaments;
-
-	/**
-	 * Table view tournaments.
-	 */
-	@FXML
-	private TableView<Tournament> tblTournaments;
-
-	/**
-	 * ID column.
-	 */
-	@FXML
-	private TableColumn<TournamentModel, String> colTournamentID;
-
-	/**
-	 * Start date column.
-	 */
-	@FXML
-	private TableColumn<TournamentModel, LocalDate> colTournamentDateStart;
-
-	/**
-	 * End date column.
-	 */
-	@FXML
-	private TableColumn<TournamentModel, LocalDate> colTournamentDateEnd;
-
-	/**
-	 * Title column.
-	 */
-	@FXML
-	private TableColumn<TournamentModel, String> colTournamentTitle;
-
-	/**
-	 * Referee report column.
-	 */
-	@FXML
-	private TableColumn<TournamentModel, Boolean> colTournamentRefereeReport;
+	private Label lblFilter;
 
 	/**
 	 * List of tournaments.
 	 */
 	private FilteredList<Tournament> lstTournaments;
-
-
-	/**
-	 * Tab other events.
-	 */
-	@FXML
-	private Tab tabOtherEvents;
-
-	/**
-	 * Other events box.
-	 */
-	@FXML
-	private VBox boxOtherEvents;
-
-	/**
-	 * Table other events.
-	 */
-	@FXML
-	private TableView<OtherEvent> tblOtherEvents;
-
-	/**
-	 * ID column.
-	 */
-	@FXML
-	private TableColumn<OtherEventModel, String> colOtherEventID;
-
-	/**
-	 * Start date column.
-	 */
-	@FXML
-	private TableColumn<OtherEventModel, LocalDate> colOtherEventDateStart;
-
-	/**
-	 * End date column.
-	 */
-	@FXML
-	private TableColumn<OtherEventModel, LocalDate> colOtherEventDateEnd;
-
-	/**
-	 * Start time column.
-	 */
-	@FXML
-	private TableColumn<OtherEventModel, LocalTime> colOtherEventTimeStart;
-
-	/**
-	 * Start time column.
-	 */
-	@FXML
-	private TableColumn<OtherEventModel, LocalTime> colOtherEventTimeEnd;
-
-	/**
-	 * Title column.
-	 */
-	@FXML
-	private TableColumn<OtherEventModel, String> colOtherEventTitle;
-
-	/**
-	 * List of other events.
-	 */
-	private FilteredList<OtherEvent> lstOtherEvents;
 
 
 	/**
@@ -290,13 +148,13 @@ public class ListEventsController {
 		colLeagueGameRefereeReport.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().existsRefereeReportFile()));
 
 		// hook data to columns (tournaments)
-		colTournamentID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
-		colTournamentID.setVisible(false);
+		colID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+		colID.setVisible(false);
 
-		colTournamentDateStart.setCellValueFactory(cellData -> cellData.getValue().getFirstDay().getDate());
-		colTournamentDateEnd.setCellValueFactory(cellData -> (cellData.getValue().getLastDay() == null) ? null : cellData.getValue().getLastDay().getDate());
-		colTournamentTitle.setCellValueFactory(cellData -> cellData.getValue().getDisplayTitleShort());
-		colTournamentRefereeReport.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().existsRefereeReportFile()));
+		colDateStart.setCellValueFactory(cellData -> cellData.getValue().getFirstDay().getDate());
+		colDateEnd.setCellValueFactory(cellData -> (cellData.getValue().getLastDay() == null) ? null : cellData.getValue().getLastDay().getDate());
+		colTitle.setCellValueFactory(cellData -> cellData.getValue().getDisplayTitleShort());
+		colRefereeReport.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().existsRefereeReportFile()));
 
 		// hook data to columns (other events)
 		colOtherEventID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
@@ -312,8 +170,8 @@ public class ListEventsController {
 		colLeagueGameDate.setCellFactory(column -> TableUtils.getTableCellLeagueGameDate());
 		colLeagueGameTime.setCellFactory(column -> TableUtils.getTableCellLeagueGameTime());
 
-		colTournamentDateStart.setCellFactory(column -> TableUtils.getTableCellTournamentDate());
-		colTournamentDateEnd.setCellFactory(column -> TableUtils.getTableCellTournamentDate());
+		colDateStart.setCellFactory(column -> TableUtils.getTableCellTournamentDate());
+		colDateEnd.setCellFactory(column -> TableUtils.getTableCellTournamentDate());
 
 		colOtherEventDateStart.setCellFactory(column -> TableUtils.getTableCellOtherEventDate());
 		colOtherEventDateEnd.setCellFactory(column -> TableUtils.getTableCellOtherEventDate());
@@ -322,7 +180,7 @@ public class ListEventsController {
 
 		// format referee report columns
 		colLeagueGameRefereeReport.setCellFactory(column -> TableUtils.getTableCellLeagueGameRefereeReport());
-		colTournamentRefereeReport.setCellFactory(column -> TableUtils.getTableCellTournamentRefereeReport());
+		colRefereeReport.setCellFactory(column -> TableUtils.getTableCellTournamentRefereeReport());
 
 		// listen to tab changes
 		tabPaneContent.getSelectionModel().selectedItemProperty().addListener((event, oldTab, newTab) -> {
