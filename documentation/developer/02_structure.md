@@ -1,6 +1,6 @@
 # Structure and Git repositories
 
-The RefereeManager is written in Java 8+, using FXML and Java features introduced in Java 8.
+The RefereeManager is written in Java 8+, using JavaFX, JAXB and language features introduced in Java 8.
 
 ## Structure
 
