@@ -28,7 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 
 /**
- * Controller for the event date list scene.
+ * Controller for the other event list scene.
  *
  * ## Legal stuff
  *

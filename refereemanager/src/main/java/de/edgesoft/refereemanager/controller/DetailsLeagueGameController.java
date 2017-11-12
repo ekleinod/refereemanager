@@ -3,14 +3,19 @@ package de.edgesoft.refereemanager.controller;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
-import de.edgesoft.refereemanager.model.OtherEventModel;
+import de.edgesoft.refereemanager.model.LeagueGameModel;
+import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.text.FontWeight;
 
 /**
- * Controller for the other event details scene.
+ * Controller for the league game details scene.
  *
  * ## Legal stuff
  *
@@ -35,13 +40,19 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsOtherEventController implements IDetailsController {
+public class DetailsLeagueGameController implements IDetailsController {
 	
 	/**
 	 * Heading.
 	 */
 	@FXML
 	private Label lblHeading;
+
+	/**
+	 * Number label.
+	 */
+	@FXML
+	private Label lblNumber;
 
 	/**
 	 * Date label.
@@ -56,10 +67,46 @@ public class DetailsOtherEventController implements IDetailsController {
 	private Label lblTime;
 
 	/**
+	 * Teams label.
+	 */
+	@FXML
+	private Label lblTeams;
+
+	/**
+	 * League label.
+	 */
+	@FXML
+	private Label lblLeague;
+
+	/**
 	 * Venue label.
 	 */
 	@FXML
 	private Label lblVenue;
+
+	/**
+	 * Referee report label.
+	 */
+	@FXML
+	private Label lblRefereeReport;
+
+	/**
+	 * Referee report label label.
+	 */
+	@FXML
+	private Label lblRefereeReportLabel;
+
+	/**
+	 * Referee report indicator label.
+	 */
+	@FXML
+	private Label lblRefereeReportIndicator;
+
+	/**
+	 * Referee report copy button.
+	 */
+	@FXML
+	private Button btnRefereeReportCopy;
 
 	/**
 	 * Type label.
@@ -78,6 +125,9 @@ public class DetailsOtherEventController implements IDetailsController {
 		// headings
 		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD));
 
+		// icons
+		btnRefereeReportCopy.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-copy.png")));
+
 	}
 
 	/**
@@ -88,7 +138,7 @@ public class DetailsOtherEventController implements IDetailsController {
 	@Override
 	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
 		
-		Class<OtherEventModel> theClass = OtherEventModel.class;
+		Class<LeagueGameModel> theClass = LeagueGameModel.class;
 
 		assert 
 				((theDetailData == null) || theClass.isInstance(theDetailData)) 
@@ -96,27 +146,61 @@ public class DetailsOtherEventController implements IDetailsController {
 
 		if (theDetailData == null) {
 
+			LabelUtils.setText(lblNumber, null);
 			LabelUtils.setText(lblDate, null);
 			LabelUtils.setText(lblTime, null);
+			LabelUtils.setText(lblTeams, null);
+			LabelUtils.setText(lblLeague, null);
 			LabelUtils.setText(lblVenue, null);
+			LabelUtils.setText(lblRefereeReport, null);
+
+			lblRefereeReportIndicator.setGraphic(null);
+			btnRefereeReportCopy.setDisable(false);
+
 			LabelUtils.setText(lblType, null);
 
 		} else {
 
-			OtherEventModel theData = theClass.cast(theDetailData);
+			LeagueGameModel theData = theClass.cast(theDetailData);
 
+			LabelUtils.setText(lblNumber, theData.getGameNumberString());
 			LabelUtils.setText(lblDate, theData.getDateText());
 			LabelUtils.setText(lblTime, theData.getTimeText());
+			LabelUtils.setText(lblTeams, theData.getTeamText());
+
+			lblLeague.setText(
+					(theData.getHomeTeam() == null) ?
+							null :
+							theData.getHomeTeam().getLeague().getDisplayTitle().getValueSafe());
 
 			lblVenue.setText(
 					(theData.getVenue() == null) ?
 							null :
-							theData.getVenue().getDisplayTitle().getValueSafe());
+								theData.getVenue().getDisplayTitle().getValueSafe());
+			
+			LabelUtils.setText(lblRefereeReport, theData.getRefereeReportFilename());
+
+			if (theData.existsRefereeReportFile()) {
+				lblRefereeReportIndicator.setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-success.png")));
+			} else {
+				lblRefereeReportIndicator.setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-error.png")));
+			}
+			btnRefereeReportCopy.setDisable(true);
 
 			LabelUtils.setText(lblType, new SimpleStringProperty("ToDo"));
 
 		}
 
+	}
+
+	/**
+	 * Copies referee report filename to clipboard.
+	 */
+	@FXML
+	private void handleRefereeReportCopy() {
+		ClipboardContent clpContent = new ClipboardContent();
+		clpContent.putString(lblRefereeReport.getText());
+		Clipboard.getSystemClipboard().setContent(clpContent);
 	}
 
 }
