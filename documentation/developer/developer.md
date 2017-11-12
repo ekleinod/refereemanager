@@ -36,3 +36,6 @@ latex input:				basis-mmd-begin-doc
 
 <!-- \cleardoublepage -->
 {{04_setup.md}}
+
+<!-- \cleardoublepage -->
+{{05_implementation.md}}

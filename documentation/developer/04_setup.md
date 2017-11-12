@@ -10,5 +10,7 @@ In short, do the following:
 6. wait for the maven dependencies to install
 7. start development
 
+The repositories are:
+
 - [refereemanager at github](https://github.com/tt-schiri/refereemanager/)
 - [edgeutils at github](https://github.com/ekleinod/edgeutils/)

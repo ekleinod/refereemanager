@@ -25,7 +25,9 @@ Github is used for code maintenance and issue tracking.
 
 Short information about the structure of the git repository:
 
-The branches are constructed regarding the git branching model of http://nvie.com/posts/a-successful-git-branching-model/
+The branches are constructed regarding the git branching model of
+
+- <http://nvie.com/posts/a-successful-git-branching-model/>
 
 This means, there are always at least three branches:
 
