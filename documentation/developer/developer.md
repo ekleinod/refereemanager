@@ -1,7 +1,7 @@
 Quotes Language:		english
 Base Header Level:	3
 latex input:				basis-mmd-scrartcl
-MyOptions:					font=droid
+MyOptions:					font=droid, tabulary
 latex input:				basis-mmd-style
 Title:							RefereeManager
 Date:
@@ -24,95 +24,12 @@ latex input:				basis-mmd-begin-doc
 <!-- \maketitle -->
 
 <!-- \tableofcontents -->
-<!-- \cleardoublepage -->
-
-# Preface
-
-This documentation focuses on the development aspect of the RefereeManager.
-Thus, there is no description for setting up the RefereeManager in a production environment.
-This is part of the user documentation.
-
-Therefore, be aware, that your passwords etc. are not secured during development, if you don't secure them yourselves.
-The same goes for other security aspects.
-
-I develop the RefereeManager in a virtual machine with no access from the internet, or on a laptop with no reading access from the internet.
-I urge you to do so yourselves, unless you know what you are doing.
-
-## Used Language
-
-The developer's documentation is in English, because I think more people understand English than German and thus more people can use the RefereeManager.
-As I am a German native speaker, you can ask German questions every time.
-
-Die Dokumentation ist auf Englisch, damit mehr Leute die Schiedsrichterverwaltung nutzen können.
-Da ich Deutsch als Muttersprache spreche, können Sie natürlich jederzeit auch deutsche Fragen stellen.
 
 <!-- \cleardoublepage -->
+{{01_preface.md}}
 
-# Structure and git repositories
-
-There are six sources or downloads used for development:
-
-1. CakePHP ([Homepage][url:cake], [Git][url:cake:git])
-2. phpMyAdmin ([Homepage][url:pma], [Git][url:pma:git], [Downloads][url:pma:down])
-3. RefereeManager ([Homepage][url:refman], [Git][url:refman:git])
-4. PHPExcel ([Homepage][url:phpexcel], [SVN][url:phpexcel:svn])
-5. PHPExcelHelper ([Homepage][url:phpexcelhelper], [Git][url:phpexcelhelper:git])
-6. TCPDF ([Homepage][url:tcpdf], [Git][url:tcpdf:git])
-
-RefereeManager should be read/write if you want to develop, the other are read-only.
-
-During the development process, several files have to be located in directories of CakePHP and phpMyAdmin resp.
-In order to avoid having several files mixed up, therefore making it difficult to separate RefereeManager files from original files, the development directories are separated from the git sources.
-This means, that the development files have to be copied to and from the corresponding directories.
-
-This will be described in detail later (see [sec:process][]).
-
-If you do not want to use the git sources, feel free to download available snapshots and place their files in the directories stated below.
-
-We refer to the needed directories as follows:
-
-	<...>/apache/refereemanager/
-- development directory
-- contains the actual website in development
-- no git allowed here
-
-<!-- -->
-	<...>/apache/phpmyadmin/
-- phpMyAdmin directory containing a copy of the phpMyAdmin files and the configuration file
-- no git allowed here
-
-<!-- -->
-	<...>/git/refereemanager/
-- RefereeManager git repository
-- development and configuration files reside here
-- development of CakePHP files does not take place here, files are copied here
-
-<!-- -->
-	<...>/git/phpmyadmin/
-- phpMyAdmin git repository
-- no development files here
-
-<!-- -->
-	<...>/git/cakephp/
-- CakePHP git repository
-- no development files here
-
-<!-- -->
-	<...>/git/phpexcel/
-- PHPExcel svn repository
-- no development files here
-
-<!-- -->
-	<...>/git/phpexcelhelper/
-- PHPExcelHelper git repository
-- no development files here
-
-<!-- -->
-	<...>/git/tcpdf/
-- TCPDF git repository
-- no development files here
-
-
+<!-- \cleardoublepage -->
+{{02_structure.md}}
 
 <!-- \cleardoublepage -->
 
