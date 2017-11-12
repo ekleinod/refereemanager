@@ -64,15 +64,21 @@ public class OverviewOtherEventsController extends AbstractOverviewController<Ot
 	@Override
 	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
 
-		getController().showDetails(theDetailData);
+		Class<OtherEventModel> theClass = OtherEventModel.class;
 
-		if ((theDetailData == null) || !(theDetailData instanceof OtherEvent)) {
+		assert 
+				((theDetailData == null) || theClass.isInstance(theDetailData)) 
+				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
+
+		getController().showDetails(theDetailData);
+		
+		if (theDetailData == null) {
 
 			getController().setHeading(new SimpleStringProperty("Details"));
 
 		} else {
 
-			OtherEvent theData = (OtherEvent) theDetailData;
+			OtherEventModel theData = theClass.cast(theDetailData);
 
 			getController().setHeading(theData.getDisplayTitle());
 

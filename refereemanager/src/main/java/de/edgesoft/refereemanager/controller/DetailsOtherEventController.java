@@ -4,7 +4,6 @@ import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.model.OtherEventModel;
-import de.edgesoft.refereemanager.model.PersonModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -37,7 +36,7 @@ import javafx.scene.text.FontWeight;
  * @since 0.15.0
  */
 public class DetailsOtherEventController implements IDetailsController {
-
+	
 	/**
 	 * Heading.
 	 */
@@ -88,8 +87,14 @@ public class DetailsOtherEventController implements IDetailsController {
 	 */
 	@Override
 	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
+		
+		Class<OtherEventModel> theClass = OtherEventModel.class;
 
-		if ((theDetailData == null) || !(theDetailData instanceof PersonModel)) {
+		assert 
+				((theDetailData == null) || theClass.isInstance(theDetailData)) 
+				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
+
+		if (theDetailData == null) {
 
 			LabelUtils.setText(lblDate, null);
 			LabelUtils.setText(lblTime, null);
@@ -98,7 +103,7 @@ public class DetailsOtherEventController implements IDetailsController {
 
 		} else {
 
-			OtherEventModel theData = (OtherEventModel) theDetailData;
+			OtherEventModel theData = theClass.cast(theDetailData);
 
 			LabelUtils.setText(lblDate, theData.getDateText());
 			LabelUtils.setText(lblTime, theData.getTimeText());
