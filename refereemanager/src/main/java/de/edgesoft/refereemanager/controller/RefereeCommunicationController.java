@@ -537,7 +537,7 @@ public class RefereeCommunicationController {
 
 		// enabling buttons
 		btnSend.disableProperty().bind(
-				ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull()
+				ctlRefList.selectedItemProperty().isNull()
 				.or(txtBody.textProperty().isEmpty())
 				.or(
 						radEMails.selectedProperty().or(radLetters.selectedProperty())
@@ -1113,7 +1113,7 @@ public class RefereeCommunicationController {
 						});
 
 						// send email for every person individually (see remark in method doc)
-						FilteredList<PersonModel> lstPeople = new FilteredList<>(ctlRefList.getAllTabSelection(), PersonModel.HAS_EMAIL);
+						FilteredList<? extends PersonModel> lstPeople = new FilteredList<>(ctlRefList.getSortedSelectedItems(), PersonModel.HAS_EMAIL);
 						int iCount = lstPeople.size();
 						for (PersonModel person : lstPeople) {
 
@@ -1323,7 +1323,7 @@ public class RefereeCommunicationController {
 
 
 						// create docs
-						List<PersonModel> lstPeople = ctlRefList.getAllTabSelection();
+						List<? extends PersonModel> lstPeople = ctlRefList.getSortedSelectedItems();
 						int iCount = lstPeople.size();
 
 						Map<String, List<String>> mapFilenames = new HashMap<>();
@@ -1487,7 +1487,7 @@ public class RefereeCommunicationController {
 
 
 						// create texts
-						List<PersonModel> lstPeople = ctlRefList.getAllTabSelection();
+						List<? extends PersonModel> lstPeople = ctlRefList.getSortedSelectedItems();
 						int iCount = lstPeople.size();
 
 						for (PersonModel person : lstPeople) {
@@ -1663,7 +1663,7 @@ public class RefereeCommunicationController {
 		mapData.put("today", LocalDateTime.now());
 		mapData.put("documentdata", theDocData);
 		mapData.put("refdata", AppModel.getData());
-		mapData.put("selection", ctlRefList.getAllTabSelection());
+		mapData.put("selection", ctlRefList.getSortedSelectedItems());
 		mapData.put("current", thePerson);
 		mapData.put("prefs", Prefs.getPrefMap());
 
