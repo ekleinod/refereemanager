@@ -1,12 +1,10 @@
 package de.edgesoft.refereemanager.controller;
-import java.lang.reflect.Field;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
-import de.edgesoft.edgeutils.ClassUtils;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
@@ -25,7 +23,6 @@ import de.edgesoft.refereemanager.model.WishModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
-import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import de.edgesoft.refereemanager.utils.SpinnerUtils;
 import javafx.fxml.FXML;
@@ -578,9 +575,6 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 	protected CheckBox chkPassed;
 
 
-
-
-
 	/**
 	 * Initializes the controller class.
 	 *
@@ -590,9 +584,8 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 	@Override
 	protected void initialize() {
 
-		super.initialize();
-
 		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class})));
+		super.initialize();
 
 		// set date picker date format
 		pckBirthday.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
@@ -629,23 +622,6 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
         spnPointsWrittenB.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
         spnPointsPractical.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
         spnPointsOral.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-
-		// declared fields
-        setDeclaredFields(ClassUtils.getDeclaredFieldsFirstAbstraction(getClass()));
-
-		// required fields
-        for (Field theFXMLField : getDeclaredFields()) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, getClasses());
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
 
 		// enable ok button for valid entries only
 		btnOK.disableProperty().bind(
@@ -994,7 +970,7 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 		// Set the referee
 		AbstractContactEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(editDialogStage);
-		editController.setContact(theContact);
+		editController.setData(theContact);
 
 		// Show the dialog and wait until the user closes it
 		editDialogStage.showAndWait();
@@ -1148,7 +1124,7 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 		// Set the referee
 		WishEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(editDialogStage);
-		editController.setWish(theWish);
+		editController.setData(theWish);
 
 		// Show the dialog and wait until the user closes it
 		editDialogStage.showAndWait();
@@ -1288,7 +1264,7 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 		// Set the referee
 		TrainingLevelEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(editDialogStage);
-		editController.setTrainingLevel(theTrainingLevel);
+		editController.setData(theTrainingLevel);
 
 		// Show the dialog and wait until the user closes it
 		editDialogStage.showAndWait();

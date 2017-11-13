@@ -2,8 +2,8 @@ package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
+import de.edgesoft.edgeutils.ClassUtils;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -87,8 +87,24 @@ public abstract class AbstractEditDialogController<T extends ModelClassExt> impl
 	 */
 	@FXML
 	protected void initialize() {
+
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
 		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
+
+		// required fields
+        for (Field theFXMLField : getDeclaredFields()) {
+
+        	try {
+        		Object fieldObject = theFXMLField.get(this);
+
+        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, getClasses());
+
+        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
+				e.printStackTrace();
+			}
+
+        }
+
 	}
 
 
@@ -100,7 +116,7 @@ public abstract class AbstractEditDialogController<T extends ModelClassExt> impl
 	@Override
 	public void setData(T theData) {
 
-		Objects.requireNonNull(theData);
+		assert (theData != null) : "data must not be null";
 
         currentData = theData;
 
@@ -206,25 +222,15 @@ public abstract class AbstractEditDialogController<T extends ModelClassExt> impl
     }
 
 	/**
-	 * Sets declared fields.
-	 *
-	 * @param theDeclaredFields list of declared fields
-	 */
-	@Override
-	public void setDeclaredFields(final List<Field> theDeclaredFields) {
-        lstDeclaredFields = theDeclaredFields;
-    }
-
-	/**
 	 * Returns declared fields.
 	 *
-	 * @return list of declared fields (empty list if none are declared)
+	 * @return list of declared fields
 	 */
 	@Override
 	public List<Field> getDeclaredFields() {
 
 		if (lstDeclaredFields == null) {
-			return Collections.EMPTY_LIST;
+			lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
 		}
 
 		return lstDeclaredFields;

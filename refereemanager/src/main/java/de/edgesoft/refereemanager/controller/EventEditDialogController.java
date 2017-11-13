@@ -1,9 +1,7 @@
 package de.edgesoft.refereemanager.controller;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import de.edgesoft.edgeutils.ClassUtils;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.EventDate;
@@ -14,7 +12,6 @@ import de.edgesoft.refereemanager.jaxb.Tournament;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
-import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import de.edgesoft.refereemanager.utils.SpinnerUtils;
 import javafx.fxml.FXML;
@@ -243,9 +240,8 @@ public class EventEditDialogController extends AbstractEditDialogController<Even
 	@Override
 	protected void initialize() {
 
-		super.initialize();
-
 		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, EventDate.class, OtherEvent.class, LeagueGame.class, Tournament.class})));
+		super.initialize();
 
 		// init date/time picker
 		pckStart = new LocalDateTimeTextField();
@@ -266,23 +262,6 @@ public class EventEditDialogController extends AbstractEditDialogController<Even
         // setup spinners
         SpinnerUtils.prepareIntegerSpinner(spnGameNumber, 0, 200);
         spnGameNumber.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-
-		// declared fields
-        setDeclaredFields(ClassUtils.getDeclaredFieldsFirstAbstraction(getClass()));
-
-		// required fields
-        for (Field theFXMLField : getDeclaredFields()) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, getClasses());
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
 
 		// enable buttons
 		btnVenueClear.disableProperty().bind(
@@ -343,8 +322,7 @@ public class EventEditDialogController extends AbstractEditDialogController<Even
 	 */
 	@FXML
 	private void handleVenueClear() {
-		cboVenue.getSelectionModel().clearSelection();
-		cboVenue.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboVenue);
 	}
 
 	/**
@@ -352,8 +330,7 @@ public class EventEditDialogController extends AbstractEditDialogController<Even
 	 */
 	@FXML
 	private void handleLeagueClear() {
-		cboLeague.getSelectionModel().clearSelection();
-		cboLeague.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboLeague);
 	}
 
 	/**
@@ -361,8 +338,7 @@ public class EventEditDialogController extends AbstractEditDialogController<Even
 	 */
 	@FXML
 	private void handleHomeTeamClear() {
-		cboHomeTeam.getSelectionModel().clearSelection();
-		cboHomeTeam.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboHomeTeam);
 	}
 
 	/**
@@ -370,8 +346,7 @@ public class EventEditDialogController extends AbstractEditDialogController<Even
 	 */
 	@FXML
 	private void handleOffTeamClear() {
-		cboOffTeam.getSelectionModel().clearSelection();
-		cboOffTeam.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboOffTeam);
 	}
 
 	/**
@@ -379,8 +354,7 @@ public class EventEditDialogController extends AbstractEditDialogController<Even
 	 */
 	@FXML
 	private void handleOrganizingClubClear() {
-		cboOrganizingClub.getSelectionModel().clearSelection();
-		cboOrganizingClub.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboOrganizingClub);
 	}
 
 	/**
@@ -388,8 +362,7 @@ public class EventEditDialogController extends AbstractEditDialogController<Even
 	 */
 	@FXML
 	private void handleOrganizerClear() {
-		cboOrganizer.getSelectionModel().clearSelection();
-		cboOrganizer.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboOrganizer);
 	}
 
 }

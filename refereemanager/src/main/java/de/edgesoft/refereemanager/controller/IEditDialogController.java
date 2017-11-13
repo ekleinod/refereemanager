@@ -87,16 +87,9 @@ public interface IEditDialogController<T extends ModelClassExt> {
     public void handleCancel();
 
 	/**
-	 * Sets declared fields.
-	 *
-	 * @param theDeclaredFields declared fields
-	 */
-	public void setDeclaredFields(final List<Field> theDeclaredFields);
-
-	/**
 	 * Returns declared fields.
 	 *
-	 * @return declared fields (empty list if none are declared)
+	 * @return declared fields
 	 */
 	public List<Field> getDeclaredFields();
 

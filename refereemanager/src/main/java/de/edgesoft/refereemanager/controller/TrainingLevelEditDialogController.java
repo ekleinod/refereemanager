@@ -1,21 +1,18 @@
 package de.edgesoft.refereemanager.controller;
-import java.lang.reflect.Field;
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
-import de.edgesoft.edgeutils.ClassUtils;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 import de.edgesoft.refereemanager.model.AppModel;
-import de.edgesoft.refereemanager.model.TrainingLevelModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
-import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
@@ -59,13 +56,7 @@ import javafx.stage.Stage;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class TrainingLevelEditDialogController {
-
-	/**
-	 * Classes for introspection when setting/getting values.
-	 */
-	private Class<?>[] theClasses = new Class<?>[]{TrainingLevel.class};
-
+public class TrainingLevelEditDialogController extends AbstractEditDialogController<TrainingLevel> {
 
 	/**
 	 * Since picker.
@@ -122,49 +113,16 @@ public class TrainingLevelEditDialogController {
 
 
 	/**
-	 * OK button.
-	 */
-	@FXML
-	private Button btnOK;
-
-	/**
-	 * Cancel button.
-	 */
-	@FXML
-	private Button btnCancel;
-
-
-
-	/**
-	 * Reference to dialog stage.
-	 */
-	private Stage dialogStage;
-
-	/**
-	 * Current training level.
-	 */
-	private TrainingLevelModel currentTrainingLevel;
-
-	/**
-	 * OK clicked?.
-	 */
-	private boolean okClicked;
-
-	/**
-	 * Fields of class and abstract subclasses.
-	 *
-	 * @since 0.14.0
-	 */
-	private List<Field> lstDeclaredFields = null;
-
-
-	/**
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
-	private void initialize() {
+	@Override
+	protected void initialize() {
+
+		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{TrainingLevel.class})));
+		super.initialize();
 
 		// set date picker date format
 		pckSince.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
@@ -174,23 +132,6 @@ public class TrainingLevelEditDialogController {
 
         // setup list views
         lstUpdate.setCellFactory(ComboBoxUtils.getCallbackLocalDateProperty());
-
-		// declared fields
-        lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
-
-		// required fields
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
 
 		// enable ok button for valid entries only
 		btnOK.disableProperty().bind(
@@ -209,9 +150,6 @@ public class TrainingLevelEditDialogController {
 		);
 
 		// icons
-		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
-		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
-
 		btnUpdateAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnUpdateEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnUpdateDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
@@ -221,81 +159,15 @@ public class TrainingLevelEditDialogController {
 	}
 
 	/**
-	 * Sets dialog stage.
+	 * Sets data to be edited.
 	 *
-	 * @param theStage dialog stage
+	 * @param theData data
 	 */
-	public void setDialogStage(final Stage theStage) {
-        dialogStage = theStage;
-    }
+	@Override
+	public void setData(TrainingLevel theData) {
 
-	/**
-	 * Sets training level to be edited.
-	 *
-	 * @param theTrainingLevel training level
-	 */
-	public void setTrainingLevel(TrainingLevelModel theTrainingLevel) {
+		super.setData(theData);
 
-		Objects.requireNonNull(theTrainingLevel);
-
-        currentTrainingLevel = theTrainingLevel;
-
-        // fill fields
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.setField(theFXMLField, fieldObject, theTrainingLevel, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
-
-    }
-
-	/**
-	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
-	 */
-	@FXML
-    private void handleOk() {
-
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentTrainingLevel, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
-
-        okClicked = true;
-        dialogStage.close();
-
-    }
-
-	/**
-	 * Returns if user clicked ok.
-	 *
-	 * @return did user click ok?
-	 */
-	public boolean isOkClicked() {
-		return okClicked;
-	}
-
-	/**
-	 * Stores non-ok click and closes dialog.
-	 */
-	@FXML
-    private void handleCancel() {
-		okClicked = false;
-        dialogStage.close();
     }
 
 
@@ -339,7 +211,7 @@ public class TrainingLevelEditDialogController {
 
 		if (!lstUpdate.getSelectionModel().isEmpty()) {
 
-			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, getDialogStage(),
 					"Löschbestätigung",
 					MessageFormat.format("Soll ''{0}'' gelöscht werden?", DateTimeUtils.formatDate(lstUpdate.getSelectionModel().getSelectedItem().getValue())),
 					null);
@@ -373,7 +245,7 @@ public class TrainingLevelEditDialogController {
 		// Create the dialog Stage.
 		Stage editDialogStage = new Stage();
 		editDialogStage.initModality(Modality.WINDOW_MODAL);
-		editDialogStage.initOwner(dialogStage);
+		editDialogStage.initOwner(getDialogStage());
 		editDialogStage.setTitle("Fortbildung");
 
 		editDialogStage.setScene(new Scene(pneLoad.getKey()));
