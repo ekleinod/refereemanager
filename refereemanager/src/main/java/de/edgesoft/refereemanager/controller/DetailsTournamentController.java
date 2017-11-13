@@ -3,7 +3,7 @@ package de.edgesoft.refereemanager.controller;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
-import de.edgesoft.refereemanager.model.LeagueGameModel;
+import de.edgesoft.refereemanager.model.TournamentModel;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -12,10 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.FontWeight;
 
 /**
- * Controller for the league game details scene.
+ * Controller for the tournament details scene.
  *
  * ## Legal stuff
  *
@@ -40,19 +41,13 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsLeagueGameController implements IDetailsController {
+public class DetailsTournamentController implements IDetailsController {
 
 	/**
 	 * Heading.
 	 */
 	@FXML
 	private Label lblHeading;
-
-	/**
-	 * Number label.
-	 */
-	@FXML
-	private Label lblNumber;
 
 	/**
 	 * Date label.
@@ -67,16 +62,16 @@ public class DetailsLeagueGameController implements IDetailsController {
 	private Label lblTime;
 
 	/**
-	 * Teams label.
+	 * Club label.
 	 */
 	@FXML
-	private Label lblTeams;
+	private Label lblClub;
 
 	/**
-	 * League label.
+	 * Organizer label.
 	 */
 	@FXML
-	private Label lblLeague;
+	private Label lblOrganizer;
 
 	/**
 	 * Venue label.
@@ -85,16 +80,16 @@ public class DetailsLeagueGameController implements IDetailsController {
 	private Label lblVenue;
 
 	/**
+	 * Referee report box.
+	 */
+	@FXML
+	private HBox boxRefereeReport;
+
+	/**
 	 * Referee report label.
 	 */
 	@FXML
 	private Label lblRefereeReport;
-
-	/**
-	 * Referee report label label.
-	 */
-	@FXML
-	private Label lblRefereeReportLabel;
 
 	/**
 	 * Referee report indicator label.
@@ -109,10 +104,11 @@ public class DetailsLeagueGameController implements IDetailsController {
 	private Button btnRefereeReportCopy;
 
 	/**
-	 * Type label.
+	 * Type.
 	 */
 	@FXML
 	private Label lblType;
+
 
 	/**
 	 * Initializes the controller class.
@@ -138,7 +134,7 @@ public class DetailsLeagueGameController implements IDetailsController {
 	@Override
 	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
 
-		Class<LeagueGameModel> theClass = LeagueGameModel.class;
+		Class<TournamentModel> theClass = TournamentModel.class;
 
 		assert
 				((theDetailData == null) || theClass.isInstance(theDetailData))
@@ -146,11 +142,12 @@ public class DetailsLeagueGameController implements IDetailsController {
 
 		if (theDetailData == null) {
 
-			LabelUtils.setText(lblNumber, null);
+			lblHeading.setText("Details");
+
 			LabelUtils.setText(lblDate, null);
 			LabelUtils.setText(lblTime, null);
-			LabelUtils.setText(lblTeams, null);
-			LabelUtils.setText(lblLeague, null);
+			LabelUtils.setText(lblClub, null);
+			LabelUtils.setText(lblOrganizer, null);
 			LabelUtils.setText(lblVenue, null);
 			LabelUtils.setText(lblRefereeReport, null);
 
@@ -161,22 +158,26 @@ public class DetailsLeagueGameController implements IDetailsController {
 
 		} else {
 
-			LeagueGameModel theData = theClass.cast(theDetailData);
+			TournamentModel theData = theClass.cast(theDetailData);
 
-			LabelUtils.setText(lblNumber, theData.getGameNumberString());
 			LabelUtils.setText(lblDate, theData.getDateText());
 			LabelUtils.setText(lblTime, theData.getTimeText());
-			LabelUtils.setText(lblTeams, theData.getTeamText());
 
-			lblLeague.setText(
-					(theData.getHomeTeam() == null) ?
-							null :
-							theData.getHomeTeam().getLeague().getDisplayTitle().getValueSafe());
 
 			lblVenue.setText(
 					(theData.getVenue() == null) ?
 							null :
 								theData.getVenue().getDisplayTitle().getValueSafe());
+
+			lblClub.setText(
+					(theData.getOrganizingClub() == null) ?
+							null :
+							theData.getOrganizingClub().getDisplayTitleShort().getValueSafe());
+
+			lblOrganizer.setText(
+					(theData.getOrganizer() == null) ?
+							null :
+							theData.getOrganizer().getDisplayText().getValueSafe());
 
 			LabelUtils.setText(lblRefereeReport, theData.getRefereeReportFilename());
 
