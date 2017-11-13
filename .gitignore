@@ -1,10 +1,4 @@
 *.bak
 *~
 empty
-/cakephp/app/Console/
-/cakephp/app/tmp/
-/cakephp/lib/
-/cakephp/plugins/
-/cakephp/vendors/
-/java-backend/refereemanager/target/
-
+/documentation/developer/developer.tex

@@ -9,8 +9,8 @@ import java.util.Properties;
 
 import de.edgesoft.refereemanager.RefereeManager;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 
 /**
  * Resources helper.
@@ -58,18 +58,18 @@ public class Resources {
 	}
 
 	/**
-	 * Loads fxml pane from resources.
+	 * Loads fxml parent from resources.
 	 *
-	 * @param thePaneName pane name
-	 * @return loaded pane
+	 * @param theParentName parent file name
+	 * @return loaded parent
 	 */
-	public static Map.Entry<Pane, FXMLLoader> loadPane(final String thePaneName) {
+	public static Map.Entry<Parent, FXMLLoader> loadNode(final String theParentName) {
 
 		try {
 
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(RefereeManager.class.getResource(String.format("view/%s.fxml", thePaneName)));
-			return new AbstractMap.SimpleImmutableEntry<>((Pane) loader.load(), loader);
+			loader.setLocation(RefereeManager.class.getResource(String.format("view/%s.fxml", theParentName)));
+			return new AbstractMap.SimpleImmutableEntry<>((Parent) loader.load(), loader);
 
 		} catch (IOException e) {
 			RefereeManager.logger.catching(e);

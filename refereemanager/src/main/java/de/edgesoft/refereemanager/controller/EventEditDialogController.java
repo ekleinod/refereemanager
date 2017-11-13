@@ -1,9 +1,7 @@
 package de.edgesoft.refereemanager.controller;
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-import de.edgesoft.edgeutils.ClassUtils;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.EventDate;
@@ -12,10 +10,8 @@ import de.edgesoft.refereemanager.jaxb.OtherEvent;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.jaxb.Tournament;
 import de.edgesoft.refereemanager.model.AppModel;
-import de.edgesoft.refereemanager.model.EventDateModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
-import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import de.edgesoft.refereemanager.utils.SpinnerUtils;
 import javafx.fxml.FXML;
@@ -27,7 +23,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import jfxtras.scene.control.LocalDateTimeTextField;
 
 /**
@@ -56,13 +51,7 @@ import jfxtras.scene.control.LocalDateTimeTextField;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class EventEditDialogController {
-
-	/**
-	 * Classes for introspection when setting/getting values.
-	 */
-	private Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, EventDate.class, OtherEvent.class, LeagueGame.class, Tournament.class};
-
+public class EventEditDialogController extends AbstractEditDialogController<EventDate> {
 
 	// event date data
 
@@ -247,51 +236,12 @@ public class EventEditDialogController {
 	private Button btnOrganizerClear;
 
 
-
-	/**
-	 * OK button.
-	 */
 	@FXML
-	private Button btnOK;
+	@Override
+	protected void initialize() {
 
-	/**
-	 * Cancel button.
-	 */
-	@FXML
-	private Button btnCancel;
-
-
-
-	/**
-	 * Reference to dialog stage.
-	 */
-	private Stage dialogStage;
-
-	/**
-	 * Current event.
-	 */
-	private EventDateModel currentEvent;
-
-	/**
-	 * OK clicked?.
-	 */
-	private boolean okClicked;
-
-	/**
-	 * Fields of class and abstract subclasses.
-	 *
-	 * @since 0.14.0
-	 */
-	private List<Field> lstDeclaredFields = null;
-
-
-	/**
-	 * Initializes the controller class.
-	 *
-	 * This method is automatically called after the fxml file has been loaded.
-	 */
-	@FXML
-	private void initialize() {
+		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, EventDate.class, OtherEvent.class, LeagueGame.class, Tournament.class})));
+		super.initialize();
 
 		// init date/time picker
 		pckStart = new LocalDateTimeTextField();
@@ -312,27 +262,6 @@ public class EventEditDialogController {
         // setup spinners
         SpinnerUtils.prepareIntegerSpinner(spnGameNumber, 0, 200);
         spnGameNumber.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-
-		// declared fields
-        lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
-
-		// required fields
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
-
-		// enable ok button for valid entries only
-//		btnOK.disableProperty().bind(
-//		);
 
 		// enable buttons
 		btnVenueClear.disableProperty().bind(
@@ -369,99 +298,31 @@ public class EventEditDialogController {
 	}
 
 	/**
-	 * Sets dialog stage.
+	 * Sets data to be edited.
 	 *
-	 * @param theStage dialog stage
+	 * @param theData data
 	 */
-	public void setDialogStage(final Stage theStage) {
-        dialogStage = theStage;
-    }
+	@Override
+	public void setData(EventDate theData) {
 
-	/**
-	 * Sets event to be edited.
-	 *
-	 * @param theEvent event
-	 */
-	public void setEvent(EventDateModel theEvent) {
+		super.setData(theData);
 
-		Objects.requireNonNull(theEvent);
-
-        currentEvent = theEvent;
-
-        if (currentEvent instanceof LeagueGame) {
+        if (getData() instanceof LeagueGame) {
     		tabLeagueGame.setDisable(false);
         }
 
-        if (currentEvent instanceof Tournament) {
+        if (getData() instanceof Tournament) {
     		tabTournament.setDisable(false);
         }
 
-        // fill fields
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.setField(theFXMLField, fieldObject, theEvent, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
-
     }
-
-	/**
-	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
-	 */
-	@FXML
-    private void handleOk() {
-
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentEvent, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
-
-        okClicked = true;
-        dialogStage.close();
-
-    }
-
-	/**
-	 * Returns if user clicked ok.
-	 *
-	 * @return did user click ok?
-	 */
-	public boolean isOkClicked() {
-		return okClicked;
-	}
-
-	/**
-	 * Stores non-ok click and closes dialog.
-	 */
-	@FXML
-    private void handleCancel() {
-		okClicked = false;
-        dialogStage.close();
-    }
-
 
 	/**
 	 * Clears venue selection.
 	 */
 	@FXML
 	private void handleVenueClear() {
-		cboVenue.getSelectionModel().clearSelection();
-		cboVenue.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboVenue);
 	}
 
 	/**
@@ -469,8 +330,7 @@ public class EventEditDialogController {
 	 */
 	@FXML
 	private void handleLeagueClear() {
-		cboLeague.getSelectionModel().clearSelection();
-		cboLeague.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboLeague);
 	}
 
 	/**
@@ -478,8 +338,7 @@ public class EventEditDialogController {
 	 */
 	@FXML
 	private void handleHomeTeamClear() {
-		cboHomeTeam.getSelectionModel().clearSelection();
-		cboHomeTeam.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboHomeTeam);
 	}
 
 	/**
@@ -487,8 +346,7 @@ public class EventEditDialogController {
 	 */
 	@FXML
 	private void handleOffTeamClear() {
-		cboOffTeam.getSelectionModel().clearSelection();
-		cboOffTeam.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboOffTeam);
 	}
 
 	/**
@@ -496,8 +354,7 @@ public class EventEditDialogController {
 	 */
 	@FXML
 	private void handleOrganizingClubClear() {
-		cboOrganizingClub.getSelectionModel().clearSelection();
-		cboOrganizingClub.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboOrganizingClub);
 	}
 
 	/**
@@ -505,8 +362,7 @@ public class EventEditDialogController {
 	 */
 	@FXML
 	private void handleOrganizerClear() {
-		cboOrganizer.getSelectionModel().clearSelection();
-		cboOrganizer.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboOrganizer);
 	}
 
 }

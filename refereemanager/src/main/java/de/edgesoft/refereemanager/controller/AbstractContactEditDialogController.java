@@ -1,9 +1,8 @@
 package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-import de.edgesoft.edgeutils.ClassUtils;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.Address;
@@ -13,7 +12,6 @@ import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.model.AppModel;
-import de.edgesoft.refereemanager.model.ContactModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
@@ -25,7 +23,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 /**
  * Abstract controller for all contact edit dialog scenes.
@@ -53,12 +50,7 @@ import javafx.stage.Stage;
  * @version 0.14.0
  * @since 0.14.0
  */
-public abstract class AbstractContactEditDialogController {
-
-	/**
-	 * Classes for introspection when setting/getting values.
-	 */
-	private final Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, Contact.class, Address.class, EMail.class, PhoneNumber.class, URL.class};
+public abstract class AbstractContactEditDialogController extends AbstractEditDialogController<Contact> {
 
 	/**
 	 * ID text field.
@@ -105,60 +97,27 @@ public abstract class AbstractContactEditDialogController {
 
 
 	/**
-	 * OK button.
-	 */
-	@FXML
-	protected Button btnOK;
-
-	/**
-	 * Cancel button.
-	 */
-	@FXML
-	protected Button btnCancel;
-
-	/**
-	 * Reference to dialog stage.
-	 */
-	protected Stage dialogStage;
-
-	/**
-	 * Current contact.
-	 */
-	protected ContactModel currentContact;
-
-	/**
-	 * OK clicked?.
-	 */
-	protected boolean okClicked;
-
-
-	/**
-	 * Fields of class and abstract subclasses.
-	 */
-	private List<Field> lstDeclaredFields = null;
-
-
-	/**
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
+	@Override
 	protected void initialize() {
+
+		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Contact.class, Address.class, EMail.class, PhoneNumber.class, URL.class})));
+		super.initialize();
 
 		// fill sex types
         ComboBoxUtils.prepareComboBox(cboContactType, AppModel.getData().getContent().getContactType());
 
-		// declared fields
-        lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
-
 		// required fields
-        for (Field theFXMLField : lstDeclaredFields) {
+        for (Field theFXMLField : getDeclaredFields()) {
 
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, theClasses);
+        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, getClasses());
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -172,88 +131,20 @@ public abstract class AbstractContactEditDialogController {
 		);
 
 		// icons
-		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
-		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
-
 		btnContactTypeClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 
 	}
 
 	/**
-	 * Sets dialog stage.
+	 * Sets data to be edited.
 	 *
-	 * @param theStage dialog stage
+	 * @param theData data
 	 */
-	public void setDialogStage(final Stage theStage) {
-        dialogStage = theStage;
-    }
+	@Override
+	public void setData(Contact theData) {
 
-	/**
-	 * Sets contact to be edited.
-	 *
-	 * @param theContact contact
-	 */
-	public void setContact(ContactModel theContact) {
+		super.setData(theData);
 
-		Objects.requireNonNull(theContact);
-
-        currentContact = theContact;
-
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.setField(theFXMLField, fieldObject, theContact, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
-
-    }
-
-	/**
-	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
-	 */
-	@FXML
-    private void handleOk() {
-
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentContact, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
-
-        okClicked = true;
-        dialogStage.close();
-
-    }
-
-	/**
-	 * Returns if user clicked ok.
-	 *
-	 * @return did user click ok?
-	 */
-	public boolean isOkClicked() {
-		return okClicked;
-	}
-
-	/**
-	 * Stores non-ok click and closes dialog.
-	 */
-	@FXML
-    private void handleCancel() {
-		okClicked = false;
-        dialogStage.close();
     }
 
 	/**

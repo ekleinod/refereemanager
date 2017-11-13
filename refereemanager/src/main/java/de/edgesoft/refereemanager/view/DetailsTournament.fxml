@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.DetailsTournamentController">
+	<children>
+		<Label fx:id="lblHeading" text="Weitere Daten" />
+		<GridPane vgap="10.0">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+				<ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="200.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+			</rowConstraints>
+			<children>
+				<Label text="Datum" />
+				<Label fx:id="lblDate" text="Label" GridPane.columnIndex="1" />
+				<Label text="Zeit" GridPane.rowIndex="1" />
+				<Label fx:id="lblTime" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Label text="Ort" GridPane.rowIndex="2" />
+				<Label fx:id="lblVenue" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label text="Club" GridPane.rowIndex="3" />
+				<Label fx:id="lblClub" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<Label text="Organisator" GridPane.rowIndex="4" />
+				<Label fx:id="lblOrganizer" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+				<Label text="OSR-Bericht" GridPane.rowIndex="5" />
+				<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+					<children>
+					<Label fx:id="lblRefereeReportIndicator" minWidth="20.0" />
+					<Label fx:id="lblRefereeReport" text="Label" />
+					<Separator prefWidth="200.0" visible="false" HBox.hgrow="ALWAYS" />
+					<Button fx:id="btnRefereeReportCopy" onAction="#handleRefereeReportCopy">
+						<tooltip>
+							<Tooltip text="Dateiname in Zwischenablage kopieren" />
+						</tooltip>
+					</Button>
+					</children>
+				</HBox>
+				<Label text="Typ" GridPane.rowIndex="6" />
+				<Label fx:id="lblType" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+			</children>
+		</GridPane>
+	</children>
+	<padding>
+		<Insets top="20.0" />
+	</padding>
+</VBox>

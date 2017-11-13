@@ -24,6 +24,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -33,10 +34,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -120,7 +118,23 @@ public class AppLayoutController {
 	 * Menu item referee -> overview.
 	 */
 	@FXML
-	private MenuItem mnuRefereeOverview;
+	private MenuItem mnuOverviewReferees;
+
+	/**
+	 * Menu item overview -> people.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private MenuItem mnuOverviewPeople;
+
+	/**
+	 * Menu item trainee -> overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private MenuItem mnuOverviewTrainees;
 
 	/**
 	 * Menu item referee -> communication.
@@ -129,12 +143,28 @@ public class AppLayoutController {
 	private MenuItem mnuRefereeCommunication;
 
 	/**
-	 * Menu item event overview.
+	 * Menu league game overview.
 	 *
 	 * @since 0.15.0
 	 */
 	@FXML
-	private MenuItem mnuEventOverview;
+	private MenuItem mnuOverviewLeagueGames;
+
+	/**
+	 * Menu item tournament overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private MenuItem mnuOverviewTournaments;
+
+	/**
+	 * Menu item other event overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private MenuItem mnuOverviewOtherEvents;
 
 	/**
 	 * Menu item club overview.
@@ -142,7 +172,7 @@ public class AppLayoutController {
 	 * @since 0.15.0
 	 */
 	@FXML
-	private MenuItem mnuClubOverview;
+	private MenuItem mnuOverviewClubs;
 
 	/**
 	 * Menu item statistics -> data.
@@ -184,7 +214,23 @@ public class AppLayoutController {
 	 * Button referee -> overview.
 	 */
 	@FXML
-	private Button btnRefereeOverview;
+	private Button btnOverviewReferees;
+
+	/**
+	 * Button overview -> people.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnOverviewPeople;
+
+	/**
+	 * Button overview -> trainees.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnOverviewTrainees;
 
 	/**
 	 * Button referee -> communication.
@@ -193,12 +239,28 @@ public class AppLayoutController {
 	private Button btnRefereeCommunication;
 
 	/**
-	 * Button event overview.
+	 * Button league games overview.
 	 *
 	 * @since 0.15.0
 	 */
 	@FXML
-	private Button btnEventOverview;
+	private Button btnOverviewLeagueGames;
+
+	/**
+	 * Button tournament overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnOverviewTournaments;
+
+	/**
+	 * Button other event overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnOverviewOtherEvents;
 
 	/**
 	 * Button club overview.
@@ -206,7 +268,7 @@ public class AppLayoutController {
 	 * @since 0.15.0
 	 */
 	@FXML
-	private Button btnClubOverview;
+	private Button btnOverviewClubs;
 
 	/**
 	 * Button statistics -> data.
@@ -260,16 +322,24 @@ public class AppLayoutController {
 		ButtonUtils.adaptButton(btnFileSave, mnuFileSave);
 		mnuFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-save-as.png")));
 
-		mnuRefereeOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
-		ButtonUtils.adaptButton(btnRefereeOverview, mnuRefereeOverview);
+		mnuOverviewReferees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
+		ButtonUtils.adaptButton(btnOverviewReferees, mnuOverviewReferees);
+		mnuOverviewPeople.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
+		ButtonUtils.adaptButton(btnOverviewPeople, mnuOverviewPeople);
+		mnuOverviewTrainees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
+		ButtonUtils.adaptButton(btnOverviewTrainees, mnuOverviewTrainees);
 		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
 		ButtonUtils.adaptButton(btnRefereeCommunication, mnuRefereeCommunication);
 
-		mnuEventOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
-		ButtonUtils.adaptButton(btnEventOverview, mnuEventOverview);
+		mnuOverviewLeagueGames.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		ButtonUtils.adaptButton(btnOverviewLeagueGames, mnuOverviewLeagueGames);
+		mnuOverviewTournaments.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		ButtonUtils.adaptButton(btnOverviewTournaments, mnuOverviewTournaments);
+		mnuOverviewOtherEvents.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		ButtonUtils.adaptButton(btnOverviewOtherEvents, mnuOverviewOtherEvents);
 
-		mnuClubOverview.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
-		ButtonUtils.adaptButton(btnClubOverview, mnuClubOverview);
+		mnuOverviewClubs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		ButtonUtils.adaptButton(btnOverviewClubs, mnuOverviewClubs);
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
 		ButtonUtils.adaptButton(btnStatisticsData, mnuStatisticsData);
@@ -292,8 +362,7 @@ public class AppLayoutController {
 		primaryStage.getIcons().add(ICON);
 
 		// Show the scene containing the root layout.
-		Scene scene = new Scene(appPane);
-		primaryStage.setScene(scene);
+		primaryStage.setScene(new Scene(appPane));
 		primaryStage.show();
 
 		// resize to last dimensions
@@ -446,8 +515,7 @@ public class AppLayoutController {
 	@FXML
 	private void handleProgramPreferences() {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PreferencesDialog");
-		AnchorPane preferencesDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("PreferencesDialog");
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
@@ -455,8 +523,7 @@ public class AppLayoutController {
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initOwner(primaryStage);
 
-		Scene scene = new Scene(preferencesDialog);
-		dialogStage.setScene(scene);
+		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// initialize controller
 		PreferencesDialogController controller = pneLoad.getValue().getController();
@@ -570,9 +637,8 @@ public class AppLayoutController {
 				null
 				);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AboutText");
-		VBox aboutText = (VBox) pneLoad.getKey();
-		alert.getDialogPane().contentProperty().set(aboutText);
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AboutText");
+		alert.getDialogPane().contentProperty().set(pneLoad.getKey());
 
 		alert.setGraphic(new ImageView(Resources.loadImage("images/icon-64.png")));
 		alert.showAndWait();
@@ -583,17 +649,44 @@ public class AppLayoutController {
 	 * Menu referee -> overview.
 	 */
 	@FXML
-	private void handleRefereeOverview() {
+	private void handleOverviewReferees() {
+		handleOverview(new OverviewRefereesController());
+	}
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeOverview");
-		AnchorPane refOverview = (AnchorPane) pneLoad.getKey();
+	/**
+	 * Menu overview -> people.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleOverviewPeople() {
+		handleOverview(new OverviewPeopleController());
+	}
 
-		// Set event overview into the center of root layout.
-		appPane.setCenter(refOverview);
+	/**
+	 * Menu overview -> trainees.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleOverviewTrainees() {
+		handleOverview(new OverviewTraineesController());
+	}
 
-		// Give the controller access to the app.
-		RefereeOverviewController ctlRefOverview = pneLoad.getValue().getController();
-		ctlRefOverview.initController(this);
+	/**
+	 * Load overview view.
+	 *
+	 * @param theOverviewController overview controller
+	 *
+	 * @since 0.15.0
+	 */
+	private void handleOverview(final IOverviewController theOverviewController) {
+
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AbstractOverview");
+
+		appPane.setCenter(pneLoad.getKey());
+
+		theOverviewController.initController(pneLoad.getValue().getController());
 
 	}
 
@@ -603,7 +696,7 @@ public class AppLayoutController {
 	@FXML
 	private void handleRefereeCommunication() {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeCommunication");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("RefereeCommunication");
 		BorderPane pneCommunication = (BorderPane) pneLoad.getKey();
 
 		// Set event overview into the center of root layout.
@@ -616,43 +709,43 @@ public class AppLayoutController {
 	}
 
 	/**
-	 * Menu event overview.
+	 * Menu overview -> league games.
 	 *
 	 * @since 0.15.0
 	 */
 	@FXML
-	private void handleEventOverview() {
-
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("EventOverview");
-		AnchorPane refOverview = (AnchorPane) pneLoad.getKey();
-
-		// Set event overview into the center of root layout.
-		appPane.setCenter(refOverview);
-
-		// Give the controller access to the app.
-		EventOverviewController ctlOverview = pneLoad.getValue().getController();
-		ctlOverview.initController(this);
-
+	private void handleOverviewLeagueGames() {
+		handleOverview(new OverviewLeagueGamesController());
 	}
 
 	/**
-	 * Menu club overview.
+	 * Menu overview -> tournaments.
 	 *
 	 * @since 0.15.0
 	 */
 	@FXML
-	private void handleClubOverview() {
+	private void handleOverviewTournaments() {
+		handleOverview(new OverviewTournamentsController());
+	}
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ClubOverview");
-		AnchorPane refOverview = (AnchorPane) pneLoad.getKey();
+	/**
+	 * Menu overview -> other events.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleOverviewOtherEvents() {
+		handleOverview(new OverviewOtherEventsController());
+	}
 
-		// Set event overview into the center of root layout.
-		appPane.setCenter(refOverview);
-
-		// Give the controller access to the app.
-		ClubOverviewController ctlOverview = pneLoad.getValue().getController();
-		ctlOverview.initController(this);
-
+	/**
+	 * Menu overview -> people.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleOverviewClubs() {
+		handleOverview(new OverviewClubsController());
 	}
 
 	/**
@@ -663,8 +756,7 @@ public class AppLayoutController {
 	@FXML
 	private void handleStatisticsData() {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("Statistics");
-		AnchorPane statistics = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("Statistics");
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
@@ -672,8 +764,7 @@ public class AppLayoutController {
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initOwner(primaryStage);
 
-		Scene scene = new Scene(statistics);
-		dialogStage.setScene(scene);
+		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the events into the controller.
 		StatisticsController controller = pneLoad.getValue().getController();

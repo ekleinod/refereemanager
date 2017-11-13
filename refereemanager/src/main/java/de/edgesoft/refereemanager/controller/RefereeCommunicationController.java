@@ -66,6 +66,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -86,8 +87,6 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -482,7 +481,7 @@ public class RefereeCommunicationController {
 	/**
 	 * Referee list controller.
 	 */
-	private RefereeListController ctlRefList;
+	private ListRefereesController ctlRefList;
 
 
 	/**
@@ -494,11 +493,10 @@ public class RefereeCommunicationController {
 	private void initialize() {
 
 		// list
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("RefereeList");
-		AnchorPane refList = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ListReferees");
 
 		// add referee list to split pane
-		pneSplit.getItems().add(refList);
+		pneSplit.getItems().add(pneLoad.getKey());
 
 		// store referee table controller
 		ctlRefList = pneLoad.getValue().getController();
@@ -539,7 +537,7 @@ public class RefereeCommunicationController {
 
 		// enabling buttons
 		btnSend.disableProperty().bind(
-				ctlRefList.getRefereesSelectionModel().selectedItemProperty().isNull()
+				ctlRefList.selectedItemProperty().isNull()
 				.or(txtBody.textProperty().isEmpty())
 				.or(
 						radEMails.selectedProperty().or(radLetters.selectedProperty())
@@ -664,7 +662,7 @@ public class RefereeCommunicationController {
 
 		appController = theAppController;
 
-		ctlRefList.setItems();
+		ctlRefList.setDataTableItems();
 
 	}
 
@@ -784,8 +782,7 @@ public class RefereeCommunicationController {
 	@FXML
 	private void handlePrefs() {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("PreferencesDialog");
-		AnchorPane preferencesDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("PreferencesDialog");
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
@@ -793,8 +790,7 @@ public class RefereeCommunicationController {
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initOwner(appController.getPrimaryStage());
 
-		Scene scene = new Scene(preferencesDialog);
-		dialogStage.setScene(scene);
+		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// initialize controller
 		PreferencesDialogController controller = pneLoad.getValue().getController();
@@ -1034,8 +1030,7 @@ public class RefereeCommunicationController {
 	 */
 	private boolean showAttachmentEditDialog(Attachment theAttachment) {
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AttachmentEditDialog");
-		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AttachmentEditDialog");
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
@@ -1043,8 +1038,7 @@ public class RefereeCommunicationController {
 		dialogStage.initOwner(appController.getPrimaryStage());
 		dialogStage.setTitle("Dateianhang editieren");
 
-		Scene scene = new Scene(editDialog);
-		dialogStage.setScene(scene);
+		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the attachment
 		AttachmentEditDialogController editController = pneLoad.getValue().getController();
@@ -1119,7 +1113,7 @@ public class RefereeCommunicationController {
 						});
 
 						// send email for every person individually (see remark in method doc)
-						FilteredList<PersonModel> lstPeople = new FilteredList<>(ctlRefList.getAllTabSelection(), PersonModel.HAS_EMAIL);
+						FilteredList<? extends PersonModel> lstPeople = new FilteredList<>(ctlRefList.getSortedSelectedItems(), PersonModel.HAS_EMAIL);
 						int iCount = lstPeople.size();
 						for (PersonModel person : lstPeople) {
 
@@ -1232,7 +1226,7 @@ public class RefereeCommunicationController {
 			};
 
             // progress dialog
-			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
+			Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ProgressDialog");
 
 			Stage dialogStage = new Stage(StageStyle.UTILITY);
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
@@ -1329,7 +1323,7 @@ public class RefereeCommunicationController {
 
 
 						// create docs
-						List<PersonModel> lstPeople = ctlRefList.getAllTabSelection();
+						List<? extends PersonModel> lstPeople = ctlRefList.getSortedSelectedItems();
 						int iCount = lstPeople.size();
 
 						Map<String, List<String>> mapFilenames = new HashMap<>();
@@ -1410,7 +1404,7 @@ public class RefereeCommunicationController {
 			};
 
             // progress dialog
-			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
+			Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ProgressDialog");
 
 			Stage dialogStage = new Stage(StageStyle.UTILITY);
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
@@ -1493,7 +1487,7 @@ public class RefereeCommunicationController {
 
 
 						// create texts
-						List<PersonModel> lstPeople = ctlRefList.getAllTabSelection();
+						List<? extends PersonModel> lstPeople = ctlRefList.getSortedSelectedItems();
 						int iCount = lstPeople.size();
 
 						for (PersonModel person : lstPeople) {
@@ -1541,7 +1535,7 @@ public class RefereeCommunicationController {
 			};
 
             // progress dialog
-			Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("ProgressDialog");
+			Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ProgressDialog");
 
 			Stage dialogStage = new Stage(StageStyle.UTILITY);
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
@@ -1669,7 +1663,7 @@ public class RefereeCommunicationController {
 		mapData.put("today", LocalDateTime.now());
 		mapData.put("documentdata", theDocData);
 		mapData.put("refdata", AppModel.getData());
-		mapData.put("selection", ctlRefList.getAllTabSelection());
+		mapData.put("selection", ctlRefList.getSortedSelectedItems());
 		mapData.put("current", thePerson);
 		mapData.put("prefs", Prefs.getPrefMap());
 
