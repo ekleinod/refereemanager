@@ -36,12 +36,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -75,93 +72,16 @@ import javafx.stage.Stage;
 public class PersonEditDialogController extends AbstractEditDialogController<Person> {
 
 	/**
-	 * ID text field.
+	 * Titled ID details view part.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "id", jaxbclass = IDType.class)
-	protected TextField txtID;
+	private Parent embeddedTabEditPersonData;
 
 	/**
-	 * Title text field.
+	 * Titled ID details view part controller.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "title", jaxbclass = TitledIDType.class)
-	protected TextField txtTitle;
-
-	/**
-	 * First name text field.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "firstName", jaxbclass = Person.class)
-	protected TextField txtFirstName;
-
-	/**
-	 * Name text field label.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "name", jaxbclass = Person.class)
-	protected Label lblName;
-
-	/**
-	 * Name text field.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "name", jaxbclass = Person.class)
-	protected TextField txtName;
-
-	/**
-	 * Birthday picker.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "birthday", jaxbclass = Person.class)
-	protected DatePicker pckBirthday;
-
-	/**
-	 * Day of death picker.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "dayOfDeath", jaxbclass = Person.class)
-	protected DatePicker pckDayOfDeath;
-
-	/**
-	 * Combobox for sex types.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "sexType", jaxbclass = Person.class)
-	protected ComboBox<ModelClassExt> cboSexType;
-
-	/**
-	 * Clear sex types.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnSexTypeClear;
-
-	/**
-	 * Combobox for roles.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "role", jaxbclass = Person.class)
-	protected ComboBox<ModelClassExt> cboRole;
-
-	/**
-	 * Clear roles.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private Button btnRoleClear;
-
-	/**
-	 * Text area for remark.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "remark", jaxbclass = TitledIDType.class)
-	protected TextArea txtRemark;
-
+	private TabEditPersonDataController embeddedTabEditPersonDataController;
 
 
 	// contact data
@@ -588,13 +508,9 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 		super.initialize();
 
 		// set date picker date format
-		pckBirthday.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
-        pckDayOfDeath.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
         pckExamDate.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
 
 		// fill combo boxes
-        ComboBoxUtils.prepareComboBox(cboSexType, AppModel.getData().getContent().getSexType());
-        ComboBoxUtils.prepareComboBox(cboRole, AppModel.getData().getContent().getRoleType());
         ComboBoxUtils.prepareComboBox(cboMember, AppModel.getData().getContent().getClub());
         ComboBoxUtils.prepareComboBox(cboReffor, AppModel.getData().getContent().getClub());
         ComboBoxUtils.prepareComboBox(cboStatus, AppModel.getData().getContent().getStatusType());
@@ -622,11 +538,6 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
         spnPointsWrittenB.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
         spnPointsPractical.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
         spnPointsOral.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-
-		// enable ok button for valid entries only
-		btnOK.disableProperty().bind(
-				txtName.textProperty().isEmpty()
-		);
 
 		// enable buttons
 		btnEMailEdit.disableProperty().bind(
@@ -672,12 +583,6 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 				lstTrainingLevel.getSelectionModel().selectedItemProperty().isNull()
 		);
 
-		btnSexTypeClear.disableProperty().bind(
-				cboSexType.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnRoleClear.disableProperty().bind(
-				cboRole.getSelectionModel().selectedItemProperty().isNull()
-		);
 		btnMemberClear.disableProperty().bind(
 				cboMember.getSelectionModel().selectedItemProperty().isNull()
 		);
@@ -728,8 +633,6 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 		btnAvoidDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnTrainingLevelDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 
-		btnSexTypeClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
-		btnRoleClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 		btnMemberClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 		btnRefforClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 		btnStatusClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
@@ -1131,26 +1034,6 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 
 		return editController.isOkClicked();
 
-	}
-
-	/**
-	 * Clears sex type selection.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handleSexTypeClear() {
-		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboSexType);
-	}
-
-	/**
-	 * Clears role selection.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private void handleRoleClear() {
-		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboRole);
 	}
 
 	/**
