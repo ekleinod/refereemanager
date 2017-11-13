@@ -80,9 +80,6 @@ public class Prefs {
 			case EMAIL_TEMPLATE_EMAIL:
 				return getPreferences().get(theKey.value(), "email/email.mmd");
 
-			case EVENT_OVERVIEW_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
-
 			case FILENAME_PATTERN_DATABASE:
 				return getPreferences().get(theKey.value(), "refereemanager_%04d.xml");
 			case FILENAME_PATTERN_REFEREE_DATA:
@@ -107,13 +104,25 @@ public class Prefs {
 			case OTHER_DATA_SORT_LOADING:
 				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
 
+			case OVERVIEW_CLUB_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
+			case OVERVIEW_LEAGUE_GAME_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
+			case OVERVIEW_OTHER_EVENT_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
+			case OVERVIEW_PERSON_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
+			case OVERVIEW_REFEREE_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
+			case OVERVIEW_TOURNAMENT_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
+			case OVERVIEW_TRAINEE_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
+
 			case REFEREE_COMMUNICATION_SPLIT_0:
 				return getPreferences().get(theKey.value(), Double.toString(0.5));
 			case REFEREE_COMMUNICATION_SPLIT_1:
 				return getPreferences().get(theKey.value(), Double.toString(0.7));
-
-			case REFEREE_OVERVIEW_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 
 			case REFEREE_REPORT_LEAGUE_GAMES:
 				return getPreferences().get(theKey.value(), "OSR_%1$s_%2$s_%3$s-%4$s.pdf");

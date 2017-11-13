@@ -1,23 +1,18 @@
 package de.edgesoft.refereemanager.controller;
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-import de.edgesoft.edgeutils.ClassUtils;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.Wish;
 import de.edgesoft.refereemanager.model.AppModel;
-import de.edgesoft.refereemanager.model.WishModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
-import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 /**
  * Controller for the referee edit dialog scene.
@@ -45,13 +40,7 @@ import javafx.stage.Stage;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class WishEditDialogController {
-
-	/**
-	 * Classes for introspection when setting/getting values.
-	 */
-	private Class<?>[] theClasses = new Class<?>[]{Wish.class};
-
+public class WishEditDialogController extends AbstractEditDialogController<Wish> {
 
 	/**
 	 * Combobox for clubs.
@@ -121,72 +110,22 @@ public class WishEditDialogController {
 	protected CheckBox chkLeagueGamesOnly;
 
 
-
-
-	/**
-	 * OK button.
-	 */
-	@FXML
-	private Button btnOK;
-
-	/**
-	 * Cancel button.
-	 */
-	@FXML
-	private Button btnCancel;
-
-
-
-	/**
-	 * Reference to dialog stage.
-	 */
-	private Stage dialogStage;
-
-	/**
-	 * Current wish.
-	 */
-	private WishModel currentWish;
-
-	/**
-	 * OK clicked?.
-	 */
-	private boolean okClicked;
-
-	/**
-	 * Fields of class and abstract subclasses.
-	 */
-	private List<Field> lstDeclaredFields = null;
-
-
 	/**
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
-	private void initialize() {
+	@Override
+	protected void initialize() {
+
+		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{Wish.class})));
+		super.initialize();
 
 		// fill combo boxes
         ComboBoxUtils.prepareComboBox(cboClub, AppModel.getData().getContent().getClub());
         ComboBoxUtils.prepareComboBox(cboLeague, AppModel.getData().getContent().getLeague());
         ComboBoxUtils.prepareComboBox(cboSexType, AppModel.getData().getContent().getSexType());
-
-		// declared fields
-        lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
-
-		// required fields
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
 
 		// enable buttons
 		btnClubClear.disableProperty().bind(
@@ -201,9 +140,6 @@ public class WishEditDialogController {
 
 
 		// icons
-		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
-		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
-
 		btnClubClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 		btnLeagueClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 		btnSexTypeClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
@@ -211,91 +147,23 @@ public class WishEditDialogController {
 	}
 
 	/**
-	 * Sets dialog stage.
+	 * Sets data to be edited.
 	 *
-	 * @param theStage dialog stage
+	 * @param theData data
 	 */
-	public void setDialogStage(final Stage theStage) {
-        dialogStage = theStage;
-    }
+	@Override
+	public void setData(Wish theData) {
 
-	/**
-	 * Sets wish to be edited.
-	 *
-	 * @param theWish wish
-	 */
-	public void setWish(WishModel theWish) {
-
-		Objects.requireNonNull(theWish);
-
-        currentWish = theWish;
-
-        // fill fields
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.setField(theFXMLField, fieldObject, theWish, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
+		super.setData(theData);
 
     }
-
-	/**
-	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
-	 */
-	@FXML
-    private void handleOk() {
-
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentWish, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
-
-        okClicked = true;
-        dialogStage.close();
-
-    }
-
-	/**
-	 * Returns if user clicked ok.
-	 *
-	 * @return did user click ok?
-	 */
-	public boolean isOkClicked() {
-		return okClicked;
-	}
-
-	/**
-	 * Stores non-ok click and closes dialog.
-	 */
-	@FXML
-    private void handleCancel() {
-		okClicked = false;
-        dialogStage.close();
-    }
-
 
 	/**
 	 * Clears club selection.
 	 */
 	@FXML
 	private void handleClubClear() {
-		cboClub.getSelectionModel().clearSelection();
-		cboClub.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboClub);
 	}
 
 	/**
@@ -303,8 +171,7 @@ public class WishEditDialogController {
 	 */
 	@FXML
 	private void handleLeagueClear() {
-		cboLeague.getSelectionModel().clearSelection();
-		cboLeague.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboLeague);
 	}
 
 	/**
@@ -312,8 +179,7 @@ public class WishEditDialogController {
 	 */
 	@FXML
 	private void handleSexTypeClear() {
-		cboSexType.getSelectionModel().clearSelection();
-		cboSexType.setValue(null);
+		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboSexType);
 	}
 
 }

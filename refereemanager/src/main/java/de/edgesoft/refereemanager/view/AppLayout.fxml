@@ -57,11 +57,19 @@
                         </MenuItem>
                      </items>
                 </Menu>
-                <Menu text="_Schiedsrichter">
+                <Menu text="_Menschen">
                   <items>
-                    <MenuItem fx:id="mnuRefereeOverview" onAction="#handleRefereeOverview" text="Schiriü_bersicht">
+                    <MenuItem fx:id="mnuOverviewReferees" onAction="#handleOverviewReferees" text="_Schiriübersicht">
                          <accelerator>
                             <KeyCodeCombination alt="DOWN" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                         </accelerator></MenuItem>
+                    <MenuItem fx:id="mnuOverviewPeople" onAction="#handleOverviewPeople" text="_Personen">
+                         <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                         </accelerator></MenuItem>
+                    <MenuItem fx:id="mnuOverviewTrainees" onAction="#handleOverviewTrainees" text="_Azubis">
+                         <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                          </accelerator></MenuItem>
                       <SeparatorMenuItem />
                       <MenuItem fx:id="mnuRefereeCommunication" onAction="#handleRefereeCommunication" text="Schiri_kommunikation">
@@ -70,15 +78,28 @@
                          </accelerator></MenuItem>
                   </items>
                 </Menu>
-                <Menu text="_Anderes">
+                <Menu text="_Ereignisse">
                    <items>
-                      <MenuItem fx:id="mnuEventOverview" onAction="#handleEventOverview" text="_Termine">
+                      <MenuItem fx:id="mnuOverviewLeagueGames" onAction="#handleOverviewLeagueGames" text="_Ligaspiele">
+                         <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="L" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                         </accelerator>
+                      </MenuItem>
+                      <MenuItem fx:id="mnuOverviewTournaments" onAction="#handleOverviewTournaments" text="_Turniere">
+                         <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="T" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                         </accelerator>
+                      </MenuItem>
+                      <MenuItem fx:id="mnuOverviewOtherEvents" onAction="#handleOverviewOtherEvents" text="Sonstige Termine">
                          <accelerator>
                             <KeyCodeCombination alt="DOWN" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                          </accelerator>
                       </MenuItem>
-                      <SeparatorMenuItem />
-                      <MenuItem fx:id="mnuClubOverview" onAction="#handleClubOverview" text="_Clubs">
+                   </items>
+                </Menu>
+                <Menu text="_Dinge">
+                   <items>
+                      <MenuItem fx:id="mnuOverviewClubs" onAction="#handleOverviewClubs" text="_Clubs">
                          <accelerator>
                             <KeyCodeCombination alt="DOWN" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                          </accelerator>
@@ -112,11 +133,17 @@
                   <Button fx:id="btnFileOpen" layoutX="10.0" layoutY="11.0" onAction="#handleFileOpen" />
                   <Button fx:id="btnFileSave" layoutX="46.0" layoutY="11.0" onAction="#handleFileSave" />
                   <Separator prefWidth="10.0" />
-                  <Button fx:id="btnRefereeOverview" onAction="#handleRefereeOverview" />
+                  <Button fx:id="btnOverviewReferees" onAction="#handleOverviewReferees" />
+                  <Button fx:id="btnOverviewPeople" onAction="#handleOverviewPeople" />
+                  <Button fx:id="btnOverviewTrainees" onAction="#handleOverviewTrainees" />
+                  <Separator layoutX="90.0" layoutY="10.0" prefWidth="10.0" />
                   <Button fx:id="btnRefereeCommunication" onAction="#handleRefereeCommunication" />
                   <Separator layoutX="90.0" layoutY="10.0" prefWidth="10.0" />
-                  <Button fx:id="btnEventOverview" onAction="#handleEventOverview" />
-                  <Button fx:id="btnClubOverview" onAction="#handleClubOverview" />
+                  <Button fx:id="btnOverviewLeagueGames" onAction="#handleOverviewLeagueGames" />
+                  <Button fx:id="btnOverviewTournaments" onAction="#handleOverviewTournaments" />
+                  <Button fx:id="btnOverviewOtherEvents" onAction="#handleOverviewOtherEvents" />
+                  <Separator layoutX="90.0" layoutY="10.0" prefWidth="10.0" />
+                  <Button fx:id="btnOverviewClubs" onAction="#handleOverviewClubs" />
                   <Separator prefWidth="10.0" />
                   <Button fx:id="btnStatisticsData" onAction="#handleStatisticsData" />
                   <Separator prefWidth="10.0" />

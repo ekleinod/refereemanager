@@ -1,11 +1,10 @@
 package de.edgesoft.refereemanager.controller;
-import java.lang.reflect.Field;
 import java.text.MessageFormat;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
-import de.edgesoft.edgeutils.ClassUtils;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
@@ -17,7 +16,6 @@ import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContactModel;
 import de.edgesoft.refereemanager.model.EMailModel;
-import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.PhoneNumberModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
 import de.edgesoft.refereemanager.model.URLModel;
@@ -25,11 +23,11 @@ import de.edgesoft.refereemanager.model.WishModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
-import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import de.edgesoft.refereemanager.utils.SpinnerUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -45,8 +43,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -76,17 +72,7 @@ import javafx.stage.Stage;
  * @version 0.14.0
  * @since 0.13.0
  */
-public class PersonEditDialogController {
-
-	/**
-	 * Classes for introspection when setting/getting values.
-	 *
-	 * @since 0.14.0
-	 */
-	private Class<?>[] theClasses = new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class};
-
-
-	// person data
+public class PersonEditDialogController extends AbstractEditDialogController<Person> {
 
 	/**
 	 * ID text field.
@@ -324,7 +310,7 @@ public class PersonEditDialogController {
 	 * @since 0.14.0
 	 */
 	@FXML
-	private Tab tabRefereeData;
+	protected Tab tabRefereeData;
 
 	/**
 	 * Combobox for member clubs.
@@ -388,7 +374,7 @@ public class PersonEditDialogController {
 	 * @since 0.14.0
 	 */
 	@FXML
-	private Tab tabRefereeWishes;
+	protected Tab tabRefereeWishes;
 
 	/**
 	 * List view for prefers.
@@ -467,7 +453,7 @@ public class PersonEditDialogController {
 	 * @since 0.14.0
 	 */
 	@FXML
-	private Tab tabRefereeTrainingLevel;
+	protected Tab tabRefereeTrainingLevel;
 
 	/**
 	 * List view for training level.
@@ -512,7 +498,7 @@ public class PersonEditDialogController {
 	 * @since 0.14.0
 	 */
 	@FXML
-	private Tab tabTraineeExam;
+	protected Tab tabTraineeExam;
 
 	/**
 	 * Checkbox for withdrawn.
@@ -553,7 +539,7 @@ public class PersonEditDialogController {
 	 * Checkbox for written passed.
 	 */
 	@FXML
-	private CheckBox chkPassedWritten;
+	protected CheckBox chkPassedWritten;
 
 	/**
 	 * Spinner for points practical.
@@ -566,7 +552,7 @@ public class PersonEditDialogController {
 	 * Checkbox for practical passed.
 	 */
 	@FXML
-	private CheckBox chkPassedPractical;
+	protected CheckBox chkPassedPractical;
 
 	/**
 	 * Spinner for points oral.
@@ -579,7 +565,7 @@ public class PersonEditDialogController {
 	 * Checkbox for oral passed.
 	 */
 	@FXML
-	private CheckBox chkPassedOral;
+	protected CheckBox chkPassedOral;
 
 	/**
 	 * Checkbox for passed.
@@ -589,53 +575,17 @@ public class PersonEditDialogController {
 	protected CheckBox chkPassed;
 
 
-
-
-
-	/**
-	 * OK button.
-	 */
-	@FXML
-	private Button btnOK;
-
-	/**
-	 * Cancel button.
-	 */
-	@FXML
-	private Button btnCancel;
-
-
-
-	/**
-	 * Reference to dialog stage.
-	 */
-	private Stage dialogStage;
-
-	/**
-	 * Current person.
-	 */
-	private PersonModel currentPerson;
-
-	/**
-	 * OK clicked?.
-	 */
-	private boolean okClicked;
-
-	/**
-	 * Fields of class and abstract subclasses.
-	 *
-	 * @since 0.14.0
-	 */
-	private List<Field> lstDeclaredFields = null;
-
-
 	/**
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
-	private void initialize() {
+	@Override
+	protected void initialize() {
+
+		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class})));
+		super.initialize();
 
 		// set date picker date format
 		pckBirthday.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
@@ -672,23 +622,6 @@ public class PersonEditDialogController {
         spnPointsWrittenB.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
         spnPointsPractical.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
         spnPointsOral.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-
-		// declared fields
-        lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
-
-		// required fields
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
 
 		// enable ok button for valid entries only
 		btnOK.disableProperty().bind(
@@ -771,9 +704,6 @@ public class PersonEditDialogController {
 
 
 		// icons
-		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
-		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
-
 		btnEMailAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnPhoneNumberAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnAddressAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
@@ -807,93 +737,27 @@ public class PersonEditDialogController {
 	}
 
 	/**
-	 * Sets dialog stage.
+	 * Sets data to be edited.
 	 *
-	 * @param theStage dialog stage
+	 * @param theData data
 	 */
-	public void setDialogStage(final Stage theStage) {
-        dialogStage = theStage;
-    }
+	@Override
+	public void setData(Person theData) {
 
-	/**
-	 * Sets referee to be edited.
-	 *
-	 * @param thePerson referee
-	 */
-	public void setPerson(PersonModel thePerson) {
+		super.setData(theData);
 
-		Objects.requireNonNull(thePerson);
-
-        currentPerson = thePerson;
-
-        if (currentPerson instanceof Referee) {
+        if (getData() instanceof Referee) {
     		tabRefereeData.setDisable(false);
     		tabRefereeWishes.setDisable(false);
     		tabRefereeTrainingLevel.setDisable(false);
         }
 
-        if (currentPerson instanceof Trainee) {
+        if (getData() instanceof Trainee) {
     		tabTraineeExam.setDisable(false);
-        }
-
-        // fill fields
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.setField(theFXMLField, fieldObject, thePerson, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
         }
 
         computeExam();
 
-    }
-
-	/**
-	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
-	 */
-	@FXML
-    private void handleOk() {
-
-        for (Field theFXMLField : lstDeclaredFields) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentPerson, theClasses);
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
-
-        okClicked = true;
-        dialogStage.close();
-
-    }
-
-	/**
-	 * Returns if user clicked ok.
-	 *
-	 * @return did user click ok?
-	 */
-	public boolean isOkClicked() {
-		return okClicked;
-	}
-
-	/**
-	 * Stores non-ok click and closes dialog.
-	 */
-	@FXML
-    private void handleCancel() {
-		okClicked = false;
-        dialogStage.close();
     }
 
 
@@ -1064,7 +928,7 @@ public class PersonEditDialogController {
 
 		if (!theListView.getSelectionModel().isEmpty()) {
 
-			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, getDialogStage(),
 					"Löschbestätigung",
 					MessageFormat.format("Soll ''{0}'' gelöscht werden?", theListView.getSelectionModel().getSelectedItem().getDisplayText().get()),
 					null);
@@ -1093,23 +957,20 @@ public class PersonEditDialogController {
 
 		Objects.requireNonNull(theContact);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane(String.format("%sEditDialog", theContact.getClass().getSimpleName().replace("Model", "")));
-
-		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode(String.format("%sEditDialog", theContact.getClass().getSimpleName().replace("Model", "")));
 
 		// Create the dialog Stage.
 		Stage editDialogStage = new Stage();
 		editDialogStage.initModality(Modality.WINDOW_MODAL);
-		editDialogStage.initOwner(dialogStage);
+		editDialogStage.initOwner(getDialogStage());
 		editDialogStage.setTitle("Kontakt editieren");
 
-		Scene scene = new Scene(editDialog);
-		editDialogStage.setScene(scene);
+		editDialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the referee
 		AbstractContactEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(editDialogStage);
-		editController.setContact(theContact);
+		editController.setData(theContact);
 
 		// Show the dialog and wait until the user closes it
 		editDialogStage.showAndWait();
@@ -1221,7 +1082,7 @@ public class PersonEditDialogController {
 
 		if (!theListView.getSelectionModel().isEmpty()) {
 
-			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, getDialogStage(),
 					"Löschbestätigung",
 					MessageFormat.format("Soll ''{0}'' gelöscht werden?", theListView.getSelectionModel().getSelectedItem().getDisplayText().get()),
 					null);
@@ -1250,23 +1111,20 @@ public class PersonEditDialogController {
 
 		Objects.requireNonNull(theWish);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("WishEditDialog");
-
-		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("WishEditDialog");
 
 		// Create the dialog Stage.
 		Stage editDialogStage = new Stage();
 		editDialogStage.initModality(Modality.WINDOW_MODAL);
-		editDialogStage.initOwner(dialogStage);
+		editDialogStage.initOwner(getDialogStage());
 		editDialogStage.setTitle("Wunsch editieren");
 
-		Scene scene = new Scene(editDialog);
-		editDialogStage.setScene(scene);
+		editDialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the referee
 		WishEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(editDialogStage);
-		editController.setWish(theWish);
+		editController.setData(theWish);
 
 		// Show the dialog and wait until the user closes it
 		editDialogStage.showAndWait();
@@ -1364,7 +1222,7 @@ public class PersonEditDialogController {
 
 		if (!lstTrainingLevel.getSelectionModel().isEmpty()) {
 
-			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, dialogStage,
+			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, getDialogStage(),
 					"Löschbestätigung",
 					MessageFormat.format("Soll ''{0}'' gelöscht werden?", lstTrainingLevel.getSelectionModel().getSelectedItem().getDisplayText().get()),
 					null);
@@ -1393,23 +1251,20 @@ public class PersonEditDialogController {
 
 		Objects.requireNonNull(theTrainingLevel);
 
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("TrainingLevelEditDialog");
-
-		AnchorPane editDialog = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("TrainingLevelEditDialog");
 
 		// Create the dialog Stage.
 		Stage editDialogStage = new Stage();
 		editDialogStage.initModality(Modality.WINDOW_MODAL);
-		editDialogStage.initOwner(dialogStage);
+		editDialogStage.initOwner(getDialogStage());
 		editDialogStage.setTitle("Ausbildungsstufe editieren");
 
-		Scene scene = new Scene(editDialog);
-		editDialogStage.setScene(scene);
+		editDialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the referee
 		TrainingLevelEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(editDialogStage);
-		editController.setTrainingLevel(theTrainingLevel);
+		editController.setData(theTrainingLevel);
 
 		// Show the dialog and wait until the user closes it
 		editDialogStage.showAndWait();

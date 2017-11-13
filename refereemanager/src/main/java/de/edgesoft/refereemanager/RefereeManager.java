@@ -26,9 +26,8 @@ import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -76,6 +75,12 @@ public class RefereeManager extends Application {
 	public static HostServicesDelegate hostServices = null;
 
 	/**
+	 * Main app controller.
+	 */
+	private static AppLayoutController appController = null;
+
+
+	/**
 	 * Starts the application.
 	 *
 	 * @param args command line arguments
@@ -97,8 +102,7 @@ public class RefereeManager extends Application {
 		showSplashScreen();
 
 		// load app layout and controller, then delegate control to controller
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("AppLayout");
-		((AppLayoutController) pneLoad.getValue().getController()).initController(primaryStage);
+		getAppController().initController(primaryStage);
 
 		// host services
 		hostServices = HostServicesFactory.getInstance(this);
@@ -113,8 +117,7 @@ public class RefereeManager extends Application {
 	public void showSplashScreen() {
 
 		// Load splash screen.
-		Map.Entry<Pane, FXMLLoader> pneLoad = Resources.loadPane("SplashScreen");
-		final AnchorPane pane = (AnchorPane) pneLoad.getKey();
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("SplashScreen");
 
 		// Create and fill splash screen stage.
 		Stage stage = new Stage();
@@ -122,12 +125,11 @@ public class RefereeManager extends Application {
 		stage.setAlwaysOnTop(true);
 		stage.initStyle(StageStyle.TRANSPARENT);
 
-		Scene scene = new Scene(pane, new Color(1, 1, 1, .5));
-		stage.setScene(scene);
+		stage.setScene(new Scene(pneLoad.getKey(), new Color(1, 1, 1, .5)));
 		stage.sizeToScene();
 		stage.centerOnScreen();
 
-		// define task, that waits 4 seconds, then returns null, i.e. succeeds
+		// define task, wait 4 seconds, then return null, i.e. succeed
 		// if needed, some progress bar output could be defined here
 		final Task<Void> splashTask = new Task<Void>() {
 			@Override
@@ -140,7 +142,7 @@ public class RefereeManager extends Application {
 		// add listener to succeed state of task, then fade out
 		splashTask.stateProperty().addListener((observableValue, oldState, newState) -> {
 				if (newState == Worker.State.SUCCEEDED) {
-						FadeTransition fadeSplash = new FadeTransition(Duration.seconds(1.2), pane);
+						FadeTransition fadeSplash = new FadeTransition(Duration.seconds(1.2), pneLoad.getKey());
 						fadeSplash.setFromValue(1.0);
 						fadeSplash.setToValue(0.0);
 						fadeSplash.setOnFinished(actionEvent -> stage.hide());
@@ -195,6 +197,22 @@ public class RefereeManager extends Application {
 	 */
 	public static Version getVersion() {
 		return new VersionExt(Resources.getProjectProperties().getProperty("longversion"));
+	}
+
+	/**
+	 * Returns app controller (singleton).
+	 *
+	 * @since 0.15.0
+	 */
+	public static AppLayoutController getAppController() {
+
+		if (appController == null) {
+			Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AppLayout");
+			appController = (AppLayoutController) pneLoad.getValue().getController();
+		}
+
+		return appController;
+
 	}
 
 }
