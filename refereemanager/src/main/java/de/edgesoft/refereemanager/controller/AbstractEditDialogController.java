@@ -1,8 +1,5 @@
 package de.edgesoft.refereemanager.controller;
-import java.lang.reflect.Field;
-
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -68,10 +65,7 @@ public abstract class AbstractEditDialogController<T extends ModelClassExt> exte
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
-	@Override
 	protected void initialize() {
-
-		super.initialize();
 
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
 		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
@@ -126,18 +120,7 @@ public abstract class AbstractEditDialogController<T extends ModelClassExt> exte
 	@Override
     public void handleOk() {
 
-        for (Field theFXMLField : getDeclaredFields()) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, getData(), getClasses());
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
+		storeData();
 
         okClicked = true;
         dialogStage.close();

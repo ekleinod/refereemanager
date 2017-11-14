@@ -72,16 +72,16 @@ import javafx.stage.Stage;
 public class PersonEditDialogController extends AbstractEditDialogController<Person> {
 
 	/**
-	 * Titled ID details view part.
+	 * Person edit tab.
 	 */
 	@FXML
 	private Parent embeddedTabEditPersonData;
 
 	/**
-	 * Titled ID details view part controller.
+	 * Person edit tab controller.
 	 */
 	@FXML
-	private TabEditPersonDataController embeddedTabEditPersonDataController;
+	private IEditDialogInputController<Person> embeddedTabEditPersonDataController;
 
 
 	// contact data
@@ -648,6 +648,7 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 	public void setData(Person theData) {
 
 		super.setData(theData);
+		embeddedTabEditPersonDataController.setData(theData);
 
         if (getData() instanceof Referee) {
     		tabRefereeData.setDisable(false);
@@ -663,6 +664,16 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 
     }
 
+	/**
+	 * Stores input data in data object.
+	 */
+	@Override
+	public void storeData() {
+
+		embeddedTabEditPersonDataController.storeData();
+		super.storeData();
+
+	}
 
 	/**
 	 * Opens edit dialog for new data.

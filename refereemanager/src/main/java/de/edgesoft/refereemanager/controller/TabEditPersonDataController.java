@@ -1,4 +1,7 @@
 package de.edgesoft.refereemanager.controller;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
@@ -18,7 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 /**
- * Controller for the referee edit dialog scene.
+ * Controller for the person data edit dialog tab.
  *
  * ## Legal stuff
  *
@@ -40,10 +43,10 @@ import javafx.scene.image.ImageView;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.14.0
- * @since 0.13.0
+ * @version 0.15.0
+ * @since 0.15.0
  */
-public class TabEditPersonDataController {
+public class TabEditPersonDataController extends AbstractEditDialogInputController<Person> {
 
 	/**
 	 * ID text field.
@@ -141,6 +144,8 @@ public class TabEditPersonDataController {
 	 */
 	@FXML
 	protected void initialize() {
+
+		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class})));
 
 		// set date picker date format
 		pckBirthday.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));

@@ -48,6 +48,11 @@ public interface IEditDialogInputController<T extends ModelClassExt> {
 	public T getData();
 
 	/**
+	 * Stores input data in data object.
+	 */
+	public void storeData();
+
+	/**
 	 * Returns declared fields.
 	 *
 	 * @return declared fields

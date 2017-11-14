@@ -6,7 +6,6 @@ import java.util.List;
 import de.edgesoft.edgeutils.ClassUtils;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
-import javafx.fxml.FXML;
 
 /**
  * Abstract controller for edit dialog scenes, input part.
@@ -53,31 +52,6 @@ public abstract class AbstractEditDialogInputController<T extends ModelClassExt>
 
 
 	/**
-	 * Initializes the controller class.
-	 *
-	 * This method is automatically called after the fxml file has been loaded.
-	 */
-	@FXML
-	protected void initialize() {
-
-		// required fields
-        for (Field theFXMLField : getDeclaredFields()) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, getClasses());
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
-
-	}
-
-
-	/**
 	 * Sets data to be edited.
 	 *
 	 * @param theData data
@@ -116,6 +90,27 @@ public abstract class AbstractEditDialogInputController<T extends ModelClassExt>
 	}
 
 	/**
+	 * Stores input data in data object.
+	 */
+	@Override
+	public void storeData() {
+
+        for (Field theFXMLField : getDeclaredFields()) {
+
+        	try {
+        		Object fieldObject = theFXMLField.get(this);
+
+        		JAXBMatchUtils.getField(theFXMLField, fieldObject, getData(), getClasses());
+
+        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
+				e.printStackTrace();
+			}
+
+        }
+
+	}
+
+	/**
 	 * Returns declared fields.
 	 *
 	 * @return list of declared fields
@@ -132,13 +127,29 @@ public abstract class AbstractEditDialogInputController<T extends ModelClassExt>
 	}
 
 	/**
-	 * Sets introspection classes.
+	 * Sets introspection classes and sets required fields.
 	 *
 	 * @param theClasses list of introspection classes
 	 */
 	@Override
 	public void setClasses(final List<Class<?>> theClasses) {
+
         lstClasses = theClasses;
+
+		// required fields
+        for (Field theFXMLField : getDeclaredFields()) {
+
+        	try {
+        		Object fieldObject = theFXMLField.get(this);
+
+        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, getClasses());
+
+        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
+				e.printStackTrace();
+			}
+
+        }
+
     }
 
 	/**
