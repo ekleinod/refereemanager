@@ -1,10 +1,12 @@
 package de.edgesoft.refereemanager.controller;
 
+import java.lang.reflect.Field;
+import java.util.List;
+
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import javafx.stage.Stage;
 
 /**
- * Interface for the edit dialog controller.
+ * Interface for the edit dialog controller, input part.
  *
  * ## Legal stuff
  *
@@ -29,45 +31,42 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IEditDialogController<T extends ModelClassExt> extends IEditDialogInputController<T> {
+public interface IEditDialogInputController<T extends ModelClassExt> {
 
 	/**
-	 * Sets dialog stage.
+	 * Sets data to be edited.
 	 *
-	 * @param theStage dialog stage
+	 * @param theData data
 	 */
-	public void setDialogStage(final Stage theStage);
+	public void setData(T theData);
 
 	/**
-	 * Returns dialog stage.
+	 * Returns edited data.
 	 *
-	 * @return dialog stage
+	 * @return data
 	 */
-	public Stage getDialogStage();
+	public T getData();
 
 	/**
-	 * Returns if user clicked ok.
+	 * Returns declared fields.
 	 *
-	 * @return did user click ok?
+	 * @return declared fields
 	 */
-	public boolean isOkClicked();
+	public List<Field> getDeclaredFields();
 
 	/**
-	 * Sets if user clicked ok.
+	 * Sets introspection classes.
 	 *
-	 * @param isOKClicked did user click ok?
+	 * @param theClasses list of introspection classes
 	 */
-	public void setOkClicked(final boolean isOKClicked);
+	public void setClasses(final List<Class<?>> theClasses);
 
 	/**
-	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
+	 * Returns introspection classes.
+	 *
+	 * @return list of introspection classes (empty list if none are declared)
 	 */
-    public void handleOk();
-
-	/**
-	 * Stores non-ok click and closes dialog.
-	 */
-    public void handleCancel();
+	public List<Class<?>> getClasses();
 
 }
 

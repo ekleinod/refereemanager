@@ -1,9 +1,6 @@
 package de.edgesoft.refereemanager.controller;
 import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.List;
 
-import de.edgesoft.edgeutils.ClassUtils;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -38,12 +35,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractEditDialogController<T extends ModelClassExt> implements IEditDialogController<T> {
-
-	/**
-	 * Data item.
-	 */
-	private T currentData = null;
+public abstract class AbstractEditDialogController<T extends ModelClassExt> extends AbstractEditDialogInputController<T> implements IEditDialogController<T> {
 
 	/**
 	 * Reference to dialog stage.
@@ -54,16 +46,6 @@ public abstract class AbstractEditDialogController<T extends ModelClassExt> impl
 	 * OK clicked?.
 	 */
 	private boolean okClicked = false;
-
-	/**
-	 * Declared fields of class and abstract subclasses.
-	 */
-	private List<Field> lstDeclaredFields = null;
-
-	/**
-	 * Classes for introspection when setting/getting values.
-	 */
-	private List<Class<?>> lstClasses = null;
 
 
 	/**
@@ -86,65 +68,16 @@ public abstract class AbstractEditDialogController<T extends ModelClassExt> impl
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
+	@Override
 	protected void initialize() {
+
+		super.initialize();
 
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
 		btnCancel.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-cancel.png")));
 
-		// required fields
-        for (Field theFXMLField : getDeclaredFields()) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, getClasses());
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
-
 	}
 
-
-	/**
-	 * Sets data to be edited.
-	 *
-	 * @param theData data
-	 */
-	@Override
-	public void setData(T theData) {
-
-		assert (theData != null) : "data must not be null";
-
-        currentData = theData;
-
-        // fill fields
-        for (Field theFXMLField : getDeclaredFields()) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.setField(theFXMLField, fieldObject, theData, getClasses());
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
-
-    }
-
-	/**
-	 * Returns data to be edited.
-	 *
-	 * @return data
-	 */
-	@Override
-	public T getData() {
-		return currentData;
-	}
 
 	/**
 	 * Sets dialog stage.
@@ -198,7 +131,7 @@ public abstract class AbstractEditDialogController<T extends ModelClassExt> impl
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, currentData, getClasses());
+        		JAXBMatchUtils.getField(theFXMLField, fieldObject, getData(), getClasses());
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -220,48 +153,6 @@ public abstract class AbstractEditDialogController<T extends ModelClassExt> impl
 		okClicked = false;
         dialogStage.close();
     }
-
-	/**
-	 * Returns declared fields.
-	 *
-	 * @return list of declared fields
-	 */
-	@Override
-	public List<Field> getDeclaredFields() {
-
-		if (lstDeclaredFields == null) {
-			lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
-		}
-
-		return lstDeclaredFields;
-
-	}
-
-	/**
-	 * Sets introspection classes.
-	 *
-	 * @param theClasses list of introspection classes
-	 */
-	@Override
-	public void setClasses(final List<Class<?>> theClasses) {
-        lstClasses = theClasses;
-    }
-
-	/**
-	 * Returns introspection classes.
-	 *
-	 * @return list of introspection classes (empty list if none are declared)
-	 */
-	@Override
-	public List<Class<?>> getClasses() {
-
-		if (lstClasses == null) {
-			return Collections.EMPTY_LIST;
-		}
-
-		return lstClasses;
-
-	}
 
 }
 
