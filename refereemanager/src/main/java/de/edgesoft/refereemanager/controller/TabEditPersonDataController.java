@@ -1,7 +1,4 @@
 package de.edgesoft.refereemanager.controller;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
@@ -46,7 +43,7 @@ import javafx.scene.image.ImageView;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class TabEditPersonDataController extends AbstractEditDialogInputController<Person> {
+public class TabEditPersonDataController extends AbstractInputFormController {
 
 	/**
 	 * ID text field.
@@ -144,8 +141,6 @@ public class TabEditPersonDataController extends AbstractEditDialogInputControll
 	 */
 	@FXML
 	protected void initialize() {
-
-		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class})));
 
 		// set date picker date format
 		pckBirthday.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));

@@ -167,9 +167,9 @@ public abstract class AbstractOverviewController<T extends ModelClassExt> implem
 		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set data
-		IEditDialogController<S> editController = pneLoad.getValue().getController();
+		IEditDialogController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(dialogStage);
-		editController.setData(theData);
+		editController.fillForm(theData);
 
 		// Show the dialog and wait until the user closes it
 		dialogStage.showAndWait();

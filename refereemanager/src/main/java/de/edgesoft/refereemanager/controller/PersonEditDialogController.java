@@ -69,7 +69,7 @@ import javafx.stage.Stage;
  * @version 0.14.0
  * @since 0.13.0
  */
-public class PersonEditDialogController extends AbstractEditDialogController<Person> {
+public class PersonEditDialogController extends AbstractTabbedEditDialogController {
 
 	/**
 	 * Person edit tab.
@@ -81,7 +81,7 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 	 * Person edit tab controller.
 	 */
 	@FXML
-	private IEditDialogInputController<Person> embeddedTabEditPersonDataController;
+	private IInputFormController embeddedTabEditPersonDataController;
 
 
 	// contact data
@@ -504,7 +504,10 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 	@Override
 	protected void initialize() {
 
-		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class})));
+		addInputFormController(embeddedTabEditPersonDataController);
+
+		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class})));
+
 		super.initialize();
 
 		// set date picker date format
@@ -640,40 +643,17 @@ public class PersonEditDialogController extends AbstractEditDialogController<Per
 	}
 
 	/**
-	 * Sets data to be edited.
+	 * Fills form with data to be edited.
 	 *
-	 * @param theData data
+	 * @param theData data object
 	 */
 	@Override
-	public void setData(Person theData) {
+	public <U extends ModelClassExt> void fillForm(final U theData) {
 
-		super.setData(theData);
-		embeddedTabEditPersonDataController.setData(theData);
-
-        if (getData() instanceof Referee) {
-    		tabRefereeData.setDisable(false);
-    		tabRefereeWishes.setDisable(false);
-    		tabRefereeTrainingLevel.setDisable(false);
-        }
-
-        if (getData() instanceof Trainee) {
-    		tabTraineeExam.setDisable(false);
-        }
-
-        computeExam();
+		super.fillForm(theData);
+		computeExam();
 
     }
-
-	/**
-	 * Stores input data in data object.
-	 */
-	@Override
-	public void storeData() {
-
-		embeddedTabEditPersonDataController.storeData();
-		super.storeData();
-
-	}
 
 	/**
 	 * Opens edit dialog for new data.

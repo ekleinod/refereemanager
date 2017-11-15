@@ -1,9 +1,7 @@
 package de.edgesoft.refereemanager.controller;
 
-import javafx.stage.Stage;
-
 /**
- * Interface for the edit dialog controller.
+ * Interface for the tabbed edit dialog controller.
  *
  * ## Legal stuff
  *
@@ -28,45 +26,14 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IEditDialogController extends IInputFormController {
+public interface ITabbedEditDialogController extends IEditDialogController {
 
 	/**
-	 * Sets dialog stage.
+	 * Adds (embedded) input form controller.
 	 *
-	 * @param theStage dialog stage
+	 * @param theInputFormController input form controller
 	 */
-	public void setDialogStage(final Stage theStage);
-
-	/**
-	 * Returns dialog stage.
-	 *
-	 * @return dialog stage
-	 */
-	public Stage getDialogStage();
-
-	/**
-	 * Returns if user clicked ok.
-	 *
-	 * @return did user click ok?
-	 */
-	public boolean isOkClicked();
-
-	/**
-	 * Sets if user clicked ok.
-	 *
-	 * @param isOKClicked did user click ok?
-	 */
-	public void setOkClicked(final boolean isOKClicked);
-
-	/**
-	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
-	 */
-    public void handleOk();
-
-	/**
-	 * Stores non-ok click and closes dialog.
-	 */
-    public void handleCancel();
+	public void addInputFormController(final IInputFormController theInputFormController);
 
 }
 

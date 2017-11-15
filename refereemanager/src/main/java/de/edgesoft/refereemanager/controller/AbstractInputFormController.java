@@ -33,12 +33,7 @@ import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractEditDialogInputController<T extends ModelClassExt> implements IEditDialogInputController<T> {
-
-	/**
-	 * Data item.
-	 */
-	private T currentData = null;
+public abstract class AbstractInputFormController implements IInputFormController {
 
 	/**
 	 * Declared fields of class and abstract subclasses.
@@ -52,16 +47,40 @@ public abstract class AbstractEditDialogInputController<T extends ModelClassExt>
 
 
 	/**
-	 * Sets data to be edited.
+	 * Initializes form: sets introspection classes and marks required fields.
 	 *
-	 * @param theData data
+	 * @param theClasses list of introspection classes
 	 */
 	@Override
-	public void setData(T theData) {
+	public void initForm(final List<Class<?>> theClasses) {
+
+		lstClasses = theClasses;
+
+		// required fields
+		for (Field theFXMLField : getDeclaredFields()) {
+
+			try {
+				Object fieldObject = theFXMLField.get(this);
+
+				JAXBMatchUtils.markRequired(theFXMLField, fieldObject, getClasses());
+
+			} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	/**
+	 * Fills form with data to be edited.
+	 *
+	 * @param theData data object
+	 */
+	@Override
+	public <U extends ModelClassExt> void fillForm(final U theData) {
 
 		assert (theData != null) : "data must not be null";
-
-        currentData = theData;
 
         // fill fields
         for (Field theFXMLField : getDeclaredFields()) {
@@ -80,27 +99,19 @@ public abstract class AbstractEditDialogInputController<T extends ModelClassExt>
     }
 
 	/**
-	 * Returns data to be edited.
+	 * Fills data object with form data.
 	 *
-	 * @return data
+	 * @param theData data object
 	 */
 	@Override
-	public T getData() {
-		return currentData;
-	}
-
-	/**
-	 * Stores input data in data object.
-	 */
-	@Override
-	public void storeData() {
+	public <V extends ModelClassExt> void fillData(V theData) {
 
         for (Field theFXMLField : getDeclaredFields()) {
 
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.getField(theFXMLField, fieldObject, getData(), getClasses());
+        		JAXBMatchUtils.getField(theFXMLField, fieldObject, theData, getClasses());
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -115,8 +126,7 @@ public abstract class AbstractEditDialogInputController<T extends ModelClassExt>
 	 *
 	 * @return list of declared fields
 	 */
-	@Override
-	public List<Field> getDeclaredFields() {
+	private List<Field> getDeclaredFields() {
 
 		if (lstDeclaredFields == null) {
 			lstDeclaredFields = ClassUtils.getDeclaredFieldsFirstAbstraction(getClass());
@@ -127,41 +137,14 @@ public abstract class AbstractEditDialogInputController<T extends ModelClassExt>
 	}
 
 	/**
-	 * Sets introspection classes and sets required fields.
-	 *
-	 * @param theClasses list of introspection classes
-	 */
-	@Override
-	public void setClasses(final List<Class<?>> theClasses) {
-
-        lstClasses = theClasses;
-
-		// required fields
-        for (Field theFXMLField : getDeclaredFields()) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, getClasses());
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
-
-    }
-
-	/**
 	 * Returns introspection classes.
 	 *
 	 * @return list of introspection classes (empty list if none are declared)
 	 */
-	@Override
-	public List<Class<?>> getClasses() {
+	private List<Class<?>> getClasses() {
 
 		if (lstClasses == null) {
-			return Collections.EMPTY_LIST;
+			lstClasses = Collections.EMPTY_LIST;
 		}
 
 		return lstClasses;

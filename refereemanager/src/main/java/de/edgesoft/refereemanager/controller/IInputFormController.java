@@ -1,6 +1,5 @@
 package de.edgesoft.refereemanager.controller;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
@@ -31,47 +30,28 @@ import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IEditDialogInputController<T extends ModelClassExt> {
+public interface IInputFormController {
 
 	/**
-	 * Sets data to be edited.
-	 *
-	 * @param theData data
-	 */
-	public void setData(T theData);
-
-	/**
-	 * Returns edited data.
-	 *
-	 * @return data
-	 */
-	public T getData();
-
-	/**
-	 * Stores input data in data object.
-	 */
-	public void storeData();
-
-	/**
-	 * Returns declared fields.
-	 *
-	 * @return declared fields
-	 */
-	public List<Field> getDeclaredFields();
-
-	/**
-	 * Sets introspection classes.
+	 * Initializes form: sets introspection classes and marks required fields.
 	 *
 	 * @param theClasses list of introspection classes
 	 */
-	public void setClasses(final List<Class<?>> theClasses);
+	public void initForm(final List<Class<?>> theClasses);
 
 	/**
-	 * Returns introspection classes.
+	 * Fills form with data to be edited.
 	 *
-	 * @return list of introspection classes (empty list if none are declared)
+	 * @param theData data object
 	 */
-	public List<Class<?>> getClasses();
+	public <U extends ModelClassExt> void fillForm(final U theData);
+
+	/**
+	 * Fills data object with form data.
+	 *
+	 * @param theData data object
+	 */
+	public <V extends ModelClassExt> void fillData(V theData);
 
 }
 

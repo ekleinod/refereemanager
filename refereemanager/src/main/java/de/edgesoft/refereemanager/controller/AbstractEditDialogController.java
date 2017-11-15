@@ -1,5 +1,4 @@
 package de.edgesoft.refereemanager.controller;
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -32,7 +31,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractEditDialogController<T extends ModelClassExt> extends AbstractEditDialogInputController<T> implements IEditDialogController<T> {
+public abstract class AbstractEditDialogController extends AbstractInputFormController implements IEditDialogController {
 
 	/**
 	 * Reference to dialog stage.
@@ -119,12 +118,8 @@ public abstract class AbstractEditDialogController<T extends ModelClassExt> exte
 	@FXML
 	@Override
     public void handleOk() {
-
-		storeData();
-
         okClicked = true;
         dialogStage.close();
-
     }
 
 	/**
