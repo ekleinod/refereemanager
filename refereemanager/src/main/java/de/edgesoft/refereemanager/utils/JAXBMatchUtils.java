@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.refereemanager.controller.PersonEditDialogController;
+import de.edgesoft.refereemanager.controller.EditDialogRefereeController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -66,7 +66,7 @@ public class JAXBMatchUtils {
 	 * to the field object is forbidden for private fields.
 	 * In order to maintain separation of concerns I call the
 	 * loop and the get method in the calling class.
-	 * {@link PersonEditDialogController#setData(de.edgesoft.refereemanager.model.PersonModel)}
+	 * {@link EditDialogRefereeController#setData(de.edgesoft.refereemanager.model.PersonModel)}
 	 *
 	 * @param theFXMLField fxml field
 	 * @param theFieldObject object of fxml field
@@ -153,7 +153,7 @@ public class JAXBMatchUtils {
 	 * to the field object is forbidden for private fields.
 	 * In order to maintain separation of concerns I call the
 	 * loop and the get method in the calling class.
-	 * {@link PersonEditDialogController#setData(de.edgesoft.refereemanager.model.PersonModel)}
+	 * {@link EditDialogRefereeController#setData(de.edgesoft.refereemanager.model.PersonModel)}
 	 *
 	 * @param theFXMLField fxml field
 	 * @param theFieldObject object of fxml field
