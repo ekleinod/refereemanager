@@ -25,7 +25,7 @@
         <tabs>
           <Tab text="Personendaten">
                <content>
-               	<fx:include fx:id="embeddedTabEditPersonData" source="TabEditPersonData.fxml" />
+               	<fx:include fx:id="embeddedInputFormPersonData" source="InputFormPersonData.fxml" />
                </content>
           </Tab>
             <Tab text="Kontaktdaten">

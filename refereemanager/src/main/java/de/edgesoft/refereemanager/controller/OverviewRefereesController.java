@@ -87,7 +87,7 @@ public class OverviewRefereesController extends AbstractOverviewController<Refer
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("PersonEditDialog", "Schiedsrichter_in", new RefereeModel(), ((ContentModel) AppModel.getData().getContent()).getObservableReferees());
+		super.handleAdd("EditDialogReferee", "Schiedsrichter_in", new RefereeModel(), ((ContentModel) AppModel.getData().getContent()).getObservableReferees());
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class OverviewRefereesController extends AbstractOverviewController<Refer
 	 */
 	@Override
 	public void handleEdit(ActionEvent event) {
-		handleEdit("PersonEditDialog", "Schiedsrichter_in");
+		handleEdit("EditDialogReferee", "Schiedsrichter_in");
 	}
 
 	/**

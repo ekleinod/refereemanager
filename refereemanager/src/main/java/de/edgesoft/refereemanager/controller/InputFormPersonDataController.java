@@ -103,16 +103,12 @@ public class InputFormPersonDataController extends AbstractInputFormController {
 
 	/**
 	 * Clear sex types.
-	 *
-	 * @since 0.14.0
 	 */
 	@FXML
 	private Button btnSexTypeClear;
 
 	/**
 	 * Combobox for roles.
-	 *
-	 * @since 0.15.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "role", jaxbclass = Person.class)
@@ -120,8 +116,6 @@ public class InputFormPersonDataController extends AbstractInputFormController {
 
 	/**
 	 * Clear roles.
-	 *
-	 * @since 0.15.0
 	 */
 	@FXML
 	private Button btnRoleClear;
@@ -165,8 +159,6 @@ public class InputFormPersonDataController extends AbstractInputFormController {
 
 	/**
 	 * Clears sex type selection.
-	 *
-	 * @since 0.14.0
 	 */
 	@FXML
 	private void handleSexTypeClear() {
@@ -175,8 +167,6 @@ public class InputFormPersonDataController extends AbstractInputFormController {
 
 	/**
 	 * Clears role selection.
-	 *
-	 * @since 0.15.0
 	 */
 	@FXML
 	private void handleRoleClear() {

@@ -72,16 +72,16 @@ import javafx.stage.Stage;
 public class EditDialogRefereeController extends AbstractTabbedEditDialogController {
 
 	/**
-	 * Person edit tab.
+	 * Person data.
 	 */
 	@FXML
-	private Parent embeddedTabEditPersonData;
+	private Parent embeddedInputFormPersonData;
 
 	/**
-	 * Person edit tab controller.
+	 * Person data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedTabEditPersonDataController;
+	private IInputFormController embeddedInputFormPersonDataController;
 
 
 	// contact data
@@ -504,7 +504,7 @@ public class EditDialogRefereeController extends AbstractTabbedEditDialogControl
 	@Override
 	protected void initialize() {
 
-		addInputFormController(embeddedTabEditPersonDataController);
+		addInputFormController(embeddedInputFormPersonDataController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class})));
 

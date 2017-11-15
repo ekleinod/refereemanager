@@ -87,7 +87,7 @@ public class OverviewPeopleController extends AbstractOverviewController<Person>
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("PersonEditDialog", "Person", new PersonModel(), ((ContentModel) AppModel.getData().getContent()).getObservablePeople());
+		super.handleAdd("EditDialogPerson", "Person", new PersonModel(), ((ContentModel) AppModel.getData().getContent()).getObservablePeople());
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class OverviewPeopleController extends AbstractOverviewController<Person>
 	 */
 	@Override
 	public void handleEdit(ActionEvent event) {
-		handleEdit("PersonEditDialog", "Person");
+		handleEdit("EditDialogPerson", "Person");
 	}
 
 	/**
