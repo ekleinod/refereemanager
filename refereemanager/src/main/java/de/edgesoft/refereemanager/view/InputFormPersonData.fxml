@@ -21,19 +21,19 @@
 				<ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="150.0" />
 			</columnConstraints>
 			<rowConstraints>
-				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-				<RowConstraints vgrow="SOMETIMES" />
-				<RowConstraints vgrow="SOMETIMES" />
-				<RowConstraints vgrow="SOMETIMES" />
-				<RowConstraints vgrow="SOMETIMES" />
-				<RowConstraints vgrow="SOMETIMES" />
-				<RowConstraints vgrow="SOMETIMES" />
-				<RowConstraints vgrow="SOMETIMES" />
-            	<RowConstraints vgrow="SOMETIMES" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
 			</rowConstraints>
 			<children>
 				<Label text="ID" />
-				<TextField fx:id="txtID" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+				<TextField fx:id="txtID" GridPane.columnIndex="1" />
 				<Label text="Titel" GridPane.rowIndex="1" />
 				<TextField fx:id="txtTitle" promptText="Dr., Prof, ..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
 				<Label text="Vorname" GridPane.rowIndex="2" />
@@ -43,27 +43,31 @@
 				<Label text="Geburtsdatum" GridPane.rowIndex="4" />
 				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
 					<children>
-						<DatePicker fx:id="pckBirthday" promptText="tt.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+						<DatePicker fx:id="pckBirthday" promptText="tt.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
 					</children>
 				</AnchorPane>
 				<Label text="Todesdatum" GridPane.rowIndex="5" />
 				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
 					<children>
-						<DatePicker fx:id="pckDayOfDeath" promptText="tt.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+						<DatePicker fx:id="pckDayOfDeath" promptText="tt.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
 					</children>
 				</AnchorPane>
 				<Label text="Geschlecht" GridPane.rowIndex="6" />
 				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="6">
 					<children>
-						<ComboBox fx:id="cboSexType" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
-						<Button fx:id="btnSexTypeClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleSexTypeClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+						<ComboBox fx:id="cboSexType" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
+						<Button fx:id="btnSexTypeClear" onAction="#handleSexTypeClear" AnchorPane.rightAnchor="0.0">
+							<tooltip>
+								<Tooltip text="Auswahl entfernen" />
+							</tooltip>
+						</Button>
 					</children>
 				</AnchorPane>
 				<Label text="Rolle" GridPane.rowIndex="7" />
 				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="7">
 					<children>
-						<ComboBox fx:id="cboRole" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
-						<Button fx:id="btnRoleClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleRoleClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+						<ComboBox fx:id="cboRole" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
+						<Button fx:id="btnRoleClear" onAction="#handleRoleClear" AnchorPane.rightAnchor="0.0">
 							<tooltip>
 								<Tooltip text="Auswahl entfernen" />
 							</tooltip>
