@@ -3,22 +3,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.edgesoft.edgeutils.commons.IDType;
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.jaxb.Trainee;
-import de.edgesoft.refereemanager.model.AppModel;
-import de.edgesoft.refereemanager.utils.JAXBMatch;
-import de.edgesoft.refereemanager.utils.SpinnerUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.Tab;
 
 /**
  * Controller for the referee edit dialog scene.
@@ -108,90 +100,17 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	@FXML
 	private IInputFormController embeddedInputFormTrainingLevelDataController;
 
-
-	// exam
-
 	/**
-	 * Tab for trainee exams.
-	 *
-	 * @since 0.14.0
+	 * Exam data.
 	 */
 	@FXML
-	protected Tab tabTraineeExam;
+	private Parent embeddedInputFormExamData;
 
 	/**
-	 * Checkbox for withdrawn.
+	 * Exam data controller.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "withdrawn", jaxbclass = Trainee.class)
-	protected CheckBox chkWithdrawn;
-
-	/**
-	 * Checkbox for did not start.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "didNotStart", jaxbclass = Trainee.class)
-	protected CheckBox chkDidNotStart;
-
-	/**
-	 * Picker for exam date.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "examDate", jaxbclass = Trainee.class)
-	protected DatePicker pckExamDate;
-
-	/**
-	 * Spinner for points written A.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "pointsWrittenA", jaxbclass = Trainee.class)
-	protected Spinner<Integer> spnPointsWrittenA;
-
-	/**
-	 * Spinner for points written B.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "pointsWrittenB", jaxbclass = Trainee.class)
-	protected Spinner<Integer> spnPointsWrittenB;
-
-	/**
-	 * Checkbox for written passed.
-	 */
-	@FXML
-	protected CheckBox chkPassedWritten;
-
-	/**
-	 * Spinner for points practical.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "pointsPractical", jaxbclass = Trainee.class)
-	protected Spinner<Integer> spnPointsPractical;
-
-	/**
-	 * Checkbox for practical passed.
-	 */
-	@FXML
-	protected CheckBox chkPassedPractical;
-
-	/**
-	 * Spinner for points oral.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "pointsOral", jaxbclass = Trainee.class)
-	protected Spinner<Integer> spnPointsOral;
-
-	/**
-	 * Checkbox for oral passed.
-	 */
-	@FXML
-	protected CheckBox chkPassedOral;
-
-	/**
-	 * Checkbox for passed.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "passed", jaxbclass = Trainee.class)
-	protected CheckBox chkPassed;
+	private IInputFormController embeddedInputFormExamDataController;
 
 
 	/**
@@ -212,89 +131,22 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 
 		super.initialize();
 
-		// set date picker date format
-        pckExamDate.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
-
-        // setup spinners
-        SpinnerUtils.prepareIntegerSpinner(spnPointsWrittenA, 0, AppModel.getData().getContent().getExam().getMaxPointsWrittenA().getValue());
-        spnPointsWrittenA.valueProperty().addListener((observable, oldValue, newValue) -> computeExam());
-        SpinnerUtils.prepareIntegerSpinner(spnPointsWrittenB, 0, AppModel.getData().getContent().getExam().getMaxPointsWrittenB().getValue());
-        spnPointsWrittenB.valueProperty().addListener((observable, oldValue, newValue) -> computeExam());
-        SpinnerUtils.prepareIntegerSpinner(spnPointsPractical, 0, AppModel.getData().getContent().getExam().getMaxPointsPractical().getValue());
-        spnPointsPractical.valueProperty().addListener((observable, oldValue, newValue) -> computeExam());
-        SpinnerUtils.prepareIntegerSpinner(spnPointsOral, 0, AppModel.getData().getContent().getExam().getMaxPointsOral().getValue());
-        spnPointsOral.valueProperty().addListener((observable, oldValue, newValue) -> computeExam());
-
-        spnPointsWrittenA.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-        spnPointsWrittenB.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-        spnPointsPractical.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-        spnPointsOral.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-
-		// enable spinners
-		spnPointsWrittenA.disableProperty().bind(
-				pckExamDate.valueProperty().isNull()
-		);
-		spnPointsWrittenB.disableProperty().bind(
-				pckExamDate.valueProperty().isNull()
-		);
-		spnPointsPractical.disableProperty().bind(
-				pckExamDate.valueProperty().isNull()
-		);
-		spnPointsOral.disableProperty().bind(
-				pckExamDate.valueProperty().isNull()
-		);
-
 	}
 
 	/**
-	 * Fills form with data to be edited.
-	 *
-	 * @param theData data object
+	 * Ok.
 	 */
-	@Override
-	public <U extends ModelClassExt> void fillForm(final U theData) {
-
-		super.fillForm(theData);
-		computeExam();
-
-    }
+	@FXML
+	public void handleOk() {
+		RefereeManager.logger.error("handleOk - ToDo");
+	}
 
 	/**
-	 * Computes if exam is passed.
-	 *
-	 * @since 0.14.0
+	 * Cancel.
 	 */
-	private void computeExam() {
-
-		int iPointsWritten = spnPointsWrittenA.getValue() + spnPointsWrittenB.getValue();
-		int iPointsPractical = spnPointsPractical.getValue();
-		int iPointsOral = spnPointsOral.getValue();
-		int iPointsSum = iPointsWritten + iPointsPractical + iPointsOral;
-
-		int iNeededWritten = AppModel.getData().getContent().getExam().getNeededPointsWritten().getValue();
-		int iNeededPractical = AppModel.getData().getContent().getExam().getNeededPointsPractical().getValue();
-		int iNeededOral = AppModel.getData().getContent().getExam().getNeededPointsOral().getValue();
-		int iNeededSum = AppModel.getData().getContent().getExam().getNeededPoints().getValue();
-
-		chkPassedWritten.setSelected(
-				(iPointsWritten >= iNeededWritten)
-		);
-
-		chkPassedPractical.setSelected(
-				(iPointsPractical >= iNeededPractical)
-		);
-
-		chkPassedOral.setSelected(
-				(iPointsOral >= iNeededOral)
-		);
-
-		chkPassed.setSelected(
-				(iPointsWritten >= iNeededWritten) &&
-				(iPointsPractical >= iNeededPractical) &&
-				(iPointsOral >= iNeededOral) &&
-				(iPointsSum >= iNeededSum)
-		);
-
+	@FXML
+	public void handleCancel() {
+		RefereeManager.logger.error("handleCancel - ToDo");
 	}
 
 }
