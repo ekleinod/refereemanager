@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormWishDataController">
+	<content>
+		<GridPane alignment="TOP_CENTER" vgap="5.0">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+				<ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="150.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+			</rowConstraints>
+			<children>
+				<Label text="Bevorzugt schiedsen" />
+				<ButtonBar GridPane.columnIndex="1">
+					<buttons>
+						<Button fx:id="btnPreferAdd" onAction="#handlePreferAdd" />
+						<Button fx:id="btnPreferEdit" onAction="#handlePreferEdit" />
+						<Button fx:id="btnPreferDelete" onAction="#handlePreferDelete" />
+					</buttons>
+				</ButtonBar>
+				<ListView fx:id="lstPrefer" prefHeight="100.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+				<Label text="Nicht schiedsen" GridPane.rowIndex="2" />
+				<ButtonBar GridPane.columnIndex="1" GridPane.rowIndex="2">
+					<buttons>
+						<Button fx:id="btnAvoidAdd" onAction="#handleAvoidAdd" />
+						<Button fx:id="btnAvoidEdit" onAction="#handleAvoidEdit" />
+						<Button fx:id="btnAvoidDelete" onAction="#handleAvoidDelete" />
+					</buttons>
+				</ButtonBar>
+				<ListView fx:id="lstAvoid" prefHeight="100.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
+			</children>
+		</GridPane>
+	</content>
+</ScrollPane>

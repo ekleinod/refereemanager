@@ -9,22 +9,14 @@ import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.edgeutils.javafx.ButtonUtils;
-import de.edgesoft.refereemanager.controller.AbstractContactEditDialogController;
 import de.edgesoft.refereemanager.controller.TrainingLevelEditDialogController;
-import de.edgesoft.refereemanager.controller.WishEditDialogController;
 import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.jaxb.Trainee;
-import de.edgesoft.refereemanager.model.AddressModel;
 import de.edgesoft.refereemanager.model.AppModel;
-import de.edgesoft.refereemanager.model.ContactModel;
-import de.edgesoft.refereemanager.model.EMailModel;
-import de.edgesoft.refereemanager.model.PhoneNumberModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
-import de.edgesoft.refereemanager.model.URLModel;
-import de.edgesoft.refereemanager.model.WishModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
@@ -39,7 +31,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
@@ -112,84 +103,17 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	@FXML
 	private IInputFormController embeddedInputFormRefereeDataController;
 
-
-	// wishes
-
 	/**
-	 * Tab for referee wishes.
-	 *
-	 * @since 0.14.0
+	 * Wish data.
 	 */
 	@FXML
-	protected Tab tabRefereeWishes;
+	private Parent embeddedInputFormWishData;
 
 	/**
-	 * List view for prefers.
-	 *
-	 * @since 0.14.0
+	 * Wish data controller.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "prefer", jaxbclass = Referee.class)
-	protected ListView<ModelClassExt> lstPrefer;
-
-	/**
-	 * Add prefer.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnPreferAdd;
-
-	/**
-	 * Edit prefer.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnPreferEdit;
-
-	/**
-	 * Delete prefer.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnPreferDelete;
-
-
-	/**
-	 * List view for avoids.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "avoid", jaxbclass = Referee.class)
-	protected ListView<ModelClassExt> lstAvoid;
-
-	/**
-	 * Add avoid.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnAvoidAdd;
-
-	/**
-	 * Edit avoid.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnAvoidEdit;
-
-	/**
-	 * Delete avoid.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnAvoidDelete;
-
+	private IInputFormController embeddedInputFormWishDataController;
 
 
 	// training levels
@@ -334,6 +258,7 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 		addInputFormController(embeddedInputFormPersonDataController);
 		addInputFormController(embeddedInputFormContactDataController);
 		addInputFormController(embeddedInputFormRefereeDataController);
+		addInputFormController(embeddedInputFormWishDataController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class})));
 
@@ -343,8 +268,6 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
         pckExamDate.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
 
         // setup list views
-        lstPrefer.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
-        lstAvoid.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
         lstTrainingLevel.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
 
         // setup spinners
@@ -363,12 +286,6 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
         spnPointsOral.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
 
 		// enable buttons
-        ButtonUtils.bindDisable(btnPreferEdit, lstPrefer);
-        ButtonUtils.bindDisable(btnPreferDelete, lstPrefer);
-
-        ButtonUtils.bindDisable(btnAvoidEdit, lstAvoid);
-        ButtonUtils.bindDisable(btnAvoidDelete, lstAvoid);
-
         ButtonUtils.bindDisable(btnTrainingLevelEdit, lstTrainingLevel);
         ButtonUtils.bindDisable(btnTrainingLevelDelete, lstTrainingLevel);
 
@@ -388,16 +305,10 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 
 
 		// icons
-		btnPreferAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
-		btnAvoidAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnTrainingLevelAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 
-		btnPreferEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
-		btnAvoidEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnTrainingLevelEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 
-		btnPreferDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
-		btnAvoidDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnTrainingLevelDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 
 	}
@@ -414,160 +325,6 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 		computeExam();
 
     }
-
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handlePreferAdd() {
-		addWish(lstPrefer, new WishModel());
-	}
-
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handlePreferEdit() {
-		editWish(lstPrefer);
-	}
-
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handlePreferDelete() {
-		deleteWish(lstPrefer);
-	}
-
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handleAvoidAdd() {
-		addWish(lstAvoid, new WishModel());
-	}
-
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handleAvoidEdit() {
-		editWish(lstAvoid);
-	}
-
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handleAvoidDelete() {
-		deleteWish(lstAvoid);
-	}
-
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @param theListView list view
-	 * @param newWish new wish
-	 *
-	 * @since 0.14.0
-	 */
-	private void addWish(ListView<ModelClassExt> theListView, WishModel newWish) {
-
-		if (showWishEditDialog(newWish)) {
-			theListView.getItems().add(newWish);
-		}
-
-	}
-
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @param theListView list view
-	 *
-	 * @since 0.14.0
-	 */
-	private void editWish(ListView<ModelClassExt> theListView) {
-
-		if (!theListView.getSelectionModel().isEmpty()) {
-			showWishEditDialog((WishModel) theListView.getSelectionModel().getSelectedItem());
-			theListView.refresh();
-		}
-
-	}
-
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @param theListView list view
-	 *
-	 * @since 0.14.0
-	 */
-	private void deleteWish(ListView<ModelClassExt> theListView) {
-
-		if (!theListView.getSelectionModel().isEmpty()) {
-
-			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, getDialogStage(),
-					"Löschbestätigung",
-					MessageFormat.format("Soll ''{0}'' gelöscht werden?", theListView.getSelectionModel().getSelectedItem().getDisplayText().get()),
-					null);
-
-			alert.showAndWait()
-					.filter(response -> response == ButtonType.OK)
-					.ifPresent(response -> {
-						theListView.getItems().remove(theListView.getSelectionModel().getSelectedItem());
-			});
-
-		}
-
-	}
-
-	/**
-	 * Opens the wish edit dialog.
-	 *
-	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
-	 *
-	 * @param theWish the wish to be edited
-	 * @return true if the user clicked OK, false otherwise.
-	 *
-	 * @since 0.14.0
-	 */
-	private boolean showWishEditDialog(WishModel theWish) {
-
-		Objects.requireNonNull(theWish);
-
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("WishEditDialog");
-
-		// Create the dialog Stage.
-		Stage editDialogStage = new Stage();
-		editDialogStage.initModality(Modality.WINDOW_MODAL);
-		editDialogStage.initOwner(getDialogStage());
-		editDialogStage.setTitle("Wunsch editieren");
-
-		editDialogStage.setScene(new Scene(pneLoad.getKey()));
-
-		// Set the referee
-		WishEditDialogController editController = pneLoad.getValue().getController();
-		editController.setDialogStage(editDialogStage);
-		editController.setData(theWish);
-
-		// Show the dialog and wait until the user closes it
-		editDialogStage.showAndWait();
-
-		return editController.isOkClicked();
-
-	}
 
 	/**
 	 * Opens edit dialog for new data.

@@ -38,65 +38,15 @@
 						<fx:include fx:id="embeddedInputFormRefereeData" source="../inputforms/InputFormRefereeData.fxml" />
 					</content>
 				</Tab>
+				<Tab text="Wünsche">
+					<content>
+						<fx:include fx:id="embeddedInputFormWishData" source="../inputforms/InputFormWishata.fxml" />
+					</content>
+				</Tab>
 
 
 
 
-			    <Tab fx:id="tabRefereeWishes" disable="true" text="Wünsche">
-			       <content>
-			          <AnchorPane prefHeight="200.0" prefWidth="200.0">
-			             <children>
-			                <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-			                   <content>
-			                      <GridPane>
-			                         <columnConstraints>
-			                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
-			                            <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="150.0" />
-			                         </columnConstraints>
-			                         <rowConstraints>
-			                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-			                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-			                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-			                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-			                         </rowConstraints>
-			                         <children>
-			                            <Label text="Bevorzugt schiedsen">
-			                               <GridPane.margin>
-			                                  <Insets bottom="10.0" top="10.0" />
-			                               </GridPane.margin>
-			                            </Label>
-			                            <ButtonBar buttonMinWidth="20.0" GridPane.columnIndex="1">
-			                               <buttons>
-			                                  <Button fx:id="btnPreferAdd" mnemonicParsing="false" onAction="#handlePreferAdd" />
-			                                  <Button fx:id="btnPreferEdit" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handlePreferEdit" />
-			                                  <Button fx:id="btnPreferDelete" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handlePreferDelete" />
-			                               </buttons>
-			                            </ButtonBar>
-			                            <ListView fx:id="lstPrefer" minHeight="-Infinity" prefHeight="100.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
-			                            <Label text="Nicht schiedsen" GridPane.rowIndex="2">
-			                               <GridPane.margin>
-			                                  <Insets bottom="10.0" top="10.0" />
-			                               </GridPane.margin>
-			                            </Label>
-			                            <ButtonBar buttonMinWidth="20.0" layoutX="165.0" layoutY="15.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-			                               <buttons>
-			                                  <Button fx:id="btnAvoidAdd" mnemonicParsing="false" onAction="#handleAvoidAdd" />
-			                                  <Button fx:id="btnAvoidEdit" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleAvoidEdit" />
-			                                  <Button fx:id="btnAvoidDelete" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleAvoidDelete" />
-			                               </buttons>
-			                            </ButtonBar>
-			                            <ListView fx:id="lstAvoid" minHeight="-Infinity" prefHeight="100.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
-			                         </children>
-			                         <padding>
-			                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-			                         </padding>
-			                      </GridPane>
-			                   </content>
-			                </ScrollPane>
-			             </children>
-			          </AnchorPane>
-			       </content>
-			    </Tab>
 			    <Tab fx:id="tabRefereeTrainingLevel" disable="true" text="Ausbildung">
 			       <content>
 			          <AnchorPane prefHeight="200.0" prefWidth="200.0">
