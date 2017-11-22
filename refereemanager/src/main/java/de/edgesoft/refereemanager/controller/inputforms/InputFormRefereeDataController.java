@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Tab;
 import javafx.scene.image.ImageView;
 
 /**
@@ -40,12 +39,6 @@ import javafx.scene.image.ImageView;
  * @since 0.15.0
  */
 public class InputFormRefereeDataController extends AbstractInputFormController {
-
-	/**
-	 * Tab for referee data.
-	 */
-	@FXML
-	protected Tab tabRefereeData;
 
 	/**
 	 * Combobox for member clubs.

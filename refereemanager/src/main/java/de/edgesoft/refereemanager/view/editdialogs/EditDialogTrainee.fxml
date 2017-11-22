@@ -40,53 +40,18 @@
 				</Tab>
 				<Tab text="Wünsche">
 					<content>
-						<fx:include fx:id="embeddedInputFormWishData" source="../inputforms/InputFormWishata.fxml" />
+						<fx:include fx:id="embeddedInputFormWishData" source="../inputforms/InputFormWishData.fxml" />
+					</content>
+				</Tab>
+				<Tab text="Ausbildung">
+					<content>
+						<fx:include fx:id="embeddedInputFormTrainingLevelData" source="../inputforms/InputFormTrainingLevelData.fxml" />
 					</content>
 				</Tab>
 
 
 
 
-			    <Tab fx:id="tabRefereeTrainingLevel" disable="true" text="Ausbildung">
-			       <content>
-			          <AnchorPane prefHeight="200.0" prefWidth="200.0">
-			             <children>
-			                <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-			                   <content>
-			                      <GridPane>
-			                         <columnConstraints>
-			                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
-			                            <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="150.0" />
-			                         </columnConstraints>
-			                         <rowConstraints>
-			                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-			                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-			                         </rowConstraints>
-			                         <children>
-			                            <Label text="Ausbildungsstufen">
-			                               <GridPane.margin>
-			                                  <Insets bottom="10.0" top="10.0" />
-			                               </GridPane.margin>
-			                            </Label>
-			                            <ButtonBar buttonMinWidth="20.0" GridPane.columnIndex="1">
-			                               <buttons>
-			                                  <Button fx:id="btnTrainingLevelAdd" mnemonicParsing="false" onAction="#handleTrainingLevelAdd" />
-			                                  <Button fx:id="btnTrainingLevelEdit" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleTrainingLevelEdit" />
-			                                  <Button fx:id="btnTrainingLevelDelete" layoutX="553.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleTrainingLevelDelete" />
-			                               </buttons>
-			                            </ButtonBar>
-			                            <ListView fx:id="lstTrainingLevel" minHeight="-Infinity" prefHeight="100.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
-			                         </children>
-			                         <padding>
-			                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-			                         </padding>
-			                      </GridPane>
-			                   </content>
-			                </ScrollPane>
-			             </children>
-			          </AnchorPane>
-			       </content>
-			    </Tab>
 			    <Tab fx:id="tabTraineeExam" disable="true" text="Prüfung">
 			       <content>
 			          <AnchorPane prefHeight="200.0" prefWidth="200.0">

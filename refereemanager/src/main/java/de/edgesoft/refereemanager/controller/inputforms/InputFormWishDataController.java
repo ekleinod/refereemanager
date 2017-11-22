@@ -21,7 +21,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -53,12 +52,6 @@ import javafx.stage.Stage;
  * @since 0.15.0
  */
 public class InputFormWishDataController extends AbstractInputFormController {
-
-	/**
-	 * Tab for referee wishes.
-	 */
-	@FXML
-	protected Tab tabRefereeWishes;
 
 	/**
 	 * List view for prefers.
