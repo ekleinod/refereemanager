@@ -1,17 +1,17 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.overview;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.refereemanager.jaxb.Trainee;
+import de.edgesoft.refereemanager.jaxb.OtherEvent;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.TraineeModel;
+import de.edgesoft.refereemanager.model.OtherEventModel;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.event.ActionEvent;
 
 /**
- * Controller for the trainee overview scene.
+ * Controller for the other events overview scene.
  *
  * ## Legal stuff
  *
@@ -36,7 +36,7 @@ import javafx.event.ActionEvent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class OverviewTraineesController extends AbstractOverviewController<Trainee> {
+public class OverviewOtherEventsController extends AbstractOverviewController<OtherEvent> {
 
 	/**
 	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
@@ -48,7 +48,7 @@ public class OverviewTraineesController extends AbstractOverviewController<Train
 
 		super.initController(theOverviewController);
 
-		getController().initController(this, PrefKey.OVERVIEW_TRAINEE_SPLIT, "lists/ListTrainees", "details/DetailsTrainee");
+		getController().initController(this, PrefKey.OVERVIEW_OTHER_EVENT_SPLIT, "lists/ListOtherEvents", "details/DetailsOtherEvent");
 
 		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
@@ -64,15 +64,21 @@ public class OverviewTraineesController extends AbstractOverviewController<Train
 	@Override
 	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
 
+		Class<OtherEventModel> theClass = OtherEventModel.class;
+
+		assert
+				((theDetailData == null) || theClass.isInstance(theDetailData))
+				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
+
 		getController().showDetails(theDetailData);
 
-		if ((theDetailData == null) || !(theDetailData instanceof Trainee)) {
+		if (theDetailData == null) {
 
 			getController().setHeading(new SimpleStringProperty("Details"));
 
 		} else {
 
-			Trainee theData = (Trainee) theDetailData;
+			OtherEventModel theData = theClass.cast(theDetailData);
 
 			getController().setHeading(theData.getDisplayTitle());
 
@@ -87,7 +93,7 @@ public class OverviewTraineesController extends AbstractOverviewController<Train
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("EditDialogTrainee", "Azubi", new TraineeModel(), ((ContentModel) AppModel.getData().getContent()).getObservableTrainees());
+		super.handleAdd("EventEditDialog", "Sonstiges Ereignis", new OtherEventModel(), ((ContentModel) AppModel.getData().getContent()).getObservableOtherEvents());
 	}
 
 	/**
@@ -97,7 +103,7 @@ public class OverviewTraineesController extends AbstractOverviewController<Train
 	 */
 	@Override
 	public void handleEdit(ActionEvent event) {
-		handleEdit("EditDialogTrainee", "Azubi");
+		handleEdit("EventEditDialog", "Sonstiges Ereignis");
 	}
 
 	/**
@@ -107,7 +113,7 @@ public class OverviewTraineesController extends AbstractOverviewController<Train
 	 */
 	@Override
 	public void handleDelete(ActionEvent event) {
-		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableTrainees());
+		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableOtherEvents());
 	}
 
 }

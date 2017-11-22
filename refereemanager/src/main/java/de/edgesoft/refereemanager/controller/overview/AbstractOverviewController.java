@@ -1,4 +1,4 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.overview;
 
 import java.text.MessageFormat;
 import java.util.Map;
@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.RefereeManager;
+import de.edgesoft.refereemanager.controller.ICRUDActionsController;
+import de.edgesoft.refereemanager.controller.IEditDialogController;
 import de.edgesoft.refereemanager.controller.details.IDetailsController;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;

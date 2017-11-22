@@ -1,17 +1,17 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.overview;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.refereemanager.jaxb.Tournament;
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.TournamentModel;
+import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.event.ActionEvent;
 
 /**
- * Controller for the tournaments overview scene.
+ * Controller for the people overview scene.
  *
  * ## Legal stuff
  *
@@ -36,7 +36,7 @@ import javafx.event.ActionEvent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class OverviewTournamentsController extends AbstractOverviewController<Tournament> {
+public class OverviewPeopleController extends AbstractOverviewController<Person> {
 
 	/**
 	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
@@ -48,7 +48,7 @@ public class OverviewTournamentsController extends AbstractOverviewController<To
 
 		super.initController(theOverviewController);
 
-		getController().initController(this, PrefKey.OVERVIEW_TOURNAMENT_SPLIT, "lists/ListTournaments", "details/DetailsTournament");
+		getController().initController(this, PrefKey.OVERVIEW_PERSON_SPLIT, "lists/ListPeople", "details/DetailsPerson");
 
 		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
@@ -64,21 +64,15 @@ public class OverviewTournamentsController extends AbstractOverviewController<To
 	@Override
 	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
 
-		Class<TournamentModel> theClass = TournamentModel.class;
-
-		assert
-				((theDetailData == null) || theClass.isInstance(theDetailData))
-				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
-
 		getController().showDetails(theDetailData);
 
-		if (theDetailData == null) {
+		if ((theDetailData == null) || !(theDetailData instanceof Person)) {
 
 			getController().setHeading(new SimpleStringProperty("Details"));
 
 		} else {
 
-			TournamentModel theData = theClass.cast(theDetailData);
+			Person theData = (Person) theDetailData;
 
 			getController().setHeading(theData.getDisplayTitle());
 
@@ -93,7 +87,7 @@ public class OverviewTournamentsController extends AbstractOverviewController<To
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("EventEditDialog", "Turnier", new TournamentModel(), ((ContentModel) AppModel.getData().getContent()).getObservableTournaments());
+		super.handleAdd("EditDialogPerson", "Person", new PersonModel(), ((ContentModel) AppModel.getData().getContent()).getObservablePeople());
 	}
 
 	/**
@@ -103,7 +97,7 @@ public class OverviewTournamentsController extends AbstractOverviewController<To
 	 */
 	@Override
 	public void handleEdit(ActionEvent event) {
-		handleEdit("EventEditDialog", "Turnier");
+		handleEdit("EditDialogPerson", "Person");
 	}
 
 	/**
@@ -113,7 +107,7 @@ public class OverviewTournamentsController extends AbstractOverviewController<To
 	 */
 	@Override
 	public void handleDelete(ActionEvent event) {
-		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableTournaments());
+		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservablePeople());
 	}
 
 }

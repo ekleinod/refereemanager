@@ -1,17 +1,17 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.overview;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.refereemanager.jaxb.Club;
+import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import de.edgesoft.refereemanager.model.AppModel;
-import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
+import de.edgesoft.refereemanager.model.LeagueGameModel;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.event.ActionEvent;
 
 /**
- * Controller for the club overview scene.
+ * Controller for the league games overview scene.
  *
  * ## Legal stuff
  *
@@ -36,7 +36,7 @@ import javafx.event.ActionEvent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class OverviewClubsController extends AbstractOverviewController<Club> {
+public class OverviewLeagueGamesController extends AbstractOverviewController<LeagueGame> {
 
 	/**
 	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
@@ -48,7 +48,7 @@ public class OverviewClubsController extends AbstractOverviewController<Club> {
 
 		super.initController(theOverviewController);
 
-		getController().initController(this, PrefKey.OVERVIEW_CLUB_SPLIT, "lists/ListClubs", "details/DetailsClub");
+		getController().initController(this, PrefKey.OVERVIEW_LEAGUE_GAME_SPLIT, "lists/ListLeagueGames", "details/DetailsLeagueGame");
 
 		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
@@ -64,12 +64,24 @@ public class OverviewClubsController extends AbstractOverviewController<Club> {
 	@Override
 	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
 
+		Class<LeagueGameModel> theClass = LeagueGameModel.class;
+
+		assert
+				((theDetailData == null) || theClass.isInstance(theDetailData))
+				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
+
 		getController().showDetails(theDetailData);
 
 		if (theDetailData == null) {
+
 			getController().setHeading(new SimpleStringProperty("Details"));
+
 		} else {
-			getController().setHeading(theDetailData.getDisplayText());
+
+			LeagueGameModel theData = theClass.cast(theDetailData);
+
+			getController().setHeading(theData.getDisplayTitle());
+
 		}
 
 	}
@@ -81,7 +93,7 @@ public class OverviewClubsController extends AbstractOverviewController<Club> {
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("ClubEditDialog", "Club", new ClubModel(), ((ContentModel) AppModel.getData().getContent()).getObservableClubs());
+		super.handleAdd("EventEditDialog", "Ligaspiel", new LeagueGameModel(), ((ContentModel) AppModel.getData().getContent()).getObservableLeagueGames());
 	}
 
 	/**
@@ -91,7 +103,7 @@ public class OverviewClubsController extends AbstractOverviewController<Club> {
 	 */
 	@Override
 	public void handleEdit(ActionEvent event) {
-		handleEdit("ClubEditDialog", "Club");
+		handleEdit("EventEditDialog", "Ligaspiel");
 	}
 
 	/**
@@ -101,7 +113,7 @@ public class OverviewClubsController extends AbstractOverviewController<Club> {
 	 */
 	@Override
 	public void handleDelete(ActionEvent event) {
-		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableClubs());
+		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableLeagueGames());
 	}
 
 }

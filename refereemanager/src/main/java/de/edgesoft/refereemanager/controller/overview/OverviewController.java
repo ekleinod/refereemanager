@@ -1,10 +1,11 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.overview;
 
 import java.util.Map;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
+import de.edgesoft.refereemanager.controller.AbstractEmbedCRUDButtonsController;
 import de.edgesoft.refereemanager.controller.details.DetailsTitledIDController;
 import de.edgesoft.refereemanager.controller.details.IDetailsController;
 import de.edgesoft.refereemanager.controller.lists.IListController;

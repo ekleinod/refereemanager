@@ -12,6 +12,14 @@ import de.edgesoft.edgeutils.commons.Info;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.edgeutils.javafx.ButtonUtils;
 import de.edgesoft.refereemanager.RefereeManager;
+import de.edgesoft.refereemanager.controller.overview.IOverviewController;
+import de.edgesoft.refereemanager.controller.overview.OverviewClubsController;
+import de.edgesoft.refereemanager.controller.overview.OverviewLeagueGamesController;
+import de.edgesoft.refereemanager.controller.overview.OverviewOtherEventsController;
+import de.edgesoft.refereemanager.controller.overview.OverviewPeopleController;
+import de.edgesoft.refereemanager.controller.overview.OverviewRefereesController;
+import de.edgesoft.refereemanager.controller.overview.OverviewTournamentsController;
+import de.edgesoft.refereemanager.controller.overview.OverviewTraineesController;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -683,7 +691,7 @@ public class AppLayoutController {
 	 */
 	private void handleOverview(final IOverviewController theOverviewController) {
 
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AbstractOverview");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("overview/Overview");
 
 		appPane.setCenter(pneLoad.getKey());
 

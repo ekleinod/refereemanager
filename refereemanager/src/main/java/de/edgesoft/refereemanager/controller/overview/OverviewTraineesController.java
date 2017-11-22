@@ -1,17 +1,17 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.overview;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.refereemanager.jaxb.LeagueGame;
+import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.LeagueGameModel;
+import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.event.ActionEvent;
 
 /**
- * Controller for the league games overview scene.
+ * Controller for the trainee overview scene.
  *
  * ## Legal stuff
  *
@@ -36,7 +36,7 @@ import javafx.event.ActionEvent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class OverviewLeagueGamesController extends AbstractOverviewController<LeagueGame> {
+public class OverviewTraineesController extends AbstractOverviewController<Trainee> {
 
 	/**
 	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
@@ -48,7 +48,7 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 
 		super.initController(theOverviewController);
 
-		getController().initController(this, PrefKey.OVERVIEW_LEAGUE_GAME_SPLIT, "lists/ListLeagueGames", "details/DetailsLeagueGame");
+		getController().initController(this, PrefKey.OVERVIEW_TRAINEE_SPLIT, "lists/ListTrainees", "details/DetailsTrainee");
 
 		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
@@ -64,21 +64,15 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 	@Override
 	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
 
-		Class<LeagueGameModel> theClass = LeagueGameModel.class;
-
-		assert
-				((theDetailData == null) || theClass.isInstance(theDetailData))
-				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
-
 		getController().showDetails(theDetailData);
 
-		if (theDetailData == null) {
+		if ((theDetailData == null) || !(theDetailData instanceof Trainee)) {
 
 			getController().setHeading(new SimpleStringProperty("Details"));
 
 		} else {
 
-			LeagueGameModel theData = theClass.cast(theDetailData);
+			Trainee theData = (Trainee) theDetailData;
 
 			getController().setHeading(theData.getDisplayTitle());
 
@@ -93,7 +87,7 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("EventEditDialog", "Ligaspiel", new LeagueGameModel(), ((ContentModel) AppModel.getData().getContent()).getObservableLeagueGames());
+		super.handleAdd("EditDialogTrainee", "Azubi", new TraineeModel(), ((ContentModel) AppModel.getData().getContent()).getObservableTrainees());
 	}
 
 	/**
@@ -103,7 +97,7 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 	 */
 	@Override
 	public void handleEdit(ActionEvent event) {
-		handleEdit("EventEditDialog", "Ligaspiel");
+		handleEdit("EditDialogTrainee", "Azubi");
 	}
 
 	/**
@@ -113,7 +107,7 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 	 */
 	@Override
 	public void handleDelete(ActionEvent event) {
-		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableLeagueGames());
+		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableTrainees());
 	}
 
 }
