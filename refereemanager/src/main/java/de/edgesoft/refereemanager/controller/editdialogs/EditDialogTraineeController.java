@@ -73,7 +73,7 @@ import javafx.stage.Stage;
  * @version 0.14.0
  * @since 0.13.0
  */
-public class EditDialogRefereeController extends AbstractTabbedEditDialogController {
+public class EditDialogTraineeController extends AbstractTabbedEditDialogController {
 
 	/**
 	 * Person data.
