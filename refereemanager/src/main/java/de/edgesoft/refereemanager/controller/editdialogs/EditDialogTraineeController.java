@@ -8,6 +8,7 @@ import java.util.Objects;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.edgeutils.javafx.ButtonUtils;
 import de.edgesoft.refereemanager.controller.AbstractContactEditDialogController;
 import de.edgesoft.refereemanager.controller.TrainingLevelEditDialogController;
 import de.edgesoft.refereemanager.controller.WishEditDialogController;
@@ -87,143 +88,17 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	@FXML
 	private IInputFormController embeddedInputFormPersonDataController;
 
-
-	// contact data
-
 	/**
-	 * List view for emails.
-	 *
-	 * @since 0.14.0
+	 * Contact data.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "eMail", jaxbclass = Person.class)
-	protected ListView<ModelClassExt> lstEMail;
+	private Parent embeddedInputFormContactData;
 
 	/**
-	 * Add email.
-	 *
-	 * @since 0.14.0
+	 * Contact data controller.
 	 */
 	@FXML
-	private Button btnEMailAdd;
-
-	/**
-	 * Edit email.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnEMailEdit;
-
-	/**
-	 * Delete email.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnEMailDelete;
-
-
-	/**
-	 * List view for phone numbers.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "phoneNumber", jaxbclass = Person.class)
-	protected ListView<ModelClassExt> lstPhoneNumber;
-
-	/**
-	 * Add phone number.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnPhoneNumberAdd;
-
-	/**
-	 * Edit phone number.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnPhoneNumberEdit;
-
-	/**
-	 * Delete phone number.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnPhoneNumberDelete;
-
-
-	/**
-	 * List view for addresses.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "address", jaxbclass = Person.class)
-	protected ListView<ModelClassExt> lstAddress;
-
-	/**
-	 * Add address.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnAddressAdd;
-
-	/**
-	 * Edit address.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnAddressEdit;
-
-	/**
-	 * Delete address.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnAddressDelete;
-
-
-	/**
-	 * List view for URLs.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "URL", jaxbclass = Person.class)
-	protected ListView<ModelClassExt> lstURL;
-
-	/**
-	 * Add URL.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnURLAdd;
-
-	/**
-	 * Edit URL.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnURLEdit;
-
-	/**
-	 * Delete URL.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnURLDelete;
+	private IInputFormController embeddedInputFormContactDataController;
 
 
 	// referee data
@@ -509,6 +384,7 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	protected void initialize() {
 
 		addInputFormController(embeddedInputFormPersonDataController);
+		addInputFormController(embeddedInputFormContactDataController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class})));
 
@@ -523,10 +399,6 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
         ComboBoxUtils.prepareComboBox(cboStatus, AppModel.getData().getContent().getStatusType());
 
         // setup list views
-        lstEMail.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
-        lstPhoneNumber.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
-        lstAddress.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
-        lstURL.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
         lstPrefer.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
         lstAvoid.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
         lstTrainingLevel.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
@@ -547,48 +419,14 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
         spnPointsOral.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
 
 		// enable buttons
-		btnEMailEdit.disableProperty().bind(
-				lstEMail.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnEMailDelete.disableProperty().bind(
-				lstEMail.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnPhoneNumberEdit.disableProperty().bind(
-				lstPhoneNumber.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnPhoneNumberDelete.disableProperty().bind(
-				lstPhoneNumber.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnAddressEdit.disableProperty().bind(
-				lstAddress.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnAddressDelete.disableProperty().bind(
-				lstAddress.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnURLEdit.disableProperty().bind(
-				lstURL.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnURLDelete.disableProperty().bind(
-				lstURL.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnPreferEdit.disableProperty().bind(
-				lstPrefer.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnPreferDelete.disableProperty().bind(
-				lstPrefer.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnAvoidEdit.disableProperty().bind(
-				lstAvoid.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnAvoidDelete.disableProperty().bind(
-				lstAvoid.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnTrainingLevelEdit.disableProperty().bind(
-				lstTrainingLevel.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnTrainingLevelDelete.disableProperty().bind(
-				lstTrainingLevel.getSelectionModel().selectedItemProperty().isNull()
-		);
+        ButtonUtils.bindDisable(btnPreferEdit, lstPrefer);
+        ButtonUtils.bindDisable(btnPreferDelete, lstPrefer);
+
+        ButtonUtils.bindDisable(btnAvoidEdit, lstAvoid);
+        ButtonUtils.bindDisable(btnAvoidDelete, lstAvoid);
+
+        ButtonUtils.bindDisable(btnTrainingLevelEdit, lstTrainingLevel);
+        ButtonUtils.bindDisable(btnTrainingLevelDelete, lstTrainingLevel);
 
 		btnMemberClear.disableProperty().bind(
 				cboMember.getSelectionModel().selectedItemProperty().isNull()
@@ -616,26 +454,14 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 
 
 		// icons
-		btnEMailAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
-		btnPhoneNumberAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
-		btnAddressAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
-		btnURLAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnPreferAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnAvoidAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 		btnTrainingLevelAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 
-		btnEMailEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
-		btnPhoneNumberEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
-		btnAddressEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
-		btnURLEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnPreferEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnAvoidEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnTrainingLevelEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 
-		btnEMailDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
-		btnPhoneNumberDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
-		btnAddressDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
-		btnURLDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnPreferDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnAvoidDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnTrainingLevelDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
@@ -658,224 +484,6 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 		computeExam();
 
     }
-
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handleEMailAdd() {
-		addContact(lstEMail, new EMailModel());
-	}
-
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handleEMailEdit() {
-		editContact(lstEMail);
-	}
-
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handleEMailDelete() {
-		deleteContact(lstEMail);
-	}
-
-
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handlePhoneNumberAdd() {
-		addContact(lstPhoneNumber, new PhoneNumberModel());
-	}
-
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handlePhoneNumberEdit() {
-		editContact(lstPhoneNumber);
-	}
-
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handlePhoneNumberDelete() {
-		deleteContact(lstPhoneNumber);
-	}
-
-
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handleAddressAdd() {
-		addContact(lstAddress, new AddressModel());
-	}
-
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handleAddressEdit() {
-		editContact(lstAddress);
-	}
-
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handleAddressDelete() {
-		deleteContact(lstAddress);
-	}
-
-
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handleURLAdd() {
-		addContact(lstURL, new URLModel());
-	}
-
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handleURLEdit() {
-		editContact(lstURL);
-	}
-
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private void handleURLDelete() {
-		deleteContact(lstURL);
-	}
-
-
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @param theListView list view
-	 * @param newContact new contact
-	 *
-	 * @since 0.14.0
-	 */
-	private void addContact(ListView<ModelClassExt> theListView, ContactModel newContact) {
-
-		if (showContactEditDialog(newContact)) {
-			theListView.getItems().add(newContact);
-		}
-
-	}
-
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @param theListView list view
-	 *
-	 * @since 0.14.0
-	 */
-	private void editContact(ListView<ModelClassExt> theListView) {
-
-		if (!theListView.getSelectionModel().isEmpty()) {
-			showContactEditDialog((ContactModel) theListView.getSelectionModel().getSelectedItem());
-			theListView.refresh();
-		}
-
-	}
-
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @param theListView list view
-	 *
-	 * @since 0.14.0
-	 */
-	private void deleteContact(ListView<ModelClassExt> theListView) {
-
-		if (!theListView.getSelectionModel().isEmpty()) {
-
-			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, getDialogStage(),
-					"Löschbestätigung",
-					MessageFormat.format("Soll ''{0}'' gelöscht werden?", theListView.getSelectionModel().getSelectedItem().getDisplayText().get()),
-					null);
-
-			alert.showAndWait()
-					.filter(response -> response == ButtonType.OK)
-					.ifPresent(response -> {
-						theListView.getItems().remove(theListView.getSelectionModel().getSelectedItem());
-			});
-
-		}
-
-	}
-
-	/**
-	 * Opens the contact edit dialog.
-	 *
-	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
-	 *
-	 * @param theContact the contact to be edited
-	 * @return true if the user clicked OK, false otherwise.
-	 *
-	 * @since 0.14.0
-	 */
-	private boolean showContactEditDialog(ContactModel theContact) {
-
-		Objects.requireNonNull(theContact);
-
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode(String.format("%sEditDialog", theContact.getClass().getSimpleName().replace("Model", "")));
-
-		// Create the dialog Stage.
-		Stage editDialogStage = new Stage();
-		editDialogStage.initModality(Modality.WINDOW_MODAL);
-		editDialogStage.initOwner(getDialogStage());
-		editDialogStage.setTitle("Kontakt editieren");
-
-		editDialogStage.setScene(new Scene(pneLoad.getKey()));
-
-		// Set the referee
-		AbstractContactEditDialogController editController = pneLoad.getValue().getController();
-		editController.setDialogStage(editDialogStage);
-		editController.setData(theContact);
-
-		// Show the dialog and wait until the user closes it
-		editDialogStage.showAndWait();
-
-		return editController.isOkClicked();
-
-	}
 
 	/**
 	 * Opens edit dialog for new data.
