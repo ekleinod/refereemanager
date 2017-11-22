@@ -2,6 +2,7 @@ package de.edgesoft.refereemanager.controller.inputforms;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.edgeutils.javafx.ButtonUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -144,12 +145,9 @@ public class InputFormPersonDataController extends AbstractInputFormController {
         ComboBoxUtils.prepareComboBox(cboSexType, AppModel.getData().getContent().getSexType());
         ComboBoxUtils.prepareComboBox(cboRole, AppModel.getData().getContent().getRoleType());
 
-		btnSexTypeClear.disableProperty().bind(
-				cboSexType.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnRoleClear.disableProperty().bind(
-				cboRole.getSelectionModel().selectedItemProperty().isNull()
-		);
+		// enable buttons
+        ButtonUtils.bindDisable(btnSexTypeClear, cboSexType);
+        ButtonUtils.bindDisable(btnRoleClear, cboRole);
 
 		// icons
 		btnSexTypeClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));

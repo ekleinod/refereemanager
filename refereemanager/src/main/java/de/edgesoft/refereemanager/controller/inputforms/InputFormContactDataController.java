@@ -30,7 +30,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * Controller for the person data edit dialog tab.
+ * Controller for the contact data edit dialog tab.
  *
  * ## Legal stuff
  *

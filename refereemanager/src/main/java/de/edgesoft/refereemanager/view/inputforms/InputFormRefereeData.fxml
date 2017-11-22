@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormRefereeDataController">
+	<content>
+		<GridPane alignment="TOP_CENTER" vgap="5.0">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+				<ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="150.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+			</rowConstraints>
+			<children>
+				<Label text="Mitglied" />
+				<AnchorPane GridPane.columnIndex="1">
+					<children>
+						<ComboBox fx:id="cboMember" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
+						<Button fx:id="btnMemberClear" onAction="#handleMemberClear" AnchorPane.rightAnchor="0.0" />
+					</children>
+				</AnchorPane>
+				<Label text="Schiedst für" GridPane.rowIndex="1" />
+				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+					<children>
+						<ComboBox fx:id="cboReffor" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
+						<Button fx:id="btnRefforClear" onAction="#handleRefforClear" AnchorPane.rightAnchor="0.0" />
+					</children>
+				</AnchorPane>
+				<Label text="Einsatzhäufigkeit" GridPane.rowIndex="2" />
+				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+					<children>
+						<ComboBox fx:id="cboStatus" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
+						<Button fx:id="btnStatusClear" onAction="#handleStatusClear" AnchorPane.rightAnchor="0.0" />
+					</children>
+				</AnchorPane>
+				<Label text="Brief" GridPane.rowIndex="3" />
+				<CheckBox fx:id="chkDocsByLetter" text="Nachrichten zusätzlich per Brief" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+			</children>
+		</GridPane>
+	</content>
+</ScrollPane>

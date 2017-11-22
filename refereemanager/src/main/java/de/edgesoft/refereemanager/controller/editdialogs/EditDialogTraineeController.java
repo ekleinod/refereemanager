@@ -103,67 +103,6 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 
 	// referee data
 
-	/**
-	 * Tab for referee data.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	protected Tab tabRefereeData;
-
-	/**
-	 * Combobox for member clubs.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "member", jaxbclass = Referee.class)
-	protected ComboBox<ModelClassExt> cboMember;
-
-	/**
-	 * Clear member clubs.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private Button btnMemberClear;
-
-	/**
-	 * Combobox for reffor clubs.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "reffor", jaxbclass = Referee.class)
-	protected ComboBox<ModelClassExt> cboReffor;
-
-	/**
-	 * Clear reffor clubs.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private Button btnRefforClear;
-
-	/**
-	 * Combobox for status.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "status", jaxbclass = Referee.class)
-	protected ComboBox<ModelClassExt> cboStatus;
-
-	/**
-	 * Clear status.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private Button btnStatusClear;
-
-	/**
-	 * Checkbox for docs by letter.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "docsByLetter", jaxbclass = Referee.class)
-	protected CheckBox chkDocsByLetter;
-
-
 
 	// wishes
 
@@ -393,11 +332,6 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 		// set date picker date format
         pckExamDate.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
 
-		// fill combo boxes
-        ComboBoxUtils.prepareComboBox(cboMember, AppModel.getData().getContent().getClub());
-        ComboBoxUtils.prepareComboBox(cboReffor, AppModel.getData().getContent().getClub());
-        ComboBoxUtils.prepareComboBox(cboStatus, AppModel.getData().getContent().getStatusType());
-
         // setup list views
         lstPrefer.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
         lstAvoid.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
@@ -428,16 +362,6 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
         ButtonUtils.bindDisable(btnTrainingLevelEdit, lstTrainingLevel);
         ButtonUtils.bindDisable(btnTrainingLevelDelete, lstTrainingLevel);
 
-		btnMemberClear.disableProperty().bind(
-				cboMember.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnRefforClear.disableProperty().bind(
-				cboReffor.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnStatusClear.disableProperty().bind(
-				cboStatus.getSelectionModel().selectedItemProperty().isNull()
-		);
-
 		// enable spinners
 		spnPointsWrittenA.disableProperty().bind(
 				pckExamDate.valueProperty().isNull()
@@ -465,10 +389,6 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 		btnPreferDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnAvoidDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnTrainingLevelDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
-
-		btnMemberClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
-		btnRefforClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
-		btnStatusClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 
 	}
 
@@ -637,36 +557,6 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 
 		return editController.isOkClicked();
 
-	}
-
-	/**
-	 * Clears member selection.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private void handleMemberClear() {
-		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboMember);
-	}
-
-	/**
-	 * Clears reffor selection.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private void handleRefforClear() {
-		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboReffor);
-	}
-
-	/**
-	 * Clears status selection.
-	 *
-	 * @since 0.15.0
-	 */
-	@FXML
-	private void handleStatusClear() {
-		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboStatus);
 	}
 
 	/**

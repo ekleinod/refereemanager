@@ -33,78 +33,15 @@
 						<fx:include fx:id="embeddedInputFormContactData" source="../inputforms/InputFormContactData.fxml" />
 					</content>
 				</Tab>
+				<Tab text="Schiri">
+					<content>
+						<fx:include fx:id="embeddedInputFormRefereeData" source="../inputforms/InputFormRefereeData.fxml" />
+					</content>
+				</Tab>
 
 
 
 
-			    <Tab fx:id="tabRefereeData" disable="true" text="Schiri">
-			       <content>
-			          <AnchorPane prefHeight="200.0" prefWidth="200.0">
-			             <children>
-			                <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-			                   <content>
-			                      <GridPane>
-			                         <columnConstraints>
-			                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
-			                            <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="150.0" />
-			                         </columnConstraints>
-			                         <rowConstraints>
-			                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-			                            <RowConstraints vgrow="SOMETIMES" />
-			                            <RowConstraints vgrow="SOMETIMES" />
-			                            <RowConstraints vgrow="SOMETIMES" />
-			                         </rowConstraints>
-			                         <children>
-			                            <Label text="Mitglied">
-			                               <GridPane.margin>
-			                                  <Insets bottom="10.0" top="10.0" />
-			                               </GridPane.margin>
-			                            </Label>
-			                            <AnchorPane GridPane.columnIndex="1">
-			                               <children>
-			                                  <ComboBox fx:id="cboMember" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
-			                                  <Button fx:id="btnMemberClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleMemberClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
-			                               </children>
-			                            </AnchorPane>
-			                            <Label text="Schiedst für" GridPane.rowIndex="1">
-			                               <GridPane.margin>
-			                                  <Insets bottom="10.0" top="10.0" />
-			                               </GridPane.margin>
-			                            </Label>
-			                            <AnchorPane layoutX="165.0" layoutY="15.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-			                               <children>
-			                                  <ComboBox fx:id="cboReffor" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
-			                                  <Button fx:id="btnRefforClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleRefforClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
-			                               </children>
-			                            </AnchorPane>
-			                            <Label text="Einsatzhäufigkeit" GridPane.rowIndex="2">
-			                               <GridPane.margin>
-			                                  <Insets bottom="10.0" top="10.0" />
-			                               </GridPane.margin>
-			                            </Label>
-			                            <AnchorPane layoutX="165.0" layoutY="45.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-			                               <children>
-			                                  <ComboBox fx:id="cboStatus" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
-			                                  <Button fx:id="btnStatusClear" layoutX="586.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleStatusClear" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
-			                               </children>
-			                            </AnchorPane>
-			                            <Label text="Brief" GridPane.rowIndex="3">
-			                               <GridPane.margin>
-			                                  <Insets bottom="10.0" top="10.0" />
-			                               </GridPane.margin>
-			                            </Label>
-			                            <CheckBox fx:id="chkDocsByLetter" mnemonicParsing="false" text="Nachrichten zusätzlich per Brief" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-			                         </children>
-			                         <padding>
-			                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-			                         </padding>
-			                      </GridPane>
-			                   </content>
-			                </ScrollPane>
-			             </children>
-			          </AnchorPane>
-			       </content>
-			    </Tab>
 			    <Tab fx:id="tabRefereeWishes" disable="true" text="Wünsche">
 			       <content>
 			          <AnchorPane prefHeight="200.0" prefWidth="200.0">
