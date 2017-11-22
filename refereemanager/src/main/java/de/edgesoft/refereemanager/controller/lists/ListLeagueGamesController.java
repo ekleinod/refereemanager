@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
-import de.edgesoft.refereemanager.controller.AbstractListController;
 import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import de.edgesoft.refereemanager.model.AppModel;

@@ -1,15 +1,16 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.lists;
 
+import java.text.MessageFormat;
 import java.util.Optional;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.utils.TableUtils;
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableView;
 
 /**
- * Interface for the list scene controller.
+ * Abstract ontroller for list scenes.
  *
  * ## Legal stuff
  *
@@ -34,64 +35,59 @@ import javafx.scene.control.TableView;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IListController {
-
-	/**
-	 * Returns data table.
-	 */
-	public TableView<? extends ModelClassExt> getDataTable();
-
-	/**
-	 * Sets table items.
-	 */
-	public void setDataTableItems();
+public abstract class AbstractListController implements IListController {
 
 	/**
 	 * Sets table placeholder noun.
 	 *
 	 * @param thePlaceholderNoun placeholder noun
 	 */
-	public void setDataTablePlaceholderNoun(final String thePlaceholderNoun);
+	@Override
+	public void setDataTablePlaceholderNoun(final String thePlaceholderNoun) {
 
-	/**
-	 * Handles filter change events.
-	 */
-	public void handleFilterChange();
+		Label lblPlaceholder = new Label(MessageFormat.format(
+				(getDataTable().getItems().size() == 0) ? TableUtils.TABLE_NO_DATA : TableUtils.TABLE_FILTERED,
+				thePlaceholderNoun));
+		lblPlaceholder.setWrapText(true);
+		getDataTable().setPlaceholder(lblPlaceholder);
+
+	}
 
 	/**
 	 * Sets selection mode.
 	 *
 	 * @param theSelectionMode selection mode
 	 */
-	public void setSelectionMode(final SelectionMode theSelectionMode);
-
-	/**
-	 * Sets selected item.
-	 *
-	 * @param theItem item to select
-	 */
-	public <T extends ModelClassExt> void select(final T theItem);
+	@Override
+	public void setSelectionMode(final SelectionMode theSelectionMode) {
+		getDataTable().getSelectionModel().setSelectionMode(theSelectionMode);
+	}
 
 	/**
 	 * Returns selected item property.
 	 *
 	 * @return selected item property
 	 */
-	public ReadOnlyObjectProperty<? extends ModelClassExt> selectedItemProperty();
-
-	/**
-	 * Returns selection from table as sorted list.
-	 *
-	 * @return sorted selection from table
-	 */
-	public ObservableList<? extends ModelClassExt> getSortedSelectedItems();
+	@Override
+	public ReadOnlyObjectProperty<? extends ModelClassExt> selectedItemProperty() {
+		return getDataTable().getSelectionModel().selectedItemProperty();
+	}
 
 	/**
 	 * Returns selected item if there is only one.
 	 *
 	 * @return selected item
 	 */
-	public Optional<? extends ModelClassExt> getSelectedItem();
+	@Override
+	public Optional<? extends ModelClassExt> getSelectedItem() {
+
+		if (getDataTable().getSelectionModel().getSelectedItems().size() != 1) {
+			return Optional.empty();
+		}
+
+		return Optional.of(getDataTable().getSelectionModel().getSelectedItem());
+
+	}
 
 }
 
