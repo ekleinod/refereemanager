@@ -1,25 +1,26 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.lists;
 
 import java.text.MessageFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
-import de.edgesoft.refereemanager.jaxb.Trainee;
+import de.edgesoft.refereemanager.controller.AbstractListController;
+import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.model.AppModel;
+import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.PersonModel;
-import de.edgesoft.refereemanager.model.TraineeModel;
-import de.edgesoft.refereemanager.utils.TableUtils;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -27,7 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 
 /**
- * Controller for the trainee list scene.
+ * Controller for the club list scene.
  *
  * ## Legal stuff
  *
@@ -52,7 +53,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListTraineesController extends AbstractListController {
+public class ListClubsController extends AbstractListController {
 
 	/**
 	 * List box.
@@ -64,38 +65,30 @@ public class ListTraineesController extends AbstractListController {
 	 * Table.
 	 */
 	@FXML
-	private TableView<Trainee> tblData;
+	private TableView<Club> tblData;
 
 	/**
 	 * ID column.
 	 */
 	@FXML
-	private TableColumn<TraineeModel, String> colID;
+	private TableColumn<ClubModel, String> colID;
 
 	/**
-	 * Name column.
+	 * Title column.
 	 */
 	@FXML
-	private TableColumn<TraineeModel, String> colName;
+	private TableColumn<ClubModel, String> colTitle;
 
 	/**
-	 * First name column.
+	 * Short title column.
 	 */
 	@FXML
-	private TableColumn<TraineeModel, String> colFirstName;
+	private TableColumn<ClubModel, String> colShorttitle;
 
 	/**
-	 * Club column.
+	 * List of clubs.
 	 */
-	@FXML
-	private TableColumn<TraineeModel, String> colClub;
-
-	/**
-	 * Birthday column.
-	 */
-	@FXML
-	private TableColumn<TraineeModel, LocalDate> colBirthday;
-
+	private FilteredList<Club> lstClubs;
 
 	/**
 	 * Label filter.
@@ -103,12 +96,17 @@ public class ListTraineesController extends AbstractListController {
 	@FXML
 	private Label lblFilter;
 
+	/**
+	 * Checkbox filter local.
+	 */
+	@FXML
+	private CheckBox chkLocal;
 
 	/**
-	 * List of trainees.
+	 * Checkbox filter non-local.
 	 */
-	private FilteredList<Trainee> lstTrainee;
-
+	@FXML
+	private CheckBox chkNonLocal;
 
 	/**
 	 * Initializes the controller class.
@@ -118,22 +116,16 @@ public class ListTraineesController extends AbstractListController {
 	@FXML
 	private void initialize() {
 
-		// hook data to columns (referees)
+		// hook data to columns
 		colID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
 		colID.setVisible(false);
 
-		colName.setCellValueFactory(cellData -> cellData.getValue().getName());
-		colFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
-		colClub.setCellValueFactory(cellData -> (cellData.getValue().getMember() == null) ? null : cellData.getValue().getMember().getDisplayText());
-
-		colBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
-		colBirthday.setVisible(false);
-		colBirthday.setCellFactory(column -> TableUtils.getTableCellTraineeDate(null));
+		colTitle.setCellValueFactory(cellData -> cellData.getValue().getTitle());
+		colShorttitle.setCellValueFactory(cellData -> cellData.getValue().getShorttitle());
 
 		// headings
 		lblFilter.setFont(FontUtils.getDerived(lblFilter.getFont(), FontWeight.BOLD));
 
-		// init items
 		setDataTableItems();
 
 	}
@@ -152,13 +144,13 @@ public class ListTraineesController extends AbstractListController {
 	@Override
 	public void setDataTableItems() {
 
-		lstTrainee = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableTrainees(), trainee -> true);
+		lstClubs = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableClubs(), club -> true);
 
-		SortedList<Trainee> lstSortedRefs = new SortedList<>(lstTrainee);
-		lstSortedRefs.comparatorProperty().bind(tblData.comparatorProperty());
-		tblData.setItems(lstSortedRefs);
+		SortedList<Club> lstSortedClubs = new SortedList<>(lstClubs);
+		lstSortedClubs.comparatorProperty().bind(tblData.comparatorProperty());
+		tblData.setItems(lstSortedClubs);
 
-		setDataTablePlaceholderNoun("Azubi");
+		setDataTablePlaceholderNoun("Clubs");
 
 		handleFilterChange();
 
@@ -167,17 +159,27 @@ public class ListTraineesController extends AbstractListController {
 	/**
 	 * Handles filter change events.
 	 */
+	@SuppressWarnings("unchecked")
 	@FXML
 	@Override
 	public void handleFilterChange() {
 
-		if (lstTrainee == null) {
+		// filter for events
+		if (lstClubs == null) {
 			lblFilter.setText("Filter");
 		} else {
 
-			lstTrainee.setPredicate(PersonModel.ALL);
+			lstClubs.setPredicate(ClubModel.ALL);
 
-			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstTrainee.size()));
+			if (chkLocal.isSelected()) {
+				lstClubs.setPredicate(((Predicate<Club>) lstClubs.getPredicate()).and(ClubModel.LOCAL));
+			}
+
+			if (chkNonLocal.isSelected()) {
+				lstClubs.setPredicate(((Predicate<Club>) lstClubs.getPredicate()).and(ClubModel.NON_LOCAL));
+			}
+
+			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstClubs.size()));
 		}
 
 		tblData.refresh();
@@ -191,23 +193,21 @@ public class ListTraineesController extends AbstractListController {
 	 */
 	@Override
 	public <T extends ModelClassExt> void select(final T theItem) {
-		tblData.getSelectionModel().select((Trainee) theItem);
+		tblData.getSelectionModel().select((Club) theItem);
 	}
 
 	/**
 	 * Returns selection from table as sorted list.
 	 *
 	 * @return sorted selection from table
-	 *
-	 * @since 0.12.0
 	 */
 	@Override
-	public ObservableList<TraineeModel> getSortedSelectedItems() {
-		List<TraineeModel> lstReturn = new ArrayList<>();
+	public ObservableList<ClubModel> getSortedSelectedItems() {
+		List<ClubModel> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((TraineeModel) data));
+		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((ClubModel) data));
 
-		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
+		return FXCollections.observableList(lstReturn.stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).collect(Collectors.toList()));
 	}
 
 }

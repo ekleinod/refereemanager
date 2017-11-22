@@ -1,4 +1,4 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.lists;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
+import de.edgesoft.refereemanager.controller.AbstractListController;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.model.AppModel;

@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="boxList" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.ListLeagueGamesController">
+<VBox fx:id="boxList" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.lists.ListLeagueGamesController">
 	<children>
 		<TableView fx:id="tblData" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
 			<columns>

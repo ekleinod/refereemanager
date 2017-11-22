@@ -48,7 +48,7 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 
 		super.initController(theOverviewController);
 
-		getController().initController(this, PrefKey.OVERVIEW_LEAGUE_GAME_SPLIT, "ListLeagueGames", "DetailsLeagueGame");
+		getController().initController(this, PrefKey.OVERVIEW_LEAGUE_GAME_SPLIT, "lists/ListLeagueGames", "DetailsLeagueGame");
 
 		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
@@ -66,12 +66,12 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 
 		Class<LeagueGameModel> theClass = LeagueGameModel.class;
 
-		assert 
-				((theDetailData == null) || theClass.isInstance(theDetailData)) 
+		assert
+				((theDetailData == null) || theClass.isInstance(theDetailData))
 				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
 
 		getController().showDetails(theDetailData);
-		
+
 		if (theDetailData == null) {
 
 			getController().setHeading(new SimpleStringProperty("Details"));

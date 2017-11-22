@@ -48,7 +48,7 @@ public class OverviewPeopleController extends AbstractOverviewController<Person>
 
 		super.initController(theOverviewController);
 
-		getController().initController(this, PrefKey.OVERVIEW_PERSON_SPLIT, "ListPeople", "DetailsPerson");
+		getController().initController(this, PrefKey.OVERVIEW_PERSON_SPLIT, "lists/ListPeople", "DetailsPerson");
 
 		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();

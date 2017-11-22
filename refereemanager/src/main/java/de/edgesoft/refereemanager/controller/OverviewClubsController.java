@@ -48,7 +48,7 @@ public class OverviewClubsController extends AbstractOverviewController<Club> {
 
 		super.initController(theOverviewController);
 
-		getController().initController(this, PrefKey.OVERVIEW_CLUB_SPLIT, "ListClubs", "DetailsClub");
+		getController().initController(this, PrefKey.OVERVIEW_CLUB_SPLIT, "lists/ListClubs", "DetailsClub");
 
 		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();

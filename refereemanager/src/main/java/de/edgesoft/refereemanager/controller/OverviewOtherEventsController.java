@@ -48,7 +48,7 @@ public class OverviewOtherEventsController extends AbstractOverviewController<Ot
 
 		super.initController(theOverviewController);
 
-		getController().initController(this, PrefKey.OVERVIEW_OTHER_EVENT_SPLIT, "ListOtherEvents", "DetailsOtherEvent");
+		getController().initController(this, PrefKey.OVERVIEW_OTHER_EVENT_SPLIT, "lists/ListOtherEvents", "DetailsOtherEvent");
 
 		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
@@ -66,12 +66,12 @@ public class OverviewOtherEventsController extends AbstractOverviewController<Ot
 
 		Class<OtherEventModel> theClass = OtherEventModel.class;
 
-		assert 
-				((theDetailData == null) || theClass.isInstance(theDetailData)) 
+		assert
+				((theDetailData == null) || theClass.isInstance(theDetailData))
 				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
 
 		getController().showDetails(theDetailData);
-		
+
 		if (theDetailData == null) {
 
 			getController().setHeading(new SimpleStringProperty("Details"));
