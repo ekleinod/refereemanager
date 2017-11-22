@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.refereemanager.controller.editdialogs.AbstractEditDialogController;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;

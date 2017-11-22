@@ -1,4 +1,5 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.editdialogs;
+import de.edgesoft.refereemanager.controller.inputforms.AbstractInputFormController;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

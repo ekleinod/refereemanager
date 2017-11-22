@@ -1,8 +1,9 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.editdialogs;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 
 /**
  * Abstract controller for tabbed edit dialog scenes.

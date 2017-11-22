@@ -1,4 +1,4 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.editdialogs;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +8,10 @@ import java.util.Objects;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.refereemanager.controller.AbstractContactEditDialogController;
+import de.edgesoft.refereemanager.controller.TrainingLevelEditDialogController;
+import de.edgesoft.refereemanager.controller.WishEditDialogController;
+import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;

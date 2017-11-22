@@ -1,4 +1,4 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.inputforms;
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;

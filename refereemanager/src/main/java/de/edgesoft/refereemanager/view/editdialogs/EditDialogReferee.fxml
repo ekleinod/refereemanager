@@ -19,13 +19,13 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.EditDialogRefereeController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.editdialogs.EditDialogRefereeController">
    <children>
       <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
         <tabs>
           <Tab text="Personendaten">
                <content>
-               	<fx:include fx:id="embeddedInputFormPersonData" source="InputFormPersonData.fxml" />
+               	<fx:include fx:id="embeddedInputFormPersonData" source="../inputforms/InputFormPersonData.fxml" />
                </content>
           </Tab>
             <Tab text="Kontaktdaten">

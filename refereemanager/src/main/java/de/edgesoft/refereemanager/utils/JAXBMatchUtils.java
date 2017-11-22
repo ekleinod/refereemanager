@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.refereemanager.controller.EditDialogRefereeController;
+import de.edgesoft.refereemanager.controller.editdialogs.EditDialogRefereeController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
