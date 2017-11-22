@@ -100,8 +100,17 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	@FXML
 	private IInputFormController embeddedInputFormContactDataController;
 
+	/**
+	 * Referee data.
+	 */
+	@FXML
+	private Parent embeddedInputFormRefereeData;
 
-	// referee data
+	/**
+	 * Referee data controller.
+	 */
+	@FXML
+	private IInputFormController embeddedInputFormRefereeDataController;
 
 
 	// wishes
@@ -324,6 +333,7 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 
 		addInputFormController(embeddedInputFormPersonDataController);
 		addInputFormController(embeddedInputFormContactDataController);
+		addInputFormController(embeddedInputFormRefereeDataController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class})));
 
