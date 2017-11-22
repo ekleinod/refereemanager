@@ -15,7 +15,7 @@
            <children>
               <Label fx:id="lblHeading" text="Label" />
               <Separator orientation="VERTICAL" prefHeight="10.0" visible="false" />
-              <fx:include fx:id="embeddedDetailsTitledID" source="DetailsTitledID.fxml" />
+              <fx:include fx:id="embeddedDetailsTitledID" source="details/DetailsTitledID.fxml" />
            </children>
         </VBox>
        </top>

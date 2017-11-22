@@ -1,15 +1,16 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.details;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
-import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.model.OtherEventModel;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.text.FontWeight;
 
 /**
- * Controller for the details part: title id.
+ * Controller for the other event details scene.
  *
  * ## Legal stuff
  *
@@ -34,61 +35,37 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsTitledIDController implements IDetailsController {
-
+public class DetailsOtherEventController implements IDetailsController {
+	
 	/**
-	 * Heading label.
+	 * Heading.
 	 */
 	@FXML
 	private Label lblHeading;
 
 	/**
-	 * ID label for output.
+	 * Date label.
 	 */
 	@FXML
-	private Label lblID;
+	private Label lblDate;
 
 	/**
-	 * "ID" label.
+	 * Time label.
 	 */
 	@FXML
-	private Label lblLabelID;
+	private Label lblTime;
 
 	/**
-	 * Title label for output.
+	 * Venue label.
 	 */
 	@FXML
-	private Label lblTitle;
+	private Label lblVenue;
 
 	/**
-	 * "Title" label.
+	 * Type label.
 	 */
 	@FXML
-	private Label lblLabelTitle;
-
-	/**
-	 * Short title label for output.
-	 */
-	@FXML
-	private Label lblShorttitle;
-
-	/**
-	 * "Short title" label.
-	 */
-	@FXML
-	private Label lblLabelShorttitle;
-
-	/**
-	 * Remark label for output.
-	 */
-	@FXML
-	private Label lblRemark;
-
-	/**
-	 * "Remark" label.
-	 */
-	@FXML
-	private Label lblLabelRemark;
+	private Label lblType;
 
 	/**
 	 * Initializes the controller class.
@@ -96,8 +73,11 @@ public class DetailsTitledIDController implements IDetailsController {
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
-	private void initialize() {
+	protected void initialize() {
+
+		// headings
 		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD));
+
 	}
 
 	/**
@@ -107,24 +87,33 @@ public class DetailsTitledIDController implements IDetailsController {
 	 */
 	@Override
 	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
+		
+		Class<OtherEventModel> theClass = OtherEventModel.class;
 
-		if ((theDetailData == null) || !(theDetailData instanceof TitledIDType)) {
+		assert 
+				((theDetailData == null) || theClass.isInstance(theDetailData)) 
+				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
 
-			LabelUtils.setText(lblID, null);
+		if (theDetailData == null) {
 
-			LabelUtils.setText(lblTitle, null);
-			LabelUtils.setText(lblShorttitle, null);
-			LabelUtils.setText(lblRemark, null);
+			LabelUtils.setText(lblDate, null);
+			LabelUtils.setText(lblTime, null);
+			LabelUtils.setText(lblVenue, null);
+			LabelUtils.setText(lblType, null);
 
 		} else {
 
-			TitledIDType theData = (TitledIDType) theDetailData;
+			OtherEventModel theData = theClass.cast(theDetailData);
 
-			lblID.setText(theData.getId());
+			LabelUtils.setText(lblDate, theData.getDateText());
+			LabelUtils.setText(lblTime, theData.getTimeText());
 
-			LabelUtils.setText(lblTitle, theData.getTitle());
-			LabelUtils.setText(lblShorttitle, theData.getShorttitle());
-			LabelUtils.setText(lblRemark, theData.getRemark());
+			lblVenue.setText(
+					(theData.getVenue() == null) ?
+							null :
+							theData.getVenue().getDisplayTitle().getValueSafe());
+
+			LabelUtils.setText(lblType, new SimpleStringProperty("ToDo"));
 
 		}
 

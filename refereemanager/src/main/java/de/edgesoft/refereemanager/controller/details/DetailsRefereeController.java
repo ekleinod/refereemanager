@@ -1,13 +1,13 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.details;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
-import de.edgesoft.refereemanager.model.TraineeModel;
+import de.edgesoft.refereemanager.model.RefereeModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 /**
- * Controller for the trainee details scene.
+ * Controller for the referee details scene.
  *
  * ## Legal stuff
  *
@@ -32,13 +32,31 @@ import javafx.scene.control.Label;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsTraineeController extends DetailsPersonController implements IDetailsController {
+public class DetailsRefereeController extends DetailsPersonController implements IDetailsController {
+
+	/**
+	 * Training level.
+	 */
+	@FXML
+	private Label lblTrainingLevel;
 
 	/**
 	 * Club.
 	 */
 	@FXML
 	private Label lblClub;
+
+	/**
+	 * Last update.
+	 */
+	@FXML
+	private Label lblLastUpdate;
+
+	/**
+	 * Next update.
+	 */
+	@FXML
+	private Label lblNextUpdate;
 
 
 	/**
@@ -62,18 +80,29 @@ public class DetailsTraineeController extends DetailsPersonController implements
 
 		super.showDetails(theDetailData);
 
-		if ((theDetailData == null) || !(theDetailData instanceof TraineeModel)) {
+		if ((theDetailData == null) || !(theDetailData instanceof RefereeModel)) {
 
+			LabelUtils.setText(lblTrainingLevel, null);
 			LabelUtils.setText(lblClub, null);
+			LabelUtils.setText(lblLastUpdate, null);
+			LabelUtils.setText(lblNextUpdate, null);
 
 		} else {
 
-			TraineeModel theData = (TraineeModel) theDetailData;
+			RefereeModel theData = (RefereeModel) theDetailData;
+
+			lblTrainingLevel.setText(
+					(theData.getHighestTrainingLevel() == null) ?
+							null :
+							theData.getHighestTrainingLevel().getType().getDisplayTitleShort().getValue());
 
 			lblClub.setText(
 					(theData.getMember() == null) ?
 							null :
 							theData.getMember().getDisplayText().getValue());
+
+			LabelUtils.setText(lblLastUpdate, theData.getLastTrainingUpdate(), null);
+			LabelUtils.setText(lblNextUpdate, theData.getNextTrainingUpdate(), "yyyy");
 
 		}
 

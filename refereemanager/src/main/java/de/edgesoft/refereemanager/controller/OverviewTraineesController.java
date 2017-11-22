@@ -48,7 +48,7 @@ public class OverviewTraineesController extends AbstractOverviewController<Train
 
 		super.initController(theOverviewController);
 
-		getController().initController(this, PrefKey.OVERVIEW_TRAINEE_SPLIT, "lists/ListTrainees", "DetailsTrainee");
+		getController().initController(this, PrefKey.OVERVIEW_TRAINEE_SPLIT, "lists/ListTrainees", "details/DetailsTrainee");
 
 		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();

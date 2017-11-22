@@ -48,7 +48,7 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 
 		super.initController(theOverviewController);
 
-		getController().initController(this, PrefKey.OVERVIEW_LEAGUE_GAME_SPLIT, "lists/ListLeagueGames", "DetailsLeagueGame");
+		getController().initController(this, PrefKey.OVERVIEW_LEAGUE_GAME_SPLIT, "lists/ListLeagueGames", "details/DetailsLeagueGame");
 
 		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
