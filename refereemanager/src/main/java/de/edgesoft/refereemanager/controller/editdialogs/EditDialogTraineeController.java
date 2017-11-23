@@ -125,6 +125,8 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 		addInputFormController(embeddedInputFormContactDataController);
 		addInputFormController(embeddedInputFormRefereeDataController);
 		addInputFormController(embeddedInputFormWishDataController);
+		addInputFormController(embeddedInputFormTrainingLevelDataController);
+		addInputFormController(embeddedInputFormExamDataController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class})));
 
