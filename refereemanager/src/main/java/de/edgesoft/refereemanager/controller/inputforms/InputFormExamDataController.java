@@ -134,11 +134,6 @@ public class InputFormExamDataController extends AbstractInputFormController {
         SpinnerUtils.prepareIntegerSpinner(spnPointsOral, 0, AppModel.getData().getContent().getExam().getMaxPointsOral().getValue());
         spnPointsOral.valueProperty().addListener((observable, oldValue, newValue) -> computeExam());
 
-        spnPointsWrittenA.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-        spnPointsWrittenB.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-        spnPointsPractical.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-        spnPointsOral.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-
 		// enable spinners
 		spnPointsWrittenA.disableProperty().bind(
 				pckExamDate.valueProperty().isNull()

@@ -10,42 +10,42 @@
 	<children>
 		<TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
 			<tabs>
-				<Tab text="Personendaten">
+				<Tab closable="false" text="Personendaten">
 					<content>
 						<fx:include fx:id="embeddedInputFormPersonData" source="../inputforms/InputFormPersonData.fxml" />
 					</content>
 				</Tab>
-				<Tab text="Kontaktdaten">
+				<Tab closable="false" text="Kontaktdaten">
 					<content>
 						<fx:include fx:id="embeddedInputFormContactData" source="../inputforms/InputFormContactData.fxml" />
 					</content>
 				</Tab>
-				<Tab text="Schiri">
+				<Tab closable="false" text="Schiri">
 					<content>
 						<fx:include fx:id="embeddedInputFormRefereeData" source="../inputforms/InputFormRefereeData.fxml" />
 					</content>
 				</Tab>
-				<Tab text="Wünsche">
+				<Tab closable="false" text="Wünsche">
 					<content>
 						<fx:include fx:id="embeddedInputFormWishData" source="../inputforms/InputFormWishData.fxml" />
 					</content>
 				</Tab>
-				<Tab text="Ausbildung">
+				<Tab closable="false" text="Ausbildung">
 					<content>
 						<fx:include fx:id="embeddedInputFormTrainingLevelData" source="../inputforms/InputFormTrainingLevelData.fxml" />
 					</content>
 				</Tab>
-				<Tab text="Prüfung">
+				<Tab closable="false" text="Prüfung">
 					<content>
 						<fx:include fx:id="embeddedInputFormExamData" source="../inputforms/InputFormExamData.fxml" />
 					</content>
 				</Tab>
 			</tabs>
 		</TabPane>
-		<ButtonBar layoutX="286.0" layoutY="346.0" prefHeight="40.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
+		<ButtonBar AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
 			<buttons>
 				<Button fx:id="btnOK" defaultButton="true" onAction="#handleOk" text="_OK" />
-				<Button fx:id="btnCancel" cancelButton="true" onAction="#handleCancel" prefWidth="140.0" text="A_bbrechen" />
+				<Button fx:id="btnCancel" cancelButton="true" onAction="#handleCancel" text="A_bbrechen" />
 			</buttons>
 		</ButtonBar>
 	</children>

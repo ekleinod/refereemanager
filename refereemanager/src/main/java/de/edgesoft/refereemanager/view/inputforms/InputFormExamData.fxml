@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -15,8 +16,8 @@
 		<GridPane alignment="TOP_CENTER" vgap="5.0">
 			<columnConstraints>
 				<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
-				<ColumnConstraints hgrow="SOMETIMES" maxWidth="282.0" minWidth="-Infinity" prefWidth="100.0" />
-				<ColumnConstraints hgrow="SOMETIMES" maxWidth="520.0" minWidth="10.0" prefWidth="520.0" />
+				<ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="250.0" />
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
 			</columnConstraints>
 			<rowConstraints>
 				<RowConstraints valignment="TOP" />
@@ -30,29 +31,48 @@
 			</rowConstraints>
 			<children>
 				<Label text="Lehrgang" />
-				<CheckBox fx:id="chkWithdrawn" text="Lehrgang nicht angetreten" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
+				<CheckBox fx:id="chkWithdrawn" text="Lehrgang nicht angetreten" GridPane.columnIndex="1" />
 				<Label text="Prüfungsantritt" GridPane.rowIndex="1" />
-				<CheckBox fx:id="chkDidNotStart" text="Nicht zur Prüfung angetreten" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+				<CheckBox fx:id="chkDidNotStart" text="Nicht zur Prüfung angetreten" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 				<Label text="Prüfungsdatum" GridPane.rowIndex="2" />
-				<AnchorPane GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
+				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
 					<children>
 						<DatePicker fx:id="pckExamDate" promptText="tt.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
 					</children>
 				</AnchorPane>
 				<Label text="Schriftlich Teil A" GridPane.rowIndex="3" />
-				<Spinner fx:id="spnPointsWrittenA" editable="true" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-				<CheckBox fx:id="chkPassedWritten" disable="true" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.rowSpan="2" />
+				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+					<children>
+						<Spinner fx:id="spnPointsWrittenA" editable="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+					</children>
+				</AnchorPane>
+				<CheckBox fx:id="chkPassedWritten" disable="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
 				<Label text="Schriftlich Teil B" GridPane.rowIndex="4" />
-				<Spinner fx:id="spnPointsWrittenB" editable="true" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
+					<children>
+						<Spinner fx:id="spnPointsWrittenB" editable="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+					</children>
+				</AnchorPane>
 				<Label text="Praktisch" GridPane.rowIndex="5" />
-				<Spinner fx:id="spnPointsPractical" editable="true" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-				<CheckBox fx:id="chkPassedPractical" disable="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+					<children>
+						<Spinner fx:id="spnPointsPractical" editable="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+					</children>
+				</AnchorPane>
+				<CheckBox fx:id="chkPassedPractical" disable="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
 				<Label text="Mündlich" GridPane.rowIndex="6" />
-				<Spinner fx:id="spnPointsOral" editable="true" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-				<CheckBox fx:id="chkPassedOral" disable="true" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="6">
+					<children>
+						<Spinner fx:id="spnPointsOral" editable="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+					</children>
+				</AnchorPane>
+				<CheckBox fx:id="chkPassedOral" disable="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
 				<Label text="Endergebnis" GridPane.rowIndex="7" />
-				<CheckBox fx:id="chkPassed" disable="true" text="Prüfung bestanden" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="7" />
+				<CheckBox fx:id="chkPassed" disable="true" text="Prüfung bestanden" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 			</children>
 		</GridPane>
 	</content>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </ScrollPane>

@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.edgesoft.edgeutils.commons.IDType;
-import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
@@ -131,22 +130,6 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 
 		super.initialize();
 
-	}
-
-	/**
-	 * Ok.
-	 */
-	@FXML
-	public void handleOk() {
-		RefereeManager.logger.error("handleOk - ToDo");
-	}
-
-	/**
-	 * Cancel.
-	 */
-	@FXML
-	public void handleCancel() {
-		RefereeManager.logger.error("handleCancel - ToDo");
 	}
 
 }
