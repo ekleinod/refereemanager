@@ -57,7 +57,7 @@ public class RefereeModel extends Referee {
 	 *
 	 * @since 0.10.0
 	 */
-	public static Predicate<Referee> LETTER_ONLY = referee -> referee.getDocsByLetter().getValue();
+	public static Predicate<Referee> LETTER_ONLY = referee -> ((RefereeModel) referee).getDocsByLetterCombined().getValue();
 
 	/**
 	 * Returns filter predicate for given status.
@@ -176,15 +176,14 @@ public class RefereeModel extends Referee {
 	 *
 	 * @since 0.8.0
 	 */
-	@Override
-	public SimpleBooleanProperty getDocsByLetter() {
-		if (getId() == null) {
-			return new SimpleBooleanProperty(false);
-		}
+	public SimpleBooleanProperty getDocsByLetterCombined() {
+
 		if (super.getDocsByLetter() == null) {
 			return new SimpleBooleanProperty(getEMail().isEmpty());
 		}
+
 		return new SimpleBooleanProperty(super.getDocsByLetter().getValue() || getEMail().isEmpty());
+
 	}
 
 }
