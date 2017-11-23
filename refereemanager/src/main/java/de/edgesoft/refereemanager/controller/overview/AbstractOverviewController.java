@@ -177,7 +177,14 @@ public abstract class AbstractOverviewController<T extends ModelClassExt> implem
 		// Show the dialog and wait until the user closes it
 		dialogStage.showAndWait();
 
-		return editController.isOkClicked();
+		// ok = store data
+		boolean isOkClicked = editController.isOkClicked();
+
+		if (isOkClicked) {
+			editController.fillData(theData);
+		}
+
+		return isOkClicked;
 
 	}
 
