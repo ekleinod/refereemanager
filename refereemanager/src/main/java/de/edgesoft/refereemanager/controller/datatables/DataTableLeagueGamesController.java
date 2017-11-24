@@ -1,4 +1,4 @@
-package de.edgesoft.refereemanager.controller.lists;
+package de.edgesoft.refereemanager.controller.datatables;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
@@ -64,13 +64,13 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListLeagueGamesController extends AbstractListController {
+public class DataTableLeagueGamesController extends AbstractDataTableController {
 
 	/**
-	 * List.
+	 * Container.
 	 */
 	@FXML
-	private VBox boxList;
+	private VBox boxContainer;
 
 	/**
 	 * Table league games.
@@ -166,8 +166,8 @@ public class ListLeagueGamesController extends AbstractListController {
 
 		// setup league filter
 		HBox boxLeagueFilter = new HBox(5);
-		boxList.getChildren().add(new Separator(Orientation.HORIZONTAL));
-		boxList.getChildren().add(boxLeagueFilter);
+		boxContainer.getChildren().add(new Separator(Orientation.HORIZONTAL));
+		boxContainer.getChildren().add(boxLeagueFilter);
 
 		mapLeagueGamesLeagues = new HashMap<>();
 		AppModel.getData().getContent().getLeague().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(

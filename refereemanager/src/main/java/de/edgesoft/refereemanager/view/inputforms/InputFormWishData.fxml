@@ -8,6 +8,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
 <ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormWishDataController">
@@ -22,6 +23,7 @@
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
+            <RowConstraints valignment="TOP" />
 			</rowConstraints>
 			<children>
 				<Label text="Bevorzugt schiedsen" />
@@ -42,6 +44,7 @@
 					</buttons>
 				</ButtonBar>
 				<ListView fx:id="lstAvoid" prefHeight="100.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
+				<fx:include fx:id="embeddedCRUDPrefer" source="../CRUDButtons.fxml" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 			</children>
 		</GridPane>
 	</content>

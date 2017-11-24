@@ -5,6 +5,9 @@ import java.util.Objects;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.ButtonUtils;
+import de.edgesoft.refereemanager.controller.CRUDButtonsController;
+import de.edgesoft.refereemanager.controller.ICRUDActionsController;
+import de.edgesoft.refereemanager.controller.IEmbedCRUDButtonsController;
 import de.edgesoft.refereemanager.controller.WishEditDialogController;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.model.WishModel;
@@ -12,6 +15,7 @@ import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.Resources;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -51,7 +55,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormWishDataController extends AbstractInputFormController {
+public class InputFormWishDataController extends AbstractInputFormController implements IEmbedCRUDButtonsController {
 
 	/**
 	 * List view for prefers.
@@ -59,6 +63,18 @@ public class InputFormWishDataController extends AbstractInputFormController {
 	@FXML
 	@JAXBMatch(jaxbfield = "prefer", jaxbclass = Referee.class)
 	protected ListView<ModelClassExt> lstPrefer;
+
+	/**
+	 * CRUD buttons prefer.
+	 */
+	@FXML
+	private Parent embeddedCRUDPrefer;
+
+	/**
+	 * CRUD buttons prefer controller.
+	 */
+	@FXML
+	private CRUDButtonsController embeddedCRUDPreferController;
 
 	/**
 	 * Add prefer.
@@ -133,6 +149,27 @@ public class InputFormWishDataController extends AbstractInputFormController {
 
 		btnPreferDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnAvoidDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
+
+	}
+
+	/**
+	 * Initializes the CRUD buttons.
+	 *
+	 * @param theActionsController CRUD actions controller
+	 * @param disableEdit when to disable edit button
+	 * @param disableDelete when to disable delete button
+	 */
+	@Override
+	public void initCRUDButtons(final ICRUDActionsController theActionsController, ObservableBooleanValue disableEdit, ObservableBooleanValue disableDelete) {
+
+		// buttons setup
+		embeddedCRUDPreferController.getAddButton().setOnAction(theActionsController::handleAdd);
+		embeddedCRUDPreferController.getEditButton().setOnAction(theActionsController::handleEdit);
+		embeddedCRUDPreferController.getDeleteButton().setOnAction(theActionsController::handleDelete);
+
+		// enabling edit/delete buttons only with selection
+		embeddedCRUDPreferController.getEditButton().disableProperty().bind(disableEdit);
+		embeddedCRUDPreferController.getDeleteButton().disableProperty().bind(disableDelete);
 
 	}
 

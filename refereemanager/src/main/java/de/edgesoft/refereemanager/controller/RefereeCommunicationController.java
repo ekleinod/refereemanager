@@ -41,7 +41,7 @@ import javax.mail.internet.MimeMultipart;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.edgeutils.files.FileAccess;
 import de.edgesoft.refereemanager.RefereeManager;
-import de.edgesoft.refereemanager.controller.lists.ListRefereesController;
+import de.edgesoft.refereemanager.controller.datatables.DataTableRefereesController;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -482,7 +482,7 @@ public class RefereeCommunicationController {
 	/**
 	 * Referee list controller.
 	 */
-	private ListRefereesController ctlRefList;
+	private DataTableRefereesController ctlRefList;
 
 
 	/**

@@ -1,4 +1,4 @@
-package de.edgesoft.refereemanager.controller.lists;
+package de.edgesoft.refereemanager.controller.datatables;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
@@ -62,15 +62,15 @@ import javafx.scene.text.FontWeight;
  * @version 0.14.0
  * @since 0.10.0
  */
-public class ListRefereesController extends AbstractListController {
+public class DataTableRefereesController extends AbstractDataTableController {
 
 	/**
-	 * List box.
+	 * Container.
 	 *
 	 * @since 0.15.0
 	 */
 	@FXML
-	private VBox boxList;
+	private VBox boxContainer;
 
 	/**
 	 * Table.
@@ -197,8 +197,8 @@ public class ListRefereesController extends AbstractListController {
 
 		// setup status filter
 		HBox boxStatusFilter = new HBox(5);
-		boxList.getChildren().add(new Separator(Orientation.HORIZONTAL));
-		boxList.getChildren().add(boxStatusFilter);
+		boxContainer.getChildren().add(new Separator(Orientation.HORIZONTAL));
+		boxContainer.getChildren().add(boxStatusFilter);
 
 		mapRefereesFilterStatus = new HashMap<>();
 		AppModel.getData().getContent().getStatusType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(

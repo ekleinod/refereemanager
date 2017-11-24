@@ -37,19 +37,19 @@ public class CRUDButtonsController {
 	 * Add button.
 	 */
 	@FXML
-	protected Button btnAdd;
+	private Button btnAdd;
 
 	/**
 	 * Edit button.
 	 */
 	@FXML
-	protected Button btnEdit;
+	private Button btnEdit;
 
 	/**
 	 * Delete button.
 	 */
 	@FXML
-	protected Button btnDelete;
+	private Button btnDelete;
 
 	/**
 	 * Initializes the controller class.
@@ -64,6 +64,33 @@ public class CRUDButtonsController {
 		btnEdit.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
 		btnDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 
+	}
+
+	/**
+	 * Returns add button.
+	 *
+	 * @return add button
+	 */
+	public Button getAddButton() {
+		return btnAdd;
+	}
+
+	/**
+	 * Returns edit button.
+	 *
+	 * @return edit button
+	 */
+	public Button getEditButton() {
+		return btnEdit;
+	}
+
+	/**
+	 * Returns delete button.
+	 *
+	 * @return delete button
+	 */
+	public Button getDeleteButton() {
+		return btnDelete;
 	}
 
 }

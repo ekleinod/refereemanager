@@ -6,9 +6,9 @@ import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.controller.AbstractEmbedCRUDButtonsController;
+import de.edgesoft.refereemanager.controller.datatables.IDataTableController;
 import de.edgesoft.refereemanager.controller.details.DetailsTitledIDController;
 import de.edgesoft.refereemanager.controller.details.IDetailsController;
-import de.edgesoft.refereemanager.controller.lists.IListController;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
@@ -81,7 +81,7 @@ public class OverviewController extends AbstractEmbedCRUDButtonsController imple
 	 * List controller.
 	 */
 	@FXML
-	private IListController listController;
+	private IDataTableController listController;
 
 
 	/**
@@ -166,7 +166,7 @@ public class OverviewController extends AbstractEmbedCRUDButtonsController imple
 	 *
 	 * @return list controller
 	 */
-	protected IListController getListController() {
+	protected IDataTableController getListController() {
 		return listController;
 	}
 

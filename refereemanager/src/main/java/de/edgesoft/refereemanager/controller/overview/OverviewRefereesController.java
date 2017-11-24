@@ -48,7 +48,7 @@ public class OverviewRefereesController extends AbstractOverviewController<Refer
 
 		super.initController(theOverviewController);
 
-		getController().initController(this, PrefKey.OVERVIEW_REFEREE_SPLIT, "lists/ListReferees", "details/DetailsReferee");
+		getController().initController(this, PrefKey.OVERVIEW_REFEREE_SPLIT, "datatables/DataTableReferees", "details/DetailsReferee");
 
 		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();

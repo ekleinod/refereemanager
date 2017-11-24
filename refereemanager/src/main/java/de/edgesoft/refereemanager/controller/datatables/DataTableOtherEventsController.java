@@ -1,4 +1,4 @@
-package de.edgesoft.refereemanager.controller.lists;
+package de.edgesoft.refereemanager.controller.datatables;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
@@ -53,13 +53,13 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListOtherEventsController extends AbstractListController {
+public class DataTableOtherEventsController extends AbstractDataTableController {
 
 	/**
-	 * Other events box.
+	 * Container.
 	 */
 	@FXML
-	private VBox boxList;
+	private VBox boxContainer;
 
 	/**
 	 * Table other events.

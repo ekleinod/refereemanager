@@ -1,26 +1,25 @@
-package de.edgesoft.refereemanager.controller.lists;
+package de.edgesoft.refereemanager.controller.datatables;
 
 import java.text.MessageFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
-import de.edgesoft.refereemanager.jaxb.Tournament;
+import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.model.AppModel;
+import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.EventDateModel;
-import de.edgesoft.refereemanager.model.TournamentModel;
-import de.edgesoft.refereemanager.utils.TableUtils;
-import javafx.beans.property.SimpleBooleanProperty;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -28,7 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 
 /**
- * Controller for the tournaments list scene.
+ * Controller for the club list scene.
  *
  * ## Legal stuff
  *
@@ -53,50 +52,42 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListTournamentsController extends AbstractListController {
+public class DataTableClubsController extends AbstractDataTableController {
 
 	/**
-	 * List.
+	 * Container.
 	 */
 	@FXML
-	private VBox boxList;
+	private VBox boxContainer;
 
 	/**
-	 * Table tournaments.
+	 * Table.
 	 */
 	@FXML
-	private TableView<Tournament> tblData;
+	private TableView<Club> tblData;
 
 	/**
 	 * ID column.
 	 */
 	@FXML
-	private TableColumn<TournamentModel, String> colID;
-
-	/**
-	 * Start date column.
-	 */
-	@FXML
-	private TableColumn<TournamentModel, LocalDate> colDateStart;
-
-	/**
-	 * End date column.
-	 */
-	@FXML
-	private TableColumn<TournamentModel, LocalDate> colDateEnd;
+	private TableColumn<ClubModel, String> colID;
 
 	/**
 	 * Title column.
 	 */
 	@FXML
-	private TableColumn<TournamentModel, String> colTitle;
+	private TableColumn<ClubModel, String> colTitle;
 
 	/**
-	 * Referee report column.
+	 * Short title column.
 	 */
 	@FXML
-	private TableColumn<TournamentModel, Boolean> colRefereeReport;
+	private TableColumn<ClubModel, String> colShorttitle;
 
+	/**
+	 * List of clubs.
+	 */
+	private FilteredList<Club> lstClubs;
 
 	/**
 	 * Label filter.
@@ -105,10 +96,16 @@ public class ListTournamentsController extends AbstractListController {
 	private Label lblFilter;
 
 	/**
-	 * List of tournaments.
+	 * Checkbox filter local.
 	 */
-	private FilteredList<Tournament> lstTournaments;
+	@FXML
+	private CheckBox chkLocal;
 
+	/**
+	 * Checkbox filter non-local.
+	 */
+	@FXML
+	private CheckBox chkNonLocal;
 
 	/**
 	 * Initializes the controller class.
@@ -122,22 +119,12 @@ public class ListTournamentsController extends AbstractListController {
 		colID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
 		colID.setVisible(false);
 
-		colDateStart.setCellValueFactory(cellData -> cellData.getValue().getFirstDay().getDate());
-		colDateEnd.setCellValueFactory(cellData -> (cellData.getValue().getLastDay() == null) ? null : cellData.getValue().getLastDay().getDate());
-		colTitle.setCellValueFactory(cellData -> cellData.getValue().getDisplayTitleShort());
-		colRefereeReport.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().existsRefereeReportFile()));
-
-		// format date columns
-		colDateStart.setCellFactory(column -> TableUtils.getTableCellTournamentDate(null));
-		colDateEnd.setCellFactory(column -> TableUtils.getTableCellTournamentDate(null));
-
-		// format referee report columns
-		colRefereeReport.setCellFactory(column -> TableUtils.getTableCellTournamentRefereeReport());
+		colTitle.setCellValueFactory(cellData -> cellData.getValue().getTitle());
+		colShorttitle.setCellValueFactory(cellData -> cellData.getValue().getShorttitle());
 
 		// headings
 		lblFilter.setFont(FontUtils.getDerived(lblFilter.getFont(), FontWeight.BOLD));
 
-		// init items
 		setDataTableItems();
 
 	}
@@ -156,13 +143,13 @@ public class ListTournamentsController extends AbstractListController {
 	@Override
 	public void setDataTableItems() {
 
-		lstTournaments = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableTournaments(), tournament -> true);
+		lstClubs = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableClubs(), club -> true);
 
-		SortedList<Tournament> lstSortedTournaments = new SortedList<>(lstTournaments);
-		lstSortedTournaments.comparatorProperty().bind(tblData.comparatorProperty());
-		tblData.setItems(lstSortedTournaments);
+		SortedList<Club> lstSortedClubs = new SortedList<>(lstClubs);
+		lstSortedClubs.comparatorProperty().bind(tblData.comparatorProperty());
+		tblData.setItems(lstSortedClubs);
 
-		setDataTablePlaceholderNoun("Turniere");
+		setDataTablePlaceholderNoun("Clubs");
 
 		handleFilterChange();
 
@@ -171,15 +158,27 @@ public class ListTournamentsController extends AbstractListController {
 	/**
 	 * Handles filter change events.
 	 */
+	@SuppressWarnings("unchecked")
 	@FXML
 	@Override
 	public void handleFilterChange() {
 
 		// filter for events
-		if (lstTournaments == null) {
+		if (lstClubs == null) {
 			lblFilter.setText("Filter");
 		} else {
-			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstTournaments.size()));
+
+			lstClubs.setPredicate(ClubModel.ALL);
+
+			if (chkLocal.isSelected()) {
+				lstClubs.setPredicate(((Predicate<Club>) lstClubs.getPredicate()).and(ClubModel.LOCAL));
+			}
+
+			if (chkNonLocal.isSelected()) {
+				lstClubs.setPredicate(((Predicate<Club>) lstClubs.getPredicate()).and(ClubModel.NON_LOCAL));
+			}
+
+			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstClubs.size()));
 		}
 
 		tblData.refresh();
@@ -193,7 +192,7 @@ public class ListTournamentsController extends AbstractListController {
 	 */
 	@Override
 	public <T extends ModelClassExt> void select(final T theItem) {
-		tblData.getSelectionModel().select((Tournament) theItem);
+		tblData.getSelectionModel().select((Club) theItem);
 	}
 
 	/**
@@ -202,12 +201,12 @@ public class ListTournamentsController extends AbstractListController {
 	 * @return sorted selection from table
 	 */
 	@Override
-	public ObservableList<TournamentModel> getSortedSelectedItems() {
-		List<TournamentModel> lstReturn = new ArrayList<>();
+	public ObservableList<ClubModel> getSortedSelectedItems() {
+		List<ClubModel> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((TournamentModel) data));
+		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((ClubModel) data));
 
-		return FXCollections.observableList(lstReturn.stream().sorted(EventDateModel.DATE_FIRST).collect(Collectors.toList()));
+		return FXCollections.observableList(lstReturn.stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).collect(Collectors.toList()));
 	}
 
 }

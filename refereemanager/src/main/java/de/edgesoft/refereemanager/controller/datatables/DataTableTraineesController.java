@@ -1,23 +1,18 @@
-package de.edgesoft.refereemanager.controller.lists;
+package de.edgesoft.refereemanager.controller.datatables;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
-import de.edgesoft.refereemanager.jaxb.Person;
-import de.edgesoft.refereemanager.jaxb.PersonRoleType;
+import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
-import de.edgesoft.refereemanager.model.TitledIDTypeModel;
+import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.utils.TableUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -25,18 +20,14 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.geometry.Orientation;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 
 /**
- * Controller for the person list scene.
+ * Controller for the trainee list scene.
  *
  * ## Legal stuff
  *
@@ -61,49 +52,49 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListPeopleController extends AbstractListController {
+public class DataTableTraineesController extends AbstractDataTableController {
 
 	/**
-	 * List box.
+	 * Container box.
 	 */
 	@FXML
-	private VBox boxList;
+	private VBox boxContainer;
 
 	/**
 	 * Table.
 	 */
 	@FXML
-	private TableView<Person> tblData;
+	private TableView<Trainee> tblData;
 
 	/**
 	 * ID column.
 	 */
 	@FXML
-	private TableColumn<PersonModel, String> colID;
+	private TableColumn<TraineeModel, String> colID;
 
 	/**
 	 * Name column.
 	 */
 	@FXML
-	private TableColumn<PersonModel, String> colName;
+	private TableColumn<TraineeModel, String> colName;
 
 	/**
 	 * First name column.
 	 */
 	@FXML
-	private TableColumn<PersonModel, String> colFirstName;
+	private TableColumn<TraineeModel, String> colFirstName;
+
+	/**
+	 * Club column.
+	 */
+	@FXML
+	private TableColumn<TraineeModel, String> colClub;
 
 	/**
 	 * Birthday column.
 	 */
 	@FXML
-	private TableColumn<PersonModel, LocalDate> colBirthday;
-
-	/**
-	 * Role column.
-	 */
-	@FXML
-	private TableColumn<PersonModel, String> colRole;
+	private TableColumn<TraineeModel, LocalDate> colBirthday;
 
 
 	/**
@@ -112,16 +103,12 @@ public class ListPeopleController extends AbstractListController {
 	@FXML
 	private Label lblFilter;
 
-	/**
-	 * Filter storage.
-	 */
-	private Map<CheckBox, PersonRoleType> mapPeopleFilterRoles;
-
 
 	/**
-	 * List of people.
+	 * List of trainees.
 	 */
-	private FilteredList<Person> lstPeople;
+	private FilteredList<Trainee> lstTrainee;
+
 
 	/**
 	 * Initializes the controller class.
@@ -131,36 +118,20 @@ public class ListPeopleController extends AbstractListController {
 	@FXML
 	private void initialize() {
 
-		// hook data to columns
+		// hook data to columns (referees)
 		colID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
 		colID.setVisible(false);
 
 		colName.setCellValueFactory(cellData -> cellData.getValue().getName());
 		colFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
+		colClub.setCellValueFactory(cellData -> (cellData.getValue().getMember() == null) ? null : cellData.getValue().getMember().getDisplayText());
 
 		colBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
 		colBirthday.setVisible(false);
-		colBirthday.setCellFactory(column -> TableUtils.getTableCellPersonDate(null));
-
-		colRole.setCellValueFactory(cellData -> (cellData.getValue().getRole() == null) ? null : cellData.getValue().getRole().getDisplayTitleShort());
+		colBirthday.setCellFactory(column -> TableUtils.getTableCellTraineeDate(null));
 
 		// headings
 		lblFilter.setFont(FontUtils.getDerived(lblFilter.getFont(), FontWeight.BOLD));
-
-		// setup role filter
-		HBox boxRoleFilter = new HBox(5);
-		boxList.getChildren().add(new Separator(Orientation.HORIZONTAL));
-		boxList.getChildren().add(boxRoleFilter);
-
-		mapPeopleFilterRoles = new HashMap<>();
-		AppModel.getData().getContent().getRoleType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
-				roleType -> {
-					CheckBox chkTemp = new CheckBox(roleType.getDisplayTitleShort().getValueSafe());
-					chkTemp.setOnAction(e -> handleFilterChange());
-					boxRoleFilter.getChildren().add(chkTemp);
-					mapPeopleFilterRoles.put(chkTemp, roleType);
-				}
-		);
 
 		// init items
 		setDataTableItems();
@@ -181,13 +152,13 @@ public class ListPeopleController extends AbstractListController {
 	@Override
 	public void setDataTableItems() {
 
-		lstPeople = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservablePeople(), person -> true);
+		lstTrainee = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableTrainees(), trainee -> true);
 
-		SortedList<Person> lstSortedPeople = new SortedList<>(lstPeople);
-		lstSortedPeople.comparatorProperty().bind(tblData.comparatorProperty());
-		tblData.setItems(lstSortedPeople);
+		SortedList<Trainee> lstSortedRefs = new SortedList<>(lstTrainee);
+		lstSortedRefs.comparatorProperty().bind(tblData.comparatorProperty());
+		tblData.setItems(lstSortedRefs);
 
-		setDataTablePlaceholderNoun("Personen");
+		setDataTablePlaceholderNoun("Azubi");
 
 		handleFilterChange();
 
@@ -196,27 +167,17 @@ public class ListPeopleController extends AbstractListController {
 	/**
 	 * Handles filter change events.
 	 */
-	@SuppressWarnings("unchecked")
 	@FXML
 	@Override
 	public void handleFilterChange() {
 
-		// filter for events
-		if (lstPeople == null) {
+		if (lstTrainee == null) {
 			lblFilter.setText("Filter");
 		} else {
 
-			lstPeople.setPredicate(PersonModel.ALL);
+			lstTrainee.setPredicate(PersonModel.ALL);
 
-			for (Entry<CheckBox, PersonRoleType> entryChkRole : mapPeopleFilterRoles.entrySet()) {
-
-				if (entryChkRole.getKey().isSelected()) {
-					lstPeople.setPredicate(((Predicate<Person>) lstPeople.getPredicate()).and(PersonModel.getRolePredicate(entryChkRole.getValue())));
-				}
-
-			}
-
-			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstPeople.size()));
+			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstTrainee.size()));
 		}
 
 		tblData.refresh();
@@ -230,19 +191,21 @@ public class ListPeopleController extends AbstractListController {
 	 */
 	@Override
 	public <T extends ModelClassExt> void select(final T theItem) {
-		tblData.getSelectionModel().select((Person) theItem);
+		tblData.getSelectionModel().select((Trainee) theItem);
 	}
 
 	/**
 	 * Returns selection from table as sorted list.
 	 *
 	 * @return sorted selection from table
+	 *
+	 * @since 0.12.0
 	 */
 	@Override
-	public ObservableList<PersonModel> getSortedSelectedItems() {
-		List<PersonModel> lstReturn = new ArrayList<>();
+	public ObservableList<TraineeModel> getSortedSelectedItems() {
+		List<TraineeModel> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((PersonModel) data));
+		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((TraineeModel) data));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
 	}
