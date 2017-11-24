@@ -1,11 +1,13 @@
 package de.edgesoft.refereemanager.controller.datatables;
 
+import java.util.Optional;
+
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.scene.control.SelectionMode;
 
 /**
- * Interface for the data table scene controller.
+ * Abstract controller for list scenes.
  *
  * ## Legal stuff
  *
@@ -30,36 +32,43 @@ import javafx.scene.control.TableView;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IDataTableController extends IListController {
+public abstract class AbstractListController implements IListController {
 
 	/**
-	 * Returns data table.
-	 */
-	public TableView<? extends ModelClassExt> getDataTable();
-
-	/**
-	 * Sets table items.
-	 */
-	public void setDataTableItems();
-
-	/**
-	 * Sets table placeholder noun.
+	 * Sets selection mode.
 	 *
-	 * @param thePlaceholderNoun placeholder noun
+	 * @param theSelectionMode selection mode
 	 */
-	public void setDataTablePlaceholderNoun(final String thePlaceholderNoun);
+	@Override
+	public void setSelectionMode(final SelectionMode theSelectionMode) {
+		getSelectionModel().setSelectionMode(theSelectionMode);
+	}
 
 	/**
-	 * Handles filter change events.
-	 */
-	public void handleFilterChange();
-
-	/**
-	 * Returns selection as sorted list.
+	 * Returns selected item property.
 	 *
-	 * @return sorted selection
+	 * @return selected item property
 	 */
-	public ObservableList<? extends ModelClassExt> getSortedSelectedItems();
+	@Override
+	public ReadOnlyObjectProperty<? extends ModelClassExt> selectedItemProperty() {
+		return getSelectionModel().selectedItemProperty();
+	}
+
+	/**
+	 * Returns selected item if there is only one.
+	 *
+	 * @return selected item
+	 */
+	@Override
+	public Optional<? extends ModelClassExt> getSelectedItem() {
+
+		if (getSelectionModel().getSelectedItems().size() != 1) {
+			return Optional.empty();
+		}
+
+		return Optional.of(getSelectionModel().getSelectedItem());
+
+	}
 
 }
 

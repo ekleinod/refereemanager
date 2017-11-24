@@ -1,11 +1,14 @@
 package de.edgesoft.refereemanager.controller.datatables;
 
+import java.util.Optional;
+
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.control.SelectionMode;
 
 /**
- * Interface for the data table scene controller.
+ * Interface for the list scene controller.
  *
  * ## Legal stuff
  *
@@ -30,36 +33,40 @@ import javafx.scene.control.TableView;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IDataTableController extends IListController {
+public interface IListController {
 
 	/**
-	 * Returns data table.
+	 * Returns selection model.
 	 */
-	public TableView<? extends ModelClassExt> getDataTable();
+	public MultipleSelectionModel<? extends ModelClassExt> getSelectionModel();
 
 	/**
-	 * Sets table items.
-	 */
-	public void setDataTableItems();
-
-	/**
-	 * Sets table placeholder noun.
+	 * Sets selected item.
 	 *
-	 * @param thePlaceholderNoun placeholder noun
+	 * @param theItem item to select
 	 */
-	public void setDataTablePlaceholderNoun(final String thePlaceholderNoun);
+	public <T extends ModelClassExt> void select(final T theItem);
 
 	/**
-	 * Handles filter change events.
-	 */
-	public void handleFilterChange();
-
-	/**
-	 * Returns selection as sorted list.
+	 * Sets selection mode.
 	 *
-	 * @return sorted selection
+	 * @param theSelectionMode selection mode
 	 */
-	public ObservableList<? extends ModelClassExt> getSortedSelectedItems();
+	public void setSelectionMode(final SelectionMode theSelectionMode);
+
+	/**
+	 * Returns selected item property.
+	 *
+	 * @return selected item property
+	 */
+	public ReadOnlyObjectProperty<? extends ModelClassExt> selectedItemProperty();
+
+	/**
+	 * Returns selected item if there is only one.
+	 *
+	 * @return selected item
+	 */
+	public Optional<? extends ModelClassExt> getSelectedItem();
 
 }
 

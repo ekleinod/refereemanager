@@ -1,16 +1,14 @@
 package de.edgesoft.refereemanager.controller.datatables;
 
 import java.text.MessageFormat;
-import java.util.Optional;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.utils.TableUtils;
-import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.MultipleSelectionModel;
 
 /**
- * Abstract ontroller for list scenes.
+ * Abstract controller for data table scenes.
  *
  * ## Legal stuff
  *
@@ -35,7 +33,17 @@ import javafx.scene.control.SelectionMode;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractDataTableController implements IDataTableController {
+public abstract class AbstractDataTableController extends AbstractListController implements IDataTableController {
+
+	/**
+	 * Returns selection model.
+	 *
+	 * @return selection model
+	 */
+	@Override
+	public MultipleSelectionModel<? extends ModelClassExt> getSelectionModel() {
+		return getDataTable().getSelectionModel();
+	}
 
 	/**
 	 * Sets table placeholder noun.
@@ -50,42 +58,6 @@ public abstract class AbstractDataTableController implements IDataTableControlle
 				thePlaceholderNoun));
 		lblPlaceholder.setWrapText(true);
 		getDataTable().setPlaceholder(lblPlaceholder);
-
-	}
-
-	/**
-	 * Sets selection mode.
-	 *
-	 * @param theSelectionMode selection mode
-	 */
-	@Override
-	public void setSelectionMode(final SelectionMode theSelectionMode) {
-		getDataTable().getSelectionModel().setSelectionMode(theSelectionMode);
-	}
-
-	/**
-	 * Returns selected item property.
-	 *
-	 * @return selected item property
-	 */
-	@Override
-	public ReadOnlyObjectProperty<? extends ModelClassExt> selectedItemProperty() {
-		return getDataTable().getSelectionModel().selectedItemProperty();
-	}
-
-	/**
-	 * Returns selected item if there is only one.
-	 *
-	 * @return selected item
-	 */
-	@Override
-	public Optional<? extends ModelClassExt> getSelectedItem() {
-
-		if (getDataTable().getSelectionModel().getSelectedItems().size() != 1) {
-			return Optional.empty();
-		}
-
-		return Optional.of(getDataTable().getSelectionModel().getSelectedItem());
 
 	}
 
