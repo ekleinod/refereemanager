@@ -10,6 +10,7 @@ import de.edgesoft.refereemanager.controller.ICRUDActionsController;
 import de.edgesoft.refereemanager.controller.IEmbedCRUDButtonsController;
 import de.edgesoft.refereemanager.controller.WishEditDialogController;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.Wish;
 import de.edgesoft.refereemanager.model.WishModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
@@ -55,7 +56,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormWishDataController extends AbstractInputFormController implements IEmbedCRUDButtonsController {
+public class InputFormWishDataController extends AbstractInputFormController implements IEmbedCRUDButtonsController<Wish> {
 
 	/**
 	 * List view for prefers.
@@ -160,7 +161,7 @@ public class InputFormWishDataController extends AbstractInputFormController imp
 	 * @param disableDelete when to disable delete button
 	 */
 	@Override
-	public void initCRUDButtons(final ICRUDActionsController theActionsController, ObservableBooleanValue disableEdit, ObservableBooleanValue disableDelete) {
+	public void initCRUDButtons(final ICRUDActionsController<Wish> theActionsController, ObservableBooleanValue disableEdit, ObservableBooleanValue disableDelete) {
 
 		// buttons setup
 		embeddedCRUDPreferController.getAddButton().setOnAction(theActionsController::handleAdd);
