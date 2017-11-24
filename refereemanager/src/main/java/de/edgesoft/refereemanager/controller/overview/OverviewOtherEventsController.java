@@ -44,7 +44,7 @@ public class OverviewOtherEventsController extends AbstractOverviewController<Ot
 	 * @param theOverviewController overview controller
 	 */
 	@Override
-	public void initController(final OverviewController theOverviewController) {
+	public void initController(final OverviewController<OtherEvent> theOverviewController) {
 
 		super.initController(theOverviewController);
 

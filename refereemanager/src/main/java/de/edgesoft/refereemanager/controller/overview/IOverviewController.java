@@ -1,5 +1,7 @@
 package de.edgesoft.refereemanager.controller.overview;
 
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+
 /**
  * Interface for specialized overview controllers.
  *
@@ -26,21 +28,21 @@ package de.edgesoft.refereemanager.controller.overview;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IOverviewController {
+public interface IOverviewController<T extends ModelClassExt> {
 
 	/**
 	 * Returns overview controller.
 	 *
 	 * @return overview controller
 	 */
-	public OverviewController getController();
+	public OverviewController<T> getController();
 
 	/**
 	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
 	 *
 	 * @param theOverviewController overview controller
 	 */
-	public void initController(final OverviewController theOverviewController);
+	public void initController(final OverviewController<T> theOverviewController);
 
 }
 

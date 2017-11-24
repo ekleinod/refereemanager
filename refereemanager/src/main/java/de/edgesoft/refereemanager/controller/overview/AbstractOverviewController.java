@@ -49,12 +49,12 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractOverviewController<T extends ModelClassExt> implements ICRUDActionsController<T>, IDetailsController, IOverviewController {
+public abstract class AbstractOverviewController<T extends ModelClassExt> implements ICRUDActionsController<T>, IDetailsController, IOverviewController<T> {
 
 	/**
 	 * Overview controller of the underlying view.
 	 */
-	private OverviewController overviewController = null;
+	private OverviewController<T> overviewController = null;
 
 	/**
 	 * Returns overview controller.
@@ -62,7 +62,7 @@ public abstract class AbstractOverviewController<T extends ModelClassExt> implem
 	 * @return overview controller
 	 */
 	@Override
-	public OverviewController getController() {
+	public OverviewController<T> getController() {
 		return overviewController;
 	}
 
@@ -72,7 +72,7 @@ public abstract class AbstractOverviewController<T extends ModelClassExt> implem
 	 * @param theOverviewController overview controller
 	 */
 	@Override
-	public void initController(final OverviewController theOverviewController) {
+	public void initController(final OverviewController<T> theOverviewController) {
 		overviewController = theOverviewController;
 	}
 

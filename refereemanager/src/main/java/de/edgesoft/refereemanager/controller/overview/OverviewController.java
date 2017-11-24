@@ -49,7 +49,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class OverviewController extends AbstractEmbedCRUDButtonsController implements IDetailsController {
+public class OverviewController<T extends ModelClassExt> extends AbstractEmbedCRUDButtonsController<T> implements IDetailsController {
 
 	/**
 	 * Heading.
@@ -152,7 +152,7 @@ public class OverviewController extends AbstractEmbedCRUDButtonsController imple
 	 * @param theDetailData detail data (null if none is selected)
 	 */
 	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
+	public <S extends ModelClassExt> void showDetails(final S theDetailData) {
 
 		embeddedDetailsTitledIDController.showDetails((TitledIDType) theDetailData);
 

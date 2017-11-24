@@ -1,5 +1,6 @@
 package de.edgesoft.refereemanager.controller;
 
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import javafx.beans.value.ObservableBooleanValue;
 
 /**
@@ -28,7 +29,7 @@ import javafx.beans.value.ObservableBooleanValue;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IEmbedCRUDButtonsController {
+public interface IEmbedCRUDButtonsController<T extends ModelClassExt> {
 
 	/**
 	 * Initializes the CRUD buttons.
@@ -37,7 +38,7 @@ public interface IEmbedCRUDButtonsController {
 	 * @param disableEdit when to disable edit button
 	 * @param disableDelete when to disable delete button
 	 */
-	public void initCRUDButtons(final ICRUDActionsController theActionsController, ObservableBooleanValue disableEdit, ObservableBooleanValue disableDelete);
+	public void initCRUDButtons(final ICRUDActionsController<T> theActionsController, ObservableBooleanValue disableEdit, ObservableBooleanValue disableDelete);
 
 }
 

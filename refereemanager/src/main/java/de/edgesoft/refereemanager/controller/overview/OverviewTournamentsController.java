@@ -44,7 +44,7 @@ public class OverviewTournamentsController extends AbstractOverviewController<To
 	 * @param theOverviewController overview controller
 	 */
 	@Override
-	public void initController(final OverviewController theOverviewController) {
+	public void initController(final OverviewController<Tournament> theOverviewController) {
 
 		super.initController(theOverviewController);
 
