@@ -93,7 +93,7 @@ public class OverviewTournamentsController extends AbstractOverviewController<To
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("EventEditDialog", "Turnier", new TournamentModel(), ((ContentModel) AppModel.getData().getContent()).getObservableTournaments());
+		super.handleAdd("editdialogs/EventEditDialog", "Turnier", new TournamentModel(), ((ContentModel) AppModel.getData().getContent()).getObservableTournaments());
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class OverviewTournamentsController extends AbstractOverviewController<To
 	 */
 	@Override
 	public void handleEdit(ActionEvent event) {
-		handleEdit("EventEditDialog", "Turnier");
+		handleEdit("editdialogs/EventEditDialog", "Turnier");
 	}
 
 	/**

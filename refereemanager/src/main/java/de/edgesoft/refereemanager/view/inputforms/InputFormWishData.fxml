@@ -44,7 +44,7 @@
 					</buttons>
 				</ButtonBar>
 				<ListView fx:id="lstAvoid" prefHeight="100.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
-				<fx:include fx:id="embeddedCRUDPrefer" source="../CRUDButtons.fxml" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+				<fx:include fx:id="embeddedCRUDPrefer" source="../crud/CRUDButtons.fxml" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 			</children>
 		</GridPane>
 	</content>

@@ -81,7 +81,7 @@ public class OverviewClubsController extends AbstractOverviewController<Club> {
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("ClubEditDialog", "Club", new ClubModel(), ((ContentModel) AppModel.getData().getContent()).getObservableClubs());
+		super.handleAdd("editdialogs/ClubEditDialog", "Club", new ClubModel(), ((ContentModel) AppModel.getData().getContent()).getObservableClubs());
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class OverviewClubsController extends AbstractOverviewController<Club> {
 	 */
 	@Override
 	public void handleEdit(ActionEvent event) {
-		handleEdit("ClubEditDialog", "Club");
+		handleEdit("editdialogs/ClubEditDialog", "Club");
 	}
 
 	/**

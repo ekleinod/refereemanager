@@ -1,4 +1,4 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.crud;
 
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;

@@ -93,7 +93,7 @@ public class OverviewOtherEventsController extends AbstractOverviewController<Ot
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("EventEditDialog", "Sonstiges Ereignis", new OtherEventModel(), ((ContentModel) AppModel.getData().getContent()).getObservableOtherEvents());
+		super.handleAdd("editdialogs/EventEditDialog", "Sonstiges Ereignis", new OtherEventModel(), ((ContentModel) AppModel.getData().getContent()).getObservableOtherEvents());
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class OverviewOtherEventsController extends AbstractOverviewController<Ot
 	 */
 	@Override
 	public void handleEdit(ActionEvent event) {
-		handleEdit("EventEditDialog", "Sonstiges Ereignis");
+		handleEdit("editdialogs/EventEditDialog", "Sonstiges Ereignis");
 	}
 
 	/**

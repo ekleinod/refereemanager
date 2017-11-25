@@ -20,7 +20,7 @@
 				</VBox>
 			</top>
 			<bottom>
-				<fx:include fx:id="embeddedCRUDButtons" source="../CRUDButtons.fxml" />
+				<fx:include fx:id="embeddedCRUDButtons" source="../crud/CRUDButtons.fxml" />
 			</bottom>
 			<padding>
 				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

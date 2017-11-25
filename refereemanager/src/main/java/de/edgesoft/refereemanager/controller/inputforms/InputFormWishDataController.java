@@ -5,10 +5,10 @@ import java.util.Objects;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.ButtonUtils;
-import de.edgesoft.refereemanager.controller.CRUDButtonsController;
-import de.edgesoft.refereemanager.controller.ICRUDActionsController;
-import de.edgesoft.refereemanager.controller.IEmbedCRUDButtonsController;
 import de.edgesoft.refereemanager.controller.WishEditDialogController;
+import de.edgesoft.refereemanager.controller.crud.CRUDButtonsController;
+import de.edgesoft.refereemanager.controller.crud.ICRUDActionsController;
+import de.edgesoft.refereemanager.controller.crud.IEmbedCRUDButtonsController;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.Wish;
 import de.edgesoft.refereemanager.model.WishModel;

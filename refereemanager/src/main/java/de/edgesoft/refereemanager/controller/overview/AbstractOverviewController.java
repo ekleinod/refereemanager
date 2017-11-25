@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.RefereeManager;
-import de.edgesoft.refereemanager.controller.ICRUDActionsController;
+import de.edgesoft.refereemanager.controller.crud.ICRUDActionsController;
 import de.edgesoft.refereemanager.controller.details.IDetailsController;
 import de.edgesoft.refereemanager.controller.editdialogs.IEditDialogController;
 import de.edgesoft.refereemanager.model.AppModel;

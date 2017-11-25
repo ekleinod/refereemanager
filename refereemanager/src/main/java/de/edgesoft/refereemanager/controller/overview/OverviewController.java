@@ -5,7 +5,7 @@ import java.util.Map;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
-import de.edgesoft.refereemanager.controller.AbstractEmbedCRUDButtonsController;
+import de.edgesoft.refereemanager.controller.crud.AbstractEmbedCRUDButtonsController;
 import de.edgesoft.refereemanager.controller.datatables.IDataTableController;
 import de.edgesoft.refereemanager.controller.details.DetailsTitledIDController;
 import de.edgesoft.refereemanager.controller.details.IDetailsController;

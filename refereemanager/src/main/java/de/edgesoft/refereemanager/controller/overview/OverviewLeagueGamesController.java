@@ -93,7 +93,7 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("EventEditDialog", "Ligaspiel", new LeagueGameModel(), ((ContentModel) AppModel.getData().getContent()).getObservableLeagueGames());
+		super.handleAdd("editdialogs/EventEditDialog", "Ligaspiel", new LeagueGameModel(), ((ContentModel) AppModel.getData().getContent()).getObservableLeagueGames());
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 	 */
 	@Override
 	public void handleEdit(ActionEvent event) {
-		handleEdit("EventEditDialog", "Ligaspiel");
+		handleEdit("editdialogs/EventEditDialog", "Ligaspiel");
 	}
 
 	/**
