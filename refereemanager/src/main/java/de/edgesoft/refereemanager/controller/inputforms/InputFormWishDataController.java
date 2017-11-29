@@ -9,6 +9,7 @@ import de.edgesoft.refereemanager.controller.WishEditDialogController;
 import de.edgesoft.refereemanager.controller.crud.CRUDButtonsController;
 import de.edgesoft.refereemanager.controller.crud.ICRUDActionsController;
 import de.edgesoft.refereemanager.controller.crud.IEmbedCRUDButtonsController;
+import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.Wish;
 import de.edgesoft.refereemanager.model.WishModel;
@@ -75,7 +76,7 @@ public class InputFormWishDataController extends AbstractInputFormController imp
 	 * CRUD buttons prefer controller.
 	 */
 	@FXML
-	private CRUDButtonsController embeddedCRUDPreferController;
+	private ListCRUDController<Wish> embeddedCRUDPreferController;
 
 	/**
 	 * Add prefer.

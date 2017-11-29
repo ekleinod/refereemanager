@@ -494,7 +494,7 @@ public class RefereeCommunicationController {
 	private void initialize() {
 
 		// list
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("ListReferees");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("datatables/DataTableReferees");
 
 		// add referee list to split pane
 		pneSplit.getItems().add(pneLoad.getKey());
