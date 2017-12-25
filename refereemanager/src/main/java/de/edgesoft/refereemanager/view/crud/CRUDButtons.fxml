@@ -4,9 +4,9 @@
 <?import javafx.scene.control.ButtonBar?>
 
 <ButtonBar xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.crud.CRUDButtonsController">
-  <buttons>
-    <Button fx:id="btnAdd" text="_Neu..." />
-    <Button fx:id="btnEdit" text="Ände_rn..." />
-    <Button fx:id="btnDelete" text="_Löschen" />
-  </buttons>
+	<buttons>
+		<Button fx:id="btnAdd" text="_Neu..." />
+		<Button fx:id="btnEdit" text="Ände_rn..." />
+		<Button fx:id="btnDelete" text="_Löschen" />
+	</buttons>
 </ButtonBar>

@@ -20,6 +20,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -61,6 +63,19 @@ public class ListCRUDController<T extends ModelClassExt> extends CRUDButtonsCont
 	private Label lblHeading;
 
 	/**
+	 * List view for avoids.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "avoid", jaxbclass = Referee.class)
+	protected ListView<T> lstData;
+
+	/**
+	 * Button for clearing list selection.
+	 */
+	@FXML
+	protected Button btnClearList;
+
+	/**
 	 * CRUD button view part.
 	 */
 	@FXML
@@ -71,13 +86,6 @@ public class ListCRUDController<T extends ModelClassExt> extends CRUDButtonsCont
 	 */
 	@FXML
 	private CRUDButtonsController embeddedCRUDButtonsController;
-
-	/**
-	 * List view for avoids.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "avoid", jaxbclass = Referee.class)
-	protected ListView<T> lstData;
 
 	/**
 	 * Class for instances.
@@ -102,13 +110,20 @@ public class ListCRUDController<T extends ModelClassExt> extends CRUDButtonsCont
 	@FXML
 	protected void initialize() {
 
+		// icons
+		btnClearList.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
+
 		// buttons setup
 		embeddedCRUDButtonsController.getAddButton().setOnAction(this::handleAdd);
 		embeddedCRUDButtonsController.getEditButton().setOnAction(this::handleEdit);
 		embeddedCRUDButtonsController.getDeleteButton().setOnAction(this::handleDelete);
 
-		// enabling edit/delete buttons only with selection
+		// enabling buttons due to selection
 		ObservableBooleanValue isOneItemSelected = lstData.getSelectionModel().selectedItemProperty().isNull();
+
+
+		btnClearList.disableProperty().bind(isOneItemSelected);
+
 		embeddedCRUDButtonsController.getEditButton().disableProperty().bind(isOneItemSelected);
 		embeddedCRUDButtonsController.getDeleteButton().disableProperty().bind(isOneItemSelected);
 
@@ -126,6 +141,17 @@ public class ListCRUDController<T extends ModelClassExt> extends CRUDButtonsCont
 		clsClass = theClass;
 		sViewName = theViewName;
 		sViewNoun = theViewTitleNoun;
+
+	}
+
+	/**
+	 * Clears list.
+	 *
+	 * @param event calling action event
+	 */
+	public void handleClearList(ActionEvent event) {
+
+		lstData.getSelectionModel().clearSelection();
 
 	}
 
