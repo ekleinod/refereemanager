@@ -20,11 +20,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -54,7 +54,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListCRUDController<T extends ModelClassExt> extends CRUDButtonsController implements ICRUDActionsController<T> {
+public class ListCRUDController<T extends ModelClassExt> implements ICRUDActionsController<T> {
 
 	/**
 	 * Heading.
@@ -121,7 +121,6 @@ public class ListCRUDController<T extends ModelClassExt> extends CRUDButtonsCont
 		// enabling buttons due to selection
 		ObservableBooleanValue isOneItemSelected = lstData.getSelectionModel().selectedItemProperty().isNull();
 
-
 		btnClearList.disableProperty().bind(isOneItemSelected);
 
 		embeddedCRUDButtonsController.getEditButton().disableProperty().bind(isOneItemSelected);
@@ -138,9 +137,15 @@ public class ListCRUDController<T extends ModelClassExt> extends CRUDButtonsCont
 	 */
 	public void initCRUDController(final Class<T> theClass, final String theViewName, final String theViewTitleNoun) {
 
+		assert (theClass != null) : "Class must not be null";
+		assert (theViewName != null) : "View name must not be null";
+		assert (theViewTitleNoun != null) : "View title noun must not be null";
+
 		clsClass = theClass;
 		sViewName = theViewName;
 		sViewNoun = theViewTitleNoun;
+
+		lblHeading.setText(theViewName);
 
 	}
 

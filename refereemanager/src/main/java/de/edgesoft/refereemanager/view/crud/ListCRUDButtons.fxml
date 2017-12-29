@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.crud.CRUDButtonsController">
+<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.crud.CRUDButtonsController">
 	<children>
-		<Button fx:id="btnAdd" text="_Neu..." />
-		<Button fx:id="btnEdit" text="Ände_rn..." />
-		<Button fx:id="btnDelete" text="_Löschen" />
+		<Button fx:id="btnAdd">
+			<tooltip>
+				<Tooltip text="Neu" />
+			</tooltip>
+		</Button>
+		<Button fx:id="btnEdit">
+			<tooltip>
+				<Tooltip text="Ändern" />
+			</tooltip>
+		</Button>
+		<Button fx:id="btnDelete">
+			<tooltip>
+				<Tooltip text="Löschen" />
+			</tooltip>
+		</Button>
 	</children>
 </VBox>

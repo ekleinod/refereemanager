@@ -57,7 +57,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormWishDataController extends AbstractInputFormController implements IEmbedCRUDButtonsController<Wish> {
+public class InputFormWishDataController extends AbstractInputFormController {
 
 	/**
 	 * List view for prefers.
@@ -152,26 +152,8 @@ public class InputFormWishDataController extends AbstractInputFormController imp
 		btnPreferDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 		btnAvoidDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 
-	}
-
-	/**
-	 * Initializes the CRUD buttons.
-	 *
-	 * @param theActionsController CRUD actions controller
-	 * @param disableEdit when to disable edit button
-	 * @param disableDelete when to disable delete button
-	 */
-	@Override
-	public void initCRUDButtons(final ICRUDActionsController<Wish> theActionsController, ObservableBooleanValue disableEdit, ObservableBooleanValue disableDelete) {
-
-		// buttons setup
-		embeddedCRUDPreferController.getAddButton().setOnAction(theActionsController::handleAdd);
-		embeddedCRUDPreferController.getEditButton().setOnAction(theActionsController::handleEdit);
-		embeddedCRUDPreferController.getDeleteButton().setOnAction(theActionsController::handleDelete);
-
-		// enabling edit/delete buttons only with selection
-		embeddedCRUDPreferController.getEditButton().disableProperty().bind(disableEdit);
-		embeddedCRUDPreferController.getDeleteButton().disableProperty().bind(disableDelete);
+		// init embedded views
+		embeddedCRUDPreferController.initCRUDController(Wish.class, "Bevorzugt schiedsen", "Wunsch");
 
 	}
 
