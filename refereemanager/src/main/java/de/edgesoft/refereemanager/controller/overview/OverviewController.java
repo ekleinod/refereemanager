@@ -15,11 +15,14 @@ import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.FontWeight;
 
@@ -113,10 +116,12 @@ public class OverviewController<T extends ModelClassExt> extends AbstractEmbedCR
 	/**
 	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
 	 *
+	 * @param theOverviewController overview controller
+	 * @param theDividerPosition divider position preference key
 	 * @param theListNode name of list node view
 	 * @param theDetailsNode name of details node view
 	 */
-	public void initController(final IDetailsController theDetailsController, final PrefKey theDividerPosition, final String theListNode, final String theDetailsNode) {
+	public void initController(final AbstractOverviewController<T> theOverviewController, final PrefKey theDividerPosition, final String theListNode, final String theDetailsNode) {
 
 		// add nodes to overview scene
 		Map.Entry<Parent, FXMLLoader> pneListNode = Resources.loadNode(theListNode);
@@ -136,10 +141,18 @@ public class OverviewController<T extends ModelClassExt> extends AbstractEmbedCR
 		});
 
 		// listen to selection changes, show details
-		getListController().selectedItemProperty().addListener((observable, oldValue, newValue) -> theDetailsController.showDetails(newValue));
+		getListController().selectedItemProperty().addListener((observable, oldValue, newValue) -> theOverviewController.showDetails(newValue));
+		getListController().getDataTable().setOnMousePressed(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent event) {
+		        if (event.isPrimaryButtonDown() && (event.getClickCount() == 2)) {
+		            theOverviewController.handleEdit(new ActionEvent(event.getSource(), event.getTarget()));
+		        }
+		    }
+		});
 
 		// clear event details
-		theDetailsController.showDetails(null);
+		theOverviewController.showDetails(null);
 
 		// set list items
 		getListController().setDataTableItems();
