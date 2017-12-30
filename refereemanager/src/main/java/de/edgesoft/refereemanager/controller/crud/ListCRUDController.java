@@ -7,11 +7,10 @@ import java.util.Objects;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.controller.editdialogs.IEditDialogController;
-import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.utils.AlertUtils;
-import de.edgesoft.refereemanager.utils.JAXBMatch;
+import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.Resources;
-import javafx.beans.value.ObservableBooleanValue;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,7 +54,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListCRUDController<T extends ModelClassExt> implements ICRUDActionsController<T> {
+public class ListCRUDController implements ICRUDActionsController<ModelClassExt> {
 
 	/**
 	 * Heading.
@@ -67,8 +66,7 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	 * List view for avoids.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "avoid", jaxbclass = Referee.class)
-	protected ListView<T> lstData;
+	protected ListView<ModelClassExt> lstData;
 
 	/**
 	 * Button for clearing list selection.
@@ -101,7 +99,7 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	/**
 	 * Class for instances.
 	 */
-	private Class<T> clsClass;
+	private Class<ModelClassExt> clsClass;
 
 	/**
 	 * View name.
@@ -130,12 +128,16 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 		embeddedCRUDButtonsController.getDeleteButton().setOnAction(this::handleDelete);
 
 		// enabling buttons due to selection
-		ObservableBooleanValue isOneItemSelected = lstData.getSelectionModel().selectedItemProperty().isNull();
+		BooleanBinding isOneItemSelected = lstData.getSelectionModel().selectedItemProperty().isNull();
 
 		btnClearList.disableProperty().bind(isOneItemSelected);
 
+		embeddedCRUDButtonsController.getAddButton().disableProperty().bind(isOneItemSelected.not());
 		embeddedCRUDButtonsController.getEditButton().disableProperty().bind(isOneItemSelected);
 		embeddedCRUDButtonsController.getDeleteButton().disableProperty().bind(isOneItemSelected);
+
+        // setup list views
+        lstData.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
 
 	}
 
@@ -146,13 +148,11 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	 * @param theViewName name of the edit view
 	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
 	 */
-	public void initCRUDController(final Class<T> theClass, final String theViewName, final String theViewTitleNoun) {
+	public void initCRUDController(final String theViewName, final String theViewTitleNoun) {
 
-		assert (theClass != null) : "Class must not be null";
 		assert (theViewName != null) : "View name must not be null";
 		assert (theViewTitleNoun != null) : "View title noun must not be null";
 
-		clsClass = theClass;
 		sViewName = theViewName;
 		sViewNoun = theViewTitleNoun;
 
@@ -173,15 +173,22 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 
 	}
 
+    /**
+     * Sets the underlying data model for the ListView.
+     *
+     * @param theItems items to set
+     */
+    public final void setItems(ObservableList<ModelClassExt> theItems) {
+        lstData.setItems(theItems);
+    }
+
 	/**
 	 * Clears list.
 	 *
 	 * @param event calling action event
 	 */
 	public void handleClearList(ActionEvent event) {
-
 		lstData.getSelectionModel().clearSelection();
-
 	}
 
 	/**
@@ -225,7 +232,7 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	 * @param theDataList data list to add data to
 	 */
 	@Override
-	public void handleAdd(final String theViewName, final String theViewTitleNoun, T theData, ObservableList<T> theDataList) {
+	public void handleAdd(final String theViewName, final String theViewTitleNoun, ModelClassExt theData, ObservableList<ModelClassExt> theDataList) {
 
 		if (showEditDialog(theViewName, theViewTitleNoun, theData)) {
 			theDataList.add(theData);
@@ -254,7 +261,7 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	 * @param theDataList data list to delete data from
 	 */
 	@Override
-	public void handleDelete(ObservableList<T> theDataList) {
+	public void handleDelete(ObservableList<ModelClassExt> theDataList) {
 
 		if (!lstData.getSelectionModel().isEmpty()) {
 

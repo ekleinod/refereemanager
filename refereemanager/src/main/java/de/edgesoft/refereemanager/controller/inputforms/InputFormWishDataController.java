@@ -72,7 +72,8 @@ public class InputFormWishDataController extends AbstractInputFormController {
 	 * CRUD buttons prefer controller.
 	 */
 	@FXML
-	private ListCRUDController<Wish> embeddedCRUDPreferController;
+	@JAXBMatch(jaxbfield = "prefer", jaxbclass = Referee.class)
+	protected ListCRUDController embeddedCRUDPreferController;
 
 	/**
 	 * Add prefer.
@@ -149,7 +150,7 @@ public class InputFormWishDataController extends AbstractInputFormController {
 		btnAvoidDelete.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-remove.png")));
 
 		// init embedded views
-		embeddedCRUDPreferController.initCRUDController(Wish.class, "Bevorzugt schiedsen", "Wunsch");
+		embeddedCRUDPreferController.initCRUDController("Bevorzugt schiedsen", "Wunsch");
 
 		// add nodes to overview scene
 		Map.Entry<Parent, FXMLLoader> pneInputFormPartNode = Resources.loadNode("inputformparts/InputFormPartWish");

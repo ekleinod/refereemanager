@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
 import de.edgesoft.refereemanager.controller.editdialogs.EditDialogTraineeController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -120,6 +121,10 @@ public class JAXBMatchUtils {
 	    					} else if (theFieldObject instanceof ListView<?>) {
 
 	    						((ListView<ModelClassExt>) theFieldObject).setItems(FXCollections.observableArrayList((List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel)));
+
+	    					} else if (theFieldObject instanceof ListCRUDController) {
+
+	    						((ListCRUDController) theFieldObject).setItems(FXCollections.observableArrayList((List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel)));
 
 	    					} else if (theFieldObject instanceof CheckBox) {
 
