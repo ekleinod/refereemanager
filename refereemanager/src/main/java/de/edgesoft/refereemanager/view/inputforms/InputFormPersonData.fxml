@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormPersonDataController">
+	<content>
+		<GridPane alignment="TOP_CENTER" vgap="5.0">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+				<ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="250.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+			</rowConstraints>
+			<children>
+				<Label text="ID" />
+				<TextField fx:id="txtID" GridPane.columnIndex="1" />
+				<Label text="Titel" GridPane.rowIndex="1" />
+				<TextField fx:id="txtTitle" promptText="Dr., Prof, ..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Label text="Vorname" GridPane.rowIndex="2" />
+				<TextField fx:id="txtFirstName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label fx:id="lblName" text="Name" GridPane.rowIndex="3" />
+				<TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<Label text="Geburtsdatum" GridPane.rowIndex="4" />
+				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
+					<children>
+						<DatePicker fx:id="pckBirthday" promptText="tt.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+					</children>
+				</AnchorPane>
+				<Label text="Todesdatum" GridPane.rowIndex="5" />
+				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+					<children>
+						<DatePicker fx:id="pckDayOfDeath" promptText="tt.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+					</children>
+				</AnchorPane>
+				<Label text="Geschlecht" GridPane.rowIndex="6" />
+				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="6">
+					<children>
+						<ComboBox fx:id="cboSexType" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
+						<Button fx:id="btnSexTypeClear" onAction="#handleSexTypeClear" AnchorPane.rightAnchor="0.0">
+							<tooltip>
+								<Tooltip text="Auswahl entfernen" />
+							</tooltip>
+						</Button>
+					</children>
+				</AnchorPane>
+				<Label text="Rolle" GridPane.rowIndex="7" />
+				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="7">
+					<children>
+						<ComboBox fx:id="cboRole" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
+						<Button fx:id="btnRoleClear" onAction="#handleRoleClear" AnchorPane.rightAnchor="0.0">
+							<tooltip>
+								<Tooltip text="Auswahl entfernen" />
+							</tooltip>
+						</Button>
+					</children>
+				</AnchorPane>
+				<Label text="Anmerkung" GridPane.rowIndex="8" />
+				<TextArea fx:id="txtRemark" prefHeight="80.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+			</children>
+		</GridPane>
+	</content>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</ScrollPane>

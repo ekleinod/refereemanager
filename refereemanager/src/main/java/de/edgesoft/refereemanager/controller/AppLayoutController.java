@@ -9,9 +9,18 @@ import java.util.Optional;
 
 import de.edgesoft.edgeutils.EdgeUtilsException;
 import de.edgesoft.edgeutils.commons.Info;
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.files.JAXBFiles;
 import de.edgesoft.edgeutils.javafx.ButtonUtils;
 import de.edgesoft.refereemanager.RefereeManager;
+import de.edgesoft.refereemanager.controller.overview.IOverviewController;
+import de.edgesoft.refereemanager.controller.overview.OverviewClubsController;
+import de.edgesoft.refereemanager.controller.overview.OverviewLeagueGamesController;
+import de.edgesoft.refereemanager.controller.overview.OverviewOtherEventsController;
+import de.edgesoft.refereemanager.controller.overview.OverviewPeopleController;
+import de.edgesoft.refereemanager.controller.overview.OverviewRefereesController;
+import de.edgesoft.refereemanager.controller.overview.OverviewTournamentsController;
+import de.edgesoft.refereemanager.controller.overview.OverviewTraineesController;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -326,8 +335,9 @@ public class AppLayoutController {
 		ButtonUtils.adaptButton(btnOverviewReferees, mnuOverviewReferees);
 		mnuOverviewPeople.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
 		ButtonUtils.adaptButton(btnOverviewPeople, mnuOverviewPeople);
-		mnuOverviewTrainees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
+		mnuOverviewTrainees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-trainees.png")));
 		ButtonUtils.adaptButton(btnOverviewTrainees, mnuOverviewTrainees);
+
 		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
 		ButtonUtils.adaptButton(btnRefereeCommunication, mnuRefereeCommunication);
 
@@ -680,9 +690,9 @@ public class AppLayoutController {
 	 *
 	 * @since 0.15.0
 	 */
-	private void handleOverview(final IOverviewController theOverviewController) {
+	private void handleOverview(final IOverviewController<? extends ModelClassExt> theOverviewController) {
 
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AbstractOverview");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("overview/Overview");
 
 		appPane.setCenter(pneLoad.getKey());
 

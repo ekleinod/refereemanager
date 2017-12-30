@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.controller.editdialogs.AbstractEditDialogController;
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.Contact;
 import de.edgesoft.refereemanager.jaxb.EMail;
@@ -50,7 +51,7 @@ import javafx.scene.image.ImageView;
  * @version 0.14.0
  * @since 0.14.0
  */
-public abstract class AbstractContactEditDialogController extends AbstractEditDialogController<Contact> {
+public abstract class AbstractContactEditDialogController extends AbstractEditDialogController {
 
 	/**
 	 * ID text field.
