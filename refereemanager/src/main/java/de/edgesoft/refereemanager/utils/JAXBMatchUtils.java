@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -77,9 +76,10 @@ public class JAXBMatchUtils {
 	@SuppressWarnings("unchecked")
 	public static void setField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final List<Class<?>> theDataClasses) {
 
-		Objects.requireNonNull(theFXMLField);
-		Objects.requireNonNull(theFieldObject);
-		Objects.requireNonNull(theModel);
+		assert (theFXMLField != null) : "FXML field must not be null.";
+		assert (theFieldObject != null) : "Field object must not be null.";
+		assert (theModel != null) : "Model must not be null.";
+		assert (theDataClasses != null) : "Data classes must not be null.";
 
     	for (Class<?> theClass : theDataClasses) {
 
@@ -165,7 +165,8 @@ public class JAXBMatchUtils {
 	@SuppressWarnings("unchecked")
 	public static void clearField(final Object theFieldObject) {
 
-		Objects.requireNonNull(theFieldObject);
+		assert (theFieldObject != null) : "Field object must not be null.";
+
 
 		if (theFieldObject instanceof TextInputControl) {
 
@@ -216,9 +217,10 @@ public class JAXBMatchUtils {
 	@SuppressWarnings("unchecked")
 	public static void getField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final List<Class<?>> theDataClasses) {
 
-		Objects.requireNonNull(theFXMLField);
-		Objects.requireNonNull(theFieldObject);
-		Objects.requireNonNull(theModel);
+		assert (theFXMLField != null) : "FXML field must not be null.";
+		assert (theFieldObject != null) : "Field object must not be null.";
+		assert (theModel != null) : "Model must not be null.";
+		assert (theDataClasses != null) : "Data classes must not be null.";
 
     	for (Class<?> theClass : theDataClasses) {
 
@@ -317,8 +319,8 @@ public class JAXBMatchUtils {
 	 */
 	public static boolean isMatch(final Field theFXMLField, final Field theJAXBField) {
 
-		Objects.requireNonNull(theFXMLField);
-		Objects.requireNonNull(theJAXBField);
+		assert (theFXMLField != null) : "FXML field must not be null.";
+		assert (theJAXBField != null) : "JAXB field must not be null.";
 
 		if (theFXMLField.getAnnotation(JAXBMatch.class) == null) {
 			return false;
@@ -341,8 +343,8 @@ public class JAXBMatchUtils {
 	 */
 	public static Method getGetterMethod(final Class<?> theClass, final String theJAXBFieldName) throws NoSuchMethodException, SecurityException {
 
-		Objects.requireNonNull(theClass);
-		Objects.requireNonNull(theJAXBFieldName);
+		assert (theClass != null) : "Class must not be null.";
+		assert (theJAXBFieldName != null) : "JAXB field name must not be null.";
 
 		return theClass.getDeclaredMethod(getGetter(theJAXBFieldName));
 
@@ -363,9 +365,9 @@ public class JAXBMatchUtils {
 	 */
 	public static Method getSetterMethod(final Class<?> theClass, final String theJAXBFieldName, final Class<?> theParameterClass) throws NoSuchMethodException, SecurityException {
 
-		Objects.requireNonNull(theClass);
-		Objects.requireNonNull(theJAXBFieldName);
-		Objects.requireNonNull(theParameterClass);
+		assert (theClass != null) : "Class must not be null.";
+		assert (theJAXBFieldName != null) : "JAXB field name must not be null.";
+		assert (theParameterClass != null) : "Parameter class must not be null.";
 
 		for (Method method : theClass.getDeclaredMethods()) {
 			if (method.getName().equals(getSetter(theJAXBFieldName)) && (method.getParameterCount() == 1)) {
@@ -391,7 +393,7 @@ public class JAXBMatchUtils {
 	 */
 	public static String getGetter(final String theJAXBFieldName) {
 
-		Objects.requireNonNull(theJAXBFieldName);
+		assert (theJAXBFieldName != null) : "JAXB field name must not be null.";
 
 		return String.format("get%s", getSuffix(theJAXBFieldName));
 
@@ -408,7 +410,7 @@ public class JAXBMatchUtils {
 	 */
 	public static String getSetter(final String theJAXBFieldName) {
 
-		Objects.requireNonNull(theJAXBFieldName);
+		assert (theJAXBFieldName != null) : "JAXB field name must not be null.";
 
 		return String.format("set%s", getSuffix(theJAXBFieldName));
 
@@ -425,7 +427,7 @@ public class JAXBMatchUtils {
 	 */
 	public static String getSuffix(final String theJAXBFieldName) {
 
-		Objects.requireNonNull(theJAXBFieldName);
+		assert (theJAXBFieldName != null) : "JAXB field name must not be null.";
 
 		return String.format("%s%s", theJAXBFieldName.substring(0, 1).toUpperCase(), theJAXBFieldName.substring(1));
 
@@ -440,7 +442,7 @@ public class JAXBMatchUtils {
 	 */
 	public static void markRequired(final Field theFXMLField, final Object theFieldObject, final List<Class<?>> theDataClasses) {
 
-		Objects.requireNonNull(theFXMLField);
+		assert (theFXMLField != null) : "FXML field must not be null.";
 
     	for (Class<?> theClass : theDataClasses) {
 
