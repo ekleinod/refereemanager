@@ -152,6 +152,54 @@ public class JAXBMatchUtils {
 	}
 
 	/**
+	 * Clears field value.
+	 *
+	 * The for-loop for all fields cannot be called here, because the access
+	 * to the field object is forbidden for private fields.
+	 * In order to maintain separation of concerns I call the
+	 * loop and the get method in the calling class.
+	 * {@link EditDialogTraineeController#setData(de.edgesoft.refereemanager.model.PersonModel)}
+	 *
+	 * @param theFieldObject object of fxml field
+	 */
+	@SuppressWarnings("unchecked")
+	public static void clearField(final Object theFieldObject) {
+
+		Objects.requireNonNull(theFieldObject);
+
+		if (theFieldObject instanceof TextInputControl) {
+
+			((TextInputControl) theFieldObject).setText(null);
+
+		} else if (theFieldObject instanceof DatePicker) {
+
+			((DatePicker) theFieldObject).setValue(null);
+
+		} else if (theFieldObject instanceof ComboBox<?>) {
+
+			((ComboBox<ModelClassExt>) theFieldObject).setValue(null);
+
+		} else if (theFieldObject instanceof ListView<?>) {
+
+			((ListView<ModelClassExt>) theFieldObject).setItems(null);
+
+		} else if (theFieldObject instanceof ListCRUDController) {
+
+			((ListCRUDController) theFieldObject).setItems(null);
+
+		} else if (theFieldObject instanceof CheckBox) {
+
+			((CheckBox) theFieldObject).setSelected(false);
+
+		} else if (theFieldObject instanceof Spinner<?>) {
+
+			((Spinner<Integer>) theFieldObject).getValueFactory().setValue(0);
+
+		}
+
+	}
+
+	/**
 	 * Get field values, fill model object.
 	 *
 	 * The for-loop for all fields cannot be called here, because the access

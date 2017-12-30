@@ -80,15 +80,17 @@ public abstract class AbstractInputFormController implements IInputFormControlle
 	@Override
 	public <U extends ModelClassExt> void fillForm(final U theData) {
 
-		assert (theData != null) : "data must not be null";
-
         // fill fields
         for (Field theFXMLField : getDeclaredFields()) {
 
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.setField(theFXMLField, fieldObject, theData, getClasses());
+        		if (theData != null) {
+        			JAXBMatchUtils.setField(theFXMLField, fieldObject, theData, getClasses());
+        		} else {
+        			JAXBMatchUtils.clearField(fieldObject);
+        		}
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -105,6 +107,8 @@ public abstract class AbstractInputFormController implements IInputFormControlle
 	 */
 	@Override
 	public <V extends ModelClassExt> void fillData(V theData) {
+
+		assert (theData != null) : "data must not be null";
 
         for (Field theFXMLField : getDeclaredFields()) {
 
