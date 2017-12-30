@@ -1,9 +1,5 @@
-package de.edgesoft.refereemanager.controller;
-import java.util.ArrayList;
-import java.util.Arrays;
-
+package de.edgesoft.refereemanager.controller.inputformparts;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.refereemanager.controller.editdialogs.AbstractEditDialogController;
 import de.edgesoft.refereemanager.jaxb.Wish;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
@@ -16,7 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 
 /**
- * Controller for the referee edit dialog scene.
+ * Controller for the input form part: wish.
  *
  * ## Legal stuff
  *
@@ -41,7 +37,7 @@ import javafx.scene.image.ImageView;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class WishEditDialogController extends AbstractEditDialogController<Wish> {
+public class InputFormPartWishController {
 
 	/**
 	 * Combobox for clubs.
@@ -117,11 +113,10 @@ public class WishEditDialogController extends AbstractEditDialogController<Wish>
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
-	@Override
 	protected void initialize() {
 
-		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{Wish.class})));
-		super.initialize();
+//		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{Wish.class})));
+//		super.initialize();
 
 		// fill combo boxes
         ComboBoxUtils.prepareComboBox(cboClub, AppModel.getData().getContent().getClub());
@@ -147,18 +142,18 @@ public class WishEditDialogController extends AbstractEditDialogController<Wish>
 
 	}
 
-	/**
-	 * Sets data to be edited.
-	 *
-	 * @param theData data
-	 */
-	@Override
-	public void setData(Wish theData) {
-
-		super.setData(theData);
-
-    }
-
+//	/**
+//	 * Sets data to be edited.
+//	 *
+//	 * @param theData data
+//	 */
+//	@Override
+//	public void setData(Wish theData) {
+//
+//		super.setData(theData);
+//
+//    }
+//
 	/**
 	 * Clears club selection.
 	 */

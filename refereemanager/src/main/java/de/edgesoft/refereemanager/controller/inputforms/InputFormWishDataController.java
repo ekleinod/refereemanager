@@ -5,11 +5,8 @@ import java.util.Objects;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.ButtonUtils;
-import de.edgesoft.refereemanager.controller.WishEditDialogController;
-import de.edgesoft.refereemanager.controller.crud.CRUDButtonsController;
-import de.edgesoft.refereemanager.controller.crud.ICRUDActionsController;
-import de.edgesoft.refereemanager.controller.crud.IEmbedCRUDButtonsController;
 import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
+import de.edgesoft.refereemanager.controller.inputformparts.InputFormPartWishController;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.Wish;
 import de.edgesoft.refereemanager.model.WishModel;
@@ -17,7 +14,6 @@ import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.Resources;
-import javafx.beans.value.ObservableBooleanValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -155,6 +151,10 @@ public class InputFormWishDataController extends AbstractInputFormController {
 		// init embedded views
 		embeddedCRUDPreferController.initCRUDController(Wish.class, "Bevorzugt schiedsen", "Wunsch");
 
+		// add nodes to overview scene
+		Map.Entry<Parent, FXMLLoader> pneInputFormPartNode = Resources.loadNode("inputformparts/InputFormPartWish");
+		embeddedCRUDPreferController.addInputFormPart(pneInputFormPartNode.getKey());
+
 	}
 
 	/**
@@ -280,7 +280,7 @@ public class InputFormWishDataController extends AbstractInputFormController {
 		editDialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set the referee
-		WishEditDialogController editController = pneLoad.getValue().getController();
+		InputFormPartWishController editController = pneLoad.getValue().getController();
 		editController.setDialogStage(editDialogStage);
 		editController.setData(theWish);
 

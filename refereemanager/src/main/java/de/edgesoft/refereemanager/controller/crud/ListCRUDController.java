@@ -25,6 +25,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -88,6 +89,16 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	private CRUDButtonsController embeddedCRUDButtonsController;
 
 	/**
+	 * Grid pane.
+	 */
+	@FXML
+	private GridPane grdListCRUD;
+
+
+
+
+
+	/**
 	 * Class for instances.
 	 */
 	private Class<T> clsClass;
@@ -146,6 +157,19 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 		sViewNoun = theViewTitleNoun;
 
 		lblHeading.setText(theViewName);
+
+	}
+
+	/**
+	 * Adds input form part to grid.
+	 *
+	 * @param theInputFormPart input form part
+	 */
+	public void addInputFormPart(final Parent theInputFormPart) {
+
+		assert (theInputFormPart != null) : "InputFormPart must not be null";
+
+		grdListCRUD.add(theInputFormPart, 0, 2);
 
 	}
 
