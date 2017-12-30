@@ -7,6 +7,7 @@ import java.util.Objects;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.controller.editdialogs.IEditDialogController;
+import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -142,13 +143,14 @@ public class ListCRUDController implements ICRUDActionsController<ModelClassExt>
 	}
 
 	/**
-	 * Initializes the CRUD controller.
+	 * Initializes the controller.
 	 *
-	 * @param theClass class
+	 * @param theInputFormController input form controller
+	 * @param thePartInputForm input form part
 	 * @param theViewName name of the edit view
 	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
 	 */
-	public void initCRUDController(final String theViewName, final String theViewTitleNoun) {
+	public void initController(final IInputFormController theInputFormController, final Parent thePartInputForm, final String theViewName, final String theViewTitleNoun) {
 
 		assert (theViewName != null) : "View name must not be null";
 		assert (theViewTitleNoun != null) : "View title noun must not be null";
@@ -158,17 +160,10 @@ public class ListCRUDController implements ICRUDActionsController<ModelClassExt>
 
 		lblHeading.setText(theViewName);
 
-	}
-
-	/**
-	 * Adds input form part to grid.
-	 *
-	 * @param thePartInputForm input form part
-	 */
-	public void addPartInputForm(final Parent thePartInputForm) {
+		assert (theInputFormController != null) : "InputFormController must not be null";
+		lstData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> theInputFormController.fillForm(lstData.getSelectionModel().getSelectedItem()));
 
 		assert (thePartInputForm != null) : "PartInputForm must not be null";
-
 		grdListCRUD.add(thePartInputForm, 0, 2);
 
 	}

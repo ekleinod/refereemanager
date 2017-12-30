@@ -147,18 +147,6 @@ public class PartInputFormWishController extends AbstractInputFormController {
 
 	}
 
-//	/**
-//	 * Sets data to be edited.
-//	 *
-//	 * @param theData data
-//	 */
-//	@Override
-//	public void setData(Wish theData) {
-//
-//		super.setData(theData);
-//
-//    }
-//
 	/**
 	 * Clears club selection.
 	 */
