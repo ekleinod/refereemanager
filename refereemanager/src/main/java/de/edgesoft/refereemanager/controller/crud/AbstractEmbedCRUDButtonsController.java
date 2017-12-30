@@ -1,6 +1,5 @@
 package de.edgesoft.refereemanager.controller.crud;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -31,7 +30,7 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractEmbedCRUDButtonsController<T extends ModelClassExt> implements IEmbedCRUDButtonsController<T> {
+public abstract class AbstractEmbedCRUDButtonsController implements IEmbedCRUDButtonsController {
 
 	/**
 	 * CRUD button view part.
@@ -53,7 +52,7 @@ public abstract class AbstractEmbedCRUDButtonsController<T extends ModelClassExt
 	 * @param disableDelete when to disable delete button
 	 */
 	@Override
-	public void initCRUDButtons(final ICRUDActionsController<T> theActionsController, ObservableBooleanValue disableEdit, ObservableBooleanValue disableDelete) {
+	public void initCRUDButtons(final ICRUDActionsController theActionsController, ObservableBooleanValue disableEdit, ObservableBooleanValue disableDelete) {
 
 		// buttons setup
 		embeddedCRUDButtonsController.getAddButton().setOnAction(theActionsController::handleAdd);

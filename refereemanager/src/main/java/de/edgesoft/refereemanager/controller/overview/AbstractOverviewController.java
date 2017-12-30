@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.RefereeManager;
-import de.edgesoft.refereemanager.controller.crud.ICRUDActionsController;
+import de.edgesoft.refereemanager.controller.crud.ICRUDDialogActionsController;
 import de.edgesoft.refereemanager.controller.details.IDetailsController;
 import de.edgesoft.refereemanager.controller.editdialogs.IEditDialogController;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -49,7 +49,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractOverviewController<T extends ModelClassExt> implements ICRUDActionsController<T>, IDetailsController, IOverviewController<T> {
+public abstract class AbstractOverviewController<T extends ModelClassExt> implements ICRUDDialogActionsController<T>, IDetailsController, IOverviewController<T> {
 
 	/**
 	 * Overview controller of the underlying view.

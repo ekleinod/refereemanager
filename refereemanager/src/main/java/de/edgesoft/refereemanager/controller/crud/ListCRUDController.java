@@ -55,7 +55,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListCRUDController implements ICRUDActionsController<ModelClassExt> {
+public class ListCRUDController implements ICRUDActionsController {
 
 	/**
 	 * Heading.
