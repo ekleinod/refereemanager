@@ -145,6 +145,64 @@ public class PartInputFormWishController extends AbstractInputFormController {
 		// init form
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Wish.class})));
 
+		// cross-disabling selection
+		cboClub.disableProperty().bind(
+				cboLeague.getSelectionModel().selectedItemProperty().isNotNull()
+				.or(cboSexType.getSelectionModel().selectedItemProperty().isNotNull())
+				.or(chkSaturday.selectedProperty())
+				.or(chkSunday.selectedProperty())
+				.or(chkTournamentOnly.selectedProperty())
+				.or(chkLeagueGamesOnly.selectedProperty())
+				);
+		cboLeague.disableProperty().bind(
+				cboClub.getSelectionModel().selectedItemProperty().isNotNull()
+				.or(cboSexType.getSelectionModel().selectedItemProperty().isNotNull())
+				.or(chkSaturday.selectedProperty())
+				.or(chkSunday.selectedProperty())
+				.or(chkTournamentOnly.selectedProperty())
+				.or(chkLeagueGamesOnly.selectedProperty())
+				);
+		cboSexType.disableProperty().bind(
+				cboClub.getSelectionModel().selectedItemProperty().isNotNull()
+				.or(cboLeague.getSelectionModel().selectedItemProperty().isNotNull())
+				.or(chkSaturday.selectedProperty())
+				.or(chkSunday.selectedProperty())
+				.or(chkTournamentOnly.selectedProperty())
+				.or(chkLeagueGamesOnly.selectedProperty())
+				);
+		chkSaturday.disableProperty().bind(
+				cboClub.getSelectionModel().selectedItemProperty().isNotNull()
+				.or(cboLeague.getSelectionModel().selectedItemProperty().isNotNull())
+				.or(cboSexType.getSelectionModel().selectedItemProperty().isNotNull())
+				.or(chkSunday.selectedProperty())
+				.or(chkTournamentOnly.selectedProperty())
+				.or(chkLeagueGamesOnly.selectedProperty())
+				);
+		chkSunday.disableProperty().bind(
+				cboClub.getSelectionModel().selectedItemProperty().isNotNull()
+				.or(cboLeague.getSelectionModel().selectedItemProperty().isNotNull())
+				.or(cboSexType.getSelectionModel().selectedItemProperty().isNotNull())
+				.or(chkSaturday.selectedProperty())
+				.or(chkTournamentOnly.selectedProperty())
+				.or(chkLeagueGamesOnly.selectedProperty())
+				);
+		chkTournamentOnly.disableProperty().bind(
+				cboClub.getSelectionModel().selectedItemProperty().isNotNull()
+				.or(cboLeague.getSelectionModel().selectedItemProperty().isNotNull())
+				.or(cboSexType.getSelectionModel().selectedItemProperty().isNotNull())
+				.or(chkSaturday.selectedProperty())
+				.or(chkSunday.selectedProperty())
+				.or(chkLeagueGamesOnly.selectedProperty())
+				);
+		chkLeagueGamesOnly.disableProperty().bind(
+				cboClub.getSelectionModel().selectedItemProperty().isNotNull()
+				.or(cboLeague.getSelectionModel().selectedItemProperty().isNotNull())
+				.or(cboSexType.getSelectionModel().selectedItemProperty().isNotNull())
+				.or(chkSaturday.selectedProperty())
+				.or(chkSunday.selectedProperty())
+				.or(chkTournamentOnly.selectedProperty())
+				);
+
 	}
 
 	/**
