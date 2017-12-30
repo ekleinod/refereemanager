@@ -1,5 +1,10 @@
-package de.edgesoft.refereemanager.controller.inputformparts;
+package de.edgesoft.refereemanager.controller.inputforms;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.jaxb.Wish;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
@@ -37,7 +42,7 @@ import javafx.scene.image.ImageView;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class InputFormPartWishController {
+public class PartInputFormWishController extends AbstractInputFormController {
 
 	/**
 	 * Combobox for clubs.
@@ -115,9 +120,6 @@ public class InputFormPartWishController {
 	@FXML
 	protected void initialize() {
 
-//		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{Wish.class})));
-//		super.initialize();
-
 		// fill combo boxes
         ComboBoxUtils.prepareComboBox(cboClub, AppModel.getData().getContent().getClub());
         ComboBoxUtils.prepareComboBox(cboLeague, AppModel.getData().getContent().getLeague());
@@ -139,6 +141,9 @@ public class InputFormPartWishController {
 		btnClubClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 		btnLeagueClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 		btnSexTypeClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
+
+		// init form
+		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Wish.class})));
 
 	}
 

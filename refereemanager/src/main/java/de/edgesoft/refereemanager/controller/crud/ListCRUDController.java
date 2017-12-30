@@ -163,13 +163,13 @@ public class ListCRUDController implements ICRUDActionsController<ModelClassExt>
 	/**
 	 * Adds input form part to grid.
 	 *
-	 * @param theInputFormPart input form part
+	 * @param thePartInputForm input form part
 	 */
-	public void addInputFormPart(final Parent theInputFormPart) {
+	public void addPartInputForm(final Parent thePartInputForm) {
 
-		assert (theInputFormPart != null) : "InputFormPart must not be null";
+		assert (thePartInputForm != null) : "PartInputForm must not be null";
 
-		grdListCRUD.add(theInputFormPart, 0, 2);
+		grdListCRUD.add(thePartInputForm, 0, 2);
 
 	}
 
