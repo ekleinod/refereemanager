@@ -7,6 +7,8 @@ import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.ButtonUtils;
 import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.Wish;
+import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.WishModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
@@ -71,7 +73,7 @@ public class InputFormWishDataController extends AbstractInputFormController {
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "prefer", jaxbclass = Referee.class)
-	protected ListCRUDController embeddedCRUDPreferController;
+	protected ListCRUDController<Wish> embeddedCRUDPreferController;
 
 	/**
 	 * Add prefer.
@@ -153,7 +155,7 @@ public class InputFormWishDataController extends AbstractInputFormController {
 				pnePartInputFormNode.getValue().getController(),
 				pnePartInputFormNode.getKey(),
 				"Bevorzugt schiedsen",
-				"Wunsch");
+				AppModel.factory::createWish);
 
 	}
 
