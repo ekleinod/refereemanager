@@ -60,6 +60,7 @@ public abstract class AbstractInputFormController implements IInputFormControlle
 		for (Field theFXMLField : getDeclaredFields()) {
 
 			try {
+
 				Object fieldObject = theFXMLField.get(this);
 
 				JAXBMatchUtils.markRequired(theFXMLField, fieldObject, getClasses());

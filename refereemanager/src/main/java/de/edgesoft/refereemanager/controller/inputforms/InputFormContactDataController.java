@@ -110,13 +110,13 @@ public class InputFormContactDataController extends AbstractInputFormController 
 				"E-Mail",
 				AppModel.factory::createEMail);
 
-//		Map.Entry<Parent, FXMLLoader> nodePhoneNumber = Resources.loadNode("inputforms/PartInputFormPhoneNumber");
-//		embeddedCRUDPhoneNumberController.initController(
-//				nodePhoneNumber.getValue().getController(),
-//				nodePhoneNumber.getKey(),
-//				"Telefon",
-//				AppModel.factory::createPhoneNumber);
-//
+		Map.Entry<Parent, FXMLLoader> nodePhoneNumber = Resources.loadNode("inputforms/PartInputFormPhoneNumber");
+		embeddedCRUDPhoneNumberController.initController(
+				nodePhoneNumber.getValue().getController(),
+				nodePhoneNumber.getKey(),
+				"Telefon",
+				AppModel.factory::createPhoneNumber);
+
 //		Map.Entry<Parent, FXMLLoader> nodeAddress = Resources.loadNode("inputforms/PartInputFormAddress");
 //		embeddedCRUDAddressController.initController(
 //				nodeAddress.getValue().getController(),

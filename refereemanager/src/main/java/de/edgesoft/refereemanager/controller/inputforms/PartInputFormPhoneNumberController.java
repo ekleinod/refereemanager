@@ -1,9 +1,9 @@
-package de.edgesoft.refereemanager.controller;
-import de.edgesoft.refereemanager.controller.inputforms.AbstractContactInputFormController;
+package de.edgesoft.refereemanager.controller.inputforms;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -32,7 +32,7 @@ import javafx.scene.control.TextField;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class PhoneNumberEditDialogController extends AbstractContactInputFormController {
+public class PartInputFormPhoneNumberController extends AbstractContactInputFormController {
 
 	/**
 	 * Country code text field.
@@ -49,6 +49,15 @@ public class PhoneNumberEditDialogController extends AbstractContactInputFormCon
 	protected TextField txtAreaCode;
 
 	/**
+	 * Label for number text field.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "number", jaxbclass = PhoneNumber.class)
+	protected Label lblNumber;
+
+	/**
 	 * Number text field.
 	 */
 	@FXML
@@ -61,25 +70,6 @@ public class PhoneNumberEditDialogController extends AbstractContactInputFormCon
 	@FXML
 	@JAXBMatch(jaxbfield = "isCell", jaxbclass = PhoneNumber.class)
 	protected CheckBox chkIsCell;
-
-
-	/**
-	 * Initializes the controller class.
-	 *
-	 * This method is automatically called after the fxml file has been loaded.
-	 */
-	@FXML
-	@Override
-	protected void initialize() {
-
-		super.initialize();
-
-		// enable ok button for valid entries only
-		btnOK.disableProperty().bind(
-				txtNumber.textProperty().isEmpty()
-		);
-
-	}
 
 }
 

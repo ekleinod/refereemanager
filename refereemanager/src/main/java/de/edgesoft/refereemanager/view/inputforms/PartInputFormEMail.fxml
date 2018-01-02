@@ -26,13 +26,13 @@
 		<RowConstraints valignment="TOP" />
 	</rowConstraints>
 	<children>
-		<Label text="ID" />
+		<Label fx:id="lblID" text="ID" />
 		<TextField fx:id="txtID" promptText="ID eingeben" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
 		<Label fx:id="lblEMail" text="E-Mail" GridPane.rowIndex="1" />
 		<TextField fx:id="txtEMail" promptText="E-Mail eingeben" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
 		<CheckBox fx:id="chkIsPrimary" text="Primärkontakt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 		<CheckBox fx:id="chkEditorOnly" text="nur für VSRA" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-		<Label text="Kontaktart" GridPane.rowIndex="3" />
+		<Label fx:id="lblContactType" text="Kontaktart" GridPane.rowIndex="3" />
 		<AnchorPane GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
 			<children>
 				<ComboBox fx:id="cboContactType" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
@@ -43,7 +43,7 @@
 				</Button>
 			</children>
 		</AnchorPane>
-		<Label text="Anmerkung" GridPane.rowIndex="4" />
+		<Label fx:id="lblRemark" text="Anmerkung" GridPane.rowIndex="4" />
 		<TextArea fx:id="txtRemark" prefHeight="40.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
 	</children>
 </GridPane>
