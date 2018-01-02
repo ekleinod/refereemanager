@@ -124,7 +124,7 @@ public class JAXBMatchUtils {
 
 	    					} else if (theFieldObject instanceof ListCRUDController) {
 
-	    						((ListCRUDController) theFieldObject).setItems(FXCollections.observableArrayList((List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel)));
+	    						((ListCRUDController<ModelClassExt>) theFieldObject).setItems(FXCollections.observableArrayList((List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel)));
 
 	    					} else if (theFieldObject instanceof CheckBox) {
 
@@ -186,7 +186,7 @@ public class JAXBMatchUtils {
 
 		} else if (theFieldObject instanceof ListCRUDController) {
 
-			((ListCRUDController) theFieldObject).setItems(null);
+			((ListCRUDController<ModelClassExt>) theFieldObject).setItems(null);
 
 		} else if (theFieldObject instanceof CheckBox) {
 
@@ -282,6 +282,12 @@ public class JAXBMatchUtils {
 	    						List<ModelClassExt> lstItems = (List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel);
 	    						lstItems.clear();
 	    						lstItems.addAll(((ListView<ModelClassExt>) theFieldObject).getItems());
+
+	    					} else if (theFieldObject instanceof ListCRUDController) {
+
+	    						List<ModelClassExt> lstItems = (List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						lstItems.clear();
+	    						lstItems.addAll(((ListCRUDController<ModelClassExt>) theFieldObject).getItems());
 
 	    					} else if (theFieldObject instanceof CheckBox) {
 

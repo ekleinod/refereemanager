@@ -156,11 +156,20 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	}
 
     /**
-     * Sets the underlying data model for the ListView.
+     * Returns the items of the ListView.
+     *
+     * @return items
+     */
+    public ObservableList<T> getItems() {
+        return lstData.getItems();
+    }
+
+    /**
+     * Sets the items of the ListView.
      *
      * @param theItems items to set
      */
-    public final void setItems(ObservableList<T> theItems) {
+    public void setItems(ObservableList<T> theItems) {
         lstData.setItems(theItems);
     }
 
