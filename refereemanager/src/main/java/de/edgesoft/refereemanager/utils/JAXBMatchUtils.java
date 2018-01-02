@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
 import de.edgesoft.refereemanager.controller.editdialogs.EditDialogTraineeController;
 import javafx.beans.property.BooleanProperty;
@@ -24,10 +25,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextInputControl;
-import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 
@@ -459,10 +460,14 @@ public class JAXBMatchUtils {
 	    			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
 
 	    				try {
-	    					if (theFieldObject instanceof Label) {
-								Font fntTemp = ((Label) theFieldObject).getFont();
-								((Label) theFieldObject).setFont(Font.font(fntTemp.getFamily(), FontWeight.BOLD, fntTemp.getSize()));
+
+	    					// not checking directly for Labeled to avoid unneccessary boldness (i.e. for buttons)
+	    					if ((theFieldObject instanceof Label) || (theFieldObject instanceof CheckBox)) {
+
+								((Labeled) theFieldObject).setFont(FontUtils.getDerived(((Labeled) theFieldObject).getFont(), FontWeight.BOLD));
+
 	    					}
+
 	    				} catch (IllegalArgumentException | SecurityException e) {
 	    					e.printStackTrace();
 	    				}

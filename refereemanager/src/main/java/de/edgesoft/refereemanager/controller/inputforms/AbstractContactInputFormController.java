@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -51,6 +52,15 @@ import javafx.scene.image.ImageView;
 public abstract class AbstractContactInputFormController extends AbstractInputFormController {
 
 	/**
+	 * Label for ID text field.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "id", jaxbclass = IDType.class)
+	protected Label lblID;
+
+	/**
 	 * ID text field.
 	 */
 	@FXML
@@ -72,6 +82,15 @@ public abstract class AbstractContactInputFormController extends AbstractInputFo
 	protected CheckBox chkEditorOnly;
 
 	/**
+	 * Label for combobox for contact types.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "contactType", jaxbclass = Contact.class)
+	protected Label lblContactType;
+
+	/**
 	 * Combobox for contact types.
 	 */
 	@FXML
@@ -85,6 +104,15 @@ public abstract class AbstractContactInputFormController extends AbstractInputFo
 	 */
 	@FXML
 	private Button btnContactTypeClear;
+
+	/**
+	 * Label for text area for remark.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "remark", jaxbclass = TitledIDType.class)
+	protected Label lblRemark;
 
 	/**
 	 * Text area for remark.
