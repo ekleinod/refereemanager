@@ -1,8 +1,8 @@
-package de.edgesoft.refereemanager.controller;
-import de.edgesoft.refereemanager.controller.inputforms.AbstractContactInputFormController;
+package de.edgesoft.refereemanager.controller.inputforms;
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -31,7 +31,14 @@ import javafx.scene.control.TextField;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class AddressEditDialogController extends AbstractContactInputFormController {
+public class PartInputFormAddressController extends AbstractContactInputFormController {
+
+	/**
+	 * Label for street text field.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "street", jaxbclass = Address.class)
+	protected Label lblStreet;
 
 	/**
 	 * Street text field.
@@ -41,11 +48,25 @@ public class AddressEditDialogController extends AbstractContactInputFormControl
 	protected TextField txtStreet;
 
 	/**
+	 * Label for number text field.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "number", jaxbclass = Address.class)
+	protected Label lblNumber;
+
+	/**
 	 * Number text field.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "number", jaxbclass = Address.class)
 	protected TextField txtNumber;
+
+	/**
+	 * Label for zip code text field.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "zipCode", jaxbclass = Address.class)
+	protected Label lblZipCode;
 
 	/**
 	 * Zip code text field.
@@ -55,31 +76,18 @@ public class AddressEditDialogController extends AbstractContactInputFormControl
 	protected TextField txtZipCode;
 
 	/**
+	 * Label for city text field.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "city", jaxbclass = Address.class)
+	protected Label lblCity;
+
+	/**
 	 * City text field.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "city", jaxbclass = Address.class)
 	protected TextField txtCity;
-
-
-	/**
-	 * Initializes the controller class.
-	 *
-	 * This method is automatically called after the fxml file has been loaded.
-	 */
-	@FXML
-	@Override
-	protected void initialize() {
-
-		super.initialize();
-
-		// enable ok button for valid entries only
-		btnOK.disableProperty().bind(
-				txtStreet.textProperty().isEmpty().or(
-						txtCity.textProperty().isEmpty())
-		);
-
-	}
 
 }
 
