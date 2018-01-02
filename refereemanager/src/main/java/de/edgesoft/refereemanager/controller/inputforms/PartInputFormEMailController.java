@@ -1,11 +1,12 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.inputforms;
+import de.edgesoft.refereemanager.controller.AbstractContactEditDialogController;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 /**
- * Controller for the email edit dialog scene.
+ * Controller for the input form part: email.
  *
  * ## Legal stuff
  *
@@ -30,7 +31,7 @@ import javafx.scene.control.TextField;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class EMailEditDialogController extends AbstractContactEditDialogController {
+public class PartInputFormEMailController extends AbstractContactEditDialogController {
 
 	/**
 	 * EMail text field.

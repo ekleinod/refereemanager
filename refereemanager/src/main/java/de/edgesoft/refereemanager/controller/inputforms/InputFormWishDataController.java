@@ -74,7 +74,6 @@ public class InputFormWishDataController extends AbstractInputFormController {
 	@FXML
 	protected void initialize() {
 
-		// add input form part prefer
 		Map.Entry<Parent, FXMLLoader> nodePrefer = Resources.loadNode("inputforms/PartInputFormWish");
 		embeddedCRUDPreferController.initController(
 				nodePrefer.getValue().getController(),
@@ -82,7 +81,6 @@ public class InputFormWishDataController extends AbstractInputFormController {
 				"Bevorzugt schiedsen",
 				AppModel.factory::createWish);
 
-		// add input form part avoid
 		Map.Entry<Parent, FXMLLoader> nodeAvoid = Resources.loadNode("inputforms/PartInputFormWish");
 		embeddedCRUDAvoidController.initController(
 				nodeAvoid.getValue().getController(),

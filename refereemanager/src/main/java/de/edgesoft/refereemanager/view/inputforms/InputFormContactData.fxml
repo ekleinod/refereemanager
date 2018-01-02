@@ -1,74 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.VBox?>
 
 <ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormContactDataController">
 	<content>
-		<GridPane alignment="TOP_CENTER" vgap="5.0">
-			<columnConstraints>
-				<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
-				<ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="250.0" />
-			</columnConstraints>
-			<rowConstraints>
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-			</rowConstraints>
+		<VBox spacing="10.0">
 			<children>
-				<Label text="E-Mail" />
-				<ButtonBar GridPane.columnIndex="1">
-					<buttons>
-						<Button fx:id="btnEMailAdd" onAction="#handleEMailAdd" />
-						<Button fx:id="btnEMailEdit" onAction="#handleEMailEdit" />
-						<Button fx:id="btnEMailDelete" onAction="#handleEMailDelete" />
-					</buttons>
-				</ButtonBar>
-				<ListView fx:id="lstEMail" prefHeight="50.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
-				<Label text="Telefon" GridPane.rowIndex="2" />
-				<ButtonBar GridPane.columnIndex="1" GridPane.rowIndex="2">
-					<buttons>
-						<Button fx:id="btnPhoneNumberAdd" onAction="#handlePhoneNumberAdd" />
-						<Button fx:id="btnPhoneNumberEdit" onAction="#handlePhoneNumberEdit" />
-						<Button fx:id="btnPhoneNumberDelete" onAction="#handlePhoneNumberDelete" />
-					</buttons>
-				</ButtonBar>
-				<ListView fx:id="lstPhoneNumber" prefHeight="50.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
-				<Label text="Adresse" GridPane.rowIndex="4" />
-				<ButtonBar GridPane.columnIndex="1" GridPane.rowIndex="4">
-					<buttons>
-						<Button fx:id="btnAddressAdd" onAction="#handleAddressAdd" />
-						<Button fx:id="btnAddressEdit" onAction="#handleAddressEdit" />
-						<Button fx:id="btnAddressDelete" onAction="#handleAddressDelete" />
-					</buttons>
-				</ButtonBar>
-				<ListView fx:id="lstAddress" prefHeight="50.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" />
-				<Label text="URL" GridPane.rowIndex="6" />
-				<ButtonBar GridPane.columnIndex="1" GridPane.rowIndex="6">
-					<buttons>
-						<Button fx:id="btnURLAdd" onAction="#handleURLAdd" />
-						<Button fx:id="btnURLEdit" onAction="#handleURLEdit" />
-						<Button fx:id="btnURLDelete" onAction="#handleURLDelete" />
-					</buttons>
-				</ButtonBar>
-				<ListView fx:id="lstURL" prefHeight="50.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="7" />
+				<fx:include fx:id="embeddedCRUDEMail" source="../crud/ListCRUD.fxml" />
+				<Separator />
+				<fx:include fx:id="embeddedCRUDPhoneNumber" source="../crud/ListCRUD.fxml" />
+				<Separator />
+				<fx:include fx:id="embeddedCRUDAddress" source="../crud/ListCRUD.fxml" />
+				<Separator />
+				<fx:include fx:id="embeddedCRUDURL" source="../crud/ListCRUD.fxml" />
 			</children>
-		</GridPane>
+		</VBox>
 	</content>
-   <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-   </padding>
+	<padding>
+		<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+	</padding>
 </ScrollPane>

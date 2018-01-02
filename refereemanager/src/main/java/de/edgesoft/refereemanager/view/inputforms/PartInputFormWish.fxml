@@ -67,14 +67,12 @@
 			<rowConstraints>
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
 			</rowConstraints>
 			<children>
-				<CheckBox fx:id="chkSaturday" text="nur sonnabends" GridPane.columnIndex="1" />
-				<CheckBox fx:id="chkSunday" text="nur sonntags" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 				<CheckBox fx:id="chkTournamentOnly" text="nur Turniere" />
 				<CheckBox fx:id="chkLeagueGamesOnly" text="nur Ligaspiele" GridPane.rowIndex="1" />
+				<CheckBox fx:id="chkSaturday" text="nur sonnabends" GridPane.columnIndex="1" />
+				<CheckBox fx:id="chkSunday" text="nur sonntags" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 			</children>
 		</GridPane>
 	</children>
