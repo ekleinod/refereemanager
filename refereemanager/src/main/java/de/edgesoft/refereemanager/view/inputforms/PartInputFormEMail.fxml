@@ -27,7 +27,7 @@
 			<children>
 				<Label text="ID" />
 				<TextField fx:id="txtID" promptText="ID eingeben" GridPane.columnIndex="1" />
-				<Label text="E-Mail" GridPane.rowIndex="1" />
+				<Label fx:id="lblEMail" text="E-Mail" GridPane.rowIndex="1" />
 				<TextField fx:id="txtEMail" promptText="E-Mail eingeben" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 			</children>
 		</GridPane>

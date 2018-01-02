@@ -2,6 +2,7 @@ package de.edgesoft.refereemanager.controller.inputforms;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -31,6 +32,15 @@ import javafx.scene.control.TextField;
  * @since 0.14.0
  */
 public class PartInputFormEMailController extends AbstractContactInputFormController {
+
+	/**
+	 * Label for EMail text field.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "eMail", jaxbclass = EMail.class)
+	protected Label lblEMail;
 
 	/**
 	 * EMail text field.
