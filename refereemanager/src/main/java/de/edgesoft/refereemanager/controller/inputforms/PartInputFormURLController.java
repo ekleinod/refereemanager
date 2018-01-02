@@ -1,8 +1,8 @@
-package de.edgesoft.refereemanager.controller;
-import de.edgesoft.refereemanager.controller.inputforms.AbstractContactInputFormController;
+package de.edgesoft.refereemanager.controller.inputforms;
 import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -31,7 +31,16 @@ import javafx.scene.control.TextField;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class URLEditDialogController extends AbstractContactInputFormController {
+public class PartInputFormURLController extends AbstractContactInputFormController {
+
+	/**
+	 * Label for URL text field.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "URL", jaxbclass = URL.class)
+	protected Label lblURL;
 
 	/**
 	 * URL text field.
@@ -39,25 +48,6 @@ public class URLEditDialogController extends AbstractContactInputFormController 
 	@FXML
 	@JAXBMatch(jaxbfield = "URL", jaxbclass = URL.class)
 	protected TextField txtURL;
-
-
-	/**
-	 * Initializes the controller class.
-	 *
-	 * This method is automatically called after the fxml file has been loaded.
-	 */
-	@FXML
-	@Override
-	protected void initialize() {
-
-		super.initialize();
-
-		// enable ok button for valid entries only
-		btnOK.disableProperty().bind(
-				txtURL.textProperty().isEmpty()
-		);
-
-	}
 
 }
 

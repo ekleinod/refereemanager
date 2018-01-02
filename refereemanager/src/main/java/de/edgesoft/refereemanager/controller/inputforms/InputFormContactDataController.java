@@ -124,12 +124,12 @@ public class InputFormContactDataController extends AbstractInputFormController 
 				"Adresse",
 				AppModel.factory::createAddress);
 
-//		Map.Entry<Parent, FXMLLoader> nodeURL = Resources.loadNode("inputforms/PartInputFormURL");
-//		embeddedCRUDURLController.initController(
-//				nodeURL.getValue().getController(),
-//				nodeURL.getKey(),
-//				"URL",
-//				AppModel.factory::createURL);
+		Map.Entry<Parent, FXMLLoader> nodeURL = Resources.loadNode("inputforms/PartInputFormURL");
+		embeddedCRUDURLController.initController(
+				nodeURL.getValue().getController(),
+				nodeURL.getKey(),
+				"URL",
+				AppModel.factory::createURL);
 
 	}
 
