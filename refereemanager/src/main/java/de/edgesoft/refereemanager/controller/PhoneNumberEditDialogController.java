@@ -1,4 +1,5 @@
 package de.edgesoft.refereemanager.controller;
+import de.edgesoft.refereemanager.controller.inputforms.AbstractContactInputFormController;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import javafx.fxml.FXML;
@@ -31,7 +32,7 @@ import javafx.scene.control.TextField;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class PhoneNumberEditDialogController extends AbstractContactEditDialogController {
+public class PhoneNumberEditDialogController extends AbstractContactInputFormController {
 
 	/**
 	 * Country code text field.

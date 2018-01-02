@@ -1,4 +1,5 @@
 package de.edgesoft.refereemanager.controller;
+import de.edgesoft.refereemanager.controller.inputforms.AbstractContactInputFormController;
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import javafx.fxml.FXML;
@@ -30,7 +31,7 @@ import javafx.scene.control.TextField;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class AddressEditDialogController extends AbstractContactEditDialogController {
+public class AddressEditDialogController extends AbstractContactInputFormController {
 
 	/**
 	 * Street text field.

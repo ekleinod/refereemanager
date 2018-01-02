@@ -1,11 +1,9 @@
-package de.edgesoft.refereemanager.controller;
-import java.lang.reflect.Field;
+package de.edgesoft.refereemanager.controller.inputforms;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.refereemanager.controller.editdialogs.AbstractEditDialogController;
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.Contact;
 import de.edgesoft.refereemanager.jaxb.EMail;
@@ -15,7 +13,6 @@ import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
-import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -51,7 +48,7 @@ import javafx.scene.image.ImageView;
  * @version 0.14.0
  * @since 0.14.0
  */
-public abstract class AbstractContactEditDialogController extends AbstractEditDialogController {
+public abstract class AbstractContactInputFormController extends AbstractInputFormController {
 
 	/**
 	 * ID text field.
@@ -59,6 +56,13 @@ public abstract class AbstractContactEditDialogController extends AbstractEditDi
 	@FXML
 	@JAXBMatch(jaxbfield = "id", jaxbclass = IDType.class)
 	protected TextField txtID;
+
+	/**
+	 * Checkbox for primary contact.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "isPrimary", jaxbclass = Contact.class)
+	protected CheckBox chkIsPrimary;
 
 	/**
 	 * Checkbox for editor only.
@@ -83,13 +87,6 @@ public abstract class AbstractContactEditDialogController extends AbstractEditDi
 	private Button btnContactTypeClear;
 
 	/**
-	 * Checkbox for primary contact.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "isPrimary", jaxbclass = Contact.class)
-	protected CheckBox chkIsPrimary;
-
-	/**
 	 * Text area for remark.
 	 */
 	@FXML
@@ -103,28 +100,10 @@ public abstract class AbstractContactEditDialogController extends AbstractEditDi
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
-	@Override
 	protected void initialize() {
 
-		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Contact.class, Address.class, EMail.class, PhoneNumber.class, URL.class})));
-		super.initialize();
-
-		// fill sex types
+		// fill combo boxes
         ComboBoxUtils.prepareComboBox(cboContactType, AppModel.getData().getContent().getContactType());
-
-		// required fields
-        for (Field theFXMLField : getDeclaredFields()) {
-
-        	try {
-        		Object fieldObject = theFXMLField.get(this);
-
-        		JAXBMatchUtils.markRequired(theFXMLField, fieldObject, getClasses());
-
-        	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
-				e.printStackTrace();
-			}
-
-        }
 
 		// enable buttons
 		btnContactTypeClear.disableProperty().bind(
@@ -134,19 +113,10 @@ public abstract class AbstractContactEditDialogController extends AbstractEditDi
 		// icons
 		btnContactTypeClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 
+		// init form
+		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Contact.class, Address.class, EMail.class, PhoneNumber.class, URL.class})));
+
 	}
-
-	/**
-	 * Sets data to be edited.
-	 *
-	 * @param theData data
-	 */
-	@Override
-	public void setData(Contact theData) {
-
-		super.setData(theData);
-
-    }
 
 	/**
 	 * Clears contact type selection.

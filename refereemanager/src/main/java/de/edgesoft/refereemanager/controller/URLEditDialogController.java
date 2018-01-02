@@ -1,4 +1,5 @@
 package de.edgesoft.refereemanager.controller;
+import de.edgesoft.refereemanager.controller.inputforms.AbstractContactInputFormController;
 import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import javafx.fxml.FXML;
@@ -30,7 +31,7 @@ import javafx.scene.control.TextField;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class URLEditDialogController extends AbstractContactEditDialogController {
+public class URLEditDialogController extends AbstractContactInputFormController {
 
 	/**
 	 * URL text field.

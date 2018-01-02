@@ -1,5 +1,4 @@
 package de.edgesoft.refereemanager.controller.inputforms;
-import de.edgesoft.refereemanager.controller.AbstractContactEditDialogController;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import javafx.fxml.FXML;
@@ -31,7 +30,7 @@ import javafx.scene.control.TextField;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class PartInputFormEMailController extends AbstractContactEditDialogController {
+public class PartInputFormEMailController extends AbstractContactInputFormController {
 
 	/**
 	 * EMail text field.
@@ -39,25 +38,6 @@ public class PartInputFormEMailController extends AbstractContactEditDialogContr
 	@FXML
 	@JAXBMatch(jaxbfield = "eMail", jaxbclass = EMail.class)
 	protected TextField txtEMail;
-
-
-	/**
-	 * Initializes the controller class.
-	 *
-	 * This method is automatically called after the fxml file has been loaded.
-	 */
-	@FXML
-	@Override
-	protected void initialize() {
-
-		super.initialize();
-
-		// enable ok button for valid entries only
-		btnOK.disableProperty().bind(
-				txtEMail.textProperty().isEmpty()
-		);
-
-	}
 
 }
 
