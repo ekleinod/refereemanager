@@ -1,11 +1,13 @@
 package de.edgesoft.refereemanager.model;
 
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.EventDay;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * Event day model, additional methods for jaxb model class.
@@ -36,6 +38,21 @@ import javafx.beans.property.SimpleStringProperty;
 public class EventDayModel extends EventDay {
 
 	/**
+	 * Returns date text.
+	 *
+	 * @return date text
+	 */
+	public SimpleStringProperty getDateText() {
+
+		if (getDate() == null) {
+			return null;
+		}
+
+		return new SimpleStringProperty(DateTimeUtils.formatDate((LocalDate) getDate().getValue()));
+
+	}
+
+	/**
 	 * Returns time text.
 	 *
 	 * @return time text
@@ -54,6 +71,14 @@ public class EventDayModel extends EventDay {
 				DateTimeUtils.formatTime((LocalTime) getStartTime().getValue()),
 				DateTimeUtils.formatTime((LocalTime) getEndTime().getValue())));
 
+	}
+
+	/**
+	 * Returns display text.
+	 */
+	@Override
+	public StringProperty getDisplayText() {
+		return getDateText();
 	}
 
 }

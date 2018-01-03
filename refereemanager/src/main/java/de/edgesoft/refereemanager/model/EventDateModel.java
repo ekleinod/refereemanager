@@ -6,7 +6,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
-import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.EventDate;
 import de.edgesoft.refereemanager.jaxb.EventDateType;
 import javafx.beans.property.SimpleStringProperty;
@@ -80,12 +79,12 @@ public class EventDateModel extends EventDate {
 		}
 
 		if ((getLastDay() == null) || (getLastDay().getDate() == null)) {
-			return new SimpleStringProperty(DateTimeUtils.formatDate((LocalDate) getFirstDay().getDate().getValue()));
+			return getFirstDay().getDateText();
 		}
 
 		return new SimpleStringProperty(MessageFormat.format("{0} - {1}",
-				DateTimeUtils.formatDate((LocalDate) getFirstDay().getDate().getValue()),
-				DateTimeUtils.formatDate((LocalDate) getLastDay().getDate().getValue())));
+				getFirstDay().getDateText().getValue(),
+				getLastDay().getDateText().getValue()));
 
 	}
 

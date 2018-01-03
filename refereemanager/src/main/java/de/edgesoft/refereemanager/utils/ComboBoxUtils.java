@@ -66,7 +66,7 @@ public class ComboBoxUtils {
 					@Override
 					public void updateItem(T item, boolean empty) {
 						super.updateItem(item, empty);
-						if (item == null) {
+						if ((item == null) || (item.getDisplayText() == null)) {
 							setText(null);
 						} else {
 							setText(item.getDisplayText().getValue());
