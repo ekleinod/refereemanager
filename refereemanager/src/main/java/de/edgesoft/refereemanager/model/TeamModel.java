@@ -93,7 +93,7 @@ public class TeamModel extends Team {
 	 * @since 0.9.0
 	 */
 	@Override
-	public Person getContactPerson() {
+    public List<Person> getContactPerson() {
 
 		if (super.getContactPerson() != null) {
 			return super.getContactPerson();
