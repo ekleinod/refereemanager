@@ -66,7 +66,7 @@ public interface ICRUDDialogActionsController<T extends ModelClassExt> extends I
 	 * @param theData the data to be edited
 	 * @return true if the user clicked OK, false otherwise.
 	 */
-	public <S extends ModelClassExt> boolean showEditDialog(final String theViewName, final String theViewTitleNoun, S theData);
+	public boolean showEditDialog(final String theViewName, final String theViewTitleNoun, T theData);
 
 }
 

@@ -1,9 +1,8 @@
 package de.edgesoft.refereemanager.controller.details;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
-import de.edgesoft.refereemanager.jaxb.Club;
+import de.edgesoft.refereemanager.model.ClubModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -35,7 +34,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsClubController implements IDetailsController {
+public class DetailsClubController<T extends ClubModel> implements IDetailsController<T> {
 
 	/**
 	 * Heading.
@@ -93,9 +92,9 @@ public class DetailsClubController implements IDetailsController {
 	 * @param theDetailData (null if no data to show)
 	 */
 	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
+	public void showDetails(final T theDetailData) {
 
-		if ((theDetailData == null) || !(theDetailData instanceof Club)) {
+		if (theDetailData == null) {
 
 			LabelUtils.setText(lblFilename, null);
 			LabelUtils.setText(lblLocal, null);
@@ -105,9 +104,7 @@ public class DetailsClubController implements IDetailsController {
 
 		} else {
 
-			Club theData = (Club) theDetailData;
-
-			LabelUtils.setText(lblFilename, theData.getFilename());
+			LabelUtils.setText(lblFilename, theDetailData.getFilename());
 			LabelUtils.setText(lblLocal, new SimpleStringProperty("ToDo"));
 			LabelUtils.setText(lblURL, new SimpleStringProperty("ToDo"));
 			LabelUtils.setText(lblVenue, new SimpleStringProperty("ToDo"));

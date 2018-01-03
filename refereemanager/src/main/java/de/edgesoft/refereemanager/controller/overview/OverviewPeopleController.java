@@ -1,12 +1,9 @@
 package de.edgesoft.refereemanager.controller.overview;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.utils.PrefKey;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.event.ActionEvent;
 
@@ -57,37 +54,13 @@ public class OverviewPeopleController extends AbstractOverviewController<Person>
 	}
 
 	/**
-	 * Shows selected data in detail window.
-	 *
-	 * @param theDetailData detail data (null if none is selected)
-	 */
-	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
-
-		getController().showDetails(theDetailData);
-
-		if ((theDetailData == null) || !(theDetailData instanceof Person)) {
-
-			getController().setHeading(new SimpleStringProperty("Details"));
-
-		} else {
-
-			Person theData = (Person) theDetailData;
-
-			getController().setHeading(theData.getDisplayTitle());
-
-		}
-
-	}
-
-	/**
 	 * Opens edit dialog for new data.
 	 *
 	 * @param event calling action event
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("editdialogs/EditDialogPerson", "Person", new PersonModel(), ((ContentModel) AppModel.getData().getContent()).getObservablePeople());
+		super.handleAdd("editdialogs/EditDialogPerson", "Person", AppModel.factory.createPerson(), ((ContentModel) AppModel.getData().getContent()).getObservablePeople());
 	}
 
 	/**

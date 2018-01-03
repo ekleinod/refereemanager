@@ -1,12 +1,9 @@
 package de.edgesoft.refereemanager.controller.overview;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.LeagueGameModel;
 import de.edgesoft.refereemanager.utils.PrefKey;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.event.ActionEvent;
 
@@ -57,43 +54,13 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 	}
 
 	/**
-	 * Shows selected data in detail window.
-	 *
-	 * @param theDetailData detail data (null if none is selected)
-	 */
-	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
-
-		Class<LeagueGameModel> theClass = LeagueGameModel.class;
-
-		assert
-				((theDetailData == null) || theClass.isInstance(theDetailData))
-				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
-
-		getController().showDetails(theDetailData);
-
-		if (theDetailData == null) {
-
-			getController().setHeading(new SimpleStringProperty("Details"));
-
-		} else {
-
-			LeagueGameModel theData = theClass.cast(theDetailData);
-
-			getController().setHeading(theData.getDisplayTitle());
-
-		}
-
-	}
-
-	/**
 	 * Opens edit dialog for new data.
 	 *
 	 * @param event calling action event
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("editdialogs/EventEditDialog", "Ligaspiel", new LeagueGameModel(), ((ContentModel) AppModel.getData().getContent()).getObservableLeagueGames());
+		super.handleAdd("editdialogs/EditDialogLeagueGame", "Ligaspiel", AppModel.factory.createLeagueGame(), ((ContentModel) AppModel.getData().getContent()).getObservableLeagueGames());
 	}
 
 	/**
@@ -103,7 +70,7 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 	 */
 	@Override
 	public void handleEdit(ActionEvent event) {
-		handleEdit("editdialogs/EventEditDialog", "Ligaspiel");
+		handleEdit("editdialogs/EditDialogLeagueGame", "Ligaspiel");
 	}
 
 	/**

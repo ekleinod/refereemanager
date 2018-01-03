@@ -11,7 +11,6 @@ import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
@@ -64,7 +63,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DataTableLeagueGamesController extends AbstractDataTableController {
+public class DataTableLeagueGamesController extends AbstractDataTableController<LeagueGame> {
 
 	/**
 	 * Container.
@@ -188,7 +187,7 @@ public class DataTableLeagueGamesController extends AbstractDataTableController 
 	 * Returns data table.
 	 */
 	@Override
-	public TableView<? extends ModelClassExt> getDataTable() {
+	public TableView<LeagueGame> getDataTable() {
 		return tblData;
 	}
 
@@ -247,8 +246,8 @@ public class DataTableLeagueGamesController extends AbstractDataTableController 
 	 * @param theItem item to select
 	 */
 	@Override
-	public <T extends ModelClassExt> void select(final T theItem) {
-		tblData.getSelectionModel().select((LeagueGame) theItem);
+	public void select(final LeagueGame theItem) {
+		tblData.getSelectionModel().select(theItem);
 	}
 
 	/**
@@ -257,10 +256,10 @@ public class DataTableLeagueGamesController extends AbstractDataTableController 
 	 * @return sorted selection from table
 	 */
 	@Override
-	public ObservableList<LeagueGameModel> getSortedSelectedItems() {
-		List<LeagueGameModel> lstReturn = new ArrayList<>();
+	public ObservableList<LeagueGame> getSortedSelectedItems() {
+		List<LeagueGame> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((LeagueGameModel) data));
+		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(EventDateModel.DATE_FIRST).collect(Collectors.toList()));
 	}

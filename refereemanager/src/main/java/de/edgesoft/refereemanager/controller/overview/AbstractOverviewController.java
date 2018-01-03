@@ -5,14 +5,15 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.controller.crud.ICRUDDialogActionsController;
 import de.edgesoft.refereemanager.controller.details.IDetailsController;
 import de.edgesoft.refereemanager.controller.editdialogs.IEditDialogController;
 import de.edgesoft.refereemanager.model.AppModel;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.Resources;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -49,7 +50,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractOverviewController<T extends ModelClassExt> implements ICRUDDialogActionsController<T>, IDetailsController, IOverviewController<T> {
+public abstract class AbstractOverviewController<T extends TitledIDTypeModel> implements ICRUDDialogActionsController<T>, IDetailsController<T>, IOverviewController<T> {
 
 	/**
 	 * Overview controller of the underlying view.
@@ -74,6 +75,28 @@ public abstract class AbstractOverviewController<T extends ModelClassExt> implem
 	@Override
 	public void initController(final OverviewController<T> theOverviewController) {
 		overviewController = theOverviewController;
+	}
+
+	/**
+	 * Shows selected data in detail window.
+	 *
+	 * @param theDetailData detail data (null if none is selected)
+	 */
+	@Override
+	public void showDetails(final T theDetailData) {
+
+		getController().showDetails(theDetailData);
+
+		if (theDetailData == null) {
+
+			getController().setHeading(new SimpleStringProperty("Details"));
+
+		} else {
+
+			getController().setHeading(theDetailData.getDisplayTitle());
+
+		}
+
 	}
 
 	/**
@@ -102,7 +125,7 @@ public abstract class AbstractOverviewController<T extends ModelClassExt> implem
 	@Override
 	public void handleEdit(final String theViewName, final String theViewTitleNoun) {
 
-		Optional<? extends ModelClassExt> theData = getController().getListController().getSelectedItem();
+		Optional<T> theData = getController().getListController().getSelectedItem();
 
 		if (theData.isPresent()) {
 			if (showEditDialog(theViewName, theViewTitleNoun, theData.get())) {
@@ -123,7 +146,7 @@ public abstract class AbstractOverviewController<T extends ModelClassExt> implem
 	@Override
 	public void handleDelete(ObservableList<T> theDataList) {
 
-		Optional<? extends ModelClassExt> theData = getController().getListController().getSelectedItem();
+		Optional<T> theData = getController().getListController().getSelectedItem();
 
 		if (theData.isPresent()) {
 
@@ -155,7 +178,7 @@ public abstract class AbstractOverviewController<T extends ModelClassExt> implem
 	 * @return true if the user clicked OK, false otherwise.
 	 */
 	@Override
-	public <S extends ModelClassExt> boolean showEditDialog(final String theViewName, final String theViewTitleNoun, S theData) {
+	public boolean showEditDialog(final String theViewName, final String theViewTitleNoun, T theData) {
 
 		Objects.requireNonNull(theData);
 

@@ -10,7 +10,6 @@ import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.PersonRoleType;
@@ -61,7 +60,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DataTablePeopleController extends AbstractDataTableController {
+public class DataTablePeopleController extends AbstractDataTableController<Person> {
 
 	/**
 	 * Container.
@@ -171,7 +170,7 @@ public class DataTablePeopleController extends AbstractDataTableController {
 	 * Returns data table.
 	 */
 	@Override
-	public TableView<? extends ModelClassExt> getDataTable() {
+	public TableView<Person> getDataTable() {
 		return tblData;
 	}
 
@@ -229,8 +228,8 @@ public class DataTablePeopleController extends AbstractDataTableController {
 	 * @param theItem item to select
 	 */
 	@Override
-	public <T extends ModelClassExt> void select(final T theItem) {
-		tblData.getSelectionModel().select((Person) theItem);
+	public void select(final Person theItem) {
+		tblData.getSelectionModel().select(theItem);
 	}
 
 	/**
@@ -239,10 +238,10 @@ public class DataTablePeopleController extends AbstractDataTableController {
 	 * @return sorted selection from table
 	 */
 	@Override
-	public ObservableList<PersonModel> getSortedSelectedItems() {
-		List<PersonModel> lstReturn = new ArrayList<>();
+	public ObservableList<Person> getSortedSelectedItems() {
+		List<Person> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((PersonModel) data));
+		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
 	}

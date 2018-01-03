@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -52,7 +51,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DataTableTraineesController extends AbstractDataTableController {
+public class DataTableTraineesController extends AbstractDataTableController<Trainee> {
 
 	/**
 	 * Container box.
@@ -142,7 +141,7 @@ public class DataTableTraineesController extends AbstractDataTableController {
 	 * Returns data table.
 	 */
 	@Override
-	public TableView<? extends ModelClassExt> getDataTable() {
+	public TableView<Trainee> getDataTable() {
 		return tblData;
 	}
 
@@ -190,8 +189,8 @@ public class DataTableTraineesController extends AbstractDataTableController {
 	 * @param theItem item to select
 	 */
 	@Override
-	public <T extends ModelClassExt> void select(final T theItem) {
-		tblData.getSelectionModel().select((Trainee) theItem);
+	public void select(final Trainee theItem) {
+		tblData.getSelectionModel().select(theItem);
 	}
 
 	/**
@@ -202,10 +201,10 @@ public class DataTableTraineesController extends AbstractDataTableController {
 	 * @since 0.12.0
 	 */
 	@Override
-	public ObservableList<TraineeModel> getSortedSelectedItems() {
-		List<TraineeModel> lstReturn = new ArrayList<>();
+	public ObservableList<Trainee> getSortedSelectedItems() {
+		List<Trainee> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((TraineeModel) data));
+		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
 	}

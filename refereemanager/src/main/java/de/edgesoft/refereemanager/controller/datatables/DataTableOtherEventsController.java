@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.OtherEvent;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -53,7 +52,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DataTableOtherEventsController extends AbstractDataTableController {
+public class DataTableOtherEventsController extends AbstractDataTableController<OtherEvent> {
 
 	/**
 	 * Container.
@@ -153,7 +152,7 @@ public class DataTableOtherEventsController extends AbstractDataTableController 
 	 * Returns data table.
 	 */
 	@Override
-	public TableView<? extends ModelClassExt> getDataTable() {
+	public TableView<OtherEvent> getDataTable() {
 		return tblData;
 	}
 
@@ -199,8 +198,8 @@ public class DataTableOtherEventsController extends AbstractDataTableController 
 	 * @param theItem item to select
 	 */
 	@Override
-	public <T extends ModelClassExt> void select(final T theItem) {
-		tblData.getSelectionModel().select((OtherEvent) theItem);
+	public void select(final OtherEvent theItem) {
+		tblData.getSelectionModel().select(theItem);
 	}
 
 	/**
@@ -209,10 +208,10 @@ public class DataTableOtherEventsController extends AbstractDataTableController 
 	 * @return sorted selection from table
 	 */
 	@Override
-	public ObservableList<OtherEventModel> getSortedSelectedItems() {
-		List<OtherEventModel> lstReturn = new ArrayList<>();
+	public ObservableList<OtherEvent> getSortedSelectedItems() {
+		List<OtherEvent> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((OtherEventModel) data));
+		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(EventDateModel.DATE_FIRST).collect(Collectors.toList()));
 	}

@@ -1,10 +1,9 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.editdialogs;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import de.edgesoft.refereemanager.controller.editdialogs.AbstractEditDialogController;
 import de.edgesoft.refereemanager.jaxb.EventDate;
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import de.edgesoft.refereemanager.jaxb.OtherEvent;
@@ -52,7 +51,7 @@ import jfxtras.scene.control.LocalDateTimeTextField;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class EventEditDialogController extends AbstractEditDialogController<EventDate> {
+public class EditDialogOtherEventController extends AbstractEditDialogController<EventDate> {
 
 	// event date data
 

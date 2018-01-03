@@ -1,6 +1,6 @@
 package de.edgesoft.refereemanager.controller.overview;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 /**
  * Interface for specialized overview controllers.
@@ -28,7 +28,7 @@ import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IOverviewController<T extends ModelClassExt> {
+public interface IOverviewController<T extends TitledIDTypeModel> {
 
 	/**
 	 * Returns overview controller.

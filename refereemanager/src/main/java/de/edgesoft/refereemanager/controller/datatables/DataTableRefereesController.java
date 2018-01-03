@@ -10,7 +10,6 @@ import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.StatusType;
@@ -62,7 +61,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.14.0
  * @since 0.10.0
  */
-public class DataTableRefereesController extends AbstractDataTableController {
+public class DataTableRefereesController extends AbstractDataTableController<Referee> {
 
 	/**
 	 * Container.
@@ -219,7 +218,7 @@ public class DataTableRefereesController extends AbstractDataTableController {
 	 * Returns data table.
 	 */
 	@Override
-	public TableView<? extends ModelClassExt> getDataTable() {
+	public TableView<Referee> getDataTable() {
 		return tblData;
 	}
 
@@ -292,8 +291,8 @@ public class DataTableRefereesController extends AbstractDataTableController {
 	 * @param theItem item to select
 	 */
 	@Override
-	public <T extends ModelClassExt> void select(final T theItem) {
-		tblData.getSelectionModel().select((Referee) theItem);
+	public void select(final Referee theItem) {
+		tblData.getSelectionModel().select(theItem);
 	}
 
 	/**
@@ -304,10 +303,10 @@ public class DataTableRefereesController extends AbstractDataTableController {
 	 * @since 0.12.0
 	 */
 	@Override
-	public ObservableList<RefereeModel> getSortedSelectedItems() {
-		List<RefereeModel> lstReturn = new ArrayList<>();
+	public ObservableList<Referee> getSortedSelectedItems() {
+		List<Referee> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((RefereeModel) data));
+		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
 	}

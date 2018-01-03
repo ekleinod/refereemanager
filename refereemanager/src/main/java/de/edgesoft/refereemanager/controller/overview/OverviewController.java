@@ -2,14 +2,13 @@ package de.edgesoft.refereemanager.controller.overview;
 
 import java.util.Map;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.controller.crud.AbstractEmbedCRUDButtonsController;
 import de.edgesoft.refereemanager.controller.datatables.IDataTableController;
 import de.edgesoft.refereemanager.controller.details.DetailsTitledIDController;
 import de.edgesoft.refereemanager.controller.details.IDetailsController;
-import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -22,6 +21,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.FontWeight;
@@ -52,7 +53,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class OverviewController<T extends ModelClassExt> extends AbstractEmbedCRUDButtonsController implements IDetailsController {
+public class OverviewController<T extends TitledIDTypeModel> extends AbstractEmbedCRUDButtonsController implements IDetailsController<T> {
 
 	/**
 	 * Heading.
@@ -78,13 +79,13 @@ public class OverviewController<T extends ModelClassExt> extends AbstractEmbedCR
 	 * Details controller.
 	 */
 	@FXML
-	private IDetailsController detailsController;
+	private IDetailsController<T> detailsController;
 
 	/**
 	 * List controller.
 	 */
 	@FXML
-	private IDataTableController listController;
+	private IDataTableController<T> listController;
 
 
 	/**
@@ -97,7 +98,7 @@ public class OverviewController<T extends ModelClassExt> extends AbstractEmbedCR
 	 * Titled ID details view part controller.
 	 */
 	@FXML
-	private DetailsTitledIDController embeddedDetailsTitledIDController;
+	private DetailsTitledIDController<T> embeddedDetailsTitledIDController;
 
 
 	/**
@@ -150,6 +151,14 @@ public class OverviewController<T extends ModelClassExt> extends AbstractEmbedCR
 		        }
 		    }
 		});
+		getListController().getDataTable().setOnKeyReleased(new EventHandler<KeyEvent>() {
+		    @Override
+		    public void handle(KeyEvent event) {
+		        if (event.getCode() == KeyCode.ENTER) {
+		            theOverviewController.handleEdit(new ActionEvent(event.getSource(), event.getTarget()));
+		        }
+		    }
+		});
 
 		// clear event details
 		theOverviewController.showDetails(null);
@@ -165,9 +174,9 @@ public class OverviewController<T extends ModelClassExt> extends AbstractEmbedCR
 	 * @param theDetailData detail data (null if none is selected)
 	 */
 	@Override
-	public <S extends ModelClassExt> void showDetails(final S theDetailData) {
+	public void showDetails(final T theDetailData) {
 
-		embeddedDetailsTitledIDController.showDetails((TitledIDType) theDetailData);
+		embeddedDetailsTitledIDController.showDetails(theDetailData);
 
 		detailsController.showDetails(theDetailData);
 
@@ -179,7 +188,7 @@ public class OverviewController<T extends ModelClassExt> extends AbstractEmbedCR
 	 *
 	 * @return list controller
 	 */
-	protected IDataTableController getListController() {
+	protected IDataTableController<T> getListController() {
 		return listController;
 	}
 
@@ -188,7 +197,7 @@ public class OverviewController<T extends ModelClassExt> extends AbstractEmbedCR
 	 *
 	 * @return details controller
 	 */
-	protected IDetailsController getDetailsController() {
+	protected IDetailsController<T> getDetailsController() {
 		return detailsController;
 	}
 

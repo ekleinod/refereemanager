@@ -1,6 +1,6 @@
 package de.edgesoft.refereemanager.controller.datatables;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 
@@ -30,12 +30,12 @@ import javafx.scene.control.TableView;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IDataTableController extends IListController {
+public interface IDataTableController<T extends TitledIDTypeModel> extends IListController<T> {
 
 	/**
 	 * Returns data table.
 	 */
-	public TableView<? extends ModelClassExt> getDataTable();
+	public TableView<T> getDataTable();
 
 	/**
 	 * Sets table items.
@@ -59,7 +59,7 @@ public interface IDataTableController extends IListController {
 	 *
 	 * @return sorted selection
 	 */
-	public ObservableList<? extends ModelClassExt> getSortedSelectedItems();
+	public ObservableList<T> getSortedSelectedItems();
 
 }
 
