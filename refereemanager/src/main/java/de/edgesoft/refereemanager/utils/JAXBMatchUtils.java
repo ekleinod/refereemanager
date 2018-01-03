@@ -78,7 +78,7 @@ public class JAXBMatchUtils {
 	public static void setField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final List<Class<?>> theDataClasses) {
 
 		assert (theFXMLField != null) : "FXML field must not be null.";
-		assert (theFieldObject != null) : String.format("Field object must not be null, field is '%s'.", theFXMLField.getName());
+		assert (theFieldObject != null) : String.format("Field object must not be null, field is '%s', maybe the field is declared in the controller but not in the fxml file?", theFXMLField.getName());
 		assert (theModel != null) : "Model must not be null.";
 		assert (theDataClasses != null) : "Data classes must not be null.";
 
@@ -166,7 +166,7 @@ public class JAXBMatchUtils {
 	@SuppressWarnings("unchecked")
 	public static void clearField(final Object theFieldObject) {
 
-		assert (theFieldObject != null) : "Field object must not be null.";
+		assert (theFieldObject != null) : String.format("Field object must not be null, maybe the field is declared in the controller but not in the fxml file?");
 
 
 		if (theFieldObject instanceof TextInputControl) {
@@ -219,7 +219,7 @@ public class JAXBMatchUtils {
 	public static void getField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final List<Class<?>> theDataClasses) {
 
 		assert (theFXMLField != null) : "FXML field must not be null.";
-		assert (theFieldObject != null) : "Field object must not be null.";
+		assert (theFieldObject != null) : String.format("Field object must not be null, field is '%s', maybe the field is declared in the controller but not in the fxml file?", theFXMLField.getName());
 		assert (theModel != null) : "Model must not be null.";
 		assert (theDataClasses != null) : "Data classes must not be null.";
 
