@@ -87,13 +87,13 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 	@FXML
 	private Button btnTrainingLevelTypeClear;
 
-	/**
-	 * List view for updates.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "update", jaxbclass = TrainingLevel.class)
-	protected ListView<SimpleObjectProperty<LocalDate>> lstUpdate;
-
+//	/**
+//	 * List view for updates.
+//	 */
+//	@FXML
+//	@JAXBMatch(jaxbfield = "update", jaxbclass = TrainingLevel.class)
+//	protected ListView<SimpleObjectProperty<LocalDate>> lstUpdate;
+//
 
 	/**
 	 * Initializes the controller class.
@@ -110,7 +110,7 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
         ComboBoxUtils.prepareComboBox(cboTrainingLevelType, AppModel.getData().getContent().getTrainingLevelType());
 
         // setup list views
-        lstUpdate.setCellFactory(ComboBoxUtils.getCallbackLocalDateProperty());
+//        lstUpdate.setCellFactory(ComboBoxUtils.getCallbackLocalDateProperty());
 
 		// enable buttons
 		btnTrainingLevelTypeClear.disableProperty().bind(

@@ -64,7 +64,7 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	private Label lblHeading;
 
 	/**
-	 * List view for avoids.
+	 * List view.
 	 */
 	@FXML
 	protected ListView<T> lstData;
