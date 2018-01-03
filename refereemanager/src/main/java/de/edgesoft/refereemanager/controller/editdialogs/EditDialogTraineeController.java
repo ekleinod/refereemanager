@@ -64,6 +64,18 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	private IInputFormController embeddedInputFormContactDataController;
 
 	/**
+	 * Address data.
+	 */
+	@FXML
+	private Parent embeddedInputFormAddressData;
+
+	/**
+	 * Address data controller.
+	 */
+	@FXML
+	private IInputFormController embeddedInputFormAddressDataController;
+
+	/**
 	 * Referee data.
 	 */
 	@FXML
@@ -123,6 +135,7 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 
 		addInputFormController(embeddedInputFormPersonDataController);
 		addInputFormController(embeddedInputFormContactDataController);
+		addInputFormController(embeddedInputFormAddressDataController);
 		addInputFormController(embeddedInputFormRefereeDataController);
 		addInputFormController(embeddedInputFormWishDataController);
 		addInputFormController(embeddedInputFormTrainingLevelDataController);

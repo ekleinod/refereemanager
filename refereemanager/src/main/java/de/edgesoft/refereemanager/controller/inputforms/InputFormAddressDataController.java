@@ -2,9 +2,9 @@ package de.edgesoft.refereemanager.controller.inputforms;
 import java.util.Map;
 
 import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
-import de.edgesoft.refereemanager.jaxb.EMail;
+import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.Person;
-import de.edgesoft.refereemanager.jaxb.PhoneNumber;
+import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -13,7 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 /**
- * Controller for the contact data edit dialog tab.
+ * Controller for the address data edit dialog tab.
  *
  * ## Legal stuff
  *
@@ -38,33 +38,33 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormContactDataController extends AbstractInputFormController {
+public class InputFormAddressDataController extends AbstractInputFormController {
 
 	/**
-	 * CRUD buttons eMail.
+	 * CRUD buttons address.
 	 */
 	@FXML
-	private Parent embeddedCRUDEMail;
+	private Parent embeddedCRUDAddress;
 
 	/**
-	 * CRUD buttons eMail controller.
+	 * CRUD buttons address controller.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "eMail", jaxbclass = Person.class)
-	protected ListCRUDController<EMail> embeddedCRUDEMailController;
+	@JAXBMatch(jaxbfield = "address", jaxbclass = Person.class)
+	protected ListCRUDController<Address> embeddedCRUDAddressController;
 
 	/**
-	 * CRUD buttons phone number.
+	 * CRUD buttons url.
 	 */
 	@FXML
-	private Parent embeddedCRUDPhoneNumber;
+	private Parent embeddedCRUDURL;
 
 	/**
-	 * CRUD buttons phone number controller.
+	 * CRUD buttons url controller.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "phoneNumber", jaxbclass = Person.class)
-	protected ListCRUDController<PhoneNumber> embeddedCRUDPhoneNumberController;
+	@JAXBMatch(jaxbfield = "URL", jaxbclass = Person.class)
+	protected ListCRUDController<URL> embeddedCRUDURLController;
 
 
 	/**
@@ -75,19 +75,19 @@ public class InputFormContactDataController extends AbstractInputFormController 
 	@FXML
 	protected void initialize() {
 
-		Map.Entry<Parent, FXMLLoader> nodeEMail = Resources.loadNode("inputforms/PartInputFormEMail");
-		embeddedCRUDEMailController.initController(
-				nodeEMail.getValue().getController(),
-				nodeEMail.getKey(),
-				"E-Mail",
-				AppModel.factory::createEMail);
+		Map.Entry<Parent, FXMLLoader> nodeAddress = Resources.loadNode("inputforms/PartInputFormAddress");
+		embeddedCRUDAddressController.initController(
+				nodeAddress.getValue().getController(),
+				nodeAddress.getKey(),
+				"Adresse",
+				AppModel.factory::createAddress);
 
-		Map.Entry<Parent, FXMLLoader> nodePhoneNumber = Resources.loadNode("inputforms/PartInputFormPhoneNumber");
-		embeddedCRUDPhoneNumberController.initController(
-				nodePhoneNumber.getValue().getController(),
-				nodePhoneNumber.getKey(),
-				"Telefon",
-				AppModel.factory::createPhoneNumber);
+		Map.Entry<Parent, FXMLLoader> nodeURL = Resources.loadNode("inputforms/PartInputFormURL");
+		embeddedCRUDURLController.initController(
+				nodeURL.getValue().getController(),
+				nodeURL.getKey(),
+				"URL",
+				AppModel.factory::createURL);
 
 	}
 
