@@ -134,20 +134,24 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	 *
 	 * @param theInputFormController input form controller
 	 * @param thePartInputForm input form part
-	 * @param theViewName name of the edit view
+	 * @param theViewName name of the edit view (null == no heading)
 	 * @param theInstanceCall instance call
 	 */
 	public void initController(final IInputFormController theInputFormController, final Parent thePartInputForm, final String theViewName, final Supplier<T> theInstanceCall) {
 
 		assert (theInputFormController != null) : "InputFormController must not be null";
 		assert (thePartInputForm != null) : "PartInputForm must not be null";
-		assert (theViewName != null) : "View name must not be null";
 		assert (theInstanceCall != null) : "Instance call must not be null";
 
 		instanceCall = theInstanceCall;
 		ctlInputForm = theInputFormController;
 
-		lblHeading.setText(theViewName);
+		if (theViewName != null) {
+			lblHeading.setText(theViewName);
+		} else {
+			lblHeading.setVisible(false);
+			lblHeading.setManaged(false);
+		}
 
 		lstData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> ctlInputForm.fillForm(lstData.getSelectionModel().getSelectedItem()));
 

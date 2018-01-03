@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.utils;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.model.LeagueGameModel;
 import de.edgesoft.refereemanager.model.OtherEventModel;
@@ -197,6 +198,29 @@ public class TableUtils {
 	 */
 	public static final TableCell<OtherEventModel, LocalDate> getTableCellOtherEventDate(final String thePattern) {
 		return new TableCell<OtherEventModel, LocalDate>() {
+	        @Override
+	        protected void updateItem(LocalDate item, boolean empty) {
+	            super.updateItem(item, empty);
+
+	            if (item == null || empty) {
+	                setText(null);
+	            } else {
+	                setText(DateTimeUtils.formatDate(item, thePattern));
+	            }
+	        }
+	    };
+	}
+
+	/**
+	 * Returns {@link TableCell} for cell factories (other event model, date).
+	 *
+	 * @return table cell for cell factories
+	 *
+	 * @param thePattern pattern (null = standard pattern)
+	 * @since 0.15.0
+	 */
+	public static final <T extends ModelClassExt> TableCell<T, LocalDate> getTableCellTModelClassExtDate(final String thePattern) {
+		return new TableCell<T, LocalDate>() {
 	        @Override
 	        protected void updateItem(LocalDate item, boolean empty) {
 	            super.updateItem(item, empty);

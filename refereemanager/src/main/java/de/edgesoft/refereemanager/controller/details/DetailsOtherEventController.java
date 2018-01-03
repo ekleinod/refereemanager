@@ -3,7 +3,6 @@ package de.edgesoft.refereemanager.controller.details;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.model.OtherEventModel;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.text.FontWeight;
@@ -104,7 +103,10 @@ public class DetailsOtherEventController<T extends OtherEventModel> implements I
 							null :
 							theDetailData.getVenue().getDisplayTitle().getValueSafe());
 
-			LabelUtils.setText(lblType, new SimpleStringProperty("ToDo"));
+			lblType.setText(
+					(theDetailData.getType() == null) ?
+							null :
+							theDetailData.getType().getDisplayTitle().getValueSafe());
 
 		}
 

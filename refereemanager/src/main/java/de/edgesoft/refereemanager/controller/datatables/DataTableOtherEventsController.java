@@ -4,15 +4,21 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.javafx.FontUtils;
+import de.edgesoft.refereemanager.jaxb.EventDateType;
 import de.edgesoft.refereemanager.jaxb.OtherEvent;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.EventDateModel;
 import de.edgesoft.refereemanager.model.OtherEventModel;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.utils.TableUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -20,9 +26,13 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 
@@ -109,6 +119,11 @@ public class DataTableOtherEventsController extends AbstractDataTableController<
 	@FXML
 	private Label lblFilter;
 
+	/**
+	 * Filter storage.
+	 */
+	private Map<CheckBox, EventDateType> mapEventFilterTypes;
+
 
 	/**
 	 * List of other events.
@@ -128,20 +143,35 @@ public class DataTableOtherEventsController extends AbstractDataTableController<
 		colID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
 		colID.setVisible(false);
 
-		colDateStart.setCellValueFactory(cellData -> cellData.getValue().getFirstDay().getDate());
+		colDateStart.setCellValueFactory(cellData -> (cellData.getValue().getFirstDay() == null) ? null : cellData.getValue().getFirstDay().getDate());
 		colDateEnd.setCellValueFactory(cellData -> (cellData.getValue().getLastDay() == null) ? null : cellData.getValue().getLastDay().getDate());
-		colTimeStart.setCellValueFactory(cellData -> cellData.getValue().getFirstDay().getStartTime());
-		colTimeEnd.setCellValueFactory(cellData -> cellData.getValue().getFirstDay().getEndTime());
+		colTimeStart.setCellValueFactory(cellData -> (cellData.getValue().getFirstDay() == null) ? null : cellData.getValue().getFirstDay().getStartTime());
+		colTimeEnd.setCellValueFactory(cellData -> (cellData.getValue().getFirstDay() == null) ? null : cellData.getValue().getFirstDay().getEndTime());
 		colTitle.setCellValueFactory(cellData -> cellData.getValue().getDisplayTitleShort());
 
 		// format date columns
-		colDateStart.setCellFactory(column -> TableUtils.getTableCellOtherEventDate(null));
+		colDateStart.setCellFactory(column -> TableUtils.getTableCellTModelClassExtDate(null));
 		colDateEnd.setCellFactory(column -> TableUtils.getTableCellOtherEventDate(null));
 		colTimeStart.setCellFactory(column -> TableUtils.getTableCellOtherEventTime(null));
 		colTimeEnd.setCellFactory(column -> TableUtils.getTableCellOtherEventTime(null));
 
 		// headings
 		lblFilter.setFont(FontUtils.getDerived(lblFilter.getFont(), FontWeight.BOLD));
+
+		// setup type filter
+		HBox boxTypeFilter = new HBox(5);
+		boxContainer.getChildren().add(new Separator(Orientation.HORIZONTAL));
+		boxContainer.getChildren().add(boxTypeFilter);
+
+		mapEventFilterTypes = new HashMap<>();
+		AppModel.getData().getContent().getEventDateType().stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).forEach(
+				eventDateType -> {
+					CheckBox chkTemp = new CheckBox(eventDateType.getDisplayTitleShort().getValueSafe());
+					chkTemp.setOnAction(e -> handleFilterChange());
+					boxTypeFilter.getChildren().add(chkTemp);
+					mapEventFilterTypes.put(chkTemp, eventDateType);
+				}
+		);
 
 		// init items
 		setDataTableItems();
@@ -177,6 +207,7 @@ public class DataTableOtherEventsController extends AbstractDataTableController<
 	/**
 	 * Handles filter change events.
 	 */
+	@SuppressWarnings("unchecked")
 	@FXML
 	@Override
 	public void handleFilterChange() {
@@ -185,7 +216,19 @@ public class DataTableOtherEventsController extends AbstractDataTableController<
 		if (lstOtherEvents == null) {
 			lblFilter.setText("Filter");
 		} else {
+
+			lstOtherEvents.setPredicate(EventDateModel.ALL);
+
+			for (Entry<CheckBox, EventDateType> entryChkType : mapEventFilterTypes.entrySet()) {
+
+				if (entryChkType.getKey().isSelected()) {
+					lstOtherEvents.setPredicate(((Predicate<OtherEvent>) lstOtherEvents.getPredicate()).and(EventDateModel.getTypePredicate(entryChkType.getValue())));
+				}
+
+			}
+
 			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstOtherEvents.size()));
+
 		}
 
 		tblData.refresh();
