@@ -25,6 +25,7 @@ import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.model.TrainingLevelModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 import de.edgesoft.refereemanager.model.URLModel;
+import de.edgesoft.refereemanager.model.UpdateModel;
 import de.edgesoft.refereemanager.model.VenueModel;
 import de.edgesoft.refereemanager.model.WishModel;
 
@@ -96,6 +97,14 @@ public class ObjectFactory {
      */
     public RefereeQuantity createRefereeQuantity() {
         return new RefereeQuantity();
+    }
+
+    /**
+     * Create an instance of {@link Update }
+     * 
+     */
+    public Update createUpdate() {
+        return new UpdateModel();
     }
 
     /**
@@ -331,6 +340,16 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
      * 
      */
+    @XmlElementDecl(namespace = "", name = "referee_report_recipient", scope = League.class)
+    @XmlIDREF
+    public JAXBElement<Object> createLeagueRefereeReportRecipient(Object value) {
+        return new JAXBElement<Object>(_LeagueRefereeReportRecipient_QNAME, Object.class, League.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
     @XmlElementDecl(namespace = "", name = "venue", scope = Club.class)
     @XmlIDREF
     public JAXBElement<Object> createClubVenue(Object value) {
@@ -345,16 +364,6 @@ public class ObjectFactory {
     @XmlIDREF
     public JAXBElement<Object> createClubContactPerson(Object value) {
         return new JAXBElement<Object>(_TeamContactPerson_QNAME, Object.class, Club.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "referee_report_recipient", scope = League.class)
-    @XmlIDREF
-    public JAXBElement<Object> createLeagueRefereeReportRecipient(Object value) {
-        return new JAXBElement<Object>(_LeagueRefereeReportRecipient_QNAME, Object.class, League.class, value);
     }
 
 }

@@ -427,7 +427,11 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
 					<xsd:element name="since" type="LocalDateProperty" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="update" type="LocalDateProperty" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="update" type="Update" minOccurs="0" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>See annotation on type Update.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
 
 					<!-- references -->
 					<xsd:element name="type" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
@@ -439,6 +443,23 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 							</xsd:appinfo>
 						</xsd:annotation>
 					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="Update">
+		<xsd:annotation>
+			<xsd:documentation>
+				This type just stores a date.
+				The date cannot be used directly, as this would break the inheritance needed for generation of input dialogs.
+				This is only needed for lists of dates, as update is one.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractModelClass">
+				<xsd:sequence>
+					<xsd:element name="date" type="LocalDateProperty" minOccurs="1" maxOccurs="1" />
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

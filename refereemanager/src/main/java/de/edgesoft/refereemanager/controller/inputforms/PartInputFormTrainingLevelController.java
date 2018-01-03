@@ -1,26 +1,28 @@
 package de.edgesoft.refereemanager.controller.inputforms;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
+import de.edgesoft.refereemanager.jaxb.Update;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.Resources;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 
 /**
- * Controller for the training level edit dialog scene.
+ * Controller for the input form part: training level.
  *
  * ## Legal stuff
  *
@@ -87,13 +89,19 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 	@FXML
 	private Button btnTrainingLevelTypeClear;
 
-//	/**
-//	 * List view for updates.
-//	 */
-//	@FXML
-//	@JAXBMatch(jaxbfield = "update", jaxbclass = TrainingLevel.class)
-//	protected ListView<SimpleObjectProperty<LocalDate>> lstUpdate;
-//
+	/**
+	 * CRUD buttons update.
+	 */
+	@FXML
+	private Parent embeddedCRUDUpdate;
+
+	/**
+	 * CRUD buttons update controller.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "update", jaxbclass = TrainingLevel.class)
+	protected ListCRUDController<Update> embeddedCRUDUpdateController;
+
 
 	/**
 	 * Initializes the controller class.
@@ -109,9 +117,6 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 		// fill combo boxes
         ComboBoxUtils.prepareComboBox(cboTrainingLevelType, AppModel.getData().getContent().getTrainingLevelType());
 
-        // setup list views
-//        lstUpdate.setCellFactory(ComboBoxUtils.getCallbackLocalDateProperty());
-
 		// enable buttons
 		btnTrainingLevelTypeClear.disableProperty().bind(
 				cboTrainingLevelType.getSelectionModel().selectedItemProperty().isNull()
@@ -122,6 +127,13 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 
 		// init form
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{TrainingLevel.class})));
+
+		Map.Entry<Parent, FXMLLoader> nodeUpdate = Resources.loadNode("inputforms/PartInputFormUpdate");
+		embeddedCRUDUpdateController.initController(
+				nodeUpdate.getValue().getController(),
+				nodeUpdate.getKey(),
+				"Fortbildungen",
+				AppModel.factory::createUpdate);
 
 	}
 

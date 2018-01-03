@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.commons.AbstractModelClass;
 import de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateAdapter;
+import de.edgesoft.refereemanager.model.UpdateModel;
 
 
 /**
@@ -26,7 +27,7 @@ import de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateAdapter;
  *     &lt;extension base="{}AbstractModelClass">
  *       &lt;sequence>
  *         &lt;element name="since" type="{}LocalDateProperty" minOccurs="0"/>
- *         &lt;element name="update" type="{}LocalDateProperty" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="update" type="{}Update" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -50,10 +51,8 @@ public class TrainingLevel
     @XmlJavaTypeAdapter(SimpleObjectPropertyLocalDateAdapter.class)
     @XmlSchemaType(name = "date")
     protected SimpleObjectProperty since;
-    @XmlElement(type = String.class)
-    @XmlJavaTypeAdapter(SimpleObjectPropertyLocalDateAdapter.class)
-    @XmlSchemaType(name = "date")
-    protected List<SimpleObjectProperty> update;
+    @XmlElement(type = UpdateModel.class)
+    protected List<Update> update;
     @XmlElement(required = true, type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -101,13 +100,13 @@ public class TrainingLevel
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * {@link Update }
      * 
      * 
      */
-    public List<SimpleObjectProperty> getUpdate() {
+    public List<Update> getUpdate() {
         if (update == null) {
-            update = new ArrayList<SimpleObjectProperty>();
+            update = new ArrayList<Update>();
         }
         return this.update;
     }

@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -40,7 +39,6 @@
 				</Button>
 			</children>
 		</AnchorPane>
-		<Label text="Fortbildungen" GridPane.rowIndex="2" />
-		<ListView fx:id="lstUpdate" prefHeight="100.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
+		<fx:include fx:id="embeddedCRUDUpdate" source="../crud/ListCRUD.fxml" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 	</children>
 </GridPane>
