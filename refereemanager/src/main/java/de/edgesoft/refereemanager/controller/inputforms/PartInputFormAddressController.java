@@ -35,6 +35,8 @@ public class PartInputFormAddressController extends AbstractContactInputFormCont
 
 	/**
 	 * Label for street text field.
+	 *
+	 * @since 0.15.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "street", jaxbclass = Address.class)
@@ -49,6 +51,8 @@ public class PartInputFormAddressController extends AbstractContactInputFormCont
 
 	/**
 	 * Label for number text field.
+	 *
+	 * @since 0.15.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "number", jaxbclass = Address.class)
@@ -63,6 +67,8 @@ public class PartInputFormAddressController extends AbstractContactInputFormCont
 
 	/**
 	 * Label for zip code text field.
+	 *
+	 * @since 0.15.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "zipCode", jaxbclass = Address.class)
@@ -77,6 +83,8 @@ public class PartInputFormAddressController extends AbstractContactInputFormCont
 
 	/**
 	 * Label for city text field.
+	 *
+	 * @since 0.15.0
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "city", jaxbclass = Address.class)

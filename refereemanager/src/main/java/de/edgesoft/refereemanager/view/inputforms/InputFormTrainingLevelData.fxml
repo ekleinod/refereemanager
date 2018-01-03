@@ -1,40 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.VBox?>
 
 <ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormTrainingLevelDataController">
 	<content>
-		<GridPane alignment="TOP_CENTER" vgap="5.0">
-			<columnConstraints>
-				<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
-				<ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="250.0" />
-			</columnConstraints>
-			<rowConstraints>
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-			</rowConstraints>
+		<VBox spacing="10.0">
 			<children>
-				<Label text="Ausbildungsstufen" />
-				<ButtonBar GridPane.columnIndex="1">
-					<buttons>
-						<Button fx:id="btnTrainingLevelAdd" onAction="#handleTrainingLevelAdd" />
-						<Button fx:id="btnTrainingLevelEdit" onAction="#handleTrainingLevelEdit" />
-						<Button fx:id="btnTrainingLevelDelete" onAction="#handleTrainingLevelDelete" />
-					</buttons>
-				</ButtonBar>
-				<ListView fx:id="lstTrainingLevel" prefHeight="100.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+				<fx:include fx:id="embeddedCRUDTrainingLevel" source="../crud/ListCRUD.fxml" />
 			</children>
-		</GridPane>
+		</VBox>
 	</content>
-   <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-   </padding>
+	<padding>
+		<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+	</padding>
 </ScrollPane>
