@@ -5,13 +5,12 @@ import java.util.Arrays;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.jaxb.Person;
-import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 
 /**
- * Controller for the referee edit dialog scene.
+ * Controller for the person edit dialog scene.
  *
  * ## Legal stuff
  *
@@ -36,7 +35,7 @@ import javafx.scene.Parent;
  * @version 0.14.0
  * @since 0.13.0
  */
-public class EditDialogRefereeController extends AbstractTabbedEditDialogController {
+public class EditDialogPersonController extends AbstractTabbedEditDialogController {
 
 	/**
 	 * Person data.
@@ -74,42 +73,6 @@ public class EditDialogRefereeController extends AbstractTabbedEditDialogControl
 	@FXML
 	private IInputFormController embeddedInputFormAddressDataController;
 
-	/**
-	 * Referee data.
-	 */
-	@FXML
-	private Parent embeddedInputFormRefereeData;
-
-	/**
-	 * Referee data controller.
-	 */
-	@FXML
-	private IInputFormController embeddedInputFormRefereeDataController;
-
-	/**
-	 * Wish data.
-	 */
-	@FXML
-	private Parent embeddedInputFormWishData;
-
-	/**
-	 * Wish data controller.
-	 */
-	@FXML
-	private IInputFormController embeddedInputFormWishDataController;
-
-	/**
-	 * Training level data.
-	 */
-	@FXML
-	private Parent embeddedInputFormTrainingLevelData;
-
-	/**
-	 * Training level data controller.
-	 */
-	@FXML
-	private IInputFormController embeddedInputFormTrainingLevelDataController;
-
 
 	/**
 	 * Initializes the controller class.
@@ -123,11 +86,8 @@ public class EditDialogRefereeController extends AbstractTabbedEditDialogControl
 		addInputFormController(embeddedInputFormPersonDataController);
 		addInputFormController(embeddedInputFormContactDataController);
 		addInputFormController(embeddedInputFormAddressDataController);
-		addInputFormController(embeddedInputFormRefereeDataController);
-		addInputFormController(embeddedInputFormWishDataController);
-		addInputFormController(embeddedInputFormTrainingLevelDataController);
 
-		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class})));
+		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class})));
 
 		super.initialize();
 
