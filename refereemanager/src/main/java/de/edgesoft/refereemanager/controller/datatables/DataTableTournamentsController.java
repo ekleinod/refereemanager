@@ -186,16 +186,6 @@ public class DataTableTournamentsController extends AbstractDataTableController<
 	}
 
 	/**
-	 * Sets selected item.
-	 *
-	 * @param theItem item to select
-	 */
-	@Override
-	public void select(final Tournament theItem) {
-		tblData.getSelectionModel().select(theItem);
-	}
-
-	/**
 	 * Returns selection from table as sorted list.
 	 *
 	 * @return sorted selection from table
@@ -204,7 +194,7 @@ public class DataTableTournamentsController extends AbstractDataTableController<
 	public ObservableList<Tournament> getSortedSelectedItems() {
 		List<Tournament> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
+		getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(EventDateModel.DATE_FIRST).collect(Collectors.toList()));
 	}

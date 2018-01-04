@@ -35,6 +35,16 @@ import javafx.scene.control.SelectionMode;
 public abstract class AbstractListController<T extends TitledIDTypeModel> implements IListController<T> {
 
 	/**
+	 * Sets selected item.
+	 *
+	 * @param theItem item to select
+	 */
+	@Override
+	public void select(final T theItem) {
+		getSelectionModel().select(theItem);
+	}
+
+	/**
 	 * Sets selection mode.
 	 *
 	 * @param theSelectionMode selection mode

@@ -223,16 +223,6 @@ public class DataTablePeopleController extends AbstractDataTableController<Perso
 	}
 
 	/**
-	 * Sets selected item.
-	 *
-	 * @param theItem item to select
-	 */
-	@Override
-	public void select(final Person theItem) {
-		tblData.getSelectionModel().select(theItem);
-	}
-
-	/**
 	 * Returns selection from table as sorted list.
 	 *
 	 * @return sorted selection from table
@@ -241,7 +231,7 @@ public class DataTablePeopleController extends AbstractDataTableController<Perso
 	public ObservableList<Person> getSortedSelectedItems() {
 		List<Person> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
+		getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
 	}

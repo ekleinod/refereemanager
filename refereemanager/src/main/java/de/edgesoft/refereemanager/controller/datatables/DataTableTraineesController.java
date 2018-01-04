@@ -184,16 +184,6 @@ public class DataTableTraineesController extends AbstractDataTableController<Tra
 	}
 
 	/**
-	 * Sets selected item.
-	 *
-	 * @param theItem item to select
-	 */
-	@Override
-	public void select(final Trainee theItem) {
-		tblData.getSelectionModel().select(theItem);
-	}
-
-	/**
 	 * Returns selection from table as sorted list.
 	 *
 	 * @return sorted selection from table
@@ -204,7 +194,7 @@ public class DataTableTraineesController extends AbstractDataTableController<Tra
 	public ObservableList<Trainee> getSortedSelectedItems() {
 		List<Trainee> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
+		getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList()));
 	}
