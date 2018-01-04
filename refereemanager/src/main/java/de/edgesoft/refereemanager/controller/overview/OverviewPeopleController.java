@@ -48,7 +48,7 @@ public class OverviewPeopleController extends AbstractOverviewController<Person>
 		getController().initController(this, PrefKey.OVERVIEW_PERSON_SPLIT, "datatables/DataTablePeople", "details/DetailsPerson");
 
 		// CRUD buttons setup
-		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
+		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
 	}

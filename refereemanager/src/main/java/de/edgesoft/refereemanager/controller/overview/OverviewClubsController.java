@@ -48,7 +48,7 @@ public class OverviewClubsController extends AbstractOverviewController<Club> {
 		getController().initController(this, PrefKey.OVERVIEW_CLUB_SPLIT, "datatables/DataTableClubs", "details/DetailsClub");
 
 		// CRUD buttons setup
-		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
+		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
 	}

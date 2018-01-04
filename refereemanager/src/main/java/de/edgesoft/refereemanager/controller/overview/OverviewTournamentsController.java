@@ -48,7 +48,7 @@ public class OverviewTournamentsController extends AbstractOverviewController<To
 		getController().initController(this, PrefKey.OVERVIEW_TOURNAMENT_SPLIT, "datatables/DataTableTournaments", "details/DetailsTournament");
 
 		// CRUD buttons setup
-		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
+		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
 	}

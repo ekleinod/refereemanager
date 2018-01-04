@@ -82,10 +82,10 @@ public class OverviewController<T extends TitledIDTypeModel> extends AbstractEmb
 	private IDetailsController<T> detailsController;
 
 	/**
-	 * List controller.
+	 * Data table controller.
 	 */
 	@FXML
-	private IDataTableController<T> listController;
+	private IDataTableController<T> dataTableController;
 
 
 	/**
@@ -126,7 +126,7 @@ public class OverviewController<T extends TitledIDTypeModel> extends AbstractEmb
 
 		// add nodes to overview scene
 		Map.Entry<Parent, FXMLLoader> pneListNode = Resources.loadNode(theListNode);
-		listController = pneListNode.getValue().getController();
+		dataTableController = pneListNode.getValue().getController();
 		pneSplit.getItems().add(0, pneListNode.getKey());
 
 		Map.Entry<Parent, FXMLLoader> pneDetailsNode = Resources.loadNode(theDetailsNode);
@@ -142,8 +142,8 @@ public class OverviewController<T extends TitledIDTypeModel> extends AbstractEmb
 		});
 
 		// listen to selection changes, show details
-		getListController().selectedItemProperty().addListener((observable, oldValue, newValue) -> theOverviewController.showDetails(newValue));
-		getListController().getDataTable().setOnMousePressed(new EventHandler<MouseEvent>() {
+		getDataTableController().selectedItemProperty().addListener((observable, oldValue, newValue) -> theOverviewController.showDetails(newValue));
+		getDataTableController().getDataTable().setOnMousePressed(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
 		        if (event.isPrimaryButtonDown() && (event.getClickCount() == 2)) {
@@ -151,7 +151,7 @@ public class OverviewController<T extends TitledIDTypeModel> extends AbstractEmb
 		        }
 		    }
 		});
-		getListController().getDataTable().setOnKeyReleased(new EventHandler<KeyEvent>() {
+		getDataTableController().getDataTable().setOnKeyReleased(new EventHandler<KeyEvent>() {
 		    @Override
 		    public void handle(KeyEvent event) {
 		        if (event.getCode() == KeyCode.ENTER) {
@@ -164,7 +164,7 @@ public class OverviewController<T extends TitledIDTypeModel> extends AbstractEmb
 		theOverviewController.showDetails(null);
 
 		// set list items
-		getListController().setDataTableItems();
+		getDataTableController().setDataTableItems();
 
 	}
 
@@ -184,12 +184,12 @@ public class OverviewController<T extends TitledIDTypeModel> extends AbstractEmb
 
 
 	/**
-	 * Returns list controller.
+	 * Returns data table controller.
 	 *
-	 * @return list controller
+	 * @return data table controller
 	 */
-	protected IDataTableController<T> getListController() {
-		return listController;
+	protected IDataTableController<T> getDataTableController() {
+		return dataTableController;
 	}
 
 	/**

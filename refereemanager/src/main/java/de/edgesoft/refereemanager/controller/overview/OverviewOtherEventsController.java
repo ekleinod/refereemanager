@@ -48,7 +48,7 @@ public class OverviewOtherEventsController extends AbstractOverviewController<Ot
 		getController().initController(this, PrefKey.OVERVIEW_OTHER_EVENT_SPLIT, "datatables/DataTableOtherEvents", "details/DetailsOtherEvent");
 
 		// CRUD buttons setup
-		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
+		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
 	}

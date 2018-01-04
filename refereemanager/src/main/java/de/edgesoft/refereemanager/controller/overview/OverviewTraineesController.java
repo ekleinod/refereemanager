@@ -48,7 +48,7 @@ public class OverviewTraineesController extends AbstractOverviewController<Train
 		getController().initController(this, PrefKey.OVERVIEW_TRAINEE_SPLIT, "datatables/DataTableTrainees", "details/DetailsTrainee");
 
 		// CRUD buttons setup
-		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
+		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
 	}

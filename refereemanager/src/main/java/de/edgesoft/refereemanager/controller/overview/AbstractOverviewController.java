@@ -111,10 +111,9 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 		if (showEditDialog(theViewName, theViewTitleNoun, theData)) {
 
 			theDataList.add(theData);
-			getController().getListController().getDataTable().refresh();
-			getController().getListController().getDataTable().getSelectionModel().select(theData);
-			getController().getListController().getDataTable().scrollTo(theData);
-//			getController().getListController().select(theData);
+			getController().getDataTableController().getDataTable().refresh();
+			getController().getDataTableController().select(theData);
+			getController().getDataTableController().getDataTable().scrollTo(theData);
 
 			AppModel.setModified(true);
 			RefereeManager.getAppController().setAppTitle();
@@ -128,11 +127,11 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 	@Override
 	public void handleEdit(final String theViewName, final String theViewTitleNoun) {
 
-		Optional<T> theData = getController().getListController().getSelectedItem();
+		Optional<T> theData = getController().getDataTableController().getSelectedItem();
 
 		if (theData.isPresent()) {
 			if (showEditDialog(theViewName, theViewTitleNoun, theData.get())) {
-				getController().getListController().getDataTable().refresh();
+				getController().getDataTableController().getDataTable().refresh();
 				showDetails(theData.get());
 				AppModel.setModified(true);
 				RefereeManager.getAppController().setAppTitle();
@@ -150,7 +149,7 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 	@Override
 	public void handleDelete(ObservableList<T> theDataList) {
 
-		Optional<T> theData = getController().getListController().getSelectedItem();
+		Optional<T> theData = getController().getDataTableController().getSelectedItem();
 
 		if (theData.isPresent()) {
 
