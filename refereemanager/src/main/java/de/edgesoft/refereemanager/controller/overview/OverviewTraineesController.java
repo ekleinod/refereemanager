@@ -60,7 +60,7 @@ public class OverviewTraineesController extends AbstractOverviewController<Train
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("editdialogs/EditDialogTrainee", "Azubi", AppModel.factory.createTrainee(), ((ContentModel) AppModel.getData().getContent()).getObservableTrainees());
+		handleAdd("editdialogs/EditDialogTrainee", "Azubi", AppModel.factory.createTrainee(), ((ContentModel) AppModel.getData().getContent()).getObservableTrainees());
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class OverviewTraineesController extends AbstractOverviewController<Train
 	 */
 	@Override
 	public void handleDelete(ActionEvent event) {
-		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableTrainees());
+		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableTrainees());
 	}
 
 }

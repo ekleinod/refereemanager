@@ -60,7 +60,7 @@ public class OverviewRefereesController extends AbstractOverviewController<Refer
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("editdialogs/EditDialogReferee", "Schiedsrichter_in", AppModel.factory.createReferee(), ((ContentModel) AppModel.getData().getContent()).getObservableReferees());
+		handleAdd("editdialogs/EditDialogReferee", "Schiedsrichter_in", AppModel.factory.createReferee(), ((ContentModel) AppModel.getData().getContent()).getObservableReferees());
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class OverviewRefereesController extends AbstractOverviewController<Refer
 	 */
 	@Override
 	public void handleDelete(ActionEvent event) {
-		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableReferees());
+		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableReferees());
 	}
 
 }

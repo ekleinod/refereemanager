@@ -111,7 +111,10 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 		if (showEditDialog(theViewName, theViewTitleNoun, theData)) {
 
 			theDataList.add(theData);
-			overviewController.getListController().select(theData);
+			getController().getListController().getDataTable().refresh();
+			getController().getListController().getDataTable().getSelectionModel().select(theData);
+			getController().getListController().getDataTable().scrollTo(theData);
+//			getController().getListController().select(theData);
 
 			AppModel.setModified(true);
 			RefereeManager.getAppController().setAppTitle();
@@ -129,6 +132,7 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 
 		if (theData.isPresent()) {
 			if (showEditDialog(theViewName, theViewTitleNoun, theData.get())) {
+				getController().getListController().getDataTable().refresh();
 				showDetails(theData.get());
 				AppModel.setModified(true);
 				RefereeManager.getAppController().setAppTitle();

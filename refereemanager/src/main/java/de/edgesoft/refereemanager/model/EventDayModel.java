@@ -78,7 +78,7 @@ public class EventDayModel extends EventDay {
 	 */
 	@Override
 	public StringProperty getDisplayText() {
-		return getDateText();
+		return (getTimeText() == null) ? getDateText() : new SimpleStringProperty(MessageFormat.format("{0}, {1} Uhr", getDateText().getValue(), getTimeText().getValue()));
 	}
 
 }

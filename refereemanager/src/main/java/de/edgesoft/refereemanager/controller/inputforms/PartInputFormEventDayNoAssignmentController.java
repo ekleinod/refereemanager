@@ -1,4 +1,7 @@
 package de.edgesoft.refereemanager.controller.inputforms;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.EventDay;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
@@ -88,6 +91,9 @@ public class PartInputFormEventDayNoAssignmentController extends AbstractInputFo
 
 		// set date picker date format
         pckDate.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
+
+		// init form
+		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{EventDay.class})));
 
 	}
 

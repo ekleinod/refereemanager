@@ -60,7 +60,7 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("editdialogs/EditDialogLeagueGame", "Ligaspiel", AppModel.factory.createLeagueGame(), ((ContentModel) AppModel.getData().getContent()).getObservableLeagueGames());
+		handleAdd("editdialogs/EditDialogLeagueGame", "Ligaspiel", AppModel.factory.createLeagueGame(), ((ContentModel) AppModel.getData().getContent()).getObservableLeagueGames());
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 	 */
 	@Override
 	public void handleDelete(ActionEvent event) {
-		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableLeagueGames());
+		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableLeagueGames());
 	}
 
 }

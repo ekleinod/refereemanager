@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -30,6 +31,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.text.FontWeight;
+import jfxtras.scene.control.LocalTimeTextField;
 
 
 /**
@@ -114,6 +116,11 @@ public class JAXBMatchUtils {
 	    						SimpleObjectProperty<LocalDate> objTemp = (SimpleObjectProperty<LocalDate>) getGetterMethod(theClass, sFieldName).invoke(theModel);
 	    						((DatePicker) theFieldObject).setValue((objTemp == null) ? null : objTemp.getValue());
 
+	    					} else if (theFieldObject instanceof LocalTimeTextField) {
+
+	    						SimpleObjectProperty<LocalTime> objTemp = (SimpleObjectProperty<LocalTime>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						((LocalTimeTextField) theFieldObject).setLocalTime((objTemp == null) ? null : objTemp.getValue());
+
 	    					} else if (theFieldObject instanceof ComboBox<?>) {
 
 	    						ModelClassExt objTemp = (ModelClassExt) getGetterMethod(theClass, sFieldName).invoke(theModel);
@@ -176,6 +183,10 @@ public class JAXBMatchUtils {
 		} else if (theFieldObject instanceof DatePicker) {
 
 			((DatePicker) theFieldObject).setValue(null);
+
+		} else if (theFieldObject instanceof LocalTimeTextField) {
+
+			((LocalTimeTextField) theFieldObject).setLocalTime(null);
 
 		} else if (theFieldObject instanceof ComboBox<?>) {
 
@@ -271,6 +282,21 @@ public class JAXBMatchUtils {
 	    							}
 	    							dteTemp.setValue(dteValue);
 	    							getSetterMethod(theClass, sFieldName, SimpleObjectProperty.class).invoke(theModel, dteTemp);
+	    						}
+
+	    					} else if (theFieldObject instanceof LocalTimeTextField) {
+
+	    						LocalTime tmeValue = ((LocalTimeTextField) theFieldObject).getLocalTime();
+
+	    						if (tmeValue == null) {
+									getSetterMethod(theClass, sFieldName, SimpleObjectProperty.class).invoke(theModel, (SimpleObjectProperty<?>) null);
+	    						} else {
+	    							SimpleObjectProperty<LocalTime> tmeTemp = (SimpleObjectProperty<LocalTime>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    							if (tmeTemp == null) {
+	    								tmeTemp = new SimpleObjectProperty<>();
+	    							}
+	    							tmeTemp.setValue(tmeValue);
+	    							getSetterMethod(theClass, sFieldName, SimpleObjectProperty.class).invoke(theModel, tmeTemp);
 	    						}
 
 	    					} else if (theFieldObject instanceof ComboBox<?>) {

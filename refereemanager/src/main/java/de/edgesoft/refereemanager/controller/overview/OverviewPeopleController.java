@@ -60,7 +60,7 @@ public class OverviewPeopleController extends AbstractOverviewController<Person>
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("editdialogs/EditDialogPerson", "Person", AppModel.factory.createPerson(), ((ContentModel) AppModel.getData().getContent()).getObservablePeople());
+		handleAdd("editdialogs/EditDialogPerson", "Person", AppModel.factory.createPerson(), ((ContentModel) AppModel.getData().getContent()).getObservablePeople());
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class OverviewPeopleController extends AbstractOverviewController<Person>
 	 */
 	@Override
 	public void handleDelete(ActionEvent event) {
-		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservablePeople());
+		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservablePeople());
 	}
 
 }

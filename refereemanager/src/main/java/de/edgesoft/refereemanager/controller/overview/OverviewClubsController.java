@@ -60,7 +60,7 @@ public class OverviewClubsController extends AbstractOverviewController<Club> {
 	 */
 	@Override
 	public void handleAdd(ActionEvent event) {
-		super.handleAdd("editdialogs/EditDialogClub", "Club", AppModel.factory.createClub(), ((ContentModel) AppModel.getData().getContent()).getObservableClubs());
+		handleAdd("editdialogs/EditDialogClub", "Club", AppModel.factory.createClub(), ((ContentModel) AppModel.getData().getContent()).getObservableClubs());
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class OverviewClubsController extends AbstractOverviewController<Club> {
 	 */
 	@Override
 	public void handleDelete(ActionEvent event) {
-		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableClubs());
+		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableClubs());
 	}
 
 }
