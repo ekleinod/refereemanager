@@ -5,28 +5,20 @@ import java.util.Arrays;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.EventDate;
-import de.edgesoft.refereemanager.jaxb.LeagueGame;
-import de.edgesoft.refereemanager.jaxb.OtherEvent;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.jaxb.Tournament;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.Resources;
-import de.edgesoft.refereemanager.utils.SpinnerUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import jfxtras.scene.control.LocalDateTimeTextField;
 
 /**
- * Controller for the event edit dialog scene.
+ * Controller for the tournament edit dialog scene.
  *
  * ## Legal stuff
  *
@@ -51,74 +43,7 @@ import jfxtras.scene.control.LocalDateTimeTextField;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class EditDialogTournamentController extends AbstractEditDialogController<EventDate> {
-
-	// event date data
-
-
-	// league games
-
-	/**
-	 * Tab for league games.
-	 */
-	@FXML
-	private Tab tabLeagueGame;
-
-	/**
-	 * Combobox for league.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "league", jaxbclass = EventDate.class)
-	protected ComboBox<ModelClassExt> cboLeague;
-
-	/**
-	 * Clear league.
-	 */
-	@FXML
-	private Button btnLeagueClear;
-
-	/**
-	 * Spinner for game number.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "gameNumber", jaxbclass = LeagueGame.class)
-	protected Spinner<Integer> spnGameNumber;
-
-	/**
-	 * Combobox for home team.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "homeTeam", jaxbclass = LeagueGame.class)
-	protected ComboBox<ModelClassExt> cboHomeTeam;
-
-	/**
-	 * Clear home team.
-	 */
-	@FXML
-	private Button btnHomeTeamClear;
-
-	/**
-	 * Combobox for off team.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "offTeam", jaxbclass = LeagueGame.class)
-	protected ComboBox<ModelClassExt> cboOffTeam;
-
-	/**
-	 * Clear off team.
-	 */
-	@FXML
-	private Button btnOffTeamClear;
-
-
-
-	// tournament
-
-	/**
-	 * Tab for tournament.
-	 */
-	@FXML
-	private Tab tabTournament;
+public class EditDialogTournamentController extends AbstractTabbedEditDialogController {
 
 	/**
 	 * Text field for announcement URL.
@@ -168,36 +93,43 @@ public class EditDialogTournamentController extends AbstractEditDialogController
 	private Button btnOrganizerClear;
 
 
+//	/**
+//	 * Event data.
+//	 */
+//	@FXML
+//	private Parent embeddedInputFormEventData;
+//
+//	/**
+//	 * Event data controller.
+//	 */
+//	@FXML
+//	private IInputFormController embeddedInputFormEventDataController;
+
+
+	/**
+	 * Initializes the controller class.
+	 *
+	 * This method is automatically called after the fxml file has been loaded.
+	 */
 	@FXML
 	@Override
 	protected void initialize() {
 
-		setClasses(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, EventDate.class, OtherEvent.class, LeagueGame.class, Tournament.class})));
+//		addInputFormController(embeddedInputFormEventDataController);
+
+		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, EventDate.class, Tournament.class})));
+
 		super.initialize();
 
+
+
+		// to move
+
 		// fill combo boxes
-        ComboBoxUtils.prepareComboBox(cboLeague, AppModel.getData().getContent().getLeague());
-        ComboBoxUtils.prepareComboBox(cboHomeTeam, AppModel.getData().getContent().getTeam());
-        ComboBoxUtils.prepareComboBox(cboOffTeam, AppModel.getData().getContent().getTeam());
         ComboBoxUtils.prepareComboBox(cboOrganizingClub, AppModel.getData().getContent().getClub());
         ComboBoxUtils.prepareComboBox(cboOrganizer, AppModel.getData().getContent().getPerson());
 
-        // setup list views
-
-        // setup spinners
-        SpinnerUtils.prepareIntegerSpinner(spnGameNumber, 0, 200);
-        spnGameNumber.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-
 		// enable buttons
-		btnLeagueClear.disableProperty().bind(
-				cboLeague.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnHomeTeamClear.disableProperty().bind(
-				cboHomeTeam.getSelectionModel().selectedItemProperty().isNull()
-		);
-		btnOffTeamClear.disableProperty().bind(
-				cboOffTeam.getSelectionModel().selectedItemProperty().isNull()
-		);
 		btnOrganizingClubClear.disableProperty().bind(
 				cboOrganizingClub.getSelectionModel().selectedItemProperty().isNull()
 		);
@@ -205,38 +137,10 @@ public class EditDialogTournamentController extends AbstractEditDialogController
 				cboOrganizer.getSelectionModel().selectedItemProperty().isNull()
 		);
 
-
 		// icons
-		btnLeagueClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
-		btnHomeTeamClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
-		btnOffTeamClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 		btnOrganizingClubClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 		btnOrganizerClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 
-	}
-
-	/**
-	 * Clears league selection.
-	 */
-	@FXML
-	private void handleLeagueClear() {
-		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboLeague);
-	}
-
-	/**
-	 * Clears home team selection.
-	 */
-	@FXML
-	private void handleHomeTeamClear() {
-		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboHomeTeam);
-	}
-
-	/**
-	 * Clears off team selection.
-	 */
-	@FXML
-	private void handleOffTeamClear() {
-		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboOffTeam);
 	}
 
 	/**
