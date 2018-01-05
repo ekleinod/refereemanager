@@ -1,9 +1,10 @@
 package de.edgesoft.refereemanager.controller.details;
 
+import java.util.stream.Collectors;
+
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.model.ClubModel;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.text.FontWeight;
@@ -70,7 +71,7 @@ public class DetailsClubController<T extends ClubModel> implements IDetailsContr
 	 * Contact.
 	 */
 	@FXML
-	private Label lblContact;
+	private Label lblContactPerson;
 
 
 	/**
@@ -100,15 +101,19 @@ public class DetailsClubController<T extends ClubModel> implements IDetailsContr
 			LabelUtils.setText(lblLocal, null);
 			LabelUtils.setText(lblURL, null);
 			LabelUtils.setText(lblVenue, null);
-			LabelUtils.setText(lblContact, null);
+			LabelUtils.setText(lblContactPerson, null);
 
 		} else {
 
 			LabelUtils.setText(lblFilename, theDetailData.getFilename());
-			LabelUtils.setText(lblLocal, new SimpleStringProperty("ToDo"));
-			LabelUtils.setText(lblURL, new SimpleStringProperty("ToDo"));
-			LabelUtils.setText(lblVenue, new SimpleStringProperty("ToDo"));
-			LabelUtils.setText(lblContact, new SimpleStringProperty("ToDo"));
+
+			lblLocal.setText(theDetailData.getLocal().getValue() ? "ja" : "nein");
+
+			lblURL.setText(theDetailData.getURL().stream().map(url -> url.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
+
+			lblVenue.setText(theDetailData.getVenueList().stream().map(venue -> venue.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
+
+			lblContactPerson.setText(theDetailData.getContactPersonList().stream().map(person -> person.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
 
 		}
 

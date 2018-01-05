@@ -21,9 +21,9 @@ import de.edgesoft.refereemanager.model.URLModel;
 
 /**
  * <p>Java class for Club complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="Club">
  *   &lt;complexContent>
@@ -39,8 +39,8 @@ import de.edgesoft.refereemanager.model.URLModel;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Club", propOrder = {
@@ -70,11 +70,11 @@ public class Club
 
     /**
      * Gets the value of the local property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public SimpleBooleanProperty getLocal() {
         return local;
@@ -82,11 +82,11 @@ public class Club
 
     /**
      * Sets the value of the local property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setLocal(SimpleBooleanProperty value) {
         this.local = value;
@@ -94,11 +94,11 @@ public class Club
 
     /**
      * Gets the value of the filename property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public SimpleStringProperty getFilename() {
         return filename;
@@ -106,11 +106,11 @@ public class Club
 
     /**
      * Sets the value of the filename property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setFilename(SimpleStringProperty value) {
         this.filename = value;
@@ -118,25 +118,25 @@ public class Club
 
     /**
      * Gets the value of the url property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the url property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getURL().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link URL }
-     * 
-     * 
+     *
+     *
      */
     public List<URL> getURL() {
         if (url == null) {
@@ -147,25 +147,25 @@ public class Club
 
     /**
      * Gets the value of the venue property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the venue property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getVenue().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * 
-     * 
+     *
+     *
      */
     public List<Venue> getVenue() {
         if (venue == null) {
@@ -176,25 +176,25 @@ public class Club
 
     /**
      * Gets the value of the contactPerson property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the contactPerson property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getContactPerson().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * 
-     * 
+     *
+     *
      */
     public List<Person> getContactPerson() {
         if (contactPerson == null) {
