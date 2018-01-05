@@ -8,10 +8,8 @@ XSD-Schema for test of lists.
 	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 	jxb:version="2.1">
 
-	<xsd:element name="lists" type="Lists" />
-
-	<xsd:complexType name="Lists">
-		<xsd:complexContent>
+	<xsd:element name="lists">
+		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element name="direct_String_0_1" type="xsd:string" minOccurs="0" maxOccurs="1" />
 				<xsd:element name="direct_String_1_1" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -56,8 +54,8 @@ XSD-Schema for test of lists.
 				</xsd:element>
 
 			</xsd:sequence>
-		</xsd:complexContent>
-	</xsd:complexType>
+		</xsd:complexType>
+	</xsd:element>
 
 	<xsd:complexType name="MyString">
 		<xsd:complexContent>
@@ -70,9 +68,7 @@ XSD-Schema for test of lists.
 	</xsd:complexType>
 
 	<xsd:complexType name="IDType" abstract="true">
-		<xsd:complexContent>
-			<xsd:attribute name="id" type="xsd:ID" use="optional" />
-		</xsd:complexContent>
+		<xsd:attribute name="id" type="xsd:ID" use="optional" />
 	</xsd:complexType>
 
 </xsd:schema>
