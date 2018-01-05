@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.8-b130911.1802 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.01.05 um 11:45:53 AM CET 
+// Generiert: 2018.01.05 um 12:40:21 PM CET 
 //
 
 
@@ -32,8 +32,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _ListsRefString0U_QNAME = new QName("", "ref_String_0_u");
-    private final static QName _ListsRefString1U_QNAME = new QName("", "ref_String_1_u");
+    private final static QName _ListsRefStringJAXB_QNAME = new QName("", "ref_String_JAXB");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: generated
@@ -62,20 +61,10 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "ref_String_0_u", scope = Lists.class)
+    @XmlElementDecl(namespace = "", name = "ref_String_JAXB", scope = Lists.class)
     @XmlIDREF
-    public JAXBElement<Object> createListsRefString0U(Object value) {
-        return new JAXBElement<Object>(_ListsRefString0U_QNAME, Object.class, Lists.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "ref_String_1_u", scope = Lists.class)
-    @XmlIDREF
-    public JAXBElement<Object> createListsRefString1U(Object value) {
-        return new JAXBElement<Object>(_ListsRefString1U_QNAME, Object.class, Lists.class, value);
+    public JAXBElement<Object> createListsRefStringJAXB(Object value) {
+        return new JAXBElement<Object>(_ListsRefStringJAXB_QNAME, Object.class, Lists.class, value);
     }
 
 }

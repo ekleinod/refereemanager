@@ -11,12 +11,7 @@ XSD-Schema for test of lists.
 	<xsd:element name="lists">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element name="direct_String_0_1" type="xsd:string" minOccurs="0" maxOccurs="1" />
-				<xsd:element name="direct_String_1_1" type="xsd:string" minOccurs="1" maxOccurs="1" />
-				<xsd:element name="direct_String_0_u" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
-				<xsd:element name="direct_String_1_u" type="xsd:string" minOccurs="1" maxOccurs="unbounded" />
-
-				<xsd:element name="ref_String_0_1" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
+				<xsd:element name="ref_String_OK" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
 					<xsd:annotation>
 						<xsd:appinfo>
 							<jxb:property>
@@ -25,7 +20,7 @@ XSD-Schema for test of lists.
 						</xsd:appinfo>
 					</xsd:annotation>
 				</xsd:element>
-				<xsd:element name="ref_String_1_1" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+				<xsd:element name="ref_String_JAXB" type="xsd:IDREF" minOccurs="0" maxOccurs="unbounded">
 					<xsd:annotation>
 						<xsd:appinfo>
 							<jxb:property>
@@ -34,40 +29,14 @@ XSD-Schema for test of lists.
 						</xsd:appinfo>
 					</xsd:annotation>
 				</xsd:element>
-				<xsd:element name="ref_String_0_u" type="xsd:IDREF" minOccurs="0" maxOccurs="unbounded">
-					<xsd:annotation>
-						<xsd:appinfo>
-							<jxb:property>
-								<jxb:baseType name="MyString" />
-							</jxb:property>
-						</xsd:appinfo>
-					</xsd:annotation>
-				</xsd:element>
-				<xsd:element name="ref_String_1_u" type="xsd:IDREF" minOccurs="1" maxOccurs="unbounded">
-					<xsd:annotation>
-						<xsd:appinfo>
-							<jxb:property>
-								<jxb:baseType name="MyString" />
-							</jxb:property>
-						</xsd:appinfo>
-					</xsd:annotation>
-				</xsd:element>
-
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
 
 	<xsd:complexType name="MyString">
-		<xsd:complexContent>
-			<xsd:extension base="IDType">
-				<xsd:sequence>
-					<xsd:element name="content" type="xsd:string" minOccurs="1" maxOccurs="1" />
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-
-	<xsd:complexType name="IDType" abstract="true">
+		<xsd:sequence>
+			<xsd:element name="content" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
 		<xsd:attribute name="id" type="xsd:ID" use="optional" />
 	</xsd:complexType>
 
