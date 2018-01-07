@@ -53,7 +53,7 @@ public class DetailsClubController<T extends ClubModel> implements IDetailsContr
 	 * Local club?.
 	 */
 	@FXML
-	private Label lblLocal;
+	private Label lblIsLocal;
 
 	/**
 	 * URL.
@@ -98,7 +98,7 @@ public class DetailsClubController<T extends ClubModel> implements IDetailsContr
 		if (theDetailData == null) {
 
 			LabelUtils.setText(lblFilename, null);
-			LabelUtils.setText(lblLocal, null);
+			LabelUtils.setText(lblIsLocal, null);
 			LabelUtils.setText(lblURL, null);
 			LabelUtils.setText(lblVenue, null);
 			LabelUtils.setText(lblContactPerson, null);
@@ -107,7 +107,7 @@ public class DetailsClubController<T extends ClubModel> implements IDetailsContr
 
 			LabelUtils.setText(lblFilename, theDetailData.getFilename());
 
-			lblLocal.setText(theDetailData.getLocal().getValue() ? "ja" : "nein");
+			lblIsLocal.setText(theDetailData.getIsLocal().getValue() ? "ja" : "nein");
 
 			lblURL.setText(theDetailData.getURL().stream().map(url -> url.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
 

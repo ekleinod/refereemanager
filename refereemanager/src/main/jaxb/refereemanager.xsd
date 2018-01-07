@@ -296,7 +296,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
-					<xsd:element name="local" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="is_local" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="filename" type="StringProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="u_r_l" type="URL" minOccurs="0" maxOccurs="unbounded" />
 

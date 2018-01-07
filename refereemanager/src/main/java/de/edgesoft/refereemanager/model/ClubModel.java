@@ -50,7 +50,7 @@ public class ClubModel extends Club {
 	/**
 	 * Filter predicate for local clubs.
 	 */
-	public static Predicate<Club> LOCAL = club -> club.getLocal().getValue();
+	public static Predicate<Club> LOCAL = club -> club.getIsLocal().getValue();
 
 	/**
 	 * Filter predicate for non-local clubs.
@@ -65,8 +65,8 @@ public class ClubModel extends Club {
 	 * @since 0.9.0
 	 */
 	@Override
-	public SimpleBooleanProperty getLocal() {
-		return (super.getLocal() == null) ? new SimpleBooleanProperty(Boolean.FALSE) : super.getLocal();
+	public SimpleBooleanProperty getIsLocal() {
+		return (super.getIsLocal() == null) ? new SimpleBooleanProperty(Boolean.FALSE) : super.getIsLocal();
 	}
 
 	/**
