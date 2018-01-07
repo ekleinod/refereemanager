@@ -1,16 +1,18 @@
-package de.edgesoft.refereemanager.controller.editdialogs;
-import java.util.ArrayList;
-import java.util.Arrays;
+package de.edgesoft.refereemanager.controller.inputforms;
+import java.util.Map;
 
-import de.edgesoft.edgeutils.commons.IDType;
-import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
+import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
 import de.edgesoft.refereemanager.jaxb.Club;
-import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.jaxb.Venue;
+import de.edgesoft.refereemanager.model.AppModel;
+import de.edgesoft.refereemanager.utils.JAXBMatch;
+import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 /**
- * Controller for the club edit dialog scene.
+ * Controller for the venue data edit dialog tab.
  *
  * ## Legal stuff
  *
@@ -35,31 +37,20 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class EditDialogClubController extends AbstractTabbedEditDialogController {
+public class InputFormVenueDataController extends AbstractInputFormController {
 
 	/**
-	 * Club data.
+	 * CRUD buttons venue.
 	 */
 	@FXML
-	private Parent embeddedInputFormClubData;
+	private Parent embeddedCRUDVenue;
 
 	/**
-	 * Club data controller.
+	 * CRUD buttons venue controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormClubDataController;
-
-	/**
-	 * Venue data.
-	 */
-	@FXML
-	private Parent embeddedInputFormVenueData;
-
-	/**
-	 * Venue data controller.
-	 */
-	@FXML
-	private IInputFormController embeddedInputFormVenueDataController;
+	@JAXBMatch(jaxbfield = "venue", jaxbclass = Club.class)
+	protected ListCRUDController<Venue> embeddedCRUDVenueController;
 
 
 	/**
@@ -68,15 +59,14 @@ public class EditDialogClubController extends AbstractTabbedEditDialogController
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
-	@Override
 	protected void initialize() {
 
-		addInputFormController(embeddedInputFormClubDataController);
-		addInputFormController(embeddedInputFormVenueDataController);
-
-		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Club.class})));
-
-		super.initialize();
+		Map.Entry<Parent, FXMLLoader> nodeVenue = Resources.loadNode("inputforms/PartInputFormVenue");
+		embeddedCRUDVenueController.initController(
+				nodeVenue.getValue().getController(),
+				nodeVenue.getKey(),
+				"Spielort",
+				AppModel.factory::createVenue);
 
 	}
 

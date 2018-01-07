@@ -1,16 +1,12 @@
-package de.edgesoft.refereemanager.controller.editdialogs;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import de.edgesoft.edgeutils.commons.IDType;
-import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
-import de.edgesoft.refereemanager.jaxb.Club;
-import de.edgesoft.refereemanager.jaxb.TitledIDType;
+package de.edgesoft.refereemanager.controller.inputforms;
+import de.edgesoft.refereemanager.jaxb.Venue;
+import de.edgesoft.refereemanager.utils.JAXBMatch;
+import de.edgesoft.refereemanager.utils.SpinnerUtils;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
+import javafx.scene.control.Spinner;
 
 /**
- * Controller for the club edit dialog scene.
+ * Controller for the venue edit dialog scene.
  *
  * ## Legal stuff
  *
@@ -35,31 +31,21 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class EditDialogClubController extends AbstractTabbedEditDialogController {
+public class PartInputFormVenueController extends PartInputFormAddressController {
 
 	/**
-	 * Club data.
+	 * Spinner for latitude.
 	 */
 	@FXML
-	private Parent embeddedInputFormClubData;
+	@JAXBMatch(jaxbfield = "latitude", jaxbclass = Venue.class)
+	protected Spinner<Double> spnLatitude;
 
 	/**
-	 * Club data controller.
+	 * Spinner for longitude.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormClubDataController;
-
-	/**
-	 * Venue data.
-	 */
-	@FXML
-	private Parent embeddedInputFormVenueData;
-
-	/**
-	 * Venue data controller.
-	 */
-	@FXML
-	private IInputFormController embeddedInputFormVenueDataController;
+	@JAXBMatch(jaxbfield = "longitude", jaxbclass = Venue.class)
+	protected Spinner<Double> spnLongitude;
 
 
 	/**
@@ -71,12 +57,9 @@ public class EditDialogClubController extends AbstractTabbedEditDialogController
 	@Override
 	protected void initialize() {
 
-		addInputFormController(embeddedInputFormClubDataController);
-		addInputFormController(embeddedInputFormVenueDataController);
-
-		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Club.class})));
-
-		super.initialize();
+        // setup spinners
+        SpinnerUtils.prepareDoubleSpinner(spnLatitude, -90.0, 90.0);
+        SpinnerUtils.prepareDoubleSpinner(spnLongitude, -180.0, 180.0);
 
 	}
 
