@@ -79,11 +79,11 @@ public class ClubModel extends Club {
 	@Override
 	public SimpleStringProperty getFilename() {
 
-		if ((super.getFilename() == null) || (super.getFilename().getValue() == null)) {
-			return new SimpleStringProperty(FileUtils.cleanFilename(getDisplayText().getValue()));
+		if ((super.getFilename() == null) || (super.getFilename().getValueSafe().isEmpty())) {
+			return new SimpleStringProperty(FileUtils.cleanFilename(getDisplayText().getValueSafe(), false));
 		}
 
-		return new SimpleStringProperty(FileUtils.cleanFilename(super.getFilename().getValue()));
+		return new SimpleStringProperty(FileUtils.cleanFilename(super.getFilename().getValueSafe(), false));
 	}
 
 	/**
