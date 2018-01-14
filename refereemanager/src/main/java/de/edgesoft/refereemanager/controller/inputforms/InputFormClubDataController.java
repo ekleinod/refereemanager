@@ -138,13 +138,22 @@ public class InputFormClubDataController extends AbstractInputFormController {
 	 */
 	private void showGeneratedFilename() {
 
-		String sGeneratedFilename = txtTitle.getText();
+		String sGeneratedFilename = "";
 
-		if (!txtShorttitle.getText().isEmpty()) {
-			sGeneratedFilename = txtShorttitle.getText();
+		// check for null: catch cases in which GUI is not initialized properly
+		if (txtTitle.getText() != null) {
+			sGeneratedFilename = txtTitle.getText();
 		}
 
-		lblGeneratedFilename.setText(MessageFormat.format("Generierter Dateiname: {0}", FileUtils.cleanFilename(sGeneratedFilename, false)));
+		if (txtShorttitle.getText() != null) {
+			if (!txtShorttitle.getText().isEmpty()) {
+				sGeneratedFilename = txtShorttitle.getText();
+			}
+		}
+
+		if (lblGeneratedFilename != null) {
+			lblGeneratedFilename.setText(MessageFormat.format("Generierter Dateiname: {0}", FileUtils.cleanFilename(sGeneratedFilename, false)));
+		}
 
 	}
 

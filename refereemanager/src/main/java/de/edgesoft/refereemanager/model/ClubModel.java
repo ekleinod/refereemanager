@@ -105,6 +105,8 @@ public class ClubModel extends Club {
      *
      * This is very strange, so I use this method as a workaround.
      *
+     * @todo Remove if generation error of JAXB for lists of referenced elements is fixed.
+     *
      * @return list of venues
      */
     public List<Venue> getVenueList() {
@@ -127,6 +129,8 @@ public class ClubModel extends Club {
      * the referencing objects.
      *
      * This is very strange, so I use this method as a workaround.
+     *
+     * @todo Remove if generation error of JAXB for lists of referenced elements is fixed.
      *
      * @return list of contact people
      */
