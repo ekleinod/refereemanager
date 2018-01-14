@@ -65,7 +65,7 @@ public class InputFormVenueDataController extends AbstractInputFormController {
 		embeddedCRUDVenueController.initController(
 				nodeVenue.getValue().getController(),
 				nodeVenue.getKey(),
-				"Spielort",
+				null,
 				AppModel.factory::createVenue);
 
 	}
