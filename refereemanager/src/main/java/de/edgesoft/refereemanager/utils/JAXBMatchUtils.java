@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElement;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
@@ -15,7 +14,6 @@ import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
 import de.edgesoft.refereemanager.controller.editdialogs.EditDialogTraineeController;
-import de.edgesoft.refereemanager.model.AppModel;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -130,21 +128,13 @@ public class JAXBMatchUtils {
 
 	    					} else if (theFieldObject instanceof ListView<?>) {
 
-	    						List<?> lstTemp = (List<?>) getGetterMethod(theClass, sFieldName).invoke(theModel);
-	    						((ListView<ModelClassExt>) theFieldObject).setItems(FXCollections.observableArrayList((List<ModelClassExt>) lstTemp));
+	    						List<ModelClassExt> lstTemp = (List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						((ListView<ModelClassExt>) theFieldObject).setItems(FXCollections.observableArrayList(lstTemp));
 
 	    					} else if (theFieldObject instanceof ListCRUDController) {
 
-	    						List<?> lstTemp = (List<?>) getGetterMethod(theClass, sFieldName).invoke(theModel);
-
-	    						// @todo Remove if generation error of JAXB for lists of referenced elements is fixed.
-	    						if (!lstTemp.isEmpty()) {
-	    							if (lstTemp.get(0) instanceof JAXBElement<?>) {
-	    	    						lstTemp = (List<?>) getListGetterMethod(theClass, sFieldName).invoke(theModel);
-	    							}
-	    						}
-
-	    						((ListCRUDController<ModelClassExt>) theFieldObject).setItems(FXCollections.observableArrayList((List<ModelClassExt>) lstTemp));
+	    						List<ModelClassExt> lstTemp = (List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						((ListCRUDController<ModelClassExt>) theFieldObject).setItems(FXCollections.observableArrayList(lstTemp));
 
 	    					} else if (theFieldObject instanceof CheckBox) {
 
@@ -517,36 +507,6 @@ public class JAXBMatchUtils {
     		}
 
 		}
-
-	}
-
-	/**
-	 * Getter method for the field in the class as list.
-	 *
-	 * @todo Remove if generation error of JAXB for lists of referenced elements is fixed.
-	 *
-	 * @param theClass class
-	 * @param theJAXBFieldName jaxb field
-	 * @return getter method
-	 *
-	 * @throws SecurityException
-	 * @throws NoSuchMethodException
-	 */
-	private static Method getListGetterMethod(final Class<?> theClass, final String theJAXBFieldName) throws NoSuchMethodException, SecurityException {
-
-		assert (theClass != null) : "Class must not be null.";
-		assert (theJAXBFieldName != null) : "JAXB field name must not be null.";
-
-		String sModelClass = String.format("%s.%sModel", AppModel.class.getPackage().getName(), theClass.getSimpleName());
-
-		Class<? extends ModelClassExt> clsModel = null;
-		try {
-			clsModel = (Class<? extends ModelClassExt>) Class.forName(sModelClass);
-		} catch (ClassNotFoundException e) {
-			throw new NoSuchMethodException(e.getMessage());
-		}
-
-		return getGetterMethod(clsModel, String.format("%sList", theJAXBFieldName));
 
 	}
 

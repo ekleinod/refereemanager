@@ -1,15 +1,9 @@
 package de.edgesoft.refereemanager.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Predicate;
-
-import javax.xml.bind.JAXBElement;
 
 import de.edgesoft.edgeutils.files.FileUtils;
 import de.edgesoft.refereemanager.jaxb.Club;
-import de.edgesoft.refereemanager.jaxb.Person;
-import de.edgesoft.refereemanager.jaxb.Venue;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -95,56 +89,6 @@ public class ClubModel extends Club {
 	public StringProperty getDisplayText() {
 		return getDisplayTitleShort();
 	}
-
-    /**
-     * Returns the list of venues.
-     *
-     * For reasons unbeknownst to me, a list of references will be generated as
-     * list of references, but internally a list of JAXBElements is used, that wrap
-     * the referencing objects.
-     *
-     * This is very strange, so I use this method as a workaround.
-     *
-     * @todo Remove if generation error of JAXB for lists of referenced elements is fixed.
-     *
-     * @return list of venues
-     */
-    public List<Venue> getVenueList() {
-
-    	List<Venue> lstReturn = new ArrayList<>();
-
-		for (Object theVenue : super.getVenue()) {
-			lstReturn.add(((JAXBElement<Venue>) theVenue).getValue());
-		}
-
-        return lstReturn;
-
-    }
-
-    /**
-     * Returns the list of contact people.
-     *
-     * For reasons unbeknownst to me, a list of references will be generated as
-     * list of references, but internally a list of JAXBElements is used, that wrap
-     * the referencing objects.
-     *
-     * This is very strange, so I use this method as a workaround.
-     *
-     * @todo Remove if generation error of JAXB for lists of referenced elements is fixed.
-     *
-     * @return list of contact people
-     */
-    public List<Person> getContactPersonList() {
-
-    	List<Person> lstReturn = new ArrayList<>();
-
-		for (Object thePerson : super.getContactPerson()) {
-			lstReturn.add(((JAXBElement<Person>) thePerson).getValue());
-		}
-
-        return lstReturn;
-
-    }
 
 }
 
