@@ -16,6 +16,7 @@ import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
 import de.edgesoft.refereemanager.controller.editdialogs.EditDialogTraineeController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -29,6 +30,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.text.FontWeight;
 import jfxtras.scene.control.LocalTimeTextField;
@@ -143,8 +145,18 @@ public class JAXBMatchUtils {
 
 	    					} else if (theFieldObject instanceof Spinner<?>) {
 
-	    						SimpleIntegerProperty objTemp = (SimpleIntegerProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
-	    						((Spinner<Integer>) theFieldObject).getValueFactory().setValue((objTemp == null) ? 0 : objTemp.getValue());
+	    						ObjectProperty<Number> objTemp = (ObjectProperty<Number>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						Number nmbNull = null;
+
+	    						if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.IntegerSpinnerValueFactory) {
+	    							nmbNull = 0;
+	    						} else if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.DoubleSpinnerValueFactory) {
+	    							nmbNull = 0.0;
+	    						} else {
+	    							throw new IllegalArgumentException(String.format("Unknow SpinnerValueFactory: %s", ((Spinner<?>) theFieldObject).getValueFactory()));
+	    						}
+
+	    						((Spinner<Number>) theFieldObject).getValueFactory().setValue((objTemp == null) ? nmbNull : objTemp.getValue());
 
 	    					}
 

@@ -57,6 +57,8 @@ public class PartInputFormVenueController extends PartInputFormAddressController
 	@Override
 	protected void initialize() {
 
+		super.initialize();
+
         // setup spinners
         SpinnerUtils.prepareDoubleSpinner(spnLatitude, -90.0, 90.0);
         SpinnerUtils.prepareDoubleSpinner(spnLongitude, -180.0, 180.0);
