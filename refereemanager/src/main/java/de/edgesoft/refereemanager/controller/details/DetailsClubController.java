@@ -111,9 +111,9 @@ public class DetailsClubController<T extends ClubModel> implements IDetailsContr
 
 			lblURL.setText(theDetailData.getURL().stream().map(url -> url.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
 
-			lblVenue.setText(theDetailData.getVenueList().stream().map(venue -> venue.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
+			lblVenue.setText(theDetailData.getVenue().stream().map(venue -> venue.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
 
-			lblContactPerson.setText(theDetailData.getContactPersonList().stream().map(person -> person.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
+			lblContactPerson.setText(theDetailData.getContactPerson().stream().map(person -> person.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
 
 		}
 

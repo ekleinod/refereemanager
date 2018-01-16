@@ -9,7 +9,10 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
+// fixing wrong JAXB generation of referenced lists
+// before: import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlIDREF;
+// end of fix
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -63,9 +66,19 @@ public class Club
     protected SimpleStringProperty filename;
     @XmlElement(name = "u_r_l", type = URLModel.class)
     protected List<URL> url;
-    @XmlElementRef(name = "venue", type = JAXBElement.class, required = false)
+    // fixing wrong JAXB generation of referenced lists
+    // before: @XmlElementRef(name = "venue", type = JAXBElement.class, required = false)
+    @XmlElement(name = "venue", type = Object.class)
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    // end of fix
     protected List<Venue> venue;
-    @XmlElementRef(name = "contact_person", type = JAXBElement.class, required = false)
+    // fixing wrong JAXB generation of referenced lists
+    // before: @XmlElementRef(name = "contact_person", type = JAXBElement.class, required = false)
+    @XmlElement(name = "contact_person", type = Object.class)
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    // end of fix
     protected List<Person> contactPerson;
 
     /**
@@ -163,7 +176,10 @@ public class Club
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * // fixing wrong JAXB generation of referenced lists
+     * // before: {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * {@link Object }
+     * // end of fix
      * 
      * 
      */
@@ -192,7 +208,10 @@ public class Club
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * // fixing wrong JAXB generation of referenced lists
+     * // before: {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * {@link Object }
+     * // end of fix
      * 
      * 
      */

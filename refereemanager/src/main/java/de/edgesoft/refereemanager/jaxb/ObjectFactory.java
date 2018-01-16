@@ -346,24 +346,12 @@ public class ObjectFactory {
         return new JAXBElement<Object>(_LeagueRefereeReportRecipient_QNAME, Object.class, League.class, value);
     }
 
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "venue", scope = Club.class)
-    @XmlIDREF
-    public JAXBElement<Object> createClubVenue(Object value) {
-        return new JAXBElement<Object>(_TeamVenue_QNAME, Object.class, Club.class, value);
-    }
+     // fixing wrong JAXB generation of referenced lists
+     // removed method: public JAXBElement<Object> createClubVenue(Object value)
+     // end of fix
 
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "contact_person", scope = Club.class)
-    @XmlIDREF
-    public JAXBElement<Object> createClubContactPerson(Object value) {
-        return new JAXBElement<Object>(_TeamContactPerson_QNAME, Object.class, Club.class, value);
-    }
+     // fixing wrong JAXB generation of referenced lists
+     // removed method: public JAXBElement<Object> createClubContactPerson(Object value)
+     // end of fix
 
 }
