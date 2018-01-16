@@ -31,7 +31,7 @@ import javafx.scene.control.TextField;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class PartInputFormURLController extends AbstractContactInputFormController {
+public class PartInputFormURLController extends AbstractContactInputFormController<URL> {
 
 	/**
 	 * Label for URL text field.

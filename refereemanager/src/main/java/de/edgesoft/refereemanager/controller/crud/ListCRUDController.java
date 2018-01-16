@@ -96,7 +96,7 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	/**
 	 * Input form controller for access to data input
 	 */
-	private IInputFormController ctlInputForm = null;
+	private IInputFormController<T> ctlInputForm = null;
 
 
 	/**
@@ -137,7 +137,7 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	 * @param theViewName name of the edit view (null == no heading)
 	 * @param theInstanceCall instance call
 	 */
-	public void initController(final IInputFormController theInputFormController, final Parent thePartInputForm, final String theViewName, final Supplier<T> theInstanceCall) {
+	public void initController(final IInputFormController<T> theInputFormController, final Parent thePartInputForm, final String theViewName, final Supplier<T> theInstanceCall) {
 
 		assert (theInputFormController != null) : "InputFormController must not be null";
 		assert (thePartInputForm != null) : "PartInputForm must not be null";

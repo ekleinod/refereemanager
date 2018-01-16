@@ -31,12 +31,12 @@ import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractTabbedEditDialogController extends AbstractEditDialogController implements ITabbedEditDialogController {
+public abstract class AbstractTabbedEditDialogController<T extends ModelClassExt> extends AbstractEditDialogController<T> implements ITabbedEditDialogController {
 
 	/**
 	 * List of input form controllers.
 	 */
-	private List<IInputFormController> lstInputFormControllers = null;
+	private List<IInputFormController<T>> lstInputFormControllers = null;
 
 	/**
 	 * Adds (embedded) input form controller.
@@ -73,7 +73,7 @@ public abstract class AbstractTabbedEditDialogController extends AbstractEditDia
 	 * @param theData data object
 	 */
 	@Override
-	public <U extends ModelClassExt> void fillForm(final U theData) {
+	public void fillForm(final T theData) {
 
 		assert (lstInputFormControllers != null) : "list of input form controllers not initialized!";
 
@@ -87,7 +87,7 @@ public abstract class AbstractTabbedEditDialogController extends AbstractEditDia
 	 * @param theData data object
 	 */
 	@Override
-	public <V extends ModelClassExt> void fillData(V theData) {
+	public void fillData(T theData) {
 
 		assert (lstInputFormControllers != null) : "list of input form controllers not initialized!";
 

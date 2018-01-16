@@ -31,7 +31,7 @@ import javafx.scene.control.TextField;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class PartInputFormAddressController extends AbstractContactInputFormController {
+public class PartInputFormAddressController extends AbstractContactInputFormController<Address> {
 
 	/**
 	 * Label for street text field.

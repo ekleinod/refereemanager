@@ -31,7 +31,7 @@ import javafx.scene.control.TextField;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class PartInputFormEMailController extends AbstractContactInputFormController {
+public class PartInputFormEMailController extends AbstractContactInputFormController<EMail> {
 
 	/**
 	 * Label for EMail text field.

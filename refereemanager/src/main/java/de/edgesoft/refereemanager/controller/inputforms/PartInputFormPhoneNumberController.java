@@ -32,7 +32,7 @@ import javafx.scene.control.TextField;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class PartInputFormPhoneNumberController extends AbstractContactInputFormController {
+public class PartInputFormPhoneNumberController extends AbstractContactInputFormController<PhoneNumber> {
 
 	/**
 	 * Country code text field.

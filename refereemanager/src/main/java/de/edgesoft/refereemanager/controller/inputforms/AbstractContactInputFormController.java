@@ -50,7 +50,7 @@ import javafx.scene.image.ImageView;
  * @version 0.14.0
  * @since 0.14.0
  */
-public abstract class AbstractContactInputFormController extends AbstractInputFormController {
+public abstract class AbstractContactInputFormController<T extends ModelClassExt> extends AbstractInputFormController<T> {
 
 	/**
 	 * Label for ID text field.

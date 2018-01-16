@@ -30,7 +30,7 @@ import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IInputFormController {
+public interface IInputFormController<T extends ModelClassExt> {
 
 	/**
 	 * Initializes form: sets introspection classes and marks required fields.
@@ -44,14 +44,14 @@ public interface IInputFormController {
 	 *
 	 * @param theData data object
 	 */
-	public <U extends ModelClassExt> void fillForm(final U theData);
+	public void fillForm(final T theData);
 
 	/**
 	 * Fills data object with form data.
 	 *
 	 * @param theData data object
 	 */
-	public <V extends ModelClassExt> void fillData(V theData);
+	public void fillData(T theData);
 
 }
 

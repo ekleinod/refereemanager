@@ -1,6 +1,5 @@
 package de.edgesoft.refereemanager.controller.editdialogs;
 
-import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import javafx.stage.Stage;
 
 /**
@@ -29,7 +28,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IEditDialogController extends IInputFormController {
+public interface IEditDialogController {
 
 	/**
 	 * Sets dialog stage.

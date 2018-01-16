@@ -33,7 +33,7 @@ import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractInputFormController implements IInputFormController {
+public abstract class AbstractInputFormController<T extends ModelClassExt> implements IInputFormController<T> {
 
 	/**
 	 * Declared fields of class and abstract subclasses.
@@ -79,7 +79,9 @@ public abstract class AbstractInputFormController implements IInputFormControlle
 	 * @param theData data object
 	 */
 	@Override
-	public <U extends ModelClassExt> void fillForm(final U theData) {
+	public void fillForm(final T theData) {
+
+		System.out.println("filling form" + theData);
 
         // fill fields
         for (Field theFXMLField : getDeclaredFields()) {
@@ -107,7 +109,7 @@ public abstract class AbstractInputFormController implements IInputFormControlle
 	 * @param theData data object
 	 */
 	@Override
-	public <V extends ModelClassExt> void fillData(V theData) {
+	public void fillData(T theData) {
 
 		assert (theData != null) : "data must not be null";
 

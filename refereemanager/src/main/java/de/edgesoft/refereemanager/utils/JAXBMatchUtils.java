@@ -15,9 +15,10 @@ import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
 import de.edgesoft.refereemanager.controller.editdialogs.EditDialogTraineeController;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -145,18 +146,19 @@ public class JAXBMatchUtils {
 
 	    					} else if (theFieldObject instanceof Spinner<?>) {
 
-	    						ObjectProperty<Number> objTemp = (ObjectProperty<Number>) getGetterMethod(theClass, sFieldName).invoke(theModel);
-	    						Number nmbNull = null;
-
 	    						if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.IntegerSpinnerValueFactory) {
-	    							nmbNull = 0;
-	    						} else if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.DoubleSpinnerValueFactory) {
-	    							nmbNull = 0.0;
-	    						} else {
-	    							throw new IllegalArgumentException(String.format("Unknow SpinnerValueFactory: %s", ((Spinner<?>) theFieldObject).getValueFactory()));
-	    						}
 
-	    						((Spinner<Number>) theFieldObject).getValueFactory().setValue((objTemp == null) ? nmbNull : objTemp.getValue());
+		    						SimpleIntegerProperty objTemp = (SimpleIntegerProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
+		    						((Spinner<Integer>) theFieldObject).getValueFactory().setValue((objTemp == null) ? 0 : objTemp.getValue());
+
+	    						} else if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.DoubleSpinnerValueFactory) {
+
+		    						SimpleDoubleProperty objTemp = (SimpleDoubleProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
+		    						((Spinner<Double>) theFieldObject).getValueFactory().setValue((objTemp == null) ? 0.0 : objTemp.getValue());
+
+	    						} else {
+	    							throw new IllegalArgumentException(String.format("Unknown SpinnerValueFactory: %s", ((Spinner<?>) theFieldObject).getValueFactory()));
+	    						}
 
 	    					}
 
@@ -220,7 +222,15 @@ public class JAXBMatchUtils {
 
 		} else if (theFieldObject instanceof Spinner<?>) {
 
-			((Spinner<Integer>) theFieldObject).getValueFactory().setValue(0);
+			Number nmbrNull = null;
+
+			if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.IntegerSpinnerValueFactory) {
+				nmbrNull = 0;
+			} else if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.DoubleSpinnerValueFactory) {
+				nmbrNull = 0.0;
+			}
+
+			((Spinner<Number>) theFieldObject).getValueFactory().setValue(nmbrNull);
 
 		}
 
@@ -336,7 +346,17 @@ public class JAXBMatchUtils {
 
 	    					} else if (theFieldObject instanceof Spinner<?>) {
 
-								getSetterMethod(theClass, sFieldName, IntegerProperty.class).invoke(theModel, new SimpleIntegerProperty(((Spinner<Integer>) theFieldObject).getValue()));
+	    						if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.IntegerSpinnerValueFactory) {
+
+	    							getSetterMethod(theClass, sFieldName, IntegerProperty.class).invoke(theModel, new SimpleIntegerProperty(((Spinner<Integer>) theFieldObject).getValue()));
+
+	    						} else if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.DoubleSpinnerValueFactory) {
+
+	    							getSetterMethod(theClass, sFieldName, DoubleProperty.class).invoke(theModel, new SimpleDoubleProperty(((Spinner<Double>) theFieldObject).getValue()));
+
+	    						} else {
+	    							throw new IllegalArgumentException(String.format("Unknown SpinnerValueFactory: %s", ((Spinner<?>) theFieldObject).getValueFactory()));
+	    						}
 
 	    					}
 
