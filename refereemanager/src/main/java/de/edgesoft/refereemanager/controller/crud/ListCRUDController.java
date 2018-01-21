@@ -137,7 +137,12 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	 * @param theViewName name of the edit view (null == no heading)
 	 * @param theInstanceCall instance call
 	 */
-	public void initController(final IInputFormController<T> theInputFormController, final Parent thePartInputForm, final String theViewName, final Supplier<T> theInstanceCall) {
+	public void initController(
+			final IInputFormController<T> theInputFormController,
+			final Parent thePartInputForm,
+			final String theViewName,
+			final Supplier<T> theInstanceCall
+			) {
 
 		assert (theInputFormController != null) : "InputFormController must not be null";
 		assert (thePartInputForm != null) : "PartInputForm must not be null";
@@ -173,8 +178,12 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
      *
      * @param theItems items to set
      */
-    public void setItems(ObservableList<T> theItems) {
+    public void setItems(
+    		ObservableList<T> theItems
+    		) {
+
         lstData.setItems(theItems);
+
     }
 
 	/**
@@ -182,8 +191,12 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	 *
 	 * @param event calling action event
 	 */
-	public void handleClearList(ActionEvent event) {
+	public void handleClearList(
+			ActionEvent event
+			) {
+
 		lstData.getSelectionModel().clearSelection();
+
 	}
 
 	/**
@@ -192,7 +205,9 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	 * @param event calling action event
 	 */
 	@Override
-	public void handleAdd(ActionEvent event) {
+	public void handleAdd(
+			ActionEvent event
+			) {
 
 		T newData = instanceCall.get();
 		ctlInputForm.fillData(newData);
@@ -211,7 +226,9 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	 * @param event calling action event
 	 */
 	@Override
-	public void handleEdit(ActionEvent event) {
+	public void handleEdit(
+			ActionEvent event
+			) {
 
 		if (!lstData.getSelectionModel().isEmpty()) {
 			ctlInputForm.fillData(lstData.getSelectionModel().getSelectedItem());
@@ -228,7 +245,9 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	 * @param event calling action event
 	 */
 	@Override
-	public void handleDelete(ActionEvent event) {
+	public void handleDelete(
+			ActionEvent event
+			) {
 
 		if (!lstData.getSelectionModel().isEmpty()) {
 

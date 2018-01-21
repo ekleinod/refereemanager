@@ -53,7 +53,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class OverviewController<T extends TitledIDTypeModel> extends AbstractEmbedCRUDButtonsController implements IDetailsController<T> {
+public class GeneralOverviewController<T extends TitledIDTypeModel> extends AbstractEmbedCRUDButtonsController implements IDetailsController<T> {
 
 	/**
 	 * Heading.

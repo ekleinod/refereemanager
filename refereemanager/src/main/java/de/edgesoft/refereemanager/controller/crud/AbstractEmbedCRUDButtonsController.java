@@ -44,15 +44,12 @@ public abstract class AbstractEmbedCRUDButtonsController implements IEmbedCRUDBu
 	@FXML
 	private CRUDButtonsController embeddedCRUDButtonsController;
 
-	/**
-	 * Initializes the CRUD buttons.
-	 *
-	 * @param theActionsController CRUD actions controller
-	 * @param disableEdit when to disable edit button
-	 * @param disableDelete when to disable delete button
-	 */
 	@Override
-	public void initCRUDButtons(final ICRUDActionsController theActionsController, ObservableBooleanValue disableEdit, ObservableBooleanValue disableDelete) {
+	public void initCRUDButtons(
+			final ICRUDActionsController theActionsController,
+			final ObservableBooleanValue disableEdit,
+			final ObservableBooleanValue disableDelete
+			) {
 
 		// buttons setup
 		embeddedCRUDButtonsController.getAddButton().setOnAction(theActionsController::handleAdd);

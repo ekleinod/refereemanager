@@ -37,7 +37,11 @@ public interface IEmbedCRUDButtonsController {
 	 * @param disableEdit when to disable edit button
 	 * @param disableDelete when to disable delete button
 	 */
-	public void initCRUDButtons(final ICRUDActionsController theActionsController, ObservableBooleanValue disableEdit, ObservableBooleanValue disableDelete);
+	public void initCRUDButtons(
+			final ICRUDActionsController theActionsController,
+			final ObservableBooleanValue disableEdit,
+			final ObservableBooleanValue disableDelete
+	);
 
 }
 

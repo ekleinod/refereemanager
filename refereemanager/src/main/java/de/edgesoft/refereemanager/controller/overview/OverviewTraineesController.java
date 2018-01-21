@@ -41,7 +41,7 @@ public class OverviewTraineesController extends AbstractOverviewController<Train
 	 * @param theOverviewController overview controller
 	 */
 	@Override
-	public void initController(final OverviewController<Trainee> theOverviewController) {
+	public void initController(final GeneralOverviewController<Trainee> theOverviewController) {
 
 		super.initController(theOverviewController);
 

@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import de.edgesoft.refereemanager.RefereeManager;
-import de.edgesoft.refereemanager.controller.crud.ICRUDDialogActionsController;
+import de.edgesoft.refereemanager.controller.crud.IEditDialogCRUDActionsController;
 import de.edgesoft.refereemanager.controller.details.IDetailsController;
 import de.edgesoft.refereemanager.controller.editdialogs.IEditDialogController;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -50,12 +50,12 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractOverviewController<T extends TitledIDTypeModel> implements ICRUDDialogActionsController<T>, IDetailsController<T>, IOverviewController<T> {
+public abstract class AbstractOverviewController<T extends TitledIDTypeModel> implements IEditDialogCRUDActionsController<T>, IDetailsController<T>, IOverviewController<T> {
 
 	/**
 	 * Overview controller of the underlying view.
 	 */
-	private OverviewController<T> overviewController = null;
+	private GeneralOverviewController<T> overviewController = null;
 
 	/**
 	 * Returns overview controller.
@@ -63,7 +63,7 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 	 * @return overview controller
 	 */
 	@Override
-	public OverviewController<T> getController() {
+	public GeneralOverviewController<T> getController() {
 		return overviewController;
 	}
 
@@ -73,7 +73,7 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 	 * @param theOverviewController overview controller
 	 */
 	@Override
-	public void initController(final OverviewController<T> theOverviewController) {
+	public void initController(final GeneralOverviewController<T> theOverviewController) {
 		overviewController = theOverviewController;
 	}
 

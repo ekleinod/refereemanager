@@ -29,44 +29,62 @@ import javafx.collections.ObservableList;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface ICRUDDialogActionsController<T extends ModelClassExt> extends ICRUDActionsController {
+public interface IEditDialogCRUDActionsController<T extends ModelClassExt> extends ICRUDActionsController {
+
+	/**
+	 * Sets edit dialog's fxml filename.
+	 *
+	 * @param theFXMLFilename fxml filename of the edit view
+	 */
+	public void setEditDialogFXMLFilename(
+			final String theFXMLFilename
+	);
+
+	/**
+	 * Sets edit dialog's noun, shown in title ("edit <noun>").
+	 *
+	 * @param theTitleNoun title noun of the edit view ("edit <noun>")
+	 */
+	public void setEditDialogTitleNoun(
+			final String theTitleNoun
+	);
 
 	/**
 	 * Handles add action.
 	 *
-	 * @param theViewName name of the edit view
-	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
 	 * @param theData data element
 	 * @param theDataList data list to add data to
 	 */
-	public void handleAdd(final String theViewName, final String theViewTitleNoun, T theData, ObservableList<T> theDataList);
+	public void handleAdd(
+			T theData,
+			ObservableList<T> theDataList
+	);
 
 	/**
 	 * Handles edit action.
-	 *
-	 * @param theViewName name of the edit view
-	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
 	 */
-	public void handleEdit(final String theViewName, final String theViewTitleNoun);
+	public void handleEdit();
 
 	/**
 	 * Handles delete action.
 	 *
 	 * @param theDataList data list to delete data from
 	 */
-	public void handleDelete(ObservableList<T> theDataList);
+	public void handleDelete(
+			ObservableList<T> theDataList
+	);
 
 	/**
 	 * Opens the data edit dialog.
 	 *
 	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
 	 *
-	 * @param theViewName name of the edit view
-	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
 	 * @param theData the data to be edited
 	 * @return true if the user clicked OK, false otherwise.
 	 */
-	public boolean showEditDialog(final String theViewName, final String theViewTitleNoun, T theData);
+	public boolean showEditDialog(
+			T theData
+	);
 
 }
 

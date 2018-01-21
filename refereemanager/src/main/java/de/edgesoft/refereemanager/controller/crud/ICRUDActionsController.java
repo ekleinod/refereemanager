@@ -35,21 +35,27 @@ public interface ICRUDActionsController {
 	 *
 	 * @param event calling action event
 	 */
-	public void handleAdd(final ActionEvent event);
+	public void handleAdd(
+			final ActionEvent event
+	);
 
 	/**
 	 * Handles edit action.
 	 *
 	 * @param event calling action event
 	 */
-	public void handleEdit(final ActionEvent event);
+	public void handleEdit(
+			final ActionEvent event
+	);
 
 	/**
 	 * Handles delete action.
 	 *
 	 * @param event calling action event
 	 */
-	public void handleDelete(final ActionEvent event);
+	public void handleDelete(
+			final ActionEvent event
+	);
 
 }
 
