@@ -57,7 +57,7 @@ public class CRUDButtonsController {
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
-	private void initialize() {
+	protected void initialize() {
 
 		// icons
 		btnAdd.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));

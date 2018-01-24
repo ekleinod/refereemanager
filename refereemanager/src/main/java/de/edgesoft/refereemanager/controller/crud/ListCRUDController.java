@@ -49,7 +49,7 @@ import javafx.scene.layout.GridPane;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListCRUDController<T extends ModelClassExt> implements ICRUDActionsController {
+public class ListCRUDController<T extends ModelClassExt> extends CRUDButtonsController implements ICRUDActionsController {
 
 	/**
 	 * Grid pane.
@@ -75,18 +75,6 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	@FXML
 	protected Button btnClearList;
 
-	/**
-	 * CRUD button view part.
-	 */
-	@FXML
-	private Parent embeddedCRUDButtons;
-
-	/**
-	 * CRUD button view part controller.
-	 */
-	@FXML
-	private CRUDButtonsController embeddedCRUDButtonsController;
-
 
 	/**
 	 * Factory method for instances of T.
@@ -99,30 +87,28 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	private IInputFormController<T> ctlInputForm = null;
 
 
-	/**
-	 * Initializes the controller class.
-	 *
-	 * This method is automatically called after the fxml file has been loaded.
-	 */
 	@FXML
+	@Override
 	protected void initialize() {
+
+		super.initialize();
 
 		// icons
 		btnClearList.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
 
 		// buttons setup
-		embeddedCRUDButtonsController.getAddButton().setOnAction(this::handleAdd);
-		embeddedCRUDButtonsController.getEditButton().setOnAction(this::handleEdit);
-		embeddedCRUDButtonsController.getDeleteButton().setOnAction(this::handleDelete);
+		getAddButton().setOnAction(this::handleAdd);
+		getEditButton().setOnAction(this::handleEdit);
+		getDeleteButton().setOnAction(this::handleDelete);
 
 		// enabling buttons due to selection
 		BooleanBinding isOneItemSelected = lstData.getSelectionModel().selectedItemProperty().isNull();
 
 		btnClearList.disableProperty().bind(isOneItemSelected);
 
-		embeddedCRUDButtonsController.getAddButton().disableProperty().bind(isOneItemSelected.not());
-		embeddedCRUDButtonsController.getEditButton().disableProperty().bind(isOneItemSelected);
-		embeddedCRUDButtonsController.getDeleteButton().disableProperty().bind(isOneItemSelected);
+		getAddButton().disableProperty().bind(isOneItemSelected.not());
+		getEditButton().disableProperty().bind(isOneItemSelected);
+		getDeleteButton().disableProperty().bind(isOneItemSelected);
 
         // setup list views
         lstData.setCellFactory(ComboBoxUtils.getCallbackTModelClassExt());
@@ -192,18 +178,13 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 	 * @param event calling action event
 	 */
 	public void handleClearList(
-			ActionEvent event
+			@SuppressWarnings("unused") ActionEvent event
 			) {
 
 		lstData.getSelectionModel().clearSelection();
 
 	}
 
-	/**
-	 * Adds new data to list.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
 	public void handleAdd(
 			ActionEvent event
@@ -220,11 +201,6 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 
 	}
 
-	/**
-	 * Changes selected data in list.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
 	public void handleEdit(
 			ActionEvent event
@@ -239,11 +215,6 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 
 	}
 
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
 	public void handleDelete(
 			ActionEvent event

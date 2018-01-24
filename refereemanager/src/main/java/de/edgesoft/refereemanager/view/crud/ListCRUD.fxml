@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <GridPane fx:id="grdListCRUD" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.crud.ListCRUDController">
 	<columnConstraints>
@@ -26,6 +27,24 @@
 				<Tooltip text="Deselektieren" />
 			</tooltip>
 		</Button>
-		<fx:include fx:id="embeddedCRUDButtons" source="../crud/ListCRUDButtons.fxml" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+		<VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2" >
+			<children>
+				<Button fx:id="btnAdd">
+					<tooltip>
+						<Tooltip text="Neu" />
+					</tooltip>
+				</Button>
+				<Button fx:id="btnEdit">
+					<tooltip>
+						<Tooltip text="Ändern" />
+					</tooltip>
+				</Button>
+				<Button fx:id="btnDelete">
+					<tooltip>
+						<Tooltip text="Löschen" />
+					</tooltip>
+				</Button>
+			</children>
+		</VBox>
 	</children>
 </GridPane>
