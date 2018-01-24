@@ -53,6 +53,31 @@ public class ComboBoxUtils {
 	}
 
 	/**
+	 * Returns {@link Callback} for cell factories for lists of T extends {@link ModelClassExt}.
+	 *
+	 * @return callback for cell factories
+	 */
+	public static final <T extends ModelClassExt> Callback<ListView<T>, ListCell<T>> getCallbackTModelClassExt() {
+		return new Callback<ListView<T>, ListCell<T>>() {
+			@SuppressWarnings("unused")
+			@Override
+			public ListCell<T> call(ListView<T> param) {
+				return new ListCell<T>() {
+					@Override
+					public void updateItem(T item, boolean empty) {
+						super.updateItem(item, empty);
+						if ((item == null) || (item.getDisplayText() == null)) {
+							setText(null);
+						} else {
+							setText(item.getDisplayText().getValue());
+						}
+					}
+				};
+			}
+		};
+	}
+
+	/**
 	 * Returns {@link Callback} for cell factories for lists of {@link ModelClassExt}.
 	 *
 	 * @return callback for cell factories

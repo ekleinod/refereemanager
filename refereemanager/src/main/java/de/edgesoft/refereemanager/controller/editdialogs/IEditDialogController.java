@@ -1,6 +1,5 @@
 package de.edgesoft.refereemanager.controller.editdialogs;
 
-import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import javafx.stage.Stage;
 
 /**
@@ -29,14 +28,16 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IEditDialogController extends IInputFormController {
+public interface IEditDialogController {
 
 	/**
 	 * Sets dialog stage.
 	 *
 	 * @param theStage dialog stage
 	 */
-	public void setDialogStage(final Stage theStage);
+	public void setDialogStage(
+			final Stage theStage
+			);
 
 	/**
 	 * Returns dialog stage.
@@ -57,7 +58,9 @@ public interface IEditDialogController extends IInputFormController {
 	 *
 	 * @param isOKClicked did user click ok?
 	 */
-	public void setOkClicked(final boolean isOKClicked);
+	public void setOkClicked(
+			final boolean isOKClicked
+			);
 
 	/**
 	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.

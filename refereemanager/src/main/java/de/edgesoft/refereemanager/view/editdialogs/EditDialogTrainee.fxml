@@ -15,9 +15,14 @@
 						<fx:include fx:id="embeddedInputFormPersonData" source="../inputforms/InputFormPersonData.fxml" />
 					</content>
 				</Tab>
-				<Tab closable="false" text="Kontaktdaten">
+				<Tab closable="false" text="Kontakt">
 					<content>
 						<fx:include fx:id="embeddedInputFormContactData" source="../inputforms/InputFormContactData.fxml" />
+					</content>
+				</Tab>
+				<Tab closable="false" text="Adressen">
+					<content>
+						<fx:include fx:id="embeddedInputFormAddressData" source="../inputforms/InputFormAddressData.fxml" />
 					</content>
 				</Tab>
 				<Tab closable="false" text="Schiri">

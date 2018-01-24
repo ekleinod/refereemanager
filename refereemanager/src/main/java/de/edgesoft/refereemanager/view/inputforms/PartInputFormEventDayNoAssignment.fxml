@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import jfxtras.scene.control.LocalTimeTextField?>
+
+<GridPane vgap="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.PartInputFormEventDayNoAssignmentController">
+	<columnConstraints>
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
+		<ColumnConstraints hgrow="SOMETIMES" />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints valignment="TOP" />
+		<RowConstraints valignment="TOP" />
+		<RowConstraints valignment="TOP" />
+	</rowConstraints>
+	<children>
+		<Label fx:id="lblDate" text="Datum" />
+		<AnchorPane GridPane.columnIndex="1">
+			<children>
+				<DatePicker fx:id="pckDate" promptText="tt.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+			</children>
+		</AnchorPane>
+		<Label fx:id="lblStartTime" text="Startzeit" GridPane.rowIndex="1" />
+		<LocalTimeTextField fx:id="pckStartTime" promptText="hh:mm" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+		<Label fx:id="lblEndTime" text="Endzeit" GridPane.rowIndex="2" />
+		<LocalTimeTextField fx:id="pckEndTime" promptText="hh:mm" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+	</children>
+</GridPane>

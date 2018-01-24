@@ -31,7 +31,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *         &lt;element name="club" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="league" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="venue" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="contact_person" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
+ *         &lt;element name="contact_person" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -66,10 +66,8 @@ public class Team
     protected League league;
     @XmlElementRef(name = "venue", type = JAXBElement.class, required = false)
     protected List<Venue> venue;
-    @XmlElement(name = "contact_person", type = Object.class)
-    @XmlIDREF
-    @XmlSchemaType(name = "IDREF")
-    protected Person contactPerson;
+    @XmlElementRef(name = "contact_person", type = JAXBElement.class, required = false)
+    protected List<Person> contactPerson;
 
     /**
      * Gets the value of the number property.
@@ -175,25 +173,30 @@ public class Team
     /**
      * Gets the value of the contactPerson property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
-     */
-    public Person getContactPerson() {
-        return contactPerson;
-    }
-
-    /**
-     * Sets the value of the contactPerson property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the contactPerson property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getContactPerson().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
+     * 
      */
-    public void setContactPerson(Person value) {
-        this.contactPerson = value;
+    public List<Person> getContactPerson() {
+        if (contactPerson == null) {
+            contactPerson = new ArrayList<Person>();
+        }
+        return this.contactPerson;
     }
 
 }

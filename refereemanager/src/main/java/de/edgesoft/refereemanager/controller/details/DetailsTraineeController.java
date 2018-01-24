@@ -1,6 +1,5 @@
 package de.edgesoft.refereemanager.controller.details;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.model.TraineeModel;
 import javafx.fxml.FXML;
@@ -32,7 +31,7 @@ import javafx.scene.control.Label;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsTraineeController extends DetailsPersonController implements IDetailsController {
+public class DetailsTraineeController<T extends TraineeModel> extends DetailsPersonController<T> {
 
 	/**
 	 * Club.
@@ -58,22 +57,20 @@ public class DetailsTraineeController extends DetailsPersonController implements
 	 * @param theDetailData (null if no data to show)
 	 */
 	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
+	public void showDetails(final T theDetailData) {
 
 		super.showDetails(theDetailData);
 
-		if ((theDetailData == null) || !(theDetailData instanceof TraineeModel)) {
+		if (theDetailData == null) {
 
 			LabelUtils.setText(lblClub, null);
 
 		} else {
 
-			TraineeModel theData = (TraineeModel) theDetailData;
-
 			lblClub.setText(
-					(theData.getMember() == null) ?
+					(theDetailData.getMember() == null) ?
 							null :
-							theData.getMember().getDisplayText().getValue());
+							theDetailData.getMember().getDisplayText().getValue());
 
 		}
 

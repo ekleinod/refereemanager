@@ -2,12 +2,13 @@ package de.edgesoft.refereemanager.model;
 
 import java.nio.file.Paths;
 
+import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.jaxb.RefereeManager;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 
 /**
- * Gebu application model.
+ * Referee manager application model.
  *
  * ## Legal stuff
  *
@@ -36,27 +37,23 @@ public final class AppModel {
 
 	/**
 	 * Referee manager data.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	private static RefereeManager dtaRefMan = null;
 
 	/**
 	 * Flag, if data is modified.
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	private static boolean isModified = false;
+
+	/**
+	 * Central object factory instance for all classes.
+	 */
+	public static final ObjectFactory factory = new ObjectFactory();
 
 	/**
      * Returns referee manager data.
      *
      * @return referee manager data
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
      */
     public static RefereeManager getData() {
         return dtaRefMan;
@@ -66,9 +63,6 @@ public final class AppModel {
      * Sets referee manager data.
      *
      * @return referee manager data
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
      */
     public static void setData(final RefereeManager theData) {
         dtaRefMan = theData;
@@ -78,9 +72,6 @@ public final class AppModel {
      * Is data modified?.
      *
      * @return Is data modified?
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
      */
     public static boolean isModified() {
         return isModified;
@@ -90,9 +81,6 @@ public final class AppModel {
      * Sets modified flag.
      *
      * @param modified data modified?
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
      */
     public static void setModified(final boolean modified) {
         isModified = modified;
@@ -102,9 +90,6 @@ public final class AppModel {
 	 * Returns the file name.
 	 *
 	 * @return filename
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	public static String getFilename() {
 		return Prefs.get(PrefKey.FILE);
@@ -114,9 +99,6 @@ public final class AppModel {
 	 * Sets the file name.
 	 *
 	 * @param theFilename filename
-	 *
-	 * @version 0.14.0
-	 * @since 0.10.0
 	 */
 	public static void setFilename(final String theFilename) {
 

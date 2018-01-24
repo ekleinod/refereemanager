@@ -1,4 +1,5 @@
 package de.edgesoft.refereemanager.controller.editdialogs;
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.controller.inputforms.AbstractInputFormController;
 import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
@@ -32,7 +33,7 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractEditDialogController extends AbstractInputFormController implements IEditDialogController {
+public abstract class AbstractEditDialogController<T extends ModelClassExt> extends AbstractInputFormController<T> implements IEditDialogController {
 
 	/**
 	 * Reference to dialog stage.
@@ -73,49 +74,34 @@ public abstract class AbstractEditDialogController extends AbstractInputFormCont
 	}
 
 
-	/**
-	 * Sets dialog stage.
-	 *
-	 * @param theStage dialog stage
-	 */
 	@Override
-	public void setDialogStage(final Stage theStage) {
+	public void setDialogStage(
+			final Stage theStage
+			) {
+
         dialogStage = theStage;
+
     }
 
-	/**
-	 * Returns dialog stage.
-	 *
-	 * @return dialog stage
-	 */
 	@Override
 	public Stage getDialogStage() {
 		return dialogStage;
 	}
 
-	/**
-	 * Sets if user clicked ok.
-	 *
-	 * @param isOKClicked did user click ok?
-	 */
 	@Override
-	public void setOkClicked(final boolean isOKClicked) {
+	public void setOkClicked(
+			final boolean isOKClicked
+			) {
+
 		okClicked = isOKClicked;
+
 	}
 
-	/**
-	 * Returns if user clicked ok.
-	 *
-	 * @return did user click ok?
-	 */
 	@Override
 	public boolean isOkClicked() {
 		return okClicked;
 	}
 
-	/**
-	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
-	 */
 	@FXML
 	@Override
     public void handleOk() {
@@ -123,9 +109,6 @@ public abstract class AbstractEditDialogController extends AbstractInputFormCont
         dialogStage.close();
     }
 
-	/**
-	 * Stores non-ok click and closes dialog.
-	 */
 	@FXML
 	@Override
     public void handleCancel() {

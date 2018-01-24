@@ -332,7 +332,7 @@ public class ContentModel extends Content {
 
 		for (Team theTeam : getTeam().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList())) {
 			if ((theTeam.getLeague() != null) && (theTeam.getLeague() == theLeague)) {
-				if ((theTeam.getClub() != null) && (theTeam.getClub().getLocal().get())) {
+				if ((theTeam.getClub() != null) && (theTeam.getClub().getIsLocal().get())) {
 					lstReturn.add(theTeam);
 				}
 			}

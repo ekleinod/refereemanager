@@ -46,7 +46,6 @@
 						<Button fx:id="btnStatusClear" onAction="#handleStatusClear" AnchorPane.rightAnchor="0.0" />
 					</children>
 				</AnchorPane>
-				<Label text="Brief" GridPane.rowIndex="3" />
 				<CheckBox fx:id="chkDocsByLetter" text="Nachrichten zusätzlich per Brief" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 			</children>
 		</GridPane>

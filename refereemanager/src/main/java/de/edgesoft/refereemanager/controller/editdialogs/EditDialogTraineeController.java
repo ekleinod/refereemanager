@@ -12,7 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 
 /**
- * Controller for the referee edit dialog scene.
+ * Controller for the trainee edit dialog scene.
  *
  * ## Legal stuff
  *
@@ -62,6 +62,18 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	 */
 	@FXML
 	private IInputFormController embeddedInputFormContactDataController;
+
+	/**
+	 * Address data.
+	 */
+	@FXML
+	private Parent embeddedInputFormAddressData;
+
+	/**
+	 * Address data controller.
+	 */
+	@FXML
+	private IInputFormController embeddedInputFormAddressDataController;
 
 	/**
 	 * Referee data.
@@ -123,6 +135,7 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 
 		addInputFormController(embeddedInputFormPersonDataController);
 		addInputFormController(embeddedInputFormContactDataController);
+		addInputFormController(embeddedInputFormAddressDataController);
 		addInputFormController(embeddedInputFormRefereeDataController);
 		addInputFormController(embeddedInputFormWishDataController);
 		addInputFormController(embeddedInputFormTrainingLevelDataController);

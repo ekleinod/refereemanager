@@ -33,7 +33,7 @@ import javafx.scene.control.TextFormatter;
 public class SpinnerUtils {
 
 	/**
-	 * Prepares spinner with min andmax values.
+	 * Prepares integer spinner with min and max values.
 	 *
 	 * Editable spinners do not change their value on exiting with tab,
 	 * thus the complicated initialization.
@@ -48,6 +48,28 @@ public class SpinnerUtils {
         SpinnerValueFactory<Integer> factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(theMin, theMax);
         theSpinner.setValueFactory(factory);
         TextFormatter<Integer> formatter = new TextFormatter<>(factory.getConverter(), factory.getValue());
+        theSpinner.getEditor().setTextFormatter(formatter);
+        factory.valueProperty().bindBidirectional(formatter.valueProperty());
+	}
+
+	/**
+	 * Prepares double spinner with min and max values.
+	 *
+	 * Editable spinners do not change their value on exiting with tab,
+	 * thus the complicated initialization.
+	 *
+	 * Code from: <https://stackoverflow.com/questions/32340476/manually-typing-in-text-in-javafx-spinner-is-not-updating-the-value-unless-user>
+	 *
+	 * @param theSpinner spinner to prepare
+	 * @param theMin min value
+	 * @param theMax max value
+	 *
+	 * @since 0.15.0
+	 */
+	public static final void prepareDoubleSpinner(Spinner<Double> theSpinner, final double theMin, final double theMax) {
+        SpinnerValueFactory<Double> factory = new SpinnerValueFactory.DoubleSpinnerValueFactory(theMin, theMax);
+        theSpinner.setValueFactory(factory);
+        TextFormatter<Double> formatter = new TextFormatter<>(factory.getConverter(), factory.getValue());
         theSpinner.getEditor().setTextFormatter(formatter);
         factory.valueProperty().bindBidirectional(formatter.valueProperty());
 	}

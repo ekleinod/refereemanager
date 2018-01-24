@@ -1,9 +1,8 @@
 package de.edgesoft.refereemanager.controller.details;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
-import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.text.FontWeight;
@@ -34,7 +33,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsTitledIDController implements IDetailsController {
+public class DetailsTitledIDController<T extends TitledIDTypeModel> implements IDetailsController<T> {
 
 	/**
 	 * Heading label.
@@ -106,9 +105,9 @@ public class DetailsTitledIDController implements IDetailsController {
 	 * @param theDetailData (null if no data to show)
 	 */
 	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
+	public void showDetails(final T theDetailData) {
 
-		if ((theDetailData == null) || !(theDetailData instanceof TitledIDType)) {
+		if (theDetailData == null) {
 
 			LabelUtils.setText(lblID, null);
 
@@ -118,13 +117,11 @@ public class DetailsTitledIDController implements IDetailsController {
 
 		} else {
 
-			TitledIDType theData = (TitledIDType) theDetailData;
+			lblID.setText(theDetailData.getId());
 
-			lblID.setText(theData.getId());
-
-			LabelUtils.setText(lblTitle, theData.getTitle());
-			LabelUtils.setText(lblShorttitle, theData.getShorttitle());
-			LabelUtils.setText(lblRemark, theData.getRemark());
+			LabelUtils.setText(lblTitle, theDetailData.getTitle());
+			LabelUtils.setText(lblShorttitle, theDetailData.getShorttitle());
+			LabelUtils.setText(lblRemark, theDetailData.getRemark());
 
 		}
 

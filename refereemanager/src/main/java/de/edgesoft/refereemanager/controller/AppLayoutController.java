@@ -690,9 +690,11 @@ public class AppLayoutController {
 	 *
 	 * @since 0.15.0
 	 */
-	private void handleOverview(final IOverviewController<? extends ModelClassExt> theOverviewController) {
+	private void handleOverview(
+			final IOverviewController<? extends ModelClassExt> theOverviewController
+			) {
 
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("overview/Overview");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("overview/OverviewDetails");
 
 		appPane.setCenter(pneLoad.getKey());
 

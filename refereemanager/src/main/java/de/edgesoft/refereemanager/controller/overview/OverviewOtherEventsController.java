@@ -1,12 +1,9 @@
 package de.edgesoft.refereemanager.controller.overview;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.OtherEvent;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.OtherEventModel;
 import de.edgesoft.refereemanager.utils.PrefKey;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.event.ActionEvent;
 
@@ -38,82 +35,48 @@ import javafx.event.ActionEvent;
  */
 public class OverviewOtherEventsController extends AbstractOverviewController<OtherEvent> {
 
-	/**
-	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
-	 *
-	 * @param theOverviewController overview controller
-	 */
 	@Override
-	public void initController(final OverviewController<OtherEvent> theOverviewController) {
+	public void initController(
+			final OverviewDetailsController<OtherEvent> theOverviewController
+			) {
 
 		super.initController(theOverviewController);
 
 		getController().initController(this, PrefKey.OVERVIEW_OTHER_EVENT_SPLIT, "datatables/DataTableOtherEvents", "details/DetailsOtherEvent");
 
 		// CRUD buttons setup
-		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
+		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
-	}
-
-	/**
-	 * Shows selected data in detail window.
-	 *
-	 * @param theDetailData detail data (null if none is selected)
-	 */
-	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
-
-		Class<OtherEventModel> theClass = OtherEventModel.class;
-
-		assert
-				((theDetailData == null) || theClass.isInstance(theDetailData))
-				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
-
-		getController().showDetails(theDetailData);
-
-		if (theDetailData == null) {
-
-			getController().setHeading(new SimpleStringProperty("Details"));
-
-		} else {
-
-			OtherEventModel theData = theClass.cast(theDetailData);
-
-			getController().setHeading(theData.getDisplayTitle());
-
-		}
+		initEditDialogFXMLFilename("editdialogs/EditDialogOtherEvent", "Sonstiges Ereignis");
 
 	}
 
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleAdd(ActionEvent event) {
-		super.handleAdd("editdialogs/EventEditDialog", "Sonstiges Ereignis", new OtherEventModel(), ((ContentModel) AppModel.getData().getContent()).getObservableOtherEvents());
+	public void handleAdd(
+			ActionEvent event
+			) {
+
+		handleAdd(AppModel.factory.createOtherEvent(), ((ContentModel) AppModel.getData().getContent()).getObservableOtherEvents());
+
 	}
 
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleEdit(ActionEvent event) {
-		handleEdit("editdialogs/EventEditDialog", "Sonstiges Ereignis");
+	public void handleEdit(
+			ActionEvent event
+			) {
+
+		handleEdit();
+
 	}
 
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleDelete(ActionEvent event) {
-		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableOtherEvents());
+	public void handleDelete(
+			ActionEvent event
+			) {
+
+		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableOtherEvents());
+
 	}
 
 }

@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.controller.inputforms;
 import java.util.List;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
 
 /**
  * Interface for the edit dialog controller, input part.
@@ -30,28 +31,37 @@ import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IInputFormController {
+public interface IInputFormController<T extends ModelClassExt> {
 
 	/**
 	 * Initializes form: sets introspection classes and marks required fields.
 	 *
+	 * The list cannot be parameterized with class T because the {@link JAXBMatchUtils} methods
+	 * are static and cannot be parameterized with an according T.
+	 *
 	 * @param theClasses list of introspection classes
 	 */
-	public void initForm(final List<Class<?>> theClasses);
+	public void initForm(
+			final List<Class<?>> theClasses
+			);
 
 	/**
 	 * Fills form with data to be edited.
 	 *
 	 * @param theData data object
 	 */
-	public <U extends ModelClassExt> void fillForm(final U theData);
+	public void fillFormFromData(
+			final T theData
+			);
 
 	/**
 	 * Fills data object with form data.
 	 *
 	 * @param theData data object
 	 */
-	public <V extends ModelClassExt> void fillData(V theData);
+	public void fillDataFromForm(
+			T theData
+			);
 
 }
 

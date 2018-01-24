@@ -4,18 +4,21 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
-import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
 
 import de.edgesoft.edgeutils.commons.ModelClass;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
 import de.edgesoft.refereemanager.controller.editdialogs.EditDialogTraineeController;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -25,11 +28,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextInputControl;
-import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import jfxtras.scene.control.LocalTimeTextField;
 
 
 /**
@@ -77,9 +82,10 @@ public class JAXBMatchUtils {
 	@SuppressWarnings("unchecked")
 	public static void setField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final List<Class<?>> theDataClasses) {
 
-		Objects.requireNonNull(theFXMLField);
-		Objects.requireNonNull(theFieldObject);
-		Objects.requireNonNull(theModel);
+		assert (theFXMLField != null) : "FXML field must not be null.";
+		assert (theFieldObject != null) : String.format("Field object must not be null, field is '%s', maybe the field is declared in the controller but not in the fxml file?", theFXMLField.getName());
+		assert (theModel != null) : "Model must not be null.";
+		assert (theDataClasses != null) : "Data classes must not be null.";
 
     	for (Class<?> theClass : theDataClasses) {
 
@@ -113,6 +119,11 @@ public class JAXBMatchUtils {
 	    						SimpleObjectProperty<LocalDate> objTemp = (SimpleObjectProperty<LocalDate>) getGetterMethod(theClass, sFieldName).invoke(theModel);
 	    						((DatePicker) theFieldObject).setValue((objTemp == null) ? null : objTemp.getValue());
 
+	    					} else if (theFieldObject instanceof LocalTimeTextField) {
+
+	    						SimpleObjectProperty<LocalTime> objTemp = (SimpleObjectProperty<LocalTime>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						((LocalTimeTextField) theFieldObject).setLocalTime((objTemp == null) ? null : objTemp.getValue());
+
 	    					} else if (theFieldObject instanceof ComboBox<?>) {
 
 	    						ModelClassExt objTemp = (ModelClassExt) getGetterMethod(theClass, sFieldName).invoke(theModel);
@@ -120,11 +131,13 @@ public class JAXBMatchUtils {
 
 	    					} else if (theFieldObject instanceof ListView<?>) {
 
-	    						((ListView<ModelClassExt>) theFieldObject).setItems(FXCollections.observableArrayList((List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel)));
+	    						List<ModelClassExt> lstTemp = (List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						((ListView<ModelClassExt>) theFieldObject).setItems(FXCollections.observableArrayList(lstTemp));
 
 	    					} else if (theFieldObject instanceof ListCRUDController) {
 
-	    						((ListCRUDController) theFieldObject).setItems(FXCollections.observableArrayList((List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel)));
+	    						List<ModelClassExt> lstTemp = (List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						((ListCRUDController<ModelClassExt>) theFieldObject).setItems(FXCollections.observableArrayList(lstTemp));
 
 	    					} else if (theFieldObject instanceof CheckBox) {
 
@@ -133,8 +146,19 @@ public class JAXBMatchUtils {
 
 	    					} else if (theFieldObject instanceof Spinner<?>) {
 
-	    						SimpleIntegerProperty objTemp = (SimpleIntegerProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
-	    						((Spinner<Integer>) theFieldObject).getValueFactory().setValue((objTemp == null) ? 0 : objTemp.getValue());
+	    						if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.IntegerSpinnerValueFactory) {
+
+		    						SimpleIntegerProperty objTemp = (SimpleIntegerProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
+		    						((Spinner<Integer>) theFieldObject).getValueFactory().setValue((objTemp == null) ? 0 : objTemp.getValue());
+
+	    						} else if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.DoubleSpinnerValueFactory) {
+
+		    						SimpleDoubleProperty objTemp = (SimpleDoubleProperty) getGetterMethod(theClass, sFieldName).invoke(theModel);
+		    						((Spinner<Double>) theFieldObject).getValueFactory().setValue((objTemp == null) ? 0.0 : objTemp.getValue());
+
+	    						} else {
+	    							throw new IllegalArgumentException(String.format("Unknown SpinnerValueFactory: %s", ((Spinner<?>) theFieldObject).getValueFactory()));
+	    						}
 
 	    					}
 
@@ -146,6 +170,67 @@ public class JAXBMatchUtils {
 
 	    		}
     		}
+
+		}
+
+	}
+
+	/**
+	 * Clears field value.
+	 *
+	 * The for-loop for all fields cannot be called here, because the access
+	 * to the field object is forbidden for private fields.
+	 * In order to maintain separation of concerns I call the
+	 * loop and the get method in the calling class.
+	 * {@link EditDialogTraineeController#setData(de.edgesoft.refereemanager.model.PersonModel)}
+	 *
+	 * @param theFieldObject object of fxml field
+	 */
+	@SuppressWarnings("unchecked")
+	public static void clearField(final Object theFieldObject) {
+
+		assert (theFieldObject != null) : String.format("Field object must not be null, maybe the field is declared in the controller but not in the fxml file?");
+
+
+		if (theFieldObject instanceof TextInputControl) {
+
+			((TextInputControl) theFieldObject).setText(null);
+
+		} else if (theFieldObject instanceof DatePicker) {
+
+			((DatePicker) theFieldObject).setValue(null);
+
+		} else if (theFieldObject instanceof LocalTimeTextField) {
+
+			((LocalTimeTextField) theFieldObject).setLocalTime(null);
+
+		} else if (theFieldObject instanceof ComboBox<?>) {
+
+			((ComboBox<ModelClassExt>) theFieldObject).setValue(null);
+
+		} else if (theFieldObject instanceof ListView<?>) {
+
+			((ListView<ModelClassExt>) theFieldObject).setItems(null);
+
+		} else if (theFieldObject instanceof ListCRUDController) {
+
+			((ListCRUDController<ModelClassExt>) theFieldObject).setItems(null);
+
+		} else if (theFieldObject instanceof CheckBox) {
+
+			((CheckBox) theFieldObject).setSelected(false);
+
+		} else if (theFieldObject instanceof Spinner<?>) {
+
+			Number nmbrNull = null;
+
+			if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.IntegerSpinnerValueFactory) {
+				nmbrNull = 0;
+			} else if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.DoubleSpinnerValueFactory) {
+				nmbrNull = 0.0;
+			}
+
+			((Spinner<Number>) theFieldObject).getValueFactory().setValue(nmbrNull);
 
 		}
 
@@ -168,9 +253,10 @@ public class JAXBMatchUtils {
 	@SuppressWarnings("unchecked")
 	public static void getField(final Field theFXMLField, final Object theFieldObject, final ModelClass theModel, final List<Class<?>> theDataClasses) {
 
-		Objects.requireNonNull(theFXMLField);
-		Objects.requireNonNull(theFieldObject);
-		Objects.requireNonNull(theModel);
+		assert (theFXMLField != null) : "FXML field must not be null.";
+		assert (theFieldObject != null) : String.format("Field object must not be null, field is '%s', maybe the field is declared in the controller but not in the fxml file?", theFXMLField.getName());
+		assert (theModel != null) : "Model must not be null.";
+		assert (theDataClasses != null) : "Data classes must not be null.";
 
     	for (Class<?> theClass : theDataClasses) {
 
@@ -222,6 +308,21 @@ public class JAXBMatchUtils {
 	    							getSetterMethod(theClass, sFieldName, SimpleObjectProperty.class).invoke(theModel, dteTemp);
 	    						}
 
+	    					} else if (theFieldObject instanceof LocalTimeTextField) {
+
+	    						LocalTime tmeValue = ((LocalTimeTextField) theFieldObject).getLocalTime();
+
+	    						if (tmeValue == null) {
+									getSetterMethod(theClass, sFieldName, SimpleObjectProperty.class).invoke(theModel, (SimpleObjectProperty<?>) null);
+	    						} else {
+	    							SimpleObjectProperty<LocalTime> tmeTemp = (SimpleObjectProperty<LocalTime>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    							if (tmeTemp == null) {
+	    								tmeTemp = new SimpleObjectProperty<>();
+	    							}
+	    							tmeTemp.setValue(tmeValue);
+	    							getSetterMethod(theClass, sFieldName, SimpleObjectProperty.class).invoke(theModel, tmeTemp);
+	    						}
+
 	    					} else if (theFieldObject instanceof ComboBox<?>) {
 
 	    						ModelClassExt mdlTemp = ((ComboBox<ModelClassExt>) theFieldObject).getValue();
@@ -233,13 +334,29 @@ public class JAXBMatchUtils {
 	    						lstItems.clear();
 	    						lstItems.addAll(((ListView<ModelClassExt>) theFieldObject).getItems());
 
+	    					} else if (theFieldObject instanceof ListCRUDController) {
+
+	    						List<ModelClassExt> lstItems = (List<ModelClassExt>) getGetterMethod(theClass, sFieldName).invoke(theModel);
+	    						lstItems.clear();
+	    						lstItems.addAll(((ListCRUDController<ModelClassExt>) theFieldObject).getItems());
+
 	    					} else if (theFieldObject instanceof CheckBox) {
 
 								getSetterMethod(theClass, sFieldName, BooleanProperty.class).invoke(theModel, new SimpleBooleanProperty(((CheckBox) theFieldObject).isSelected()));
 
 	    					} else if (theFieldObject instanceof Spinner<?>) {
 
-								getSetterMethod(theClass, sFieldName, IntegerProperty.class).invoke(theModel, new SimpleIntegerProperty(((Spinner<Integer>) theFieldObject).getValue()));
+	    						if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.IntegerSpinnerValueFactory) {
+
+	    							getSetterMethod(theClass, sFieldName, IntegerProperty.class).invoke(theModel, new SimpleIntegerProperty(((Spinner<Integer>) theFieldObject).getValue()));
+
+	    						} else if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.DoubleSpinnerValueFactory) {
+
+	    							getSetterMethod(theClass, sFieldName, DoubleProperty.class).invoke(theModel, new SimpleDoubleProperty(((Spinner<Double>) theFieldObject).getValue()));
+
+	    						} else {
+	    							throw new IllegalArgumentException(String.format("Unknown SpinnerValueFactory: %s", ((Spinner<?>) theFieldObject).getValueFactory()));
+	    						}
 
 	    					}
 
@@ -269,8 +386,8 @@ public class JAXBMatchUtils {
 	 */
 	public static boolean isMatch(final Field theFXMLField, final Field theJAXBField) {
 
-		Objects.requireNonNull(theFXMLField);
-		Objects.requireNonNull(theJAXBField);
+		assert (theFXMLField != null) : "FXML field must not be null.";
+		assert (theJAXBField != null) : "JAXB field must not be null.";
 
 		if (theFXMLField.getAnnotation(JAXBMatch.class) == null) {
 			return false;
@@ -293,8 +410,8 @@ public class JAXBMatchUtils {
 	 */
 	public static Method getGetterMethod(final Class<?> theClass, final String theJAXBFieldName) throws NoSuchMethodException, SecurityException {
 
-		Objects.requireNonNull(theClass);
-		Objects.requireNonNull(theJAXBFieldName);
+		assert (theClass != null) : "Class must not be null.";
+		assert (theJAXBFieldName != null) : "JAXB field name must not be null.";
 
 		return theClass.getDeclaredMethod(getGetter(theJAXBFieldName));
 
@@ -315,9 +432,9 @@ public class JAXBMatchUtils {
 	 */
 	public static Method getSetterMethod(final Class<?> theClass, final String theJAXBFieldName, final Class<?> theParameterClass) throws NoSuchMethodException, SecurityException {
 
-		Objects.requireNonNull(theClass);
-		Objects.requireNonNull(theJAXBFieldName);
-		Objects.requireNonNull(theParameterClass);
+		assert (theClass != null) : "Class must not be null.";
+		assert (theJAXBFieldName != null) : "JAXB field name must not be null.";
+		assert (theParameterClass != null) : "Parameter class must not be null.";
 
 		for (Method method : theClass.getDeclaredMethods()) {
 			if (method.getName().equals(getSetter(theJAXBFieldName)) && (method.getParameterCount() == 1)) {
@@ -343,7 +460,7 @@ public class JAXBMatchUtils {
 	 */
 	public static String getGetter(final String theJAXBFieldName) {
 
-		Objects.requireNonNull(theJAXBFieldName);
+		assert (theJAXBFieldName != null) : "JAXB field name must not be null.";
 
 		return String.format("get%s", getSuffix(theJAXBFieldName));
 
@@ -360,7 +477,7 @@ public class JAXBMatchUtils {
 	 */
 	public static String getSetter(final String theJAXBFieldName) {
 
-		Objects.requireNonNull(theJAXBFieldName);
+		assert (theJAXBFieldName != null) : "JAXB field name must not be null.";
 
 		return String.format("set%s", getSuffix(theJAXBFieldName));
 
@@ -377,7 +494,7 @@ public class JAXBMatchUtils {
 	 */
 	public static String getSuffix(final String theJAXBFieldName) {
 
-		Objects.requireNonNull(theJAXBFieldName);
+		assert (theJAXBFieldName != null) : "JAXB field name must not be null.";
 
 		return String.format("%s%s", theJAXBFieldName.substring(0, 1).toUpperCase(), theJAXBFieldName.substring(1));
 
@@ -392,7 +509,7 @@ public class JAXBMatchUtils {
 	 */
 	public static void markRequired(final Field theFXMLField, final Object theFieldObject, final List<Class<?>> theDataClasses) {
 
-		Objects.requireNonNull(theFXMLField);
+		assert (theFXMLField != null) : "FXML field must not be null.";
 
     	for (Class<?> theClass : theDataClasses) {
 
@@ -403,10 +520,14 @@ public class JAXBMatchUtils {
 	    			if (JAXBMatchUtils.isMatch(theFXMLField, theJAXBField)) {
 
 	    				try {
-	    					if (theFieldObject instanceof Label) {
-								Font fntTemp = ((Label) theFieldObject).getFont();
-								((Label) theFieldObject).setFont(Font.font(fntTemp.getFamily(), FontWeight.BOLD, fntTemp.getSize()));
+
+	    					// not checking directly for Labeled to avoid unneccessary boldness (i.e. for buttons)
+	    					if ((theFieldObject instanceof Label) || (theFieldObject instanceof CheckBox)) {
+
+								((Labeled) theFieldObject).setFont(FontUtils.getDerived(((Labeled) theFieldObject).getFont(), FontWeight.BOLD));
+
 	    					}
+
 	    				} catch (IllegalArgumentException | SecurityException e) {
 	    					e.printStackTrace();
 	    				}

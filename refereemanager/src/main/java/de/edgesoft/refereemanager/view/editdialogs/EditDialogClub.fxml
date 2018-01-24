@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.editdialogs.EditDialogClubController">
+	<children>
+		<TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+			<tabs>
+				<Tab closable="false" text="Clubdaten">
+					<content>
+						<fx:include fx:id="embeddedInputFormClubData" source="../inputforms/InputFormClubData.fxml" />
+					</content>
+				</Tab>
+				<Tab closable="false" text="Spielorte">
+					<content>
+						<fx:include fx:id="embeddedInputFormVenueData" source="../inputforms/InputFormVenueData.fxml" />
+					</content>
+				</Tab>
+			</tabs>
+		</TabPane>
+		<ButtonBar AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
+			<buttons>
+				<Button fx:id="btnOK" defaultButton="true" onAction="#handleOk" text="_OK" />
+				<Button fx:id="btnCancel" cancelButton="true" onAction="#handleCancel" text="A_bbrechen" />
+			</buttons>
+		</ButtonBar>
+	</children>
+</AnchorPane>

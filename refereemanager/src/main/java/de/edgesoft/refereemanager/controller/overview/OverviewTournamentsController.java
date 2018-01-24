@@ -1,12 +1,9 @@
 package de.edgesoft.refereemanager.controller.overview;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.Tournament;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
-import de.edgesoft.refereemanager.model.TournamentModel;
 import de.edgesoft.refereemanager.utils.PrefKey;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.event.ActionEvent;
 
@@ -38,82 +35,48 @@ import javafx.event.ActionEvent;
  */
 public class OverviewTournamentsController extends AbstractOverviewController<Tournament> {
 
-	/**
-	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
-	 *
-	 * @param theOverviewController overview controller
-	 */
 	@Override
-	public void initController(final OverviewController<Tournament> theOverviewController) {
+	public void initController(
+			final OverviewDetailsController<Tournament> theOverviewController
+			) {
 
 		super.initController(theOverviewController);
 
 		getController().initController(this, PrefKey.OVERVIEW_TOURNAMENT_SPLIT, "datatables/DataTableTournaments", "details/DetailsTournament");
 
 		// CRUD buttons setup
-		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
+		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
-	}
-
-	/**
-	 * Shows selected data in detail window.
-	 *
-	 * @param theDetailData detail data (null if none is selected)
-	 */
-	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
-
-		Class<TournamentModel> theClass = TournamentModel.class;
-
-		assert
-				((theDetailData == null) || theClass.isInstance(theDetailData))
-				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
-
-		getController().showDetails(theDetailData);
-
-		if (theDetailData == null) {
-
-			getController().setHeading(new SimpleStringProperty("Details"));
-
-		} else {
-
-			TournamentModel theData = theClass.cast(theDetailData);
-
-			getController().setHeading(theData.getDisplayTitle());
-
-		}
+		initEditDialogFXMLFilename("editdialogs/EditDialogTournament", "Turnier");
 
 	}
 
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleAdd(ActionEvent event) {
-		super.handleAdd("editdialogs/EventEditDialog", "Turnier", new TournamentModel(), ((ContentModel) AppModel.getData().getContent()).getObservableTournaments());
+	public void handleAdd(
+			ActionEvent event
+			) {
+
+		handleAdd(AppModel.factory.createTournament(), ((ContentModel) AppModel.getData().getContent()).getObservableTournaments());
+
 	}
 
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleEdit(ActionEvent event) {
-		handleEdit("editdialogs/EventEditDialog", "Turnier");
+	public void handleEdit(
+			ActionEvent event
+			) {
+
+		handleEdit();
+
 	}
 
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleDelete(ActionEvent event) {
-		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableTournaments());
+	public void handleDelete(
+			ActionEvent event
+			) {
+
+		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableTournaments());
+
 	}
 
 }

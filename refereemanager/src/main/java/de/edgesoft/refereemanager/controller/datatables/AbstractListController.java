@@ -2,7 +2,7 @@ package de.edgesoft.refereemanager.controller.datatables;
 
 import java.util.Optional;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.control.SelectionMode;
 
@@ -32,7 +32,17 @@ import javafx.scene.control.SelectionMode;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractListController implements IListController {
+public abstract class AbstractListController<T extends TitledIDTypeModel> implements IListController<T> {
+
+	/**
+	 * Sets selected item.
+	 *
+	 * @param theItem item to select
+	 */
+	@Override
+	public void select(final T theItem) {
+		getSelectionModel().select(theItem);
+	}
 
 	/**
 	 * Sets selection mode.
@@ -50,7 +60,7 @@ public abstract class AbstractListController implements IListController {
 	 * @return selected item property
 	 */
 	@Override
-	public ReadOnlyObjectProperty<? extends ModelClassExt> selectedItemProperty() {
+	public ReadOnlyObjectProperty<T> selectedItemProperty() {
 		return getSelectionModel().selectedItemProperty();
 	}
 
@@ -60,7 +70,7 @@ public abstract class AbstractListController implements IListController {
 	 * @return selected item
 	 */
 	@Override
-	public Optional<? extends ModelClassExt> getSelectedItem() {
+	public Optional<T> getSelectedItem() {
 
 		if (getSelectionModel().getSelectedItems().size() != 1) {
 			return Optional.empty();

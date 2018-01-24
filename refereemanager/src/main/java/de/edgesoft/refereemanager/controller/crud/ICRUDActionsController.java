@@ -1,7 +1,5 @@
 package de.edgesoft.refereemanager.controller.crud;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 /**
@@ -30,65 +28,34 @@ import javafx.event.ActionEvent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface ICRUDActionsController<T extends ModelClassExt> {
+public interface ICRUDActionsController {
 
 	/**
 	 * Handles add action.
 	 *
 	 * @param event calling action event
 	 */
-	public void handleAdd(final ActionEvent event);
-
-	/**
-	 * Handles add action.
-	 *
-	 * @param theViewName name of the edit view
-	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
-	 * @param theData data element
-	 * @param theDataList data list to add data to
-	 */
-	public void handleAdd(final String theViewName, final String theViewTitleNoun, T theData, ObservableList<T> theDataList);
+	public void handleAdd(
+			final ActionEvent event
+	);
 
 	/**
 	 * Handles edit action.
 	 *
 	 * @param event calling action event
 	 */
-	public void handleEdit(final ActionEvent event);
-
-	/**
-	 * Handles edit action.
-	 *
-	 * @param theViewName name of the edit view
-	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
-	 */
-	public void handleEdit(final String theViewName, final String theViewTitleNoun);
+	public void handleEdit(
+			final ActionEvent event
+	);
 
 	/**
 	 * Handles delete action.
 	 *
 	 * @param event calling action event
 	 */
-	public void handleDelete(final ActionEvent event);
-
-	/**
-	 * Handles delete action.
-	 *
-	 * @param theDataList data list to delete data from
-	 */
-	public void handleDelete(ObservableList<T> theDataList);
-
-	/**
-	 * Opens the data edit dialog.
-	 *
-	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
-	 *
-	 * @param theViewName name of the edit view
-	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
-	 * @param theData the data to be edited
-	 * @return true if the user clicked OK, false otherwise.
-	 */
-	public <S extends ModelClassExt> boolean showEditDialog(final String theViewName, final String theViewTitleNoun, S theData);
+	public void handleDelete(
+			final ActionEvent event
+	);
 
 }
 

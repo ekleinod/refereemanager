@@ -25,14 +25,14 @@
 			<children>
 				<Label text="Dateiname" />
 				<Label fx:id="lblFilename" text="Label" GridPane.columnIndex="1" />
-				<Label text="Lokal?" GridPane.rowIndex="1" />
-				<Label fx:id="lblLocal" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-				<Label text="URL" GridPane.rowIndex="2" />
+				<Label text="Lokaler Club" GridPane.rowIndex="1" />
+				<Label fx:id="lblIsLocal" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Label text="URLs" GridPane.rowIndex="2" />
 				<Label fx:id="lblURL" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 				<Label text="Spielorte" GridPane.rowIndex="3" />
 				<Label fx:id="lblVenue" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-				<Label text="Kontakt" GridPane.rowIndex="4" />
-				<Label fx:id="lblContact" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+				<Label text="Kontaktpersonen" GridPane.rowIndex="4" />
+				<Label fx:id="lblContactPerson" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 			</children>
 		</GridPane>
 	</children>

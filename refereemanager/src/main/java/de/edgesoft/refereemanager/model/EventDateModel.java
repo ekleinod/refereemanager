@@ -4,9 +4,10 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
+import java.util.function.Predicate;
 
-import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.refereemanager.jaxb.EventDate;
+import de.edgesoft.refereemanager.jaxb.EventDateType;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -38,9 +39,31 @@ import javafx.beans.property.SimpleStringProperty;
 public class EventDateModel extends EventDate {
 
 	/**
+	 * Filter predicate for all events.
+	 *
+	 * @since 0.15.0
+	 */
+	public static Predicate<EventDateModel> ALL = date -> true;
+
+	/**
+	 * Returns filter predicate for given type.
+	 *
+	 * @param theType type
+	 * @return predicate
+	 *
+	 * @since 0.15.0
+	 */
+	public static Predicate<EventDateModel> getTypePredicate(EventDateType theType) {
+		return date -> date.getType() == theType;
+	}
+
+	/**
 	 * Comparator start date/time.
 	 */
-	public static final Comparator<EventDateModel> DATE_FIRST = Comparator.comparing(date -> (LocalDate) date.getFirstDay().getDate().getValue());
+	public static final Comparator<EventDateModel> DATE_FIRST = Comparator.comparing(date ->
+			((date.getFirstDay() == null) || (date.getFirstDay().getDate() == null)) ? null : (LocalDate) date.getFirstDay().getDate().getValue(),
+			Comparator.nullsLast(LocalDate::compareTo)
+	);
 
 	/**
 	 * Returns date text.
@@ -51,17 +74,17 @@ public class EventDateModel extends EventDate {
 	 */
 	public SimpleStringProperty getDateText() {
 
-		if (getFirstDay() == null) {
+		if ((getFirstDay() == null) || (getFirstDay().getDate() == null)) {
 			return null;
 		}
 
-		if (getLastDay() == null)  {
-			return new SimpleStringProperty(DateTimeUtils.formatDate((LocalDate) getFirstDay().getDate().getValue()));
+		if ((getLastDay() == null) || (getLastDay().getDate() == null)) {
+			return getFirstDay().getDateText();
 		}
 
 		return new SimpleStringProperty(MessageFormat.format("{0} - {1}",
-				DateTimeUtils.formatDate((LocalDate) getFirstDay().getDate().getValue()),
-				DateTimeUtils.formatDate((LocalDate) getLastDay().getDate().getValue())));
+				getFirstDay().getDateText().getValue(),
+				getLastDay().getDateText().getValue()));
 
 	}
 

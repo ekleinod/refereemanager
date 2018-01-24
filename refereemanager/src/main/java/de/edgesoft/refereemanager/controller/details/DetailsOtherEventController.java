@@ -1,10 +1,8 @@
 package de.edgesoft.refereemanager.controller.details;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.model.OtherEventModel;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.text.FontWeight;
@@ -35,8 +33,8 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsOtherEventController implements IDetailsController {
-	
+public class DetailsOtherEventController<T extends OtherEventModel> implements IDetailsController<T> {
+
 	/**
 	 * Heading.
 	 */
@@ -86,13 +84,7 @@ public class DetailsOtherEventController implements IDetailsController {
 	 * @param theDetailData (null if no data to show)
 	 */
 	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
-		
-		Class<OtherEventModel> theClass = OtherEventModel.class;
-
-		assert 
-				((theDetailData == null) || theClass.isInstance(theDetailData)) 
-				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
+	public void showDetails(final T theDetailData) {
 
 		if (theDetailData == null) {
 
@@ -103,17 +95,18 @@ public class DetailsOtherEventController implements IDetailsController {
 
 		} else {
 
-			OtherEventModel theData = theClass.cast(theDetailData);
-
-			LabelUtils.setText(lblDate, theData.getDateText());
-			LabelUtils.setText(lblTime, theData.getTimeText());
+			LabelUtils.setText(lblDate, theDetailData.getDateText());
+			LabelUtils.setText(lblTime, theDetailData.getTimeText());
 
 			lblVenue.setText(
-					(theData.getVenue() == null) ?
+					(theDetailData.getVenue() == null) ?
 							null :
-							theData.getVenue().getDisplayTitle().getValueSafe());
+							theDetailData.getVenue().getDisplayTitle().getValueSafe());
 
-			LabelUtils.setText(lblType, new SimpleStringProperty("ToDo"));
+			lblType.setText(
+					(theDetailData.getType() == null) ?
+							null :
+							theDetailData.getType().getDisplayTitle().getValueSafe());
 
 		}
 

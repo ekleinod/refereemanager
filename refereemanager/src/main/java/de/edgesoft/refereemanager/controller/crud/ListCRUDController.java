@@ -1,12 +1,11 @@
 package de.edgesoft.refereemanager.controller.crud;
 
 import java.text.MessageFormat;
-import java.util.Map;
-import java.util.Objects;
+import java.util.function.Supplier;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.RefereeManager;
-import de.edgesoft.refereemanager.controller.editdialogs.IEditDialogController;
+import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.utils.AlertUtils;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -14,9 +13,7 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -25,8 +22,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 /**
  * Controller for the overview part: CRUD buttons with list.
@@ -54,7 +49,13 @@ import javafx.stage.Stage;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class ListCRUDController implements ICRUDActionsController<ModelClassExt> {
+public class ListCRUDController<T extends ModelClassExt> implements ICRUDActionsController {
+
+	/**
+	 * Grid pane.
+	 */
+	@FXML
+	private GridPane grdListCRUD;
 
 	/**
 	 * Heading.
@@ -63,10 +64,10 @@ public class ListCRUDController implements ICRUDActionsController<ModelClassExt>
 	private Label lblHeading;
 
 	/**
-	 * List view for avoids.
+	 * List view.
 	 */
 	@FXML
-	protected ListView<ModelClassExt> lstData;
+	protected ListView<T> lstData;
 
 	/**
 	 * Button for clearing list selection.
@@ -86,30 +87,17 @@ public class ListCRUDController implements ICRUDActionsController<ModelClassExt>
 	@FXML
 	private CRUDButtonsController embeddedCRUDButtonsController;
 
-	/**
-	 * Grid pane.
-	 */
-	@FXML
-	private GridPane grdListCRUD;
-
-
-
-
 
 	/**
-	 * Class for instances.
+	 * Factory method for instances of T.
 	 */
-	private Class<ModelClassExt> clsClass;
+	private Supplier<T> instanceCall = null;
 
 	/**
-	 * View name.
+	 * Input form controller for access to data input
 	 */
-	private String sViewName;
+	private IInputFormController<T> ctlInputForm = null;
 
-	/**
-	 * View noun.
-	 */
-	private String sViewNoun;
 
 	/**
 	 * Initializes the controller class.
@@ -137,49 +125,65 @@ public class ListCRUDController implements ICRUDActionsController<ModelClassExt>
 		embeddedCRUDButtonsController.getDeleteButton().disableProperty().bind(isOneItemSelected);
 
         // setup list views
-        lstData.setCellFactory(ComboBoxUtils.getCallbackModelClassExt());
+        lstData.setCellFactory(ComboBoxUtils.getCallbackTModelClassExt());
 
 	}
 
 	/**
-	 * Initializes the CRUD controller.
+	 * Initializes the controller.
 	 *
-	 * @param theClass class
-	 * @param theViewName name of the edit view
-	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
+	 * @param theInputFormController input form controller
+	 * @param thePartInputForm input form part
+	 * @param theViewName name of the edit view (null == no heading)
+	 * @param theInstanceCall instance call
 	 */
-	public void initCRUDController(final String theViewName, final String theViewTitleNoun) {
+	public void initController(
+			final IInputFormController<T> theInputFormController,
+			final Parent thePartInputForm,
+			final String theViewName,
+			final Supplier<T> theInstanceCall
+			) {
 
-		assert (theViewName != null) : "View name must not be null";
-		assert (theViewTitleNoun != null) : "View title noun must not be null";
+		assert (theInputFormController != null) : "InputFormController must not be null";
+		assert (thePartInputForm != null) : "PartInputForm must not be null";
+		assert (theInstanceCall != null) : "Instance call must not be null";
 
-		sViewName = theViewName;
-		sViewNoun = theViewTitleNoun;
+		instanceCall = theInstanceCall;
+		ctlInputForm = theInputFormController;
 
-		lblHeading.setText(theViewName);
+		if (theViewName != null) {
+			lblHeading.setText(theViewName);
+		} else {
+			lblHeading.setVisible(false);
+			lblHeading.setManaged(false);
+		}
 
-	}
+		lstData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> ctlInputForm.fillFormFromData(lstData.getSelectionModel().getSelectedItem()));
 
-	/**
-	 * Adds input form part to grid.
-	 *
-	 * @param theInputFormPart input form part
-	 */
-	public void addInputFormPart(final Parent theInputFormPart) {
-
-		assert (theInputFormPart != null) : "InputFormPart must not be null";
-
-		grdListCRUD.add(theInputFormPart, 0, 2);
+		grdListCRUD.add(thePartInputForm, 0, 2);
 
 	}
 
     /**
-     * Sets the underlying data model for the ListView.
+     * Returns the items of the ListView.
+     *
+     * @return items
+     */
+    public ObservableList<T> getItems() {
+        return lstData.getItems();
+    }
+
+    /**
+     * Sets the items of the ListView.
      *
      * @param theItems items to set
      */
-    public final void setItems(ObservableList<ModelClassExt> theItems) {
+    public void setItems(
+    		ObservableList<T> theItems
+    		) {
+
         lstData.setItems(theItems);
+
     }
 
 	/**
@@ -187,32 +191,52 @@ public class ListCRUDController implements ICRUDActionsController<ModelClassExt>
 	 *
 	 * @param event calling action event
 	 */
-	public void handleClearList(ActionEvent event) {
+	public void handleClearList(
+			ActionEvent event
+			) {
+
 		lstData.getSelectionModel().clearSelection();
+
 	}
 
 	/**
-	 * Opens edit dialog for new data.
+	 * Adds new data to list.
 	 *
 	 * @param event calling action event
 	 */
 	@Override
-	public void handleAdd(ActionEvent event) {
-		try {
-			handleAdd(sViewName, sViewNoun, clsClass.newInstance(), lstData.getItems());
-		} catch (InstantiationException | IllegalAccessException e) {
-			RefereeManager.logger.catching(e);
+	public void handleAdd(
+			ActionEvent event
+			) {
+
+		T newData = instanceCall.get();
+		ctlInputForm.fillDataFromForm(newData);
+		lstData.getItems().add(newData);
+
+		lstData.getSelectionModel().select(newData);
+		lstData.refresh();
+		lstData.scrollTo(newData);
+		lstData.getFocusModel().focus(lstData.getSelectionModel().getSelectedIndex());
+
+	}
+
+	/**
+	 * Changes selected data in list.
+	 *
+	 * @param event calling action event
+	 */
+	@Override
+	public void handleEdit(
+			ActionEvent event
+			) {
+
+		if (!lstData.getSelectionModel().isEmpty()) {
+			ctlInputForm.fillDataFromForm(lstData.getSelectionModel().getSelectedItem());
+			lstData.refresh();
+			lstData.scrollTo(lstData.getSelectionModel().getSelectedItem());
+			lstData.getFocusModel().focus(lstData.getSelectionModel().getSelectedIndex());
 		}
-	}
 
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @param event calling action event
-	 */
-	@Override
-	public void handleEdit(ActionEvent event) {
-		handleEdit(sViewName, sViewNoun);
 	}
 
 	/**
@@ -221,106 +245,28 @@ public class ListCRUDController implements ICRUDActionsController<ModelClassExt>
 	 * @param event calling action event
 	 */
 	@Override
-	public void handleDelete(ActionEvent event) {
-		handleDelete(lstData.getItems());
-	}
-
-	/**
-	 * Handles add action.
-	 *
-	 * @param theData data element
-	 * @param theDataList data list to add data to
-	 */
-	@Override
-	public void handleAdd(final String theViewName, final String theViewTitleNoun, ModelClassExt theData, ObservableList<ModelClassExt> theDataList) {
-
-		if (showEditDialog(theViewName, theViewTitleNoun, theData)) {
-			theDataList.add(theData);
-		}
-
-	}
-
-	/**
-	 * Opens edit dialog for editing selected data.
-	 */
-	@Override
-	public void handleEdit(final String theViewName, final String theViewTitleNoun) {
+	public void handleDelete(
+			ActionEvent event
+			) {
 
 		if (!lstData.getSelectionModel().isEmpty()) {
-			if (showEditDialog(theViewName, theViewTitleNoun, lstData.getSelectionModel().getSelectedItem())) {
-				lstData.refresh();
-			}
-		}
 
-	}
-
-	/**
-	 * Handles delete action.
-	 *
-	 * @param theData data element
-	 * @param theDataList data list to delete data from
-	 */
-	@Override
-	public void handleDelete(ObservableList<ModelClassExt> theDataList) {
-
-		if (!lstData.getSelectionModel().isEmpty()) {
+			T dtaSelected = lstData.getSelectionModel().getSelectedItem();
 
 			Alert alert = AlertUtils.createAlert(AlertType.CONFIRMATION, RefereeManager.getAppController().getPrimaryStage(),
 					"Löschbestätigung",
-					MessageFormat.format("Soll ''{0}'' gelöscht werden?", lstData.getSelectionModel().getSelectedItem().getDisplayText().get()),
+					MessageFormat.format("Soll ''{0}'' gelöscht werden?", dtaSelected.getDisplayText().get()),
 					null);
 
 			alert.showAndWait()
 					.filter(response -> response == ButtonType.OK)
 					.ifPresent(response -> {
-						theDataList.remove(lstData.getSelectionModel().getSelectedItem());
-			});
+						lstData.getItems().remove(dtaSelected);
+						lstData.refresh();
+					}
+			);
 
 		}
-
-	}
-
-	/**
-	 * Opens the data edit dialog.
-	 *
-	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
-	 *
-	 * @param theViewName name of the edit view
-	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
-	 * @param theData the data to be edited
-	 * @return true if the user clicked OK, false otherwise.
-	 */
-	@Override
-	public <S extends ModelClassExt> boolean showEditDialog(final String theViewName, final String theViewTitleNoun, S theData) {
-
-		Objects.requireNonNull(theData);
-
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode(theViewName);
-
-		// Create the dialog Stage.
-		Stage dialogStage = new Stage();
-		dialogStage.initModality(Modality.WINDOW_MODAL);
-		dialogStage.initOwner(RefereeManager.getAppController().getPrimaryStage());
-		dialogStage.setTitle(MessageFormat.format("{0} editieren", theViewTitleNoun));
-
-		dialogStage.setScene(new Scene(pneLoad.getKey()));
-
-		// Set data
-		IEditDialogController editController = pneLoad.getValue().getController();
-		editController.setDialogStage(dialogStage);
-		editController.fillForm(theData);
-
-		// Show the dialog and wait until the user closes it
-		dialogStage.showAndWait();
-
-		// ok = store data
-		boolean isOkClicked = editController.isOkClicked();
-
-		if (isOkClicked) {
-			editController.fillData(theData);
-		}
-
-		return isOkClicked;
 
 	}
 

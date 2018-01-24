@@ -1,6 +1,5 @@
 package de.edgesoft.refereemanager.controller.details;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.model.LeagueGameModel;
@@ -40,7 +39,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsLeagueGameController implements IDetailsController {
+public class DetailsLeagueGameController<T extends LeagueGameModel> implements IDetailsController<T> {
 
 	/**
 	 * Heading.
@@ -136,13 +135,7 @@ public class DetailsLeagueGameController implements IDetailsController {
 	 * @param theDetailData (null if no data to show)
 	 */
 	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
-
-		Class<LeagueGameModel> theClass = LeagueGameModel.class;
-
-		assert
-				((theDetailData == null) || theClass.isInstance(theDetailData))
-				: String.format("Detail data is not of type %s but of type %s.", theClass.getName(), (theDetailData == null) ? "null" : theDetailData.getClass().getName());
+	public void showDetails(final T theDetailData) {
 
 		if (theDetailData == null) {
 
@@ -161,26 +154,24 @@ public class DetailsLeagueGameController implements IDetailsController {
 
 		} else {
 
-			LeagueGameModel theData = theClass.cast(theDetailData);
-
-			LabelUtils.setText(lblNumber, theData.getGameNumberString());
-			LabelUtils.setText(lblDate, theData.getDateText());
-			LabelUtils.setText(lblTime, theData.getTimeText());
-			LabelUtils.setText(lblTeams, theData.getTeamText());
+			LabelUtils.setText(lblNumber, theDetailData.getGameNumberString());
+			LabelUtils.setText(lblDate, theDetailData.getDateText());
+			LabelUtils.setText(lblTime, theDetailData.getTimeText());
+			LabelUtils.setText(lblTeams, theDetailData.getTeamText());
 
 			lblLeague.setText(
-					(theData.getHomeTeam() == null) ?
+					(theDetailData.getHomeTeam() == null) ?
 							null :
-							theData.getHomeTeam().getLeague().getDisplayTitle().getValueSafe());
+							theDetailData.getHomeTeam().getLeague().getDisplayTitle().getValueSafe());
 
 			lblVenue.setText(
-					(theData.getVenue() == null) ?
+					(theDetailData.getVenue() == null) ?
 							null :
-								theData.getVenue().getDisplayTitle().getValueSafe());
+								theDetailData.getVenue().getDisplayTitle().getValueSafe());
 
-			LabelUtils.setText(lblRefereeReport, theData.getRefereeReportFilename());
+			LabelUtils.setText(lblRefereeReport, theDetailData.getRefereeReportFilename());
 
-			if (theData.existsRefereeReportFile()) {
+			if (theDetailData.existsRefereeReportFile()) {
 				lblRefereeReportIndicator.setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-success.png")));
 			} else {
 				lblRefereeReportIndicator.setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-error.png")));

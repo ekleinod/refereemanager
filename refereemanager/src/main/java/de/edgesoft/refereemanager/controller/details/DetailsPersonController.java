@@ -3,7 +3,6 @@ package de.edgesoft.refereemanager.controller.details;
 import java.io.File;
 import java.nio.file.Paths;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.RefereeManager;
@@ -42,7 +41,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsPersonController implements IDetailsController {
+public class DetailsPersonController<T extends PersonModel> implements IDetailsController<T> {
 
 	/**
 	 * Heading.
@@ -100,9 +99,9 @@ public class DetailsPersonController implements IDetailsController {
 	 * @param theDetailData (null if no data to show)
 	 */
 	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
+	public void showDetails(final T theDetailData) {
 
-		if ((theDetailData == null) || !(theDetailData instanceof PersonModel)) {
+		if (theDetailData == null) {
 
 			LabelUtils.setText(lblName, null);
 			LabelUtils.setText(lblFirstName, null);
@@ -113,20 +112,18 @@ public class DetailsPersonController implements IDetailsController {
 
 		} else {
 
-			PersonModel theData = (PersonModel) theDetailData;
-
-			LabelUtils.setText(lblName, theData.getName());
-			LabelUtils.setText(lblFirstName, theData.getFirstName());
-			LabelUtils.setText(lblBirthday, theData.getBirthday(), null);
+			LabelUtils.setText(lblName, theDetailData.getName());
+			LabelUtils.setText(lblFirstName, theDetailData.getFirstName());
+			LabelUtils.setText(lblBirthday, theDetailData.getBirthday(), null);
 
 			lblRole.setText(
-					(theData.getRole() == null) ?
+					(theDetailData.getRole() == null) ?
 							null :
-							theData.getRole().getDisplayText().getValue());
+							theDetailData.getRole().getDisplayText().getValue());
 
 			try {
-				if (theData.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
-					File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), String.format("%s.jpg", theData.getFileName().getValue())).toFile();
+				if (theDetailData.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {
+					File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), String.format("%s.jpg", theDetailData.getFileName().getValue())).toFile();
 					imgView.setImage(new Image(fleImage.toURI().toURL().toString()));
 				} else {
 					File fleImage = Paths.get(Prefs.get(PrefKey.PATHS_IMAGE), "missing.jpg").toFile();

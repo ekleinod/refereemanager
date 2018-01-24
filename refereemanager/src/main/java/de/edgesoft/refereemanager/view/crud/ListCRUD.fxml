@@ -20,7 +20,7 @@
 	</rowConstraints>
 	<children>
 		<Label fx:id="lblHeading" text="Label" />
-		<ListView fx:id="lstData" prefHeight="100.0" GridPane.rowIndex="1" />
+		<ListView fx:id="lstData" prefHeight="75.0" GridPane.rowIndex="1" />
 		<Button fx:id="btnClearList" onAction="#handleClearList" GridPane.columnIndex="1" GridPane.rowIndex="1">
 			<tooltip>
 				<Tooltip text="Deselektieren" />

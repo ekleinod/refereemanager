@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -52,7 +51,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DataTableClubsController extends AbstractDataTableController {
+public class DataTableClubsController extends AbstractDataTableController<Club> {
 
 	/**
 	 * Container.
@@ -133,7 +132,7 @@ public class DataTableClubsController extends AbstractDataTableController {
 	 * Returns data table.
 	 */
 	@Override
-	public TableView<? extends ModelClassExt> getDataTable() {
+	public TableView<Club> getDataTable() {
 		return tblData;
 	}
 
@@ -186,25 +185,15 @@ public class DataTableClubsController extends AbstractDataTableController {
 	}
 
 	/**
-	 * Sets selected item.
-	 *
-	 * @param theItem item to select
-	 */
-	@Override
-	public <T extends ModelClassExt> void select(final T theItem) {
-		tblData.getSelectionModel().select((Club) theItem);
-	}
-
-	/**
 	 * Returns selection from table as sorted list.
 	 *
 	 * @return sorted selection from table
 	 */
 	@Override
-	public ObservableList<ClubModel> getSortedSelectedItems() {
-		List<ClubModel> lstReturn = new ArrayList<>();
+	public ObservableList<Club> getSortedSelectedItems() {
+		List<Club> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((ClubModel) data));
+		getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(TitledIDTypeModel.SHORTTITLE_TITLE).collect(Collectors.toList()));
 	}

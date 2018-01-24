@@ -33,7 +33,7 @@ import de.edgesoft.refereemanager.utils.JAXBMatchUtils;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractInputFormController implements IInputFormController {
+public abstract class AbstractInputFormController<T extends ModelClassExt> implements IInputFormController<T> {
 
 	/**
 	 * Declared fields of class and abstract subclasses.
@@ -46,13 +46,10 @@ public abstract class AbstractInputFormController implements IInputFormControlle
 	private List<Class<?>> lstClasses = null;
 
 
-	/**
-	 * Initializes form: sets introspection classes and marks required fields.
-	 *
-	 * @param theClasses list of introspection classes
-	 */
 	@Override
-	public void initForm(final List<Class<?>> theClasses) {
+	public void initForm(
+			final List<Class<?>> theClasses
+			) {
 
 		lstClasses = theClasses;
 
@@ -60,6 +57,7 @@ public abstract class AbstractInputFormController implements IInputFormControlle
 		for (Field theFXMLField : getDeclaredFields()) {
 
 			try {
+
 				Object fieldObject = theFXMLField.get(this);
 
 				JAXBMatchUtils.markRequired(theFXMLField, fieldObject, getClasses());
@@ -72,15 +70,10 @@ public abstract class AbstractInputFormController implements IInputFormControlle
 
 	}
 
-	/**
-	 * Fills form with data to be edited.
-	 *
-	 * @param theData data object
-	 */
 	@Override
-	public <U extends ModelClassExt> void fillForm(final U theData) {
-
-		assert (theData != null) : "data must not be null";
+	public void fillFormFromData(
+			final T theData
+			) {
 
         // fill fields
         for (Field theFXMLField : getDeclaredFields()) {
@@ -88,7 +81,11 @@ public abstract class AbstractInputFormController implements IInputFormControlle
         	try {
         		Object fieldObject = theFXMLField.get(this);
 
-        		JAXBMatchUtils.setField(theFXMLField, fieldObject, theData, getClasses());
+        		if (theData != null) {
+        			JAXBMatchUtils.setField(theFXMLField, fieldObject, theData, getClasses());
+        		} else {
+        			JAXBMatchUtils.clearField(fieldObject);
+        		}
 
         	} catch (IllegalArgumentException | IllegalAccessException | SecurityException e) {
 				e.printStackTrace();
@@ -98,13 +95,12 @@ public abstract class AbstractInputFormController implements IInputFormControlle
 
     }
 
-	/**
-	 * Fills data object with form data.
-	 *
-	 * @param theData data object
-	 */
 	@Override
-	public <V extends ModelClassExt> void fillData(V theData) {
+	public void fillDataFromForm(
+			T theData
+			) {
+
+		assert (theData != null) : "data must not be null";
 
         for (Field theFXMLField : getDeclaredFields()) {
 

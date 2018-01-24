@@ -1,12 +1,9 @@
 package de.edgesoft.refereemanager.controller.overview;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.model.AppModel;
-import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.utils.PrefKey;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.event.ActionEvent;
 
@@ -38,70 +35,48 @@ import javafx.event.ActionEvent;
  */
 public class OverviewClubsController extends AbstractOverviewController<Club> {
 
-	/**
-	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
-	 *
-	 * @param theOverviewController overview controller
-	 */
 	@Override
-	public void initController(final OverviewController<Club> theOverviewController) {
+	public void initController(
+			final OverviewDetailsController<Club> theOverviewController
+			) {
 
 		super.initController(theOverviewController);
 
 		getController().initController(this, PrefKey.OVERVIEW_CLUB_SPLIT, "datatables/DataTableClubs", "details/DetailsClub");
 
 		// CRUD buttons setup
-		ObservableBooleanValue isOneItemSelected = getController().getListController().selectedItemProperty().isNull();
+		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
-	}
-
-	/**
-	 * Shows selected data in detail window.
-	 *
-	 * @param theDetailData detail data (null if none is selected)
-	 */
-	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
-
-		getController().showDetails(theDetailData);
-
-		if (theDetailData == null) {
-			getController().setHeading(new SimpleStringProperty("Details"));
-		} else {
-			getController().setHeading(theDetailData.getDisplayText());
-		}
+		initEditDialogFXMLFilename("editdialogs/EditDialogClub", "Club");
 
 	}
 
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleAdd(ActionEvent event) {
-		super.handleAdd("editdialogs/ClubEditDialog", "Club", new ClubModel(), ((ContentModel) AppModel.getData().getContent()).getObservableClubs());
+	public void handleAdd(
+			ActionEvent event
+			) {
+
+		handleAdd(AppModel.factory.createClub(), ((ContentModel) AppModel.getData().getContent()).getObservableClubs());
+
 	}
 
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleEdit(ActionEvent event) {
-		handleEdit("editdialogs/ClubEditDialog", "Club");
+	public void handleEdit(
+			ActionEvent event
+			) {
+
+		handleEdit();
+
 	}
 
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleDelete(ActionEvent event) {
-		super.handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableClubs());
+	public void handleDelete(
+			ActionEvent event
+			) {
+
+		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableClubs());
+
 	}
 
 }

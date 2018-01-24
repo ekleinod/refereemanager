@@ -132,7 +132,7 @@ public class RefereeModel extends Referee {
 		}
 
 		List<LocalDate> lstUpdate = new ArrayList<>();
-		highestTrainingLevel.getUpdate().forEach(update -> lstUpdate.add((LocalDate) update.getValue()));
+		highestTrainingLevel.getUpdate().forEach(update -> lstUpdate.add((LocalDate) update.getDate().getValue()));
 
 		LocalDate dteReturn = lstUpdate
 				.stream()

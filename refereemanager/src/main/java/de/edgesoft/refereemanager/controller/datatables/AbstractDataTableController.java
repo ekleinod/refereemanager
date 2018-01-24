@@ -2,7 +2,7 @@ package de.edgesoft.refereemanager.controller.datatables;
 
 import java.text.MessageFormat;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.utils.TableUtils;
 import javafx.scene.control.Label;
 import javafx.scene.control.MultipleSelectionModel;
@@ -33,7 +33,7 @@ import javafx.scene.control.MultipleSelectionModel;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractDataTableController extends AbstractListController implements IDataTableController {
+public abstract class AbstractDataTableController<T extends TitledIDTypeModel> extends AbstractListController<T> implements IDataTableController<T> {
 
 	/**
 	 * Returns selection model.
@@ -41,7 +41,7 @@ public abstract class AbstractDataTableController extends AbstractListController
 	 * @return selection model
 	 */
 	@Override
-	public MultipleSelectionModel<? extends ModelClassExt> getSelectionModel() {
+	public MultipleSelectionModel<T> getSelectionModel() {
 		return getDataTable().getSelectionModel();
 	}
 

@@ -2,7 +2,7 @@ package de.edgesoft.refereemanager.controller.datatables;
 
 import java.util.Optional;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
@@ -33,19 +33,21 @@ import javafx.scene.control.SelectionMode;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IListController {
+public interface IListController<T extends TitledIDTypeModel> {
 
 	/**
 	 * Returns selection model.
+	 *
+	 * @return selection model
 	 */
-	public MultipleSelectionModel<? extends ModelClassExt> getSelectionModel();
+	public MultipleSelectionModel<T> getSelectionModel();
 
 	/**
 	 * Sets selected item.
 	 *
 	 * @param theItem item to select
 	 */
-	public <T extends ModelClassExt> void select(final T theItem);
+	public void select(final T theItem);
 
 	/**
 	 * Sets selection mode.
@@ -59,14 +61,14 @@ public interface IListController {
 	 *
 	 * @return selected item property
 	 */
-	public ReadOnlyObjectProperty<? extends ModelClassExt> selectedItemProperty();
+	public ReadOnlyObjectProperty<T> selectedItemProperty();
 
 	/**
 	 * Returns selected item if there is only one.
 	 *
 	 * @return selected item
 	 */
-	public Optional<? extends ModelClassExt> getSelectedItem();
+	public Optional<T> getSelectedItem();
 
 }
 

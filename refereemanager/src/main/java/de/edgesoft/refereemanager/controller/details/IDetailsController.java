@@ -1,6 +1,6 @@
 package de.edgesoft.refereemanager.controller.details;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 /**
  * Interface for details controllers.
@@ -28,14 +28,16 @@ import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface IDetailsController {
+public interface IDetailsController<T extends TitledIDTypeModel> {
 
 	/**
 	 * Shows detail data.
 	 *
 	 * @param theDetailData (null if no data to show)
 	 */
-	public <T extends ModelClassExt> void showDetails(final T theDetailData);
+	public void showDetails(
+			final T theDetailData
+	);
 
 }
 

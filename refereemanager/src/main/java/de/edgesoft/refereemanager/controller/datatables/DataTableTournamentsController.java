@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.Tournament;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -53,7 +52,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DataTableTournamentsController extends AbstractDataTableController {
+public class DataTableTournamentsController extends AbstractDataTableController<Tournament> {
 
 	/**
 	 * Container.
@@ -146,7 +145,7 @@ public class DataTableTournamentsController extends AbstractDataTableController 
 	 * Returns data table.
 	 */
 	@Override
-	public TableView<? extends ModelClassExt> getDataTable() {
+	public TableView<Tournament> getDataTable() {
 		return tblData;
 	}
 
@@ -187,25 +186,15 @@ public class DataTableTournamentsController extends AbstractDataTableController 
 	}
 
 	/**
-	 * Sets selected item.
-	 *
-	 * @param theItem item to select
-	 */
-	@Override
-	public <T extends ModelClassExt> void select(final T theItem) {
-		tblData.getSelectionModel().select((Tournament) theItem);
-	}
-
-	/**
 	 * Returns selection from table as sorted list.
 	 *
 	 * @return sorted selection from table
 	 */
 	@Override
-	public ObservableList<TournamentModel> getSortedSelectedItems() {
-		List<TournamentModel> lstReturn = new ArrayList<>();
+	public ObservableList<Tournament> getSortedSelectedItems() {
+		List<Tournament> lstReturn = new ArrayList<>();
 
-		tblData.getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add((TournamentModel) data));
+		getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
 
 		return FXCollections.observableList(lstReturn.stream().sorted(EventDateModel.DATE_FIRST).collect(Collectors.toList()));
 	}

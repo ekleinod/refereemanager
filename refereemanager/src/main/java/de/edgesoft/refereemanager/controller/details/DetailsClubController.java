@@ -1,10 +1,10 @@
 package de.edgesoft.refereemanager.controller.details;
 
-import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
+import java.util.stream.Collectors;
+
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
-import de.edgesoft.refereemanager.jaxb.Club;
-import javafx.beans.property.SimpleStringProperty;
+import de.edgesoft.refereemanager.model.ClubModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.text.FontWeight;
@@ -35,7 +35,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsClubController implements IDetailsController {
+public class DetailsClubController<T extends ClubModel> implements IDetailsController<T> {
 
 	/**
 	 * Heading.
@@ -53,7 +53,7 @@ public class DetailsClubController implements IDetailsController {
 	 * Local club?.
 	 */
 	@FXML
-	private Label lblLocal;
+	private Label lblIsLocal;
 
 	/**
 	 * URL.
@@ -71,7 +71,7 @@ public class DetailsClubController implements IDetailsController {
 	 * Contact.
 	 */
 	@FXML
-	private Label lblContact;
+	private Label lblContactPerson;
 
 
 	/**
@@ -93,25 +93,27 @@ public class DetailsClubController implements IDetailsController {
 	 * @param theDetailData (null if no data to show)
 	 */
 	@Override
-	public <T extends ModelClassExt> void showDetails(final T theDetailData) {
+	public void showDetails(final T theDetailData) {
 
-		if ((theDetailData == null) || !(theDetailData instanceof Club)) {
+		if (theDetailData == null) {
 
 			LabelUtils.setText(lblFilename, null);
-			LabelUtils.setText(lblLocal, null);
+			LabelUtils.setText(lblIsLocal, null);
 			LabelUtils.setText(lblURL, null);
 			LabelUtils.setText(lblVenue, null);
-			LabelUtils.setText(lblContact, null);
+			LabelUtils.setText(lblContactPerson, null);
 
 		} else {
 
-			Club theData = (Club) theDetailData;
+			LabelUtils.setText(lblFilename, theDetailData.getFilename());
 
-			LabelUtils.setText(lblFilename, theData.getFilename());
-			LabelUtils.setText(lblLocal, new SimpleStringProperty("ToDo"));
-			LabelUtils.setText(lblURL, new SimpleStringProperty("ToDo"));
-			LabelUtils.setText(lblVenue, new SimpleStringProperty("ToDo"));
-			LabelUtils.setText(lblContact, new SimpleStringProperty("ToDo"));
+			lblIsLocal.setText(theDetailData.getIsLocal().getValue() ? "ja" : "nein");
+
+			lblURL.setText(theDetailData.getURL().stream().map(url -> url.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
+
+			lblVenue.setText(theDetailData.getVenue().stream().map(venue -> venue.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
+
+			lblContactPerson.setText(theDetailData.getContactPerson().stream().map(person -> person.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
 
 		}
 
