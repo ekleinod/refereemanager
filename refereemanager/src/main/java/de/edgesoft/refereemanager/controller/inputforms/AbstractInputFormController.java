@@ -46,13 +46,10 @@ public abstract class AbstractInputFormController<T extends ModelClassExt> imple
 	private List<Class<?>> lstClasses = null;
 
 
-	/**
-	 * Initializes form: sets introspection classes and marks required fields.
-	 *
-	 * @param theClasses list of introspection classes
-	 */
 	@Override
-	public void initForm(final List<Class<?>> theClasses) {
+	public void initForm(
+			final List<Class<?>> theClasses
+			) {
 
 		lstClasses = theClasses;
 
@@ -73,15 +70,10 @@ public abstract class AbstractInputFormController<T extends ModelClassExt> imple
 
 	}
 
-	/**
-	 * Fills form with data to be edited.
-	 *
-	 * @param theData data object
-	 */
 	@Override
-	public void fillForm(final T theData) {
-
-		System.out.println("filling form" + theData);
+	public void fillFormFromData(
+			final T theData
+			) {
 
         // fill fields
         for (Field theFXMLField : getDeclaredFields()) {
@@ -103,13 +95,10 @@ public abstract class AbstractInputFormController<T extends ModelClassExt> imple
 
     }
 
-	/**
-	 * Fills data object with form data.
-	 *
-	 * @param theData data object
-	 */
 	@Override
-	public void fillData(T theData) {
+	public void fillDataFromForm(
+			T theData
+			) {
 
 		assert (theData != null) : "data must not be null";
 

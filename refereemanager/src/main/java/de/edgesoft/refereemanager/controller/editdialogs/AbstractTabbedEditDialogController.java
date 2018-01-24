@@ -73,11 +73,11 @@ public abstract class AbstractTabbedEditDialogController<T extends ModelClassExt
 	 * @param theData data object
 	 */
 	@Override
-	public void fillForm(final T theData) {
+	public void fillFormFromData(final T theData) {
 
 		assert (lstInputFormControllers != null) : "list of input form controllers not initialized!";
 
-		lstInputFormControllers.stream().forEach(form -> form.fillForm(theData));
+		lstInputFormControllers.stream().forEach(form -> form.fillFormFromData(theData));
 
     }
 
@@ -87,11 +87,11 @@ public abstract class AbstractTabbedEditDialogController<T extends ModelClassExt
 	 * @param theData data object
 	 */
 	@Override
-	public void fillData(T theData) {
+	public void fillDataFromForm(T theData) {
 
 		assert (lstInputFormControllers != null) : "list of input form controllers not initialized!";
 
-		lstInputFormControllers.stream().forEach(form -> form.fillData(theData));
+		lstInputFormControllers.stream().forEach(form -> form.fillDataFromForm(theData));
 
 	}
 

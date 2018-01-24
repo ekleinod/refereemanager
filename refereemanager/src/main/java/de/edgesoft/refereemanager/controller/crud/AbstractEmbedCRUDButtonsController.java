@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 
 /**
- * Abstract controller scenes with included CRUD buttons.
+ * Abstract controller scenes with embedded CRUD buttons.
  *
  * ## Legal stuff
  *

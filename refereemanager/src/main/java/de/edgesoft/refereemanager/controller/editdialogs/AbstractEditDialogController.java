@@ -74,49 +74,34 @@ public abstract class AbstractEditDialogController<T extends ModelClassExt> exte
 	}
 
 
-	/**
-	 * Sets dialog stage.
-	 *
-	 * @param theStage dialog stage
-	 */
 	@Override
-	public void setDialogStage(final Stage theStage) {
+	public void setDialogStage(
+			final Stage theStage
+			) {
+
         dialogStage = theStage;
+
     }
 
-	/**
-	 * Returns dialog stage.
-	 *
-	 * @return dialog stage
-	 */
 	@Override
 	public Stage getDialogStage() {
 		return dialogStage;
 	}
 
-	/**
-	 * Sets if user clicked ok.
-	 *
-	 * @param isOKClicked did user click ok?
-	 */
 	@Override
-	public void setOkClicked(final boolean isOKClicked) {
+	public void setOkClicked(
+			final boolean isOKClicked
+			) {
+
 		okClicked = isOKClicked;
+
 	}
 
-	/**
-	 * Returns if user clicked ok.
-	 *
-	 * @return did user click ok?
-	 */
 	@Override
 	public boolean isOkClicked() {
 		return okClicked;
 	}
 
-	/**
-	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.
-	 */
 	@FXML
 	@Override
     public void handleOk() {
@@ -124,9 +109,6 @@ public abstract class AbstractEditDialogController<T extends ModelClassExt> exte
         dialogStage.close();
     }
 
-	/**
-	 * Stores non-ok click and closes dialog.
-	 */
 	@FXML
 	@Override
     public void handleCancel() {

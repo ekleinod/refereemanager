@@ -41,7 +41,7 @@ public class OverviewLeagueGamesController extends AbstractOverviewController<Le
 	 * @param theOverviewController overview controller
 	 */
 	@Override
-	public void initController(final GeneralOverviewController<LeagueGame> theOverviewController) {
+	public void initController(final OverviewDetailsController<LeagueGame> theOverviewController) {
 
 		super.initController(theOverviewController);
 

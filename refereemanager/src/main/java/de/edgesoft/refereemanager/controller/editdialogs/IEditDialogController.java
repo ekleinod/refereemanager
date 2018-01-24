@@ -35,7 +35,9 @@ public interface IEditDialogController {
 	 *
 	 * @param theStage dialog stage
 	 */
-	public void setDialogStage(final Stage theStage);
+	public void setDialogStage(
+			final Stage theStage
+			);
 
 	/**
 	 * Returns dialog stage.
@@ -56,7 +58,9 @@ public interface IEditDialogController {
 	 *
 	 * @param isOKClicked did user click ok?
 	 */
-	public void setOkClicked(final boolean isOKClicked);
+	public void setOkClicked(
+			final boolean isOKClicked
+			);
 
 	/**
 	 * Validates input, stores ok click, and closes dialog; does nothing for invalid input.

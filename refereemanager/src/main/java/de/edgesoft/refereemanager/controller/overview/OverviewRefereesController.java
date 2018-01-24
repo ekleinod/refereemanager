@@ -41,7 +41,7 @@ public class OverviewRefereesController extends AbstractOverviewController<Refer
 	 * @param theOverviewController overview controller
 	 */
 	@Override
-	public void initController(final GeneralOverviewController<Referee> theOverviewController) {
+	public void initController(final OverviewDetailsController<Referee> theOverviewController) {
 
 		super.initController(theOverviewController);
 

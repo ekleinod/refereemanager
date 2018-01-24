@@ -3,7 +3,7 @@ package de.edgesoft.refereemanager.controller.crud;
 import javafx.beans.value.ObservableBooleanValue;
 
 /**
- * Interface for controller scenes with included CRUD buttons.
+ * Interface for controller scenes with embedded CRUD buttons.
  *
  * ## Legal stuff
  *

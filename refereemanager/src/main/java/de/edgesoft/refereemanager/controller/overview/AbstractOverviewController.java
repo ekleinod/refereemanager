@@ -8,7 +8,7 @@ import java.util.Optional;
 import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.controller.crud.IEditDialogCRUDActionsController;
 import de.edgesoft.refereemanager.controller.details.IDetailsController;
-import de.edgesoft.refereemanager.controller.editdialogs.IEditDialogController;
+import de.edgesoft.refereemanager.controller.editdialogs.AbstractEditDialogController;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.utils.AlertUtils;
@@ -55,35 +55,36 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 	/**
 	 * Overview controller of the underlying view.
 	 */
-	private GeneralOverviewController<T> overviewController = null;
+	private OverviewDetailsController<T> overviewController = null;
 
 	/**
-	 * Returns overview controller.
-	 *
-	 * @return overview controller
+	 * Title noun.
 	 */
+	private String sTitleNoun = null;
+
+	/**
+	 * FXML filename.
+	 */
+	private String sFXMLFilename = null;
+
 	@Override
-	public GeneralOverviewController<T> getController() {
+	public OverviewDetailsController<T> getController() {
 		return overviewController;
 	}
 
-	/**
-	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
-	 *
-	 * @param theOverviewController overview controller
-	 */
 	@Override
-	public void initController(final GeneralOverviewController<T> theOverviewController) {
+	public void initController(
+			final OverviewDetailsController<T> theOverviewController
+			) {
+
 		overviewController = theOverviewController;
+
 	}
 
-	/**
-	 * Shows selected data in detail window.
-	 *
-	 * @param theDetailData detail data (null if none is selected)
-	 */
 	@Override
-	public void showDetails(final T theDetailData) {
+	public void showDetails(
+			final T theDetailData
+			) {
 
 		getController().showDetails(theDetailData);
 
@@ -99,16 +100,24 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 
 	}
 
-	/**
-	 * Handles add action.
-	 *
-	 * @param theData data element
-	 * @param theDataList data list to add data to
-	 */
 	@Override
-	public void handleAdd(final String theViewName, final String theViewTitleNoun, T theData, ObservableList<T> theDataList) {
+	public void initEditDialogFXMLFilename(
+			final String theFXMLFilename,
+			final String theTitleNoun
+			) {
 
-		if (showEditDialog(theViewName, theViewTitleNoun, theData)) {
+		sFXMLFilename = theFXMLFilename;
+		sTitleNoun = theTitleNoun;
+
+	}
+
+	@Override
+	public void handleAdd(
+			T theData,
+			ObservableList<T> theDataList
+			) {
+
+		if (showEditDialog(theData)) {
 
 			theDataList.add(theData);
 			getController().getDataTableController().getDataTable().refresh();
@@ -121,16 +130,13 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 
 	}
 
-	/**
-	 * Opens edit dialog for editing selected data.
-	 */
 	@Override
-	public void handleEdit(final String theViewName, final String theViewTitleNoun) {
+	public void handleEdit() {
 
 		Optional<T> theData = getController().getDataTableController().getSelectedItem();
 
 		if (theData.isPresent()) {
-			if (showEditDialog(theViewName, theViewTitleNoun, theData.get())) {
+			if (showEditDialog(theData.get())) {
 				getController().getDataTableController().getDataTable().refresh();
 				showDetails(theData.get());
 				AppModel.setModified(true);
@@ -140,14 +146,10 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 
 	}
 
-	/**
-	 * Handles delete action.
-	 *
-	 * @param theData data element
-	 * @param theDataList data list to delete data from
-	 */
 	@Override
-	public void handleDelete(ObservableList<T> theDataList) {
+	public void handleDelete(
+			ObservableList<T> theDataList
+			) {
 
 		Optional<T> theData = getController().getDataTableController().getSelectedItem();
 
@@ -170,35 +172,27 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 
 	}
 
-	/**
-	 * Opens the data edit dialog.
-	 *
-	 * If the user clicks OK, the changes are saved into the provided event object and true is returned.
-	 *
-	 * @param theViewName name of the edit view
-	 * @param theViewTitleNoun title noun of the edit view ("edit <noun>")
-	 * @param theData the data to be edited
-	 * @return true if the user clicked OK, false otherwise.
-	 */
 	@Override
-	public boolean showEditDialog(final String theViewName, final String theViewTitleNoun, T theData) {
+	public boolean showEditDialog(
+			T theData
+			) {
 
 		Objects.requireNonNull(theData);
 
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode(theViewName);
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode(sFXMLFilename);
 
 		// Create the dialog Stage.
 		Stage dialogStage = new Stage();
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initOwner(RefereeManager.getAppController().getPrimaryStage());
-		dialogStage.setTitle(MessageFormat.format("{0} editieren", theViewTitleNoun));
+		dialogStage.setTitle(MessageFormat.format("{0} editieren", sTitleNoun));
 
 		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
 		// Set data
-		IEditDialogController editController = pneLoad.getValue().getController();
+		AbstractEditDialogController<T> editController = pneLoad.getValue().getController();
 		editController.setDialogStage(dialogStage);
-		editController.fillForm(theData);
+		editController.fillFormFromData(theData);
 
 		// Show the dialog and wait until the user closes it
 		dialogStage.showAndWait();
@@ -207,7 +201,7 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 		boolean isOkClicked = editController.isOkClicked();
 
 		if (isOkClicked) {
-			editController.fillData(theData);
+			editController.fillDataFromForm(theData);
 		}
 
 		return isOkClicked;

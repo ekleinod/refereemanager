@@ -41,7 +41,7 @@ public class OverviewPeopleController extends AbstractOverviewController<Person>
 	 * @param theOverviewController overview controller
 	 */
 	@Override
-	public void initController(final GeneralOverviewController<Person> theOverviewController) {
+	public void initController(final OverviewDetailsController<Person> theOverviewController) {
 
 		super.initController(theOverviewController);
 

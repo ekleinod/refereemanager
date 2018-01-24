@@ -156,9 +156,9 @@ public class InputFormExamDataController extends AbstractInputFormController<Exa
 	 * @param theData data object
 	 */
 	@Override
-	public void fillForm(final Exam theData) {
+	public void fillFormFromData(final Exam theData) {
 
-		super.fillForm(theData);
+		super.fillFormFromData(theData);
 		computeExam();
 
     }

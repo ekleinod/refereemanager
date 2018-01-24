@@ -35,14 +35,16 @@ public interface IOverviewController<T extends TitledIDTypeModel> {
 	 *
 	 * @return overview controller
 	 */
-	public GeneralOverviewController<T> getController();
+	public OverviewDetailsController<T> getController();
 
 	/**
 	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
 	 *
 	 * @param theOverviewController overview controller
 	 */
-	public void initController(final GeneralOverviewController<T> theOverviewController);
+	public void initController(
+			final OverviewDetailsController<T> theOverviewController
+	);
 
 }
 

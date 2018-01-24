@@ -32,20 +32,13 @@ import javafx.collections.ObservableList;
 public interface IEditDialogCRUDActionsController<T extends ModelClassExt> extends ICRUDActionsController {
 
 	/**
-	 * Sets edit dialog's fxml filename.
+	 * Sets edit dialog's fxml filename and noun, shown in title ("edit <noun>").
 	 *
 	 * @param theFXMLFilename fxml filename of the edit view
-	 */
-	public void setEditDialogFXMLFilename(
-			final String theFXMLFilename
-	);
-
-	/**
-	 * Sets edit dialog's noun, shown in title ("edit <noun>").
-	 *
 	 * @param theTitleNoun title noun of the edit view ("edit <noun>")
 	 */
-	public void setEditDialogTitleNoun(
+	public void initEditDialogFXMLFilename(
+			final String theFXMLFilename,
 			final String theTitleNoun
 	);
 

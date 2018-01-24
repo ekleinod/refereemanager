@@ -35,7 +35,9 @@ public interface IDetailsController<T extends TitledIDTypeModel> {
 	 *
 	 * @param theDetailData (null if no data to show)
 	 */
-	public void showDetails(final T theDetailData);
+	public void showDetails(
+			final T theDetailData
+	);
 
 }
 

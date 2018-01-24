@@ -158,7 +158,7 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 			lblHeading.setManaged(false);
 		}
 
-		lstData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> ctlInputForm.fillForm(lstData.getSelectionModel().getSelectedItem()));
+		lstData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> ctlInputForm.fillFormFromData(lstData.getSelectionModel().getSelectedItem()));
 
 		grdListCRUD.add(thePartInputForm, 0, 2);
 
@@ -210,7 +210,7 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 			) {
 
 		T newData = instanceCall.get();
-		ctlInputForm.fillData(newData);
+		ctlInputForm.fillDataFromForm(newData);
 		lstData.getItems().add(newData);
 
 		lstData.getSelectionModel().select(newData);
@@ -231,7 +231,7 @@ public class ListCRUDController<T extends ModelClassExt> implements ICRUDActions
 			) {
 
 		if (!lstData.getSelectionModel().isEmpty()) {
-			ctlInputForm.fillData(lstData.getSelectionModel().getSelectedItem());
+			ctlInputForm.fillDataFromForm(lstData.getSelectionModel().getSelectedItem());
 			lstData.refresh();
 			lstData.scrollTo(lstData.getSelectionModel().getSelectedItem());
 			lstData.getFocusModel().focus(lstData.getSelectionModel().getSelectedIndex());

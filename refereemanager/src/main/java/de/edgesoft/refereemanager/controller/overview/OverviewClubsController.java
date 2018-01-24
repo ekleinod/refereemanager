@@ -41,7 +41,7 @@ public class OverviewClubsController extends AbstractOverviewController<Club> {
 	 * @param theOverviewController overview controller
 	 */
 	@Override
-	public void initController(final GeneralOverviewController<Club> theOverviewController) {
+	public void initController(final OverviewDetailsController<Club> theOverviewController) {
 
 		super.initController(theOverviewController);
 

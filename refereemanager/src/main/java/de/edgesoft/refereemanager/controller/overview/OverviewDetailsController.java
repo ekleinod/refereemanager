@@ -28,7 +28,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.FontWeight;
 
 /**
- * Abstract controller for overview scenes.
+ * General controller for overview scenes, cannot be declared abstract, because it is
+ * instantiated via fxml, it is not used directly though, but through the Overview...Controllers.
  *
  * ## Legal stuff
  *
@@ -53,14 +54,13 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class GeneralOverviewController<T extends TitledIDTypeModel> extends AbstractEmbedCRUDButtonsController implements IDetailsController<T> {
+public class OverviewDetailsController<T extends TitledIDTypeModel> extends AbstractEmbedCRUDButtonsController implements IDetailsController<T> {
 
 	/**
 	 * Heading.
 	 */
 	@FXML
 	private Label lblHeading;
-
 
 	/**
 	 * Split pane.
@@ -122,7 +122,12 @@ public class GeneralOverviewController<T extends TitledIDTypeModel> extends Abst
 	 * @param theListNode name of list node view
 	 * @param theDetailsNode name of details node view
 	 */
-	public void initController(final AbstractOverviewController<T> theOverviewController, final PrefKey theDividerPosition, final String theListNode, final String theDetailsNode) {
+	public void initController(
+			final AbstractOverviewController<T> theOverviewController,
+			final PrefKey theDividerPosition,
+			final String theListNode,
+			final String theDetailsNode
+			) {
 
 		// add nodes to overview scene
 		Map.Entry<Parent, FXMLLoader> pneListNode = Resources.loadNode(theListNode);
