@@ -35,13 +35,10 @@ import javafx.event.ActionEvent;
  */
 public class OverviewPeopleController extends AbstractOverviewController<Person> {
 
-	/**
-	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
-	 *
-	 * @param theOverviewController overview controller
-	 */
 	@Override
-	public void initController(final OverviewDetailsController<Person> theOverviewController) {
+	public void initController(
+			final OverviewDetailsController<Person> theOverviewController
+			) {
 
 		super.initController(theOverviewController);
 
@@ -51,36 +48,35 @@ public class OverviewPeopleController extends AbstractOverviewController<Person>
 		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
+		initEditDialogFXMLFilename("editdialogs/EditDialogPerson", "Person");
+
 	}
 
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleAdd(ActionEvent event) {
-		handleAdd("editdialogs/EditDialogPerson", "Person", AppModel.factory.createPerson(), ((ContentModel) AppModel.getData().getContent()).getObservablePeople());
+	public void handleAdd(
+			ActionEvent event
+			) {
+
+		handleAdd(AppModel.factory.createPerson(), ((ContentModel) AppModel.getData().getContent()).getObservablePeople());
+
 	}
 
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleEdit(ActionEvent event) {
-		handleEdit("editdialogs/EditDialogPerson", "Person");
+	public void handleEdit(
+			ActionEvent event
+			) {
+
+		handleEdit();
+
 	}
 
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleDelete(ActionEvent event) {
+	public void handleDelete(
+			ActionEvent event
+			) {
+
 		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservablePeople());
+
 	}
 
 }

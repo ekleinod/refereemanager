@@ -35,13 +35,10 @@ import javafx.event.ActionEvent;
  */
 public class OverviewTraineesController extends AbstractOverviewController<Trainee> {
 
-	/**
-	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
-	 *
-	 * @param theOverviewController overview controller
-	 */
 	@Override
-	public void initController(final OverviewDetailsController<Trainee> theOverviewController) {
+	public void initController(
+			final OverviewDetailsController<Trainee> theOverviewController
+			) {
 
 		super.initController(theOverviewController);
 
@@ -51,36 +48,35 @@ public class OverviewTraineesController extends AbstractOverviewController<Train
 		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
+		initEditDialogFXMLFilename("editdialogs/EditDialogTrainee", "Azubi");
+
 	}
 
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleAdd(ActionEvent event) {
-		handleAdd("editdialogs/EditDialogTrainee", "Azubi", AppModel.factory.createTrainee(), ((ContentModel) AppModel.getData().getContent()).getObservableTrainees());
+	public void handleAdd(
+			ActionEvent event
+			) {
+
+		handleAdd(AppModel.factory.createTrainee(), ((ContentModel) AppModel.getData().getContent()).getObservableTrainees());
+
 	}
 
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleEdit(ActionEvent event) {
-		handleEdit("editdialogs/EditDialogTrainee", "Azubi");
+	public void handleEdit(
+			ActionEvent event
+			) {
+
+		handleEdit();
+
 	}
 
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleDelete(ActionEvent event) {
+	public void handleDelete(
+			ActionEvent event
+			) {
+
 		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableTrainees());
+
 	}
 
 }

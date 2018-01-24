@@ -35,13 +35,10 @@ import javafx.event.ActionEvent;
  */
 public class OverviewClubsController extends AbstractOverviewController<Club> {
 
-	/**
-	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
-	 *
-	 * @param theOverviewController overview controller
-	 */
 	@Override
-	public void initController(final OverviewDetailsController<Club> theOverviewController) {
+	public void initController(
+			final OverviewDetailsController<Club> theOverviewController
+			) {
 
 		super.initController(theOverviewController);
 
@@ -51,36 +48,35 @@ public class OverviewClubsController extends AbstractOverviewController<Club> {
 		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
+		initEditDialogFXMLFilename("editdialogs/EditDialogClub", "Club");
+
 	}
 
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleAdd(ActionEvent event) {
-		handleAdd("editdialogs/EditDialogClub", "Club", AppModel.factory.createClub(), ((ContentModel) AppModel.getData().getContent()).getObservableClubs());
+	public void handleAdd(
+			ActionEvent event
+			) {
+
+		handleAdd(AppModel.factory.createClub(), ((ContentModel) AppModel.getData().getContent()).getObservableClubs());
+
 	}
 
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleEdit(ActionEvent event) {
-		handleEdit("editdialogs/EditDialogClub", "Club");
+	public void handleEdit(
+			ActionEvent event
+			) {
+
+		handleEdit();
+
 	}
 
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleDelete(ActionEvent event) {
+	public void handleDelete(
+			ActionEvent event
+			) {
+
 		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableClubs());
+
 	}
 
 }

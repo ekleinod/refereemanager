@@ -35,13 +35,10 @@ import javafx.event.ActionEvent;
  */
 public class OverviewOtherEventsController extends AbstractOverviewController<OtherEvent> {
 
-	/**
-	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
-	 *
-	 * @param theOverviewController overview controller
-	 */
 	@Override
-	public void initController(final OverviewDetailsController<OtherEvent> theOverviewController) {
+	public void initController(
+			final OverviewDetailsController<OtherEvent> theOverviewController
+			) {
 
 		super.initController(theOverviewController);
 
@@ -51,36 +48,35 @@ public class OverviewOtherEventsController extends AbstractOverviewController<Ot
 		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
+		initEditDialogFXMLFilename("editdialogs/EditDialogOtherEvent", "Sonstiges Ereignis");
+
 	}
 
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleAdd(ActionEvent event) {
-		handleAdd("editdialogs/EditDialogOtherEvent", "Sonstiges Ereignis", AppModel.factory.createOtherEvent(), ((ContentModel) AppModel.getData().getContent()).getObservableOtherEvents());
+	public void handleAdd(
+			ActionEvent event
+			) {
+
+		handleAdd(AppModel.factory.createOtherEvent(), ((ContentModel) AppModel.getData().getContent()).getObservableOtherEvents());
+
 	}
 
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleEdit(ActionEvent event) {
-		handleEdit("editdialogs/EditDialogOtherEvent", "Sonstiges Ereignis");
+	public void handleEdit(
+			ActionEvent event
+			) {
+
+		handleEdit();
+
 	}
 
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleDelete(ActionEvent event) {
+	public void handleDelete(
+			ActionEvent event
+			) {
+
 		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableOtherEvents());
+
 	}
 
 }

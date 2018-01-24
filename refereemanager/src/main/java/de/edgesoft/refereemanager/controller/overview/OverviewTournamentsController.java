@@ -35,13 +35,10 @@ import javafx.event.ActionEvent;
  */
 public class OverviewTournamentsController extends AbstractOverviewController<Tournament> {
 
-	/**
-	 * Initializes the controller with things that cannot be done during {@link #initialize()}.
-	 *
-	 * @param theOverviewController overview controller
-	 */
 	@Override
-	public void initController(final OverviewDetailsController<Tournament> theOverviewController) {
+	public void initController(
+			final OverviewDetailsController<Tournament> theOverviewController
+			) {
 
 		super.initController(theOverviewController);
 
@@ -51,36 +48,35 @@ public class OverviewTournamentsController extends AbstractOverviewController<To
 		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
+		initEditDialogFXMLFilename("editdialogs/EditDialogTournament", "Turnier");
+
 	}
 
-	/**
-	 * Opens edit dialog for new data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleAdd(ActionEvent event) {
-		handleAdd("editdialogs/EditDialogTournament", "Turnier", AppModel.factory.createTournament(), ((ContentModel) AppModel.getData().getContent()).getObservableTournaments());
+	public void handleAdd(
+			ActionEvent event
+			) {
+
+		handleAdd(AppModel.factory.createTournament(), ((ContentModel) AppModel.getData().getContent()).getObservableTournaments());
+
 	}
 
-	/**
-	 * Opens edit dialog for editing selected data.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleEdit(ActionEvent event) {
-		handleEdit("editdialogs/EditDialogTournament", "Turnier");
+	public void handleEdit(
+			ActionEvent event
+			) {
+
+		handleEdit();
+
 	}
 
-	/**
-	 * Deletes selected data from list.
-	 *
-	 * @param event calling action event
-	 */
 	@Override
-	public void handleDelete(ActionEvent event) {
+	public void handleDelete(
+			ActionEvent event
+			) {
+
 		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableTournaments());
+
 	}
 
 }

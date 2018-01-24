@@ -173,13 +173,10 @@ public class OverviewDetailsController<T extends TitledIDTypeModel> extends Abst
 
 	}
 
-	/**
-	 * Shows selected data in detail window.
-	 *
-	 * @param theDetailData detail data (null if none is selected)
-	 */
 	@Override
-	public void showDetails(final T theDetailData) {
+	public void showDetails(
+			final T theDetailData
+			) {
 
 		embeddedDetailsTitledIDController.showDetails(theDetailData);
 
@@ -220,8 +217,12 @@ public class OverviewDetailsController<T extends TitledIDTypeModel> extends Abst
 	 *
 	 * @param theHeading heading text
 	 */
-	public void setHeading(final StringProperty theHeading) {
+	public void setHeading(
+			final StringProperty theHeading
+			) {
+
 		LabelUtils.setText(lblHeading, theHeading);
+
 	}
 
 }
