@@ -1,6 +1,7 @@
 package de.edgesoft.refereemanager.controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -1172,6 +1173,10 @@ public class RefereeCommunicationController {
 								if (mapFilled.containsKey(DocumentDataVariable.ATTACHMENT.value())) {
 									for (Attachment theAttachment : (List<Attachment>) mapFilled.get(DocumentDataVariable.ATTACHMENT.value())) {
 										Path attachment = Paths.get(theAttachment.getFilename().getValue());
+
+										if (!attachment.toFile().exists()) {
+											throw new FileNotFoundException(attachment.toAbsolutePath().normalize().toString());
+										}
 
 										BodyPart bpAttachment = new MimeBodyPart();
 										bpAttachment.setDataHandler(new DataHandler(new FileDataSource(attachment.toFile())));
