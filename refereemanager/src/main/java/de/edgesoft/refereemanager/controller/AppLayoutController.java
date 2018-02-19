@@ -537,7 +537,7 @@ public class AppLayoutController {
 
 		// initialize controller
 		PreferencesDialogController controller = pneLoad.getValue().getController();
-		controller.initController(this, dialogStage, null);
+		controller.initController(dialogStage, null);
 
 		// Show the dialog and wait until the user closes it
 		dialogStage.showAndWait();

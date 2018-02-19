@@ -796,10 +796,12 @@ public class RefereeCommunicationController {
 
 		// initialize controller
 		PreferencesDialogController controller = pneLoad.getValue().getController();
-		controller.initController(appController, dialogStage,
+		controller.initController(
+				dialogStage,
 				(radEMails.isSelected()) ? "tabEMail" :
 					(radLetters.isSelected()) ? "tabLetters" :
-						(radDocument.isSelected()) ? "tabDocuments" : "tabTexts");
+						(radDocument.isSelected()) ? "tabDocuments" : "tabTexts"
+				);
 
 		// Show the dialog and wait until the user closes it
 		dialogStage.showAndWait();

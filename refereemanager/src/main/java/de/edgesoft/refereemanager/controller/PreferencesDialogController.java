@@ -408,12 +408,16 @@ public class PreferencesDialogController {
 	/**
 	 * Initializes the controller with things, that cannot be done during {@link #initialize()}.
 	 *
-	 * @param theAppController app controller
 	 * @param theStage dialog stage
 	 * @param theTabID tab to open
 	 */
-	public void initController(final AppLayoutController theAppController, final Stage theStage, final String theTabID) {
+	public void initController(
+			final Stage theStage,
+			final String theTabID
+			) {
+
 		dialogStage = theStage;
+
 		if (theTabID != null) {
 			pneTabs.getTabs().forEach(tab -> {
 				if (tab.getId().equals(theTabID)) {
@@ -421,6 +425,7 @@ public class PreferencesDialogController {
 				}
 			});
 		}
+
 	}
 
 	/**
