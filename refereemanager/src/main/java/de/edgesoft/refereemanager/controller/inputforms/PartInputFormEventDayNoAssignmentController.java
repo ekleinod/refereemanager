@@ -36,7 +36,7 @@ import jfxtras.scene.control.LocalTimeTextField;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class PartInputFormEventDayNoAssignmentController extends AbstractInputFormController {
+public class PartInputFormEventDayNoAssignmentController extends AbstractInputFormController<EventDay> {
 
 	/**
 	 * Label for picker for date.

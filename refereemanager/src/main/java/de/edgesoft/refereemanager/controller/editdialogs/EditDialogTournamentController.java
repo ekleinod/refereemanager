@@ -43,7 +43,7 @@ import javafx.scene.image.ImageView;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class EditDialogTournamentController extends AbstractTabbedEditDialogController {
+public class EditDialogTournamentController extends AbstractTabbedEditDialogController<Tournament> {
 
 	/**
 	 * Text field for announcement URL.

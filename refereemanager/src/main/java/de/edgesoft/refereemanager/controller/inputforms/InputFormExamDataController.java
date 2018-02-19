@@ -1,6 +1,5 @@
 package de.edgesoft.refereemanager.controller.inputforms;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
-import de.edgesoft.refereemanager.jaxb.Exam;
 import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
@@ -36,7 +35,7 @@ import javafx.scene.control.Spinner;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormExamDataController extends AbstractInputFormController<Exam> {
+public class InputFormExamDataController extends AbstractInputFormController<Trainee> {
 
 	/**
 	 * Checkbox for withdrawn.
@@ -156,7 +155,7 @@ public class InputFormExamDataController extends AbstractInputFormController<Exa
 	 * @param theData data object
 	 */
 	@Override
-	public void fillFormFromData(final Exam theData) {
+	public void fillFormFromData(final Trainee theData) {
 
 		super.fillFormFromData(theData);
 		computeExam();

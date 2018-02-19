@@ -1,5 +1,6 @@
 package de.edgesoft.refereemanager.controller.editdialogs;
 
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 
 /**
@@ -28,14 +29,14 @@ import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
  * @version 0.15.0
  * @since 0.15.0
  */
-public interface ITabbedEditDialogController extends IEditDialogController {
+public interface ITabbedEditDialogController<T extends ModelClassExt> extends IEditDialogController {
 
 	/**
 	 * Adds (embedded) input form controller.
 	 *
 	 * @param theInputFormController input form controller
 	 */
-	public void addInputFormController(final IInputFormController theInputFormController);
+	public void addInputFormController(final IInputFormController<T> theInputFormController);
 
 }
 

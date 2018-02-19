@@ -38,7 +38,7 @@ import javafx.scene.image.ImageView;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormRefereeDataController extends AbstractInputFormController {
+public class InputFormRefereeDataController extends AbstractInputFormController<Referee> {
 
 	/**
 	 * Combobox for member clubs.

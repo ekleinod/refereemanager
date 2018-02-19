@@ -47,7 +47,7 @@ import javafx.scene.image.ImageView;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class PartInputFormTrainingLevelController extends AbstractInputFormController {
+public class PartInputFormTrainingLevelController extends AbstractInputFormController<TrainingLevel> {
 
 	/**
 	 * Label for since picker.

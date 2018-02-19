@@ -44,7 +44,7 @@ import javafx.scene.image.ImageView;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class EditDialogLeagueGameController extends AbstractTabbedEditDialogController {
+public class EditDialogLeagueGameController extends AbstractTabbedEditDialogController<LeagueGame> {
 
 	/**
 	 * Combobox for league.

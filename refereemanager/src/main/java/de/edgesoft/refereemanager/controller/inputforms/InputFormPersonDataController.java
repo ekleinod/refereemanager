@@ -44,7 +44,7 @@ import javafx.scene.image.ImageView;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormPersonDataController extends AbstractInputFormController {
+public class InputFormPersonDataController extends AbstractInputFormController<Person> {
 
 	/**
 	 * ID text field.

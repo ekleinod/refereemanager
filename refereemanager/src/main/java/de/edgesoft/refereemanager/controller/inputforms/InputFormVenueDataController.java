@@ -37,7 +37,7 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormVenueDataController extends AbstractInputFormController {
+public class InputFormVenueDataController extends AbstractInputFormController<Club> {
 
 	/**
 	 * CRUD buttons venue.

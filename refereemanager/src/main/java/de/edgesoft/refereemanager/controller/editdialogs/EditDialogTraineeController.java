@@ -37,7 +37,7 @@ import javafx.scene.Parent;
  * @version 0.14.0
  * @since 0.13.0
  */
-public class EditDialogTraineeController extends AbstractTabbedEditDialogController {
+public class EditDialogTraineeController extends AbstractTabbedEditDialogController<Trainee> {
 
 	/**
 	 * Person data.
@@ -49,7 +49,7 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	 * Person data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormPersonDataController;
+	private IInputFormController<Trainee> embeddedInputFormPersonDataController;
 
 	/**
 	 * Contact data.
@@ -61,7 +61,7 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	 * Contact data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormContactDataController;
+	private IInputFormController<Trainee> embeddedInputFormContactDataController;
 
 	/**
 	 * Address data.
@@ -73,7 +73,7 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	 * Address data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormAddressDataController;
+	private IInputFormController<Trainee> embeddedInputFormAddressDataController;
 
 	/**
 	 * Referee data.
@@ -85,7 +85,7 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	 * Referee data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormRefereeDataController;
+	private IInputFormController<Trainee> embeddedInputFormRefereeDataController;
 
 	/**
 	 * Wish data.
@@ -97,7 +97,7 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	 * Wish data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormWishDataController;
+	private IInputFormController<Trainee> embeddedInputFormWishDataController;
 
 	/**
 	 * Training level data.
@@ -109,7 +109,7 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	 * Training level data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormTrainingLevelDataController;
+	private IInputFormController<Trainee> embeddedInputFormTrainingLevelDataController;
 
 	/**
 	 * Exam data.
@@ -121,7 +121,7 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	 * Exam data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormExamDataController;
+	private IInputFormController<Trainee> embeddedInputFormExamDataController;
 
 
 	/**

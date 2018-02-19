@@ -36,7 +36,7 @@ import javafx.scene.Parent;
  * @version 0.14.0
  * @since 0.13.0
  */
-public class EditDialogRefereeController extends AbstractTabbedEditDialogController {
+public class EditDialogRefereeController extends AbstractTabbedEditDialogController<Referee> {
 
 	/**
 	 * Person data.
@@ -48,7 +48,7 @@ public class EditDialogRefereeController extends AbstractTabbedEditDialogControl
 	 * Person data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormPersonDataController;
+	private IInputFormController<Referee> embeddedInputFormPersonDataController;
 
 	/**
 	 * Contact data.
@@ -60,7 +60,7 @@ public class EditDialogRefereeController extends AbstractTabbedEditDialogControl
 	 * Contact data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormContactDataController;
+	private IInputFormController<Referee> embeddedInputFormContactDataController;
 
 	/**
 	 * Address data.
@@ -72,7 +72,7 @@ public class EditDialogRefereeController extends AbstractTabbedEditDialogControl
 	 * Address data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormAddressDataController;
+	private IInputFormController<Referee> embeddedInputFormAddressDataController;
 
 	/**
 	 * Referee data.
@@ -84,7 +84,7 @@ public class EditDialogRefereeController extends AbstractTabbedEditDialogControl
 	 * Referee data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormRefereeDataController;
+	private IInputFormController<Referee> embeddedInputFormRefereeDataController;
 
 	/**
 	 * Wish data.
@@ -96,7 +96,7 @@ public class EditDialogRefereeController extends AbstractTabbedEditDialogControl
 	 * Wish data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormWishDataController;
+	private IInputFormController<Referee> embeddedInputFormWishDataController;
 
 	/**
 	 * Training level data.
@@ -108,7 +108,7 @@ public class EditDialogRefereeController extends AbstractTabbedEditDialogControl
 	 * Training level data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormTrainingLevelDataController;
+	private IInputFormController<Referee> embeddedInputFormTrainingLevelDataController;
 
 
 	/**

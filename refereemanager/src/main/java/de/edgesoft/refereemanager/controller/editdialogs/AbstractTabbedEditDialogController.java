@@ -31,7 +31,7 @@ import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
  * @version 0.15.0
  * @since 0.15.0
  */
-public abstract class AbstractTabbedEditDialogController<T extends ModelClassExt> extends AbstractEditDialogController<T> implements ITabbedEditDialogController {
+public abstract class AbstractTabbedEditDialogController<T extends ModelClassExt> extends AbstractEditDialogController<T> implements ITabbedEditDialogController<T> {
 
 	/**
 	 * List of input form controllers.
@@ -44,7 +44,7 @@ public abstract class AbstractTabbedEditDialogController<T extends ModelClassExt
 	 * @param theInputFormController input form controller
 	 */
 	@Override
-	public void addInputFormController(final IInputFormController theInputFormController) {
+	public void addInputFormController(final IInputFormController<T> theInputFormController) {
 
 		if (lstInputFormControllers == null) {
 			lstInputFormControllers = new ArrayList<>();

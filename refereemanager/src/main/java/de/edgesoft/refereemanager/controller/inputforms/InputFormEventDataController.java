@@ -46,7 +46,7 @@ import javafx.scene.image.ImageView;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormEventDataController extends AbstractInputFormController {
+public class InputFormEventDataController extends AbstractInputFormController<EventDate> {
 
 	/**
 	 * ID text field.

@@ -36,7 +36,7 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class EditDialogOtherEventController extends AbstractTabbedEditDialogController {
+public class EditDialogOtherEventController extends AbstractTabbedEditDialogController<OtherEvent> {
 
 	/**
 	 * Event data.
@@ -48,7 +48,7 @@ public class EditDialogOtherEventController extends AbstractTabbedEditDialogCont
 	 * Event data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormEventDataController;
+	private IInputFormController<OtherEvent> embeddedInputFormEventDataController;
 
 
 	/**

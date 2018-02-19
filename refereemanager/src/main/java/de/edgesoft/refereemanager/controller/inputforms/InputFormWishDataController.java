@@ -37,7 +37,7 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormWishDataController extends AbstractInputFormController<Wish> {
+public class InputFormWishDataController extends AbstractInputFormController<Referee> {
 
 	/**
 	 * CRUD buttons prefer.

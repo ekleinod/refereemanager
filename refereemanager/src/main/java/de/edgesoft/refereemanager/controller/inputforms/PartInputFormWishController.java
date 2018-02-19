@@ -42,7 +42,7 @@ import javafx.scene.image.ImageView;
  * @version 0.14.0
  * @since 0.14.0
  */
-public class PartInputFormWishController extends AbstractInputFormController {
+public class PartInputFormWishController extends AbstractInputFormController<Wish> {
 
 	/**
 	 * Combobox for clubs.

@@ -38,7 +38,7 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormAddressDataController extends AbstractInputFormController {
+public class InputFormAddressDataController extends AbstractInputFormController<Person> {
 
 	/**
 	 * CRUD buttons address.

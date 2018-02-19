@@ -37,7 +37,7 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormTrainingLevelDataController extends AbstractInputFormController {
+public class InputFormTrainingLevelDataController extends AbstractInputFormController<Referee> {
 
 	/**
 	 * CRUD buttons training level.

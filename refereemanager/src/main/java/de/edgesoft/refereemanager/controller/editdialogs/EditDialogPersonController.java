@@ -35,7 +35,7 @@ import javafx.scene.Parent;
  * @version 0.14.0
  * @since 0.13.0
  */
-public class EditDialogPersonController extends AbstractTabbedEditDialogController {
+public class EditDialogPersonController extends AbstractTabbedEditDialogController<Person> {
 
 	/**
 	 * Person data.
@@ -47,7 +47,7 @@ public class EditDialogPersonController extends AbstractTabbedEditDialogControll
 	 * Person data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormPersonDataController;
+	private IInputFormController<Person> embeddedInputFormPersonDataController;
 
 	/**
 	 * Contact data.
@@ -59,7 +59,7 @@ public class EditDialogPersonController extends AbstractTabbedEditDialogControll
 	 * Contact data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormContactDataController;
+	private IInputFormController<Person> embeddedInputFormContactDataController;
 
 	/**
 	 * Address data.
@@ -71,7 +71,7 @@ public class EditDialogPersonController extends AbstractTabbedEditDialogControll
 	 * Address data controller.
 	 */
 	@FXML
-	private IInputFormController embeddedInputFormAddressDataController;
+	private IInputFormController<Person> embeddedInputFormAddressDataController;
 
 
 	/**

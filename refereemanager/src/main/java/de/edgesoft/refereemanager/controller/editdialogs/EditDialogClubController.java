@@ -60,7 +60,7 @@ public class EditDialogClubController extends AbstractTabbedEditDialogController
 	 * Venue data controller.
 	 */
 	@FXML
-	private IInputFormController<Venue> embeddedInputFormVenueDataController;
+	private IInputFormController<Club> embeddedInputFormVenueDataController;
 
 
 	/**
