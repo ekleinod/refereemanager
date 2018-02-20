@@ -1,0 +1,11 @@
+de.edgesoft.refereemanager
+de.edgesoft.refereemanager.controller
+de.edgesoft.refereemanager.controller.crud
+de.edgesoft.refereemanager.controller.datatables
+de.edgesoft.refereemanager.controller.details
+de.edgesoft.refereemanager.controller.editdialogs
+de.edgesoft.refereemanager.controller.inputforms
+de.edgesoft.refereemanager.controller.overview
+de.edgesoft.refereemanager.jaxb
+de.edgesoft.refereemanager.model
+de.edgesoft.refereemanager.utils

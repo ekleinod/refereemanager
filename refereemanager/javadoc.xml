@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc
+	        	sourcepath="src/main/java"
+	        	destdir="../documentation/api"
+	        	doctitle="Referee Manager"
+	        	windowtitle="Referee Manager Documentation"
+
+        		encoding="utf-8"
+        		charset="utf-8"
+	        	source="1.8"
+
+	        	access="private"
+
+	        	author="true"
+	        	version="true"
+
+	        	nodeprecated="true"
+	        	nodeprecatedlist="true"
+	        	noindex="true"
+	        	nohelp="true"
+	        	nonavbar="false"
+	        	notree="true"
+        >
+        	<doclet
+	        		name="ch.raffael.mddoclet.MarkdownDoclet"
+		            path="../documentation/markdown-doclet-1.4-all.jar">
+    	    </doclet>
+        </javadoc>
+    </target>
+</project>
