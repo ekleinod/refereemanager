@@ -1,19 +1,19 @@
 package de.edgesoft.refereemanager;
 
 
+import static org.testfx.api.FxAssert.verifyThat;
+import static org.testfx.matcher.base.NodeMatchers.isVisible;
+
+import java.util.concurrent.TimeoutException;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxRobot;
+import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
-import org.testfx.framework.junit5.Start;
 
-import static org.testfx.api.FxAssert.verifyThat;
-import static org.testfx.matcher.control.LabeledMatchers.hasText;
-
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
+import javafx.application.Application;
 
 /**
  * RefereeManager application test.
@@ -44,30 +44,59 @@ import javafx.stage.Stage;
 @ExtendWith(ApplicationExtension.class)
 public class RefereeManagerTest {
 
-	Button button;
+	/**
+	 * Application.
+	 */
+	public static Application appRefMan = null;
 
-	@Start
-    public void onStart(Stage stage) {
-        button = new Button("click me!");
-        button.setOnAction(actionEvent -> button.setText("clicked!"));
-        stage.setScene(new Scene(new StackPane(button), 100, 100));
-        stage.show();
+	/**
+	 * Init tests - call application.
+	 *
+	 * @throws TimeoutException
+	 */
+	@BeforeAll
+    public static void initAll() throws TimeoutException {
+        FxToolkit.registerPrimaryStage();
+        appRefMan = FxToolkit.setupApplication(RefereeManager.class);
     }
 
     @Test
-    public void should_contain_button() {
-        // expect:
-    	verifyThat(".button", hasText("click me!"));
+    public void isAppVisible() {
+
+    	verifyThat("#appPane", isVisible());
+
     }
 
     @Test
-    public void should_click_on_button(FxRobot robot) {
-        // when:
-        robot.clickOn(".button");
+    public void showPreferences(FxRobot robot) {
 
-        // then:
-        verifyThat(".button", hasText("clicked!"));
+    	robot.clickOn("#appPane #mnuProgramPreferences");
+
     }
+
+//	/**
+//	 * Tear down tests - close application.
+//	 * @throws TimeoutException
+//	 */
+//	@AfterAll
+//    public static void tearDownAll(FxRobot robot) throws TimeoutException {
+//
+//		robot.press(KeyCode.CONTROL, KeyCode.Q);
+//		robot.release(KeyCode.CONTROL, KeyCode.Q);
+//
+//		FxToolkit.cleanupApplication(appRefMan);
+//		FxToolkit.cleanupStages();
+//
+//    }
+//
+//    @Test
+//    public void should_click_on_button(FxRobot robot) {
+//        // when:
+//        robot.clickOn(button);
+//
+//        // then:
+//        verifyThat(button, hasText("clicked!"));
+//    }
 
 }
 
