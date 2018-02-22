@@ -70,7 +70,12 @@ public class RefereeManagerTest {
     @Test
     public void showPreferences(FxRobot robot) {
 
-    	robot.clickOn("#appPane #mnuProgramPreferences");
+    	robot.clickOn("#mnuProgram");
+//    	robot.sleep(500);
+    	robot.clickOn("#mnuProgramPreferences");
+//    	robot.sleep(500);
+    	robot.clickOn("#btnCancel");
+//    	robot.sleep(500);
 
     }
 

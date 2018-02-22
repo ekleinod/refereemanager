@@ -17,7 +17,7 @@
          <children>
             <MenuBar>
               <menus>
-                  <Menu text="_Programm">
+                  <Menu fx:id="mnuProgram" text="_Programm">
                     <items>
                         <MenuItem fx:id="mnuProgramPreferences" onAction="#handleProgramPreferences" text="E_instellungen">
                            <accelerator>
