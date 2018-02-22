@@ -47,7 +47,7 @@ public class RefereeManagerTest {
 	Button button;
 
 	@Start
-    void onStart(Stage stage) {
+    public void onStart(Stage stage) {
         button = new Button("click me!");
         button.setOnAction(actionEvent -> button.setText("clicked!"));
         stage.setScene(new Scene(new StackPane(button), 100, 100));
@@ -55,13 +55,13 @@ public class RefereeManagerTest {
     }
 
     @Test
-    void should_contain_button() {
+    public void should_contain_button() {
         // expect:
     	verifyThat(".button", hasText("click me!"));
     }
 
     @Test
-    void should_click_on_button(FxRobot robot) {
+    public void should_click_on_button(FxRobot robot) {
         // when:
         robot.clickOn(".button");
 
