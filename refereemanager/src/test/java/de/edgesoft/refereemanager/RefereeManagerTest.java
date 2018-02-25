@@ -4,8 +4,17 @@ package de.edgesoft.refereemanager;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.concurrent.TimeoutException;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.InvalidPreferencesFormatException;
+import java.util.prefs.Preferences;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,6 +54,11 @@ import javafx.application.Application;
 public class RefereeManagerTest {
 
 	/**
+	 * File name for temporary preferences file.
+	 */
+	public static final String FILE_PREFS = "savedPreferences.preferences";
+
+	/**
 	 * Application.
 	 */
 	public static Application appRefMan = null;
@@ -52,10 +66,20 @@ public class RefereeManagerTest {
 	/**
 	 * Init tests - call application.
 	 *
+	 * - save current preferences
+	 * - start app
+	 *
 	 * @throws TimeoutException
 	 */
 	@BeforeAll
     public static void initAll() throws TimeoutException {
+
+		try (OutputStream osPrefs = new FileOutputStream(FILE_PREFS)) {
+			Preferences.userNodeForPackage(RefereeManager.class).exportNode(osPrefs);
+		} catch (IOException | BackingStoreException e) {
+			e.printStackTrace();
+		}
+
         FxToolkit.registerPrimaryStage();
         appRefMan = FxToolkit.setupApplication(RefereeManager.class);
     }
@@ -79,29 +103,28 @@ public class RefereeManagerTest {
 
     }
 
-//	/**
-//	 * Tear down tests - close application.
-//	 * @throws TimeoutException
-//	 */
-//	@AfterAll
-//    public static void tearDownAll(FxRobot robot) throws TimeoutException {
-//
-//		robot.press(KeyCode.CONTROL, KeyCode.Q);
-//		robot.release(KeyCode.CONTROL, KeyCode.Q);
-//
-//		FxToolkit.cleanupApplication(appRefMan);
-//		FxToolkit.cleanupStages();
-//
-//    }
-//
-//    @Test
-//    public void should_click_on_button(FxRobot robot) {
-//        // when:
-//        robot.clickOn(button);
-//
-//        // then:
-//        verifyThat(button, hasText("clicked!"));
-//    }
+	/**
+	 * Tear down tests.
+	 *
+	 * - restore preferences
+	 * - clean up app
+	 *
+	 * @throws TimeoutException
+	 */
+	@AfterAll
+	public static void tearDownAll() throws TimeoutException {
+
+		try (InputStream isPrefs = new FileInputStream(FILE_PREFS)) {
+			Preferences.userNodeForPackage(RefereeManager.class).clear();
+			Preferences.importPreferences(isPrefs);
+		} catch (IOException | BackingStoreException | InvalidPreferencesFormatException e) {
+			e.printStackTrace();
+		}
+
+		FxToolkit.cleanupApplication(appRefMan);
+		FxToolkit.cleanupStages();
+
+	}
 
 }
 
