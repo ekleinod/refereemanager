@@ -23,6 +23,7 @@ import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
 
 import javafx.application.Application;
+import javafx.scene.input.KeyCode;
 
 /**
  * RefereeManager application test.
@@ -52,6 +53,11 @@ import javafx.application.Application;
  */
 @ExtendWith(ApplicationExtension.class)
 public class RefereeManagerTest {
+
+	/**
+	 * Sleep time in ms.
+	 */
+	public static final int SLEEP = 1000;
 
 	/**
 	 * File name for temporary preferences file.
@@ -84,22 +90,36 @@ public class RefereeManagerTest {
         appRefMan = FxToolkit.setupApplication(RefereeManager.class);
     }
 
+	/**
+	 * The big test.
+	 *
+	 * JUnit 5 does not provide ordered tests (2018-02-25).
+	 * The GUI tests have to be performed in a certain order, therefore
+	 * all tests are executed in this one test method.
+	 *
+	 * @param robot FX robot
+	 */
     @Test
-    public void isAppVisible() {
+    public void performeGUITest(
+    		FxRobot robot
+    		) {
 
+    	// app visible
     	verifyThat("#appPane", isVisible());
 
-    }
-
-    @Test
-    public void showPreferences(FxRobot robot) {
-
-    	robot.clickOn("#mnuProgram");
-//    	robot.sleep(500);
-    	robot.clickOn("#mnuProgramPreferences");
-//    	robot.sleep(500);
+    	// preferences
+    	robot.clickOn("#mnuProgram").clickOn("#mnuProgramPreferences");
+    	robot.sleep(SLEEP);
     	robot.clickOn("#btnCancel");
-//    	robot.sleep(500);
+    	robot.sleep(SLEEP);
+
+    	// new file
+    	robot.clickOn("#mnuFile").clickOn("#mnuFileNew");
+    	robot.sleep(SLEEP);
+    	robot.clickOn("#btnFileSave");
+    	robot.sleep(SLEEP);
+    	robot.push(KeyCode.ESCAPE);
+    	robot.sleep(SLEEP);
 
     }
 

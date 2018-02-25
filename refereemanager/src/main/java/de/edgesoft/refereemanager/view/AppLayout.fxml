@@ -31,7 +31,7 @@
                         </MenuItem>
                     </items>
                   </Menu>
-                <Menu text="_Datei">
+                <Menu fx:id="mnuFile" text="_Datei">
                      <items>
                         <MenuItem fx:id="mnuFileNew" onAction="#handleFileNew" text="_Neu">
                            <accelerator>
