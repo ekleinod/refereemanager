@@ -1,8 +1,8 @@
 package de.edgesoft.refereemanager;
 
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.testfx.api.FxAssert.verifyThat;
-import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,8 +21,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
+import org.testfx.matcher.base.NodeMatchers;
+import org.testfx.matcher.control.ButtonMatchers;
+import org.testfx.matcher.control.TextInputControlMatchers;
 
 import javafx.application.Application;
+import javafx.scene.control.CheckBox;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -65,6 +69,11 @@ public class RefereeManagerTest {
 	public static final String FILE_PREFS = "savedPreferences.preferences";
 
 	/**
+	 * File name for temporary content file.
+	 */
+	public static final String FILE_CONTENT = "RefManContent.xml";
+
+	/**
 	 * Application.
 	 */
 	public static Application appRefMan = null;
@@ -105,21 +114,59 @@ public class RefereeManagerTest {
     		) {
 
     	// app visible
-    	verifyThat("#appPane", isVisible());
+    	verifyThat("#appPane", NodeMatchers.isVisible());
 
     	// preferences
     	robot.clickOn("#mnuProgram").clickOn("#mnuProgramPreferences");
     	robot.sleep(SLEEP);
+
+    	verifyThat("#pnePreferences", NodeMatchers.isVisible());
+    	verifyThat("#btnOK", ButtonMatchers.isDefaultButton());
+    	verifyThat("#btnCancel", ButtonMatchers.isCancelButton());
+
     	robot.clickOn("#btnCancel");
     	robot.sleep(SLEEP);
 
-    	// new file
+    	// new file, save dialog should open as "save as"
     	robot.clickOn("#mnuFile").clickOn("#mnuFileNew");
     	robot.sleep(SLEEP);
     	robot.clickOn("#btnFileSave");
     	robot.sleep(SLEEP);
     	robot.push(KeyCode.ESCAPE);
     	robot.sleep(SLEEP);
+
+    	// clear preferences
+		try {
+			Preferences.userNodeForPackage(RefereeManager.class).clear();
+		} catch (BackingStoreException e) {
+			fail(e);
+		}
+
+    	// preferences
+    	robot.clickOn("#mnuProgram").clickOn("#mnuProgramPreferences");
+    	robot.sleep(SLEEP);
+
+    	verifyThat("#chkTitleFullpath", (CheckBox box) -> !box.isSelected());
+    	verifyThat("#chkDataSortLoading", (CheckBox box) -> !box.isSelected());
+    	verifyThat("#txtPathsTemplate", TextInputControlMatchers.hasText(""));
+    	verifyThat("#txtRefereeReportPath", TextInputControlMatchers.hasText(""));
+    	verifyThat("#txtRefereeReportTournament", TextInputControlMatchers.hasText("OSR_%1$s_%2$s.pdf"));
+    	verifyThat("#txtEMailTemplateEMail", TextInputControlMatchers.hasText("email/email.mmd"));
+    	verifyThat("#txtLettersTemplateMergeSingle", TextInputControlMatchers.hasText("letter/merge_referee.tex"));
+    	verifyThat("#txtDocumentsTemplateDocument", TextInputControlMatchers.hasText("document/document.mmd"));
+    	verifyThat("#txtTextsTemplateText", TextInputControlMatchers.hasText("text/text.mmd"));
+    	verifyThat("#txtStatisticsTemplateOverview", TextInputControlMatchers.hasText("statistics/overview.html"));
+
+    	robot.clickOn("#btnCancel");
+    	robot.sleep(SLEEP);
+
+		// save empty file
+//    	robot.clickOn("#btnFileSave");
+//    	robot.sleep(SLEEP);
+//    	robot.write(FILE_CONTENT);
+//    	robot.sleep(SLEEP*5);
+//    	robot.push(KeyCode.ENTER);
+//    	robot.sleep(SLEEP*5);
 
     }
 
