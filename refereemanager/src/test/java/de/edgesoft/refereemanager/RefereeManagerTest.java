@@ -1,6 +1,7 @@
 package de.edgesoft.refereemanager;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.testfx.api.FxAssert.verifyThat;
 
@@ -74,7 +75,7 @@ public class RefereeManagerTest {
 	/**
 	 * Sleep time in ms.
 	 */
-	private static final int SLEEP = 1000;
+	private static final int SLEEP = 200;
 
 	/**
 	 * File name for temporary preferences file.
@@ -189,7 +190,19 @@ public class RefereeManagerTest {
     	RobotHelper.write(robot, FILE_CONTENT);
     	robot.sleep(SLEEP);
     	robot.push(KeyCode.ENTER);
+    	robot.sleep(1000); // wait a little for the title setting to take effect (don't know why)
+
+    	// check title
+    	assertEquals(String.format("Referee Manager - %s", FILE_CONTENT), FxToolkit.toolkitContext().getRegisteredStage().getTitle());
+
+    	robot.clickOn("#btnProgramPreferences");
     	robot.sleep(SLEEP);
+    	robot.clickOn("#chkTitleFullpath");
+    	robot.sleep(SLEEP);
+    	robot.clickOn("#btnOK");
+    	robot.sleep(SLEEP);
+
+    	assertEquals(String.format("Referee Manager - %s", Paths.get(FILE_CONTENT).toAbsolutePath().toString()), FxToolkit.toolkitContext().getRegisteredStage().getTitle());
 
     }
 
@@ -204,11 +217,16 @@ public class RefereeManagerTest {
 	@AfterAll
 	public static void tearDownAll() throws TimeoutException {
 
+		try (InputStream isPrefs = new FileInputStream(FILE_PREFS)) {
+			Preferences.userNodeForPackage(RefereeManager.class).clear();
+		} catch (IOException | BackingStoreException e) {
+			e.printStackTrace();
+		}
+
 		if (DEBUG_IMPORT_PREFS) {
 			try (InputStream isPrefs = new FileInputStream(FILE_PREFS)) {
-				Preferences.userNodeForPackage(RefereeManager.class).clear();
 				Preferences.importPreferences(isPrefs);
-			} catch (IOException | BackingStoreException | InvalidPreferencesFormatException e) {
+			} catch (IOException | InvalidPreferencesFormatException e) {
 				e.printStackTrace();
 			}
 		}
