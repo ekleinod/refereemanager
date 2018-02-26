@@ -78,6 +78,11 @@ public class RefereeManagerTest {
 	private static final int SLEEP = 200;
 
 	/**
+	 * Default path for saving temporary files.
+	 */
+	private static final String PATH_TEMP = Paths.get("").toAbsolutePath().toString();
+
+	/**
 	 * File name for temporary preferences file.
 	 */
 	private static final String FILE_PREFS = "savedPreferences.preferences";
@@ -105,21 +110,20 @@ public class RefereeManagerTest {
     public static void initAll() throws TimeoutException {
 
 		if (DEBUG_EXPORT_PREFS) {
-			try (OutputStream osPrefs = new FileOutputStream(FILE_PREFS)) {
+			try (OutputStream osPrefs = new FileOutputStream(Paths.get(PATH_TEMP, FILE_PREFS).toFile())) {
 				Preferences.userNodeForPackage(RefereeManager.class).exportNode(osPrefs);
 			} catch (IOException | BackingStoreException e) {
 				e.printStackTrace();
 			}
 		}
 
-		File fleTemp = Paths.get(FILE_CONTENT).toFile();
+		File fleTemp = Paths.get(PATH_TEMP, FILE_CONTENT).toFile();
 		if (fleTemp.exists()) {
 			fleTemp.delete();
 		}
 
         FxToolkit.registerPrimaryStage();
         appRefMan = FxToolkit.setupApplication(RefereeManager.class);
-
 
     }
 
@@ -185,6 +189,7 @@ public class RefereeManagerTest {
     	robot.sleep(SLEEP);
 
 		// save empty file
+    	Preferences.userNodeForPackage(RefereeManager.class).put("path", PATH_TEMP);
     	robot.clickOn("#btnFileSave");
     	robot.sleep(SLEEP);
     	RobotHelper.write(robot, FILE_CONTENT);
@@ -202,7 +207,10 @@ public class RefereeManagerTest {
     	robot.clickOn("#btnOK");
     	robot.sleep(SLEEP);
 
-    	assertEquals(String.format("Referee Manager - %s", Paths.get(FILE_CONTENT).toAbsolutePath().toString()), FxToolkit.toolkitContext().getRegisteredStage().getTitle());
+    	assertEquals(
+    			String.format("Referee Manager - %s", Paths.get(PATH_TEMP, FILE_CONTENT).toAbsolutePath().toString()),
+    			FxToolkit.toolkitContext().getRegisteredStage().getTitle()
+    			);
 
     }
 
@@ -217,14 +225,14 @@ public class RefereeManagerTest {
 	@AfterAll
 	public static void tearDownAll() throws TimeoutException {
 
-		try (InputStream isPrefs = new FileInputStream(FILE_PREFS)) {
+		try {
 			Preferences.userNodeForPackage(RefereeManager.class).clear();
-		} catch (IOException | BackingStoreException e) {
+		} catch (BackingStoreException e) {
 			e.printStackTrace();
 		}
 
 		if (DEBUG_IMPORT_PREFS) {
-			try (InputStream isPrefs = new FileInputStream(FILE_PREFS)) {
+			try (InputStream isPrefs = new FileInputStream(Paths.get(PATH_TEMP, FILE_PREFS).toFile())) {
 				Preferences.importPreferences(isPrefs);
 			} catch (IOException | InvalidPreferencesFormatException e) {
 				e.printStackTrace();
