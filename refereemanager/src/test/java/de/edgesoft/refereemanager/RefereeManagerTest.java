@@ -65,12 +65,12 @@ public class RefereeManagerTest {
 	/**
 	 * Easing debugging of test with flags: no export of preferences at start of test.
 	 */
-	private static final boolean DEBUG_EXPORT_PREFS = false;
+	private static final boolean DEBUG_EXPORT_PREFS = true;
 
 	/**
 	 * Easing debugging of test with flags: no import of preferences at end of test.
 	 */
-	private static final boolean DEBUG_IMPORT_PREFS = false;
+	private static final boolean DEBUG_IMPORT_PREFS = true;
 
 	/**
 	 * Sleep time in ms.
@@ -80,7 +80,7 @@ public class RefereeManagerTest {
 	/**
 	 * Default path for saving temporary files.
 	 */
-	private static final String PATH_TEMP = Paths.get("").toAbsolutePath().toString();
+	private static final String PATH_TEMP = Paths.get("", "target").toAbsolutePath().toString();
 
 	/**
 	 * File name for temporary preferences file.
