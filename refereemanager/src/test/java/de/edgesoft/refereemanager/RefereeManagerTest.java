@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.concurrent.TimeoutException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
@@ -28,9 +29,20 @@ import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.ButtonMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
+import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.edgeutils.testfx.CheckBoxMatcher;
 import de.edgesoft.edgeutils.testfx.RobotHelper;
+import de.edgesoft.refereemanager.jaxb.ObjectFactory;
+import de.edgesoft.refereemanager.jaxb.Person;
+import de.edgesoft.refereemanager.jaxb.PersonRoleType;
+import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.SexType;
+import de.edgesoft.refereemanager.model.AppModel;
 import javafx.application.Application;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -65,12 +77,12 @@ public class RefereeManagerTest {
 	/**
 	 * Easing debugging of test with flags: no export of preferences at start of test.
 	 */
-	private static final boolean DEBUG_EXPORT_PREFS = true;
+	private static final boolean DEBUG_EXPORT_PREFS = false;
 
 	/**
 	 * Easing debugging of test with flags: no import of preferences at end of test.
 	 */
-	private static final boolean DEBUG_IMPORT_PREFS = true;
+	private static final boolean DEBUG_IMPORT_PREFS = false;
 
 	/**
 	 * Sleep time in ms.
@@ -91,6 +103,11 @@ public class RefereeManagerTest {
 	 * File name for temporary content file.
 	 */
 	private static final String FILE_CONTENT = "RefManContent.xml";
+
+	/**
+	 * Object factory.
+	 */
+	public static ObjectFactory factory = new ObjectFactory();
 
 	/**
 	 * Application.
@@ -212,6 +229,41 @@ public class RefereeManagerTest {
     			FxToolkit.toolkitContext().getRegisteredStage().getTitle()
     			);
 
+    	// referees overview
+    	robot.clickOn("#btnOverviewReferees");
+    	robot.sleep(SLEEP);
+
+    	// verify empty list
+
+    	// app model
+    	robot.clickOn("#btnAdd");
+    	robot.sleep(SLEEP);
+    	// verify empty sex selection
+    	robot.clickOn("#btnCancel");
+    	robot.sleep(SLEEP);
+
+    	fillAppModel();
+
+    	robot.clickOn("#btnAdd");
+    	robot.sleep(SLEEP);
+    	// verify filled sex selection
+    	robot.push(KeyCode.ESCAPE);
+    	robot.sleep(SLEEP);
+
+    	// fill in some referees
+    	robot.clickOn("#btnAdd");
+    	robot.sleep(SLEEP);
+    	fillPersonForm(robot, getReferee1());
+    	robot.clickOn("#btnOK");
+    	robot.sleep(SLEEP);
+
+    	// verify list entry and details entry (visible, selected automatically)
+
+    	robot.clickOn("#btnFileSave");
+    	robot.sleep(SLEEP);
+
+    	robot.sleep(SLEEP*10);
+
     }
 
 	/**
@@ -243,6 +295,125 @@ public class RefereeManagerTest {
 		FxToolkit.cleanupStages();
 
 	}
+
+	/**
+	 * Fills person data in input form.
+	 *
+	 * @param robot FX robot
+	 * @param person person data
+	 */
+    private static void fillPersonForm(
+    		FxRobot robot,
+    		Person person
+    		) {
+
+    	robot.clickOn("#txtID");
+
+    	if (person.getId() != null) {
+    		RobotHelper.write(robot, person.getId());
+    	}
+    	robot.push(KeyCode.TAB);
+    	robot.sleep(SLEEP);
+
+    	StringProperty spContent = person.getTitle();
+    	if (spContent != null) {
+    		RobotHelper.write(robot, spContent.getValueSafe());
+    	}
+    	robot.push(KeyCode.TAB);
+    	robot.sleep(SLEEP);
+
+    	spContent = person.getFirstName();
+    	if (spContent != null) {
+    		RobotHelper.write(robot, spContent.getValueSafe());
+    	}
+    	robot.push(KeyCode.TAB);
+    	robot.sleep(SLEEP);
+
+    	spContent = person.getName();
+    	if (spContent != null) {
+    		RobotHelper.write(robot, spContent.getValueSafe());
+    	}
+    	robot.push(KeyCode.TAB);
+    	robot.sleep(SLEEP);
+
+    	ObjectProperty<LocalDate> opContent = person.getBirthday();
+    	if (opContent != null) {
+    		RobotHelper.write(robot, DateTimeUtils.formatDate(opContent.getValue()));
+    	}
+    	robot.push(KeyCode.TAB);
+    	robot.sleep(SLEEP);
+
+    	opContent = person.getDayOfDeath();
+    	if (opContent != null) {
+    		RobotHelper.write(robot, DateTimeUtils.formatDate(opContent.getValue()));
+    	}
+    	robot.push(KeyCode.TAB);
+    	robot.sleep(SLEEP);
+
+    	robot.push(KeyCode.TAB);
+    	robot.sleep(SLEEP);
+    	robot.push(KeyCode.TAB);
+    	robot.sleep(SLEEP);
+
+    	spContent = person.getRemark();
+    	if (spContent != null) {
+    		RobotHelper.write(robot, spContent.getValueSafe());
+    	}
+    	robot.push(KeyCode.TAB);
+    	robot.sleep(SLEEP);
+
+    }
+
+	/**
+	 * Returns test data.
+	 * @return test data
+	 */
+	private static Referee getReferee1() {
+		Referee dtaReturn = factory.createReferee();
+
+		dtaReturn.setId("Referee.1");
+		dtaReturn.setFirstName(new SimpleStringProperty("Vorname Schiedsrichter 1"));
+		dtaReturn.setName(new SimpleStringProperty("Name Schiedsrichter 1"));
+		dtaReturn.setBirthday(new SimpleObjectProperty<>(LocalDate.of(1970, 9, 21)));
+		dtaReturn.setRemark(new SimpleStringProperty("Testdaten Schiedsrichter 1"));
+
+		return dtaReturn;
+	}
+
+	/**
+	 * Fills app model with static data: sex types etc.
+	 */
+    private static void fillAppModel() {
+
+    	// sex types
+    	SexType stNew = factory.createSexType();
+    	stNew.setId("SexType.female");
+    	stNew.setTitle(new SimpleStringProperty("weiblich"));
+    	AppModel.getData().getContent().getSexType().add(stNew);
+
+    	stNew = factory.createSexType();
+    	stNew.setId("SexType.male");
+    	stNew.setTitle(new SimpleStringProperty("männlich"));
+    	stNew.setShorttitle(new SimpleStringProperty("m"));
+    	AppModel.getData().getContent().getSexType().add(stNew);
+
+    	stNew = factory.createSexType();
+    	stNew.setId("SexType.other");
+    	stNew.setTitle(new SimpleStringProperty("andere"));
+    	AppModel.getData().getContent().getSexType().add(stNew);
+
+    	// roles
+    	PersonRoleType rtNew = factory.createPersonRoleType();
+    	rtNew.setId("RoleType.1");
+    	rtNew.setTitle(new SimpleStringProperty("Rolle 1"));
+    	AppModel.getData().getContent().getRoleType().add(rtNew);
+
+    	rtNew = factory.createPersonRoleType();
+    	rtNew.setId("RoleType.2");
+    	rtNew.setTitle(new SimpleStringProperty("Rolle 2"));
+    	AppModel.getData().getContent().getRoleType().add(rtNew);
+
+    }
 
 }
 
