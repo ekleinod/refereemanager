@@ -27,6 +27,8 @@ import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.ButtonMatchers;
+import org.testfx.matcher.control.LabeledMatchers;
+import org.testfx.matcher.control.TableViewMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
@@ -43,6 +45,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -234,6 +238,11 @@ public class RefereeManagerTest {
     	robot.sleep(SLEEP);
 
     	// verify empty list
+    	verifyThat("#tblData", NodeMatchers.isVisible());
+    	verifyThat("#tblData", TableViewMatchers.hasNumRows(0));
+    	verifyThat("#tblData", (TableView<Referee> tblView) -> ((Label) tblView.getPlaceholder()).getText().equals("Es wurden noch keine Schiedsrichter eingegeben."));
+    	verifyThat("#lblHeading", LabeledMatchers.hasText("Details"));
+    	verifyThat("#lblFilter", LabeledMatchers.hasText("Filter (0 angezeigt)"));
 
     	// app model
     	robot.clickOn("#btnAdd");
@@ -258,11 +267,13 @@ public class RefereeManagerTest {
     	robot.sleep(SLEEP);
 
     	// verify list entry and details entry (visible, selected automatically)
+    	verifyThat("#tblData", TableViewMatchers.hasNumRows(1));
+//    	verifyThat("#tblData", TableViewMatchers.containsRow("Name Schiedsrichter 1", "Vorname Schiedsrichter 1", "", "", "", "", "")); // does not work yet (NullPointerException)
+    	verifyThat("#lblHeading", LabeledMatchers.hasText(String.format("%s %s", getReferee1().getFirstName().getValueSafe(), getReferee1().getName().getValueSafe())));
+    	verifyThat("#lblFilter", LabeledMatchers.hasText("Filter (1 angezeigt)"));
 
     	robot.clickOn("#btnFileSave");
     	robot.sleep(SLEEP);
-
-    	robot.sleep(SLEEP*10);
 
     }
 

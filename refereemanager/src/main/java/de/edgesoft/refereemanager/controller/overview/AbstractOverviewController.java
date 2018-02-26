@@ -126,6 +126,8 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 
 			AppModel.setModified(true);
 			RefereeManager.getAppController().setAppTitle();
+			getController().getDataTableController().handleFilterChange();
+
 		}
 
 	}
@@ -141,6 +143,7 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 				showDetails(theData.get());
 				AppModel.setModified(true);
 				RefereeManager.getAppController().setAppTitle();
+				getController().getDataTableController().handleFilterChange();
 			}
 		}
 
@@ -166,6 +169,7 @@ public abstract class AbstractOverviewController<T extends TitledIDTypeModel> im
 						theDataList.remove(theData.get());
 						AppModel.setModified(true);
 						RefereeManager.getAppController().setAppTitle();
+						getController().getDataTableController().handleFilterChange();
 						});
 
 		}
