@@ -27,6 +27,7 @@ import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.ButtonMatchers;
+import org.testfx.matcher.control.ComboBoxMatchers;
 import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.matcher.control.TableViewMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
@@ -247,7 +248,8 @@ public class RefereeManagerTest {
     	// app model
     	robot.clickOn("#btnAdd");
     	robot.sleep(SLEEP);
-    	// verify empty sex selection
+    	verifyThat("#cboSexType", ComboBoxMatchers.hasItems(0));
+    	verifyThat("#cboRole", ComboBoxMatchers.hasItems(0));
     	robot.clickOn("#btnCancel");
     	robot.sleep(SLEEP);
 
@@ -255,7 +257,8 @@ public class RefereeManagerTest {
 
     	robot.clickOn("#btnAdd");
     	robot.sleep(SLEEP);
-    	// verify filled sex selection
+    	verifyThat("#cboSexType", ComboBoxMatchers.hasItems(3));
+    	verifyThat("#cboRole", ComboBoxMatchers.hasItems(2));
     	robot.push(KeyCode.ESCAPE);
     	robot.sleep(SLEEP);
 
