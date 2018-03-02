@@ -29,12 +29,15 @@ import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.ButtonMatchers;
 import org.testfx.matcher.control.ComboBoxMatchers;
 import org.testfx.matcher.control.LabeledMatchers;
+import org.testfx.matcher.control.ListViewMatchers;
 import org.testfx.matcher.control.TableViewMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.edgeutils.testfx.CheckBoxMatcher;
 import de.edgesoft.edgeutils.testfx.RobotHelper;
+import de.edgesoft.refereemanager.jaxb.ContactType;
+import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.PersonRoleType;
@@ -43,6 +46,7 @@ import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.model.AppModel;
 import javafx.application.Application;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -265,6 +269,7 @@ public class RefereeManagerTest {
     	// fill in some referees
     	robot.clickOn("#btnAdd");
     	robot.sleep(SLEEP);
+    	fillContactForm(robot, getReferee1());
     	fillPersonForm(robot, getReferee1());
     	robot.clickOn("#btnOK");
     	robot.sleep(SLEEP);
@@ -320,6 +325,9 @@ public class RefereeManagerTest {
     		FxRobot robot,
     		Person person
     		) {
+
+    	robot.clickOn("#tabPerson");
+    	robot.sleep(SLEEP);
 
     	robot.clickOn("#txtID");
 
@@ -388,6 +396,111 @@ public class RefereeManagerTest {
     }
 
 	/**
+	 * Fills contact data in input form.
+	 *
+	 * @param robot FX robot
+	 * @param person person data
+	 */
+    private static void fillContactForm(
+    		FxRobot robot,
+    		Person person
+    		) {
+
+    	robot.clickOn("#tabContact");
+    	robot.sleep(SLEEP);
+
+//    	for (Node theNode : robot.lookup("#txtEMail").queryAll()) {
+//    		Node ndeTemp = theNode;
+//    		while(ndeTemp != null) {
+//    			System.out.println(ndeTemp + " - id: " + ndeTemp.getId());
+//    			ndeTemp = ndeTemp.getParent();
+//    		}
+//    		System.out.println();
+//    	}
+
+    	verifyThat("#lstData", ListViewMatchers.isEmpty());
+
+    	for (EMail theEMail : person.getEMail()) {
+
+    		if (theEMail.getId() != null) {
+    			robot.clickOn("#txtID");
+    			RobotHelper.write(robot, theEMail.getId());
+    		}
+    		robot.sleep(SLEEP);
+
+    		if (theEMail.getEMail() != null) {
+    			robot.clickOn("#txtEMail");
+    			RobotHelper.write(robot, theEMail.getEMail().getValueSafe());
+    		}
+    		robot.sleep(SLEEP);
+
+			robot.clickOn("#btnAdd");
+			robot.sleep(SLEEP);
+
+			robot.clickOn("#btnClearList");
+			robot.sleep(SLEEP);
+
+		}
+
+//    	StringProperty spContent = person.getTitle();
+//    	if (spContent != null) {
+//    		RobotHelper.write(robot, spContent.getValueSafe());
+//    	}
+//    	robot.push(KeyCode.TAB);
+//    	robot.sleep(SLEEP);
+//
+//    	spContent = person.getFirstName();
+//    	if (spContent != null) {
+//    		RobotHelper.write(robot, spContent.getValueSafe());
+//    	}
+//    	robot.push(KeyCode.TAB);
+//    	robot.sleep(SLEEP);
+//
+//    	spContent = person.getName();
+//    	if (spContent != null) {
+//    		RobotHelper.write(robot, spContent.getValueSafe());
+//    	}
+//    	robot.push(KeyCode.TAB);
+//    	robot.sleep(SLEEP);
+//
+//    	ObjectProperty<LocalDate> opContent = person.getBirthday();
+//    	if (opContent != null) {
+//    		RobotHelper.write(robot, DateTimeUtils.formatDate(opContent.getValue()));
+//    	}
+//    	robot.push(KeyCode.TAB);
+//    	robot.sleep(SLEEP);
+//
+//    	opContent = person.getDayOfDeath();
+//    	if (opContent != null) {
+//    		RobotHelper.write(robot, DateTimeUtils.formatDate(opContent.getValue()));
+//    	}
+//    	robot.push(KeyCode.TAB);
+//    	robot.sleep(SLEEP);
+//
+//    	if (person.getSexType() != null) {
+//    		robot.clickOn("#cboSexType").clickOn(person.getSexType().getDisplayText().getValue());
+//    		robot.sleep(SLEEP);
+//    		robot.clickOn("#btnSexTypeClear");
+//    		robot.sleep(SLEEP);
+//    		robot.clickOn("#cboSexType").clickOn(person.getSexType().getDisplayText().getValue());
+////    		verifyThat("#cboSexType", ComboBoxMatchers.hasSelectedItem(person.getSexType())); // does not work yet (NullPointerException)
+//    	}
+//
+//    	if (person.getRole() != null) {
+//    		robot.clickOn("#cboRole").clickOn(person.getRole().getDisplayText().getValue());
+////    		verifyThat("#cboRole", ComboBoxMatchers.hasSelectedItem(person.getRole())); // does not work yet (NullPointerException)
+//    	}
+//
+//    	spContent = person.getRemark();
+//    	if (spContent != null) {
+//    		robot.clickOn("#txtRemark");
+//    		RobotHelper.write(robot, spContent.getValueSafe());
+//    	}
+//    	robot.sleep(SLEEP);
+
+    }
+
+	/**
 	 * Returns test data.
 	 * @return test data
 	 */
@@ -398,9 +511,20 @@ public class RefereeManagerTest {
 		dtaReturn.setFirstName(new SimpleStringProperty("Vorname Schiedsrichter 1"));
 		dtaReturn.setName(new SimpleStringProperty("Name Schiedsrichter 1"));
 		dtaReturn.setBirthday(new SimpleObjectProperty<>(LocalDate.of(1970, 9, 21)));
-
 		dtaReturn.setSexType(AppModel.getData().getContent().getSexType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("männlich")).findFirst().get());
 		dtaReturn.setRemark(new SimpleStringProperty("Testdaten Schiedsrichter 1"));
+
+		EMail theMail = factory.createEMail();
+		theMail.setEMail(new SimpleStringProperty("schiri1@test-schiri.de"));
+		theMail.setIsPrimary(new SimpleBooleanProperty(true));
+		theMail.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
+		theMail.setRemark(new SimpleStringProperty("Testmail 1 Schiedsrichter 1"));
+		dtaReturn.getEMail().add(theMail);
+
+		theMail = factory.createEMail();
+		theMail.setEMail(new SimpleStringProperty("schiri2@test-schiri.de"));
+		theMail.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("dienstlich")).findFirst().get());
+		dtaReturn.getEMail().add(theMail);
 
 		return dtaReturn;
 	}
@@ -430,13 +554,25 @@ public class RefereeManagerTest {
     	// roles
     	PersonRoleType rtNew = factory.createPersonRoleType();
     	rtNew.setId("RoleType.1");
-    	rtNew.setTitle(new SimpleStringProperty("Rolle 1"));
+    	rtNew.setTitle(new SimpleStringProperty("VSRO"));
     	AppModel.getData().getContent().getRoleType().add(rtNew);
 
     	rtNew = factory.createPersonRoleType();
     	rtNew.setId("RoleType.2");
-    	rtNew.setTitle(new SimpleStringProperty("Rolle 2"));
+    	rtNew.setTitle(new SimpleStringProperty("Kapitän"));
     	AppModel.getData().getContent().getRoleType().add(rtNew);
+
+    	// contact kinds
+    	ContactType ctNew = factory.createContactType();
+    	ctNew.setId("ContactType.1");
+    	ctNew.setTitle(new SimpleStringProperty("persönlich"));
+    	AppModel.getData().getContent().getContactType().add(ctNew);
+
+    	ctNew = factory.createContactType();
+    	ctNew.setId("ContactType.2");
+    	ctNew.setTitle(new SimpleStringProperty("dienstlich"));
+    	ctNew.setShorttitle(new SimpleStringProperty("d"));
+    	AppModel.getData().getContent().getContactType().add(ctNew);
 
     }
 

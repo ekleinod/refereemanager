@@ -10,17 +10,17 @@
 	<children>
 		<TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
 			<tabs>
-				<Tab closable="false" text="Personendaten">
+				<Tab fx:id="tabPerson" closable="false" text="Personendaten">
 					<content>
 						<fx:include fx:id="embeddedInputFormPersonData" source="../inputforms/InputFormPersonData.fxml" />
 					</content>
 				</Tab>
-				<Tab closable="false" text="Kontakt">
+				<Tab fx:id="tabContact" closable="false" text="Kontakt">
 					<content>
 						<fx:include fx:id="embeddedInputFormContactData" source="../inputforms/InputFormContactData.fxml" />
 					</content>
 				</Tab>
-				<Tab closable="false" text="Adressen">
+				<Tab fx:id="tabAddresses" closable="false" text="Adressen">
 					<content>
 						<fx:include fx:id="embeddedInputFormAddressData" source="../inputforms/InputFormAddressData.fxml" />
 					</content>

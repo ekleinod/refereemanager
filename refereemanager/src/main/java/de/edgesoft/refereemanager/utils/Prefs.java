@@ -130,14 +130,14 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), "OSR_%1$s_%2$s.pdf");
 
 			case STAGE_WIDTH:
-				return getPreferences().get(theKey.value(), Double.toString(800));
+				return getPreferences().get(theKey.value(), Double.toString(1200));
 			case STAGE_X:
-				return getPreferences().get(theKey.value(), Double.toString((Screen.getPrimary().getBounds().getWidth() - 800) / 2));
+				return getPreferences().get(theKey.value(), Double.toString((Screen.getPrimary().getBounds().getWidth() - 1200) / 2));
 
 			case STAGE_HEIGHT:
-				return getPreferences().get(theKey.value(), Double.toString(600));
+				return getPreferences().get(theKey.value(), Double.toString(800));
 			case STAGE_Y:
-				return getPreferences().get(theKey.value(), Double.toString((Screen.getPrimary().getBounds().getHeight() - 600) / 2));
+				return getPreferences().get(theKey.value(), Double.toString((Screen.getPrimary().getBounds().getHeight() - 800) / 2));
 
 			case STAGE_MAXIMIZED:
 				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
