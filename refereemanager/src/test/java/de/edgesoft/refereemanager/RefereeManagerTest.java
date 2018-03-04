@@ -41,6 +41,7 @@ import de.edgesoft.edgeutils.testfx.ComboBoxMatcher;
 import de.edgesoft.edgeutils.testfx.DatePickerMatcher;
 import de.edgesoft.edgeutils.testfx.RobotHelper;
 import de.edgesoft.edgeutils.testfx.TextInputControlMatcher;
+import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
@@ -49,6 +50,7 @@ import de.edgesoft.refereemanager.jaxb.PersonRoleType;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.SexType;
+import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.model.AppModel;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
@@ -58,6 +60,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.VerticalDirection;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -196,7 +199,6 @@ public class RefereeManagerTest {
     	testPreferences();
     	testNewFile();
     	testRefereeOverview();
-
 
     	robot.clickOn("#btnFileSave");
     	robot.sleep(SLEEP);
@@ -367,23 +369,23 @@ public class RefereeManagerTest {
     	robot.clickOn("#tabPerson");
     	robot.sleep(SLEEP);
 
-    	verifyThat("#txtID", NodeMatchers.isVisible());
-    	robot.clickOn("#txtID");
+    	verifyThat("#scrPerson #txtID", NodeMatchers.isVisible());
+    	robot.clickOn("#scrPerson #txtID");
 
     	if (person.getId() != null) {
-    		RobotHelper.write(robot, person.getId());
+    		robot.write(person.getId(), 10);
     		robot.sleep(SLEEP);
     	}
     	robot.push(KeyCode.TAB);
 
-    	writeText("#txtTitle", person.getTitle());
-    	writeText("#txtFirstName", person.getFirstName());
-    	writeText("#txtName", person.getName());
-    	writeDate("#pckBirthday", person.getBirthday());
-    	writeDate("#pckDayOfDeath", person.getDayOfDeath());
-    	selectComboBox("#cboSexType", "#btnSexTypeClear", person.getSexType(), AppModel.getData().getContent().getSexType());
-    	selectComboBox("#cboRole", "#btnRoleClear", person.getRole(), AppModel.getData().getContent().getRoleType());
-    	writeText("#txtRemark", person.getRemark());
+    	writeText("#scrPerson #txtTitle", person.getTitle());
+    	writeText("#scrPerson #txtFirstName", person.getFirstName());
+    	writeText("#scrPerson #txtName", person.getName());
+    	writeDate("#scrPerson #pckBirthday", person.getBirthday());
+    	writeDate("#scrPerson #pckDayOfDeath", person.getDayOfDeath());
+    	selectComboBox("#scrPerson #cboSexType", "#scrPerson #btnSexTypeClear", person.getSexType(), AppModel.getData().getContent().getSexType());
+    	selectComboBox("#scrPerson #cboRole", "#scrPerson #btnRoleClear", person.getRole(), AppModel.getData().getContent().getRoleType());
+    	writeText("#scrPerson #txtRemark", person.getRemark());
 
     }
 
@@ -494,6 +496,21 @@ public class RefereeManagerTest {
 		thePhone.setNumber(new SimpleStringProperty("88 88 888-8"));
 		dtaReturn.getPhoneNumber().add(thePhone);
 
+		Address theAddress = factory.createAddress();
+		theAddress.setStreet(new SimpleStringProperty("Musterstraße"));
+		theAddress.setNumber(new SimpleStringProperty("12"));
+		theAddress.setZipCode(new SimpleStringProperty("06543"));
+		theAddress.setCity(new SimpleStringProperty("Musterstadt"));
+		theAddress.setIsPrimary(new SimpleBooleanProperty(true));
+		theAddress.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
+		theAddress.setRemark(new SimpleStringProperty("Einzige Testadresse Schiedsrichter 1"));
+		dtaReturn.getAddress().add(theAddress);
+
+		URL theURL = factory.createURL();
+		theURL.setURL(new SimpleStringProperty("http://www.musterschiri.de/"));
+		theURL.setIsPrimary(new SimpleBooleanProperty(false));
+		dtaReturn.getURL().add(theURL);
+
 		return dtaReturn;
 	}
 
@@ -560,7 +577,7 @@ public class RefereeManagerTest {
 
 		if (theContent != null) {
 			robot.clickOn(theField);
-			RobotHelper.write(robot, theContent.getValueSafe());
+			robot.write(theContent.getValueSafe(), 10);
 			robot.sleep(SLEEP);
 
 			// text areas' getText returns empty text, therefore no assertion here, same goes for test for focus
@@ -590,7 +607,7 @@ public class RefereeManagerTest {
 		if (theContent != null) {
 			robot.clickOn(theField);
 	    	verifyThat(theField, NodeMatchers.isFocused());
-			RobotHelper.write(robot, DateTimeUtils.formatDate(theContent.getValue()));
+			robot.write(DateTimeUtils.formatDate(theContent.getValue()), 10);
 			robot.push(KeyCode.TAB);
 			robot.sleep(SLEEP);
 			verifyThat(theField, DatePickerMatcher.hasDate(theContent.getValue()));
@@ -662,6 +679,32 @@ public class RefereeManagerTest {
 
 		}
 
+
+    }
+
+	/**
+	 * Print parent information of given field.
+	 *
+	 * Debug method.
+	 *
+	 * @param theField input form field
+	 */
+    @SuppressWarnings("unused")
+	private static void debugParents(
+    		final String theField
+    		) {
+
+		for (Node theNode : robot.lookup(theField).queryAll()) {
+
+			Node ndeTemp = theNode;
+			while(ndeTemp != null) {
+				System.out.println(ndeTemp + " - id: " + ndeTemp.getId());
+				ndeTemp = ndeTemp.getParent();
+			}
+
+			System.out.println();
+
+		}
 
     }
 

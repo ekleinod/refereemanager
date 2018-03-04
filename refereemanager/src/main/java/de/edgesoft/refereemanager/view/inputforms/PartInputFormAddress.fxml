@@ -29,8 +29,8 @@
 		<RowConstraints valignment="TOP" />
 	</rowConstraints>
 	<children>
-		<Label fx:id="lblID" text="ID" />
-		<TextField fx:id="txtID" promptText="ID eingeben" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
+		<Label fx:id="lblID" text="ID" visible="false" managed="false" />
+		<TextField fx:id="txtID" promptText="ID eingeben" visible="false" managed="false" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
 		<Label fx:id="lblStreet" text="Straße" GridPane.rowIndex="1" />
 		<TextField fx:id="txtStreet" promptText="Straße eingeben" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
 		<Label fx:id="lblNumber" text="Hausnummer" GridPane.rowIndex="2" />

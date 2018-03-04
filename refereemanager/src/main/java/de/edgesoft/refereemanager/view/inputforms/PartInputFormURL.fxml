@@ -26,8 +26,8 @@
 		<RowConstraints valignment="TOP" />
 	</rowConstraints>
 	<children>
-		<Label fx:id="lblID" text="ID" />
-		<TextField fx:id="txtID" promptText="ID eingeben" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
+		<Label fx:id="lblID" text="ID" visible="false" managed="false" />
+		<TextField fx:id="txtID" promptText="ID eingeben" visible="false" managed="false" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
 		<Label fx:id="lblURL" text="URL" GridPane.rowIndex="1" />
 		<TextField fx:id="txtURL" promptText="URL eingeben" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
 		<CheckBox fx:id="chkIsPrimary" text="Primärkontakt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
