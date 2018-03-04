@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
@@ -380,15 +381,8 @@ public class RefereeManagerTest {
     	writeText("#txtName", person.getName());
     	writeDate("#pckBirthday", person.getBirthday());
     	writeDate("#pckDayOfDeath", person.getDayOfDeath());
-
-    	verifyThat("#cboSexType", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getSexType().size()));
-    	verifyThat("#cboSexType", ComboBoxMatchers.containsItems(AppModel.getData().getContent().getSexType().toArray(new SexType[AppModel.getData().getContent().getSexType().size()])));
-    	selectComboBox("#cboSexType", "#btnSexTypeClear", person.getSexType());
-
-    	verifyThat("#cboRole", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getRoleType().size()));
-    	verifyThat("#cboRole", ComboBoxMatchers.containsItems(AppModel.getData().getContent().getRoleType().toArray(new PersonRoleType[AppModel.getData().getContent().getRoleType().size()])));
-    	selectComboBox("#cboRole", "#btnRoleClear", person.getRole());
-
+    	selectComboBox("#cboSexType", "#btnSexTypeClear", person.getSexType(), AppModel.getData().getContent().getSexType());
+    	selectComboBox("#cboRole", "#btnRoleClear", person.getRole(), AppModel.getData().getContent().getRoleType());
     	writeText("#txtRemark", person.getRemark());
 
     }
@@ -413,8 +407,7 @@ public class RefereeManagerTest {
         	writeText(".EMail #txtEMail", theEMail.getEMail());
         	checkCheckBox(".EMail #chkIsPrimary", theEMail.getIsPrimary());
         	checkCheckBox(".EMail #chkEditorOnly", theEMail.getEditorOnly());
-        	verifyThat(".EMail #cboContactType", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getContactType().size()));
-        	selectComboBox(".EMail #cboContactType", ".EMail #btnContactTypeClear", theEMail.getContactType());
+        	selectComboBox(".EMail #cboContactType", ".EMail #btnContactTypeClear", theEMail.getContactType(), AppModel.getData().getContent().getContactType());
         	writeText(".EMail #txtRemark", theEMail.getRemark());
 
 			robot.clickOn(".EMail #btnAdd");
@@ -440,8 +433,7 @@ public class RefereeManagerTest {
         	checkCheckBox(".PhoneNumber #chkIsCell", thePhoneNumber.getIsCell());
         	checkCheckBox(".PhoneNumber #chkIsPrimary", thePhoneNumber.getIsPrimary());
         	checkCheckBox(".PhoneNumber #chkEditorOnly", thePhoneNumber.getEditorOnly());
-        	verifyThat(".PhoneNumber #cboContactType", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getContactType().size()));
-        	selectComboBox(".PhoneNumber #cboContactType", ".PhoneNumber #btnContactTypeClear", thePhoneNumber.getContactType());
+        	selectComboBox(".PhoneNumber #cboContactType", ".PhoneNumber #btnContactTypeClear", thePhoneNumber.getContactType(), AppModel.getData().getContent().getContactType());
         	writeText(".PhoneNumber #txtRemark", thePhoneNumber.getRemark());
 
 			robot.clickOn(".PhoneNumber #btnAdd");
@@ -634,15 +626,19 @@ public class RefereeManagerTest {
 	 * @param theField input form field
 	 * @param theFieldClear input form field clear button
 	 * @param theContent content
+	 * @param theComboContent content of combo box
 	 */
     private static void selectComboBox(
     		final String theField,
     		final String theFieldClear,
-    		final ModelClassExt theContent
+    		final ModelClassExt theContent,
+    		final List<? extends ModelClassExt> theComboContent
     		) {
 
     	verifyThat(theField, NodeMatchers.isVisible());
 		verifyThat(theField, ComboBoxMatcher.isNotSelected());
+    	verifyThat(theField, ComboBoxMatchers.hasItems(theComboContent.size()));
+    	verifyThat(theField, ComboBoxMatchers.containsItems(theComboContent.toArray()));
 
 		if (theContent != null) {
     		robot.clickOn(theField).clickOn(theContent.getDisplayText().getValue());
