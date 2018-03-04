@@ -35,26 +35,23 @@ public class EMailModel extends EMail {
 	 * Display title.
 	 *
 	 * @return display title
-	 *
-	 * @version 0.14.0
-	 * @since 0.6.0
 	 */
 	@Override
 	public SimpleStringProperty getDisplayTitle() {
 
 		if (isPrivateOnly && !isPrivate()) {
-		return null;
+			return null;
 		}
 
 		StringBuilder sbReturn = new StringBuilder();
 
 		sbReturn.append(getEMail().getValue());
 
-			if (!isPrivate()) {
-				sbReturn.append(" (");
-				sbReturn.append(getContactType().getShorttitle().getValue());
-				sbReturn.append(")");
-			}
+		if (!isPrivate()) {
+			sbReturn.append(" (");
+			sbReturn.append(getContactType().getShorttitle().getValue());
+			sbReturn.append(")");
+		}
 
 		return new SimpleStringProperty(sbReturn.toString());
 

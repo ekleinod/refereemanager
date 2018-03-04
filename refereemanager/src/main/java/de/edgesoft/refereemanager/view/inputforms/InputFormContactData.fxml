@@ -9,9 +9,9 @@
 	<content>
 		<VBox spacing="10.0">
 			<children>
-				<fx:include fx:id="embeddedCRUDEMail" source="../crud/ListCRUD.fxml" />
+				<fx:include fx:id="embeddedCRUDEMail" styleClass="EMail" source="../crud/ListCRUD.fxml" />
 				<Separator />
-				<fx:include fx:id="embeddedCRUDPhoneNumber" source="../crud/ListCRUD.fxml" />
+				<fx:include fx:id="embeddedCRUDPhoneNumber" styleClass="PhoneNumber" source="../crud/ListCRUD.fxml" />
 			</children>
 		</VBox>
 	</content>

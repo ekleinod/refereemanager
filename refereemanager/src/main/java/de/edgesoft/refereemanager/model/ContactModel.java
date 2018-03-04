@@ -30,15 +30,12 @@ import de.edgesoft.refereemanager.utils.Prefs;
  *
  * @author Ekkart Kleinod
  * @version 0.14.0
- * @since 0.6.0
+ * @since 0.8.0
  */
 public class ContactModel extends Contact {
 
 	/**
 	 * Filter predicate for primary contacts.
-	 *
-	 * @version 0.14.0
-	 * @since 0.8.0
 	 */
 	public static final Predicate<Contact> ISPRIMARY = (contact -> (contact.getIsPrimary() == null) || contact.getIsPrimary().get());
 
@@ -49,9 +46,6 @@ public class ContactModel extends Contact {
 	 * the getter methods with a parameter.
 	 *
 	 * @todo check if there is a better way of implementing this
-	 *
-	 * @version 0.14.0
-	 * @since 0.8.0
 	 */
 	public static boolean isPrivateOnly = false;
 
@@ -59,9 +53,6 @@ public class ContactModel extends Contact {
 	 * Is contact private?
 	 *
 	 * @return is contact private
-	 *
-	 * @version 0.14.0
-	 * @since 0.8.0
 	 */
 	public boolean isPrivate() {
 

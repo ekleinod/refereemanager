@@ -170,7 +170,32 @@ public class RefereeManagerTest {
     	// app visible
     	verifyThat("#appPane", NodeMatchers.isVisible());
 
-    	// preferences
+    	// clear preferences
+    	try {
+    		Preferences.userNodeForPackage(RefereeManager.class).clear();
+    	} catch (BackingStoreException e) {
+    		fail(e);
+    	}
+
+    	testPreferences(robot);
+    	testNewFile(robot);
+    	testRefereeOverview(robot);
+
+
+    	robot.clickOn("#btnFileSave");
+    	robot.sleep(SLEEP);
+
+    }
+
+	/**
+	 * Preferences
+	 *
+	 * @param robot FX robot
+	 */
+    private static void testPreferences(
+    		FxRobot robot
+    		) {
+
     	robot.clickOn("#mnuProgram").clickOn("#mnuProgramPreferences");
     	robot.sleep(SLEEP);
 
@@ -180,21 +205,6 @@ public class RefereeManagerTest {
 
     	robot.clickOn("#btnCancel");
     	robot.sleep(SLEEP);
-
-    	// new file, save dialog should open as "save as"
-    	robot.clickOn("#mnuFile").clickOn("#mnuFileNew");
-    	robot.sleep(SLEEP);
-    	robot.clickOn("#btnFileSave");
-    	robot.sleep(SLEEP);
-    	robot.push(KeyCode.ESCAPE);
-    	robot.sleep(SLEEP);
-
-    	// clear preferences
-		try {
-			Preferences.userNodeForPackage(RefereeManager.class).clear();
-		} catch (BackingStoreException e) {
-			fail(e);
-		}
 
     	// preferences
     	robot.clickOn("#btnProgramPreferences");
@@ -212,6 +222,25 @@ public class RefereeManagerTest {
     	verifyThat("#txtStatisticsTemplateOverview", TextInputControlMatchers.hasText("statistics/overview.html"));
 
     	robot.clickOn("#btnCancel");
+    	robot.sleep(SLEEP);
+
+    }
+
+	/**
+	 * New file.
+	 *
+	 * @param robot FX robot
+	 */
+    private static void testNewFile(
+    		FxRobot robot
+    		) {
+
+    	// new file, save dialog should open as "save as"
+    	robot.clickOn("#mnuFile").clickOn("#mnuFileNew");
+    	robot.sleep(SLEEP);
+    	robot.clickOn("#btnFileSave");
+    	robot.sleep(SLEEP);
+    	robot.push(KeyCode.ESCAPE);
     	robot.sleep(SLEEP);
 
 		// save empty file
@@ -238,7 +267,17 @@ public class RefereeManagerTest {
     			FxToolkit.toolkitContext().getRegisteredStage().getTitle()
     			);
 
-    	// referees overview
+    }
+
+	/**
+	 * Referee overview
+	 *
+	 * @param robot FX robot
+	 */
+    private static void testRefereeOverview(
+    		FxRobot robot
+    		) {
+
     	robot.clickOn("#btnOverviewReferees");
     	robot.sleep(SLEEP);
 
@@ -269,8 +308,8 @@ public class RefereeManagerTest {
     	// fill in some referees
     	robot.clickOn("#btnAdd");
     	robot.sleep(SLEEP);
-    	fillContactForm(robot, getReferee1());
     	fillPersonForm(robot, getReferee1());
+    	fillContactForm(robot, getReferee1());
     	robot.clickOn("#btnOK");
     	robot.sleep(SLEEP);
 
@@ -279,9 +318,6 @@ public class RefereeManagerTest {
 //    	verifyThat("#tblData", TableViewMatchers.containsRow("Name Schiedsrichter 1", "Vorname Schiedsrichter 1", "", "", "", "", "")); // does not work yet (NullPointerException)
     	verifyThat("#lblHeading", LabeledMatchers.hasText(String.format("%s %s", getReferee1().getFirstName().getValueSafe(), getReferee1().getName().getValueSafe())));
     	verifyThat("#lblFilter", LabeledMatchers.hasText("Filter (1 angezeigt)"));
-
-    	robot.clickOn("#btnFileSave");
-    	robot.sleep(SLEEP);
 
     }
 
@@ -329,48 +365,49 @@ public class RefereeManagerTest {
     	robot.clickOn("#tabPerson");
     	robot.sleep(SLEEP);
 
+    	verifyThat("#txtID", NodeMatchers.isVisible());
     	robot.clickOn("#txtID");
 
     	if (person.getId() != null) {
     		RobotHelper.write(robot, person.getId());
+    		robot.sleep(SLEEP);
     	}
     	robot.push(KeyCode.TAB);
-    	robot.sleep(SLEEP);
 
     	StringProperty spContent = person.getTitle();
     	if (spContent != null) {
     		RobotHelper.write(robot, spContent.getValueSafe());
+    		robot.sleep(SLEEP);
     	}
     	robot.push(KeyCode.TAB);
-    	robot.sleep(SLEEP);
 
     	spContent = person.getFirstName();
     	if (spContent != null) {
     		RobotHelper.write(robot, spContent.getValueSafe());
+    		robot.sleep(SLEEP);
     	}
     	robot.push(KeyCode.TAB);
-    	robot.sleep(SLEEP);
 
     	spContent = person.getName();
     	if (spContent != null) {
     		RobotHelper.write(robot, spContent.getValueSafe());
+    		robot.sleep(SLEEP);
     	}
     	robot.push(KeyCode.TAB);
-    	robot.sleep(SLEEP);
 
     	ObjectProperty<LocalDate> opContent = person.getBirthday();
     	if (opContent != null) {
     		RobotHelper.write(robot, DateTimeUtils.formatDate(opContent.getValue()));
+    		robot.sleep(SLEEP);
     	}
     	robot.push(KeyCode.TAB);
-    	robot.sleep(SLEEP);
 
     	opContent = person.getDayOfDeath();
     	if (opContent != null) {
     		RobotHelper.write(robot, DateTimeUtils.formatDate(opContent.getValue()));
+    		robot.sleep(SLEEP);
     	}
     	robot.push(KeyCode.TAB);
-    	robot.sleep(SLEEP);
 
     	if (person.getSexType() != null) {
     		robot.clickOn("#cboSexType").clickOn(person.getSexType().getDisplayText().getValue());
@@ -379,19 +416,21 @@ public class RefereeManagerTest {
     		robot.sleep(SLEEP);
     		robot.clickOn("#cboSexType").clickOn(person.getSexType().getDisplayText().getValue());
 //    		verifyThat("#cboSexType", ComboBoxMatchers.hasSelectedItem(person.getSexType())); // does not work yet (NullPointerException)
+    		robot.sleep(SLEEP);
     	}
 
     	if (person.getRole() != null) {
     		robot.clickOn("#cboRole").clickOn(person.getRole().getDisplayText().getValue());
 //    		verifyThat("#cboRole", ComboBoxMatchers.hasSelectedItem(person.getRole())); // does not work yet (NullPointerException)
+    		robot.sleep(SLEEP);
     	}
 
     	spContent = person.getRemark();
     	if (spContent != null) {
     		robot.clickOn("#txtRemark");
     		RobotHelper.write(robot, spContent.getValueSafe());
+    		robot.sleep(SLEEP);
     	}
-    	robot.sleep(SLEEP);
 
     }
 
@@ -409,94 +448,49 @@ public class RefereeManagerTest {
     	robot.clickOn("#tabContact");
     	robot.sleep(SLEEP);
 
-//    	for (Node theNode : robot.lookup("#txtEMail").queryAll()) {
-//    		Node ndeTemp = theNode;
-//    		while(ndeTemp != null) {
-//    			System.out.println(ndeTemp + " - id: " + ndeTemp.getId());
-//    			ndeTemp = ndeTemp.getParent();
-//    		}
-//    		System.out.println();
-//    	}
+    	verifyThat(".EMail #lstData", ListViewMatchers.isEmpty());
 
-    	verifyThat("#lstData", ListViewMatchers.isEmpty());
+    	verifyThat(".EMail #txtID", NodeMatchers.isInvisible());
 
     	for (EMail theEMail : person.getEMail()) {
 
-    		if (theEMail.getId() != null) {
-    			robot.clickOn("#txtID");
-    			RobotHelper.write(robot, theEMail.getId());
-    		}
-    		robot.sleep(SLEEP);
-
     		if (theEMail.getEMail() != null) {
-    			robot.clickOn("#txtEMail");
+    			robot.clickOn(".EMail #txtEMail");
     			RobotHelper.write(robot, theEMail.getEMail().getValueSafe());
+    			robot.sleep(SLEEP);
     		}
-    		robot.sleep(SLEEP);
 
-			robot.clickOn("#btnAdd");
+    		if ((theEMail.getIsPrimary() != null) && (theEMail.getIsPrimary().getValue())) {
+    			robot.clickOn(".EMail #chkIsPrimary");
+    			robot.sleep(SLEEP);
+    		}
+
+    		if ((theEMail.getEditorOnly() != null) && (theEMail.getEditorOnly().getValue())) {
+    			robot.clickOn(".EMail #chkEditorOnly");
+    			robot.sleep(SLEEP);
+    		}
+
+        	if (theEMail.getContactType() != null) {
+	    		robot.clickOn(".EMail #cboContactType").clickOn(theEMail.getContactType().getDisplayText().getValue());
+//	    		verifyThat(".EMail #cboContactType", ComboBoxMatchers.hasSelectedItem(person.getRole())); // does not work yet (NullPointerException)
+				robot.sleep(SLEEP);
+        	}
+
+        	if (person.getRemark() != null) {
+        		robot.clickOn("#txtRemark");
+        		RobotHelper.write(robot, person.getRemark().getValueSafe());
+        		robot.sleep(SLEEP);
+        	}
+
+			robot.clickOn(".EMail #btnAdd");
 			robot.sleep(SLEEP);
 
-			robot.clickOn("#btnClearList");
+			robot.clickOn(".EMail #btnClearList");
 			robot.sleep(SLEEP);
 
 		}
 
-//    	StringProperty spContent = person.getTitle();
-//    	if (spContent != null) {
-//    		RobotHelper.write(robot, spContent.getValueSafe());
-//    	}
-//    	robot.push(KeyCode.TAB);
-//    	robot.sleep(SLEEP);
-//
-//    	spContent = person.getFirstName();
-//    	if (spContent != null) {
-//    		RobotHelper.write(robot, spContent.getValueSafe());
-//    	}
-//    	robot.push(KeyCode.TAB);
-//    	robot.sleep(SLEEP);
-//
-//    	spContent = person.getName();
-//    	if (spContent != null) {
-//    		RobotHelper.write(robot, spContent.getValueSafe());
-//    	}
-//    	robot.push(KeyCode.TAB);
-//    	robot.sleep(SLEEP);
-//
-//    	ObjectProperty<LocalDate> opContent = person.getBirthday();
-//    	if (opContent != null) {
-//    		RobotHelper.write(robot, DateTimeUtils.formatDate(opContent.getValue()));
-//    	}
-//    	robot.push(KeyCode.TAB);
-//    	robot.sleep(SLEEP);
-//
-//    	opContent = person.getDayOfDeath();
-//    	if (opContent != null) {
-//    		RobotHelper.write(robot, DateTimeUtils.formatDate(opContent.getValue()));
-//    	}
-//    	robot.push(KeyCode.TAB);
-//    	robot.sleep(SLEEP);
-//
-//    	if (person.getSexType() != null) {
-//    		robot.clickOn("#cboSexType").clickOn(person.getSexType().getDisplayText().getValue());
-//    		robot.sleep(SLEEP);
-//    		robot.clickOn("#btnSexTypeClear");
-//    		robot.sleep(SLEEP);
-//    		robot.clickOn("#cboSexType").clickOn(person.getSexType().getDisplayText().getValue());
-////    		verifyThat("#cboSexType", ComboBoxMatchers.hasSelectedItem(person.getSexType())); // does not work yet (NullPointerException)
-//    	}
-//
-//    	if (person.getRole() != null) {
-//    		robot.clickOn("#cboRole").clickOn(person.getRole().getDisplayText().getValue());
-////    		verifyThat("#cboRole", ComboBoxMatchers.hasSelectedItem(person.getRole())); // does not work yet (NullPointerException)
-//    	}
-//
-//    	spContent = person.getRemark();
-//    	if (spContent != null) {
-//    		robot.clickOn("#txtRemark");
-//    		RobotHelper.write(robot, spContent.getValueSafe());
-//    	}
-//    	robot.sleep(SLEEP);
+    	verifyThat(".EMail #lstData", ListViewMatchers.hasItems(person.getEMail().size()));
 
     }
 
@@ -564,12 +558,12 @@ public class RefereeManagerTest {
 
     	// contact kinds
     	ContactType ctNew = factory.createContactType();
-    	ctNew.setId("ContactType.1");
+    	ctNew.setId("ContactType.p");
     	ctNew.setTitle(new SimpleStringProperty("persönlich"));
     	AppModel.getData().getContent().getContactType().add(ctNew);
 
     	ctNew = factory.createContactType();
-    	ctNew.setId("ContactType.2");
+    	ctNew.setId("ContactType.d");
     	ctNew.setTitle(new SimpleStringProperty("dienstlich"));
     	ctNew.setShorttitle(new SimpleStringProperty("d"));
     	AppModel.getData().getContent().getContactType().add(ctNew);
