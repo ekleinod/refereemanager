@@ -42,6 +42,7 @@ import de.edgesoft.edgeutils.testfx.DatePickerMatcher;
 import de.edgesoft.edgeutils.testfx.RobotHelper;
 import de.edgesoft.edgeutils.testfx.TextInputControlMatcher;
 import de.edgesoft.refereemanager.jaxb.Address;
+import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
@@ -50,6 +51,7 @@ import de.edgesoft.refereemanager.jaxb.PersonRoleType;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.SexType;
+import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.model.AppModel;
 import javafx.application.Application;
@@ -323,6 +325,7 @@ public class RefereeManagerTest {
     	fillPersonForm(getReferee1());
     	fillContactForm(getReferee1());
     	fillAddressForm(getReferee1());
+    	fillRefereeForm(getReferee1());
 
     	robot.clickOn("#btnOK");
     	robot.sleep(SLEEP);
@@ -520,6 +523,25 @@ public class RefereeManagerTest {
     }
 
 	/**
+	 * Fills referee data in input form.
+	 *
+	 * @param referee referee data
+	 */
+    private static void fillRefereeForm(
+    		Referee referee
+    		) {
+
+    	robot.clickOn("#tabReferee");
+    	robot.sleep(SLEEP);
+
+    	selectComboBox("#scrReferee #cboMember", "#scrReferee #btnMemberClear", referee.getMember(), AppModel.getData().getContent().getClub());
+    	selectComboBox("#scrReferee #cboReffor", "#scrReferee #btnRefforClear", referee.getReffor(), AppModel.getData().getContent().getClub());
+    	selectComboBox("#scrReferee #cboStatus", "#scrReferee #btnStatusClear", referee.getStatus(), AppModel.getData().getContent().getStatusType());
+    	checkCheckBox("#scrReferee #chkDocsByLetter", referee.getDocsByLetter());
+
+    }
+
+	/**
 	 * Returns test data.
 	 * @return test data
 	 */
@@ -582,6 +604,11 @@ public class RefereeManagerTest {
 		theURL.setRemark(new SimpleStringProperty("Auch die einzige URL von Schiedsrichter 1. äöüß Und noch ein paar Sonderzeichen: é â ò."));
 		dtaReturn.getURL().add(theURL);
 
+		dtaReturn.setMember(AppModel.getData().getContent().getClub().stream().filter(st -> st.getDisplayText().getValueSafe().equals("eastside")).findFirst().get());
+		dtaReturn.setReffor(AppModel.getData().getContent().getClub().stream().filter(st -> st.getDisplayText().getValueSafe().equals("Brauer")).findFirst().get());
+		dtaReturn.setStatus(AppModel.getData().getContent().getStatusType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("many")).findFirst().get());
+		dtaReturn.setDocsByLetter(new SimpleBooleanProperty(true));
+
 		return dtaReturn;
 	}
 
@@ -629,6 +656,29 @@ public class RefereeManagerTest {
     	ctNew.setTitle(new SimpleStringProperty("dienstlich"));
     	ctNew.setShorttitle(new SimpleStringProperty("d"));
     	AppModel.getData().getContent().getContactType().add(ctNew);
+
+    	// clubs
+    	Club clNew = factory.createClub();
+    	clNew.setId("Club.1");
+    	clNew.setTitle(new SimpleStringProperty("eastside"));
+    	AppModel.getData().getContent().getClub().add(clNew);
+
+    	clNew = factory.createClub();
+    	clNew.setId("Club.2");
+    	clNew.setTitle(new SimpleStringProperty("Brauereien"));
+    	clNew.setShorttitle(new SimpleStringProperty("Brauer"));
+    	AppModel.getData().getContent().getClub().add(clNew);
+
+    	// status
+    	StatusType sttNew = factory.createStatusType();
+    	sttNew.setId("StatusType.1");
+    	sttNew.setTitle(new SimpleStringProperty("normal"));
+    	AppModel.getData().getContent().getStatusType().add(sttNew);
+
+    	sttNew = factory.createStatusType();
+    	sttNew.setId("StatusType.2");
+    	sttNew.setTitle(new SimpleStringProperty("many"));
+    	AppModel.getData().getContent().getStatusType().add(sttNew);
 
     }
 

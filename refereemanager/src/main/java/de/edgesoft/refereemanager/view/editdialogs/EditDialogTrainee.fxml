@@ -20,27 +20,27 @@
 						<fx:include fx:id="embeddedInputFormContactData" source="../inputforms/InputFormContactData.fxml" />
 					</content>
 				</Tab>
-				<Tab fx:id="tabAddresses" closable="false" text="Adressen">
+				<Tab fx:id="tabAddress" closable="false" text="Adressen">
 					<content>
 						<fx:include fx:id="embeddedInputFormAddressData" source="../inputforms/InputFormAddressData.fxml" />
 					</content>
 				</Tab>
-				<Tab closable="false" text="Schiri">
+				<Tab fx:id="tabReferee" closable="false" text="Schiri">
 					<content>
 						<fx:include fx:id="embeddedInputFormRefereeData" source="../inputforms/InputFormRefereeData.fxml" />
 					</content>
 				</Tab>
-				<Tab closable="false" text="Wünsche">
+				<Tab fx:id="tabWish" closable="false" text="Wünsche">
 					<content>
 						<fx:include fx:id="embeddedInputFormWishData" source="../inputforms/InputFormWishData.fxml" />
 					</content>
 				</Tab>
-				<Tab closable="false" text="Ausbildung">
+				<Tab fx:id="tabTraining" closable="false" text="Ausbildung">
 					<content>
 						<fx:include fx:id="embeddedInputFormTrainingLevelData" source="../inputforms/InputFormTrainingLevelData.fxml" />
 					</content>
 				</Tab>
-				<Tab closable="false" text="Prüfung">
+				<Tab fx:id="tabExam" closable="false" text="Prüfung">
 					<content>
 						<fx:include fx:id="embeddedInputFormExamData" source="../inputforms/InputFormExamData.fxml" />
 					</content>
