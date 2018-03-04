@@ -206,26 +206,26 @@ public class RefereeManagerTest {
     	}
 
     	// activated/deactivated menus/buttons
-    	verifyThat("#mnuProgram", NodeMatchers.isVisible());
-    	verifyThat("#mnuFile", NodeMatchers.isVisible());
-    	verifyThat("#mnuPeople", NodeMatchers.isVisible());
-    	verifyThat("#mnuEvents", NodeMatchers.isNull());
-    	verifyThat("#mnuThings", NodeMatchers.isNull());
-    	verifyThat("#mnuStatistics", NodeMatchers.isVisible());
-    	verifyThat("#mnuHelp", NodeMatchers.isVisible());
+    	verifyThat("#appPane #mnuProgram", NodeMatchers.isVisible());
+    	verifyThat("#appPane #mnuFile", NodeMatchers.isVisible());
+    	verifyThat("#appPane #mnuPeople", NodeMatchers.isVisible());
+    	verifyThat("#appPane #mnuEvents", NodeMatchers.isNull());
+    	verifyThat("#appPane #mnuThings", NodeMatchers.isNull());
+    	verifyThat("#appPane #mnuStatistics", NodeMatchers.isVisible());
+    	verifyThat("#appPane #mnuHelp", NodeMatchers.isVisible());
 
-    	verifyThat("#btnFileOpen", NodeMatchers.isVisible());
-    	verifyThat("#btnFileSave", NodeMatchers.isVisible());
-    	verifyThat("#btnOverviewReferees", NodeMatchers.isVisible());
-    	verifyThat("#btnOverviewPeople", NodeMatchers.isVisible());
-    	verifyThat("#btnOverviewTrainees", NodeMatchers.isVisible());
-    	verifyThat("#btnRefereeCommunication", NodeMatchers.isVisible());
-    	verifyThat("#btnOverviewLeagueGames", NodeMatchers.isInvisible());
-    	verifyThat("#btnOverviewTournaments", NodeMatchers.isInvisible());
-    	verifyThat("#btnOverviewOtherEvents", NodeMatchers.isInvisible());
-    	verifyThat("#btnOverviewClubs", NodeMatchers.isInvisible());
-    	verifyThat("#btnStatisticsData", NodeMatchers.isVisible());
-    	verifyThat("#btnProgramPreferences", NodeMatchers.isVisible());
+    	verifyThat("#appPane #btnFileOpen", NodeMatchers.isVisible());
+    	verifyThat("#appPane #btnFileSave", NodeMatchers.isVisible());
+    	verifyThat("#appPane #btnOverviewReferees", NodeMatchers.isVisible());
+    	verifyThat("#appPane #btnOverviewPeople", NodeMatchers.isVisible());
+    	verifyThat("#appPane #btnOverviewTrainees", NodeMatchers.isVisible());
+    	verifyThat("#appPane #btnRefereeCommunication", NodeMatchers.isVisible());
+    	verifyThat("#appPane #btnOverviewLeagueGames", NodeMatchers.isInvisible());
+    	verifyThat("#appPane #btnOverviewTournaments", NodeMatchers.isInvisible());
+    	verifyThat("#appPane #btnOverviewOtherEvents", NodeMatchers.isInvisible());
+    	verifyThat("#appPane #btnOverviewClubs", NodeMatchers.isInvisible());
+    	verifyThat("#appPane #btnStatisticsData", NodeMatchers.isVisible());
+    	verifyThat("#appPane #btnProgramPreferences", NodeMatchers.isVisible());
 
 
     	// tests
@@ -233,7 +233,7 @@ public class RefereeManagerTest {
     	testNewFile();
     	testRefereeOverview();
 
-    	robot.clickOn("#btnFileSave");
+    	robot.clickOn("#appPane #btnFileSave");
     	robot.sleep(SLEEP);
 
     }
@@ -243,7 +243,7 @@ public class RefereeManagerTest {
 	 */
     private static void testPreferences() {
 
-    	robot.clickOn("#mnuProgram").clickOn("#mnuProgramPreferences");
+    	robot.clickOn("#appPane #mnuProgram").clickOn("#mnuProgramPreferences");
     	robot.sleep(SLEEP);
 
     	verifyThat("#pnePreferences", NodeMatchers.isVisible());
@@ -254,7 +254,7 @@ public class RefereeManagerTest {
     	robot.sleep(SLEEP);
 
     	// preferences
-    	robot.clickOn("#btnProgramPreferences");
+    	robot.clickOn("#appPane #btnProgramPreferences");
     	robot.sleep(SLEEP);
 
     	verifyThat("#chkTitleFullpath", CheckBoxMatcher.isNotSelected());
@@ -279,16 +279,16 @@ public class RefereeManagerTest {
     private static void testNewFile() {
 
     	// new file, save dialog should open as "save as"
-    	robot.clickOn("#mnuFile").clickOn("#mnuFileNew");
+    	robot.clickOn("#appPane #mnuFile").clickOn("#mnuFileNew");
     	robot.sleep(SLEEP);
-    	robot.clickOn("#btnFileSave");
+    	robot.clickOn("#appPane #btnFileSave");
     	robot.sleep(SLEEP);
     	robot.push(KeyCode.ESCAPE);
     	robot.sleep(SLEEP);
 
 		// save empty file
     	Preferences.userNodeForPackage(RefereeManager.class).put("path", PATH_TEMP);
-    	robot.clickOn("#btnFileSave");
+    	robot.clickOn("#appPane #btnFileSave");
     	robot.sleep(SLEEP);
     	RobotHelper.write(robot, FILE_CONTENT);
     	robot.sleep(SLEEP);
@@ -298,7 +298,7 @@ public class RefereeManagerTest {
     	// check title
     	assertEquals(String.format("Referee Manager - %s", FILE_CONTENT), FxToolkit.toolkitContext().getRegisteredStage().getTitle());
 
-    	robot.clickOn("#btnProgramPreferences");
+    	robot.clickOn("#appPane #btnProgramPreferences");
     	robot.sleep(SLEEP);
     	robot.clickOn("#chkTitleFullpath");
     	robot.sleep(SLEEP);
@@ -317,7 +317,7 @@ public class RefereeManagerTest {
 	 */
     private static void testRefereeOverview() {
 
-    	robot.clickOn("#btnOverviewReferees");
+    	robot.clickOn("#appPane #btnOverviewReferees");
     	robot.sleep(SLEEP);
 
     	// verify empty list
@@ -328,7 +328,7 @@ public class RefereeManagerTest {
     	verifyThat("#lblFilter", LabeledMatchers.hasText("Filter (0 angezeigt)"));
 
     	// app model
-    	robot.clickOn("#btnAdd");
+    	robot.clickOn("#bbCRUD #btnAdd");
     	robot.sleep(SLEEP);
     	verifyThat("#cboSexType", ComboBoxMatchers.hasItems(0));
     	verifyThat("#cboRole", ComboBoxMatchers.hasItems(0));
@@ -337,7 +337,7 @@ public class RefereeManagerTest {
 
     	fillAppModel();
 
-    	robot.clickOn("#btnAdd");
+    	robot.clickOn("#bbCRUD #btnAdd");
     	robot.sleep(SLEEP);
     	verifyThat("#cboSexType", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getSexType().size()));
     	verifyThat("#cboRole", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getRoleType().size()));
@@ -345,7 +345,7 @@ public class RefereeManagerTest {
     	robot.sleep(SLEEP);
 
     	// fill in some referees
-    	robot.clickOn("#btnAdd");
+    	robot.clickOn("#bbCRUD #btnAdd");
     	robot.sleep(SLEEP);
 
     	fillPersonForm(getReferee1());
