@@ -41,6 +41,7 @@ import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.PersonRoleType;
+import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -50,6 +51,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.geometry.VerticalDirection;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
@@ -300,8 +302,8 @@ public class RefereeManagerTest {
 
     	robot.clickOn("#btnAdd");
     	robot.sleep(SLEEP);
-    	verifyThat("#cboSexType", ComboBoxMatchers.hasItems(3));
-    	verifyThat("#cboRole", ComboBoxMatchers.hasItems(2));
+    	verifyThat("#cboSexType", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getSexType().size()));
+    	verifyThat("#cboRole", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getRoleType().size()));
     	robot.push(KeyCode.ESCAPE);
     	robot.sleep(SLEEP);
 
@@ -409,6 +411,7 @@ public class RefereeManagerTest {
     	}
     	robot.push(KeyCode.TAB);
 
+    	verifyThat("#cboSexType", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getSexType().size()));
     	if (person.getSexType() != null) {
     		robot.clickOn("#cboSexType").clickOn(person.getSexType().getDisplayText().getValue());
     		robot.sleep(SLEEP);
@@ -419,7 +422,10 @@ public class RefereeManagerTest {
     		robot.sleep(SLEEP);
     	}
 
+    	verifyThat("#cboRole", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getRoleType().size()));
     	if (person.getRole() != null) {
+    		robot.clickOn("#cboRole").clickOn(person.getRole().getDisplayText().getValue());
+    		robot.clickOn("#btnRoleClear");
     		robot.clickOn("#cboRole").clickOn(person.getRole().getDisplayText().getValue());
 //    		verifyThat("#cboRole", ComboBoxMatchers.hasSelectedItem(person.getRole())); // does not work yet (NullPointerException)
     		robot.sleep(SLEEP);
@@ -449,7 +455,6 @@ public class RefereeManagerTest {
     	robot.sleep(SLEEP);
 
     	verifyThat(".EMail #lstData", ListViewMatchers.isEmpty());
-
     	verifyThat(".EMail #txtID", NodeMatchers.isInvisible());
 
     	for (EMail theEMail : person.getEMail()) {
@@ -470,15 +475,18 @@ public class RefereeManagerTest {
     			robot.sleep(SLEEP);
     		}
 
+        	verifyThat(".EMail #cboContactType", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getContactType().size()));
         	if (theEMail.getContactType() != null) {
+	    		robot.clickOn(".EMail #cboContactType").clickOn(theEMail.getContactType().getDisplayText().getValue());
+	    		robot.clickOn(".EMail #btnContactTypeClear");
 	    		robot.clickOn(".EMail #cboContactType").clickOn(theEMail.getContactType().getDisplayText().getValue());
 //	    		verifyThat(".EMail #cboContactType", ComboBoxMatchers.hasSelectedItem(person.getRole())); // does not work yet (NullPointerException)
 				robot.sleep(SLEEP);
         	}
 
-        	if (person.getRemark() != null) {
-        		robot.clickOn("#txtRemark");
-        		RobotHelper.write(robot, person.getRemark().getValueSafe());
+        	if (theEMail.getRemark() != null) {
+        		robot.clickOn(".EMail #txtRemark");
+        		RobotHelper.write(robot, theEMail.getRemark().getValueSafe());
         		robot.sleep(SLEEP);
         	}
 
@@ -491,6 +499,71 @@ public class RefereeManagerTest {
 		}
 
     	verifyThat(".EMail #lstData", ListViewMatchers.hasItems(person.getEMail().size()));
+
+    	robot.scroll(30, VerticalDirection.DOWN);
+
+    	verifyThat(".PhoneNumber #lstData", ListViewMatchers.isEmpty());
+    	verifyThat(".PhoneNumber #txtID", NodeMatchers.isInvisible());
+
+    	for (PhoneNumber thePhoneNumber : person.getPhoneNumber()) {
+
+    		if (thePhoneNumber.getCountryCode() != null) {
+    			robot.clickOn(".PhoneNumber #txtCountryCode");
+    			RobotHelper.write(robot, thePhoneNumber.getCountryCode().getValueSafe());
+    			robot.sleep(SLEEP);
+    		}
+
+    		if (thePhoneNumber.getAreaCode() != null) {
+    			robot.clickOn(".PhoneNumber #txtAreaCode");
+    			RobotHelper.write(robot, thePhoneNumber.getAreaCode().getValueSafe());
+    			robot.sleep(SLEEP);
+    		}
+
+    		if (thePhoneNumber.getNumber() != null) {
+    			robot.clickOn(".PhoneNumber #txtNumber");
+    			RobotHelper.write(robot, thePhoneNumber.getNumber().getValueSafe());
+    			robot.sleep(SLEEP);
+    		}
+
+    		if ((thePhoneNumber.getIsCell() != null) && (thePhoneNumber.getIsCell().getValue())) {
+    			robot.clickOn(".PhoneNumber #chkIsCell");
+    			robot.sleep(SLEEP);
+    		}
+
+    		if ((thePhoneNumber.getIsPrimary() != null) && (thePhoneNumber.getIsPrimary().getValue())) {
+    			robot.clickOn(".PhoneNumber #chkIsPrimary");
+    			robot.sleep(SLEEP);
+    		}
+
+    		if ((thePhoneNumber.getEditorOnly() != null) && (thePhoneNumber.getEditorOnly().getValue())) {
+    			robot.clickOn(".PhoneNumber #chkEditorOnly");
+    			robot.sleep(SLEEP);
+    		}
+
+        	verifyThat(".PhoneNumber #cboContactType", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getContactType().size()));
+        	if (thePhoneNumber.getContactType() != null) {
+	    		robot.clickOn(".PhoneNumber #cboContactType").clickOn(thePhoneNumber.getContactType().getDisplayText().getValue());
+	    		robot.clickOn(".PhoneNumber #btnContactTypeClear");
+	    		robot.clickOn(".PhoneNumber #cboContactType").clickOn(thePhoneNumber.getContactType().getDisplayText().getValue());
+//	    		verifyThat(".PhoneNumber #cboContactType", ComboBoxMatchers.hasSelectedItem(person.getRole())); // does not work yet (NullPointerException)
+				robot.sleep(SLEEP);
+        	}
+
+        	if (thePhoneNumber.getRemark() != null) {
+        		robot.clickOn(".PhoneNumber #txtRemark");
+        		RobotHelper.write(robot, thePhoneNumber.getRemark().getValueSafe());
+        		robot.sleep(SLEEP);
+        	}
+
+			robot.clickOn(".PhoneNumber #btnAdd");
+			robot.sleep(SLEEP);
+
+			robot.clickOn(".PhoneNumber #btnClearList");
+			robot.sleep(SLEEP);
+
+		}
+
+    	verifyThat(".PhoneNumber #lstData", ListViewMatchers.hasItems(person.getPhoneNumber().size()));
 
     }
 
@@ -519,6 +592,26 @@ public class RefereeManagerTest {
 		theMail.setEMail(new SimpleStringProperty("schiri2@test-schiri.de"));
 		theMail.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("dienstlich")).findFirst().get());
 		dtaReturn.getEMail().add(theMail);
+
+		PhoneNumber thePhone = factory.createPhoneNumber();
+		thePhone.setNumber(new SimpleStringProperty("1234567"));
+		thePhone.setIsPrimary(new SimpleBooleanProperty(true));
+		thePhone.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
+		thePhone.setRemark(new SimpleStringProperty("Testtelefon 1 Schiedsrichter 1"));
+		dtaReturn.getPhoneNumber().add(thePhone);
+
+		thePhone = factory.createPhoneNumber();
+		thePhone.setCountryCode(new SimpleStringProperty("49"));
+		thePhone.setAreaCode(new SimpleStringProperty("176"));
+		thePhone.setNumber(new SimpleStringProperty("6666 666"));
+		thePhone.setIsCell(new SimpleBooleanProperty(true));
+		thePhone.setEditorOnly(new SimpleBooleanProperty(true));
+		dtaReturn.getPhoneNumber().add(thePhone);
+
+		thePhone = factory.createPhoneNumber();
+		thePhone.setAreaCode(new SimpleStringProperty("345"));
+		thePhone.setNumber(new SimpleStringProperty("88 88 888-8"));
+		dtaReturn.getPhoneNumber().add(thePhone);
 
 		return dtaReturn;
 	}

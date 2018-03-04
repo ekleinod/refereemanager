@@ -69,6 +69,9 @@ public class Prefs {
 	public static String get(final PrefKey theKey) {
 
 		switch (theKey) {
+			case AREA_CODE:
+				return getPreferences().get(theKey.value(), "30");
+
 			case CONTACT_PRIVATE:
 				return getPreferences().get(theKey.value(), "ContactType.p");
 			case COUNTRY_CODE:

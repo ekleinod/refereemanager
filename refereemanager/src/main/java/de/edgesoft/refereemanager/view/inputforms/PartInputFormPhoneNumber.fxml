@@ -29,12 +29,12 @@
 		<RowConstraints valignment="TOP" />
 	</rowConstraints>
 	<children>
-		<Label fx:id="lblID" text="ID" />
-		<TextField fx:id="txtID" promptText="ID eingeben" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
+		<Label fx:id="lblID" text="ID" visible="false" managed="false" />
+		<TextField fx:id="txtID" promptText="ID eingeben" visible="false" managed="false" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
 		<Label text="Land" GridPane.rowIndex="1" />
-		<TextField fx:id="txtCountryCode" promptText="Ländervorwahl eingeben" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+		<TextField fx:id="txtCountryCode" promptText="Ländervorwahl ohne + oder führende Nullen eingeben" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
 		<Label text="Vorwahl" GridPane.rowIndex="2" />
-		<TextField fx:id="txtAreaCode" promptText="Vorwahl eingeben" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
+		<TextField fx:id="txtAreaCode" promptText="Vorwahl ohne führende Nullen eingeben" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
 		<Label fx:id="lblNumber" text="Nummer" GridPane.rowIndex="3" />
 		<TextField fx:id="txtNumber" promptText="Nummer eingeben" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
 		<CheckBox fx:id="chkIsCell" text="ist ein Handy" GridPane.columnIndex="1" GridPane.rowIndex="4" />
