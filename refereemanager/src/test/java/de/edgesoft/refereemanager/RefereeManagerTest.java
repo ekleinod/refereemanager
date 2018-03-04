@@ -111,6 +111,11 @@ public class RefereeManagerTest {
 	private static final int SLEEP = 200;
 
 	/**
+	 * Character input time in ms.
+	 */
+	private static final int CHAR_SLEEP = 5;
+
+	/**
 	 * Default path for saving temporary files.
 	 */
 	private static final String PATH_TEMP = Paths.get("", "target").toAbsolutePath().toString();
@@ -373,7 +378,7 @@ public class RefereeManagerTest {
     	robot.clickOn("#scrPerson #txtID");
 
     	if (person.getId() != null) {
-    		robot.write(person.getId(), 10);
+    		robot.write(person.getId(), CHAR_SLEEP);
     		robot.sleep(SLEEP);
     	}
     	robot.push(KeyCode.TAB);
@@ -577,7 +582,7 @@ public class RefereeManagerTest {
 
 		if (theContent != null) {
 			robot.clickOn(theField);
-			robot.write(theContent.getValueSafe(), 10);
+			robot.write(theContent.getValueSafe(), CHAR_SLEEP);
 			robot.sleep(SLEEP);
 
 			// text areas' getText returns empty text, therefore no assertion here, same goes for test for focus
@@ -607,7 +612,7 @@ public class RefereeManagerTest {
 		if (theContent != null) {
 			robot.clickOn(theField);
 	    	verifyThat(theField, NodeMatchers.isFocused());
-			robot.write(DateTimeUtils.formatDate(theContent.getValue()), 10);
+			robot.write(DateTimeUtils.formatDate(theContent.getValue()), CHAR_SLEEP);
 			robot.push(KeyCode.TAB);
 			robot.sleep(SLEEP);
 			verifyThat(theField, DatePickerMatcher.hasDate(theContent.getValue()));
