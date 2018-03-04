@@ -20,7 +20,7 @@
 						<fx:include fx:id="embeddedInputFormContactData" source="../inputforms/InputFormContactData.fxml" />
 					</content>
 				</Tab>
-				<Tab fx:id="tabAddresses" closable="false" text="Adressen">
+				<Tab fx:id="tabAddress" closable="false" text="Adressen">
 					<content>
 						<fx:include fx:id="embeddedInputFormAddressData" source="../inputforms/InputFormAddressData.fxml" />
 					</content>

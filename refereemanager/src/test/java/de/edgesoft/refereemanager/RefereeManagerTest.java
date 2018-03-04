@@ -319,8 +319,11 @@ public class RefereeManagerTest {
     	// fill in some referees
     	robot.clickOn("#btnAdd");
     	robot.sleep(SLEEP);
+
     	fillPersonForm(getReferee1());
     	fillContactForm(getReferee1());
+    	fillAddressForm(getReferee1());
+
     	robot.clickOn("#btnOK");
     	robot.sleep(SLEEP);
 
@@ -456,6 +459,67 @@ public class RefereeManagerTest {
     }
 
 	/**
+	 * Fills address data in input form.
+	 *
+	 * @param person person data
+	 */
+    private static void fillAddressForm(
+    		Person person
+    		) {
+
+    	robot.clickOn("#tabAddress");
+    	robot.sleep(SLEEP);
+
+    	verifyThat(".Address #lstData", ListViewMatchers.isEmpty());
+    	verifyThat(".Address #txtID", NodeMatchers.isInvisible());
+
+    	for (Address theAddress : person.getAddress()) {
+
+        	writeText(".Address #txtStreet", theAddress.getStreet());
+        	writeText(".Address #txtNumber", theAddress.getNumber());
+        	writeText(".Address #txtZipCode", theAddress.getZipCode());
+        	writeText(".Address #txtCity", theAddress.getCity());
+        	checkCheckBox(".Address #chkIsPrimary", theAddress.getIsPrimary());
+        	checkCheckBox(".Address #chkEditorOnly", theAddress.getEditorOnly());
+        	selectComboBox(".Address #cboContactType", ".Address #btnContactTypeClear", theAddress.getContactType(), AppModel.getData().getContent().getContactType());
+        	writeText(".Address #txtRemark", theAddress.getRemark());
+
+			robot.clickOn(".Address #btnAdd");
+			robot.sleep(SLEEP);
+
+			robot.clickOn(".Address #btnClearList");
+			robot.sleep(SLEEP);
+
+		}
+
+    	verifyThat(".Address #lstData", ListViewMatchers.hasItems(person.getAddress().size()));
+
+    	robot.scroll(30, VerticalDirection.DOWN);
+
+    	verifyThat(".URL #lstData", ListViewMatchers.isEmpty());
+    	verifyThat(".URL #txtID", NodeMatchers.isInvisible());
+
+    	for (URL theURL : person.getURL()) {
+
+        	writeText(".URL #txtURL", theURL.getURL());
+        	checkCheckBox(".URL #chkIsPrimary", theURL.getIsPrimary());
+        	checkCheckBox(".URL #chkEditorOnly", theURL.getEditorOnly());
+        	selectComboBox(".URL #cboContactType", ".URL #btnContactTypeClear", theURL.getContactType(), AppModel.getData().getContent().getContactType());
+        	writeText(".URL #txtRemark", theURL.getRemark());
+
+			robot.clickOn(".URL #btnAdd");
+			robot.sleep(SLEEP);
+
+			robot.clickOn(".URL #btnClearList");
+			robot.sleep(SLEEP);
+
+		}
+
+    	verifyThat(".URL #lstData", ListViewMatchers.hasItems(person.getURL().size()));
+
+    }
+
+	/**
 	 * Returns test data.
 	 * @return test data
 	 */
@@ -470,14 +534,14 @@ public class RefereeManagerTest {
 		dtaReturn.setRemark(new SimpleStringProperty("Testdaten Schiedsrichter 1"));
 
 		EMail theMail = factory.createEMail();
-		theMail.setEMail(new SimpleStringProperty("schiri1 at test-schiri.de")); // @todo @ does not work so far (KeyCombination)
+		theMail.setEMail(new SimpleStringProperty("schiri1@test-schiri.de"));
 		theMail.setIsPrimary(new SimpleBooleanProperty(true));
 		theMail.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
 		theMail.setRemark(new SimpleStringProperty("Testmail 1 Schiedsrichter 1"));
 		dtaReturn.getEMail().add(theMail);
 
 		theMail = factory.createEMail();
-		theMail.setEMail(new SimpleStringProperty("schiri2 at test-schiri.de")); // @todo @ does not work so far (KeyCombination)
+		theMail.setEMail(new SimpleStringProperty("schiri2@test-schiri.de"));
 		theMail.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("dienstlich")).findFirst().get());
 		dtaReturn.getEMail().add(theMail);
 
@@ -514,6 +578,8 @@ public class RefereeManagerTest {
 		URL theURL = factory.createURL();
 		theURL.setURL(new SimpleStringProperty("http://www.musterschiri.de/"));
 		theURL.setIsPrimary(new SimpleBooleanProperty(false));
+		theURL.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("dienstlich")).findFirst().get());
+		theURL.setRemark(new SimpleStringProperty("Auch die einzige URL von Schiedsrichter 1. äöüß Und noch ein paar Sonderzeichen: é â ò."));
 		dtaReturn.getURL().add(theURL);
 
 		return dtaReturn;
