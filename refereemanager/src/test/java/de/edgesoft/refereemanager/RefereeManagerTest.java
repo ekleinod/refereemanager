@@ -563,9 +563,10 @@ public class RefereeManagerTest {
 			RobotHelper.write(robot, theContent.getValueSafe());
 			robot.sleep(SLEEP);
 
-			// text areas' getText returns empty text, therefore no assertion here
+			// text areas' getText returns empty text, therefore no assertion here, same goes for test for focus
 			if (!(robot.lookup(theField).query() instanceof TextArea)) {
 				verifyThat(theField, TextInputControlMatchers.hasText(theContent.getValueSafe()));
+				verifyThat(theField, NodeMatchers.isFocused());
 			}
 
 		}
@@ -588,6 +589,7 @@ public class RefereeManagerTest {
 
 		if (theContent != null) {
 			robot.clickOn(theField);
+	    	verifyThat(theField, NodeMatchers.isFocused());
 			RobotHelper.write(robot, DateTimeUtils.formatDate(theContent.getValue()));
 			robot.push(KeyCode.TAB);
 			robot.sleep(SLEEP);
@@ -613,6 +615,7 @@ public class RefereeManagerTest {
 
 		if ((theContent != null) && (theContent.getValue())) {
 			robot.clickOn(theField);
+	    	verifyThat(theField, NodeMatchers.isFocused());
 			robot.sleep(SLEEP);
 			verifyThat(theField, (theContent.getValue()) ? CheckBoxMatcher.isSelected() : CheckBoxMatcher.isNotSelected());
 		}
@@ -649,8 +652,13 @@ public class RefereeManagerTest {
 	    		robot.clickOn(theField).clickOn(theContent.getDisplayText().getValue());
     		}
 
+    		// cannot test for focus, not sure, why
+	    	//verifyThat(theField, NodeMatchers.isFocused());
+
 			robot.sleep(SLEEP);
-//		verifyThat(theField, ComboBoxMatchers.hasSelectedItem(theContent)); // does not work yet (NullPointerException)
+
+			// ComboBox#getSelectionModel().getSelectedItem() returns null, therefore no check possible
+			//verifyThat(theField, ComboBoxMatchers.hasSelectedItem(theContent));
 
 		}
 

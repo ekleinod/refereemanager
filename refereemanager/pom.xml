@@ -30,7 +30,7 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<javax.mail.version>1.6.0</javax.mail.version>
-		<testfx.version>4.0.11-alpha</testfx.version>
+		<testfx.version>4.0.12-alpha</testfx.version>
 		<junit.platform.version>1.1.0</junit.platform.version>
 		<junit.jupiter.version>5.1.0</junit.jupiter.version>
 	</properties>
