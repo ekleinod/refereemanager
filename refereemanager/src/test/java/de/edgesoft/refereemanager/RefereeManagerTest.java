@@ -205,6 +205,30 @@ public class RefereeManagerTest {
     		fail(e);
     	}
 
+    	// activated/deactivated menus/buttons
+    	verifyThat("#mnuProgram", NodeMatchers.isVisible());
+    	verifyThat("#mnuFile", NodeMatchers.isVisible());
+    	verifyThat("#mnuPeople", NodeMatchers.isVisible());
+    	verifyThat("#mnuEvents", NodeMatchers.isNull());
+    	verifyThat("#mnuThings", NodeMatchers.isNull());
+    	verifyThat("#mnuStatistics", NodeMatchers.isVisible());
+    	verifyThat("#mnuHelp", NodeMatchers.isVisible());
+
+    	verifyThat("#btnFileOpen", NodeMatchers.isVisible());
+    	verifyThat("#btnFileSave", NodeMatchers.isVisible());
+    	verifyThat("#btnOverviewReferees", NodeMatchers.isVisible());
+    	verifyThat("#btnOverviewPeople", NodeMatchers.isVisible());
+    	verifyThat("#btnOverviewTrainees", NodeMatchers.isVisible());
+    	verifyThat("#btnRefereeCommunication", NodeMatchers.isVisible());
+    	verifyThat("#btnOverviewLeagueGames", NodeMatchers.isInvisible());
+    	verifyThat("#btnOverviewTournaments", NodeMatchers.isInvisible());
+    	verifyThat("#btnOverviewOtherEvents", NodeMatchers.isInvisible());
+    	verifyThat("#btnOverviewClubs", NodeMatchers.isInvisible());
+    	verifyThat("#btnStatisticsData", NodeMatchers.isVisible());
+    	verifyThat("#btnProgramPreferences", NodeMatchers.isVisible());
+
+
+    	// tests
     	testPreferences();
     	testNewFile();
     	testRefereeOverview();

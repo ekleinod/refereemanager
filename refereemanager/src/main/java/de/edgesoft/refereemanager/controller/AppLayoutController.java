@@ -293,14 +293,6 @@ public class AppLayoutController {
 	@FXML
 	private Button btnProgramPreferences;
 
-	/**
-	 * Button help -> about.
-	 *
-	 * @since 0.14.0
-	 */
-	@FXML
-	private Button btnHelpAbout;
-
 
 	/**
 	 * Primary stage.
@@ -355,7 +347,6 @@ public class AppLayoutController {
 		ButtonUtils.adaptButton(btnStatisticsData, mnuStatisticsData);
 
 		mnuHelpAbout.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/help-about.png")));
-		ButtonUtils.adaptButton(btnHelpAbout, mnuHelpAbout);
 
 	}
 
