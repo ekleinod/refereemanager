@@ -45,6 +45,7 @@ import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.EMail;
+import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.PersonRoleType;
@@ -53,6 +54,7 @@ import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.URL;
+import de.edgesoft.refereemanager.jaxb.Wish;
 import de.edgesoft.refereemanager.model.AppModel;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
@@ -326,6 +328,7 @@ public class RefereeManagerTest {
     	fillContactForm(getReferee1());
     	fillAddressForm(getReferee1());
     	fillRefereeForm(getReferee1());
+    	fillWishForm(getReferee1());
 
     	robot.clickOn("#btnOK");
     	robot.sleep(SLEEP);
@@ -542,6 +545,66 @@ public class RefereeManagerTest {
     }
 
 	/**
+	 * Fills referee data in wish form.
+	 *
+	 * @param referee referee data
+	 */
+    private static void fillWishForm(
+    		Referee referee
+    		) {
+
+    	robot.clickOn("#tabWish");
+    	robot.sleep(SLEEP);
+
+    	verifyThat(".Prefer #lstData", ListViewMatchers.isEmpty());
+
+    	for (Wish thePrefer : referee.getPrefer()) {
+
+    		selectComboBox(".Prefer #cboClub", ".Prefer #btnClubClear", thePrefer.getClub(), AppModel.getData().getContent().getClub());
+    		selectComboBox(".Prefer #cboLeague", ".Prefer #btnLeagueClear", thePrefer.getLeague(), AppModel.getData().getContent().getLeague());
+    		selectComboBox(".Prefer #cboSexType", ".Prefer #btnSexTypeClear", thePrefer.getSexType(), AppModel.getData().getContent().getSexType());
+        	checkCheckBox(".Prefer #chkTournamentOnly", thePrefer.getTournamentOnly());
+        	checkCheckBox(".Prefer #chkLeagueGamesOnly", thePrefer.getLeagueGamesOnly());
+        	checkCheckBox(".Prefer #chkSaturday", thePrefer.getSaturday());
+        	checkCheckBox(".Prefer #chkSunday", thePrefer.getSunday());
+
+			robot.clickOn(".Prefer #btnAdd");
+			robot.sleep(SLEEP);
+
+			robot.clickOn(".Prefer #btnClearList");
+			robot.sleep(SLEEP);
+
+		}
+
+    	verifyThat(".Prefer #lstData", ListViewMatchers.hasItems(referee.getPrefer().size()));
+
+    	robot.scroll(30, VerticalDirection.DOWN);
+
+    	verifyThat(".Avoid #lstData", ListViewMatchers.isEmpty());
+
+    	for (Wish theAvoid : referee.getAvoid()) {
+
+    		selectComboBox(".Avoid #cboClub", ".Avoid #btnClubClear", theAvoid.getClub(), AppModel.getData().getContent().getClub());
+    		selectComboBox(".Avoid #cboLeague", ".Avoid #btnLeagueClear", theAvoid.getLeague(), AppModel.getData().getContent().getLeague());
+    		selectComboBox(".Avoid #cboSexType", ".Avoid #btnSexTypeClear", theAvoid.getSexType(), AppModel.getData().getContent().getSexType());
+        	checkCheckBox(".Avoid #chkTournamentOnly", theAvoid.getTournamentOnly());
+        	checkCheckBox(".Avoid #chkLeagueGamesOnly", theAvoid.getLeagueGamesOnly());
+        	checkCheckBox(".Avoid #chkSaturday", theAvoid.getSaturday());
+        	checkCheckBox(".Avoid #chkSunday", theAvoid.getSunday());
+
+			robot.clickOn(".Avoid #btnAdd");
+			robot.sleep(SLEEP);
+
+			robot.clickOn(".Avoid #btnClearList");
+			robot.sleep(SLEEP);
+
+		}
+
+    	verifyThat(".Avoid #lstData", ListViewMatchers.hasItems(referee.getAvoid().size()));
+
+    }
+
+	/**
 	 * Returns test data.
 	 * @return test data
 	 */
@@ -608,6 +671,42 @@ public class RefereeManagerTest {
 		dtaReturn.setReffor(AppModel.getData().getContent().getClub().stream().filter(st -> st.getDisplayText().getValueSafe().equals("Brauer")).findFirst().get());
 		dtaReturn.setStatus(AppModel.getData().getContent().getStatusType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("many")).findFirst().get());
 		dtaReturn.setDocsByLetter(new SimpleBooleanProperty(true));
+
+		Wish theWish = factory.createWish();
+		theWish.setClub(AppModel.getData().getContent().getClub().stream().filter(st -> st.getDisplayText().getValueSafe().equals("eastside")).findFirst().get());
+		dtaReturn.getPrefer().add(theWish);
+
+		theWish = factory.createWish();
+		theWish.setLeague(AppModel.getData().getContent().getLeague().stream().filter(st -> st.getDisplayText().getValueSafe().equals("Regionalliga Herren")).findFirst().get());
+		dtaReturn.getPrefer().add(theWish);
+
+		theWish = factory.createWish();
+		theWish.setSexType(AppModel.getData().getContent().getSexType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("männlich")).findFirst().get());
+		dtaReturn.getPrefer().add(theWish);
+
+		theWish = factory.createWish();
+		theWish.setSaturday(new SimpleBooleanProperty(true));
+		dtaReturn.getPrefer().add(theWish);
+
+		theWish = factory.createWish();
+		theWish.setClub(AppModel.getData().getContent().getClub().stream().filter(st -> st.getDisplayText().getValueSafe().equals("Brauer")).findFirst().get());
+		dtaReturn.getAvoid().add(theWish);
+
+		theWish = factory.createWish();
+		theWish.setLeague(AppModel.getData().getContent().getLeague().stream().filter(st -> st.getDisplayText().getValueSafe().equals("Oberliga Damen")).findFirst().get());
+		dtaReturn.getAvoid().add(theWish);
+
+		theWish = factory.createWish();
+		theWish.setSunday(new SimpleBooleanProperty(true));
+		dtaReturn.getAvoid().add(theWish);
+
+		theWish = factory.createWish();
+		theWish.setLeagueGamesOnly(new SimpleBooleanProperty(true));
+		dtaReturn.getAvoid().add(theWish);
+
+		theWish = factory.createWish();
+		theWish.setTournamentOnly(new SimpleBooleanProperty(true));
+		dtaReturn.getAvoid().add(theWish);
 
 		return dtaReturn;
 	}
@@ -679,6 +778,18 @@ public class RefereeManagerTest {
     	sttNew.setId("StatusType.2");
     	sttNew.setTitle(new SimpleStringProperty("many"));
     	AppModel.getData().getContent().getStatusType().add(sttNew);
+
+    	// leagues
+    	League lgNew = factory.createLeague();
+    	lgNew.setId("League.1");
+    	lgNew.setTitle(new SimpleStringProperty("Oberliga Damen"));
+    	AppModel.getData().getContent().getLeague().add(lgNew);
+
+    	lgNew = factory.createLeague();
+    	lgNew.setId("League.2");
+    	lgNew.setTitle(new SimpleStringProperty("Regionalliga Herren"));
+    	lgNew.setShorttitle(new SimpleStringProperty("RLH"));
+    	AppModel.getData().getContent().getLeague().add(lgNew);
 
     }
 

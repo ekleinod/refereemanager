@@ -9,9 +9,9 @@
 	<content>
 		<VBox spacing="10.0">
 			<children>
-				<fx:include fx:id="embeddedCRUDPrefer" source="../crud/ListCRUD.fxml" />
+				<fx:include fx:id="embeddedCRUDPrefer" styleClass="Prefer" source="../crud/ListCRUD.fxml" />
 				<Separator />
-				<fx:include fx:id="embeddedCRUDAvoid" source="../crud/ListCRUD.fxml" />
+				<fx:include fx:id="embeddedCRUDAvoid" styleClass="Avoid" source="../crud/ListCRUD.fxml" />
 			</children>
 		</VBox>
 	</content>
