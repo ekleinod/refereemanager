@@ -33,9 +33,13 @@ import org.testfx.matcher.control.ListViewMatchers;
 import org.testfx.matcher.control.TableViewMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
+import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
 import de.edgesoft.edgeutils.testfx.CheckBoxMatcher;
+import de.edgesoft.edgeutils.testfx.ComboBoxMatcher;
+import de.edgesoft.edgeutils.testfx.DatePickerMatcher;
 import de.edgesoft.edgeutils.testfx.RobotHelper;
+import de.edgesoft.edgeutils.testfx.TextInputControlMatcher;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
@@ -46,6 +50,7 @@ import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.model.AppModel;
 import javafx.application.Application;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -54,6 +59,7 @@ import javafx.beans.property.StringProperty;
 import javafx.geometry.VerticalDirection;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -126,6 +132,11 @@ public class RefereeManagerTest {
 	private static Application appRefMan = null;
 
 	/**
+	 * Fx robot.
+	 */
+	private static FxRobot robot = null;
+
+	/**
 	 * Init tests - call application.
 	 *
 	 * - save current preferences
@@ -166,8 +177,10 @@ public class RefereeManagerTest {
 	 */
     @Test
     public void performGUITest(
-    		FxRobot robot
+    		FxRobot theRobot
     		) {
+
+    	robot = theRobot;
 
     	// app visible
     	verifyThat("#appPane", NodeMatchers.isVisible());
@@ -179,9 +192,9 @@ public class RefereeManagerTest {
     		fail(e);
     	}
 
-    	testPreferences(robot);
-    	testNewFile(robot);
-    	testRefereeOverview(robot);
+    	testPreferences();
+    	testNewFile();
+    	testRefereeOverview();
 
 
     	robot.clickOn("#btnFileSave");
@@ -191,12 +204,8 @@ public class RefereeManagerTest {
 
 	/**
 	 * Preferences
-	 *
-	 * @param robot FX robot
 	 */
-    private static void testPreferences(
-    		FxRobot robot
-    		) {
+    private static void testPreferences() {
 
     	robot.clickOn("#mnuProgram").clickOn("#mnuProgramPreferences");
     	robot.sleep(SLEEP);
@@ -230,12 +239,8 @@ public class RefereeManagerTest {
 
 	/**
 	 * New file.
-	 *
-	 * @param robot FX robot
 	 */
-    private static void testNewFile(
-    		FxRobot robot
-    		) {
+    private static void testNewFile() {
 
     	// new file, save dialog should open as "save as"
     	robot.clickOn("#mnuFile").clickOn("#mnuFileNew");
@@ -273,12 +278,8 @@ public class RefereeManagerTest {
 
 	/**
 	 * Referee overview
-	 *
-	 * @param robot FX robot
 	 */
-    private static void testRefereeOverview(
-    		FxRobot robot
-    		) {
+    private static void testRefereeOverview() {
 
     	robot.clickOn("#btnOverviewReferees");
     	robot.sleep(SLEEP);
@@ -310,8 +311,8 @@ public class RefereeManagerTest {
     	// fill in some referees
     	robot.clickOn("#btnAdd");
     	robot.sleep(SLEEP);
-    	fillPersonForm(robot, getReferee1());
-    	fillContactForm(robot, getReferee1());
+    	fillPersonForm(getReferee1());
+    	fillContactForm(getReferee1());
     	robot.clickOn("#btnOK");
     	robot.sleep(SLEEP);
 
@@ -356,11 +357,9 @@ public class RefereeManagerTest {
 	/**
 	 * Fills person data in input form.
 	 *
-	 * @param robot FX robot
 	 * @param person person data
 	 */
     private static void fillPersonForm(
-    		FxRobot robot,
     		Person person
     		) {
 
@@ -376,78 +375,30 @@ public class RefereeManagerTest {
     	}
     	robot.push(KeyCode.TAB);
 
-    	StringProperty spContent = person.getTitle();
-    	if (spContent != null) {
-    		RobotHelper.write(robot, spContent.getValueSafe());
-    		robot.sleep(SLEEP);
-    	}
-    	robot.push(KeyCode.TAB);
-
-    	spContent = person.getFirstName();
-    	if (spContent != null) {
-    		RobotHelper.write(robot, spContent.getValueSafe());
-    		robot.sleep(SLEEP);
-    	}
-    	robot.push(KeyCode.TAB);
-
-    	spContent = person.getName();
-    	if (spContent != null) {
-    		RobotHelper.write(robot, spContent.getValueSafe());
-    		robot.sleep(SLEEP);
-    	}
-    	robot.push(KeyCode.TAB);
-
-    	ObjectProperty<LocalDate> opContent = person.getBirthday();
-    	if (opContent != null) {
-    		RobotHelper.write(robot, DateTimeUtils.formatDate(opContent.getValue()));
-    		robot.sleep(SLEEP);
-    	}
-    	robot.push(KeyCode.TAB);
-
-    	opContent = person.getDayOfDeath();
-    	if (opContent != null) {
-    		RobotHelper.write(robot, DateTimeUtils.formatDate(opContent.getValue()));
-    		robot.sleep(SLEEP);
-    	}
-    	robot.push(KeyCode.TAB);
+    	writeText("#txtTitle", person.getTitle());
+    	writeText("#txtFirstName", person.getFirstName());
+    	writeText("#txtName", person.getName());
+    	writeDate("#pckBirthday", person.getBirthday());
+    	writeDate("#pckDayOfDeath", person.getDayOfDeath());
 
     	verifyThat("#cboSexType", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getSexType().size()));
-    	if (person.getSexType() != null) {
-    		robot.clickOn("#cboSexType").clickOn(person.getSexType().getDisplayText().getValue());
-    		robot.sleep(SLEEP);
-    		robot.clickOn("#btnSexTypeClear");
-    		robot.sleep(SLEEP);
-    		robot.clickOn("#cboSexType").clickOn(person.getSexType().getDisplayText().getValue());
-//    		verifyThat("#cboSexType", ComboBoxMatchers.hasSelectedItem(person.getSexType())); // does not work yet (NullPointerException)
-    		robot.sleep(SLEEP);
-    	}
+    	verifyThat("#cboSexType", ComboBoxMatchers.containsItems(AppModel.getData().getContent().getSexType().toArray(new SexType[AppModel.getData().getContent().getSexType().size()])));
+    	selectComboBox("#cboSexType", "#btnSexTypeClear", person.getSexType());
 
     	verifyThat("#cboRole", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getRoleType().size()));
-    	if (person.getRole() != null) {
-    		robot.clickOn("#cboRole").clickOn(person.getRole().getDisplayText().getValue());
-    		robot.clickOn("#btnRoleClear");
-    		robot.clickOn("#cboRole").clickOn(person.getRole().getDisplayText().getValue());
-//    		verifyThat("#cboRole", ComboBoxMatchers.hasSelectedItem(person.getRole())); // does not work yet (NullPointerException)
-    		robot.sleep(SLEEP);
-    	}
+    	verifyThat("#cboRole", ComboBoxMatchers.containsItems(AppModel.getData().getContent().getRoleType().toArray(new PersonRoleType[AppModel.getData().getContent().getRoleType().size()])));
+    	selectComboBox("#cboRole", "#btnRoleClear", person.getRole());
 
-    	spContent = person.getRemark();
-    	if (spContent != null) {
-    		robot.clickOn("#txtRemark");
-    		RobotHelper.write(robot, spContent.getValueSafe());
-    		robot.sleep(SLEEP);
-    	}
+    	writeText("#txtRemark", person.getRemark());
 
     }
 
 	/**
 	 * Fills contact data in input form.
 	 *
-	 * @param robot FX robot
 	 * @param person person data
 	 */
     private static void fillContactForm(
-    		FxRobot robot,
     		Person person
     		) {
 
@@ -459,36 +410,12 @@ public class RefereeManagerTest {
 
     	for (EMail theEMail : person.getEMail()) {
 
-    		if (theEMail.getEMail() != null) {
-    			robot.clickOn(".EMail #txtEMail");
-    			RobotHelper.write(robot, theEMail.getEMail().getValueSafe());
-    			robot.sleep(SLEEP);
-    		}
-
-    		if ((theEMail.getIsPrimary() != null) && (theEMail.getIsPrimary().getValue())) {
-    			robot.clickOn(".EMail #chkIsPrimary");
-    			robot.sleep(SLEEP);
-    		}
-
-    		if ((theEMail.getEditorOnly() != null) && (theEMail.getEditorOnly().getValue())) {
-    			robot.clickOn(".EMail #chkEditorOnly");
-    			robot.sleep(SLEEP);
-    		}
-
+        	writeText(".EMail #txtEMail", theEMail.getEMail());
+        	checkCheckBox(".EMail #chkIsPrimary", theEMail.getIsPrimary());
+        	checkCheckBox(".EMail #chkEditorOnly", theEMail.getEditorOnly());
         	verifyThat(".EMail #cboContactType", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getContactType().size()));
-        	if (theEMail.getContactType() != null) {
-	    		robot.clickOn(".EMail #cboContactType").clickOn(theEMail.getContactType().getDisplayText().getValue());
-	    		robot.clickOn(".EMail #btnContactTypeClear");
-	    		robot.clickOn(".EMail #cboContactType").clickOn(theEMail.getContactType().getDisplayText().getValue());
-//	    		verifyThat(".EMail #cboContactType", ComboBoxMatchers.hasSelectedItem(person.getRole())); // does not work yet (NullPointerException)
-				robot.sleep(SLEEP);
-        	}
-
-        	if (theEMail.getRemark() != null) {
-        		robot.clickOn(".EMail #txtRemark");
-        		RobotHelper.write(robot, theEMail.getRemark().getValueSafe());
-        		robot.sleep(SLEEP);
-        	}
+        	selectComboBox(".EMail #cboContactType", ".EMail #btnContactTypeClear", theEMail.getContactType());
+        	writeText(".EMail #txtRemark", theEMail.getRemark());
 
 			robot.clickOn(".EMail #btnAdd");
 			robot.sleep(SLEEP);
@@ -507,53 +434,15 @@ public class RefereeManagerTest {
 
     	for (PhoneNumber thePhoneNumber : person.getPhoneNumber()) {
 
-    		if (thePhoneNumber.getCountryCode() != null) {
-    			robot.clickOn(".PhoneNumber #txtCountryCode");
-    			RobotHelper.write(robot, thePhoneNumber.getCountryCode().getValueSafe());
-    			robot.sleep(SLEEP);
-    		}
-
-    		if (thePhoneNumber.getAreaCode() != null) {
-    			robot.clickOn(".PhoneNumber #txtAreaCode");
-    			RobotHelper.write(robot, thePhoneNumber.getAreaCode().getValueSafe());
-    			robot.sleep(SLEEP);
-    		}
-
-    		if (thePhoneNumber.getNumber() != null) {
-    			robot.clickOn(".PhoneNumber #txtNumber");
-    			RobotHelper.write(robot, thePhoneNumber.getNumber().getValueSafe());
-    			robot.sleep(SLEEP);
-    		}
-
-    		if ((thePhoneNumber.getIsCell() != null) && (thePhoneNumber.getIsCell().getValue())) {
-    			robot.clickOn(".PhoneNumber #chkIsCell");
-    			robot.sleep(SLEEP);
-    		}
-
-    		if ((thePhoneNumber.getIsPrimary() != null) && (thePhoneNumber.getIsPrimary().getValue())) {
-    			robot.clickOn(".PhoneNumber #chkIsPrimary");
-    			robot.sleep(SLEEP);
-    		}
-
-    		if ((thePhoneNumber.getEditorOnly() != null) && (thePhoneNumber.getEditorOnly().getValue())) {
-    			robot.clickOn(".PhoneNumber #chkEditorOnly");
-    			robot.sleep(SLEEP);
-    		}
-
+        	writeText(".PhoneNumber #txtCountryCode", thePhoneNumber.getCountryCode());
+        	writeText(".PhoneNumber #txtAreaCode", thePhoneNumber.getAreaCode());
+        	writeText(".PhoneNumber #txtNumber", thePhoneNumber.getNumber());
+        	checkCheckBox(".PhoneNumber #chkIsCell", thePhoneNumber.getIsCell());
+        	checkCheckBox(".PhoneNumber #chkIsPrimary", thePhoneNumber.getIsPrimary());
+        	checkCheckBox(".PhoneNumber #chkEditorOnly", thePhoneNumber.getEditorOnly());
         	verifyThat(".PhoneNumber #cboContactType", ComboBoxMatchers.hasItems(AppModel.getData().getContent().getContactType().size()));
-        	if (thePhoneNumber.getContactType() != null) {
-	    		robot.clickOn(".PhoneNumber #cboContactType").clickOn(thePhoneNumber.getContactType().getDisplayText().getValue());
-	    		robot.clickOn(".PhoneNumber #btnContactTypeClear");
-	    		robot.clickOn(".PhoneNumber #cboContactType").clickOn(thePhoneNumber.getContactType().getDisplayText().getValue());
-//	    		verifyThat(".PhoneNumber #cboContactType", ComboBoxMatchers.hasSelectedItem(person.getRole())); // does not work yet (NullPointerException)
-				robot.sleep(SLEEP);
-        	}
-
-        	if (thePhoneNumber.getRemark() != null) {
-        		robot.clickOn(".PhoneNumber #txtRemark");
-        		RobotHelper.write(robot, thePhoneNumber.getRemark().getValueSafe());
-        		robot.sleep(SLEEP);
-        	}
+        	selectComboBox(".PhoneNumber #cboContactType", ".PhoneNumber #btnContactTypeClear", thePhoneNumber.getContactType());
+        	writeText(".PhoneNumber #txtRemark", thePhoneNumber.getRemark());
 
 			robot.clickOn(".PhoneNumber #btnAdd");
 			robot.sleep(SLEEP);
@@ -582,14 +471,14 @@ public class RefereeManagerTest {
 		dtaReturn.setRemark(new SimpleStringProperty("Testdaten Schiedsrichter 1"));
 
 		EMail theMail = factory.createEMail();
-		theMail.setEMail(new SimpleStringProperty("schiri1@test-schiri.de"));
+		theMail.setEMail(new SimpleStringProperty("schiri1 at test-schiri.de")); // @todo @ does not work so far (KeyCombination)
 		theMail.setIsPrimary(new SimpleBooleanProperty(true));
 		theMail.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
 		theMail.setRemark(new SimpleStringProperty("Testmail 1 Schiedsrichter 1"));
 		dtaReturn.getEMail().add(theMail);
 
 		theMail = factory.createEMail();
-		theMail.setEMail(new SimpleStringProperty("schiri2@test-schiri.de"));
+		theMail.setEMail(new SimpleStringProperty("schiri2 at test-schiri.de")); // @todo @ does not work so far (KeyCombination)
 		theMail.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("dienstlich")).findFirst().get());
 		dtaReturn.getEMail().add(theMail);
 
@@ -660,6 +549,115 @@ public class RefereeManagerTest {
     	ctNew.setTitle(new SimpleStringProperty("dienstlich"));
     	ctNew.setShorttitle(new SimpleStringProperty("d"));
     	AppModel.getData().getContent().getContactType().add(ctNew);
+
+    }
+
+	/**
+	 * Writes text in form element if needed.
+	 *
+	 * @param theField input form field
+	 * @param theContent content
+	 */
+    private static void writeText(
+    		final String theField,
+    		final StringProperty theContent
+    		) {
+
+    	verifyThat(theField, NodeMatchers.isVisible());
+		verifyThat(theField, TextInputControlMatcher.isEmpty());
+
+		if (theContent != null) {
+			robot.clickOn(theField);
+			RobotHelper.write(robot, theContent.getValueSafe());
+			robot.sleep(SLEEP);
+
+			// text areas' getText returns empty text, therefore no assertion here
+			if (!(robot.lookup(theField).query() instanceof TextArea)) {
+				verifyThat(theField, TextInputControlMatchers.hasText(theContent.getValueSafe()));
+			}
+
+		}
+
+    }
+
+	/**
+	 * Writes date in form element if needed.
+	 *
+	 * @param theField input form field
+	 * @param theContent content
+	 */
+    private static void writeDate(
+    		final String theField,
+    		final ObjectProperty<LocalDate> theContent
+    		) {
+
+    	verifyThat(theField, NodeMatchers.isVisible());
+		verifyThat(theField, DatePickerMatcher.isEmpty());
+
+		if (theContent != null) {
+			robot.clickOn(theField);
+			RobotHelper.write(robot, DateTimeUtils.formatDate(theContent.getValue()));
+			robot.push(KeyCode.TAB);
+			robot.sleep(SLEEP);
+			verifyThat(theField, DatePickerMatcher.hasDate(theContent.getValue()));
+		}
+
+
+    }
+
+	/**
+	 * Checks CheckBox if needed.
+	 *
+	 * @param theField input form field
+	 * @param theContent content
+	 */
+    private static void checkCheckBox(
+    		final String theField,
+    		final BooleanProperty theContent
+    		) {
+
+    	verifyThat(theField, NodeMatchers.isVisible());
+		verifyThat(theField, CheckBoxMatcher.isNotSelected());
+
+		if ((theContent != null) && (theContent.getValue())) {
+			robot.clickOn(theField);
+			robot.sleep(SLEEP);
+			verifyThat(theField, (theContent.getValue()) ? CheckBoxMatcher.isSelected() : CheckBoxMatcher.isNotSelected());
+		}
+
+
+    }
+
+	/**
+	 * Selects ComboBox if needed.
+	 *
+	 * @param theField input form field
+	 * @param theFieldClear input form field clear button
+	 * @param theContent content
+	 */
+    private static void selectComboBox(
+    		final String theField,
+    		final String theFieldClear,
+    		final ModelClassExt theContent
+    		) {
+
+    	verifyThat(theField, NodeMatchers.isVisible());
+		verifyThat(theField, ComboBoxMatcher.isNotSelected());
+
+		if (theContent != null) {
+    		robot.clickOn(theField).clickOn(theContent.getDisplayText().getValue());
+
+    		if (theFieldClear != null) {
+	    		robot.clickOn(theFieldClear);
+	    		verifyThat(theField, ComboBoxMatcher.isNotSelected());
+	    		robot.clickOn(theField).clickOn(theContent.getDisplayText().getValue());
+    		}
+
+			robot.sleep(SLEEP);
+//		verifyThat(theField, ComboBoxMatchers.hasSelectedItem(theContent)); // does not work yet (NullPointerException)
+
+		}
+
 
     }
 
