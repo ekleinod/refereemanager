@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.model;
 import java.util.Comparator;
 
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -49,7 +50,7 @@ public class TrainingLevelModel extends TrainingLevel {
 	 */
 	@Override
 	public StringProperty getDisplayText() {
-		return getType().getDisplayTitleShort();
+		return (getType() == null) ? new SimpleStringProperty("Stufe eingeben") : getType().getDisplayTitleShort();
 	}
 
 }

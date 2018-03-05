@@ -9,7 +9,7 @@
 	<content>
 		<VBox spacing="10.0">
 			<children>
-				<fx:include fx:id="embeddedCRUDTrainingLevel" source="../crud/ListCRUD.fxml" />
+				<fx:include fx:id="embeddedCRUDTrainingLevel" styleClass="TrainingLevel" source="../crud/ListCRUD.fxml" />
 			</children>
 		</VBox>
 	</content>

@@ -35,7 +35,7 @@
 						<fx:include fx:id="embeddedInputFormWishData" source="../inputforms/InputFormWishData.fxml" />
 					</content>
 				</Tab>
-				<Tab fx:id="tabTraining" closable="false" text="Ausbildung">
+				<Tab fx:id="tabTrainingLevel" closable="false" text="Ausbildung">
 					<content>
 						<fx:include fx:id="embeddedInputFormTrainingLevelData" source="../inputforms/InputFormTrainingLevelData.fxml" />
 					</content>

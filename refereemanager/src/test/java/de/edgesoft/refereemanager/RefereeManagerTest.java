@@ -53,13 +53,17 @@ import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jaxb.StatusType;
+import de.edgesoft.refereemanager.jaxb.TrainingLevel;
+import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
 import de.edgesoft.refereemanager.jaxb.URL;
+import de.edgesoft.refereemanager.jaxb.Update;
 import de.edgesoft.refereemanager.jaxb.Wish;
 import de.edgesoft.refereemanager.model.AppModel;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -112,7 +116,7 @@ public class RefereeManagerTest {
 	/**
 	 * Sleep time in ms.
 	 */
-	private static final int SLEEP = 200;
+	private static final int SLEEP = 20;
 
 	/**
 	 * Character input time in ms.
@@ -226,7 +230,6 @@ public class RefereeManagerTest {
     	verifyThat("#appPane #btnOverviewClubs", NodeMatchers.isInvisible());
     	verifyThat("#appPane #btnStatisticsData", NodeMatchers.isVisible());
     	verifyThat("#appPane #btnProgramPreferences", NodeMatchers.isVisible());
-
 
     	// tests
     	testPreferences();
@@ -348,6 +351,7 @@ public class RefereeManagerTest {
     	robot.clickOn("#bbCRUD #btnAdd");
     	robot.sleep(SLEEP);
 
+    	fillTrainingLevelForm(getReferee1());
     	fillPersonForm(getReferee1());
     	fillContactForm(getReferee1());
     	fillAddressForm(getReferee1());
@@ -629,6 +633,51 @@ public class RefereeManagerTest {
     }
 
 	/**
+	 * Fills referee data in wish form.
+	 *
+	 * @param referee referee data
+	 */
+    private static void fillTrainingLevelForm(
+    		Referee referee
+    		) {
+
+    	robot.clickOn("#tabTrainingLevel");
+    	robot.sleep(SLEEP);
+
+    	verifyThat(".TrainingLevel #lstData", ListViewMatchers.isEmpty());
+
+    	for (TrainingLevel theTrainingLevel : referee.getTrainingLevel()) {
+
+    		writeDate(".TrainingLevel #pckSince", theTrainingLevel.getSince());
+    		selectComboBox(".TrainingLevel #cboTrainingLevelType", ".TrainingLevel #btnTrainingLevelTypeClear", theTrainingLevel.getType(), AppModel.getData().getContent().getTrainingLevelType());
+
+			robot.clickOn(".TrainingLevel #btnAdd");
+			robot.sleep(SLEEP);
+
+	    	for (Update theUpdate : theTrainingLevel.getUpdate()) {
+
+	    		writeDate(".TrainingLevel .Update #pckDate", theUpdate.getDate());
+
+				robot.clickOn(".TrainingLevel .Update #btnAdd");
+				robot.sleep(SLEEP);
+
+				robot.clickOn(".TrainingLevel .Update #btnClearList");
+				robot.sleep(SLEEP);
+
+			}
+
+	    	verifyThat(".TrainingLevel .Update #lstData", ListViewMatchers.hasItems(theTrainingLevel.getUpdate().size()));
+
+			robot.clickOn(".TrainingLevel #btnClearList");
+			robot.sleep(SLEEP);
+
+		}
+
+    	verifyThat(".TrainingLevel #lstData", ListViewMatchers.hasItems(referee.getTrainingLevel().size()));
+
+    }
+
+	/**
 	 * Returns test data.
 	 * @return test data
 	 */
@@ -639,6 +688,7 @@ public class RefereeManagerTest {
 		dtaReturn.setFirstName(new SimpleStringProperty("Vorname Schiedsrichter 1"));
 		dtaReturn.setName(new SimpleStringProperty("Name Schiedsrichter 1"));
 		dtaReturn.setBirthday(new SimpleObjectProperty<>(LocalDate.of(1970, 9, 21)));
+		dtaReturn.setDayOfDeath(new SimpleObjectProperty<>(LocalDate.of(2010, 12, 1)));
 		dtaReturn.setSexType(AppModel.getData().getContent().getSexType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("männlich")).findFirst().get());
 		dtaReturn.setRemark(new SimpleStringProperty("Testdaten Schiedsrichter 1"));
 
@@ -732,6 +782,30 @@ public class RefereeManagerTest {
 		theWish.setTournamentOnly(new SimpleBooleanProperty(true));
 		dtaReturn.getAvoid().add(theWish);
 
+		TrainingLevel theTrainingLevel = factory.createTrainingLevel();
+		theTrainingLevel.setSince(new SimpleObjectProperty<>(LocalDate.of(1984, 7, 12)));
+		theTrainingLevel.setType(AppModel.getData().getContent().getTrainingLevelType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("Verbandsschiedsrichter_in")).findFirst().get());
+		Update theUpdate = factory.createUpdate();
+		theUpdate.setDate(new SimpleObjectProperty<>(LocalDate.of(1986, 10, 31)));
+		theTrainingLevel.getUpdate().add(theUpdate);
+		theUpdate = factory.createUpdate();
+		theUpdate.setDate(new SimpleObjectProperty<>(LocalDate.of(1987, 11, 3)));
+		theTrainingLevel.getUpdate().add(theUpdate);
+		dtaReturn.getTrainingLevel().add(theTrainingLevel);
+
+		theTrainingLevel = factory.createTrainingLevel();
+		theTrainingLevel.setSince(new SimpleObjectProperty<>(LocalDate.of(1990, 1, 12)));
+		theTrainingLevel.setType(AppModel.getData().getContent().getTrainingLevelType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("Nationale_r Schiedsrichter_in")).findFirst().get());
+		theUpdate = factory.createUpdate();
+		theUpdate.setDate(new SimpleObjectProperty<>(LocalDate.of(1993, 8, 10)));
+		theTrainingLevel.getUpdate().add(theUpdate);
+		dtaReturn.getTrainingLevel().add(theTrainingLevel);
+
+		theTrainingLevel = factory.createTrainingLevel();
+		theTrainingLevel.setSince(new SimpleObjectProperty<>(LocalDate.of(1998, 5, 12)));
+		theTrainingLevel.setType(AppModel.getData().getContent().getTrainingLevelType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("International Umpire")).findFirst().get());
+		dtaReturn.getTrainingLevel().add(theTrainingLevel);
+
 		return dtaReturn;
 	}
 
@@ -814,6 +888,31 @@ public class RefereeManagerTest {
     	lgNew.setTitle(new SimpleStringProperty("Regionalliga Herren"));
     	lgNew.setShorttitle(new SimpleStringProperty("RLH"));
     	AppModel.getData().getContent().getLeague().add(lgNew);
+
+    	// training level
+    	TrainingLevelType lvlNew = factory.createTrainingLevelType();
+    	lvlNew.setId("TrainingLevelType.VSR");
+    	lvlNew.setTitle(new SimpleStringProperty("Verbandsschiedsrichter_in"));
+    	lvlNew.setRank(new SimpleIntegerProperty(0));
+    	lvlNew.setUpdateInterval(new SimpleIntegerProperty(2));
+    	AppModel.getData().getContent().getTrainingLevelType().add(lvlNew);
+
+    	lvlNew = factory.createTrainingLevelType();
+    	lvlNew.setId("TrainingLevelType.NSR");
+    	lvlNew.setTitle(new SimpleStringProperty("Nationale_r Schiedsrichter_in"));
+    	lvlNew.setShorttitle(new SimpleStringProperty("NSR"));
+    	lvlNew.setRank(new SimpleIntegerProperty(1));
+    	lvlNew.setUpdateInterval(new SimpleIntegerProperty(3));
+    	AppModel.getData().getContent().getTrainingLevelType().add(lvlNew);
+
+    	lvlNew = factory.createTrainingLevelType();
+    	lvlNew.setId("TrainingLevelType.IU");
+    	lvlNew.setTitle(new SimpleStringProperty("International Umpire"));
+    	lvlNew.setShorttitle(new SimpleStringProperty("IU"));
+    	lvlNew.setRank(new SimpleIntegerProperty(2));
+    	lvlNew.setUpdateInterval(new SimpleIntegerProperty(3));
+    	lvlNew.setRemark(new SimpleStringProperty("Die Besten der Besten."));
+    	AppModel.getData().getContent().getTrainingLevelType().add(lvlNew);
 
     }
 
