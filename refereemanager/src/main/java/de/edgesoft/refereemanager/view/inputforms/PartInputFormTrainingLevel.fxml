@@ -12,7 +12,7 @@
 
 <GridPane vgap="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.PartInputFormTrainingLevelController">
 	<columnConstraints>
-		<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
 		<ColumnConstraints hgrow="SOMETIMES" />
 	</columnConstraints>
 	<rowConstraints>
@@ -39,6 +39,18 @@
 				</Button>
 			</children>
 		</AnchorPane>
-		<fx:include fx:id="embeddedCRUDUpdate" styleClass="Update" source="../crud/ListCRUD.fxml" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+		<Label fx:id="lblUpdatesLabel" text="Fortbildungen" GridPane.rowIndex="2" />
+		<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+			<children>
+				<Label fx:id="lblUpdates" text="Label" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
+				<Button fx:id="btnEditUpdates" onAction="#handleEditUpdates" AnchorPane.rightAnchor="0.0" />
+			</children>
+		</AnchorPane>
+		<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+			<children>
+				<DatePicker fx:id="pckQuickUpdate" promptText="tt.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
+				<Button fx:id="btnAddQuickUpdate" onAction="#handleAddQuickUpdate" AnchorPane.rightAnchor="0.0" />
+			</children>
+		</AnchorPane>
 	</children>
 </GridPane>

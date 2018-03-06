@@ -1,7 +1,11 @@
 package de.edgesoft.refereemanager.controller.inputforms;
+import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
@@ -12,6 +16,7 @@ import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.Resources;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -90,17 +95,60 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 	private Button btnTrainingLevelTypeClear;
 
 	/**
-	 * CRUD buttons update.
+	 * Label for updates display.
+	 *
+	 * @since 0.15.0
 	 */
 	@FXML
-	private Parent embeddedCRUDUpdate;
+	protected Label lblUpdatesLabel;
 
 	/**
-	 * CRUD buttons update controller.
+	 * Label for displaying updates.
+	 *
+	 * @since 0.15.0
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "update", jaxbclass = TrainingLevel.class)
-	protected ListCRUDController<Update> embeddedCRUDUpdateController;
+	protected Label lblUpdates;
+
+	/**
+	 * Edit updates.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnEditUpdates;
+
+	/**
+	 * Quick update picker.
+	 */
+	@FXML
+	protected DatePicker pckQuickUpdate;
+
+	/**
+	 * Add quick update.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnAddQuickUpdate;
+
+	/**
+	 * Data storage for updates
+	 */
+	private List<Update> lstUpdates = null;
+
+//	/**
+//	 * CRUD buttons update.
+//	 */
+//	@FXML
+//	private Parent embeddedCRUDUpdate;
+//
+//	/**
+//	 * CRUD buttons update controller.
+//	 */
+//	@FXML
+//	@JAXBMatch(jaxbfield = "update", jaxbclass = TrainingLevel.class)
+//	protected ListCRUDController<Update> embeddedCRUDUpdateController;
 
 
 	/**
@@ -121,19 +169,84 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 		btnTrainingLevelTypeClear.disableProperty().bind(
 				cboTrainingLevelType.getSelectionModel().selectedItemProperty().isNull()
 		);
+		btnEditUpdates.disableProperty().bind(
+				cboTrainingLevelType.getSelectionModel().selectedItemProperty().isNull()
+		);
+		btnAddQuickUpdate.disableProperty().bind(
+				cboTrainingLevelType.getSelectionModel().selectedItemProperty().isNull()
+		);
 
 		// icons
 		btnTrainingLevelTypeClear.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-clear.png")));
+		btnEditUpdates.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit.png")));
+		btnAddQuickUpdate.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/list-add.png")));
 
 		// init form
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{TrainingLevel.class})));
 
-		Map.Entry<Parent, FXMLLoader> nodeUpdate = Resources.loadNode("inputforms/PartInputFormUpdate");
-		embeddedCRUDUpdateController.initController(
-				nodeUpdate.getValue().getController(),
-				nodeUpdate.getKey(),
-				"Fortbildungen",
-				AppModel.factory::createUpdate);
+		lblUpdates.setText(null);
+
+//		Map.Entry<Parent, FXMLLoader> nodeUpdate = Resources.loadNode("inputforms/PartInputFormUpdate");
+//		embeddedCRUDUpdateController.initController(
+//				nodeUpdate.getValue().getController(),
+//				nodeUpdate.getKey(),
+//				"Fortbildungen",
+//				AppModel.factory::createUpdate);
+
+	}
+
+	@Override
+	public void fillFormFromData(
+			final TrainingLevel theData
+			) {
+
+		super.fillFormFromData(theData);
+
+		if (theData == null) {
+			lstUpdates = null;
+		} else {
+			lstUpdates = new ArrayList<>(theData.getUpdate());
+		}
+		updateUpdates();
+
+	}
+
+	@Override
+	public void fillDataFromForm(
+			TrainingLevel theData
+			) {
+
+		super.fillDataFromForm(theData);
+
+		// fill updates
+
+	}
+
+	/**
+	 * Updates update display.
+	 *
+	 * @since 0.15.0
+	 */
+	public void updateUpdates() {
+
+		lblUpdatesLabel.setText(MessageFormat.format(
+				"{0,choice,0#Fortbildungen|1#Fortbildung|1<Fortbildungen}",
+				(lstUpdates == null) ? 0 : lstUpdates.size())
+				);
+
+		if (lstUpdates == null) {
+
+			lblUpdates.setText(null);
+
+		} else {
+
+			if (lstUpdates.isEmpty()) {
+				lblUpdates.setText("Keine");
+			} else {
+				lblUpdates.setText(lstUpdates.stream().map(update -> update.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
+			}
+
+		}
 
 	}
 
@@ -145,6 +258,38 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 	@FXML
 	private void handleTrainingLevelTypeClear() {
 		de.edgesoft.edgeutils.javafx.ComboBoxUtils.clearSelection(cboTrainingLevelType);
+	}
+
+	/**
+	 * Opens update edit form.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleEditUpdates() {
+		System.out.println("todo");
+	}
+
+	/**
+	 * Adds quick update date.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleAddQuickUpdate() {
+
+		LocalDate dteValue = pckQuickUpdate.getValue();
+
+		if (dteValue != null) {
+
+			Update newUpdate = AppModel.factory.createUpdate();
+			newUpdate.setDate(new SimpleObjectProperty<>(dteValue));
+			lstUpdates.add(newUpdate);
+
+			updateUpdates();
+
+		}
+
 	}
 
 }
