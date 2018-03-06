@@ -1,6 +1,7 @@
 package de.edgesoft.refereemanager.controller;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
@@ -573,13 +574,16 @@ public class AppLayoutController {
 					new FileChooser.ExtensionFilter("Alle Dateien (*.*)", "*.*")
 					);
 			if (!Prefs.get(PrefKey.PATH).isEmpty()) {
-				fileChooser.setInitialDirectory(new File(Prefs.get(PrefKey.PATH)));
+				Path flePath = Paths.get(Prefs.get(PrefKey.PATH));
+				if (flePath.toFile().exists()) {
+					fileChooser.setInitialDirectory(flePath.toFile());
+				}
 			}
 
 			File file = fileChooser.showOpenDialog(primaryStage);
 
 			if (file != null) {
-					openData(file.getPath());
+				openData(file.getPath());
 			}
 
 		}
@@ -621,7 +625,7 @@ public class AppLayoutController {
 			if (!file.getName().contains(".")) {
 				file = new File(String.format("%s.refman", file.getPath()));
 			}
-				saveData(file.getPath());
+			saveData(file.getPath());
 		}
 
 	}

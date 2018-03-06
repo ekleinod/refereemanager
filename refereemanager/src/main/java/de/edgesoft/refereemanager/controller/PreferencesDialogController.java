@@ -732,7 +732,9 @@ public class PreferencesDialogController {
 				);
 		if (!Prefs.get(PrefKey.PREFERENCES_FILE).isEmpty()) {
 			Path pathPrefs = Paths.get(Prefs.get(PrefKey.PREFERENCES_FILE));
-			fileChooser.setInitialDirectory(pathPrefs.getParent().toFile());
+			if (pathPrefs.getParent().toFile().exists()) {
+				fileChooser.setInitialDirectory(pathPrefs.getParent().toFile());
+			}
 			fileChooser.setInitialFileName(pathPrefs.getFileName().toString());
 		}
 
