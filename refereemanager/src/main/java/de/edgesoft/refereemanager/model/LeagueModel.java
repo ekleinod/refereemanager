@@ -1,14 +1,10 @@
 package de.edgesoft.refereemanager.model;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
-
-import javax.xml.bind.JAXBElement;
 
 import de.edgesoft.refereemanager.jaxb.League;
-import de.edgesoft.refereemanager.jaxb.Person;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * League model, additional methods for jaxb model class.
@@ -50,35 +46,18 @@ public class LeagueModel extends League {
 	 */
 	public static final Comparator<League> RANK_DISPLAYTITLE = RANK.thenComparing(TitledIDTypeModel.DISPLAYTITLE);
 
-	/**
-	 * Returns if league is national league.
-	 *
-	 * @return is league national league
-	 */
 	@Override
 	public SimpleBooleanProperty getNational() {
 		return (super.getNational() == null) ? new SimpleBooleanProperty(Boolean.FALSE) : super.getNational();
 	}
 
 	/**
-	 * Gets the value of the refereeReportRecipient property.
-	 *
-	 * For some reason, the generated code is correct but there is a list of {@link JAXBElement} in
-	 * the refereeReportRecipient property.
-	 *
-	 * Until the issue is solved, this method converts this to the correct list of {@link Person}
-	 *
+	 * @since 0.15.0
 	 */
 	@Override
-	public List<Person> getRefereeReportRecipient() {
-		List<Person> lstReturn = new ArrayList<>();
-
-		for (Object personObject : super.getRefereeReportRecipient()) {
-			lstReturn.add(((JAXBElement<Person>) personObject).getValue());
-		}
-
-		return lstReturn;
-	}
+    public SimpleIntegerProperty getRank() {
+        return (super.getRank() == null) ? new SimpleIntegerProperty(-1) : super.getRank();
+    }
 
 }
 
