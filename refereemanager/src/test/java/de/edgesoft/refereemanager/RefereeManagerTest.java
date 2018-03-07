@@ -18,6 +18,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 import java.util.prefs.Preferences;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -351,12 +352,12 @@ public class RefereeManagerTest {
     	robot.clickOn("#bbCRUD #btnAdd");
     	robot.sleep(SLEEP);
 
-    	fillTrainingLevelForm(getReferee1());
     	fillPersonForm(getReferee1());
     	fillContactForm(getReferee1());
     	fillAddressForm(getReferee1());
     	fillRefereeForm(getReferee1());
     	fillWishForm(getReferee1());
+    	fillTrainingLevelForm(getReferee1());
 
     	robot.clickOn("#btnOK");
     	robot.sleep(SLEEP);
@@ -425,8 +426,8 @@ public class RefereeManagerTest {
     	writeText("#scrPerson #txtName", person.getName());
     	writeDate("#scrPerson #pckBirthday", person.getBirthday());
     	writeDate("#scrPerson #pckDayOfDeath", person.getDayOfDeath());
-    	selectComboBox("#scrPerson #cboSexType", "#scrPerson #btnSexTypeClear", person.getSexType(), AppModel.getData().getContent().getSexType());
-    	selectComboBox("#scrPerson #cboRole", "#scrPerson #btnRoleClear", person.getRole(), AppModel.getData().getContent().getRoleType());
+    	selectComboBoxEntry("#scrPerson #cboSexType", "#scrPerson #btnSexTypeClear", person.getSexType(), AppModel.getData().getContent().getSexType());
+    	selectComboBoxEntry("#scrPerson #cboRole", "#scrPerson #btnRoleClear", person.getRole(), AppModel.getData().getContent().getRoleType());
     	writeText("#scrPerson #txtRemark", person.getRemark());
 
     }
@@ -451,7 +452,7 @@ public class RefereeManagerTest {
         	writeText(".EMail #txtEMail", theEMail.getEMail());
         	checkCheckBox(".EMail #chkIsPrimary", theEMail.getIsPrimary());
         	checkCheckBox(".EMail #chkEditorOnly", theEMail.getEditorOnly());
-        	selectComboBox(".EMail #cboContactType", ".EMail #btnContactTypeClear", theEMail.getContactType(), AppModel.getData().getContent().getContactType());
+        	selectComboBoxEntry(".EMail #cboContactType", ".EMail #btnContactTypeClear", theEMail.getContactType(), AppModel.getData().getContent().getContactType());
         	writeText(".EMail #txtRemark", theEMail.getRemark());
 
 			robot.clickOn(".EMail #btnAdd");
@@ -477,7 +478,7 @@ public class RefereeManagerTest {
         	checkCheckBox(".PhoneNumber #chkIsCell", thePhoneNumber.getIsCell());
         	checkCheckBox(".PhoneNumber #chkIsPrimary", thePhoneNumber.getIsPrimary());
         	checkCheckBox(".PhoneNumber #chkEditorOnly", thePhoneNumber.getEditorOnly());
-        	selectComboBox(".PhoneNumber #cboContactType", ".PhoneNumber #btnContactTypeClear", thePhoneNumber.getContactType(), AppModel.getData().getContent().getContactType());
+        	selectComboBoxEntry(".PhoneNumber #cboContactType", ".PhoneNumber #btnContactTypeClear", thePhoneNumber.getContactType(), AppModel.getData().getContent().getContactType());
         	writeText(".PhoneNumber #txtRemark", thePhoneNumber.getRemark());
 
 			robot.clickOn(".PhoneNumber #btnAdd");
@@ -515,7 +516,7 @@ public class RefereeManagerTest {
         	writeText(".Address #txtCity", theAddress.getCity());
         	checkCheckBox(".Address #chkIsPrimary", theAddress.getIsPrimary());
         	checkCheckBox(".Address #chkEditorOnly", theAddress.getEditorOnly());
-        	selectComboBox(".Address #cboContactType", ".Address #btnContactTypeClear", theAddress.getContactType(), AppModel.getData().getContent().getContactType());
+        	selectComboBoxEntry(".Address #cboContactType", ".Address #btnContactTypeClear", theAddress.getContactType(), AppModel.getData().getContent().getContactType());
         	writeText(".Address #txtRemark", theAddress.getRemark());
 
 			robot.clickOn(".Address #btnAdd");
@@ -538,7 +539,7 @@ public class RefereeManagerTest {
         	writeText(".URL #txtURL", theURL.getURL());
         	checkCheckBox(".URL #chkIsPrimary", theURL.getIsPrimary());
         	checkCheckBox(".URL #chkEditorOnly", theURL.getEditorOnly());
-        	selectComboBox(".URL #cboContactType", ".URL #btnContactTypeClear", theURL.getContactType(), AppModel.getData().getContent().getContactType());
+        	selectComboBoxEntry(".URL #cboContactType", ".URL #btnContactTypeClear", theURL.getContactType(), AppModel.getData().getContent().getContactType());
         	writeText(".URL #txtRemark", theURL.getRemark());
 
 			robot.clickOn(".URL #btnAdd");
@@ -565,9 +566,9 @@ public class RefereeManagerTest {
     	robot.clickOn("#tabReferee");
     	robot.sleep(SLEEP);
 
-    	selectComboBox("#scrReferee #cboMember", "#scrReferee #btnMemberClear", referee.getMember(), AppModel.getData().getContent().getClub());
-    	selectComboBox("#scrReferee #cboReffor", "#scrReferee #btnRefforClear", referee.getReffor(), AppModel.getData().getContent().getClub());
-    	selectComboBox("#scrReferee #cboStatus", "#scrReferee #btnStatusClear", referee.getStatus(), AppModel.getData().getContent().getStatusType());
+    	selectComboBoxEntry("#scrReferee #cboMember", "#scrReferee #btnMemberClear", referee.getMember(), AppModel.getData().getContent().getClub());
+    	selectComboBoxEntry("#scrReferee #cboReffor", "#scrReferee #btnRefforClear", referee.getReffor(), AppModel.getData().getContent().getClub());
+    	selectComboBoxEntry("#scrReferee #cboStatus", "#scrReferee #btnStatusClear", referee.getStatus(), AppModel.getData().getContent().getStatusType());
     	checkCheckBox("#scrReferee #chkDocsByLetter", referee.getDocsByLetter());
 
     }
@@ -588,9 +589,9 @@ public class RefereeManagerTest {
 
     	for (Wish thePrefer : referee.getPrefer()) {
 
-    		selectComboBox(".Prefer #cboClub", ".Prefer #btnClubClear", thePrefer.getClub(), AppModel.getData().getContent().getClub());
-    		selectComboBox(".Prefer #cboLeague", ".Prefer #btnLeagueClear", thePrefer.getLeague(), AppModel.getData().getContent().getLeague());
-    		selectComboBox(".Prefer #cboSexType", ".Prefer #btnSexTypeClear", thePrefer.getSexType(), AppModel.getData().getContent().getSexType());
+    		selectComboBoxEntry(".Prefer #cboClub", ".Prefer #btnClubClear", thePrefer.getClub(), AppModel.getData().getContent().getClub());
+    		selectComboBoxEntry(".Prefer #cboLeague", ".Prefer #btnLeagueClear", thePrefer.getLeague(), AppModel.getData().getContent().getLeague());
+    		selectComboBoxEntry(".Prefer #cboSexType", ".Prefer #btnSexTypeClear", thePrefer.getSexType(), AppModel.getData().getContent().getSexType());
         	checkCheckBox(".Prefer #chkTournamentOnly", thePrefer.getTournamentOnly());
         	checkCheckBox(".Prefer #chkLeagueGamesOnly", thePrefer.getLeagueGamesOnly());
         	checkCheckBox(".Prefer #chkSaturday", thePrefer.getSaturday());
@@ -612,9 +613,9 @@ public class RefereeManagerTest {
 
     	for (Wish theAvoid : referee.getAvoid()) {
 
-    		selectComboBox(".Avoid #cboClub", ".Avoid #btnClubClear", theAvoid.getClub(), AppModel.getData().getContent().getClub());
-    		selectComboBox(".Avoid #cboLeague", ".Avoid #btnLeagueClear", theAvoid.getLeague(), AppModel.getData().getContent().getLeague());
-    		selectComboBox(".Avoid #cboSexType", ".Avoid #btnSexTypeClear", theAvoid.getSexType(), AppModel.getData().getContent().getSexType());
+    		selectComboBoxEntry(".Avoid #cboClub", ".Avoid #btnClubClear", theAvoid.getClub(), AppModel.getData().getContent().getClub());
+    		selectComboBoxEntry(".Avoid #cboLeague", ".Avoid #btnLeagueClear", theAvoid.getLeague(), AppModel.getData().getContent().getLeague());
+    		selectComboBoxEntry(".Avoid #cboSexType", ".Avoid #btnSexTypeClear", theAvoid.getSexType(), AppModel.getData().getContent().getSexType());
         	checkCheckBox(".Avoid #chkTournamentOnly", theAvoid.getTournamentOnly());
         	checkCheckBox(".Avoid #chkLeagueGamesOnly", theAvoid.getLeagueGamesOnly());
         	checkCheckBox(".Avoid #chkSaturday", theAvoid.getSaturday());
@@ -649,24 +650,10 @@ public class RefereeManagerTest {
     	for (TrainingLevel theTrainingLevel : referee.getTrainingLevel()) {
 
     		writeDate(".TrainingLevel #pckSince", theTrainingLevel.getSince());
-    		selectComboBox(".TrainingLevel #cboTrainingLevelType", ".TrainingLevel #btnTrainingLevelTypeClear", theTrainingLevel.getType(), AppModel.getData().getContent().getTrainingLevelType());
+    		selectComboBoxEntry(".TrainingLevel #cboTrainingLevelType", ".TrainingLevel #btnTrainingLevelTypeClear", theTrainingLevel.getType(), AppModel.getData().getContent().getTrainingLevelType());
 
 			robot.clickOn(".TrainingLevel #btnAdd");
 			robot.sleep(SLEEP);
-
-	    	for (Update theUpdate : theTrainingLevel.getUpdate()) {
-
-	    		writeDate(".TrainingLevel .Update #pckDate", theUpdate.getDate());
-
-				robot.clickOn(".TrainingLevel .Update #btnAdd");
-				robot.sleep(SLEEP);
-
-				robot.clickOn(".TrainingLevel .Update #btnClearList");
-				robot.sleep(SLEEP);
-
-			}
-
-	    	verifyThat(".TrainingLevel .Update #lstData", ListViewMatchers.hasItems(theTrainingLevel.getUpdate().size()));
 
 			robot.clickOn(".TrainingLevel #btnClearList");
 			robot.sleep(SLEEP);
@@ -674,6 +661,103 @@ public class RefereeManagerTest {
 		}
 
     	verifyThat(".TrainingLevel #lstData", ListViewMatchers.hasItems(referee.getTrainingLevel().size()));
+
+    	for (TrainingLevel theTrainingLevel : referee.getTrainingLevel()) {
+
+    		robot.clickOn(".TrainingLevel #btnClearList");
+    		robot.sleep(SLEEP);
+
+        	verifyThat(".TrainingLevel #lblUpdates", LabeledMatchers.hasText(""));
+        	verifyThat(".TrainingLevel #btnEditUpdates", NodeMatchers.isDisabled());
+        	verifyThat(".TrainingLevel #btnAddQuickUpdate", NodeMatchers.isDisabled());
+
+    		selectListViewEntry(".TrainingLevel #lstData", theTrainingLevel);
+    		robot.sleep(SLEEP);
+
+        	verifyThat(".TrainingLevel #lblUpdates", LabeledMatchers.hasText("Keine"));
+        	verifyThat(".TrainingLevel #btnEditUpdates", NodeMatchers.isEnabled());
+        	verifyThat(".TrainingLevel #btnAddQuickUpdate", NodeMatchers.isDisabled());
+
+	    	for (Update theUpdate : theTrainingLevel.getUpdate()) {
+
+	    		writeDate(".TrainingLevel #pckQuickUpdate", theUpdate.getDate());
+
+	        	verifyThat(".TrainingLevel #btnAddQuickUpdate", NodeMatchers.isEnabled());
+
+				robot.clickOn(".TrainingLevel #btnAddQuickUpdate");
+				robot.sleep(SLEEP);
+
+	        	verifyThat(".TrainingLevel #btnAddQuickUpdate", NodeMatchers.isDisabled());
+
+			}
+
+			robot.clickOn(".TrainingLevel #btnEdit");
+			robot.sleep(SLEEP);
+
+        	verifyThat(".TrainingLevel #lblUpdates", LabeledMatchers.hasText(
+        			(theTrainingLevel.getUpdate().isEmpty()) ?
+					"Keine" :
+        			theTrainingLevel.getUpdate().stream().map(update -> update.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")))
+        			);
+
+    	}
+
+    	for (TrainingLevel theTrainingLevel : referee.getTrainingLevel()) {
+
+    		selectListViewEntry(".TrainingLevel #lstData", theTrainingLevel);
+    		robot.sleep(SLEEP);
+
+        	verifyThat(".TrainingLevel #lblUpdates", LabeledMatchers.hasText(
+        			(theTrainingLevel.getUpdate().isEmpty()) ?
+					"Keine" :
+        			theTrainingLevel.getUpdate().stream().map(update -> update.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")))
+        			);
+
+        	robot.clickOn(".TrainingLevel #btnEditUpdates");
+			robot.sleep(SLEEP);
+
+	    	verifyThat(".Updates #lstData", NodeMatchers.isVisible());
+	    	verifyThat(".Updates #lstData", ListViewMatchers.hasItems(theTrainingLevel.getUpdate().size()));
+
+	    	for (Update theUpdate : theTrainingLevel.getUpdate()) {
+
+	    		selectListViewEntry(".Updates #lstData", theUpdate);
+	    		robot.sleep(SLEEP);
+
+	        	robot.clickOn(".Updates #btnDelete");
+				robot.sleep(SLEEP*10);
+
+	        	robot.push(KeyCode.ENTER);
+				robot.sleep(SLEEP);
+
+	    	}
+
+	    	verifyThat(".Updates #lstData", ListViewMatchers.isEmpty());
+
+	    	for (Update theUpdate : theTrainingLevel.getUpdate()) {
+
+	    		writeDate(".Updates #pckDate", theUpdate.getDate());
+
+	        	robot.clickOn(".Updates #btnAdd");
+				robot.sleep(SLEEP);
+
+	        	robot.clickOn(".Updates #btnClearList");
+				robot.sleep(SLEEP);
+
+	    	}
+
+	    	verifyThat(".Updates #lstData", ListViewMatchers.hasItems(theTrainingLevel.getUpdate().size()));
+
+        	robot.clickOn("#btnOK");
+			robot.sleep(SLEEP);
+
+        	verifyThat(".TrainingLevel #lblUpdates", LabeledMatchers.hasText(
+        			(theTrainingLevel.getUpdate().isEmpty()) ?
+					"Keine" :
+        			theTrainingLevel.getUpdate().stream().map(update -> update.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")))
+        			);
+
+    	}
 
     }
 
@@ -996,14 +1080,14 @@ public class RefereeManagerTest {
     }
 
 	/**
-	 * Selects ComboBox if needed.
+	 * Selects ComboBox entry if needed.
 	 *
 	 * @param theField input form field
 	 * @param theFieldClear input form field clear button
 	 * @param theContent content
 	 * @param theComboContent content of combo box
 	 */
-    private static void selectComboBox(
+    private static void selectComboBoxEntry(
     		final String theField,
     		final String theFieldClear,
     		final ModelClassExt theContent,
@@ -1034,6 +1118,25 @@ public class RefereeManagerTest {
 
 		}
 
+    }
+
+	/**
+	 * Selects ListView entry if needed.
+	 *
+	 * @param theField input form field
+	 * @param theContent content
+	 */
+    private static void selectListViewEntry(
+    		final String theField,
+    		final ModelClassExt theContent
+    		) {
+
+    	verifyThat(theField, NodeMatchers.isVisible());
+
+		if (theContent != null) {
+    		robot.clickOn(theField).clickOn(theContent.getDisplayText().getValue());
+			robot.sleep(SLEEP);
+		}
 
     }
 

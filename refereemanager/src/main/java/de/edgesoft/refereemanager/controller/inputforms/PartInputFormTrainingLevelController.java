@@ -205,7 +205,9 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 
 		// fill updates
 		theData.getUpdate().clear();
-		theData.getUpdate().addAll(lstUpdates);
+		if (lstUpdates != null) {
+			theData.getUpdate().addAll(lstUpdates);
+		}
 
 	}
 
@@ -225,7 +227,7 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 
 		if (lstUpdates == null) {
 
-			lblUpdates.setText(null);
+			lblUpdates.setText("");
 
 		} else {
 
@@ -263,7 +265,7 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 		Stage dialogStage = new Stage();
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initOwner(RefereeManager.getAppController().getPrimaryStage());
-		dialogStage.setTitle(MessageFormat.format("Fortbildungen für {0} editieren", cboTrainingLevelType.getSelectionModel().getSelectedItem().getDisplayText()));
+		dialogStage.setTitle(MessageFormat.format("Fortbildungen für {0} editieren", cboTrainingLevelType.getSelectionModel().getSelectedItem().getDisplayText().getValueSafe()));
 
 		dialogStage.setScene(new Scene(pneLoad.getKey()));
 
