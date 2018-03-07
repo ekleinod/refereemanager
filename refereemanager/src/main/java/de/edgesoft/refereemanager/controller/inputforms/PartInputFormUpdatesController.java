@@ -35,7 +35,7 @@ import javafx.scene.control.Label;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class PartInputFormUpdateController extends AbstractInputFormController<Update> {
+public class PartInputFormUpdatesController extends AbstractInputFormController<Update> {
 
 	/**
 	 * Label for date picker.

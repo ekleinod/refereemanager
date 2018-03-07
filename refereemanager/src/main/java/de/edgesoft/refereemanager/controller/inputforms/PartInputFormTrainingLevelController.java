@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
-import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
+import de.edgesoft.refereemanager.RefereeManager;
+import de.edgesoft.refereemanager.controller.editdialogs.AbstractEditDialogController;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 import de.edgesoft.refereemanager.jaxb.Update;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -20,11 +21,14 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * Controller for the input form part: training level.
@@ -137,19 +141,6 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 	 */
 	private List<Update> lstUpdates = null;
 
-//	/**
-//	 * CRUD buttons update.
-//	 */
-//	@FXML
-//	private Parent embeddedCRUDUpdate;
-//
-//	/**
-//	 * CRUD buttons update controller.
-//	 */
-//	@FXML
-//	@JAXBMatch(jaxbfield = "update", jaxbclass = TrainingLevel.class)
-//	protected ListCRUDController<Update> embeddedCRUDUpdateController;
-
 
 	/**
 	 * Initializes the controller class.
@@ -174,6 +165,7 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 		);
 		btnAddQuickUpdate.disableProperty().bind(
 				cboTrainingLevelType.getSelectionModel().selectedItemProperty().isNull()
+				.or(pckQuickUpdate.valueProperty().isNull())
 		);
 
 		// icons
@@ -185,13 +177,6 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{TrainingLevel.class})));
 
 		lblUpdates.setText(null);
-
-//		Map.Entry<Parent, FXMLLoader> nodeUpdate = Resources.loadNode("inputforms/PartInputFormUpdate");
-//		embeddedCRUDUpdateController.initController(
-//				nodeUpdate.getValue().getController(),
-//				nodeUpdate.getKey(),
-//				"Fortbildungen",
-//				AppModel.factory::createUpdate);
 
 	}
 
@@ -219,6 +204,8 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 		super.fillDataFromForm(theData);
 
 		// fill updates
+		theData.getUpdate().clear();
+		theData.getUpdate().addAll(lstUpdates);
 
 	}
 
@@ -227,12 +214,14 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 	 *
 	 * @since 0.15.0
 	 */
-	public void updateUpdates() {
+	private void updateUpdates() {
 
 		lblUpdatesLabel.setText(MessageFormat.format(
 				"{0,choice,0#Fortbildungen|1#Fortbildung|1<Fortbildungen}",
 				(lstUpdates == null) ? 0 : lstUpdates.size())
 				);
+
+		pckQuickUpdate.setValue(null);
 
 		if (lstUpdates == null) {
 
@@ -267,7 +256,39 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 	 */
 	@FXML
 	private void handleEditUpdates() {
-		System.out.println("todo");
+
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("editdialogs/EditDialogUpdates");
+
+		// Create the dialog Stage.
+		Stage dialogStage = new Stage();
+		dialogStage.initModality(Modality.WINDOW_MODAL);
+		dialogStage.initOwner(RefereeManager.getAppController().getPrimaryStage());
+		dialogStage.setTitle(MessageFormat.format("Fortbildungen für {0} editieren", cboTrainingLevelType.getSelectionModel().getSelectedItem().getDisplayText()));
+
+		dialogStage.setScene(new Scene(pneLoad.getKey()));
+
+		// Set data
+		AbstractEditDialogController<TrainingLevel> editController = pneLoad.getValue().getController();
+		editController.setDialogStage(dialogStage);
+
+		TrainingLevel theData = AppModel.factory.createTrainingLevel();
+		theData.getUpdate().addAll(lstUpdates);
+		editController.fillFormFromData(theData);
+
+		// Show the dialog and wait until the user closes it
+		dialogStage.showAndWait();
+
+		// ok = store data
+		boolean isOkClicked = editController.isOkClicked();
+
+		if (isOkClicked) {
+			editController.fillDataFromForm(theData);
+			lstUpdates.clear();
+			lstUpdates = new ArrayList<>(theData.getUpdate());
+		}
+
+		updateUpdates();
+
 	}
 
 	/**
