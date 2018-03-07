@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -16,6 +17,9 @@
 		<ColumnConstraints hgrow="SOMETIMES" />
 	</columnConstraints>
 	<rowConstraints>
+		<RowConstraints valignment="TOP" />
+		<RowConstraints valignment="TOP" />
+		<RowConstraints valignment="TOP" />
 		<RowConstraints valignment="TOP" />
 		<RowConstraints valignment="TOP" />
 		<RowConstraints valignment="TOP" />
@@ -39,14 +43,16 @@
 				</Button>
 			</children>
 		</AnchorPane>
-		<Label fx:id="lblUpdatesLabel" text="Fortbildungen" GridPane.rowIndex="2" />
-		<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+		<Separator GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
+		<Label fx:id="lblUpdatesLabel" text="Fortbildungen" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+		<Separator GridPane.columnIndex="1" GridPane.rowIndex="4" />
+		<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
 			<children>
 				<Label fx:id="lblUpdates" text="Label" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
 				<Button fx:id="btnEditUpdates" onAction="#handleEditUpdates" AnchorPane.rightAnchor="0.0" />
 			</children>
 		</AnchorPane>
-		<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+		<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="6">
 			<children>
 				<DatePicker fx:id="pckQuickUpdate" promptText="tt.mm.jjjj" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
 				<Button fx:id="btnAddQuickUpdate" onAction="#handleAddQuickUpdate" AnchorPane.rightAnchor="0.0" />
