@@ -152,6 +152,7 @@ public class PartInputFormTrainingLevelController extends AbstractInputFormContr
 
 		// set date picker date format
 		pckSince.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
+		pckQuickUpdate.setConverter(DateTimeUtils.getDateConverter("d.M.yyyy"));
 
 		// fill combo boxes
         ComboBoxUtils.prepareComboBox(cboTrainingLevelType, AppModel.getData().getContent().getTrainingLevelType());
