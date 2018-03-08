@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<refereemanager>
+    <info>
+        <created>2018-03-09T00:43:57.700</created>
+        <modified>2018-03-09T00:46:09.193</modified>
+        <docversion>
+            <major>0</major>
+            <minor>14</minor>
+            <patch>0</patch>
+        </docversion>
+        <appversion>
+            <major>0</major>
+            <minor>14</minor>
+            <patch>0</patch>
+        </appversion>
+        <creator>de.edgesoft.refereemanager.RefereeManager</creator>
+    </info>
+    <content>
+        <referee id="Referee.1">
+            <remark>Testdaten Schiedsrichter 1</remark>
+            <first_name>Vorname Schiedsrichter 1</first_name>
+            <name>Name Schiedsrichter 1</name>
+            <birthday>1970-09-21</birthday>
+            <day_of_death>2010-12-01</day_of_death>
+            <e_mail id="">
+                <remark>Testmail 1 Schiedsrichter 1</remark>
+                <is_primary>true</is_primary>
+                <editor_only>false</editor_only>
+                <contact_type>ContactType.p</contact_type>
+                <e_mail>schiri1@test-schiri.de</e_mail>
+            </e_mail>
+            <e_mail>
+                <is_primary>false</is_primary>
+                <editor_only>false</editor_only>
+                <contact_type>ContactType.d</contact_type>
+                <e_mail>schiri2@test-schiri.de</e_mail>
+            </e_mail>
+            <address id="">
+                <remark>Einzige Testadresse Schiedsrichter 1</remark>
+                <is_primary>true</is_primary>
+                <editor_only>false</editor_only>
+                <contact_type>ContactType.p</contact_type>
+                <street>Musterstraße</street>
+                <number>12</number>
+                <zip_code>06543</zip_code>
+                <city>Musterstadt</city>
+            </address>
+            <phone_number id="">
+                <remark>Testtelefon 1 Schiedsrichter 1</remark>
+                <is_primary>true</is_primary>
+                <editor_only>false</editor_only>
+                <contact_type>ContactType.p</contact_type>
+                <country_code>49</country_code>
+                <area_code>30</area_code>
+                <number>1234567</number>
+                <is_cell>false</is_cell>
+            </phone_number>
+            <phone_number>
+                <is_primary>false</is_primary>
+                <editor_only>true</editor_only>
+                <country_code>49</country_code>
+                <area_code>176</area_code>
+                <number>6666 666</number>
+                <is_cell>true</is_cell>
+            </phone_number>
+            <phone_number>
+                <is_primary>false</is_primary>
+                <editor_only>false</editor_only>
+                <country_code>49</country_code>
+                <area_code>345</area_code>
+                <number>88 88 888-8</number>
+                <is_cell>false</is_cell>
+            </phone_number>
+            <u_r_l id="">
+                <remark>Auch die einzige URL von Schiedsrichter 1. äöüß Und noch ein paar Sonderzeichen: é â ò.</remark>
+                <is_primary>false</is_primary>
+                <editor_only>false</editor_only>
+                <contact_type>ContactType.d</contact_type>
+                <u_r_l>http://www.musterschiri.de/</u_r_l>
+            </u_r_l>
+            <sex_type>SexType.male</sex_type>
+            <role>RoleType.1</role>
+            <docs_by_letter>true</docs_by_letter>
+            <training_level>
+                <since>1984-07-12</since>
+                <update>
+                    <date>1986-10-31</date>
+                </update>
+                <update>
+                    <date>1987-11-03</date>
+                </update>
+                <type>TrainingLevelType.VSR</type>
+            </training_level>
+            <training_level>
+                <since>1990-01-12</since>
+                <update>
+                    <date>1993-08-10</date>
+                </update>
+                <type>TrainingLevelType.NSR</type>
+            </training_level>
+            <training_level>
+                <since>1998-05-12</since>
+                <type>TrainingLevelType.IU</type>
+            </training_level>
+            <prefer>
+                <saturday>false</saturday>
+                <sunday>false</sunday>
+                <tournament_only>false</tournament_only>
+                <league_games_only>false</league_games_only>
+                <club>Club.1</club>
+            </prefer>
+            <prefer>
+                <saturday>false</saturday>
+                <sunday>false</sunday>
+                <tournament_only>false</tournament_only>
+                <league_games_only>false</league_games_only>
+                <league>League.2</league>
+            </prefer>
+            <prefer>
+                <saturday>false</saturday>
+                <sunday>false</sunday>
+                <tournament_only>false</tournament_only>
+                <league_games_only>false</league_games_only>
+                <sex_type>SexType.male</sex_type>
+            </prefer>
+            <prefer>
+                <saturday>true</saturday>
+                <sunday>false</sunday>
+                <tournament_only>false</tournament_only>
+                <league_games_only>false</league_games_only>
+            </prefer>
+            <avoid>
+                <saturday>false</saturday>
+                <sunday>false</sunday>
+                <tournament_only>false</tournament_only>
+                <league_games_only>false</league_games_only>
+                <club>Club.2</club>
+            </avoid>
+            <avoid>
+                <saturday>false</saturday>
+                <sunday>false</sunday>
+                <tournament_only>false</tournament_only>
+                <league_games_only>false</league_games_only>
+                <league>League.1</league>
+            </avoid>
+            <avoid>
+                <saturday>false</saturday>
+                <sunday>true</sunday>
+                <tournament_only>false</tournament_only>
+                <league_games_only>false</league_games_only>
+            </avoid>
+            <avoid>
+                <saturday>false</saturday>
+                <sunday>false</sunday>
+                <tournament_only>false</tournament_only>
+                <league_games_only>true</league_games_only>
+            </avoid>
+            <avoid>
+                <saturday>false</saturday>
+                <sunday>false</sunday>
+                <tournament_only>true</tournament_only>
+                <league_games_only>false</league_games_only>
+            </avoid>
+            <member>Club.1</member>
+            <reffor>Club.2</reffor>
+            <status>StatusType.2</status>
+        </referee>
+        <league id="League.1">
+            <title>Oberliga Damen</title>
+        </league>
+        <league id="League.2">
+            <title>Regionalliga Herren</title>
+            <shorttitle>RLH</shorttitle>
+        </league>
+        <club id="Club.1">
+            <title>eastside</title>
+        </club>
+        <club id="Club.2">
+            <title>Brauereien</title>
+            <shorttitle>Brauer</shorttitle>
+        </club>
+        <sex_type id="SexType.female">
+            <title>weiblich</title>
+        </sex_type>
+        <sex_type id="SexType.male">
+            <title>männlich</title>
+            <shorttitle>m</shorttitle>
+        </sex_type>
+        <sex_type id="SexType.other">
+            <title>andere</title>
+        </sex_type>
+        <contact_type id="ContactType.p">
+            <title>persönlich</title>
+        </contact_type>
+        <contact_type id="ContactType.d">
+            <title>dienstlich</title>
+            <shorttitle>d</shorttitle>
+        </contact_type>
+        <status_type id="StatusType.1">
+            <title>normal</title>
+        </status_type>
+        <status_type id="StatusType.2">
+            <title>many</title>
+        </status_type>
+        <training_level_type id="TrainingLevelType.VSR">
+            <title>Verbandsschiedsrichter_in</title>
+            <rank>0</rank>
+            <update_interval>2</update_interval>
+        </training_level_type>
+        <training_level_type id="TrainingLevelType.NSR">
+            <title>Nationale_r Schiedsrichter_in</title>
+            <shorttitle>NSR</shorttitle>
+            <rank>1</rank>
+            <update_interval>3</update_interval>
+        </training_level_type>
+        <training_level_type id="TrainingLevelType.IU">
+            <title>International Umpire</title>
+            <shorttitle>IU</shorttitle>
+            <remark>Die Besten der Besten.</remark>
+            <rank>2</rank>
+            <update_interval>3</update_interval>
+        </training_level_type>
+        <role_type id="RoleType.1">
+            <title>VSRO</title>
+        </role_type>
+        <role_type id="RoleType.2">
+            <title>Kapitän</title>
+        </role_type>
+    </content>
+</refereemanager>
