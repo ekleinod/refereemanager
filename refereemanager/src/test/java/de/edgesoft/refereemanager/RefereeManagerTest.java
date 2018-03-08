@@ -120,6 +120,11 @@ public class RefereeManagerTest {
 	private static final int SLEEP = 20;
 
 	/**
+	 * Long sleep time in ms (wait for the gui to update).
+	 */
+	private static final int LONG_SLEEP = 500;
+
+	/**
 	 * Character input time in ms.
 	 */
 	private static final int CHAR_SLEEP = 5;
@@ -297,7 +302,7 @@ public class RefereeManagerTest {
     	RobotHelper.write(robot, FILE_CONTENT);
     	robot.sleep(SLEEP);
     	robot.push(KeyCode.ENTER);
-    	robot.sleep(1000); // wait a little for the title setting to take effect (don't know why)
+    	robot.sleep(LONG_SLEEP); // wait a little for the title setting to take effect (don't know why)
 
     	// check title
     	assertEquals(String.format("Referee Manager - %s", FILE_CONTENT), FxToolkit.toolkitContext().getRegisteredStage().getTitle());
@@ -716,37 +721,37 @@ public class RefereeManagerTest {
         	robot.clickOn(".TrainingLevel #btnEditUpdates");
 			robot.sleep(SLEEP);
 
-	    	verifyThat(".Updates #lstData", NodeMatchers.isVisible());
-	    	verifyThat(".Updates #lstData", ListViewMatchers.hasItems(theTrainingLevel.getUpdate().size()));
+	    	verifyThat("#embeddedInputFormUpdateData .Updates #lstData", NodeMatchers.isVisible());
+	    	verifyThat("#embeddedInputFormUpdateData .Updates #lstData", ListViewMatchers.hasItems(theTrainingLevel.getUpdate().size()));
 
 	    	for (Update theUpdate : theTrainingLevel.getUpdate()) {
 
-	    		selectListViewEntry(".Updates #lstData", theUpdate);
+	    		selectListViewEntry("#embeddedInputFormUpdateData .Updates #lstData", theUpdate);
 	    		robot.sleep(SLEEP);
 
-	        	robot.clickOn(".Updates #btnDelete");
-				robot.sleep(SLEEP*10);
+	        	robot.clickOn("#embeddedInputFormUpdateData .Updates #btnDelete");
+				robot.sleep(LONG_SLEEP);
 
 	        	robot.push(KeyCode.ENTER);
-				robot.sleep(SLEEP);
+				robot.sleep(LONG_SLEEP);
 
 	    	}
 
-	    	verifyThat(".Updates #lstData", ListViewMatchers.isEmpty());
+	    	verifyThat("#embeddedInputFormUpdateData .Updates #lstData", ListViewMatchers.isEmpty());
 
 	    	for (Update theUpdate : theTrainingLevel.getUpdate()) {
 
-	    		writeDate(".Updates #pckDate", theUpdate.getDate());
+	    		writeDate("#embeddedInputFormUpdateData .Updates #pckDate", theUpdate.getDate());
 
-	        	robot.clickOn(".Updates #btnAdd");
+	        	robot.clickOn("#embeddedInputFormUpdateData .Updates #btnAdd");
 				robot.sleep(SLEEP);
 
-	        	robot.clickOn(".Updates #btnClearList");
+	        	robot.clickOn("#embeddedInputFormUpdateData .Updates #btnClearList");
 				robot.sleep(SLEEP);
 
 	    	}
 
-	    	verifyThat(".Updates #lstData", ListViewMatchers.hasItems(theTrainingLevel.getUpdate().size()));
+	    	verifyThat("#embeddedInputFormUpdateData .Updates #lstData", ListViewMatchers.hasItems(theTrainingLevel.getUpdate().size()));
 
         	robot.clickOn("#btnOK");
 			robot.sleep(SLEEP);
@@ -773,25 +778,26 @@ public class RefereeManagerTest {
 		dtaReturn.setName(new SimpleStringProperty("Name Schiedsrichter 1"));
 		dtaReturn.setBirthday(new SimpleObjectProperty<>(LocalDate.of(1970, 9, 21)));
 		dtaReturn.setDayOfDeath(new SimpleObjectProperty<>(LocalDate.of(2010, 12, 1)));
-		dtaReturn.setSexType(AppModel.getData().getContent().getSexType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("männlich")).findFirst().get());
+		dtaReturn.setSexType(AppModel.getData().getContent().getSexType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("männlich")).findFirst().get());
+		dtaReturn.setRole(AppModel.getData().getContent().getRoleType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("VSRO")).findFirst().get());
 		dtaReturn.setRemark(new SimpleStringProperty("Testdaten Schiedsrichter 1"));
 
 		EMail theMail = factory.createEMail();
 		theMail.setEMail(new SimpleStringProperty("schiri1@test-schiri.de"));
 		theMail.setIsPrimary(new SimpleBooleanProperty(true));
-		theMail.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
+		theMail.setContactType(AppModel.getData().getContent().getContactType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
 		theMail.setRemark(new SimpleStringProperty("Testmail 1 Schiedsrichter 1"));
 		dtaReturn.getEMail().add(theMail);
 
 		theMail = factory.createEMail();
 		theMail.setEMail(new SimpleStringProperty("schiri2@test-schiri.de"));
-		theMail.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("dienstlich")).findFirst().get());
+		theMail.setContactType(AppModel.getData().getContent().getContactType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("dienstlich")).findFirst().get());
 		dtaReturn.getEMail().add(theMail);
 
 		PhoneNumber thePhone = factory.createPhoneNumber();
 		thePhone.setNumber(new SimpleStringProperty("1234567"));
 		thePhone.setIsPrimary(new SimpleBooleanProperty(true));
-		thePhone.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
+		thePhone.setContactType(AppModel.getData().getContent().getContactType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
 		thePhone.setRemark(new SimpleStringProperty("Testtelefon 1 Schiedsrichter 1"));
 		dtaReturn.getPhoneNumber().add(thePhone);
 
@@ -814,7 +820,7 @@ public class RefereeManagerTest {
 		theAddress.setZipCode(new SimpleStringProperty("06543"));
 		theAddress.setCity(new SimpleStringProperty("Musterstadt"));
 		theAddress.setIsPrimary(new SimpleBooleanProperty(true));
-		theAddress.setContactType(AppModel.getData().getContent().getContactType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
+		theAddress.setContactType(AppModel.getData().getContent().getContactType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
 		theAddress.setRemark(new SimpleStringProperty("Einzige Testadresse Schiedsrichter 1"));
 		dtaReturn.getAddress().add(theAddress);
 
@@ -825,21 +831,21 @@ public class RefereeManagerTest {
 		theURL.setRemark(new SimpleStringProperty("Auch die einzige URL von Schiedsrichter 1. äöüß Und noch ein paar Sonderzeichen: é â ò."));
 		dtaReturn.getURL().add(theURL);
 
-		dtaReturn.setMember(AppModel.getData().getContent().getClub().stream().filter(st -> st.getDisplayText().getValueSafe().equals("eastside")).findFirst().get());
-		dtaReturn.setReffor(AppModel.getData().getContent().getClub().stream().filter(st -> st.getDisplayText().getValueSafe().equals("Brauer")).findFirst().get());
-		dtaReturn.setStatus(AppModel.getData().getContent().getStatusType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("many")).findFirst().get());
+		dtaReturn.setMember(AppModel.getData().getContent().getClub().stream().filter(t -> t.getDisplayText().getValueSafe().equals("eastside")).findFirst().get());
+		dtaReturn.setReffor(AppModel.getData().getContent().getClub().stream().filter(t -> t.getDisplayText().getValueSafe().equals("Brauer")).findFirst().get());
+		dtaReturn.setStatus(AppModel.getData().getContent().getStatusType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("many")).findFirst().get());
 		dtaReturn.setDocsByLetter(new SimpleBooleanProperty(true));
 
 		Wish theWish = factory.createWish();
-		theWish.setClub(AppModel.getData().getContent().getClub().stream().filter(st -> st.getDisplayText().getValueSafe().equals("eastside")).findFirst().get());
+		theWish.setClub(AppModel.getData().getContent().getClub().stream().filter(t -> t.getDisplayText().getValueSafe().equals("eastside")).findFirst().get());
 		dtaReturn.getPrefer().add(theWish);
 
 		theWish = factory.createWish();
-		theWish.setLeague(AppModel.getData().getContent().getLeague().stream().filter(st -> st.getDisplayText().getValueSafe().equals("Regionalliga Herren")).findFirst().get());
+		theWish.setLeague(AppModel.getData().getContent().getLeague().stream().filter(t -> t.getDisplayText().getValueSafe().equals("Regionalliga Herren")).findFirst().get());
 		dtaReturn.getPrefer().add(theWish);
 
 		theWish = factory.createWish();
-		theWish.setSexType(AppModel.getData().getContent().getSexType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("männlich")).findFirst().get());
+		theWish.setSexType(AppModel.getData().getContent().getSexType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("männlich")).findFirst().get());
 		dtaReturn.getPrefer().add(theWish);
 
 		theWish = factory.createWish();
@@ -847,11 +853,11 @@ public class RefereeManagerTest {
 		dtaReturn.getPrefer().add(theWish);
 
 		theWish = factory.createWish();
-		theWish.setClub(AppModel.getData().getContent().getClub().stream().filter(st -> st.getDisplayText().getValueSafe().equals("Brauer")).findFirst().get());
+		theWish.setClub(AppModel.getData().getContent().getClub().stream().filter(t -> t.getDisplayText().getValueSafe().equals("Brauer")).findFirst().get());
 		dtaReturn.getAvoid().add(theWish);
 
 		theWish = factory.createWish();
-		theWish.setLeague(AppModel.getData().getContent().getLeague().stream().filter(st -> st.getDisplayText().getValueSafe().equals("Oberliga Damen")).findFirst().get());
+		theWish.setLeague(AppModel.getData().getContent().getLeague().stream().filter(t -> t.getDisplayText().getValueSafe().equals("Oberliga Damen")).findFirst().get());
 		dtaReturn.getAvoid().add(theWish);
 
 		theWish = factory.createWish();
@@ -868,7 +874,7 @@ public class RefereeManagerTest {
 
 		TrainingLevel theTrainingLevel = factory.createTrainingLevel();
 		theTrainingLevel.setSince(new SimpleObjectProperty<>(LocalDate.of(1984, 7, 12)));
-		theTrainingLevel.setType(AppModel.getData().getContent().getTrainingLevelType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("Verbandsschiedsrichter_in")).findFirst().get());
+		theTrainingLevel.setType(AppModel.getData().getContent().getTrainingLevelType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("Verbandsschiedsrichter_in")).findFirst().get());
 		Update theUpdate = factory.createUpdate();
 		theUpdate.setDate(new SimpleObjectProperty<>(LocalDate.of(1986, 10, 31)));
 		theTrainingLevel.getUpdate().add(theUpdate);
@@ -879,7 +885,7 @@ public class RefereeManagerTest {
 
 		theTrainingLevel = factory.createTrainingLevel();
 		theTrainingLevel.setSince(new SimpleObjectProperty<>(LocalDate.of(1990, 1, 12)));
-		theTrainingLevel.setType(AppModel.getData().getContent().getTrainingLevelType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("Nationale_r Schiedsrichter_in")).findFirst().get());
+		theTrainingLevel.setType(AppModel.getData().getContent().getTrainingLevelType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("Nationale_r Schiedsrichter_in")).findFirst().get());
 		theUpdate = factory.createUpdate();
 		theUpdate.setDate(new SimpleObjectProperty<>(LocalDate.of(1993, 8, 10)));
 		theTrainingLevel.getUpdate().add(theUpdate);
@@ -887,7 +893,7 @@ public class RefereeManagerTest {
 
 		theTrainingLevel = factory.createTrainingLevel();
 		theTrainingLevel.setSince(new SimpleObjectProperty<>(LocalDate.of(1998, 5, 12)));
-		theTrainingLevel.setType(AppModel.getData().getContent().getTrainingLevelType().stream().filter(st -> st.getDisplayText().getValueSafe().equals("International Umpire")).findFirst().get());
+		theTrainingLevel.setType(AppModel.getData().getContent().getTrainingLevelType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("International Umpire")).findFirst().get());
 		dtaReturn.getTrainingLevel().add(theTrainingLevel);
 
 		return dtaReturn;
