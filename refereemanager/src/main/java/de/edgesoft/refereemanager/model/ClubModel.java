@@ -37,11 +37,6 @@ import javafx.beans.property.StringProperty;
 public class ClubModel extends Club {
 
 	/**
-	 * Filter predicate for all clubs.
-	 */
-	public static Predicate<Club> ALL = club -> true;
-
-	/**
 	 * Filter predicate for local clubs.
 	 */
 	public static Predicate<Club> LOCAL = club -> club.getIsLocal().getValue();

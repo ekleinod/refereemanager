@@ -2,6 +2,7 @@ package de.edgesoft.refereemanager.model;
 
 import java.text.Collator;
 import java.util.Comparator;
+import java.util.function.Predicate;
 
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import javafx.beans.property.SimpleStringProperty;
@@ -34,6 +35,13 @@ import javafx.beans.property.StringProperty;
  * @since 0.5.0
  */
 public class TitledIDTypeModel extends TitledIDType {
+
+	/**
+	 * Filter predicate for all titles id types.
+	 *
+	 * @since 0.15.0
+	 */
+	public static Predicate<TitledIDTypeModel> ALL = titled -> true;
 
 	/**
 	 * Comparator title.
