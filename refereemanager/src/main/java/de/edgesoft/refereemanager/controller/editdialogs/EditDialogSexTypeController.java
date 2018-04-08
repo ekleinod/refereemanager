@@ -47,7 +47,7 @@ public class EditDialogSexTypeController extends AbstractTabbedEditDialogControl
 	 * Titled id data controller.
 	 */
 	@FXML
-	private IInputFormController<SexType> embeddedInputFormTitledIDDataController;
+	private IInputFormController<SexType> embeddedInputFormTitledIDTypeDataController;
 
 
 	/**
@@ -59,7 +59,7 @@ public class EditDialogSexTypeController extends AbstractTabbedEditDialogControl
 	@Override
 	protected void initialize() {
 
-		addInputFormController(embeddedInputFormTitledIDDataController);
+		addInputFormController(embeddedInputFormTitledIDTypeDataController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, SexType.class})));
 
