@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.prefs.BackingStoreException;
@@ -220,7 +221,7 @@ public class RefereeManagerTest {
     	verifyThat("#appPane #mnuFile", NodeMatchers.isVisible());
     	verifyThat("#appPane #mnuPeople", NodeMatchers.isVisible());
     	verifyThat("#appPane #mnuEvents", NodeMatchers.isNull());
-    	verifyThat("#appPane #mnuThings", NodeMatchers.isNull());
+    	verifyThat("#appPane #mnuThings", NodeMatchers.isVisible());
     	verifyThat("#appPane #mnuStatistics", NodeMatchers.isVisible());
     	verifyThat("#appPane #mnuHelp", NodeMatchers.isVisible());
 
@@ -344,7 +345,13 @@ public class RefereeManagerTest {
     	robot.clickOn("#btnCancel");
     	robot.sleep(SLEEP);
 
+    	// things that are needed
+    	fillSexTypesForm(getSexTypes());
     	fillAppModel();
+
+    	// referee overview again
+    	robot.clickOn("#appPane #btnOverviewReferees");
+    	robot.sleep(SLEEP);
 
     	robot.clickOn("#bbCRUD #btnAdd");
     	robot.sleep(SLEEP);
@@ -404,6 +411,81 @@ public class RefereeManagerTest {
 		FxToolkit.cleanupStages();
 
 	}
+
+	/**
+	 * Fills sex types in input form.
+	 *
+	 * @param theSexTypes the sex types
+	 */
+    private static void fillSexTypesForm(
+    		List<SexType> theSexTypes
+    		) {
+
+    	robot.clickOn("#appPane #mnuThings").clickOn("#mnuOverviewSexTypes");
+    	robot.sleep(SLEEP);
+
+    	// verify empty list
+    	verifyThat("#tblData", NodeMatchers.isVisible());
+    	verifyThat("#tblData", TableViewMatchers.hasNumRows(0));
+    	verifyThat("#tblData", (TableView<Referee> tblView) -> ((Label) tblView.getPlaceholder()).getText().equals("Es wurden noch keine Geschlechter eingegeben."));
+    	verifyThat("#lblHeading", LabeledMatchers.hasText("Details"));
+    	verifyThat("#lblFilter", LabeledMatchers.hasText("Filter (0 angezeigt)"));
+
+    	for (SexType aSexType : theSexTypes) {
+
+    		robot.clickOn("#bbCRUD #btnAdd");
+    		robot.sleep(SLEEP);
+
+    		verifyThat("#scrTitledID #txtID", NodeMatchers.isVisible());
+    		robot.clickOn("#scrTitledID #txtID");
+
+    		robot.write(aSexType.getId(), CHAR_SLEEP);
+    		robot.sleep(SLEEP);
+
+        	writeText("#scrTitledID #txtTitle", aSexType.getTitle());
+        	writeText("#scrTitledID #txtShorttitle", aSexType.getShorttitle());
+        	writeText("#scrTitledID #txtRemark", aSexType.getRemark());
+
+        	robot.clickOn("#btnOK");
+        	robot.sleep(SLEEP);
+
+		}
+
+    	// verify filled list
+    	verifyThat("#tblData", TableViewMatchers.hasNumRows(theSexTypes.size()));
+
+    }
+
+	/**
+	 * Returns sex types.
+	 *
+	 * @return list of sex types
+	 */
+    private static List<SexType> getSexTypes() {
+
+    	List<SexType> lstReturn = new ArrayList<>();
+
+    	// sex types
+    	SexType stNew = factory.createSexType();
+    	stNew.setId("SexType.female");
+    	stNew.setTitle(new SimpleStringProperty("weiblich"));
+    	lstReturn.add(stNew);
+
+    	stNew = factory.createSexType();
+    	stNew.setId("SexType.male");
+    	stNew.setTitle(new SimpleStringProperty("männlich"));
+    	stNew.setShorttitle(new SimpleStringProperty("m"));
+    	lstReturn.add(stNew);
+
+    	stNew = factory.createSexType();
+    	stNew.setId("SexType.other");
+    	stNew.setTitle(new SimpleStringProperty("andere"));
+    	stNew.setRemark(new SimpleStringProperty("Andere Geschlechter oder noch nicht entschieden."));
+    	lstReturn.add(stNew);
+
+    	return lstReturn;
+
+    }
 
 	/**
 	 * Fills person data in input form.
@@ -900,26 +982,9 @@ public class RefereeManagerTest {
 	}
 
 	/**
-	 * Fills app model with static data: sex types etc.
+	 * Fills app model with static data.
 	 */
     private static void fillAppModel() {
-
-    	// sex types
-    	SexType stNew = factory.createSexType();
-    	stNew.setId("SexType.female");
-    	stNew.setTitle(new SimpleStringProperty("weiblich"));
-    	AppModel.getData().getContent().getSexType().add(stNew);
-
-    	stNew = factory.createSexType();
-    	stNew.setId("SexType.male");
-    	stNew.setTitle(new SimpleStringProperty("männlich"));
-    	stNew.setShorttitle(new SimpleStringProperty("m"));
-    	AppModel.getData().getContent().getSexType().add(stNew);
-
-    	stNew = factory.createSexType();
-    	stNew.setId("SexType.other");
-    	stNew.setTitle(new SimpleStringProperty("andere"));
-    	AppModel.getData().getContent().getSexType().add(stNew);
 
     	// roles
     	PersonRoleType rtNew = factory.createPersonRoleType();
