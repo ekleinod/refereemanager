@@ -45,7 +45,7 @@ public class RefereeModel extends Referee {
 	/**
 	 * Filter predicate for active status types.
 	 */
-	public static Predicate<Referee> ACTIVE = referee -> (referee.getStatus().getActive().getValue() && (referee.getDayOfDeath() == null));
+	public static Predicate<Referee> ACTIVE = referee -> (((RefereeModel) referee).isActive().getValue());
 
 	/**
 	 * Filter predicate for inactive status types.
@@ -183,6 +183,19 @@ public class RefereeModel extends Referee {
 		}
 
 		return new SimpleBooleanProperty(super.getDocsByLetter().getValue() || getEMail().isEmpty());
+
+	}
+
+	/**
+	 * Is referee active?.
+	 *
+	 * @return is active?
+	 *
+	 * @since 0.15.0
+	 */
+	public SimpleBooleanProperty isActive() {
+
+		return new SimpleBooleanProperty(getStatus().getActive().getValue() && (getDayOfDeath() == null));
 
 	}
 
