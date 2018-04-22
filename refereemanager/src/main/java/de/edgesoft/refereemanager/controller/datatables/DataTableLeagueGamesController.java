@@ -222,7 +222,7 @@ public class DataTableLeagueGamesController extends AbstractDataTableController<
 			lblFilter.setText("Filter");
 		} else {
 
-			lstLeagueGames.setPredicate(LeagueGameModel.ALL);
+			lstLeagueGames.setPredicate(TitledIDTypeModel.ALL);
 
 			for (Entry<CheckBox, League> entryChkLeague : mapLeagueGamesLeagues.entrySet()) {
 

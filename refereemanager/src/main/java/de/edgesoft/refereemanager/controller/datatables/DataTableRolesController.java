@@ -3,13 +3,11 @@ package de.edgesoft.refereemanager.controller.datatables;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.javafx.FontUtils;
-import de.edgesoft.refereemanager.jaxb.Club;
+import de.edgesoft.refereemanager.jaxb.RoleType;
 import de.edgesoft.refereemanager.model.AppModel;
-import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,7 +16,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,7 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 
 /**
- * Controller for the club list scene.
+ * Controller for the role list scene.
  *
  * ## Legal stuff
  *
@@ -51,7 +48,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DataTableClubsController extends AbstractDataTableController<Club> {
+public class DataTableRolesController extends AbstractDataTableController<RoleType> {
 
 	/**
 	 * Container.
@@ -63,30 +60,30 @@ public class DataTableClubsController extends AbstractDataTableController<Club> 
 	 * Table.
 	 */
 	@FXML
-	private TableView<Club> tblData;
+	private TableView<RoleType> tblData;
 
 	/**
 	 * ID column.
 	 */
 	@FXML
-	private TableColumn<ClubModel, String> colID;
+	private TableColumn<RoleType, String> colID;
 
 	/**
 	 * Title column.
 	 */
 	@FXML
-	private TableColumn<ClubModel, String> colTitle;
+	private TableColumn<RoleType, String> colTitle;
 
 	/**
 	 * Short title column.
 	 */
 	@FXML
-	private TableColumn<ClubModel, String> colShorttitle;
+	private TableColumn<RoleType, String> colShorttitle;
 
 	/**
-	 * List of clubs.
+	 * List of sex types.
 	 */
-	private FilteredList<Club> lstClubs;
+	private FilteredList<RoleType> lstRoleTypes;
 
 	/**
 	 * Label filter.
@@ -94,17 +91,6 @@ public class DataTableClubsController extends AbstractDataTableController<Club> 
 	@FXML
 	private Label lblFilter;
 
-	/**
-	 * Checkbox filter local.
-	 */
-	@FXML
-	private CheckBox chkLocal;
-
-	/**
-	 * Checkbox filter non-local.
-	 */
-	@FXML
-	private CheckBox chkNonLocal;
 
 	/**
 	 * Initializes the controller class.
@@ -132,7 +118,7 @@ public class DataTableClubsController extends AbstractDataTableController<Club> 
 	 * Returns data table.
 	 */
 	@Override
-	public TableView<Club> getDataTable() {
+	public TableView<RoleType> getDataTable() {
 		return tblData;
 	}
 
@@ -142,13 +128,13 @@ public class DataTableClubsController extends AbstractDataTableController<Club> 
 	@Override
 	public void setDataTableItems() {
 
-		lstClubs = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableClubs(), club -> true);
+		lstRoleTypes = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableRoleTypes(), roletype -> true);
 
-		SortedList<Club> lstSortedClubs = new SortedList<>(lstClubs);
-		lstSortedClubs.comparatorProperty().bind(tblData.comparatorProperty());
-		tblData.setItems(lstSortedClubs);
+		SortedList<RoleType> lstSortedRoleTypes = new SortedList<>(lstRoleTypes);
+		lstSortedRoleTypes.comparatorProperty().bind(tblData.comparatorProperty());
+		tblData.setItems(lstSortedRoleTypes);
 
-		setDataTablePlaceholderNoun("Clubs");
+		setDataTablePlaceholderNoun("Rollen");
 
 		handleFilterChange();
 
@@ -157,27 +143,17 @@ public class DataTableClubsController extends AbstractDataTableController<Club> 
 	/**
 	 * Handles filter change events.
 	 */
-	@SuppressWarnings("unchecked")
 	@FXML
 	@Override
 	public void handleFilterChange() {
 
-		// filter for events
-		if (lstClubs == null) {
+		if (lstRoleTypes == null) {
 			lblFilter.setText("Filter");
 		} else {
 
-			lstClubs.setPredicate(TitledIDTypeModel.ALL);
+			lstRoleTypes.setPredicate(TitledIDTypeModel.ALL);
 
-			if (chkLocal.isSelected()) {
-				lstClubs.setPredicate(((Predicate<Club>) lstClubs.getPredicate()).and(ClubModel.LOCAL));
-			}
-
-			if (chkNonLocal.isSelected()) {
-				lstClubs.setPredicate(((Predicate<Club>) lstClubs.getPredicate()).and(ClubModel.NON_LOCAL));
-			}
-
-			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstClubs.size()));
+			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstRoleTypes.size()));
 		}
 
 		tblData.refresh();
@@ -190,8 +166,8 @@ public class DataTableClubsController extends AbstractDataTableController<Club> 
 	 * @return sorted selection from table
 	 */
 	@Override
-	public ObservableList<Club> getSortedSelectedItems() {
-		List<Club> lstReturn = new ArrayList<>();
+	public ObservableList<RoleType> getSortedSelectedItems() {
+		List<RoleType> lstReturn = new ArrayList<>();
 
 		getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
 

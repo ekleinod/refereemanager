@@ -8,12 +8,12 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
 /**
- * <p>Java class for PersonRoleType complex type.
+ * <p>Java class for RoleType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="PersonRoleType">
+ * &lt;complexType name="RoleType">
  *   &lt;complexContent>
  *     &lt;extension base="{}TitledIDType">
  *     &lt;/extension>
@@ -24,8 +24,8 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PersonRoleType")
-public class PersonRoleType
+@XmlType(name = "RoleType")
+public class RoleType
     extends TitledIDTypeModel
 {
 

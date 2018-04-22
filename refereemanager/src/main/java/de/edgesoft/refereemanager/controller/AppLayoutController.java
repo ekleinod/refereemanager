@@ -20,6 +20,7 @@ import de.edgesoft.refereemanager.controller.overview.OverviewLeagueGamesControl
 import de.edgesoft.refereemanager.controller.overview.OverviewOtherEventsController;
 import de.edgesoft.refereemanager.controller.overview.OverviewPeopleController;
 import de.edgesoft.refereemanager.controller.overview.OverviewRefereesController;
+import de.edgesoft.refereemanager.controller.overview.OverviewRolesController;
 import de.edgesoft.refereemanager.controller.overview.OverviewSexTypesController;
 import de.edgesoft.refereemanager.controller.overview.OverviewTournamentsController;
 import de.edgesoft.refereemanager.controller.overview.OverviewTraineesController;
@@ -194,6 +195,14 @@ public class AppLayoutController {
 	private MenuItem mnuOverviewSexTypes;
 
 	/**
+	 * Menu item roles overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private MenuItem mnuOverviewRoles;
+
+	/**
 	 * Menu item statistics -> data.
 	 */
 	@FXML
@@ -354,6 +363,7 @@ public class AppLayoutController {
 		ButtonUtils.adaptButton(btnOverviewClubs, mnuOverviewClubs);
 
 		mnuOverviewSexTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		mnuOverviewRoles.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
 		ButtonUtils.adaptButton(btnStatisticsData, mnuStatisticsData);
@@ -757,7 +767,7 @@ public class AppLayoutController {
 	}
 
 	/**
-	 * Menu overview -> clubs.
+	 * Menu things -> clubs.
 	 *
 	 * @since 0.15.0
 	 */
@@ -767,13 +777,23 @@ public class AppLayoutController {
 	}
 
 	/**
-	 * Menu overview -> sex types.
+	 * Menu things -> sex types.
 	 *
 	 * @since 0.15.0
 	 */
 	@FXML
 	private void handleOverviewSexTypes() {
 		handleOverview(new OverviewSexTypesController());
+	}
+
+	/**
+	 * Menu things -> roles.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleOverviewRoles() {
+		handleOverview(new OverviewRolesController());
 	}
 
 	/**

@@ -8,8 +8,8 @@ import de.edgesoft.edgeutils.files.FileUtils;
 import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.Person;
-import de.edgesoft.refereemanager.jaxb.PersonRoleType;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
+import de.edgesoft.refereemanager.jaxb.RoleType;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -55,13 +55,6 @@ public class PersonModel extends Person {
 	public static final Comparator<Person> NAME_FIRSTNAME = NAME.thenComparing(Comparator.comparing(person -> person.getFirstName().getValueSafe(), Collator.getInstance()));
 
 	/**
-	 * Filter predicate for all people.
-	 *
-	 * @since 0.15.0
-	 */
-	public static Predicate<Person> ALL = person -> true;
-
-	/**
 	 * Returns filter predicate for given role.
 	 *
 	 * @param theRole role
@@ -69,7 +62,7 @@ public class PersonModel extends Person {
 	 *
 	 * @since 0.15.0
 	 */
-	public static Predicate<Person> getRolePredicate(PersonRoleType theRole) {
+	public static Predicate<Person> getRolePredicate(RoleType theRole) {
 		return person -> person.getRole() == theRole;
 	}
 

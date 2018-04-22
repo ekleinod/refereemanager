@@ -50,9 +50,9 @@ import de.edgesoft.refereemanager.jaxb.EMail;
 import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.jaxb.Person;
-import de.edgesoft.refereemanager.jaxb.PersonRoleType;
 import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.RoleType;
 import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
@@ -347,6 +347,7 @@ public class RefereeManagerTest {
 
     	// things that are needed
     	fillSexTypesForm(getSexTypes());
+    	fillRoleTypesForm(getRoleTypes());
     	fillAppModel();
 
     	// referee overview again
@@ -457,6 +458,50 @@ public class RefereeManagerTest {
     }
 
 	/**
+	 * Fills role types in input form.
+	 *
+	 * @param theRoleTypes the sex types
+	 */
+    private static void fillRoleTypesForm(
+    		List<RoleType> theRoleTypes
+    		) {
+
+    	robot.clickOn("#appPane #mnuThings").clickOn("#mnuOverviewRoles");
+    	robot.sleep(SLEEP);
+
+    	// verify empty list
+    	verifyThat("#tblData", NodeMatchers.isVisible());
+    	verifyThat("#tblData", TableViewMatchers.hasNumRows(0));
+    	verifyThat("#tblData", (TableView<Referee> tblView) -> ((Label) tblView.getPlaceholder()).getText().equals("Es wurden noch keine Rollen eingegeben."));
+    	verifyThat("#lblHeading", LabeledMatchers.hasText("Details"));
+    	verifyThat("#lblFilter", LabeledMatchers.hasText("Filter (0 angezeigt)"));
+
+    	for (RoleType aRoleType : theRoleTypes) {
+
+    		robot.clickOn("#bbCRUD #btnAdd");
+    		robot.sleep(SLEEP);
+
+    		verifyThat("#scrTitledID #txtID", NodeMatchers.isVisible());
+    		robot.clickOn("#scrTitledID #txtID");
+
+    		robot.write(aRoleType.getId(), CHAR_SLEEP);
+    		robot.sleep(SLEEP);
+
+        	writeText("#scrTitledID #txtTitle", aRoleType.getTitle());
+        	writeText("#scrTitledID #txtShorttitle", aRoleType.getShorttitle());
+        	writeText("#scrTitledID #txtRemark", aRoleType.getRemark());
+
+        	robot.clickOn("#btnOK");
+        	robot.sleep(SLEEP);
+
+		}
+
+    	// verify filled list
+    	verifyThat("#tblData", TableViewMatchers.hasNumRows(theRoleTypes.size()));
+
+    }
+
+	/**
 	 * Returns sex types.
 	 *
 	 * @return list of sex types
@@ -481,6 +526,37 @@ public class RefereeManagerTest {
     	stNew.setId("SexType.other");
     	stNew.setTitle(new SimpleStringProperty("andere"));
     	stNew.setRemark(new SimpleStringProperty("Andere Geschlechter oder noch nicht entschieden."));
+    	lstReturn.add(stNew);
+
+    	return lstReturn;
+
+    }
+
+	/**
+	 * Returns role types.
+	 *
+	 * @return list of role types
+	 */
+    private static List<RoleType> getRoleTypes() {
+
+    	List<RoleType> lstReturn = new ArrayList<>();
+
+    	// sex types
+    	RoleType stNew = factory.createRoleType();
+    	stNew.setId("RoleType.Captain");
+    	stNew.setTitle(new SimpleStringProperty("Kapitän_in"));
+    	lstReturn.add(stNew);
+
+    	stNew = factory.createRoleType();
+    	stNew.setId("RoleType.Staffel");
+    	stNew.setTitle(new SimpleStringProperty("Spielleiter_innen"));
+    	lstReturn.add(stNew);
+
+    	stNew = factory.createRoleType();
+    	stNew.setId("RoleType.VSRO");
+    	stNew.setTitle(new SimpleStringProperty("Verbandsschiedsrichterobfrau/-obmann"));
+    	stNew.setShorttitle(new SimpleStringProperty("VSRO"));
+    	stNew.setRemark(new SimpleStringProperty("Die lieben Kolleginnen und Kollegen."));
     	lstReturn.add(stNew);
 
     	return lstReturn;
@@ -985,17 +1061,6 @@ public class RefereeManagerTest {
 	 * Fills app model with static data.
 	 */
     private static void fillAppModel() {
-
-    	// roles
-    	PersonRoleType rtNew = factory.createPersonRoleType();
-    	rtNew.setId("RoleType.1");
-    	rtNew.setTitle(new SimpleStringProperty("VSRO"));
-    	AppModel.getData().getContent().getRoleType().add(rtNew);
-
-    	rtNew = factory.createPersonRoleType();
-    	rtNew.setId("RoleType.2");
-    	rtNew.setTitle(new SimpleStringProperty("Kapitän"));
-    	AppModel.getData().getContent().getRoleType().add(rtNew);
 
     	// contact kinds
     	ContactType ctNew = factory.createContactType();

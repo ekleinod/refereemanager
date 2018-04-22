@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.refereemanager.jaxb.Person;
-import de.edgesoft.refereemanager.jaxb.PersonRoleType;
+import de.edgesoft.refereemanager.jaxb.RoleType;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
@@ -114,7 +114,7 @@ public class DataTablePeopleController extends AbstractDataTableController<Perso
 	/**
 	 * Filter storage.
 	 */
-	private Map<CheckBox, PersonRoleType> mapPeopleFilterRoles;
+	private Map<CheckBox, RoleType> mapPeopleFilterRoles;
 
 
 	/**
@@ -205,9 +205,9 @@ public class DataTablePeopleController extends AbstractDataTableController<Perso
 			lblFilter.setText("Filter");
 		} else {
 
-			lstPeople.setPredicate(PersonModel.ALL);
+			lstPeople.setPredicate(TitledIDTypeModel.ALL);
 
-			for (Entry<CheckBox, PersonRoleType> entryChkRole : mapPeopleFilterRoles.entrySet()) {
+			for (Entry<CheckBox, RoleType> entryChkRole : mapPeopleFilterRoles.entrySet()) {
 
 				if (entryChkRole.getKey().isSelected()) {
 					lstPeople.setPredicate(((Predicate<Person>) lstPeople.getPredicate()).and(PersonModel.getRolePredicate(entryChkRole.getValue())));

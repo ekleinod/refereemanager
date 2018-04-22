@@ -39,11 +39,6 @@ import javafx.beans.property.SimpleStringProperty;
 public class LeagueGameModel extends LeagueGame {
 
 	/**
-	 * Filter predicate for all league games.
-	 */
-	public static Predicate<LeagueGame> ALL = leaguegame -> true;
-
-	/**
 	 * Returns filter predicate for given league.
 	 *
 	 * @param theLeague league

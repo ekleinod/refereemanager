@@ -1,6 +1,6 @@
 package de.edgesoft.refereemanager.controller.overview;
 
-import de.edgesoft.refereemanager.jaxb.SexType;
+import de.edgesoft.refereemanager.jaxb.RoleType;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.utils.PrefKey;
@@ -8,7 +8,7 @@ import javafx.beans.value.ObservableBooleanValue;
 import javafx.event.ActionEvent;
 
 /**
- * Controller for the sex types overview scene.
+ * Controller for the roles overview scene.
  *
  * ## Legal stuff
  *
@@ -33,22 +33,22 @@ import javafx.event.ActionEvent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class OverviewSexTypesController extends AbstractOverviewController<SexType> {
+public class OverviewRolesController extends AbstractOverviewController<RoleType> {
 
 	@Override
 	public void initController(
-			final OverviewDetailsController<SexType> theOverviewController
+			final OverviewDetailsController<RoleType> theOverviewController
 			) {
 
 		super.initController(theOverviewController);
 
-		getController().initController(this, PrefKey.OVERVIEW_SEXTYPE_SPLIT, "datatables/DataTableSexTypes", "details/DetailsSexType");
+		getController().initController(this, PrefKey.OVERVIEW_PERSONROLETYPE_SPLIT, "datatables/DataTableRoles", "details/DetailsRole");
 
 		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();
 		getController().initCRUDButtons(this, isOneItemSelected, isOneItemSelected);
 
-		initEditDialogFXMLFilename("editdialogs/EditDialogSexType", "Geschlecht");
+		initEditDialogFXMLFilename("editdialogs/EditDialogRole", "Rolle");
 
 	}
 
@@ -57,7 +57,7 @@ public class OverviewSexTypesController extends AbstractOverviewController<SexTy
 			ActionEvent event
 			) {
 
-		handleAdd(AppModel.factory.createSexType(), ((ContentModel) AppModel.getData().getContent()).getObservableSexTypes());
+		handleAdd(AppModel.factory.createRoleType(), ((ContentModel) AppModel.getData().getContent()).getObservableRoleTypes());
 
 	}
 
@@ -75,7 +75,7 @@ public class OverviewSexTypesController extends AbstractOverviewController<SexTy
 			ActionEvent event
 			) {
 
-		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableSexTypes());
+		handleDelete(((ContentModel) AppModel.getData().getContent()).getObservableRoleTypes());
 
 	}
 

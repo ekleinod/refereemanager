@@ -252,7 +252,7 @@ public class DataTableRefereesController extends AbstractDataTableController<Ref
 			lblFilter.setText("Filter");
 		} else {
 
-			lstReferees.setPredicate(PersonModel.ALL);
+			lstReferees.setPredicate(TitledIDTypeModel.ALL);
 
 			if (chkActive.isSelected()) {
 				lstReferees.setPredicate(((Predicate<Referee>) lstReferees.getPredicate()).and(RefereeModel.ACTIVE));

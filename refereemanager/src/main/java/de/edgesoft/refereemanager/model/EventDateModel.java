@@ -39,13 +39,6 @@ import javafx.beans.property.SimpleStringProperty;
 public class EventDateModel extends EventDate {
 
 	/**
-	 * Filter predicate for all events.
-	 *
-	 * @since 0.15.0
-	 */
-	public static Predicate<EventDateModel> ALL = date -> true;
-
-	/**
 	 * Returns filter predicate for given type.
 	 *
 	 * @param theType type

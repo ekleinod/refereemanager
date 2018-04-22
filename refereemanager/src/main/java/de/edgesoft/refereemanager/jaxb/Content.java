@@ -50,7 +50,7 @@ import de.edgesoft.refereemanager.model.VenueModel;
  *         &lt;element name="status_type" type="{}StatusType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="referee_assignment_type" type="{}RefereeAssignmentType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="training_level_type" type="{}TrainingLevelType" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="role_type" type="{}PersonRoleType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="role_type" type="{}RoleType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="event_date_type" type="{}EventDateType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -121,7 +121,7 @@ public class Content
     @XmlElement(name = "training_level_type", type = TrainingLevelTypeModel.class)
     protected List<TrainingLevelType> trainingLevelType;
     @XmlElement(name = "role_type")
-    protected List<PersonRoleType> roleType;
+    protected List<RoleType> roleType;
     @XmlElement(name = "event_date_type")
     protected List<EventDateType> eventDateType;
 
@@ -626,13 +626,13 @@ public class Content
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link PersonRoleType }
+     * {@link RoleType }
      * 
      * 
      */
-    public List<PersonRoleType> getRoleType() {
+    public List<RoleType> getRoleType() {
         if (roleType == null) {
-            roleType = new ArrayList<PersonRoleType>();
+            roleType = new ArrayList<RoleType>();
         }
         return this.roleType;
     }

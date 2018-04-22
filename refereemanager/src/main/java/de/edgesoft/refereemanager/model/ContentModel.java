@@ -15,9 +15,9 @@ import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.LeagueGame;
 import de.edgesoft.refereemanager.jaxb.OtherEvent;
 import de.edgesoft.refereemanager.jaxb.Person;
-import de.edgesoft.refereemanager.jaxb.PersonRoleType;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.RefereeAssignmentType;
+import de.edgesoft.refereemanager.jaxb.RoleType;
 import de.edgesoft.refereemanager.jaxb.SexType;
 import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.Team;
@@ -88,6 +88,14 @@ public class ContentModel extends Content {
 	 */
 	@XmlTransient
 	private ObservableList<SexType> observableSexTypes = null;
+
+	/**
+	 * Observable list of role types (singleton).
+	 *
+	 * @since 0.15.0
+	 */
+	@XmlTransient
+	private ObservableList<RoleType> observableRoleTypes = null;
 
 	/**
 	 * Observable list of league games (singleton).
@@ -162,6 +170,20 @@ public class ContentModel extends Content {
 			observablePeople = FXCollections.observableList(getPerson());
 		}
 		return observablePeople;
+	}
+
+	/**
+	 * Returns observable list of roles.
+	 *
+	 * @return observable list of roles
+	 *
+	 * @since 0.15.0
+	 */
+	public ObservableList<RoleType> getObservableRoleTypes() {
+		if (observableRoleTypes == null) {
+			observableRoleTypes = FXCollections.observableList(getRoleType());
+		}
+		return observableRoleTypes;
 	}
 
 	/**
@@ -405,7 +427,7 @@ public class ContentModel extends Content {
 		getRefereeAssignmentType().clear();
 		getRefereeAssignmentType().addAll(lstRefereeAssignmentType);
 
-		List<PersonRoleType> lstPersonRoleType = getRoleType().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
+		List<RoleType> lstPersonRoleType = getRoleType().stream().sorted(TitledIDTypeModel.DISPLAYTITLE).collect(Collectors.toList());
 		getRoleType().clear();
 		getRoleType().addAll(lstPersonRoleType);
 

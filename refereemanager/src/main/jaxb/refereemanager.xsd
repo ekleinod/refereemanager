@@ -75,7 +75,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 					<xsd:element name="status_type" type="StatusType" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="referee_assignment_type" type="RefereeAssignmentType" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="training_level_type" type="TrainingLevelType" minOccurs="0" maxOccurs="unbounded" />
-					<xsd:element name="role_type" type="PersonRoleType" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="role_type" type="RoleType" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="event_date_type" type="EventDateType" minOccurs="0" maxOccurs="unbounded" />
 				</xsd:sequence>
 			</xsd:extension>
@@ -121,7 +121,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 						<xsd:annotation>
 							<xsd:appinfo>
 								<jxb:property>
-									<jxb:baseType name="PersonRoleType" />
+									<jxb:baseType name="RoleType" />
 								</jxb:property>
 							</xsd:appinfo>
 						</xsd:annotation>
@@ -681,7 +681,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<xsd:complexType name="PersonRoleType">
+	<xsd:complexType name="RoleType">
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 			</xsd:extension>

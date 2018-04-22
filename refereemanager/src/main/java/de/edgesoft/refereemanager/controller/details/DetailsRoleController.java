@@ -1,11 +1,13 @@
-package de.edgesoft.refereemanager.model;
+package de.edgesoft.refereemanager.controller.details;
 
-import java.util.function.Predicate;
-
-import de.edgesoft.refereemanager.jaxb.StatusType;
+import de.edgesoft.edgeutils.javafx.FontUtils;
+import de.edgesoft.refereemanager.jaxb.RoleType;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.text.FontWeight;
 
 /**
- * StatusType model, additional methods for jaxb model class.
+ * Controller for the role details scene.
  *
  * ## Legal stuff
  *
@@ -27,26 +29,42 @@ import de.edgesoft.refereemanager.jaxb.StatusType;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.14.0
- * @since 0.6.0
+ * @version 0.15.0
+ * @since 0.15.0
  */
-public class StatusTypeModel extends StatusType {
+public class DetailsRoleController<T extends RoleType> implements IDetailsController<T> {
 
 	/**
-	 * Filter predicate for active status types.
-	 *
-	 * @version 0.14.0
-	 * @since 0.6.0
+	 * Heading.
 	 */
-	public static Predicate<StatusType> ACTIVE = type -> type.getActive().get();
+	@FXML
+	private Label lblHeading;
+
 
 	/**
-	 * Filter predicate for inactive status types.
+	 * Initializes the controller class.
 	 *
-	 * @version 0.14.0
-	 * @since 0.6.0
+	 * This method is automatically called after the fxml file has been loaded.
 	 */
-	public static Predicate<StatusType> INACTIVE = type -> !type.getActive().get();
+	@FXML
+	private void initialize() {
+
+		// headings
+		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD));
+
+	}
+
+	/**
+	 * Shows detail data.
+	 *
+	 * @param theDetailData (null if no data to show)
+	 */
+	@Override
+	public void showDetails(final T theDetailData) {
+
+		// nothing to do
+
+	}
 
 }
 

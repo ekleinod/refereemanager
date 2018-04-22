@@ -111,6 +111,7 @@
 								</MenuItem>
 								<SeparatorMenuItem />
 								<MenuItem fx:id="mnuOverviewSexTypes" onAction="#handleOverviewSexTypes" text="_Geschlechter" />
+								<MenuItem fx:id="mnuOverviewRoles" onAction="#handleOverviewRoles" text="_Rollen" />
 							</items>
 						</Menu>
 						<Menu fx:id="mnuStatistics" text="S_tatistik">

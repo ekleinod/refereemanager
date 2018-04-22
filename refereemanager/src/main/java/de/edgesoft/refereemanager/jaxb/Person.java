@@ -100,7 +100,7 @@ public class Person
     @XmlElement(type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
-    protected PersonRoleType role;
+    protected RoleType role;
 
     /**
      * Gets the value of the firstName property.
@@ -346,7 +346,7 @@ public class Person
      *     {@link Object }
      *     
      */
-    public PersonRoleType getRole() {
+    public RoleType getRole() {
         return role;
     }
 
@@ -358,7 +358,7 @@ public class Person
      *     {@link Object }
      *     
      */
-    public void setRole(PersonRoleType value) {
+    public void setRole(RoleType value) {
         this.role = value;
     }
 

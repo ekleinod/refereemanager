@@ -11,6 +11,7 @@ import de.edgesoft.refereemanager.jaxb.Trainee;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.PersonModel;
+import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.model.TraineeModel;
 import de.edgesoft.refereemanager.utils.TableUtils;
 import javafx.beans.property.SimpleStringProperty;
@@ -174,7 +175,7 @@ public class DataTableTraineesController extends AbstractDataTableController<Tra
 			lblFilter.setText("Filter");
 		} else {
 
-			lstTrainee.setPredicate(PersonModel.ALL);
+			lstTrainee.setPredicate(TitledIDTypeModel.ALL);
 
 			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstTrainee.size()));
 		}

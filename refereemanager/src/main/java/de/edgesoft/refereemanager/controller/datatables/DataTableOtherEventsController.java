@@ -217,7 +217,7 @@ public class DataTableOtherEventsController extends AbstractDataTableController<
 			lblFilter.setText("Filter");
 		} else {
 
-			lstOtherEvents.setPredicate(EventDateModel.ALL);
+			lstOtherEvents.setPredicate(TitledIDTypeModel.ALL);
 
 			for (Entry<CheckBox, EventDateType> entryChkType : mapEventFilterTypes.entrySet()) {
 
