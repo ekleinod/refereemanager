@@ -937,7 +937,7 @@ public class RefereeManagerTest {
 		dtaReturn.setBirthday(new SimpleObjectProperty<>(LocalDate.of(1970, 9, 21)));
 		dtaReturn.setDayOfDeath(new SimpleObjectProperty<>(LocalDate.of(2010, 12, 1)));
 		dtaReturn.setSexType(AppModel.getData().getContent().getSexType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("männlich")).findFirst().get());
-		dtaReturn.setRole(AppModel.getData().getContent().getRoleType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("VSRO")).findFirst().get());
+		dtaReturn.setRole(AppModel.getData().getContent().getRoleType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("Verbandsschiedsrichterobfrau/-obmann")).findFirst().get());
 		dtaReturn.setRemark(new SimpleStringProperty("Testdaten Schiedsrichter 1"));
 
 		EMail theMail = factory.createEMail();
@@ -1090,11 +1090,19 @@ public class RefereeManagerTest {
     	StatusType sttNew = factory.createStatusType();
     	sttNew.setId("StatusType.1");
     	sttNew.setTitle(new SimpleStringProperty("normal"));
+    	sttNew.setActive(new SimpleBooleanProperty(true));
     	AppModel.getData().getContent().getStatusType().add(sttNew);
 
     	sttNew = factory.createStatusType();
     	sttNew.setId("StatusType.2");
     	sttNew.setTitle(new SimpleStringProperty("many"));
+    	sttNew.setActive(new SimpleBooleanProperty(true));
+    	AppModel.getData().getContent().getStatusType().add(sttNew);
+
+    	sttNew = factory.createStatusType();
+    	sttNew.setId("StatusType.3");
+    	sttNew.setTitle(new SimpleStringProperty("passiv"));
+    	sttNew.setActive(new SimpleBooleanProperty(false));
     	AppModel.getData().getContent().getStatusType().add(sttNew);
 
     	// leagues
