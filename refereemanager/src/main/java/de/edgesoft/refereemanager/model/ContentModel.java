@@ -98,6 +98,14 @@ public class ContentModel extends Content {
 	private ObservableList<RoleType> observableRoleTypes = null;
 
 	/**
+	 * Observable list of contact types (singleton).
+	 *
+	 * @since 0.15.0
+	 */
+	@XmlTransient
+	private ObservableList<ContactType> observableContactTypes = null;
+
+	/**
 	 * Observable list of league games (singleton).
 	 *
 	 * @since 0.15.0
@@ -184,6 +192,20 @@ public class ContentModel extends Content {
 			observableRoleTypes = FXCollections.observableList(getRoleType());
 		}
 		return observableRoleTypes;
+	}
+
+	/**
+	 * Returns observable list of contact types.
+	 *
+	 * @return observable list of contact types
+	 *
+	 * @since 0.15.0
+	 */
+	public ObservableList<ContactType> getObservableContactTypes() {
+		if (observableContactTypes == null) {
+			observableContactTypes = FXCollections.observableList(getContactType());
+		}
+		return observableContactTypes;
 	}
 
 	/**

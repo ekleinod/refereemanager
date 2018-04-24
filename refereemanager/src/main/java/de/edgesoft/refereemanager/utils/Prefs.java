@@ -107,6 +107,8 @@ public class Prefs {
 			case OTHER_DATA_SORT_LOADING:
 				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
 
+			case OVERVIEW_CONTACT_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_CLUB_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_LEAGUE_GAME_SPLIT:
@@ -115,9 +117,9 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_PERSON_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
-			case OVERVIEW_PERSONROLETYPE_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_REFEREE_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
+			case OVERVIEW_ROLETYPE_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_SEXTYPE_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));

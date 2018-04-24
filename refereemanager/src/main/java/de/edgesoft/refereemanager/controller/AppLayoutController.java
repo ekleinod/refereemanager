@@ -16,6 +16,7 @@ import de.edgesoft.edgeutils.javafx.ButtonUtils;
 import de.edgesoft.refereemanager.RefereeManager;
 import de.edgesoft.refereemanager.controller.overview.IOverviewController;
 import de.edgesoft.refereemanager.controller.overview.OverviewClubsController;
+import de.edgesoft.refereemanager.controller.overview.OverviewContactTypesController;
 import de.edgesoft.refereemanager.controller.overview.OverviewLeagueGamesController;
 import de.edgesoft.refereemanager.controller.overview.OverviewOtherEventsController;
 import de.edgesoft.refereemanager.controller.overview.OverviewPeopleController;
@@ -203,6 +204,14 @@ public class AppLayoutController {
 	private MenuItem mnuOverviewRoles;
 
 	/**
+	 * Menu item contact types overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private MenuItem mnuOverviewContactTypes;
+
+	/**
 	 * Menu item statistics -> data.
 	 */
 	@FXML
@@ -364,6 +373,7 @@ public class AppLayoutController {
 
 		mnuOverviewSexTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		mnuOverviewRoles.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		mnuOverviewContactTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
 		ButtonUtils.adaptButton(btnStatisticsData, mnuStatisticsData);
@@ -794,6 +804,16 @@ public class AppLayoutController {
 	@FXML
 	private void handleOverviewRoles() {
 		handleOverview(new OverviewRolesController());
+	}
+
+	/**
+	 * Menu things -> contact types.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleOverviewContactTypes() {
+		handleOverview(new OverviewContactTypesController());
 	}
 
 	/**

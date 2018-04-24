@@ -42,7 +42,7 @@ public class OverviewRolesController extends AbstractOverviewController<RoleType
 
 		super.initController(theOverviewController);
 
-		getController().initController(this, PrefKey.OVERVIEW_PERSONROLETYPE_SPLIT, "datatables/DataTableRoles", "details/DetailsRole");
+		getController().initController(this, PrefKey.OVERVIEW_ROLETYPE_SPLIT, "datatables/DataTableRoles", "details/DetailsRole");
 
 		// CRUD buttons setup
 		ObservableBooleanValue isOneItemSelected = getController().getDataTableController().selectedItemProperty().isNull();

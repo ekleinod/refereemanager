@@ -348,6 +348,7 @@ public class RefereeManagerTest {
     	// things that are needed
     	fillSexTypesForm(getSexTypes());
     	fillRoleTypesForm(getRoleTypes());
+    	fillContactTypesForm(getContactTypes());
     	fillAppModel();
 
     	// referee overview again
@@ -460,7 +461,51 @@ public class RefereeManagerTest {
 	/**
 	 * Fills role types in input form.
 	 *
-	 * @param theRoleTypes the sex types
+	 * @param theContactTypes the contact types
+	 */
+    private static void fillContactTypesForm(
+    		List<ContactType> theContactTypes
+    		) {
+
+    	robot.clickOn("#appPane #mnuThings").clickOn("#mnuOverviewContactTypes");
+    	robot.sleep(SLEEP);
+
+    	// verify empty list
+    	verifyThat("#tblData", NodeMatchers.isVisible());
+    	verifyThat("#tblData", TableViewMatchers.hasNumRows(0));
+    	verifyThat("#tblData", (TableView<Referee> tblView) -> ((Label) tblView.getPlaceholder()).getText().equals("Es wurden noch keine Kontakttypen eingegeben."));
+    	verifyThat("#lblHeading", LabeledMatchers.hasText("Details"));
+    	verifyThat("#lblFilter", LabeledMatchers.hasText("Filter (0 angezeigt)"));
+
+    	for (ContactType aContactType : theContactTypes) {
+
+    		robot.clickOn("#bbCRUD #btnAdd");
+    		robot.sleep(SLEEP);
+
+    		verifyThat("#scrTitledID #txtID", NodeMatchers.isVisible());
+    		robot.clickOn("#scrTitledID #txtID");
+
+    		robot.write(aContactType.getId(), CHAR_SLEEP);
+    		robot.sleep(SLEEP);
+
+        	writeText("#scrTitledID #txtTitle", aContactType.getTitle());
+        	writeText("#scrTitledID #txtShorttitle", aContactType.getShorttitle());
+        	writeText("#scrTitledID #txtRemark", aContactType.getRemark());
+
+        	robot.clickOn("#btnOK");
+        	robot.sleep(SLEEP);
+
+		}
+
+    	// verify filled list
+    	verifyThat("#tblData", TableViewMatchers.hasNumRows(theContactTypes.size()));
+
+    }
+
+	/**
+	 * Fills role types in input form.
+	 *
+	 * @param theRoleTypes the role types
 	 */
     private static void fillRoleTypesForm(
     		List<RoleType> theRoleTypes
@@ -510,7 +555,6 @@ public class RefereeManagerTest {
 
     	List<SexType> lstReturn = new ArrayList<>();
 
-    	// sex types
     	SexType stNew = factory.createSexType();
     	stNew.setId("SexType.female");
     	stNew.setTitle(new SimpleStringProperty("weiblich"));
@@ -541,23 +585,47 @@ public class RefereeManagerTest {
 
     	List<RoleType> lstReturn = new ArrayList<>();
 
-    	// sex types
-    	RoleType stNew = factory.createRoleType();
-    	stNew.setId("RoleType.Captain");
-    	stNew.setTitle(new SimpleStringProperty("Kapitän_in"));
-    	lstReturn.add(stNew);
+    	RoleType rtNew = factory.createRoleType();
+    	rtNew.setId("RoleType.Captain");
+    	rtNew.setTitle(new SimpleStringProperty("Kapitän_in"));
+    	lstReturn.add(rtNew);
 
-    	stNew = factory.createRoleType();
-    	stNew.setId("RoleType.Staffel");
-    	stNew.setTitle(new SimpleStringProperty("Spielleiter_innen"));
-    	lstReturn.add(stNew);
+    	rtNew = factory.createRoleType();
+    	rtNew.setId("RoleType.Staffel");
+    	rtNew.setTitle(new SimpleStringProperty("Spielleiter_innen"));
+    	lstReturn.add(rtNew);
 
-    	stNew = factory.createRoleType();
-    	stNew.setId("RoleType.VSRO");
-    	stNew.setTitle(new SimpleStringProperty("Verbandsschiedsrichterobfrau/-obmann"));
-    	stNew.setShorttitle(new SimpleStringProperty("VSRO"));
-    	stNew.setRemark(new SimpleStringProperty("Die lieben Kolleginnen und Kollegen."));
-    	lstReturn.add(stNew);
+    	rtNew = factory.createRoleType();
+    	rtNew.setId("RoleType.VSRO");
+    	rtNew.setTitle(new SimpleStringProperty("Verbandsschiedsrichterobfrau/-obmann"));
+    	rtNew.setShorttitle(new SimpleStringProperty("VSRO"));
+    	rtNew.setRemark(new SimpleStringProperty("Die lieben Kolleginnen und Kollegen."));
+    	lstReturn.add(rtNew);
+
+    	return lstReturn;
+
+    }
+
+	/**
+	 * Returns contact types.
+	 *
+	 * @return list of contact types
+	 */
+    private static List<ContactType> getContactTypes() {
+
+    	List<ContactType> lstReturn = new ArrayList<>();
+
+    	ContactType ctNew = factory.createContactType();
+    	ctNew.setId("ContactType.p");
+    	ctNew.setTitle(new SimpleStringProperty("privat"));
+    	ctNew.setShorttitle(new SimpleStringProperty("p"));
+    	lstReturn.add(ctNew);
+
+    	ctNew = factory.createContactType();
+    	ctNew.setId("ContactType.d");
+    	ctNew.setTitle(new SimpleStringProperty("dienstlich"));
+    	ctNew.setShorttitle(new SimpleStringProperty("d"));
+    	lstReturn.add(ctNew);
 
     	return lstReturn;
 
@@ -943,7 +1011,7 @@ public class RefereeManagerTest {
 		EMail theMail = factory.createEMail();
 		theMail.setEMail(new SimpleStringProperty("schiri1@test-schiri.de"));
 		theMail.setIsPrimary(new SimpleBooleanProperty(true));
-		theMail.setContactType(AppModel.getData().getContent().getContactType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
+		theMail.setContactType(AppModel.getData().getContent().getContactType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("privat")).findFirst().get());
 		theMail.setRemark(new SimpleStringProperty("Testmail 1 Schiedsrichter 1"));
 		dtaReturn.getEMail().add(theMail);
 
@@ -955,7 +1023,7 @@ public class RefereeManagerTest {
 		PhoneNumber thePhone = factory.createPhoneNumber();
 		thePhone.setNumber(new SimpleStringProperty("1234567"));
 		thePhone.setIsPrimary(new SimpleBooleanProperty(true));
-		thePhone.setContactType(AppModel.getData().getContent().getContactType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
+		thePhone.setContactType(AppModel.getData().getContent().getContactType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("privat")).findFirst().get());
 		thePhone.setRemark(new SimpleStringProperty("Testtelefon 1 Schiedsrichter 1"));
 		dtaReturn.getPhoneNumber().add(thePhone);
 
@@ -978,7 +1046,7 @@ public class RefereeManagerTest {
 		theAddress.setZipCode(new SimpleStringProperty("06543"));
 		theAddress.setCity(new SimpleStringProperty("Musterstadt"));
 		theAddress.setIsPrimary(new SimpleBooleanProperty(true));
-		theAddress.setContactType(AppModel.getData().getContent().getContactType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("persönlich")).findFirst().get());
+		theAddress.setContactType(AppModel.getData().getContent().getContactType().stream().filter(t -> t.getDisplayText().getValueSafe().equals("privat")).findFirst().get());
 		theAddress.setRemark(new SimpleStringProperty("Einzige Testadresse Schiedsrichter 1"));
 		dtaReturn.getAddress().add(theAddress);
 
@@ -1061,18 +1129,6 @@ public class RefereeManagerTest {
 	 * Fills app model with static data.
 	 */
     private static void fillAppModel() {
-
-    	// contact kinds
-    	ContactType ctNew = factory.createContactType();
-    	ctNew.setId("ContactType.p");
-    	ctNew.setTitle(new SimpleStringProperty("persönlich"));
-    	AppModel.getData().getContent().getContactType().add(ctNew);
-
-    	ctNew = factory.createContactType();
-    	ctNew.setId("ContactType.d");
-    	ctNew.setTitle(new SimpleStringProperty("dienstlich"));
-    	ctNew.setShorttitle(new SimpleStringProperty("d"));
-    	AppModel.getData().getContent().getContactType().add(ctNew);
 
     	// clubs
     	Club clNew = factory.createClub();
