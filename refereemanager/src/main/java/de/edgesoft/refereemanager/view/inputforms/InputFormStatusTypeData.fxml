@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<ScrollPane fx:id="scrStatusType" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormStatusTypeDataController">
+	<content>
+		<GridPane alignment="TOP_CENTER" vgap="5.0">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+				<ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="250.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+			</rowConstraints>
+			<children>
+				<Label text="Aktiv" />
+				<CheckBox fx:id="chkActive" text="Aktiv" GridPane.columnIndex="1" />
+				<Label text="MMD Start" GridPane.rowIndex="1" />
+				<TextField fx:id="txtMmdmarkupstart" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Label text="MMD Ende" GridPane.rowIndex="2" />
+				<TextField fx:id="txtMmdmarkupend" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+			</children>
+		</GridPane>
+	</content>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</ScrollPane>

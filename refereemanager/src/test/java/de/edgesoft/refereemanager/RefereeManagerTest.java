@@ -346,6 +346,7 @@ public class RefereeManagerTest {
     	robot.sleep(SLEEP);
 
     	// things that are needed
+    	fillStatusTypesForm(getStatusTypes());
     	fillSexTypesForm(getSexTypes());
     	fillRoleTypesForm(getRoleTypes());
     	fillContactTypesForm(getContactTypes());
@@ -455,6 +456,59 @@ public class RefereeManagerTest {
 
     	// verify filled list
     	verifyThat("#tblData", TableViewMatchers.hasNumRows(theSexTypes.size()));
+
+    }
+
+	/**
+	 * Fills status types in input form.
+	 *
+	 * @param theStatusTypes the status types
+	 */
+    private static void fillStatusTypesForm(
+    		List<StatusType> theStatusTypes
+    		) {
+
+    	robot.clickOn("#appPane #mnuThings").clickOn("#mnuOverviewStatusTypes");
+    	robot.sleep(SLEEP);
+
+    	// verify empty list
+    	verifyThat("#tblData", NodeMatchers.isVisible());
+    	verifyThat("#tblData", TableViewMatchers.hasNumRows(0));
+    	verifyThat("#tblData", (TableView<Referee> tblView) -> ((Label) tblView.getPlaceholder()).getText().equals("Es wurden noch keine Status eingegeben."));
+    	verifyThat("#lblHeading", LabeledMatchers.hasText("Details"));
+    	verifyThat("#lblFilter", LabeledMatchers.hasText("Filter (0 angezeigt)"));
+
+    	for (StatusType aStatusType : theStatusTypes) {
+
+    		robot.clickOn("#bbCRUD #btnAdd");
+    		robot.sleep(SLEEP);
+
+    		verifyThat("#scrTitledID #txtID", NodeMatchers.isVisible());
+    		robot.clickOn("#scrTitledID #txtID");
+
+    		robot.write(aStatusType.getId(), CHAR_SLEEP);
+    		robot.sleep(SLEEP);
+
+        	writeText("#scrTitledID #txtTitle", aStatusType.getTitle());
+        	writeText("#scrTitledID #txtShorttitle", aStatusType.getShorttitle());
+        	writeText("#scrTitledID #txtRemark", aStatusType.getRemark());
+
+        	robot.clickOn("#tabStatus");
+        	robot.sleep(SLEEP);
+
+    		verifyThat("#scrStatusType #chkActive", NodeMatchers.isVisible());
+        	checkCheckBox("#scrStatusType #chkActive", aStatusType.getActive());
+
+        	writeText("#scrStatusType #txtMmdmarkupstart", aStatusType.getMmdmarkupstart());
+        	writeText("#scrStatusType #txtMmdmarkupend", aStatusType.getMmdmarkupend());
+
+        	robot.clickOn("#btnOK");
+        	robot.sleep(SLEEP);
+
+		}
+
+    	// verify filled list
+    	verifyThat("#tblData", TableViewMatchers.hasNumRows(theStatusTypes.size()));
 
     }
 
@@ -601,6 +655,39 @@ public class RefereeManagerTest {
     	rtNew.setShorttitle(new SimpleStringProperty("VSRO"));
     	rtNew.setRemark(new SimpleStringProperty("Die lieben Kolleginnen und Kollegen."));
     	lstReturn.add(rtNew);
+
+    	return lstReturn;
+
+    }
+
+	/**
+	 * Returns status types.
+	 *
+	 * @return list of status types
+	 */
+    private static List<StatusType> getStatusTypes() {
+
+    	List<StatusType> lstReturn = new ArrayList<>();
+
+    	StatusType sttNew = factory.createStatusType();
+    	sttNew.setId("StatusType.1");
+    	sttNew.setTitle(new SimpleStringProperty("normal"));
+    	sttNew.setActive(new SimpleBooleanProperty(true));
+    	lstReturn.add(sttNew);
+
+    	sttNew = factory.createStatusType();
+    	sttNew.setId("StatusType.2");
+    	sttNew.setTitle(new SimpleStringProperty("many"));
+    	sttNew.setActive(new SimpleBooleanProperty(true));
+    	sttNew.setMmdmarkupstart(new SimpleStringProperty("**start"));
+    	sttNew.setMmdmarkupend(new SimpleStringProperty("end**"));
+    	lstReturn.add(sttNew);
+
+    	sttNew = factory.createStatusType();
+    	sttNew.setId("StatusType.3");
+    	sttNew.setTitle(new SimpleStringProperty("passiv"));
+    	sttNew.setActive(new SimpleBooleanProperty(false));
+    	lstReturn.add(sttNew);
 
     	return lstReturn;
 
@@ -1141,25 +1228,6 @@ public class RefereeManagerTest {
     	clNew.setTitle(new SimpleStringProperty("Brauereien"));
     	clNew.setShorttitle(new SimpleStringProperty("Brauer"));
     	AppModel.getData().getContent().getClub().add(clNew);
-
-    	// status
-    	StatusType sttNew = factory.createStatusType();
-    	sttNew.setId("StatusType.1");
-    	sttNew.setTitle(new SimpleStringProperty("normal"));
-    	sttNew.setActive(new SimpleBooleanProperty(true));
-    	AppModel.getData().getContent().getStatusType().add(sttNew);
-
-    	sttNew = factory.createStatusType();
-    	sttNew.setId("StatusType.2");
-    	sttNew.setTitle(new SimpleStringProperty("many"));
-    	sttNew.setActive(new SimpleBooleanProperty(true));
-    	AppModel.getData().getContent().getStatusType().add(sttNew);
-
-    	sttNew = factory.createStatusType();
-    	sttNew.setId("StatusType.3");
-    	sttNew.setTitle(new SimpleStringProperty("passiv"));
-    	sttNew.setActive(new SimpleBooleanProperty(false));
-    	AppModel.getData().getContent().getStatusType().add(sttNew);
 
     	// leagues
     	League lgNew = factory.createLeague();

@@ -106,6 +106,14 @@ public class ContentModel extends Content {
 	private ObservableList<ContactType> observableContactTypes = null;
 
 	/**
+	 * Observable list of status types (singleton).
+	 *
+	 * @since 0.15.0
+	 */
+	@XmlTransient
+	private ObservableList<StatusType> observableStatusTypes = null;
+
+	/**
 	 * Observable list of league games (singleton).
 	 *
 	 * @since 0.15.0
@@ -220,6 +228,20 @@ public class ContentModel extends Content {
 			observableSexTypes = FXCollections.observableList(getSexType());
 		}
 		return observableSexTypes;
+	}
+
+	/**
+	 * Returns observable list of status types.
+	 *
+	 * @return observable list of status types
+	 *
+	 * @since 0.15.0
+	 */
+	public ObservableList<StatusType> getObservableStatusTypes() {
+		if (observableStatusTypes == null) {
+			observableStatusTypes = FXCollections.observableList(getStatusType());
+		}
+		return observableStatusTypes;
 	}
 
 	/**

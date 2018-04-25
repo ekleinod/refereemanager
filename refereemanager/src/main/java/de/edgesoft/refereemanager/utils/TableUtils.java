@@ -5,6 +5,7 @@ import java.time.LocalTime;
 
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.datetime.DateTimeUtils;
+import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.model.LeagueGameModel;
 import de.edgesoft.refereemanager.model.OtherEventModel;
 import de.edgesoft.refereemanager.model.PersonModel;
@@ -290,6 +291,30 @@ public class TableUtils {
 	 */
 	public static final TableCell<TournamentModel, Boolean> getTableCellTournamentRefereeReport() {
 		return new TableCell<TournamentModel, Boolean>() {
+	        @Override
+	        protected void updateItem(Boolean item, boolean empty) {
+	            super.updateItem(item, empty);
+
+	            if (empty) {
+	                setGraphic(null);
+	            } else if (item == null || !item) {
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-error.png")));
+	            } else {
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-success.png")));
+	            }
+	        }
+	    };
+	}
+
+	/**
+	 * Returns {@link TableCell} for cell factories.
+	 *
+	 * @return table cell for cell factories
+	 *
+	 * @since 0.15.0
+	 */
+	public static final TableCell<StatusType, Boolean> getTableCellStatusTypeActive() {
+		return new TableCell<StatusType, Boolean>() {
 	        @Override
 	        protected void updateItem(Boolean item, boolean empty) {
 	            super.updateItem(item, empty);
