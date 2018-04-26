@@ -130,6 +130,12 @@ public class DataTableRefereesController extends AbstractDataTableController<Ref
 	private TableColumn<RefereeModel, LocalDate> colUpdate;
 
 	/**
+	 * Status column.
+	 */
+	@FXML
+	private TableColumn<RefereeModel, String> colStatus;
+
+	/**
 	 * Label filter.
 	 */
 	@FXML
@@ -199,6 +205,9 @@ public class DataTableRefereesController extends AbstractDataTableController<Ref
 		colUpdate.setCellValueFactory(cellData -> cellData.getValue().getNextTrainingUpdate());
 		colUpdate.setVisible(false);
 		colUpdate.setCellFactory(column -> TableUtils.getTableCellRefereeDate("yyyy"));
+
+		colStatus.setCellValueFactory(cellData -> (cellData.getValue().getStatus() == null) ? null : cellData.getValue().getStatus().getDisplayTitleShort());
+		colStatus.setVisible(false);
 
 		// headings
 		lblFilter.setFont(FontUtils.getDerived(lblFilter.getFont(), FontWeight.BOLD));

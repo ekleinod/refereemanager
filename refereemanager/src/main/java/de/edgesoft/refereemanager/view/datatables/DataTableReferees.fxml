@@ -20,6 +20,7 @@
 				<TableColumn fx:id="colActive" text="Aktiv" />
 				<TableColumn fx:id="colBirthday" text="Geburtstag" />
 				<TableColumn fx:id="colUpdate" text="Fortbildung" />
+				<TableColumn fx:id="colStatus" text="Status" />
 			</columns>
 			<columnResizePolicy>
 				<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
