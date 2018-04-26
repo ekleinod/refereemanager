@@ -322,9 +322,9 @@ public class TableUtils {
 	            if (empty) {
 	                setGraphic(null);
 	            } else if (item == null || !item) {
-	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-unchecked.png")));
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/stock_no.png")));
 	            } else {
-	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-checked.png")));
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/stock_yes.png")));
 	            }
 	        }
 	    };
@@ -346,9 +346,9 @@ public class TableUtils {
 	            if (empty) {
 	                setGraphic(null);
 	            } else if (item == null || !item) {
-	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-unchecked.png")));
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/stock_no.png")));
 	            } else {
-	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-checked.png")));
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/stock_yes.png")));
 	            }
 	        }
 	    };
