@@ -313,6 +313,30 @@ public class TableUtils {
 	 *
 	 * @since 0.15.0
 	 */
+	public static final TableCell<RefereeModel, Boolean> getTableCellRefereeActive() {
+		return new TableCell<RefereeModel, Boolean>() {
+	        @Override
+	        protected void updateItem(Boolean item, boolean empty) {
+	            super.updateItem(item, empty);
+
+	            if (empty) {
+	                setGraphic(null);
+	            } else if (item == null || !item) {
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-unchecked.png")));
+	            } else {
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-checked.png")));
+	            }
+	        }
+	    };
+	}
+
+	/**
+	 * Returns {@link TableCell} for cell factories.
+	 *
+	 * @return table cell for cell factories
+	 *
+	 * @since 0.15.0
+	 */
 	public static final TableCell<StatusType, Boolean> getTableCellStatusTypeActive() {
 		return new TableCell<StatusType, Boolean>() {
 	        @Override
@@ -322,9 +346,9 @@ public class TableUtils {
 	            if (empty) {
 	                setGraphic(null);
 	            } else if (item == null || !item) {
-	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-error.png")));
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-unchecked.png")));
 	            } else {
-	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-success.png")));
+	                setGraphic(new ImageView(Resources.loadImage("icons/24x24/emblems/emblem-checked.png")));
 	            }
 	        }
 	    };

@@ -110,6 +110,12 @@ public class DataTableRefereesController extends AbstractDataTableController<Ref
 	private TableColumn<RefereeModel, String> colClub;
 
 	/**
+	 * Active column.
+	 */
+	@FXML
+	private TableColumn<RefereeModel, Boolean> colActive;
+
+	/**
 	 * Birthday column.
 	 */
 	@FXML
@@ -183,6 +189,9 @@ public class DataTableRefereesController extends AbstractDataTableController<Ref
 		colFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstName());
 		colTrainingLevel.setCellValueFactory(cellData -> (cellData.getValue().getHighestTrainingLevel() == null) ? null : cellData.getValue().getHighestTrainingLevel().getType().getDisplayTitleShort());
 		colClub.setCellValueFactory(cellData -> (cellData.getValue().getMember() == null) ? null : cellData.getValue().getMember().getDisplayText());
+
+		colActive.setCellValueFactory(cellData -> cellData.getValue().isActive());
+		colActive.setCellFactory(column -> TableUtils.getTableCellRefereeActive());
 
 		colBirthday.setCellValueFactory(cellData -> cellData.getValue().getBirthday());
 		colBirthday.setVisible(false);

@@ -17,6 +17,7 @@
 				<TableColumn fx:id="colFirstName" text="Vorname" />
 				<TableColumn fx:id="colTrainingLevel" text="Ausbildung" />
 				<TableColumn fx:id="colClub" text="Verein" />
+				<TableColumn fx:id="colActive" text="Aktiv" />
 				<TableColumn fx:id="colBirthday" text="Geburtstag" />
 				<TableColumn fx:id="colUpdate" text="Fortbildung" />
 			</columns>

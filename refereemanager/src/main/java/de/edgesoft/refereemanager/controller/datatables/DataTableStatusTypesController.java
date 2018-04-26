@@ -115,7 +115,6 @@ public class DataTableStatusTypesController extends AbstractDataTableController<
 		colShorttitle.setCellValueFactory(cellData -> cellData.getValue().getShorttitle());
 
 		colActive.setCellValueFactory(cellData -> cellData.getValue().getActive());
-		colActive.setVisible(false);
 		colActive.setCellFactory(column -> TableUtils.getTableCellStatusTypeActive());
 
 		// headings
