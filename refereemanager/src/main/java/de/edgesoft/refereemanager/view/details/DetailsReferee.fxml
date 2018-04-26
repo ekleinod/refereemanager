@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -27,6 +28,9 @@
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
 			</rowConstraints>
 			<children>
 				<Label text="Name" />
@@ -39,14 +43,18 @@
 				<Label fx:id="lblClub" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 				<Label text="Geburtstag" GridPane.rowIndex="4" />
 				<Label fx:id="lblBirthday" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-				<Label text="Letzte Fortbildung" GridPane.rowIndex="5" />
-				<Label fx:id="lblLastUpdate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-				<Label text="Nächste Fortbildung" GridPane.rowIndex="6" />
-				<Label fx:id="lblNextUpdate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-				<Label text="Rolle" GridPane.rowIndex="7" />
-				<Label fx:id="lblRole" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-				<Label text="aktiv?" GridPane.rowIndex="8" />
-				<Label fx:id="lblActive" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+				<Separator GridPane.columnSpan="2" GridPane.rowIndex="5" />
+				<Label text="Letzte Fortbildung" GridPane.rowIndex="6" />
+				<Label fx:id="lblLastUpdate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+				<Label text="Nächste Fortbildung" GridPane.rowIndex="7" />
+				<Label fx:id="lblNextUpdate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+				<Label text="Rolle" GridPane.rowIndex="8" />
+				<Label fx:id="lblRole" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+				<Separator GridPane.columnSpan="2" GridPane.rowIndex="9" />
+				<Label text="Status" GridPane.rowIndex="10" />
+				<Label fx:id="lblStatus" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+				<Label text="aktiv?" GridPane.rowIndex="11" />
+				<Label fx:id="lblActive" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="11" />
 				<ImageView fx:id="imgView" fitHeight="160.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowSpan="2147483647" GridPane.valignment="TOP" />
 			</children>
 		</GridPane>

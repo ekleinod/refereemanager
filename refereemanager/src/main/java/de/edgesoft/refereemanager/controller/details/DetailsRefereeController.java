@@ -58,6 +58,12 @@ public class DetailsRefereeController<T extends RefereeModel> extends DetailsPer
 	private Label lblNextUpdate;
 
 	/**
+	 * Status.
+	 */
+	@FXML
+	private Label lblStatus;
+
+	/**
 	 * Active?.
 	 */
 	@FXML
@@ -91,6 +97,7 @@ public class DetailsRefereeController<T extends RefereeModel> extends DetailsPer
 			LabelUtils.setText(lblClub, null);
 			LabelUtils.setText(lblLastUpdate, null);
 			LabelUtils.setText(lblNextUpdate, null);
+			LabelUtils.setText(lblStatus, null);
 			LabelUtils.setText(lblActive, null);
 
 		} else {
@@ -107,6 +114,11 @@ public class DetailsRefereeController<T extends RefereeModel> extends DetailsPer
 
 			LabelUtils.setText(lblLastUpdate, theDetailData.getLastTrainingUpdate(), null);
 			LabelUtils.setText(lblNextUpdate, theDetailData.getNextTrainingUpdate(), "yyyy");
+
+			lblStatus.setText(
+					(theDetailData.getStatus() == null) ?
+							null :
+							theDetailData.getStatus().getDisplayText().getValue());
 
 			lblActive.setText(
 					(theDetailData.isActive().getValue()) ?
