@@ -26,6 +26,7 @@ import de.edgesoft.refereemanager.controller.overview.OverviewSexTypesController
 import de.edgesoft.refereemanager.controller.overview.OverviewStatusTypesController;
 import de.edgesoft.refereemanager.controller.overview.OverviewTournamentsController;
 import de.edgesoft.refereemanager.controller.overview.OverviewTraineesController;
+import de.edgesoft.refereemanager.controller.overview.OverviewTrainingLevelTypesController;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -221,6 +222,14 @@ public class AppLayoutController {
 	private MenuItem mnuOverviewStatusTypes;
 
 	/**
+	 * Menu item training level types overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private MenuItem mnuOverviewTrainingLevelTypes;
+
+	/**
 	 * Menu item statistics -> data.
 	 */
 	@FXML
@@ -384,6 +393,7 @@ public class AppLayoutController {
 		mnuOverviewRoles.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		mnuOverviewContactTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		mnuOverviewStatusTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		mnuOverviewTrainingLevelTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
 		ButtonUtils.adaptButton(btnStatisticsData, mnuStatisticsData);
@@ -834,6 +844,16 @@ public class AppLayoutController {
 	@FXML
 	private void handleOverviewStatusTypes() {
 		handleOverview(new OverviewStatusTypesController());
+	}
+
+	/**
+	 * Menu things -> training level types.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleOverviewTrainingLevelTypes() {
+		handleOverview(new OverviewTrainingLevelTypesController());
 	}
 
 	/**

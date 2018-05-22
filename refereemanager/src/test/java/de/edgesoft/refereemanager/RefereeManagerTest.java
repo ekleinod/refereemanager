@@ -346,6 +346,7 @@ public class RefereeManagerTest {
     	robot.sleep(SLEEP);
 
     	// things that are needed
+    	fillTrainingLevelTypesForm(getTrainingLevelTypes());
     	fillStatusTypesForm(getStatusTypes());
     	fillSexTypesForm(getSexTypes());
     	fillRoleTypesForm(getRoleTypes());
@@ -509,6 +510,59 @@ public class RefereeManagerTest {
 
     	// verify filled list
     	verifyThat("#tblData", TableViewMatchers.hasNumRows(theStatusTypes.size()));
+
+    }
+
+	/**
+	 * Fills training level types in input form.
+	 *
+	 * @param theStatusTypes the status types
+	 */
+    private static void fillTrainingLevelTypesForm(
+    		List<TrainingLevelType> theTrainingLevelTypes
+    		) {
+
+    	robot.clickOn("#appPane #mnuThings").clickOn("#mnuOverviewTrainingLevelTypes");
+    	robot.sleep(SLEEP);
+
+    	// verify empty list
+    	verifyThat("#tblData", NodeMatchers.isVisible());
+    	verifyThat("#tblData", TableViewMatchers.hasNumRows(0));
+    	verifyThat("#tblData", (TableView<Referee> tblView) -> ((Label) tblView.getPlaceholder()).getText().equals("Es wurden noch keine Ausbildungsarten eingegeben."));
+    	verifyThat("#lblHeading", LabeledMatchers.hasText("Details"));
+    	verifyThat("#lblFilter", LabeledMatchers.hasText("Filter (0 angezeigt)"));
+
+    	for (TrainingLevelType aTrainingLevelType : theTrainingLevelTypes) {
+
+    		robot.clickOn("#bbCRUD #btnAdd");
+    		robot.sleep(SLEEP);
+
+    		verifyThat("#scrTitledID #txtID", NodeMatchers.isVisible());
+    		robot.clickOn("#scrTitledID #txtID");
+
+    		robot.write(aTrainingLevelType.getId(), CHAR_SLEEP);
+    		robot.sleep(SLEEP);
+
+        	writeText("#scrTitledID #txtTitle", aTrainingLevelType.getTitle());
+        	writeText("#scrTitledID #txtShorttitle", aTrainingLevelType.getShorttitle());
+        	writeText("#scrTitledID #txtRemark", aTrainingLevelType.getRemark());
+
+        	robot.clickOn("#tabTrainingLevel");
+        	robot.sleep(SLEEP);
+
+    		verifyThat("#scrTrainingLevelType #spnRank", NodeMatchers.isVisible());
+        	writeText("#scrTrainingLevelType #spnRank", new SimpleStringProperty(aTrainingLevelType.getRank().getValue().toString()));
+
+    		verifyThat("#scrTrainingLevelType #spnUpdateInterval", NodeMatchers.isVisible());
+        	writeText("#scrTrainingLevelType #spnUpdateInterval", new SimpleStringProperty(aTrainingLevelType.getUpdateInterval().getValue().toString()));
+
+        	robot.clickOn("#btnOK");
+        	robot.sleep(SLEEP);
+
+		}
+
+    	// verify filled list
+    	verifyThat("#tblData", TableViewMatchers.hasNumRows(theTrainingLevelTypes.size()));
 
     }
 
@@ -688,6 +742,43 @@ public class RefereeManagerTest {
     	sttNew.setTitle(new SimpleStringProperty("passiv"));
     	sttNew.setActive(new SimpleBooleanProperty(false));
     	lstReturn.add(sttNew);
+
+    	return lstReturn;
+
+    }
+
+	/**
+	 * Returns training level types.
+	 *
+	 * @return list of training level types
+	 */
+    private static List<TrainingLevelType> getTrainingLevelTypes() {
+
+    	List<TrainingLevelType> lstReturn = new ArrayList<>();
+
+    	TrainingLevelType lvlNew = factory.createTrainingLevelType();
+    	lvlNew.setId("TrainingLevelType.VSR");
+    	lvlNew.setTitle(new SimpleStringProperty("Verbandsschiedsrichter_in"));
+    	lvlNew.setRank(new SimpleIntegerProperty(0));
+    	lvlNew.setUpdateInterval(new SimpleIntegerProperty(2));
+    	lstReturn.add(lvlNew);
+
+    	lvlNew = factory.createTrainingLevelType();
+    	lvlNew.setId("TrainingLevelType.NSR");
+    	lvlNew.setTitle(new SimpleStringProperty("Nationale_r Schiedsrichter_in"));
+    	lvlNew.setShorttitle(new SimpleStringProperty("NSR"));
+    	lvlNew.setRank(new SimpleIntegerProperty(1));
+    	lvlNew.setUpdateInterval(new SimpleIntegerProperty(3));
+    	lstReturn.add(lvlNew);
+
+    	lvlNew = factory.createTrainingLevelType();
+    	lvlNew.setId("TrainingLevelType.IU");
+    	lvlNew.setTitle(new SimpleStringProperty("International Umpire"));
+    	lvlNew.setShorttitle(new SimpleStringProperty("IU"));
+    	lvlNew.setRank(new SimpleIntegerProperty(2));
+    	lvlNew.setUpdateInterval(new SimpleIntegerProperty(3));
+    	lvlNew.setRemark(new SimpleStringProperty("Die Besten der Besten."));
+    	lstReturn.add(lvlNew);
 
     	return lstReturn;
 
@@ -1240,31 +1331,6 @@ public class RefereeManagerTest {
     	lgNew.setTitle(new SimpleStringProperty("Regionalliga Herren"));
     	lgNew.setShorttitle(new SimpleStringProperty("RLH"));
     	AppModel.getData().getContent().getLeague().add(lgNew);
-
-    	// training level
-    	TrainingLevelType lvlNew = factory.createTrainingLevelType();
-    	lvlNew.setId("TrainingLevelType.VSR");
-    	lvlNew.setTitle(new SimpleStringProperty("Verbandsschiedsrichter_in"));
-    	lvlNew.setRank(new SimpleIntegerProperty(0));
-    	lvlNew.setUpdateInterval(new SimpleIntegerProperty(2));
-    	AppModel.getData().getContent().getTrainingLevelType().add(lvlNew);
-
-    	lvlNew = factory.createTrainingLevelType();
-    	lvlNew.setId("TrainingLevelType.NSR");
-    	lvlNew.setTitle(new SimpleStringProperty("Nationale_r Schiedsrichter_in"));
-    	lvlNew.setShorttitle(new SimpleStringProperty("NSR"));
-    	lvlNew.setRank(new SimpleIntegerProperty(1));
-    	lvlNew.setUpdateInterval(new SimpleIntegerProperty(3));
-    	AppModel.getData().getContent().getTrainingLevelType().add(lvlNew);
-
-    	lvlNew = factory.createTrainingLevelType();
-    	lvlNew.setId("TrainingLevelType.IU");
-    	lvlNew.setTitle(new SimpleStringProperty("International Umpire"));
-    	lvlNew.setShorttitle(new SimpleStringProperty("IU"));
-    	lvlNew.setRank(new SimpleIntegerProperty(2));
-    	lvlNew.setUpdateInterval(new SimpleIntegerProperty(3));
-    	lvlNew.setRemark(new SimpleStringProperty("Die Besten der Besten."));
-    	AppModel.getData().getContent().getTrainingLevelType().add(lvlNew);
 
     }
 

@@ -114,6 +114,14 @@ public class ContentModel extends Content {
 	private ObservableList<StatusType> observableStatusTypes = null;
 
 	/**
+	 * Observable list of training level types (singleton).
+	 *
+	 * @since 0.15.0
+	 */
+	@XmlTransient
+	private ObservableList<TrainingLevelType> observableTrainingLevelTypes = null;
+
+	/**
 	 * Observable list of league games (singleton).
 	 *
 	 * @since 0.15.0
@@ -242,6 +250,20 @@ public class ContentModel extends Content {
 			observableStatusTypes = FXCollections.observableList(getStatusType());
 		}
 		return observableStatusTypes;
+	}
+
+	/**
+	 * Returns observable list of training level types.
+	 *
+	 * @return observable list of training level types
+	 *
+	 * @since 0.15.0
+	 */
+	public ObservableList<TrainingLevelType> getObservableTrainingLevelTypes() {
+		if (observableTrainingLevelTypes == null) {
+			observableTrainingLevelTypes = FXCollections.observableList(getTrainingLevelType());
+		}
+		return observableTrainingLevelTypes;
 	}
 
 	/**

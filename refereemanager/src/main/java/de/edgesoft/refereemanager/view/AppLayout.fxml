@@ -114,6 +114,7 @@
 								<MenuItem fx:id="mnuOverviewRoles" onAction="#handleOverviewRoles" text="_Rollen" />
 								<MenuItem fx:id="mnuOverviewContactTypes" onAction="#handleOverviewContactTypes" text="_Kontaktarten" />
 								<MenuItem fx:id="mnuOverviewStatusTypes" onAction="#handleOverviewStatusTypes" text="_Status" />
+								<MenuItem fx:id="mnuOverviewTrainingLevelTypes" onAction="#handleOverviewTrainingLevelTypes" text="_Ausbildungsart" />
 							</items>
 						</Menu>
 						<Menu fx:id="mnuStatistics" text="S_tatistik">
