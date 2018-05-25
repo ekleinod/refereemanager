@@ -73,7 +73,8 @@ import javafx.geometry.VerticalDirection;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -1346,15 +1347,19 @@ public class RefereeManagerTest {
     		) {
 
     	verifyThat(theField, NodeMatchers.isVisible());
-		verifyThat(theField, TextInputControlMatcher.isEmpty());
+
+    	// no spinners allowed here
+		if (robot.lookup(theField).query() instanceof TextInputControl) {
+			verifyThat(theField, TextInputControlMatcher.isEmpty());
+		}
 
 		if (theContent != null) {
 			robot.clickOn(theField);
 			robot.write(theContent.getValueSafe(), CHAR_SLEEP);
 			robot.sleep(SLEEP);
 
-			// text areas' getText returns empty text, therefore no assertion here, same goes for test for focus
-			if (!(robot.lookup(theField).query() instanceof TextArea)) {
+			// text area's getText returns empty text, therefore no assertion here, same goes for test for focus
+			if (robot.lookup(theField).query() instanceof TextField) {
 				verifyThat(theField, TextInputControlMatchers.hasText(theContent.getValueSafe()));
 				verifyThat(theField, NodeMatchers.isFocused());
 			}
