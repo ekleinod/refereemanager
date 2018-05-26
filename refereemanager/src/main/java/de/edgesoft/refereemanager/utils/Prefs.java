@@ -111,6 +111,8 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_CLUB_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
+			case OVERVIEW_LEAGUE_SPLIT:
+				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_LEAGUE_GAME_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_OTHER_EVENT_SPLIT:

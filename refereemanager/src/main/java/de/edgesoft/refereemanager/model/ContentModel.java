@@ -82,6 +82,14 @@ public class ContentModel extends Content {
 	private ObservableList<Person> observablePeople = null;
 
 	/**
+	 * Observable list of leagues (singleton).
+	 *
+	 * @since 0.15.0
+	 */
+	@XmlTransient
+	private ObservableList<League> observableLeagues = null;
+
+	/**
 	 * Observable list of sex types (singleton).
 	 *
 	 * @since 0.13.0
@@ -236,6 +244,20 @@ public class ContentModel extends Content {
 			observableSexTypes = FXCollections.observableList(getSexType());
 		}
 		return observableSexTypes;
+	}
+
+	/**
+	 * Returns observable list of leagues.
+	 *
+	 * @return observable list of leagues
+	 *
+	 * @since 0.15.0
+	 */
+	public ObservableList<League> getObservableLeagues() {
+		if (observableLeagues == null) {
+			observableLeagues = FXCollections.observableList(getLeague());
+		}
+		return observableLeagues;
 	}
 
 	/**

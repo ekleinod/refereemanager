@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.javafx.FontUtils;
-import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
+import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
@@ -23,7 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 
 /**
- * Controller for the training level type list scene.
+ * Controller for the league list scene.
  *
  * ## Legal stuff
  *
@@ -48,7 +48,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DataTableTrainingLevelTypesController extends AbstractDataTableController<TrainingLevelType> {
+public class DataTableLeaguesController extends AbstractDataTableController<League> {
 
 	/**
 	 * Container.
@@ -60,36 +60,36 @@ public class DataTableTrainingLevelTypesController extends AbstractDataTableCont
 	 * Table.
 	 */
 	@FXML
-	private TableView<TrainingLevelType> tblData;
+	private TableView<League> tblData;
 
 	/**
 	 * ID column.
 	 */
 	@FXML
-	private TableColumn<TrainingLevelType, String> colID;
+	private TableColumn<League, String> colID;
 
 	/**
 	 * Title column.
 	 */
 	@FXML
-	private TableColumn<TrainingLevelType, String> colTitle;
+	private TableColumn<League, String> colTitle;
 
 	/**
 	 * Short title column.
 	 */
 	@FXML
-	private TableColumn<TrainingLevelType, String> colShorttitle;
+	private TableColumn<League, String> colShorttitle;
 
 	/**
-	 * Rank column.
+	 * Sex type column.
 	 */
 	@FXML
-	private TableColumn<TrainingLevelType, Integer> colRank;
+	private TableColumn<League, String> colSexType;
 
 	/**
 	 * List of types.
 	 */
-	private FilteredList<TrainingLevelType> lstTrainingLevelTypes;
+	private FilteredList<League> lstLeagues;
 
 	/**
 	 * Label filter.
@@ -112,7 +112,7 @@ public class DataTableTrainingLevelTypesController extends AbstractDataTableCont
 
 		colTitle.setCellValueFactory(cellData -> cellData.getValue().getTitle());
 		colShorttitle.setCellValueFactory(cellData -> cellData.getValue().getShorttitle());
-		colRank.setCellValueFactory(cellData -> cellData.getValue().getRank().asObject());
+		colSexType.setCellValueFactory(cellData -> cellData.getValue().getSexType().getDisplayText());
 
 		// headings
 		lblFilter.setFont(FontUtils.getDerived(lblFilter.getFont(), FontWeight.BOLD));
@@ -125,7 +125,7 @@ public class DataTableTrainingLevelTypesController extends AbstractDataTableCont
 	 * Returns data table.
 	 */
 	@Override
-	public TableView<TrainingLevelType> getDataTable() {
+	public TableView<League> getDataTable() {
 		return tblData;
 	}
 
@@ -135,13 +135,13 @@ public class DataTableTrainingLevelTypesController extends AbstractDataTableCont
 	@Override
 	public void setDataTableItems() {
 
-		lstTrainingLevelTypes = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableTrainingLevelTypes(), trainingleveltype -> true);
+		lstLeagues = new FilteredList<>(((ContentModel) AppModel.getData().getContent()).getObservableLeagues(), league -> true);
 
-		SortedList<TrainingLevelType> lstSortedTrainingLevelTypes = new SortedList<>(lstTrainingLevelTypes);
-		lstSortedTrainingLevelTypes.comparatorProperty().bind(tblData.comparatorProperty());
-		tblData.setItems(lstSortedTrainingLevelTypes);
+		SortedList<League> lstSortedLeagues = new SortedList<>(lstLeagues);
+		lstSortedLeagues.comparatorProperty().bind(tblData.comparatorProperty());
+		tblData.setItems(lstSortedLeagues);
 
-		setDataTablePlaceholderNoun("Ausbildungsarten");
+		setDataTablePlaceholderNoun("Ligen");
 
 		handleFilterChange();
 
@@ -154,13 +154,13 @@ public class DataTableTrainingLevelTypesController extends AbstractDataTableCont
 	@Override
 	public void handleFilterChange() {
 
-		if (lstTrainingLevelTypes == null) {
+		if (lstLeagues == null) {
 			lblFilter.setText("Filter");
 		} else {
 
-			lstTrainingLevelTypes.setPredicate(TitledIDTypeModel.ALL);
+			lstLeagues.setPredicate(TitledIDTypeModel.ALL);
 
-			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstTrainingLevelTypes.size()));
+			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstLeagues.size()));
 		}
 
 		tblData.refresh();
@@ -173,8 +173,8 @@ public class DataTableTrainingLevelTypesController extends AbstractDataTableCont
 	 * @return sorted selection from table
 	 */
 	@Override
-	public ObservableList<TrainingLevelType> getSortedSelectedItems() {
-		List<TrainingLevelType> lstReturn = new ArrayList<>();
+	public ObservableList<League> getSortedSelectedItems() {
+		List<League> lstReturn = new ArrayList<>();
 
 		getSelectionModel().getSelectedItems().forEach(data -> lstReturn.add(data));
 

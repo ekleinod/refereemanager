@@ -264,8 +264,8 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 				<xsd:sequence>
 					<xsd:element name="rank" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="national" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
-					<xsd:element name="results" type="StringProperty" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="referee_report" type="StringProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="results_u_r_l" type="StringProperty" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="referee_report_u_r_l" type="StringProperty" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="referee_quantity" type="RefereeQuantity" minOccurs="1" maxOccurs="unbounded" />
 
 					<!-- references -->

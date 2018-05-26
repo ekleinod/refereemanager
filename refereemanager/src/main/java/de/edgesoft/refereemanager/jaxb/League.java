@@ -33,8 +33,8 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *       &lt;sequence>
  *         &lt;element name="rank" type="{}IntegerProperty"/>
  *         &lt;element name="national" type="{}BooleanProperty" minOccurs="0"/>
- *         &lt;element name="results" type="{}StringProperty"/>
- *         &lt;element name="referee_report" type="{}StringProperty"/>
+ *         &lt;element name="results_u_r_l" type="{}StringProperty"/>
+ *         &lt;element name="referee_report_u_r_l" type="{}StringProperty"/>
  *         &lt;element name="referee_quantity" type="{}RefereeQuantity" maxOccurs="unbounded"/>
  *         &lt;element name="sex_type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="referee_report_recipient" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded"/>
@@ -50,8 +50,8 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 @XmlType(name = "League", propOrder = {
     "rank",
     "national",
-    "results",
-    "refereeReport",
+    "resultsURL",
+    "refereeReportURL",
     "refereeQuantity",
     "sexType",
     "refereeReportRecipient"
@@ -68,12 +68,12 @@ public class League
     @XmlJavaTypeAdapter(SimpleBooleanPropertyAdapter.class)
     @XmlSchemaType(name = "boolean")
     protected SimpleBooleanProperty national;
-    @XmlElement(required = true, type = String.class)
+    @XmlElement(name = "results_u_r_l", required = true, type = String.class)
     @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
-    protected SimpleStringProperty results;
-    @XmlElement(name = "referee_report", required = true, type = String.class)
+    protected SimpleStringProperty resultsURL;
+    @XmlElement(name = "referee_report_u_r_l", required = true, type = String.class)
     @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
-    protected SimpleStringProperty refereeReport;
+    protected SimpleStringProperty refereeReportURL;
     @XmlElement(name = "referee_quantity", required = true)
     protected List<RefereeQuantity> refereeQuantity;
     @XmlElement(name = "sex_type", required = true, type = Object.class)
@@ -132,51 +132,51 @@ public class League
     }
 
     /**
-     * Gets the value of the results property.
+     * Gets the value of the resultsURL property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public SimpleStringProperty getResults() {
-        return results;
+    public SimpleStringProperty getResultsURL() {
+        return resultsURL;
     }
 
     /**
-     * Sets the value of the results property.
+     * Sets the value of the resultsURL property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setResults(SimpleStringProperty value) {
-        this.results = value;
+    public void setResultsURL(SimpleStringProperty value) {
+        this.resultsURL = value;
     }
 
     /**
-     * Gets the value of the refereeReport property.
+     * Gets the value of the refereeReportURL property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public SimpleStringProperty getRefereeReport() {
-        return refereeReport;
+    public SimpleStringProperty getRefereeReportURL() {
+        return refereeReportURL;
     }
 
     /**
-     * Sets the value of the refereeReport property.
+     * Sets the value of the refereeReportURL property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setRefereeReport(SimpleStringProperty value) {
-        this.refereeReport = value;
+    public void setRefereeReportURL(SimpleStringProperty value) {
+        this.refereeReportURL = value;
     }
 
     /**

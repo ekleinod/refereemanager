@@ -109,6 +109,7 @@
 										<KeyCodeCombination alt="DOWN" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
 									</accelerator>
 								</MenuItem>
+								<MenuItem fx:id="mnuOverviewLeagues" onAction="#handleOverviewLeagues" text="_Ligen" />
 								<SeparatorMenuItem />
 								<MenuItem fx:id="mnuOverviewSexTypes" onAction="#handleOverviewSexTypes" text="_Geschlechter" />
 								<MenuItem fx:id="mnuOverviewRoles" onAction="#handleOverviewRoles" text="_Rollen" />
