@@ -2,7 +2,6 @@ package de.edgesoft.refereemanager.controller.inputforms;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.edgeutils.javafx.ButtonUtils;
 import de.edgesoft.refereemanager.jaxb.League;
-import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
@@ -10,8 +9,10 @@ import de.edgesoft.refereemanager.utils.Resources;
 import de.edgesoft.refereemanager.utils.SpinnerUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 /**
@@ -61,6 +62,27 @@ public class InputFormLeagueDataController extends AbstractInputFormController<L
 	@FXML
 	@JAXBMatch(jaxbfield = "rank", jaxbclass = League.class)
 	protected Spinner<Integer> spnRank;
+
+	/**
+	 * Checkbox for national leagues.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "national", jaxbclass = League.class)
+	protected CheckBox chkNational;
+
+	/**
+	 * Results (URL).
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "resultsURL", jaxbclass = League.class)
+	protected TextField txtResultsURL;
+
+	/**
+	 * Referee report (URL).
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "refereeReportURL", jaxbclass = League.class)
+	protected TextField txtRefereeReportURL;
 
 
 	/**

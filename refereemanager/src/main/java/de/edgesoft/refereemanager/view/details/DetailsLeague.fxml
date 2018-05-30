@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -25,6 +26,10 @@
 				<Label fx:id="lblSexType" text="Label" GridPane.columnIndex="1" />
 				<Label text="Rang" GridPane.rowIndex="1" />
 				<Label fx:id="lblRank" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Label text="Resultate" GridPane.rowIndex="2" />
+				<Hyperlink fx:id="lnkResultsURL" onAction="#handleWebLinkAction" text="URL" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label text="OSR-Bericht" GridPane.rowIndex="3" />
+				<Hyperlink fx:id="lnkRefereeReportURL" onAction="#handleWebLinkAction" text="URL" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 			</children>
 		</GridPane>
 	</children>

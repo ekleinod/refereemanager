@@ -1,7 +1,12 @@
 package de.edgesoft.refereemanager.controller;
 
+import de.edgesoft.refereemanager.RefereeManager;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Hyperlink;
+
 /**
- * Controller for about text.
+ * Abstract controller with hyperlink abilities.
  *
  * ## Legal stuff
  *
@@ -23,12 +28,30 @@ package de.edgesoft.refereemanager.controller;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.14.0
- * @since 0.10.0
+ * @version 0.15.0
+ * @since 0.15.0
  */
-public class AboutTextController extends AbstractHyperlinkController {
+public abstract class AbstractHyperlinkController {
 
-	// just inherit link methods so far
+	/**
+	 * Email link.
+	 *
+	 * @param theEvent action event
+	 */
+	@FXML
+	protected void handleEmailLinkAction(final ActionEvent theEvent) {
+		RefereeManager.hostServices.showDocument(String.format("mailto:%s", ((Hyperlink) theEvent.getTarget()).getText()));
+	}
+
+	/**
+	 * Web link.
+	 *
+	 * @param theEvent action event
+	 */
+	@FXML
+	protected void handleWebLinkAction(final ActionEvent theEvent) {
+		RefereeManager.hostServices.showDocument(((Hyperlink) theEvent.getTarget()).getText());
+	}
 
 }
 

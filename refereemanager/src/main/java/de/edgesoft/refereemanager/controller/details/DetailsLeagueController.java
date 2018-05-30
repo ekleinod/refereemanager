@@ -2,8 +2,10 @@ package de.edgesoft.refereemanager.controller.details;
 
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
+import de.edgesoft.refereemanager.controller.AbstractHyperlinkController;
 import de.edgesoft.refereemanager.model.LeagueModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.text.FontWeight;
 
@@ -33,7 +35,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsLeagueController<T extends LeagueModel> implements IDetailsController<T> {
+public class DetailsLeagueController<T extends LeagueModel> extends AbstractHyperlinkController implements IDetailsController<T> {
 
 	/**
 	 * Heading.
@@ -52,6 +54,18 @@ public class DetailsLeagueController<T extends LeagueModel> implements IDetailsC
 	 */
 	@FXML
 	private Label lblRank;
+
+	/**
+	 * Results.
+	 */
+	@FXML
+	private Hyperlink lnkResultsURL;
+
+	/**
+	 * Referee report.
+	 */
+	@FXML
+	private Hyperlink lnkRefereeReportURL;
 
 
 	/**
@@ -79,6 +93,8 @@ public class DetailsLeagueController<T extends LeagueModel> implements IDetailsC
 
 			LabelUtils.setText(lblSexType, null);
 			LabelUtils.setText(lblRank, null);
+			lnkResultsURL.setText(null);
+			lnkRefereeReportURL.setText(null);
 
 		} else {
 
@@ -91,6 +107,16 @@ public class DetailsLeagueController<T extends LeagueModel> implements IDetailsC
 					(theDetailData.getRank() == null) ?
 							null :
 							theDetailData.getRank().getValue().toString());
+
+			lnkResultsURL.setText(
+					(theDetailData.getResultsURL() == null) ?
+							null :
+							theDetailData.getResultsURL().getValue().toString());
+
+			lnkRefereeReportURL.setText(
+					(theDetailData.getRefereeReportURL() == null) ?
+							null :
+							theDetailData.getRefereeReportURL().getValue().toString());
 
 		}
 
