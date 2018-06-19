@@ -10,7 +10,13 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
+// fixing wrong JAXB generation of referenced lists
+// before: // fixing wrong JAXB generation of referenced lists
+// before: import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlIDREF;
+// end of fix
+import javax.xml.bind.annotation.XmlIDREF;
+// end of fix
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
@@ -80,7 +86,12 @@ public class League
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected SexType sexType;
-    @XmlElementRef(name = "referee_report_recipient", type = JAXBElement.class)
+    // fixing wrong JAXB generation of referenced lists
+    // before: @XmlElementRef(name = "referee_report_recipient", type = JAXBElement.class)
+    @XmlElement(name = "referee_report_recipient", type = Object.class)
+    @XmlIDREF
+    @XmlSchemaType(name = "IDREF")
+    // end of fix
     protected List<Person> refereeReportRecipient;
 
     /**
@@ -250,9 +261,10 @@ public class League
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * 
-     * 
+     * - fixing wrong JAXB generation of referenced lists
+     * - before: {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * {@link Person }
+     * - end of fix
      */
     public List<Person> getRefereeReportRecipient() {
         if (refereeReportRecipient == null) {

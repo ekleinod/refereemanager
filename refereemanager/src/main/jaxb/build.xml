@@ -59,7 +59,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<param name="xjc:bindings3" value="${refman:bindings3}" />
 		</antcall>
 
-		<antcall target="fixmodel" />
+		<!--antcall target="fixmodel" /-->
 
 	</target>
 
@@ -80,6 +80,16 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<param name="modelclass" value="Club" />
 			<param name="element" value="contact_person" />
 			<param name="elementcamel" value="ContactPerson" />
+			<param name="elementclass" value="Person" />
+		</antcall>
+
+		<antcall target="fixannotationimport">
+			<param name="modelclass" value="League" />
+		</antcall>
+		<antcall target="fixclass">
+			<param name="modelclass" value="League" />
+			<param name="element" value="referee_report_recipient" />
+			<param name="elementcamel" value="RefereeReportRecipient" />
 			<param name="elementclass" value="Person" />
 		</antcall>
 
@@ -149,7 +159,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 				file="${refman:packagepath}${modelclass}.java"
 				flags="g"
 
-				match="\s{4}(@XmlElementRef\(name = &quot;${element}&quot;, type = JAXBElement\.class, required = false\))\n"
+				match="\s{4}(@XmlElementRef\(name = &quot;${element}&quot;, type = JAXBElement\.class.*\))\n"
 
 				replace="    // fixing wrong JAXB generation of referenced lists${line.separator}    // before: \1${line.separator}    @XmlElement\(name = &quot;${element}&quot;, type = Object\.class\)${line.separator}    @XmlIDREF${line.separator}    @XmlSchemaType\(name = &quot;IDREF&quot;\)${line.separator}    // end of fix${line.separator}"
 
@@ -183,7 +193,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 				file="${refman:packagepath}ObjectFactory.java"
 				flags="g"
 
-				match="\s{4}/\*{2}\n\s{5}\* Create an instance of \{@link JAXBElement \}\{@code &lt;\}\{@link Object \}\{@code &gt;\}\}\n\s{5}\* \n\s{5}\*/\n\s{4}@XmlElementDecl\(namespace = &quot;&quot;, name = &quot;${element}&quot;, scope = ${modelclass}\.class\)\n\s{4}@XmlIDREF\n\s{4}(public JAXBElement&lt;Object&gt; create${modelclass}${elementcamel}\(Object value\)) \{\n\s{8}return new JAXBElement&lt;Object&gt;\(\_Team${elementcamel}\_QNAME, Object\.class, ${modelclass}\.class, value\);\n\s{4}\}\n"
+				match="\s{4}/\*{2}\n\s{5}\* Create an instance of \{@link JAXBElement \}\{@code &lt;\}\{@link Object \}\{@code &gt;\}\}\n\s{5}\* \n\s{5}\*/\n\s{4}@XmlElementDecl\(namespace = &quot;&quot;, name = &quot;${element}&quot;, scope = ${modelclass}\.class\)\n\s{4}@XmlIDREF\n\s{4}(public JAXBElement&lt;Object&gt; create${modelclass}${elementcamel}\(Object value\)) \{\n\s{8}return new JAXBElement&lt;Object&gt;\(\_${modelclass}${elementcamel}\_QNAME, Object\.class, ${modelclass}\.class, value\);\n\s{4}\}\n"
 
 				replace="    // fixing wrong JAXB generation of referenced lists${line.separator}    // removed method: \1${line.separator}    // end of fix${line.separator}"
 
