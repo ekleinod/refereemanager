@@ -3,6 +3,8 @@
 <!--
 Ant script for jaxb creation.
 
+**Important:** save with spaces, not tabs.
+
 ## Legal stuff
 
 Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
@@ -29,141 +31,157 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 <project name="refereemanager" default="help" basedir=".">
 
-  <property name="edgeutils:ant" value="../../../../submodules/edgeutils/ant" />
-  <property name="edgeutils:jaxb" value="../../../../submodules/edgeutils/jaxb" />
-  <import file="${edgeutils:ant}/ant-commons.xml"/>
-  <import file="${edgeutils:ant}/ant-jaxb.xml"/>
+	<property name="edgeutils:ant" value="../../../../submodules/edgeutils/ant" />
+	<property name="edgeutils:jaxb" value="../../../../submodules/edgeutils/jaxb" />
+	<import file="${edgeutils:ant}/ant-commons.xml"/>
+	<import file="${edgeutils:ant}/ant-jaxb.xml"/>
 
-  <property name="refman:xsd" value="refereemanager.xsd" />
-  <property name="refman:outpath" value="../java/" />
-  <property name="refman:package" value="de.edgesoft.refereemanager.jaxb" />
-  <property name="refman:packagepath" value="${refman:outpath}de/edgesoft/refereemanager/jaxb/" />
-  <property name="refman:bindings1" value="${edgeutils:jaxb}/commons.xjb" />
-  <property name="refman:bindings2" value="${edgeutils:jaxb}/commons-reuse.xjb" />
-  <property name="refman:bindings3" value="refereemanager.xjb" />
+	<property name="refman:xsd" value="refereemanager.xsd" />
+	<property name="refman:outpath" value="../java/" />
+	<property name="refman:package" value="de.edgesoft.refereemanager.jaxb" />
+	<property name="refman:packagepath" value="${refman:outpath}de/edgesoft/refereemanager/jaxb/" />
+	<property name="refman:bindings1" value="${edgeutils:jaxb}/commons.xjb" />
+	<property name="refman:bindings2" value="${edgeutils:jaxb}/commons-reuse.xjb" />
+	<property name="refman:bindings3" value="refereemanager.xjb" />
 
-  <target name="model" description="Removes, then generates the refman model classes from xsd.">
+	<target name="model" description="Removes, then generates the refman model classes from xsd.">
 
-    <antcall target="deletemodel">
-      <param name="del:path" value="${refman:packagepath}" />
-    </antcall>
+		<antcall target="deletemodel">
+			<param name="del:path" value="${refman:packagepath}" />
+		</antcall>
 
-    <antcall target="callxjc">
-      <param name="xjc:outpath" value="${refman:outpath}" />
-      <param name="xjc:package" value="${refman:package}" />
-      <param name="xjc:xsd" value="${refman:xsd}" />
-      <param name="xjc:bindings1" value="${refman:bindings1}" />
-      <param name="xjc:bindings2" value="${refman:bindings2}" />
-      <param name="xjc:bindings3" value="${refman:bindings3}" />
-    </antcall>
+		<antcall target="callxjc">
+			<param name="xjc:outpath" value="${refman:outpath}" />
+			<param name="xjc:package" value="${refman:package}" />
+			<param name="xjc:xsd" value="${refman:xsd}" />
+			<param name="xjc:bindings1" value="${refman:bindings1}" />
+			<param name="xjc:bindings2" value="${refman:bindings2}" />
+			<param name="xjc:bindings3" value="${refman:bindings3}" />
+		</antcall>
 
-  </target>
+		<!--antcall target="fixmodel" /-->
 
-  <target name="fixmodel" description="Fixes generation errors in model.">
+	</target>
 
-    <echo message="Fixing ${refman:packagepath}Club.java." />
+	<target name="fixmodel" description="Fixes generation errors in model.">
 
-    <antcall target="fixannotationimport">
-      <param name="modelclass" value="Club" />
-    </antcall>
-    <antcall target="fixannotationline">
-      <param name="modelclass" value="Club" />
-      <param name="element" value="venue" />
-    </antcall>
-    <antcall target="fixannotationline">
-      <param name="modelclass" value="Club" />
-      <param name="element" value="contact_person" />
-    </antcall>
-    <antcall target="fixcomment">
-      <param name="modelclass" value="Club" />
-    </antcall>
+		<echo message="Fixing ${refman:packagepath}Club.java." />
 
-    <echo message="Fixing ${refman:packagepath}ObjectFactory.java." />
+		<antcall target="fixannotationimport">
+			<param name="modelclass" value="Club" />
+		</antcall>
+		<antcall target="fixcomment">
+			<param name="modelclass" value="Club" />
+		</antcall>
+		<antcall target="fixannotationline">
+			<param name="modelclass" value="Club" />
+			<param name="element" value="venue" />
+		</antcall>
+		<antcall target="fixannotationline">
+			<param name="modelclass" value="Club" />
+			<param name="element" value="contact_person" />
+		</antcall>
 
-    <antcall target="fixfactorymethod">
-      <param name="modelclass" value="Club" />
-      <param name="element" value="venue" />
-      <param name="elementclass" value="Venue" />
-    </antcall>
-    <antcall target="fixfactorymethod">
-      <param name="modelclass" value="Club" />
-      <param name="element" value="contact_person" />
-      <param name="elementclass" value="ContactPerson" />
-    </antcall>
+		<echo message="Fixing ${refman:packagepath}ObjectFactory.java." />
 
-  </target>
+		<antcall target="fixfactorymethod">
+			<param name="modelclass" value="Club" />
+			<param name="element" value="venue" />
+			<param name="elementclass" value="Venue" />
+		</antcall>
+		<antcall target="fixfactorymethod">
+			<param name="modelclass" value="Club" />
+			<param name="element" value="contact_person" />
+			<param name="elementclass" value="ContactPerson" />
+		</antcall>
 
-  <target name="fixannotationimport">
+	</target>
 
-    <replace
-        encoding="utf-8"
-        file="${refman:packagepath}${modelclass}.java"
-        failOnNoReplacements="true"
-    >
+	<target name="fixannotationimport">
+
+		<replace
+				encoding="utf-8"
+				file="${refman:packagepath}${modelclass}.java"
+				failOnNoReplacements="true"
+		>
 <replacetoken expandProperties="true"><![CDATA[import javax.xml.bind.annotation.XmlElementRef;]]></replacetoken>
 <replacevalue expandProperties="true"><![CDATA[// fixing wrong JAXB generation of referenced lists
 // before: import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlIDREF;
 // end of fix]]></replacevalue>
-    </replace>
+		</replace>
 
-  </target>
+	</target>
 
-  <target name="fixannotationline">
+	<target name="fixannotationline">
 
-    <replace
-        encoding="utf-8"
-        file="${refman:packagepath}${modelclass}.java"
-        failOnNoReplacements="true"
-    >
-<replacetoken expandProperties="true"><![CDATA[    @XmlElementRef(name = "${element}", type = JAXBElement.class, required = false)]]></replacetoken>
-<replacevalue expandProperties="true"><![CDATA[    // fixing wrong JAXB generation of referenced lists
-    // before: @XmlElementRef(name = "${element}", type = JAXBElement.class, required = false)
-    @XmlElement(name = "${element}", type = Object.class)
-    @XmlIDREF
-    @XmlSchemaType(name = "IDREF")
-    // end of fix]]></replacevalue>
-    </replace>
+		<replaceregexp
+				encoding="utf-8"
+				file="${refman:packagepath}${modelclass}.java"
+				flags="g"
 
-  </target>
+				match="\s{4}(@XmlElementRef\(name = &quot;${element}&quot;, type = JAXBElement\.class, required = false\))\n"
 
-  <target name="fixcomment">
+				replace="    // fixing wrong JAXB generation of referenced lists${line.separator}    // before: \1${line.separator}    @XmlElement\(name = &quot;${element}&quot;, type = Object\.class\)${line.separator}    @XmlIDREF${line.separator}    @XmlSchemaType\(name = &quot;IDREF&quot;\)${line.separator}    // end of fix${line.separator}"
 
-    <replace
-        encoding="utf-8"
-        file="${refman:packagepath}${modelclass}.java"
-        failOnNoReplacements="true"
-    >
+		/>
+
+	</target>
+
+	<target name="fixcomment">
+
+		<replace
+				encoding="utf-8"
+				file="${refman:packagepath}${modelclass}.java"
+				failOnNoReplacements="true"
+		>
 <replacetoken expandProperties="true"><![CDATA[     * {@link JAXBElement }{@code <}{@link Object }{@code >}]]></replacetoken>
 <replacevalue expandProperties="true"><![CDATA[     * // fixing wrong JAXB generation of referenced lists
-     * // before: {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * {@link Object }
-     * // end of fix]]></replacevalue>
-    </replace>
+		 * // before: {@link JAXBElement }{@code <}{@link Object }{@code >}
+		 * {@link Object }
+		 * // end of fix]]></replacevalue>
+		</replace>
 
-  </target>
+	</target>
 
-  <target name="fixfactorymethod">
+	<target name="fixfactorymethod">
 
-    <replace
-        encoding="utf-8"
-        file="${refman:packagepath}ObjectFactory.java"
-        failOnNoReplacements="true"
-    >
-<replacetoken expandProperties="true"><![CDATA[    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "${element}", scope = ${modelclass}.class)
-    @XmlIDREF
-    public JAXBElement<Object> create${modelclass}${elementclass}(Object value) {
-        return new JAXBElement<Object>(_Team${elementclass}_QNAME, Object.class, ${modelclass}.class, value);
-    }]]></replacetoken>
-<replacevalue expandProperties="true"><![CDATA[     // fixing wrong JAXB generation of referenced lists
-     // removed method: public JAXBElement<Object> create${modelclass}${elementclass}(Object value)
-     // end of fix]]></replacevalue>
-    </replace>
+		<replaceregexp
+				encoding="utf-8"
+				file="${refman:packagepath}ObjectFactory.java"
+				flags="g"
 
-  </target>
+				match="\s{4}/\*{2}\n\s{5}\* Create an instance of \{@link JAXBElement \}\{@code &lt;\}\{@link Object \}\{@code &gt;\}\}\n\s{5}\* \n\s{5}\*/\n\s{4}@XmlElementDecl\(namespace = &quot;&quot;, name = &quot;${element}&quot;, scope = ${modelclass}\.class\)\n\s{4}@XmlIDREF\n\s{4}(public JAXBElement&lt;Object&gt; create${modelclass}${elementclass}\(Object value\)) \{\n\s{8}return new JAXBElement&lt;Object&gt;\(\_Team${elementclass}\_QNAME, Object\.class, ${modelclass}\.class, value\);\n\s{4}\}\n"
+
+				replace="    // fixing wrong JAXB generation of referenced lists${line.separator}    // removed method: \1${line.separator}    // end of fix${line.separator}"
+
+		/>
+
+	</target>
+
+	<target name="testreplace" description="testreplace">
+
+		<antcall target="testreplace1">
+			<param name="modelclass" value="Club" />
+			<param name="element" value="contact_person" />
+			<param name="elementclass" value="ContactPerson" />
+		</antcall>
+
+	</target>
+
+	<target name="testreplace1">
+
+		<replaceregexp
+				encoding="utf-8"
+				file="${refman:packagepath}ObjectFactory.java"
+				flags="g"
+
+				match="\s{4}/\*{2}\n\s{5}\* Create an instance of \{@link JAXBElement \}\{@code &lt;\}\{@link Object \}\{@code &gt;\}\}\n\s{5}\* \n\s{5}\*/\n\s{4}@XmlElementDecl\(namespace = &quot;&quot;, name = &quot;${element}&quot;, scope = ${modelclass}\.class\)\n\s{4}@XmlIDREF\n\s{4}(public JAXBElement&lt;Object&gt; create${modelclass}${elementclass}\(Object value\)) \{\n\s{8}return new JAXBElement&lt;Object&gt;\(\_Team${elementclass}\_QNAME, Object\.class, ${modelclass}\.class, value\);\n\s{4}\}\n"
+
+				replace="    // fixing wrong JAXB generation of referenced lists${line.separator}    // removed method: \1${line.separator}    // end of fix${line.separator}"
+
+		/>
+
+	</target>
 
 </project>
