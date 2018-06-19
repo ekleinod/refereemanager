@@ -49,8 +49,8 @@ public class ObjectFactory {
 
     private final static QName _Refereemanager_QNAME = new QName("", "refereemanager");
     private final static QName _LeagueRefereeReportRecipient_QNAME = new QName("", "referee_report_recipient");
-    private final static QName _TeamVenue_QNAME = new QName("", "venue");
-    private final static QName _TeamContactPerson_QNAME = new QName("", "contact_person");
+    private final static QName _ClubVenue_QNAME = new QName("", "venue");
+    private final static QName _ClubContactPerson_QNAME = new QName("", "contact_person");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.edgesoft.refereemanager.jaxb
@@ -330,30 +330,10 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "", name = "venue", scope = Team.class)
-    @XmlIDREF
-    public JAXBElement<Object> createTeamVenue(Object value) {
-        return new JAXBElement<Object>(_TeamVenue_QNAME, Object.class, Team.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "contact_person", scope = Team.class)
-    @XmlIDREF
-    public JAXBElement<Object> createTeamContactPerson(Object value) {
-        return new JAXBElement<Object>(_TeamContactPerson_QNAME, Object.class, Team.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
-     * 
-     */
     @XmlElementDecl(namespace = "", name = "venue", scope = Club.class)
     @XmlIDREF
     public JAXBElement<Object> createClubVenue(Object value) {
-        return new JAXBElement<Object>(_TeamVenue_QNAME, Object.class, Club.class, value);
+        return new JAXBElement<Object>(_ClubVenue_QNAME, Object.class, Club.class, value);
     }
 
     /**
@@ -363,7 +343,27 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "contact_person", scope = Club.class)
     @XmlIDREF
     public JAXBElement<Object> createClubContactPerson(Object value) {
-        return new JAXBElement<Object>(_TeamContactPerson_QNAME, Object.class, Club.class, value);
+        return new JAXBElement<Object>(_ClubContactPerson_QNAME, Object.class, Club.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "venue", scope = Team.class)
+    @XmlIDREF
+    public JAXBElement<Object> createTeamVenue(Object value) {
+        return new JAXBElement<Object>(_ClubVenue_QNAME, Object.class, Team.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "contact_person", scope = Team.class)
+    @XmlIDREF
+    public JAXBElement<Object> createTeamContactPerson(Object value) {
+        return new JAXBElement<Object>(_ClubContactPerson_QNAME, Object.class, Team.class, value);
     }
 
 }
