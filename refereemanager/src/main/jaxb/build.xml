@@ -65,37 +65,63 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<target name="fixmodel" description="Fixes generation errors in model.">
 
-		<echo message="Fixing ${refman:packagepath}Club.java." />
+		<echo message="Fixing model." />
 
-		<antcall target="fixannotationimport">
-			<param name="modelclass" value="Club" />
-		</antcall>
-		<antcall target="fixcomment">
-			<param name="modelclass" value="Club" />
-		</antcall>
-		<antcall target="fixannotationline">
+		<antcall target="fixclass">
 			<param name="modelclass" value="Club" />
 			<param name="element" value="venue" />
-		</antcall>
-		<antcall target="fixannotationline">
-			<param name="modelclass" value="Club" />
-			<param name="element" value="contact_person" />
-		</antcall>
-
-		<echo message="Fixing ${refman:packagepath}ObjectFactory.java." />
-
-		<antcall target="fixfactorymethod">
-			<param name="modelclass" value="Club" />
-			<param name="element" value="venue" />
+			<param name="elementcamel" value="Venue" />
 			<param name="elementclass" value="Venue" />
 		</antcall>
-		<antcall target="fixfactorymethod">
+		<antcall target="fixclass">
 			<param name="modelclass" value="Club" />
 			<param name="element" value="contact_person" />
-			<param name="elementclass" value="ContactPerson" />
+			<param name="elementcamel" value="ContactPerson" />
+			<param name="elementclass" value="Person" />
 		</antcall>
 
 	</target>
+
+
+	<target name="fixclass">
+
+		<echo message="Fixing class ${modelclass}.java with element ${elementclass}." />
+
+		<antcall target="fixannotationimport">
+			<param name="modelclass" value="${modelclass}" />
+		</antcall>
+		<antcall target="fixcomment">
+			<param name="modelclass" value="${modelclass}" />
+			<param name="elementclass" value="${elementclass}" />
+		</antcall>
+		<antcall target="fixcomment">
+			<param name="modelclass" value="${modelclass}" />
+			<param name="elementclass" value="${elementclass}" />
+		</antcall>
+		<antcall target="fixannotationline">
+			<param name="modelclass" value="${modelclass}" />
+			<param name="element" value="${element}" />
+		</antcall>
+		<antcall target="fixannotationline">
+			<param name="modelclass" value="${modelclass}" />
+			<param name="element" value="${element}" />
+		</antcall>
+
+		<echo message="Fixing ObjectFactory.java regarding ${modelclass} and ${elementcamel}." />
+
+		<antcall target="fixfactorymethod">
+			<param name="modelclass" value="${modelclass}" />
+			<param name="element" value="${element}" />
+			<param name="elementcamel" value="${elementcamel}" />
+		</antcall>
+		<antcall target="fixfactorymethod">
+			<param name="modelclass" value="${modelclass}" />
+			<param name="element" value="${element}" />
+			<param name="elementcamel" value="${elementcamel}" />
+		</antcall>
+
+	</target>
+
 
 	<target name="fixannotationimport">
 
@@ -130,17 +156,16 @@ import javax.xml.bind.annotation.XmlIDREF;
 
 	<target name="fixcomment">
 
-		<replace
+		<replaceregexp
 				encoding="utf-8"
 				file="${refman:packagepath}${modelclass}.java"
-				failOnNoReplacements="true"
-		>
-<replacetoken expandProperties="true"><![CDATA[     * {@link JAXBElement }{@code <}{@link Object }{@code >}]]></replacetoken>
-<replacevalue expandProperties="true"><![CDATA[     * // fixing wrong JAXB generation of referenced lists
-		 * // before: {@link JAXBElement }{@code <}{@link Object }{@code >}
-		 * {@link Object }
-		 * // end of fix]]></replacevalue>
-		</replace>
+				flags="g"
+
+				match="\s{5}\* (\{@link JAXBElement \}\{@code &lt;\}\{@link Object \}\{@code &gt;\})\n\s{5}\* \n\s{5}\* \n(\s{5}\*/\n\s{4}public List&lt;${elementclass}&gt;)"
+
+				replace="     \* - fixing wrong JAXB generation of referenced lists${line.separator}     \* - before: \1${line.separator}     \* \{@link ${elementclass} \}${line.separator}     \* - end of fix${line.separator}\2"
+
+		/>
 
 	</target>
 
@@ -151,7 +176,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 				file="${refman:packagepath}ObjectFactory.java"
 				flags="g"
 
-				match="\s{4}/\*{2}\n\s{5}\* Create an instance of \{@link JAXBElement \}\{@code &lt;\}\{@link Object \}\{@code &gt;\}\}\n\s{5}\* \n\s{5}\*/\n\s{4}@XmlElementDecl\(namespace = &quot;&quot;, name = &quot;${element}&quot;, scope = ${modelclass}\.class\)\n\s{4}@XmlIDREF\n\s{4}(public JAXBElement&lt;Object&gt; create${modelclass}${elementclass}\(Object value\)) \{\n\s{8}return new JAXBElement&lt;Object&gt;\(\_Team${elementclass}\_QNAME, Object\.class, ${modelclass}\.class, value\);\n\s{4}\}\n"
+				match="\s{4}/\*{2}\n\s{5}\* Create an instance of \{@link JAXBElement \}\{@code &lt;\}\{@link Object \}\{@code &gt;\}\}\n\s{5}\* \n\s{5}\*/\n\s{4}@XmlElementDecl\(namespace = &quot;&quot;, name = &quot;${element}&quot;, scope = ${modelclass}\.class\)\n\s{4}@XmlIDREF\n\s{4}(public JAXBElement&lt;Object&gt; create${modelclass}${elementcamel}\(Object value\)) \{\n\s{8}return new JAXBElement&lt;Object&gt;\(\_Team${elementcamel}\_QNAME, Object\.class, ${modelclass}\.class, value\);\n\s{4}\}\n"
 
 				replace="    // fixing wrong JAXB generation of referenced lists${line.separator}    // removed method: \1${line.separator}    // end of fix${line.separator}"
 
@@ -164,7 +189,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 		<antcall target="testreplace1">
 			<param name="modelclass" value="Club" />
 			<param name="element" value="contact_person" />
-			<param name="elementclass" value="ContactPerson" />
+			<param name="elementcamel" value="ContactPerson" />
 		</antcall>
 
 	</target>
@@ -176,7 +201,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 				file="${refman:packagepath}ObjectFactory.java"
 				flags="g"
 
-				match="\s{4}/\*{2}\n\s{5}\* Create an instance of \{@link JAXBElement \}\{@code &lt;\}\{@link Object \}\{@code &gt;\}\}\n\s{5}\* \n\s{5}\*/\n\s{4}@XmlElementDecl\(namespace = &quot;&quot;, name = &quot;${element}&quot;, scope = ${modelclass}\.class\)\n\s{4}@XmlIDREF\n\s{4}(public JAXBElement&lt;Object&gt; create${modelclass}${elementclass}\(Object value\)) \{\n\s{8}return new JAXBElement&lt;Object&gt;\(\_Team${elementclass}\_QNAME, Object\.class, ${modelclass}\.class, value\);\n\s{4}\}\n"
+				match="\s{4}/\*{2}\n\s{5}\* Create an instance of \{@link JAXBElement \}\{@code &lt;\}\{@link Object \}\{@code &gt;\}\}\n\s{5}\* \n\s{5}\*/\n\s{4}@XmlElementDecl\(namespace = &quot;&quot;, name = &quot;${element}&quot;, scope = ${modelclass}\.class\)\n\s{4}@XmlIDREF\n\s{4}(public JAXBElement&lt;Object&gt; create${modelclass}${elementcamel}\(Object value\)) \{\n\s{8}return new JAXBElement&lt;Object&gt;\(\_Team${elementcamel}\_QNAME, Object\.class, ${modelclass}\.class, value\);\n\s{4}\}\n"
 
 				replace="    // fixing wrong JAXB generation of referenced lists${line.separator}    // removed method: \1${line.separator}    // end of fix${line.separator}"
 
