@@ -79,6 +79,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<jxb:class implClass="de.edgesoft.refereemanager.model.PersonModel" />
 		</jxb:bindings>
 
+		<jxb:bindings node="//xsd:complexType[@name='PersonReference']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.PersonReferenceModel" />
+		</jxb:bindings>
+
 		<jxb:bindings node="//xsd:complexType[@name='PhoneNumber']">
 			<jxb:class implClass="de.edgesoft.refereemanager.model.PhoneNumberModel" />
 		</jxb:bindings>

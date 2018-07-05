@@ -90,7 +90,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<param name="modelclass" value="League" />
 			<param name="element" value="referee_report_recipient" />
 			<param name="elementcamel" value="RefereeReportRecipient" />
-			<param name="elementclass" value="Person" />
+			<param name="elementclass" value="PersonReference" />
 		</antcall>
 
 	</target>

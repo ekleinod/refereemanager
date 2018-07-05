@@ -10,10 +10,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 // fixing wrong JAXB generation of referenced lists
-// before: // fixing wrong JAXB generation of referenced lists
 // before: import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlIDREF;
-// end of fix
 import javax.xml.bind.annotation.XmlIDREF;
 // end of fix
 import javax.xml.bind.annotation.XmlSchemaType;

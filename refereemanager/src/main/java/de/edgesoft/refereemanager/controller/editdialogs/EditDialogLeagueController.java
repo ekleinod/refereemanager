@@ -50,16 +50,28 @@ public class EditDialogLeagueController extends AbstractTabbedEditDialogControll
 	private IInputFormController<League> embeddedInputFormTitledIDTypeDataController;
 
 	/**
-	 * League detail data.
+	 * League data.
 	 */
 	@FXML
-	private Parent embeddedInputFormTrainingLevelTypeData;
+	private Parent embeddedInputFormLeagueData;
 
 	/**
-	 * League detail data controller.
+	 * League data controller.
 	 */
 	@FXML
 	private IInputFormController<League> embeddedInputFormLeagueDataController;
+
+	/**
+	 * Referee report recipient data.
+	 */
+	@FXML
+	private Parent embeddedInputFormRefereeReportRecipientData;
+
+	/**
+	 * Referee report recipient data controller.
+	 */
+	@FXML
+	private IInputFormController<League> embeddedInputFormRefereeReportRecipientDataController;
 
 
 	/**
@@ -73,6 +85,7 @@ public class EditDialogLeagueController extends AbstractTabbedEditDialogControll
 
 		addInputFormController(embeddedInputFormTitledIDTypeDataController);
 		addInputFormController(embeddedInputFormLeagueDataController);
+		addInputFormController(embeddedInputFormRefereeReportRecipientDataController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, League.class})));
 

@@ -20,6 +20,11 @@
 						<fx:include fx:id="embeddedInputFormLeagueData" source="../inputforms/InputFormLeagueData.fxml" />
 					</content>
 				</Tab>
+				<Tab fx:id="tabRefereeReportRecipients" closable="false" text="OSR-Berichte">
+					<content>
+						<fx:include fx:id="embeddedInputFormRefereeReportRecipientData" source="../inputforms/InputFormRefereeReportRecipientData.fxml" />
+					</content>
+				</Tab>
 			</tabs>
 		</TabPane>
 		<ButtonBar AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">

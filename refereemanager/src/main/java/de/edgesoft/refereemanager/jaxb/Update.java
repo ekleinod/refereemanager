@@ -16,7 +16,7 @@ import de.edgesoft.edgeutils.javafx.SimpleObjectPropertyLocalDateAdapter;
  * 
  * 				This type just stores a date.
  * 				The date cannot be used directly, as this would break the inheritance needed for generation of input dialogs.
- * 				This is only needed for lists of dates, as update is one.
+ * 				This is only needed for lists.
  * 			
  * 
  * <p>Java class for Update complex type.

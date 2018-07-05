@@ -6,17 +6,9 @@ import java.util.List;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-// fixing wrong JAXB generation of referenced lists
-// before: // fixing wrong JAXB generation of referenced lists
-// before: import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlIDREF;
-// end of fix
-import javax.xml.bind.annotation.XmlIDREF;
-// end of fix
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
@@ -24,6 +16,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
+import de.edgesoft.refereemanager.model.PersonReferenceModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
@@ -43,7 +36,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *         &lt;element name="referee_report_u_r_l" type="{}StringProperty"/>
  *         &lt;element name="referee_quantity" type="{}RefereeQuantity" maxOccurs="unbounded"/>
  *         &lt;element name="sex_type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
- *         &lt;element name="referee_report_recipient" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded"/>
+ *         &lt;element name="referee_report_recipient" type="{}PersonReference" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -86,13 +79,8 @@ public class League
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected SexType sexType;
-    // fixing wrong JAXB generation of referenced lists
-    // before: @XmlElementRef(name = "referee_report_recipient", type = JAXBElement.class)
-    @XmlElement(name = "referee_report_recipient", type = Object.class)
-    @XmlIDREF
-    @XmlSchemaType(name = "IDREF")
-    // end of fix
-    protected List<Person> refereeReportRecipient;
+    @XmlElement(name = "referee_report_recipient", required = true, type = PersonReferenceModel.class)
+    protected List<PersonReference> refereeReportRecipient;
 
     /**
      * Gets the value of the rank property.
@@ -261,14 +249,13 @@ public class League
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * - fixing wrong JAXB generation of referenced lists
-     * - before: {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * {@link Person }
-     * - end of fix
+     * {@link PersonReference }
+     * 
+     * 
      */
-    public List<Person> getRefereeReportRecipient() {
+    public List<PersonReference> getRefereeReportRecipient() {
         if (refereeReportRecipient == null) {
-            refereeReportRecipient = new ArrayList<Person>();
+            refereeReportRecipient = new ArrayList<PersonReference>();
         }
         return this.refereeReportRecipient;
     }

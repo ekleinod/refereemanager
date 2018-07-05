@@ -278,13 +278,9 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 							</xsd:appinfo>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element name="referee_report_recipient" type="xsd:IDREF" minOccurs="1" maxOccurs="unbounded">
+					<xsd:element name="referee_report_recipient" type="PersonReference" minOccurs="1" maxOccurs="unbounded">
 						<xsd:annotation>
-							<xsd:appinfo>
-								<jxb:property>
-									<jxb:baseType name="Person" />
-								</jxb:property>
-							</xsd:appinfo>
+							<xsd:documentation>See annotation on type Update.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 				</xsd:sequence>
@@ -453,13 +449,38 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<xsd:documentation>
 				This type just stores a date.
 				The date cannot be used directly, as this would break the inheritance needed for generation of input dialogs.
-				This is only needed for lists of dates, as update is one.
+				This is only needed for lists.
 			</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="AbstractModelClass">
 				<xsd:sequence>
 					<xsd:element name="date" type="LocalDateProperty" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="PersonReference">
+		<xsd:annotation>
+			<xsd:documentation>
+				This type just stores a person.
+				The person cannot be used directly, as this would break the inheritance needed for generation of input dialogs.
+				This is only needed for lists.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AbstractModelClass">
+				<xsd:sequence>
+					<xsd:element name="person" type="xsd:IDREF" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<jxb:property>
+									<jxb:baseType name="Person" />
+								</jxb:property>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
