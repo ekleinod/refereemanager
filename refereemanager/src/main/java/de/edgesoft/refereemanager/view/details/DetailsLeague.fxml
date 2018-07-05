@@ -20,6 +20,9 @@
 			<rowConstraints>
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
 			</rowConstraints>
 			<children>
 				<Label text="Geschlecht" />
@@ -30,6 +33,8 @@
 				<Hyperlink fx:id="lnkResultsURL" onAction="#handleWebLinkAction" text="URL" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 				<Label text="OSR-Bericht" GridPane.rowIndex="3" />
 				<Hyperlink fx:id="lnkRefereeReportURL" onAction="#handleWebLinkAction" text="URL" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<Label text="Empfänger" GridPane.rowIndex="4" />
+				<Label fx:id="lblRefereeReportRecipient" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 			</children>
 		</GridPane>
 	</children>

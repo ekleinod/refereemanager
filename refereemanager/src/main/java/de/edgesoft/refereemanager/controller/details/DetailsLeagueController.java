@@ -1,5 +1,7 @@
 package de.edgesoft.refereemanager.controller.details;
 
+import java.util.stream.Collectors;
+
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.controller.AbstractHyperlinkController;
@@ -67,6 +69,12 @@ public class DetailsLeagueController<T extends LeagueModel> extends AbstractHype
 	@FXML
 	private Hyperlink lnkRefereeReportURL;
 
+	/**
+	 * Referee report recipients.
+	 */
+	@FXML
+	private Label lblRefereeReportRecipient;
+
 
 	/**
 	 * Initializes the controller class.
@@ -95,6 +103,7 @@ public class DetailsLeagueController<T extends LeagueModel> extends AbstractHype
 			LabelUtils.setText(lblRank, null);
 			lnkResultsURL.setText(null);
 			lnkRefereeReportURL.setText(null);
+			LabelUtils.setText(lblRefereeReportRecipient, null);
 
 		} else {
 
@@ -117,6 +126,13 @@ public class DetailsLeagueController<T extends LeagueModel> extends AbstractHype
 					(theDetailData.getRefereeReportURL() == null) ?
 							null :
 							theDetailData.getRefereeReportURL().getValue().toString());
+
+			lblRefereeReportRecipient.setText(
+					(theDetailData.getRefereeReportRecipient().isEmpty()) ?
+							null :
+							theDetailData.getRefereeReportRecipient().stream()
+								.map(person -> person.getDisplayText().getValueSafe())
+								.collect(Collectors.joining(System.lineSeparator())));
 
 		}
 
