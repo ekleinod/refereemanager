@@ -5,6 +5,7 @@ import java.util.Arrays;
 import de.edgesoft.edgeutils.commons.ext.ModelClassExt;
 import de.edgesoft.refereemanager.jaxb.PersonReference;
 import de.edgesoft.refereemanager.model.AppModel;
+import de.edgesoft.refereemanager.model.ContentModel;
 import de.edgesoft.refereemanager.utils.ComboBoxUtils;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -72,7 +73,7 @@ public class PartInputFormPersonListController extends AbstractInputFormControll
 	protected void initialize() {
 
 		// fill combo boxes
-        ComboBoxUtils.prepareComboBox(cboPersonList, AppModel.getData().getContent().getPerson());
+        ComboBoxUtils.prepareComboBox(cboPersonList, ((ContentModel) AppModel.getData().getContent()).getAllPeople());
 
 		// enable buttons
 		btnPersonListClear.disableProperty().bind(

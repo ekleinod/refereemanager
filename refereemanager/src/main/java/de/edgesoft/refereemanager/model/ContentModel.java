@@ -525,6 +525,25 @@ public class ContentModel extends Content {
 
 	}
 
+	/**
+	 * Returns list of all people (people, referees, trainees).
+	 *
+	 * @return list of all people
+	 *
+	 * @since 0.15.0
+	 */
+	public List<Person> getAllPeople() {
+
+		List<Person> lstReturn = new ArrayList<>();
+
+		lstReturn.addAll(getPerson());
+		lstReturn.addAll(getReferee());
+		lstReturn.addAll(getTrainee());
+
+		return lstReturn.stream().sorted(PersonModel.NAME_FIRSTNAME).collect(Collectors.toList());
+
+	}
+
 }
 
 /* EOF */
