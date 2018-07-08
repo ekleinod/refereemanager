@@ -104,7 +104,7 @@
 						</Menu>
 						<Menu fx:id="mnuThings" text="Din_ge">
 							<items>
-								<MenuItem fx:id="mnuOverviewClubs" onAction="#handleOverviewClubs" text="_Clubs" visible="false">
+								<MenuItem fx:id="mnuOverviewClubs" onAction="#handleOverviewClubs" text="_Clubs">
 									<accelerator>
 										<KeyCodeCombination alt="DOWN" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
 									</accelerator>
@@ -154,8 +154,8 @@
 						<Button fx:id="btnOverviewLeagueGames" onAction="#handleOverviewLeagueGames" visible="false" managed="false" />
 						<Button fx:id="btnOverviewTournaments" onAction="#handleOverviewTournaments" visible="false" managed="false" />
 						<Button fx:id="btnOverviewOtherEvents" onAction="#handleOverviewOtherEvents" visible="false" managed="false" />
-						<Separator prefWidth="10.0" visible="false" managed="false" />
-						<Button fx:id="btnOverviewClubs" onAction="#handleOverviewClubs" visible="false" managed="false" />
+						<Separator prefWidth="10.0" />
+						<Button fx:id="btnOverviewClubs" onAction="#handleOverviewClubs" />
 						<Separator prefWidth="10.0" />
 						<Button fx:id="btnStatisticsData" onAction="#handleStatisticsData" />
 						<Separator prefWidth="10.0" />
