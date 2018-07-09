@@ -4,17 +4,17 @@ package de.edgesoft.refereemanager.jaxb;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleIntegerProperty;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
+import de.edgesoft.refereemanager.model.PersonReferenceModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
+import de.edgesoft.refereemanager.model.VenueReferenceModel;
 
 
 /**
@@ -30,8 +30,8 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *         &lt;element name="number" type="{}IntegerProperty" minOccurs="0"/>
  *         &lt;element name="club" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
  *         &lt;element name="league" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
- *         &lt;element name="venue" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="contact_person" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="venue" type="{}VenueReference" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="contact_person" type="{}PersonReference" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -64,10 +64,10 @@ public class Team
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected League league;
-    @XmlElementRef(name = "venue", type = JAXBElement.class, required = false)
-    protected List<Venue> venue;
-    @XmlElementRef(name = "contact_person", type = JAXBElement.class, required = false)
-    protected List<Person> contactPerson;
+    @XmlElement(type = VenueReferenceModel.class)
+    protected List<VenueReference> venue;
+    @XmlElement(name = "contact_person", type = PersonReferenceModel.class)
+    protected List<PersonReference> contactPerson;
 
     /**
      * Gets the value of the number property.
@@ -159,13 +159,13 @@ public class Team
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * {@link VenueReference }
      * 
      * 
      */
-    public List<Venue> getVenue() {
+    public List<VenueReference> getVenue() {
         if (venue == null) {
-            venue = new ArrayList<Venue>();
+            venue = new ArrayList<VenueReference>();
         }
         return this.venue;
     }
@@ -188,13 +188,13 @@ public class Team
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * {@link PersonReference }
      * 
      * 
      */
-    public List<Person> getContactPerson() {
+    public List<PersonReference> getContactPerson() {
         if (contactPerson == null) {
-            contactPerson = new ArrayList<Person>();
+            contactPerson = new ArrayList<PersonReference>();
         }
         return this.contactPerson;
     }

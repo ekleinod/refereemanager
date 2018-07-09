@@ -4,8 +4,10 @@ import java.util.stream.Collectors;
 
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
+import de.edgesoft.refereemanager.controller.AbstractHyperlinkController;
 import de.edgesoft.refereemanager.model.ClubModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.text.FontWeight;
 
@@ -35,7 +37,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsClubController<T extends ClubModel> implements IDetailsController<T> {
+public class DetailsClubController<T extends ClubModel> extends AbstractHyperlinkController implements IDetailsController<T> {
 
 	/**
 	 * Heading.
@@ -59,7 +61,7 @@ public class DetailsClubController<T extends ClubModel> implements IDetailsContr
 	 * URL.
 	 */
 	@FXML
-	private Label lblURL;
+	private Hyperlink lnkURL;
 
 	/**
 	 * Venue.
@@ -99,7 +101,7 @@ public class DetailsClubController<T extends ClubModel> implements IDetailsContr
 
 			LabelUtils.setText(lblFilename, null);
 			LabelUtils.setText(lblIsLocal, null);
-			LabelUtils.setText(lblURL, null);
+			lnkURL.setText(null);
 			LabelUtils.setText(lblVenue, null);
 			LabelUtils.setText(lblContactPerson, null);
 
@@ -109,7 +111,10 @@ public class DetailsClubController<T extends ClubModel> implements IDetailsContr
 
 			lblIsLocal.setText(theDetailData.getIsLocal().getValue() ? "ja" : "nein");
 
-			lblURL.setText(theDetailData.getURL().stream().map(url -> url.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
+			lnkURL.setText(
+					(theDetailData.getURL() == null) ?
+							null :
+							theDetailData.getURL().getURL().getValue().toString());
 
 			lblVenue.setText(theDetailData.getVenue().stream().map(venue -> venue.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
 

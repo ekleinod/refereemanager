@@ -14,6 +14,7 @@ import de.edgesoft.refereemanager.model.EventDayModel;
 import de.edgesoft.refereemanager.model.OtherEventModel;
 import de.edgesoft.refereemanager.model.RefereeEventModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
+import de.edgesoft.refereemanager.model.VenueReferenceModel;
 
 
 /**
@@ -27,7 +28,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *     &lt;extension base="{}TitledIDType">
  *       &lt;sequence>
  *         &lt;element name="day" type="{}EventDay" maxOccurs="unbounded"/>
- *         &lt;element name="venue" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
+ *         &lt;element name="venue" type="{}VenueReference" minOccurs="0"/>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -53,10 +54,8 @@ public abstract class EventDate
 
     @XmlElement(required = true, type = EventDayModel.class)
     protected List<EventDay> day;
-    @XmlElement(type = Object.class)
-    @XmlIDREF
-    @XmlSchemaType(name = "IDREF")
-    protected Venue venue;
+    @XmlElement(type = VenueReferenceModel.class)
+    protected VenueReferenceModel venue;
     @XmlElement(type = Object.class)
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
@@ -96,10 +95,10 @@ public abstract class EventDate
      * 
      * @return
      *     possible object is
-     *     {@link Object }
+     *     {@link VenueReference }
      *     
      */
-    public Venue getVenue() {
+    public VenueReference getVenue() {
         return venue;
     }
 
@@ -108,11 +107,11 @@ public abstract class EventDate
      * 
      * @param value
      *     allowed object is
-     *     {@link Object }
+     *     {@link VenueReference }
      *     
      */
-    public void setVenue(Venue value) {
-        this.venue = value;
+    public void setVenue(VenueReference value) {
+        this.venue = ((VenueReferenceModel) value);
     }
 
     /**

@@ -5,21 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-// fixing wrong JAXB generation of referenced lists
-// before: import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlIDREF;
-// end of fix
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
+import de.edgesoft.refereemanager.model.PersonReferenceModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 import de.edgesoft.refereemanager.model.URLModel;
+import de.edgesoft.refereemanager.model.VenueReferenceModel;
 
 
 /**
@@ -34,9 +31,9 @@ import de.edgesoft.refereemanager.model.URLModel;
  *       &lt;sequence>
  *         &lt;element name="is_local" type="{}BooleanProperty" minOccurs="0"/>
  *         &lt;element name="filename" type="{}StringProperty" minOccurs="0"/>
- *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="venue" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="contact_person" type="{http://www.w3.org/2001/XMLSchema}IDREF" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="u_r_l" type="{}URL" minOccurs="0"/>
+ *         &lt;element name="venue" type="{}VenueReference" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="contact_person" type="{}PersonReference" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -65,21 +62,11 @@ public class Club
     @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
     protected SimpleStringProperty filename;
     @XmlElement(name = "u_r_l", type = URLModel.class)
-    protected List<URL> url;
-    // fixing wrong JAXB generation of referenced lists
-    // before: @XmlElementRef(name = "venue", type = JAXBElement.class, required = false)
-    @XmlElement(name = "venue", type = Object.class)
-    @XmlIDREF
-    @XmlSchemaType(name = "IDREF")
-    // end of fix
-    protected List<Venue> venue;
-    // fixing wrong JAXB generation of referenced lists
-    // before: @XmlElementRef(name = "contact_person", type = JAXBElement.class, required = false)
-    @XmlElement(name = "contact_person", type = Object.class)
-    @XmlIDREF
-    @XmlSchemaType(name = "IDREF")
-    // end of fix
-    protected List<Person> contactPerson;
+    protected URLModel url;
+    @XmlElement(type = VenueReferenceModel.class)
+    protected List<VenueReference> venue;
+    @XmlElement(name = "contact_person", type = PersonReferenceModel.class)
+    protected List<PersonReference> contactPerson;
 
     /**
      * Gets the value of the isLocal property.
@@ -132,30 +119,25 @@ public class Club
     /**
      * Gets the value of the url property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the url property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getURL().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link URL }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link URL }
+     *     
      */
-    public List<URL> getURL() {
-        if (url == null) {
-            url = new ArrayList<URL>();
-        }
-        return this.url;
+    public URL getURL() {
+        return url;
+    }
+
+    /**
+     * Sets the value of the url property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link URL }
+     *     
+     */
+    public void setURL(URL value) {
+        this.url = ((URLModel) value);
     }
 
     /**
@@ -176,14 +158,13 @@ public class Club
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * - fixing wrong JAXB generation of referenced lists
-     * - before: {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * {@link Venue }
-     * - end of fix
+     * {@link VenueReference }
+     * 
+     * 
      */
-    public List<Venue> getVenue() {
+    public List<VenueReference> getVenue() {
         if (venue == null) {
-            venue = new ArrayList<Venue>();
+            venue = new ArrayList<VenueReference>();
         }
         return this.venue;
     }
@@ -206,14 +187,13 @@ public class Club
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * - fixing wrong JAXB generation of referenced lists
-     * - before: {@link JAXBElement }{@code <}{@link Object }{@code >}
-     * {@link Person }
-     * - end of fix
+     * {@link PersonReference }
+     * 
+     * 
      */
-    public List<Person> getContactPerson() {
+    public List<PersonReference> getContactPerson() {
         if (contactPerson == null) {
-            contactPerson = new ArrayList<Person>();
+            contactPerson = new ArrayList<PersonReference>();
         }
         return this.contactPerson;
     }

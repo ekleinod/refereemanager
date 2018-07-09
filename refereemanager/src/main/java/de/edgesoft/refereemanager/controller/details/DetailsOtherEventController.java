@@ -101,7 +101,7 @@ public class DetailsOtherEventController<T extends OtherEventModel> implements I
 			lblVenue.setText(
 					(theDetailData.getVenue() == null) ?
 							null :
-							theDetailData.getVenue().getDisplayTitle().getValueSafe());
+							theDetailData.getVenue().getDisplayText().getValueSafe());
 
 			lblType.setText(
 					(theDetailData.getType() == null) ?

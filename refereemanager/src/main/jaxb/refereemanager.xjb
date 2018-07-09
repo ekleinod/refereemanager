@@ -143,6 +143,10 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<jxb:class implClass="de.edgesoft.refereemanager.model.VenueModel" />
 		</jxb:bindings>
 
+		<jxb:bindings node="//xsd:complexType[@name='VenueReference']">
+			<jxb:class implClass="de.edgesoft.refereemanager.model.VenueReferenceModel" />
+		</jxb:bindings>
+
 	</jxb:bindings>
 
 </jxb:bindings>

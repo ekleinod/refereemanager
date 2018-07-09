@@ -167,7 +167,7 @@ public class DetailsLeagueGameController<T extends LeagueGameModel> implements I
 			lblVenue.setText(
 					(theDetailData.getVenue() == null) ?
 							null :
-								theDetailData.getVenue().getDisplayTitle().getValueSafe());
+								theDetailData.getVenue().getDisplayText().getValueSafe());
 
 			LabelUtils.setText(lblRefereeReport, theDetailData.getRefereeReportFilename());
 

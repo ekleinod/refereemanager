@@ -4,9 +4,9 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import de.edgesoft.edgeutils.files.FileUtils;
-import de.edgesoft.refereemanager.jaxb.Person;
+import de.edgesoft.refereemanager.jaxb.PersonReference;
 import de.edgesoft.refereemanager.jaxb.Team;
-import de.edgesoft.refereemanager.jaxb.Venue;
+import de.edgesoft.refereemanager.jaxb.VenueReference;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -93,7 +93,7 @@ public class TeamModel extends Team {
 	 * @since 0.9.0
 	 */
 	@Override
-    public List<Person> getContactPerson() {
+    public List<PersonReference> getContactPerson() {
 
 		if (super.getContactPerson() != null) {
 			return super.getContactPerson();
@@ -115,7 +115,7 @@ public class TeamModel extends Team {
 	 * @since 0.9.0
 	 */
 	@Override
-	public List<Venue> getVenue() {
+	public List<VenueReference> getVenue() {
 
 		if (super.getVenue().isEmpty() && (getClub() != null) && (!getClub().getVenue().isEmpty())) {
 			return getClub().getVenue();

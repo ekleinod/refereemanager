@@ -158,7 +158,7 @@ public class DetailsTournamentController<T extends TournamentModel> implements I
 			lblVenue.setText(
 					(theDetailData.getVenue() == null) ?
 							null :
-								theDetailData.getVenue().getDisplayTitle().getValueSafe());
+								theDetailData.getVenue().getDisplayText().getValueSafe());
 
 			lblClub.setText(
 					(theDetailData.getOrganizingClub() == null) ?
