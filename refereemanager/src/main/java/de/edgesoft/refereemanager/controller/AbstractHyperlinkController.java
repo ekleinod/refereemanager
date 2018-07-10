@@ -44,7 +44,7 @@ public abstract class AbstractHyperlinkController {
 	@FXML
 	protected void handleEmailLinkAction(final ActionEvent theEvent) {
 		try {
-			Desktop.getDesktop().browse(URI.create(String.format("mailto:%s", ((Hyperlink) theEvent.getTarget()).getText())));
+			Desktop.getDesktop().mail(URI.create(String.format("mailto:%s", ((Hyperlink) theEvent.getTarget()).getText())));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
