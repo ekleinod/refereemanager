@@ -1,6 +1,9 @@
 package de.edgesoft.refereemanager.controller;
 
-import de.edgesoft.refereemanager.RefereeManager;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
@@ -40,7 +43,11 @@ public abstract class AbstractHyperlinkController {
 	 */
 	@FXML
 	protected void handleEmailLinkAction(final ActionEvent theEvent) {
-		RefereeManager.hostServices.showDocument(String.format("mailto:%s", ((Hyperlink) theEvent.getTarget()).getText()));
+		try {
+			Desktop.getDesktop().browse(URI.create(String.format("mailto:%s", ((Hyperlink) theEvent.getTarget()).getText())));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -50,7 +57,11 @@ public abstract class AbstractHyperlinkController {
 	 */
 	@FXML
 	protected void handleWebLinkAction(final ActionEvent theEvent) {
-		RefereeManager.hostServices.showDocument(((Hyperlink) theEvent.getTarget()).getText());
+		try {
+			Desktop.getDesktop().browse(URI.create(((Hyperlink) theEvent.getTarget()).getText()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

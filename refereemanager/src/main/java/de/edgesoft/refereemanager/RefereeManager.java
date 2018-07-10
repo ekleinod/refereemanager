@@ -14,9 +14,6 @@ import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 
-import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
-import com.sun.javafx.application.HostServicesDelegate;
-
 import de.edgesoft.edgeutils.commons.Version;
 import de.edgesoft.edgeutils.commons.ext.VersionExt;
 import de.edgesoft.refereemanager.controller.AppLayoutController;
@@ -68,13 +65,6 @@ public class RefereeManager extends Application {
 	public static final Logger logger = LogManager.getLogger(RefereeManager.class.getPackage().getName());
 
 	/**
-	 * Host services delegate.
-	 *
-	 * Needed for opening links in browser etc.
-	 */
-	public static HostServicesDelegate hostServices = null;
-
-	/**
 	 * Main app controller.
 	 */
 	private static AppLayoutController appController = null;
@@ -103,9 +93,6 @@ public class RefereeManager extends Application {
 
 		// load app layout and controller, then delegate control to controller
 		getAppController().initController(primaryStage);
-
-		// host services
-		hostServices = HostServicesFactory.getInstance(this);
 
 	}
 
