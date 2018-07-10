@@ -10,9 +10,11 @@ import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.utils.PrefKey;
 import de.edgesoft.refereemanager.utils.Prefs;
 import javafx.fxml.FXML;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 
 /**
@@ -74,6 +76,12 @@ public class DetailsPersonController<T extends PersonModel> implements IDetailsC
 	private Label lblRole;
 
 	/**
+	 * E-Mail box.
+	 */
+	@FXML
+	private VBox boxEMail;
+
+	/**
 	 * Image.
 	 */
 	@FXML
@@ -108,6 +116,8 @@ public class DetailsPersonController<T extends PersonModel> implements IDetailsC
 			LabelUtils.setText(lblBirthday, null);
 			LabelUtils.setText(lblRole, null);
 
+			boxEMail.getChildren().clear();
+
 			imgView.setImage(null);
 
 		} else {
@@ -120,6 +130,9 @@ public class DetailsPersonController<T extends PersonModel> implements IDetailsC
 					(theDetailData.getRole() == null) ?
 							null :
 							theDetailData.getRole().getDisplayText().getValue());
+
+			boxEMail.getChildren().clear();
+			theDetailData.getEMail().stream().forEach(email -> boxEMail.getChildren().add(new Hyperlink(email.getEMail().getValueSafe())));
 
 			try {
 				if (theDetailData.existsImageFile(Prefs.get(PrefKey.PATHS_IMAGE))) {

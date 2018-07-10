@@ -3,6 +3,7 @@ package de.edgesoft.refereemanager.controller;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,8 +45,8 @@ public abstract class AbstractHyperlinkController {
 	@FXML
 	protected void handleEmailLinkAction(final ActionEvent theEvent) {
 		try {
-			Desktop.getDesktop().mail(URI.create(String.format("mailto:%s", ((Hyperlink) theEvent.getTarget()).getText())));
-		} catch (IOException e) {
+			Desktop.getDesktop().mail(new URI(String.format("mailto:%s", ((Hyperlink) theEvent.getTarget()).getText())));
+		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 		}
 	}
@@ -58,8 +59,8 @@ public abstract class AbstractHyperlinkController {
 	@FXML
 	protected void handleWebLinkAction(final ActionEvent theEvent) {
 		try {
-			Desktop.getDesktop().browse(URI.create(((Hyperlink) theEvent.getTarget()).getText()));
-		} catch (IOException e) {
+			Desktop.getDesktop().browse(new URI(((Hyperlink) theEvent.getTarget()).getText()));
+		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 		}
 	}

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -24,6 +24,10 @@
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+            <RowConstraints />
+            <RowConstraints />
 			</rowConstraints>
 			<children>
 				<Label text="Name" />
@@ -36,6 +40,9 @@
 				<Label fx:id="lblRole" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 				<Label text="Verein" GridPane.rowIndex="4" />
 				<Label fx:id="lblClub" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+				<Separator GridPane.columnSpan="2" GridPane.rowIndex="5" />
+				<Label text="E-Mail" GridPane.rowIndex="6" />
+				<VBox fx:id="boxEMail" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 				<ImageView fx:id="imgView" fitHeight="160.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowSpan="2147483647" GridPane.valignment="TOP" />
 			</children>
 		</GridPane>
