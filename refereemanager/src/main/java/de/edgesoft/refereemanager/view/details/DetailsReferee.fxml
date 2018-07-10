@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.ImageView?>
@@ -19,6 +20,7 @@
 				<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
 			</columnConstraints>
 			<rowConstraints>
+				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
@@ -55,6 +57,9 @@
 				<Label fx:id="lblStatus" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="10" />
 				<Label text="aktiv?" GridPane.rowIndex="11" />
 				<Label fx:id="lblActive" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+				<Separator GridPane.columnSpan="2" GridPane.rowIndex="12" />
+				<Label text="E-Mail" GridPane.rowIndex="13" />
+				<Label fx:id="lblEMail" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="13" />
 				<ImageView fx:id="imgView" fitHeight="160.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowSpan="2147483647" GridPane.valignment="TOP" />
 			</children>
 		</GridPane>
