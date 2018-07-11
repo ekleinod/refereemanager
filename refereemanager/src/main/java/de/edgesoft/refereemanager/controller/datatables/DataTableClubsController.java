@@ -107,6 +107,13 @@ public class DataTableClubsController extends AbstractDataTableController<Club> 
 	private CheckBox chkNonLocal;
 
 	/**
+	 * Checkbox filter unused clubs.
+	 */
+	@FXML
+	private CheckBox chkUnused;
+
+
+	/**
 	 * Initializes the controller class.
 	 *
 	 * This method is automatically called after the fxml file has been loaded.
@@ -175,6 +182,11 @@ public class DataTableClubsController extends AbstractDataTableController<Club> 
 
 			if (chkNonLocal.isSelected()) {
 				lstClubs.setPredicate(((Predicate<Club>) lstClubs.getPredicate()).and(ClubModel.NON_LOCAL));
+			}
+
+			if (chkUnused.isSelected()) {
+				// todo
+//				lstClubs.setPredicate(((Predicate<Club>) lstClubs.getPredicate()).and(ClubModel.NON_LOCAL));
 			}
 
 			lblFilter.setText(MessageFormat.format("Filter ({0} angezeigt)", lstClubs.size()));

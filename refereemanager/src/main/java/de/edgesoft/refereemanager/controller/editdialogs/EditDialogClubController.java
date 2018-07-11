@@ -1,13 +1,20 @@
 package de.edgesoft.refereemanager.controller.editdialogs;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 import de.edgesoft.edgeutils.commons.IDType;
+import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
 import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.jaxb.Club;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.jaxb.Venue;
+import de.edgesoft.refereemanager.model.AppModel;
+import de.edgesoft.refereemanager.utils.JAXBMatch;
+import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 /**
@@ -39,6 +46,18 @@ import javafx.scene.Parent;
 public class EditDialogClubController extends AbstractTabbedEditDialogController<Club> {
 
 	/**
+	 * Titled id type data.
+	 */
+	@FXML
+	private Parent embeddedInputFormTitledIDTypeData;
+
+	/**
+	 * Titled id data controller.
+	 */
+	@FXML
+	private IInputFormController<Club> embeddedInputFormTitledIDTypeDataController;
+
+	/**
 	 * Club data.
 	 */
 	@FXML
@@ -49,6 +68,19 @@ public class EditDialogClubController extends AbstractTabbedEditDialogController
 	 */
 	@FXML
 	private IInputFormController<Club> embeddedInputFormClubDataController;
+
+	/**
+	 * CRUD buttons url.
+	 */
+	@FXML
+	private Parent embeddedCRUDURL;
+
+	/**
+	 * CRUD buttons url controller.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "URL", jaxbclass = Club.class)
+	protected ListCRUDController<URL> embeddedCRUDURLController;
 
 	/**
 	 * Venue data.
@@ -72,10 +104,18 @@ public class EditDialogClubController extends AbstractTabbedEditDialogController
 	@Override
 	protected void initialize() {
 
+		addInputFormController(embeddedInputFormTitledIDTypeDataController);
 		addInputFormController(embeddedInputFormClubDataController);
 		addInputFormController(embeddedInputFormVenueDataController);
 
-		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Club.class, Venue.class})));
+		Map.Entry<Parent, FXMLLoader> nodeURL = Resources.loadNode("inputforms/PartInputFormURL");
+		embeddedCRUDURLController.initController(
+				nodeURL.getValue().getController(),
+				nodeURL.getKey(),
+				"URL (ToDo)",
+				AppModel.factory::createURL);
+
+		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Club.class, URL.class, Venue.class})));
 
 		super.initialize();
 

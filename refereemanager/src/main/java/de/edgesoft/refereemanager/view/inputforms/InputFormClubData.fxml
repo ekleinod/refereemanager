@@ -4,8 +4,6 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -22,33 +20,13 @@
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
 			</rowConstraints>
 			<children>
-				<Label text="ID" />
-				<TextField fx:id="txtID" GridPane.columnIndex="1" />
-				<Label text="Titel" GridPane.rowIndex="1" />
-				<TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-				<Label text="Kurztitel" GridPane.rowIndex="2" />
-				<TextField fx:id="txtShorttitle" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-				<CheckBox fx:id="chkIsLocal" text="ist lokaler Club" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-				<Label text="Dateiname" GridPane.rowIndex="4" />
-				<TextField fx:id="txtFilename" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-				<Label fx:id="lblGeneratedFilename" disable="true" text="" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-
-				<Separator GridPane.columnSpan="2147483647" GridPane.rowIndex="6" />
-				<Label text="URLs" GridPane.rowIndex="7" />
-				<fx:include fx:id="embeddedCRUDURL" source="../crud/ListCRUD.fxml" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-				<Separator GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
-
-				<Label text="Anmerkung" GridPane.rowIndex="9" />
-				<TextArea fx:id="txtRemark" prefHeight="80.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+				<Label text="Lokal?" />
+				<CheckBox fx:id="chkIsLocal" text="ist lokaler Club" GridPane.columnIndex="1" />
+				<Label text="Dateiname" GridPane.rowIndex="1" />
+				<TextField fx:id="txtFilename" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Label fx:id="lblGeneratedFilename" disable="true" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 			</children>
 		</GridPane>
 	</content>

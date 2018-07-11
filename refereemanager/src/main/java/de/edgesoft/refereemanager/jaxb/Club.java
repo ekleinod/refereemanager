@@ -31,7 +31,7 @@ import de.edgesoft.refereemanager.model.VenueReferenceModel;
  *       &lt;sequence>
  *         &lt;element name="is_local" type="{}BooleanProperty" minOccurs="0"/>
  *         &lt;element name="filename" type="{}StringProperty" minOccurs="0"/>
- *         &lt;element name="u_r_l" type="{}URL" minOccurs="0"/>
+ *         &lt;element name="u_r_l" type="{}URL" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="venue" type="{}VenueReference" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contact_person" type="{}PersonReference" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
@@ -62,7 +62,7 @@ public class Club
     @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
     protected SimpleStringProperty filename;
     @XmlElement(name = "u_r_l", type = URLModel.class)
-    protected URLModel url;
+    protected List<URL> url;
     @XmlElement(type = VenueReferenceModel.class)
     protected List<VenueReference> venue;
     @XmlElement(name = "contact_person", type = PersonReferenceModel.class)
@@ -119,25 +119,30 @@ public class Club
     /**
      * Gets the value of the url property.
      * 
-     * @return
-     *     possible object is
-     *     {@link URL }
-     *     
-     */
-    public URL getURL() {
-        return url;
-    }
-
-    /**
-     * Sets the value of the url property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the url property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link URL }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getURL().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link URL }
+     * 
+     * 
      */
-    public void setURL(URL value) {
-        this.url = ((URLModel) value);
+    public List<URL> getURL() {
+        if (url == null) {
+            url = new ArrayList<URL>();
+        }
+        return this.url;
     }
 
     /**

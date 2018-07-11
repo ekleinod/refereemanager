@@ -10,9 +10,19 @@
 	<children>
 		<TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
 			<tabs>
+				<Tab fx:id="tabTitledID" closable="false" text="Basisdaten">
+					<content>
+						<fx:include fx:id="embeddedInputFormTitledIDTypeData" source="../inputforms/InputFormTitledIDTypeData.fxml" />
+					</content>
+				</Tab>
 				<Tab closable="false" text="Clubdaten">
 					<content>
 						<fx:include fx:id="embeddedInputFormClubData" source="../inputforms/InputFormClubData.fxml" />
+					</content>
+				</Tab>
+				<Tab closable="false" text="URL">
+					<content>
+						<fx:include fx:id="embeddedCRUDURL" styleClass="URL" source="../crud/ListCRUD.fxml" />
 					</content>
 				</Tab>
 				<Tab closable="false" text="Spielorte">

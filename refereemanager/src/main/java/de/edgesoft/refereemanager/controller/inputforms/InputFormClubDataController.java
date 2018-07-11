@@ -1,23 +1,10 @@
 package de.edgesoft.refereemanager.controller.inputforms;
-import java.text.MessageFormat;
-import java.util.Map;
-
-import de.edgesoft.edgeutils.commons.IDType;
-import de.edgesoft.edgeutils.files.FileUtils;
 import de.edgesoft.edgeutils.javafx.FontUtils;
-import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
 import de.edgesoft.refereemanager.jaxb.Club;
-import de.edgesoft.refereemanager.jaxb.TitledIDType;
-import de.edgesoft.refereemanager.jaxb.URL;
-import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
-import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.FontPosture;
 
@@ -50,27 +37,6 @@ import javafx.scene.text.FontPosture;
 public class InputFormClubDataController extends AbstractInputFormController<Club> {
 
 	/**
-	 * ID text field.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "id", jaxbclass = IDType.class)
-	protected TextField txtID;
-
-	/**
-	 * Title text field.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "title", jaxbclass = TitledIDType.class)
-	protected TextField txtTitle;
-
-	/**
-	 * Short title text field.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "shorttitle", jaxbclass = TitledIDType.class)
-	protected TextField txtShorttitle;
-
-	/**
 	 * Checkbox for local clubs.
 	 */
 	@FXML
@@ -90,26 +56,6 @@ public class InputFormClubDataController extends AbstractInputFormController<Clu
 	@FXML
 	protected Label lblGeneratedFilename;
 
-	/**
-	 * CRUD URL.
-	 */
-	@FXML
-	private Parent embeddedCRUDURL;
-
-	/**
-	 * CRUD buttons address controller.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "URL", jaxbclass = Club.class)
-	protected ListCRUDController<URL> embeddedCRUDURLController;
-
-	/**
-	 * Text area for remark.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "remark", jaxbclass = TitledIDType.class)
-	protected TextArea txtRemark;
-
 
 	/**
 	 * Initializes the controller class.
@@ -121,15 +67,9 @@ public class InputFormClubDataController extends AbstractInputFormController<Clu
 
 		lblGeneratedFilename.setFont(FontUtils.getDerived(lblGeneratedFilename.getFont(), FontPosture.ITALIC, -1));
 
-		Map.Entry<Parent, FXMLLoader> nodeURL = Resources.loadNode("inputforms/PartInputFormURL");
-		embeddedCRUDURLController.initController(
-				nodeURL.getValue().getController(),
-				nodeURL.getKey(),
-				null,
-				AppModel.factory::createURL);
-
-		txtTitle.textProperty().addListener((obs, oldText, newText) -> showGeneratedFilename());
-		txtShorttitle.textProperty().addListener((obs, oldText, newText) -> showGeneratedFilename());
+//		txtTitle.textProperty().addListener((obs, oldText, newText) -> showGeneratedFilename());
+//		txtShorttitle.textProperty().addListener((obs, oldText, newText) -> showGeneratedFilename());
+		showGeneratedFilename();
 
 	}
 
@@ -138,22 +78,24 @@ public class InputFormClubDataController extends AbstractInputFormController<Clu
 	 */
 	private void showGeneratedFilename() {
 
-		String sGeneratedFilename = "";
+		lblGeneratedFilename.setText("todo");
 
-		// check for null: catch cases in which GUI is not initialized properly
-		if (txtTitle.getText() != null) {
-			sGeneratedFilename = txtTitle.getText();
-		}
-
-		if (txtShorttitle.getText() != null) {
-			if (!txtShorttitle.getText().isEmpty()) {
-				sGeneratedFilename = txtShorttitle.getText();
-			}
-		}
-
-		if (lblGeneratedFilename != null) {
-			lblGeneratedFilename.setText(MessageFormat.format("Generierter Dateiname: {0}", FileUtils.cleanFilename(sGeneratedFilename, false)));
-		}
+//		String sGeneratedFilename = "";
+//
+//		// check for null: catch cases in which GUI is not initialized properly
+//		if (txtTitle.getText() != null) {
+//			sGeneratedFilename = txtTitle.getText();
+//		}
+//
+//		if (txtShorttitle.getText() != null) {
+//			if (!txtShorttitle.getText().isEmpty()) {
+//				sGeneratedFilename = txtShorttitle.getText();
+//			}
+//		}
+//
+//		if (lblGeneratedFilename != null) {
+//			lblGeneratedFilename.setText(MessageFormat.format("Generierter Dateiname: {0}", FileUtils.cleanFilename(sGeneratedFilename, false)));
+//		}
 
 	}
 

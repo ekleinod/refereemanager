@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
@@ -25,6 +26,12 @@
 			<children>
 				<CheckBox fx:id="chkLocal" onAction="#handleFilterChange" text="Lokal" />
 				<CheckBox fx:id="chkNonLocal" onAction="#handleFilterChange" text="Auswärtig" />
+			</children>
+		</HBox>
+		<Separator />
+		<HBox spacing="5.0">
+			<children>
+				<CheckBox fx:id="chkUnused" disable="true" onAction="#handleFilterChange" text="Ungenutzt" />
 			</children>
 		</HBox>
 	</children>

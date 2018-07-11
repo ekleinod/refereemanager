@@ -28,10 +28,10 @@
 				<Label fx:id="lblFilename" text="Label" GridPane.columnIndex="1" />
 				<Label text="Lokaler Club" GridPane.rowIndex="1" />
 				<Label fx:id="lblIsLocal" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-				<Label text="URL" GridPane.rowIndex="2" />
-				<Hyperlink fx:id="lnkURL" onAction="#handleWebLinkAction" text="URL" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label text="URLs" GridPane.rowIndex="2" />
+				<VBox fx:id="boxURL" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 				<Label text="Spielorte" GridPane.rowIndex="3" />
-				<Label fx:id="lblVenue" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<Label fx:id="lblVenues" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 				<Label text="Kontaktpersonen" GridPane.rowIndex="4" />
 				<Label fx:id="lblContactPerson" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 			</children>
