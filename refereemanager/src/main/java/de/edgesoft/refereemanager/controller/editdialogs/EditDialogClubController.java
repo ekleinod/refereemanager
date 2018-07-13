@@ -69,19 +69,19 @@ public class EditDialogClubController extends AbstractTabbedEditDialogController
 	@FXML
 	private IInputFormController<Club> embeddedInputFormClubDataController;
 
-	/**
-	 * CRUD buttons url.
-	 */
-	@FXML
-	private Parent embeddedCRUDURL;
-
-	/**
-	 * CRUD buttons url controller.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "URL", jaxbclass = Club.class)
-	protected ListCRUDController<URL> embeddedCRUDURLController;
-
+//	/**
+//	 * CRUD buttons url.
+//	 */
+//	@FXML
+//	private Parent embeddedCRUDURL;
+//
+//	/**
+//	 * CRUD buttons url controller.
+//	 */
+//	@FXML
+//	@JAXBMatch(jaxbfield = "URL", jaxbclass = Club.class)
+//	protected ListCRUDController<URL> embeddedCRUDURLController;
+//
 	/**
 	 * Venue data.
 	 */
@@ -108,12 +108,12 @@ public class EditDialogClubController extends AbstractTabbedEditDialogController
 		addInputFormController(embeddedInputFormClubDataController);
 		addInputFormController(embeddedInputFormVenueDataController);
 
-		Map.Entry<Parent, FXMLLoader> nodeURL = Resources.loadNode("inputforms/PartInputFormURL");
-		embeddedCRUDURLController.initController(
-				nodeURL.getValue().getController(),
-				nodeURL.getKey(),
-				"URL (ToDo)",
-				AppModel.factory::createURL);
+//		Map.Entry<Parent, FXMLLoader> nodeURL = Resources.loadNode("inputforms/PartInputFormURL");
+//		embeddedCRUDURLController.initController(
+//				nodeURL.getValue().getController(),
+//				nodeURL.getKey(),
+//				"URL (ToDo)",
+//				AppModel.factory::createURL);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Club.class, URL.class, Venue.class})));
 

@@ -9,7 +9,6 @@ import de.edgesoft.refereemanager.model.ClubModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.FontWeight;
 
 /**
@@ -59,10 +58,10 @@ public class DetailsClubController<T extends ClubModel> extends AbstractHyperlin
 	private Label lblIsLocal;
 
 	/**
-	 * URL box.
+	 * URL.
 	 */
 	@FXML
-	private VBox boxURL;
+	private Hyperlink lnkURL;
 
 	/**
 	 * Venue.
@@ -103,7 +102,7 @@ public class DetailsClubController<T extends ClubModel> extends AbstractHyperlin
 			LabelUtils.setText(lblFilename, null);
 			LabelUtils.setText(lblIsLocal, null);
 
-			boxURL.getChildren().clear();
+			lnkURL.setText(null);
 
 			LabelUtils.setText(lblVenues, null);
 			LabelUtils.setText(lblContactPerson, null);
@@ -114,8 +113,10 @@ public class DetailsClubController<T extends ClubModel> extends AbstractHyperlin
 
 			lblIsLocal.setText(theDetailData.getIsLocal().getValue() ? "ja" : "nein");
 
-			boxURL.getChildren().clear();
-			theDetailData.getURL().stream().forEach(url -> boxURL.getChildren().add(new Hyperlink(url.getURL().getValueSafe())));
+			lnkURL.setText(
+					(theDetailData.getURL() == null) ?
+							null :
+							theDetailData.getURL().getURL().getValue().toString());
 
 			lblVenues.setText(theDetailData.getVenue().stream().map(venue -> venue.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
 
