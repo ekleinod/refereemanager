@@ -20,12 +20,6 @@
 						<fx:include fx:id="embeddedInputFormClubData" source="../inputforms/InputFormClubData.fxml" />
 					</content>
 				</Tab>
-				<Tab closable="false" text="URL">
-					<content>
-						<fx:include fx:id="embeddedInputFormURLData" source="../inputforms/PartInputFormURL.fxml" />
-						<!-- fx:include fx:id="embeddedCRUDURL" styleClass="URL" source="../crud/ListCRUD.fxml" /-->
-					</content>
-				</Tab>
 				<Tab closable="false" text="Spielorte">
 					<content>
 						<fx:include fx:id="embeddedInputFormVenueData" source="../inputforms/InputFormVenueData.fxml" />

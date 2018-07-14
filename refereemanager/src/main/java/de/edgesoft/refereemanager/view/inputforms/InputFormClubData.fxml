@@ -20,6 +20,7 @@
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
 			</rowConstraints>
 			<children>
 				<Label text="Lokal?" />
@@ -27,6 +28,8 @@
 				<Label text="Dateiname" GridPane.rowIndex="1" />
 				<TextField fx:id="txtFilename" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 				<Label fx:id="lblGeneratedFilename" disable="true" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label text="Homepage" GridPane.rowIndex="3" />
+				<TextField fx:id="txtHomepage" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 			</children>
 		</GridPane>
 	</content>

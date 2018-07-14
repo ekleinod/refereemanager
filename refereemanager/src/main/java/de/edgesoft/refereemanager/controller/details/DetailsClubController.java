@@ -116,7 +116,7 @@ public class DetailsClubController<T extends ClubModel> extends AbstractHyperlin
 			lnkURL.setText(
 					(theDetailData.getURL() == null) ?
 							null :
-							theDetailData.getURL().getURL().getValue().toString());
+							theDetailData.getURL().getValue().toString());
 
 			lblVenues.setText(theDetailData.getVenue().stream().map(venue -> venue.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
 

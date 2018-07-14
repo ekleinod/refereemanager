@@ -15,7 +15,6 @@ import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
 import de.edgesoft.refereemanager.model.PersonReferenceModel;
 import de.edgesoft.refereemanager.model.TitledIDTypeModel;
-import de.edgesoft.refereemanager.model.URLModel;
 import de.edgesoft.refereemanager.model.VenueReferenceModel;
 
 
@@ -31,7 +30,7 @@ import de.edgesoft.refereemanager.model.VenueReferenceModel;
  *       &lt;sequence>
  *         &lt;element name="is_local" type="{}BooleanProperty" minOccurs="0"/>
  *         &lt;element name="filename" type="{}StringProperty" minOccurs="0"/>
- *         &lt;element name="u_r_l" type="{}URL" minOccurs="0"/>
+ *         &lt;element name="u_r_l" type="{}StringProperty" minOccurs="0"/>
  *         &lt;element name="venue" type="{}VenueReference" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contact_person" type="{}PersonReference" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
@@ -61,8 +60,9 @@ public class Club
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
     protected SimpleStringProperty filename;
-    @XmlElement(name = "u_r_l", type = URLModel.class)
-    protected URLModel url;
+    @XmlElement(name = "u_r_l", type = String.class)
+    @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
+    protected SimpleStringProperty url;
     @XmlElement(type = VenueReferenceModel.class)
     protected List<VenueReference> venue;
     @XmlElement(name = "contact_person", type = PersonReferenceModel.class)
@@ -121,10 +121,10 @@ public class Club
      * 
      * @return
      *     possible object is
-     *     {@link URL }
+     *     {@link String }
      *     
      */
-    public URL getURL() {
+    public SimpleStringProperty getURL() {
         return url;
     }
 
@@ -133,11 +133,11 @@ public class Club
      * 
      * @param value
      *     allowed object is
-     *     {@link URL }
+     *     {@link String }
      *     
      */
-    public void setURL(URL value) {
-        this.url = ((URLModel) value);
+    public void setURL(SimpleStringProperty value) {
+        this.url = value;
     }
 
     /**
