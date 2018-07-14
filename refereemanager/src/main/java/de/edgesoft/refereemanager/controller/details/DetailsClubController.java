@@ -58,10 +58,10 @@ public class DetailsClubController<T extends ClubModel> extends AbstractHyperlin
 	private Label lblIsLocal;
 
 	/**
-	 * URL.
+	 * Homepage.
 	 */
 	@FXML
-	private Hyperlink lnkURL;
+	private Hyperlink lnkHomepage;
 
 	/**
 	 * Venue.
@@ -102,7 +102,7 @@ public class DetailsClubController<T extends ClubModel> extends AbstractHyperlin
 			LabelUtils.setText(lblFilename, null);
 			LabelUtils.setText(lblIsLocal, null);
 
-			lnkURL.setText(null);
+			lnkHomepage.setText(null);
 
 			LabelUtils.setText(lblVenues, null);
 			LabelUtils.setText(lblContactPerson, null);
@@ -113,10 +113,10 @@ public class DetailsClubController<T extends ClubModel> extends AbstractHyperlin
 
 			lblIsLocal.setText(theDetailData.getIsLocal().getValue() ? "ja" : "nein");
 
-			lnkURL.setText(
-					(theDetailData.getURL() == null) ?
+			lnkHomepage.setText(
+					(theDetailData.getHomepage() == null) ?
 							null :
-							theDetailData.getURL().getValue().toString());
+							theDetailData.getHomepage().getValue().toString());
 
 			lblVenues.setText(theDetailData.getVenue().stream().map(venue -> venue.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
 

@@ -30,7 +30,7 @@ import de.edgesoft.refereemanager.model.VenueReferenceModel;
  *       &lt;sequence>
  *         &lt;element name="is_local" type="{}BooleanProperty" minOccurs="0"/>
  *         &lt;element name="filename" type="{}StringProperty" minOccurs="0"/>
- *         &lt;element name="u_r_l" type="{}StringProperty" minOccurs="0"/>
+ *         &lt;element name="homepage" type="{}StringProperty" minOccurs="0"/>
  *         &lt;element name="venue" type="{}VenueReference" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="contact_person" type="{}PersonReference" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
@@ -45,7 +45,7 @@ import de.edgesoft.refereemanager.model.VenueReferenceModel;
 @XmlType(name = "Club", propOrder = {
     "isLocal",
     "filename",
-    "url",
+    "homepage",
     "venue",
     "contactPerson"
 })
@@ -60,9 +60,9 @@ public class Club
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
     protected SimpleStringProperty filename;
-    @XmlElement(name = "u_r_l", type = String.class)
+    @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(SimpleStringPropertyAdapter.class)
-    protected SimpleStringProperty url;
+    protected SimpleStringProperty homepage;
     @XmlElement(type = VenueReferenceModel.class)
     protected List<VenueReference> venue;
     @XmlElement(name = "contact_person", type = PersonReferenceModel.class)
@@ -117,27 +117,27 @@ public class Club
     }
 
     /**
-     * Gets the value of the url property.
+     * Gets the value of the homepage property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public SimpleStringProperty getURL() {
-        return url;
+    public SimpleStringProperty getHomepage() {
+        return homepage;
     }
 
     /**
-     * Sets the value of the url property.
+     * Sets the value of the homepage property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setURL(SimpleStringProperty value) {
-        this.url = value;
+    public void setHomepage(SimpleStringProperty value) {
+        this.homepage = value;
     }
 
     /**

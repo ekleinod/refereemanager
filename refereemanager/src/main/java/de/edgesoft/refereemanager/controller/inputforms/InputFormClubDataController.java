@@ -44,7 +44,7 @@ public class InputFormClubDataController extends AbstractInputFormController<Clu
 	protected CheckBox chkIsLocal;
 
 	/**
-	 * Filename text field.
+	 * Filename.
 	 */
 	@FXML
 	@JAXBMatch(jaxbfield = "filename", jaxbclass = Club.class)
@@ -55,6 +55,13 @@ public class InputFormClubDataController extends AbstractInputFormController<Clu
 	 */
 	@FXML
 	protected Label lblGeneratedFilename;
+
+	/**
+	 * Homepage.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "homepage", jaxbclass = Club.class)
+	protected TextField txtHomepage;
 
 
 	/**
