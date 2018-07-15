@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane vgap="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.PartInputFormVenueListController">
+	<columnConstraints>
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+		<ColumnConstraints hgrow="SOMETIMES" />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints valignment="TOP" />
+	</rowConstraints>
+	<children>
+		<Label fx:id="lblVenueList" text="Spielort" />
+		<AnchorPane GridPane.columnIndex="1">
+			<children>
+				<ComboBox fx:id="cboVenueList" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
+				<Button fx:id="btnVenueListClear" onAction="#handleVenueListClear" AnchorPane.rightAnchor="0.0">
+					<tooltip>
+						<Tooltip text="Auswahl entfernen" />
+					</tooltip>
+				</Button>
+			</children>
+		</AnchorPane>
+	</children>
+</GridPane>

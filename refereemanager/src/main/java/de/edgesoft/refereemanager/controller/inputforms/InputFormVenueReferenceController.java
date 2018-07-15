@@ -2,8 +2,8 @@ package de.edgesoft.refereemanager.controller.inputforms;
 import java.util.Map;
 
 import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
-import de.edgesoft.refereemanager.jaxb.PersonReference;
 import de.edgesoft.refereemanager.jaxb.PersonVenueReferrer;
+import de.edgesoft.refereemanager.jaxb.VenueReference;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -12,7 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 /**
- * Controller for the person reference edit dialog tab.
+ * Controller for the venue reference edit dialog tab.
  *
  * ## Legal stuff
  *
@@ -37,20 +37,20 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormPersonReferenceController extends AbstractInputFormController<PersonVenueReferrer> {
+public class InputFormVenueReferenceController extends AbstractInputFormController<PersonVenueReferrer> {
 
 	/**
-	 * CRUD buttons person reference.
+	 * CRUD buttons venue reference.
 	 */
 	@FXML
-	private Parent embeddedCRUDPersonReference;
+	private Parent embeddedCRUDVenueReference;
 
 	/**
-	 * CRUD buttons person reference.
+	 * CRUD buttons venue reference.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "person", jaxbclass = PersonVenueReferrer.class)
-	protected ListCRUDController<PersonReference> embeddedCRUDPersonReferenceController;
+	@JAXBMatch(jaxbfield = "venue", jaxbclass = PersonVenueReferrer.class)
+	protected ListCRUDController<VenueReference> embeddedCRUDVenueReferenceController;
 
 	/**
 	 * Initializes the controller class.
@@ -60,11 +60,11 @@ public class InputFormPersonReferenceController extends AbstractInputFormControl
 	@FXML
 	protected void initialize() {
 
-		Map.Entry<Parent, FXMLLoader> nodePersonReference = Resources.loadNode("inputforms/PartInputFormPersonList");
-		embeddedCRUDPersonReferenceController.initController(
-				nodePersonReference.getValue().getController(),
-				nodePersonReference.getKey(),
-				AppModel.factory::createPersonReference);
+		Map.Entry<Parent, FXMLLoader> nodeVenueReference = Resources.loadNode("inputforms/PartInputFormVenueList");
+		embeddedCRUDVenueReferenceController.initController(
+				nodeVenueReference.getValue().getController(),
+				nodeVenueReference.getKey(),
+				AppModel.factory::createVenueReference);
 
 	}
 

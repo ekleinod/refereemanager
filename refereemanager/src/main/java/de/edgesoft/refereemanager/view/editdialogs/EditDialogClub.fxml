@@ -15,14 +15,14 @@
 						<fx:include fx:id="embeddedInputFormTitledIDTypeData" source="../inputforms/InputFormTitledIDTypeData.fxml" />
 					</content>
 				</Tab>
-				<Tab closable="false" text="Clubdaten">
+				<Tab fx:id="tabClub" closable="false" text="Clubdaten">
 					<content>
 						<fx:include fx:id="embeddedInputFormClubData" source="../inputforms/InputFormClubData.fxml" />
 					</content>
 				</Tab>
-				<Tab closable="false" text="Spielorte">
+				<Tab fx:id="tabVenues" closable="false" text="Spielorte">
 					<content>
-						<fx:include fx:id="embeddedInputFormVenueData" source="../inputforms/InputFormVenueData.fxml" />
+						<fx:include fx:id="embeddedInputFormVenueReference" source="../inputforms/InputFormVenueReference.fxml" />
 					</content>
 				</Tab>
 			</tabs>

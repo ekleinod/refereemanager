@@ -5,6 +5,7 @@ import java.util.Arrays;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.jaxb.Club;
+import de.edgesoft.refereemanager.jaxb.PersonVenueReferrer;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.jaxb.Venue;
@@ -64,16 +65,16 @@ public class EditDialogClubController extends AbstractTabbedEditDialogController
 	private IInputFormController<Club> embeddedInputFormClubDataController;
 
 	/**
-	 * Venue data.
+	 * Venues.
 	 */
 	@FXML
-	private Parent embeddedInputFormVenueData;
+	private Parent embeddedInputFormVenueReference;
 
 	/**
-	 * Venue data controller.
+	 * Venues controller.
 	 */
 	@FXML
-	private IInputFormController<Club> embeddedInputFormVenueDataController;
+	private IInputFormController<Club> embeddedInputFormVenueReferenceController;
 
 
 	/**
@@ -87,9 +88,9 @@ public class EditDialogClubController extends AbstractTabbedEditDialogController
 
 		addInputFormController(embeddedInputFormTitledIDTypeDataController);
 		addInputFormController(embeddedInputFormClubDataController);
-		addInputFormController(embeddedInputFormVenueDataController);
+		addInputFormController(embeddedInputFormVenueReferenceController);
 
-		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Club.class, URL.class, Venue.class})));
+		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Club.class, URL.class, Venue.class, PersonVenueReferrer.class})));
 
 		super.initialize();
 
