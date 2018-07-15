@@ -144,7 +144,6 @@ public class InputFormEventDataController extends AbstractInputFormController<Ev
 		embeddedCRUDEventDayController.initController(
 				nodeEventDay.getValue().getController(),
 				nodeEventDay.getKey(),
-				null,
 				AppModel.factory::createEventDay);
 
 	}

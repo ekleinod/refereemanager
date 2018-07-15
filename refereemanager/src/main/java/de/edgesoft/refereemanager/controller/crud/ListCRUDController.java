@@ -18,7 +18,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -56,12 +55,6 @@ public class ListCRUDController<T extends ModelClassExt> extends CRUDButtonsCont
 	 */
 	@FXML
 	private GridPane grdListCRUD;
-
-	/**
-	 * Heading.
-	 */
-	@FXML
-	private Label lblHeading;
 
 	/**
 	 * List view.
@@ -120,13 +113,11 @@ public class ListCRUDController<T extends ModelClassExt> extends CRUDButtonsCont
 	 *
 	 * @param theInputFormController input form controller
 	 * @param thePartInputForm input form part
-	 * @param theViewName name of the edit view (null == no heading)
 	 * @param theInstanceCall instance call
 	 */
 	public void initController(
 			final IInputFormController<T> theInputFormController,
 			final Parent thePartInputForm,
-			final String theViewName,
 			final Supplier<T> theInstanceCall
 			) {
 
@@ -136,13 +127,6 @@ public class ListCRUDController<T extends ModelClassExt> extends CRUDButtonsCont
 
 		instanceCall = theInstanceCall;
 		ctlInputForm = theInputFormController;
-
-		if (theViewName != null) {
-			lblHeading.setText(theViewName);
-		} else {
-			lblHeading.setVisible(false);
-			lblHeading.setManaged(false);
-		}
 
 		lstData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> ctlInputForm.fillFormFromData(lstData.getSelectionModel().getSelectedItem()));
 

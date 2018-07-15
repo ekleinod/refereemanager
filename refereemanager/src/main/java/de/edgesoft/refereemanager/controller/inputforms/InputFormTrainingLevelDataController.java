@@ -64,7 +64,6 @@ public class InputFormTrainingLevelDataController extends AbstractInputFormContr
 		embeddedCRUDTrainingLevelController.initController(
 				nodeTrainingLevel.getValue().getController(),
 				nodeTrainingLevel.getKey(),
-				"Ausbildung",
 				AppModel.factory::createTrainingLevel);
 
 	}

@@ -79,14 +79,12 @@ public class InputFormAddressDataController extends AbstractInputFormController<
 		embeddedCRUDAddressController.initController(
 				nodeAddress.getValue().getController(),
 				nodeAddress.getKey(),
-				"Adresse",
 				AppModel.factory::createAddress);
 
 		Map.Entry<Parent, FXMLLoader> nodeURL = Resources.loadNode("inputforms/PartInputFormURL");
 		embeddedCRUDURLController.initController(
 				nodeURL.getValue().getController(),
 				nodeURL.getKey(),
-				"URL",
 				AppModel.factory::createURL);
 
 	}

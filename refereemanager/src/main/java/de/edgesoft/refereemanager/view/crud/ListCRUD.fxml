@@ -17,17 +17,15 @@
 	<rowConstraints>
 		<RowConstraints valignment="TOP" />
 		<RowConstraints valignment="TOP" />
-		<RowConstraints valignment="TOP" />
 	</rowConstraints>
 	<children>
-		<Label fx:id="lblHeading" text="Label" />
-		<ListView fx:id="lstData" prefHeight="75.0" GridPane.rowIndex="1" />
-		<Button fx:id="btnClearList" onAction="#handleClearList" GridPane.columnIndex="1" GridPane.rowIndex="1">
+		<ListView fx:id="lstData" prefHeight="75.0" />
+		<Button fx:id="btnClearList" onAction="#handleClearList" GridPane.columnIndex="1">
 			<tooltip>
 				<Tooltip text="Deselektieren" />
 			</tooltip>
 		</Button>
-		<VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2" >
+		<VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1" >
 			<children>
 				<Button fx:id="btnAdd">
 					<tooltip>

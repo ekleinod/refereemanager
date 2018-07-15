@@ -64,7 +64,6 @@ public class InputFormUpdateDataController extends AbstractInputFormController<T
 		embeddedCRUDUpdatesController.initController(
 				nodeUpdates.getValue().getController(),
 				nodeUpdates.getKey(),
-				"Fortbildungen",
 				AppModel.factory::createUpdate);
 
 	}

@@ -64,7 +64,6 @@ public class InputFormPersonReferenceController extends AbstractInputFormControl
 		embeddedCRUDPersonReferenceController.initController(
 				nodeRefereeReportRecipient.getValue().getController(),
 				nodeRefereeReportRecipient.getKey(),
-				"Person",
 				AppModel.factory::createPersonReference);
 
 	}

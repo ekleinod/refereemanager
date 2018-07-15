@@ -79,14 +79,12 @@ public class InputFormContactDataController extends AbstractInputFormController<
 		embeddedCRUDEMailController.initController(
 				nodeEMail.getValue().getController(),
 				nodeEMail.getKey(),
-				"E-Mail",
 				AppModel.factory::createEMail);
 
 		Map.Entry<Parent, FXMLLoader> nodePhoneNumber = Resources.loadNode("inputforms/PartInputFormPhoneNumber");
 		embeddedCRUDPhoneNumberController.initController(
 				nodePhoneNumber.getValue().getController(),
 				nodePhoneNumber.getKey(),
-				"Telefon",
 				AppModel.factory::createPhoneNumber);
 
 	}

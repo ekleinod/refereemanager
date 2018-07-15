@@ -78,14 +78,12 @@ public class InputFormWishDataController extends AbstractInputFormController<Ref
 		embeddedCRUDPreferController.initController(
 				nodePrefer.getValue().getController(),
 				nodePrefer.getKey(),
-				"Bevorzugt schiedsen",
 				AppModel.factory::createWish);
 
 		Map.Entry<Parent, FXMLLoader> nodeAvoid = Resources.loadNode("inputforms/PartInputFormWish");
 		embeddedCRUDAvoidController.initController(
 				nodeAvoid.getValue().getController(),
 				nodeAvoid.getKey(),
-				"Nicht schiedsen",
 				AppModel.factory::createWish);
 
 	}
