@@ -352,6 +352,25 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:complexContent>
 	</xsd:complexType>
 
+	<xsd:complexType name="PersonVenueReferrer">
+		<xsd:complexContent>
+			<xsd:extension base="TitledIDType">
+				<xsd:sequence>
+					<xsd:element name="venue" type="VenueReference" minOccurs="0" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>See annotation on type VenueReference.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="person" type="PersonReference" minOccurs="0" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>See annotation on type PersonReference.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 	<xsd:complexType name="RefereeQuantity">
 		<xsd:complexContent>
 			<xsd:extension base="AbstractModelClass">
