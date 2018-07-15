@@ -1,5 +1,7 @@
 package de.edgesoft.refereemanager.controller.details;
 
+import java.util.stream.Collectors;
+
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.model.OtherEventModel;
@@ -57,7 +59,7 @@ public class DetailsOtherEventController<T extends OtherEventModel> implements I
 	 * Venue label.
 	 */
 	@FXML
-	private Label lblVenue;
+	private Label lblVenues;
 
 	/**
 	 * Type label.
@@ -90,7 +92,7 @@ public class DetailsOtherEventController<T extends OtherEventModel> implements I
 
 			LabelUtils.setText(lblDate, null);
 			LabelUtils.setText(lblTime, null);
-			LabelUtils.setText(lblVenue, null);
+			LabelUtils.setText(lblVenues, null);
 			LabelUtils.setText(lblType, null);
 
 		} else {
@@ -98,10 +100,7 @@ public class DetailsOtherEventController<T extends OtherEventModel> implements I
 			LabelUtils.setText(lblDate, theDetailData.getDateText());
 			LabelUtils.setText(lblTime, theDetailData.getTimeText());
 
-			lblVenue.setText(
-					(theDetailData.getVenue() == null) ?
-							null :
-							theDetailData.getVenue().getDisplayText().getValueSafe());
+			lblVenues.setText(theDetailData.getVenue().stream().map(venue -> venue.getDisplayText().getValueSafe()).collect(Collectors.joining(System.lineSeparator())));
 
 			lblType.setText(
 					(theDetailData.getType() == null) ?

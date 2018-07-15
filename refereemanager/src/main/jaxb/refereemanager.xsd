@@ -260,7 +260,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="League">
 		<xsd:complexContent>
-			<xsd:extension base="TitledIDType">
+			<xsd:extension base="PersonVenueReferrer">
 				<xsd:sequence>
 					<xsd:element name="rank" type="IntegerProperty" minOccurs="1" maxOccurs="1" />
 					<xsd:element name="national" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
@@ -278,11 +278,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 							</xsd:appinfo>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element name="referee_report_recipient" type="PersonReference" minOccurs="1" maxOccurs="unbounded">
-						<xsd:annotation>
-							<xsd:documentation>See annotation on type PersonReference.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -290,23 +285,11 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Club">
 		<xsd:complexContent>
-			<xsd:extension base="TitledIDType">
+			<xsd:extension base="PersonVenueReferrer">
 				<xsd:sequence>
 					<xsd:element name="is_local" type="BooleanProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="filename" type="StringProperty" minOccurs="0" maxOccurs="1" />
 					<xsd:element name="homepage" type="StringProperty" minOccurs="0" maxOccurs="1" />
-
-					<!-- references -->
-					<xsd:element name="venue" type="VenueReference" minOccurs="0" maxOccurs="unbounded">
-						<xsd:annotation>
-							<xsd:documentation>See annotation on type VenueReference.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element name="contact_person" type="PersonReference" minOccurs="0" maxOccurs="unbounded">
-						<xsd:annotation>
-							<xsd:documentation>See annotation on type PersonReference.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -314,7 +297,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="Team">
 		<xsd:complexContent>
-			<xsd:extension base="TitledIDType">
+			<xsd:extension base="PersonVenueReferrer">
 				<xsd:sequence>
 					<xsd:element name="number" type="IntegerProperty" minOccurs="0" maxOccurs="1" />
 
@@ -337,22 +320,24 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 							</xsd:appinfo>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element name="venue" type="VenueReference" minOccurs="0" maxOccurs="unbounded">
-						<xsd:annotation>
-							<xsd:documentation>See annotation on type VenueReference.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element name="contact_person" type="PersonReference" minOccurs="0" maxOccurs="unbounded">
-						<xsd:annotation>
-							<xsd:documentation>See annotation on type PersonReference.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 
 	<xsd:complexType name="PersonVenueReferrer">
+		<xsd:annotation>
+			<xsd:documentation>
+				This class is introduces for reducing the number of GUI classes.
+				In my classes, they reflect the needed methods per class, thus e.g. a venue is needed in the class used for the controller class.
+				This would lead to different controllers and fxml files for the same kind of GUI, just because of reflection.
+				This means, all classes refer to venues and people through the name "venue" and "person" which does not reflect the role they play for the class.
+
+				This means, too, that classes refer to people, that should only refer to venues (e.g. events), and vice versa (e.g. leagues) but I did not want to introduce other interim classes.
+
+				Another downside ist, that all references are 0..unbounded.
+			</xsd:documentation>
+		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="TitledIDType">
 				<xsd:sequence>
@@ -642,15 +627,6 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 							</xsd:appinfo>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element name="organizer" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
-						<xsd:annotation>
-							<xsd:appinfo>
-								<jxb:property>
-									<jxb:baseType name="Person" />
-								</jxb:property>
-							</xsd:appinfo>
-						</xsd:annotation>
-					</xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -672,16 +648,11 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsd:complexType name="EventDate" abstract="true">
 		<xsd:complexContent>
-			<xsd:extension base="TitledIDType">
+			<xsd:extension base="PersonVenueReferrer">
 				<xsd:sequence>
 					<xsd:element name="day" type="EventDay" minOccurs="1" maxOccurs="unbounded" />
 
 					<!-- references -->
-					<xsd:element name="venue" type="VenueReference" minOccurs="0" maxOccurs="1">
-						<xsd:annotation>
-							<xsd:documentation>See annotation on type VenueReference.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
 					<xsd:element name="type" type="xsd:IDREF" minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:appinfo>

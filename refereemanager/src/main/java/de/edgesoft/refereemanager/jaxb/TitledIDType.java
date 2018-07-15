@@ -10,14 +10,10 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
-import de.edgesoft.refereemanager.model.ClubModel;
 import de.edgesoft.refereemanager.model.ContactModel;
-import de.edgesoft.refereemanager.model.EventDateModel;
-import de.edgesoft.refereemanager.model.LeagueModel;
 import de.edgesoft.refereemanager.model.PersonModel;
 import de.edgesoft.refereemanager.model.SeasonModel;
 import de.edgesoft.refereemanager.model.StatusTypeModel;
-import de.edgesoft.refereemanager.model.TeamModel;
 import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
 
 
@@ -53,16 +49,13 @@ import de.edgesoft.refereemanager.model.TrainingLevelTypeModel;
     TrainingLevelTypeModel.class,
     RoleType.class,
     EventDateType.class,
-    LeagueModel.class,
-    TeamModel.class,
     SeasonModel.class,
     SexType.class,
     PersonModel.class,
-    ClubModel.class,
     StatusTypeModel.class,
     ContactModel.class,
     RefereeAssignmentType.class,
-    EventDateModel.class
+    PersonVenueReferrer.class
 })
 public abstract class TitledIDType
     extends IDType

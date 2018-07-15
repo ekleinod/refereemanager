@@ -127,12 +127,7 @@ public class DetailsLeagueController<T extends LeagueModel> extends AbstractHype
 							null :
 							theDetailData.getRefereeReportURL().getValue().toString());
 
-			lblRefereeReportRecipient.setText(
-					(theDetailData.getRefereeReportRecipient().isEmpty()) ?
-							null :
-							theDetailData.getRefereeReportRecipient().stream()
-								.map(person -> person.getDisplayText().getValueSafe())
-								.collect(Collectors.joining(System.lineSeparator())));
+			lblRefereeReportRecipient.setText(theDetailData.getPerson().stream().map(person -> person.getDisplayText().getValueSafe()).collect(Collectors.joining(System.lineSeparator())));
 
 		}
 

@@ -73,7 +73,7 @@ public class DetailsClubController<T extends ClubModel> extends AbstractHyperlin
 	 * Contact.
 	 */
 	@FXML
-	private Label lblContactPerson;
+	private Label lblContactPeople;
 
 
 	/**
@@ -105,7 +105,7 @@ public class DetailsClubController<T extends ClubModel> extends AbstractHyperlin
 			lnkHomepage.setText(null);
 
 			LabelUtils.setText(lblVenues, null);
-			LabelUtils.setText(lblContactPerson, null);
+			LabelUtils.setText(lblContactPeople, null);
 
 		} else {
 
@@ -118,9 +118,9 @@ public class DetailsClubController<T extends ClubModel> extends AbstractHyperlin
 							null :
 							theDetailData.getHomepage().getValue().toString());
 
-			lblVenues.setText(theDetailData.getVenue().stream().map(venue -> venue.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
+			lblVenues.setText(theDetailData.getVenue().stream().map(venue -> venue.getDisplayText().getValueSafe()).collect(Collectors.joining(System.lineSeparator())));
 
-			lblContactPerson.setText(theDetailData.getContactPerson().stream().map(person -> person.getDisplayText().getValueSafe()).collect(Collectors.joining("\n")));
+			lblContactPeople.setText(theDetailData.getPerson().stream().map(person -> person.getDisplayText().getValueSafe()).collect(Collectors.joining(System.lineSeparator())));
 
 		}
 

@@ -30,7 +30,6 @@ import de.edgesoft.refereemanager.model.RefereeEventModel;
  *         &lt;element name="result_u_r_l" type="{}StringProperty" minOccurs="0"/>
  *         &lt;element name="referee_quantity" type="{}RefereeQuantity" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="organizing_club" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
- *         &lt;element name="organizer" type="{http://www.w3.org/2001/XMLSchema}IDREF" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -45,8 +44,7 @@ import de.edgesoft.refereemanager.model.RefereeEventModel;
     "informationURL",
     "resultURL",
     "refereeQuantity",
-    "organizingClub",
-    "organizer"
+    "organizingClub"
 })
 public class Tournament
     extends RefereeEventModel
@@ -67,10 +65,6 @@ public class Tournament
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected Club organizingClub;
-    @XmlElement(type = Object.class)
-    @XmlIDREF
-    @XmlSchemaType(name = "IDREF")
-    protected Person organizer;
 
     /**
      * Gets the value of the announcementURL property.
@@ -195,30 +189,6 @@ public class Tournament
      */
     public void setOrganizingClub(Club value) {
         this.organizingClub = value;
-    }
-
-    /**
-     * Gets the value of the organizer property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
-     */
-    public Person getOrganizer() {
-        return organizer;
-    }
-
-    /**
-     * Sets the value of the organizer property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
-     */
-    public void setOrganizer(Person value) {
-        this.organizer = value;
     }
 
 }

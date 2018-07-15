@@ -33,7 +33,7 @@
 				<Label text="Spielorte" GridPane.rowIndex="3" />
 				<Label fx:id="lblVenues" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 				<Label text="Kontaktpersonen" GridPane.rowIndex="4" />
-				<Label fx:id="lblContactPerson" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+				<Label fx:id="lblContactPeople" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 			</children>
 		</GridPane>
 	</children>

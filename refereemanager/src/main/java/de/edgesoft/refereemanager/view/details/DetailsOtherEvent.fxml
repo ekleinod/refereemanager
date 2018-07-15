@@ -27,7 +27,7 @@
 				<Label text="Zeit" GridPane.rowIndex="1" />
 				<Label fx:id="lblTime" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 				<Label text="Ort" GridPane.rowIndex="2" />
-				<Label fx:id="lblVenue" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label fx:id="lblVenues" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 				<Label text="Typ" GridPane.rowIndex="3" />
 				<Label fx:id="lblType" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 			</children>

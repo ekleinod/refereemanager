@@ -34,11 +34,11 @@
 				<Label text="Zeit" GridPane.rowIndex="1" />
 				<Label fx:id="lblTime" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 				<Label text="Ort" GridPane.rowIndex="2" />
-				<Label fx:id="lblVenue" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label fx:id="lblVenues" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 				<Label text="Club" GridPane.rowIndex="3" />
 				<Label fx:id="lblClub" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 				<Label text="Organisator" GridPane.rowIndex="4" />
-				<Label fx:id="lblOrganizer" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+				<Label fx:id="lblOrganizers" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 				<Label text="OSR-Bericht" GridPane.rowIndex="5" />
 				<HBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
 					<children>

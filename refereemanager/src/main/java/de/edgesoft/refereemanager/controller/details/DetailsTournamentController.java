@@ -1,5 +1,7 @@
 package de.edgesoft.refereemanager.controller.details;
 
+import java.util.stream.Collectors;
+
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.model.TournamentModel;
@@ -70,13 +72,13 @@ public class DetailsTournamentController<T extends TournamentModel> implements I
 	 * Organizer label.
 	 */
 	@FXML
-	private Label lblOrganizer;
+	private Label lblOrganizers;
 
 	/**
 	 * Venue label.
 	 */
 	@FXML
-	private Label lblVenue;
+	private Label lblVenues;
 
 	/**
 	 * Referee report box.
@@ -140,8 +142,8 @@ public class DetailsTournamentController<T extends TournamentModel> implements I
 			LabelUtils.setText(lblDate, null);
 			LabelUtils.setText(lblTime, null);
 			LabelUtils.setText(lblClub, null);
-			LabelUtils.setText(lblOrganizer, null);
-			LabelUtils.setText(lblVenue, null);
+			LabelUtils.setText(lblOrganizers, null);
+			LabelUtils.setText(lblVenues, null);
 			LabelUtils.setText(lblRefereeReport, null);
 
 			lblRefereeReportIndicator.setGraphic(null);
@@ -155,20 +157,14 @@ public class DetailsTournamentController<T extends TournamentModel> implements I
 			LabelUtils.setText(lblTime, theDetailData.getTimeText());
 
 
-			lblVenue.setText(
-					(theDetailData.getVenue() == null) ?
-							null :
-								theDetailData.getVenue().getDisplayText().getValueSafe());
+			lblVenues.setText(theDetailData.getVenue().stream().map(venue -> venue.getDisplayText().getValueSafe()).collect(Collectors.joining(System.lineSeparator())));
 
 			lblClub.setText(
 					(theDetailData.getOrganizingClub() == null) ?
 							null :
 							theDetailData.getOrganizingClub().getDisplayTitleShort().getValueSafe());
 
-			lblOrganizer.setText(
-					(theDetailData.getOrganizer() == null) ?
-							null :
-							theDetailData.getOrganizer().getDisplayText().getValueSafe());
+			lblOrganizers.setText(theDetailData.getPerson().stream().map(person -> person.getDisplayText().getValueSafe()).collect(Collectors.joining(System.lineSeparator())));
 
 			LabelUtils.setText(lblRefereeReport, theDetailData.getRefereeReportFilename());
 

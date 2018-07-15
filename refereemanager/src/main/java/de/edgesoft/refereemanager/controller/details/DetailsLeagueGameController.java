@@ -1,5 +1,7 @@
 package de.edgesoft.refereemanager.controller.details;
 
+import java.util.stream.Collectors;
+
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.model.LeagueGameModel;
@@ -81,7 +83,7 @@ public class DetailsLeagueGameController<T extends LeagueGameModel> implements I
 	 * Venue label.
 	 */
 	@FXML
-	private Label lblVenue;
+	private Label lblVenues;
 
 	/**
 	 * Referee report label.
@@ -144,7 +146,7 @@ public class DetailsLeagueGameController<T extends LeagueGameModel> implements I
 			LabelUtils.setText(lblTime, null);
 			LabelUtils.setText(lblTeams, null);
 			LabelUtils.setText(lblLeague, null);
-			LabelUtils.setText(lblVenue, null);
+			LabelUtils.setText(lblVenues, null);
 			LabelUtils.setText(lblRefereeReport, null);
 
 			lblRefereeReportIndicator.setGraphic(null);
@@ -164,10 +166,7 @@ public class DetailsLeagueGameController<T extends LeagueGameModel> implements I
 							null :
 							theDetailData.getHomeTeam().getLeague().getDisplayTitle().getValueSafe());
 
-			lblVenue.setText(
-					(theDetailData.getVenue() == null) ?
-							null :
-								theDetailData.getVenue().getDisplayText().getValueSafe());
+			lblVenues.setText(theDetailData.getVenue().stream().map(venue -> venue.getDisplayText().getValueSafe()).collect(Collectors.joining(System.lineSeparator())));
 
 			LabelUtils.setText(lblRefereeReport, theDetailData.getRefereeReportFilename());
 

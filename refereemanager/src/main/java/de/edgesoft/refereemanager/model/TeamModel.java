@@ -93,14 +93,14 @@ public class TeamModel extends Team {
 	 * @since 0.9.0
 	 */
 	@Override
-    public List<PersonReference> getContactPerson() {
+    public List<PersonReference> getPerson() {
 
-		if (super.getContactPerson() != null) {
-			return super.getContactPerson();
+		if (super.getPerson() != null) {
+			return super.getPerson();
 		}
 
-		if ((getClub() != null) && (getClub().getContactPerson() != null)) {
-			return getClub().getContactPerson();
+		if ((getClub() != null) && (getClub().getPerson() != null)) {
+			return getClub().getPerson();
 		}
 
 		return null;

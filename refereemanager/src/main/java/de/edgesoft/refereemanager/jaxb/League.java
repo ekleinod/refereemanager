@@ -16,8 +16,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleBooleanPropertyAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleIntegerPropertyAdapter;
 import de.edgesoft.edgeutils.javafx.SimpleStringPropertyAdapter;
-import de.edgesoft.refereemanager.model.PersonReferenceModel;
-import de.edgesoft.refereemanager.model.TitledIDTypeModel;
 
 
 /**
@@ -28,7 +26,7 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  * <pre>
  * &lt;complexType name="League">
  *   &lt;complexContent>
- *     &lt;extension base="{}TitledIDType">
+ *     &lt;extension base="{}PersonVenueReferrer">
  *       &lt;sequence>
  *         &lt;element name="rank" type="{}IntegerProperty"/>
  *         &lt;element name="national" type="{}BooleanProperty" minOccurs="0"/>
@@ -36,7 +34,6 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
  *         &lt;element name="referee_report_u_r_l" type="{}StringProperty"/>
  *         &lt;element name="referee_quantity" type="{}RefereeQuantity" maxOccurs="unbounded"/>
  *         &lt;element name="sex_type" type="{http://www.w3.org/2001/XMLSchema}IDREF"/>
- *         &lt;element name="referee_report_recipient" type="{}PersonReference" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -52,11 +49,10 @@ import de.edgesoft.refereemanager.model.TitledIDTypeModel;
     "resultsURL",
     "refereeReportURL",
     "refereeQuantity",
-    "sexType",
-    "refereeReportRecipient"
+    "sexType"
 })
 public class League
-    extends TitledIDTypeModel
+    extends PersonVenueReferrer
 {
 
     @XmlElement(required = true, type = String.class)
@@ -79,8 +75,6 @@ public class League
     @XmlIDREF
     @XmlSchemaType(name = "IDREF")
     protected SexType sexType;
-    @XmlElement(name = "referee_report_recipient", required = true, type = PersonReferenceModel.class)
-    protected List<PersonReference> refereeReportRecipient;
 
     /**
      * Gets the value of the rank property.
@@ -229,35 +223,6 @@ public class League
      */
     public void setSexType(SexType value) {
         this.sexType = value;
-    }
-
-    /**
-     * Gets the value of the refereeReportRecipient property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the refereeReportRecipient property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getRefereeReportRecipient().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link PersonReference }
-     * 
-     * 
-     */
-    public List<PersonReference> getRefereeReportRecipient() {
-        if (refereeReportRecipient == null) {
-            refereeReportRecipient = new ArrayList<PersonReference>();
-        }
-        return this.refereeReportRecipient;
     }
 
 }
