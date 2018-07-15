@@ -2,8 +2,8 @@ package de.edgesoft.refereemanager.controller.inputforms;
 import java.util.Map;
 
 import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
-import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.PersonReference;
+import de.edgesoft.refereemanager.jaxb.PersonVenueReferrer;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -12,7 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 /**
- * Controller for the referee report recipient data edit dialog tab.
+ * Controller for the person reference edit dialog tab.
  *
  * ## Legal stuff
  *
@@ -37,20 +37,20 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormRefereeReportRecipientDataController extends AbstractInputFormController<League> {
+public class InputFormPersonReferenceController extends AbstractInputFormController<PersonVenueReferrer> {
+
+	/**
+	 * CRUD buttons person reference.
+	 */
+	@FXML
+	private Parent embeddedCRUDPersonReference;
 
 	/**
 	 * CRUD buttons referee report recipient.
 	 */
 	@FXML
-	private Parent embeddedCRUDRefereeReportRecipient;
-
-	/**
-	 * CRUD buttons referee report recipient.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "refereeReportRecipient", jaxbclass = League.class)
-	protected ListCRUDController<PersonReference> embeddedCRUDRefereeReportRecipientController;
+	@JAXBMatch(jaxbfield = "person", jaxbclass = PersonVenueReferrer.class)
+	protected ListCRUDController<PersonReference> embeddedCRUDPersonReferenceController;
 
 	/**
 	 * Initializes the controller class.
@@ -61,10 +61,10 @@ public class InputFormRefereeReportRecipientDataController extends AbstractInput
 	protected void initialize() {
 
 		Map.Entry<Parent, FXMLLoader> nodeRefereeReportRecipient = Resources.loadNode("inputforms/PartInputFormPersonList");
-		embeddedCRUDRefereeReportRecipientController.initController(
+		embeddedCRUDPersonReferenceController.initController(
 				nodeRefereeReportRecipient.getValue().getController(),
 				nodeRefereeReportRecipient.getKey(),
-				"Empfänger",
+				"Person",
 				AppModel.factory::createPersonReference);
 
 	}

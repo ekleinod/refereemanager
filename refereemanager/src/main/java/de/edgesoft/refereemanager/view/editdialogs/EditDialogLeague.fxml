@@ -20,9 +20,9 @@
 						<fx:include fx:id="embeddedInputFormLeagueData" source="../inputforms/InputFormLeagueData.fxml" />
 					</content>
 				</Tab>
-				<Tab fx:id="tabRefereeReportRecipients" closable="false" text="OSR-Berichte">
+				<Tab fx:id="tabRefereeReportRecipients" closable="false" text="OSR-Berichtsempfänger">
 					<content>
-						<fx:include fx:id="embeddedInputFormRefereeReportRecipientData" source="../inputforms/InputFormRefereeReportRecipientData.fxml" />
+						<fx:include fx:id="embeddedInputFormPersonReference" source="../inputforms/InputFormPersonReference.fxml" />
 					</content>
 				</Tab>
 			</tabs>

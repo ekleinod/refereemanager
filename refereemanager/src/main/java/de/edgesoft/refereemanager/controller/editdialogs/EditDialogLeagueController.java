@@ -5,6 +5,7 @@ import java.util.Arrays;
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.jaxb.League;
+import de.edgesoft.refereemanager.jaxb.PersonVenueReferrer;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -65,13 +66,13 @@ public class EditDialogLeagueController extends AbstractTabbedEditDialogControll
 	 * Referee report recipient data.
 	 */
 	@FXML
-	private Parent embeddedInputFormRefereeReportRecipientData;
+	private Parent embeddedInputFormPersonReference;
 
 	/**
 	 * Referee report recipient data controller.
 	 */
 	@FXML
-	private IInputFormController<League> embeddedInputFormRefereeReportRecipientDataController;
+	private IInputFormController<League> embeddedInputFormPersonReferenceController;
 
 
 	/**
@@ -85,9 +86,9 @@ public class EditDialogLeagueController extends AbstractTabbedEditDialogControll
 
 		addInputFormController(embeddedInputFormTitledIDTypeDataController);
 		addInputFormController(embeddedInputFormLeagueDataController);
-		addInputFormController(embeddedInputFormRefereeReportRecipientDataController);
+		addInputFormController(embeddedInputFormPersonReferenceController);
 
-		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, League.class})));
+		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, League.class, PersonVenueReferrer.class})));
 
 		super.initialize();
 
