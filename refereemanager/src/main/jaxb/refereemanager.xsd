@@ -325,7 +325,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<xsd:complexType name="PersonVenueReferrer">
+	<xsd:complexType name="PersonVenueReferrer" abstract="true">
 		<xsd:annotation>
 			<xsd:documentation>
 				This class is introduces for reducing the number of GUI classes.

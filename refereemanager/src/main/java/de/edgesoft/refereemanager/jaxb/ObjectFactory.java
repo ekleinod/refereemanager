@@ -138,14 +138,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link PersonVenueReferrer }
-     * 
-     */
-    public PersonVenueReferrer createPersonVenueReferrer() {
-        return new PersonVenueReferrer();
-    }
-
-    /**
      * Create an instance of {@link TrainingLevel }
      * 
      */

@@ -59,7 +59,7 @@ import de.edgesoft.refereemanager.model.VenueReferenceModel;
     ClubModel.class,
     EventDateModel.class
 })
-public class PersonVenueReferrer
+public abstract class PersonVenueReferrer
     extends TitledIDTypeModel
 {
 
