@@ -2,8 +2,8 @@ package de.edgesoft.refereemanager.controller.inputforms;
 import java.util.Map;
 
 import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
-import de.edgesoft.refereemanager.jaxb.Referee;
-import de.edgesoft.refereemanager.jaxb.TrainingLevel;
+import de.edgesoft.refereemanager.jaxb.Person;
+import de.edgesoft.refereemanager.jaxb.PhoneNumber;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -12,7 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 /**
- * Controller for the training level data edit dialog tab.
+ * Controller for the phone number edit dialog tab.
  *
  * ## Legal stuff
  *
@@ -37,20 +37,21 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormTrainingLevelDataController extends AbstractInputFormController<Referee> {
+public class InputFormPhoneNumberController extends AbstractInputFormController<Person> {
 
 	/**
-	 * CRUD buttons training level.
+	 * CRUD buttons phone number.
 	 */
 	@FXML
-	private Parent embeddedCRUDTrainingLevel;
+	private Parent embeddedCRUDPhoneNumber;
 
 	/**
-	 * CRUD buttons training level controller.
+	 * CRUD buttons phone number controller.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "trainingLevel", jaxbclass = Referee.class)
-	protected ListCRUDController<TrainingLevel> embeddedCRUDTrainingLevelController;
+	@JAXBMatch(jaxbfield = "phoneNumber", jaxbclass = Person.class)
+	protected ListCRUDController<PhoneNumber> embeddedCRUDPhoneNumberController;
+
 
 	/**
 	 * Initializes the controller class.
@@ -60,11 +61,11 @@ public class InputFormTrainingLevelDataController extends AbstractInputFormContr
 	@FXML
 	protected void initialize() {
 
-		Map.Entry<Parent, FXMLLoader> nodeTrainingLevel = Resources.loadNode("inputforms/PartInputFormTrainingLevel");
-		embeddedCRUDTrainingLevelController.initController(
-				nodeTrainingLevel.getValue().getController(),
-				nodeTrainingLevel.getKey(),
-				AppModel.factory::createTrainingLevel);
+		Map.Entry<Parent, FXMLLoader> nodePhoneNumber = Resources.loadNode("inputforms/PartInputFormPhoneNumber");
+		embeddedCRUDPhoneNumberController.initController(
+				nodePhoneNumber.getValue().getController(),
+				nodePhoneNumber.getKey(),
+				AppModel.factory::createPhoneNumber);
 
 	}
 

@@ -2,8 +2,8 @@ package de.edgesoft.refereemanager.controller.inputforms;
 import java.util.Map;
 
 import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
-import de.edgesoft.refereemanager.jaxb.Referee;
-import de.edgesoft.refereemanager.jaxb.Wish;
+import de.edgesoft.refereemanager.jaxb.EMail;
+import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -12,7 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 /**
- * Controller for the wish data edit dialog tab.
+ * Controller for the contact data edit dialog tab.
  *
  * ## Legal stuff
  *
@@ -37,33 +37,20 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormWishDataController extends AbstractInputFormController<Referee> {
+public class InputFormEMailController extends AbstractInputFormController<Person> {
 
 	/**
-	 * CRUD buttons prefer.
+	 * CRUD buttons eMail.
 	 */
 	@FXML
-	private Parent embeddedCRUDPrefer;
+	private Parent embeddedCRUDEMail;
 
 	/**
-	 * CRUD buttons prefer controller.
+	 * CRUD buttons eMail controller.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "prefer", jaxbclass = Referee.class)
-	protected ListCRUDController<Wish> embeddedCRUDPreferController;
-
-	/**
-	 * CRUD buttons avoid.
-	 */
-	@FXML
-	private Parent embeddedCRUDAvoid;
-
-	/**
-	 * CRUD buttons avoid controller.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "avoid", jaxbclass = Referee.class)
-	protected ListCRUDController<Wish> embeddedCRUDAvoidController;
+	@JAXBMatch(jaxbfield = "eMail", jaxbclass = Person.class)
+	protected ListCRUDController<EMail> embeddedCRUDEMailController;
 
 
 	/**
@@ -74,17 +61,11 @@ public class InputFormWishDataController extends AbstractInputFormController<Ref
 	@FXML
 	protected void initialize() {
 
-		Map.Entry<Parent, FXMLLoader> nodePrefer = Resources.loadNode("inputforms/PartInputFormWish");
-		embeddedCRUDPreferController.initController(
-				nodePrefer.getValue().getController(),
-				nodePrefer.getKey(),
-				AppModel.factory::createWish);
-
-		Map.Entry<Parent, FXMLLoader> nodeAvoid = Resources.loadNode("inputforms/PartInputFormWish");
-		embeddedCRUDAvoidController.initController(
-				nodeAvoid.getValue().getController(),
-				nodeAvoid.getKey(),
-				AppModel.factory::createWish);
+		Map.Entry<Parent, FXMLLoader> nodeEMail = Resources.loadNode("inputforms/PartInputFormEMail");
+		embeddedCRUDEMailController.initController(
+				nodeEMail.getValue().getController(),
+				nodeEMail.getKey(),
+				AppModel.factory::createEMail);
 
 	}
 

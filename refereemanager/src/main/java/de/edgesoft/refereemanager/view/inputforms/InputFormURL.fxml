@@ -5,11 +5,11 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormTrainingLevelDataController">
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormURLController">
 	<content>
 		<VBox spacing="10.0">
 			<children>
-				<fx:include fx:id="embeddedCRUDTrainingLevel" styleClass="TrainingLevel" source="../crud/ListCRUD.fxml" />
+				<fx:include fx:id="embeddedCRUDURL" styleClass="URL" source="../crud/ListCRUD.fxml" />
 			</children>
 		</VBox>
 	</content>

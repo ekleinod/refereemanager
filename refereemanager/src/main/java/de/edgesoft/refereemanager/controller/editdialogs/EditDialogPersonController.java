@@ -7,7 +7,6 @@ import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 
 /**
  * Controller for the person edit dialog scene.
@@ -38,40 +37,34 @@ import javafx.scene.Parent;
 public class EditDialogPersonController extends AbstractTabbedEditDialogController<Person> {
 
 	/**
-	 * Person data.
-	 */
-	@FXML
-	private Parent embeddedInputFormPersonData;
-
-	/**
 	 * Person data controller.
 	 */
 	@FXML
-	private IInputFormController<Person> embeddedInputFormPersonDataController;
+	private IInputFormController<Person> embeddedInputFormPersonController;
 
 	/**
-	 * Contact data.
+	 * EMail controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormContactData;
+	private IInputFormController<Person> embeddedInputFormEMailController;
 
 	/**
-	 * Contact data controller.
+	 * Phone number controller.
 	 */
 	@FXML
-	private IInputFormController<Person> embeddedInputFormContactDataController;
+	private IInputFormController<Person> embeddedInputFormPhoneNumberController;
 
 	/**
-	 * Address data.
+	 * Address controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormAddressData;
+	private IInputFormController<Person> embeddedInputFormAddressController;
 
 	/**
-	 * Address data controller.
+	 * URL controller.
 	 */
 	@FXML
-	private IInputFormController<Person> embeddedInputFormAddressDataController;
+	private IInputFormController<Person> embeddedInputFormURLController;
 
 
 	/**
@@ -83,9 +76,11 @@ public class EditDialogPersonController extends AbstractTabbedEditDialogControll
 	@Override
 	protected void initialize() {
 
-		addInputFormController(embeddedInputFormPersonDataController);
-		addInputFormController(embeddedInputFormContactDataController);
-		addInputFormController(embeddedInputFormAddressDataController);
+		addInputFormController(embeddedInputFormPersonController);
+		addInputFormController(embeddedInputFormEMailController);
+		addInputFormController(embeddedInputFormPhoneNumberController);
+		addInputFormController(embeddedInputFormAddressController);
+		addInputFormController(embeddedInputFormURLController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class})));
 

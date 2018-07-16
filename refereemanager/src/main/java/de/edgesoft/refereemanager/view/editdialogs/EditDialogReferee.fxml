@@ -12,32 +12,47 @@
 			<tabs>
 				<Tab fx:id="tabPerson" closable="false" text="Personendaten">
 					<content>
-						<fx:include fx:id="embeddedInputFormPersonData" source="../inputforms/InputFormPersonData.fxml" />
-					</content>
-				</Tab>
-				<Tab fx:id="tabContact" closable="false" text="Kontakt">
-					<content>
-						<fx:include fx:id="embeddedInputFormContactData" source="../inputforms/InputFormContactData.fxml" />
-					</content>
-				</Tab>
-				<Tab fx:id="tabAddress" closable="false" text="Adressen">
-					<content>
-						<fx:include fx:id="embeddedInputFormAddressData" source="../inputforms/InputFormAddressData.fxml" />
+						<fx:include fx:id="embeddedInputFormPerson" source="../inputforms/InputFormPerson.fxml" />
 					</content>
 				</Tab>
 				<Tab fx:id="tabReferee" closable="false" text="Schiri">
 					<content>
-						<fx:include fx:id="embeddedInputFormRefereeData" source="../inputforms/InputFormRefereeData.fxml" />
-					</content>
-				</Tab>
-				<Tab fx:id="tabWish" closable="false" text="Wünsche">
-					<content>
-						<fx:include fx:id="embeddedInputFormWishData" source="../inputforms/InputFormWishData.fxml" />
+						<fx:include fx:id="embeddedInputFormReferee" source="../inputforms/InputFormReferee.fxml" />
 					</content>
 				</Tab>
 				<Tab fx:id="tabTrainingLevel" closable="false" text="Ausbildung">
 					<content>
-						<fx:include fx:id="embeddedInputFormTrainingLevelData" source="../inputforms/InputFormTrainingLevelData.fxml" />
+						<fx:include fx:id="embeddedInputFormTrainingLevel" source="../inputforms/InputFormTrainingLevel.fxml" />
+					</content>
+				</Tab>
+				<Tab fx:id="tabEMail" closable="false" text="E-Mail">
+					<content>
+						<fx:include fx:id="embeddedInputFormEMail" source="../inputforms/InputFormEMail.fxml" />
+					</content>
+				</Tab>
+				<Tab fx:id="tabPhone" closable="false" text="Telefon">
+					<content>
+						<fx:include fx:id="embeddedInputFormPhoneNumber" source="../inputforms/InputFormPhoneNumber.fxml" />
+					</content>
+				</Tab>
+				<Tab fx:id="tabAddress" closable="false" text="Adresse">
+					<content>
+						<fx:include fx:id="embeddedInputFormAddress" source="../inputforms/InputFormAddress.fxml" />
+					</content>
+				</Tab>
+				<Tab fx:id="tabPrefer" closable="false" text="Wünsche">
+					<content>
+						<fx:include fx:id="embeddedInputFormPrefer" source="../inputforms/InputFormPrefer.fxml" />
+					</content>
+				</Tab>
+				<Tab fx:id="tabAvoid" closable="false" text="Vermeiden">
+					<content>
+						<fx:include fx:id="embeddedInputFormAvoid" source="../inputforms/InputFormAvoid.fxml" />
+					</content>
+				</Tab>
+				<Tab fx:id="tabURL" closable="false" text="URL">
+					<content>
+						<fx:include fx:id="embeddedInputFormURL" source="../inputforms/InputFormURL.fxml" />
 					</content>
 				</Tab>
 			</tabs>

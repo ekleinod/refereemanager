@@ -2,7 +2,6 @@ package de.edgesoft.refereemanager.controller.inputforms;
 import java.util.Map;
 
 import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
-import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -38,26 +37,7 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormAddressDataController extends AbstractInputFormController<Person> {
-
-	/**
-	 * CRUD buttons address.
-	 */
-	@FXML
-	private Parent embeddedCRUDAddress;
-
-	/**
-	 * CRUD buttons address controller.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "address", jaxbclass = Person.class)
-	protected ListCRUDController<Address> embeddedCRUDAddressController;
-
-	/**
-	 * CRUD buttons url.
-	 */
-	@FXML
-	private Parent embeddedCRUDURL;
+public class InputFormURLController extends AbstractInputFormController<Person> {
 
 	/**
 	 * CRUD buttons url controller.
@@ -74,12 +54,6 @@ public class InputFormAddressDataController extends AbstractInputFormController<
 	 */
 	@FXML
 	protected void initialize() {
-
-		Map.Entry<Parent, FXMLLoader> nodeAddress = Resources.loadNode("inputforms/PartInputFormAddress");
-		embeddedCRUDAddressController.initController(
-				nodeAddress.getValue().getController(),
-				nodeAddress.getKey(),
-				AppModel.factory::createAddress);
 
 		Map.Entry<Parent, FXMLLoader> nodeURL = Resources.loadNode("inputforms/PartInputFormURL");
 		embeddedCRUDURLController.initController(

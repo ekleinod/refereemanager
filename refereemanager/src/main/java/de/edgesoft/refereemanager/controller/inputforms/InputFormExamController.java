@@ -35,7 +35,7 @@ import javafx.scene.control.Spinner;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormExamDataController extends AbstractInputFormController<Trainee> {
+public class InputFormExamController extends AbstractInputFormController<Trainee> {
 
 	/**
 	 * Checkbox for withdrawn.

@@ -2,9 +2,8 @@ package de.edgesoft.refereemanager.controller.inputforms;
 import java.util.Map;
 
 import de.edgesoft.refereemanager.controller.crud.ListCRUDController;
-import de.edgesoft.refereemanager.jaxb.EMail;
-import de.edgesoft.refereemanager.jaxb.Person;
-import de.edgesoft.refereemanager.jaxb.PhoneNumber;
+import de.edgesoft.refereemanager.jaxb.Referee;
+import de.edgesoft.refereemanager.jaxb.Wish;
 import de.edgesoft.refereemanager.model.AppModel;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import de.edgesoft.refereemanager.utils.Resources;
@@ -13,7 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 /**
- * Controller for the contact data edit dialog tab.
+ * Controller for the avoid edit dialog tab.
  *
  * ## Legal stuff
  *
@@ -38,33 +37,14 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormContactDataController extends AbstractInputFormController<Person> {
+public class InputFormAvoidController extends AbstractInputFormController<Referee> {
 
 	/**
-	 * CRUD buttons eMail.
+	 * CRUD buttons avoid controller.
 	 */
 	@FXML
-	private Parent embeddedCRUDEMail;
-
-	/**
-	 * CRUD buttons eMail controller.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "eMail", jaxbclass = Person.class)
-	protected ListCRUDController<EMail> embeddedCRUDEMailController;
-
-	/**
-	 * CRUD buttons phone number.
-	 */
-	@FXML
-	private Parent embeddedCRUDPhoneNumber;
-
-	/**
-	 * CRUD buttons phone number controller.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "phoneNumber", jaxbclass = Person.class)
-	protected ListCRUDController<PhoneNumber> embeddedCRUDPhoneNumberController;
+	@JAXBMatch(jaxbfield = "avoid", jaxbclass = Referee.class)
+	protected ListCRUDController<Wish> embeddedCRUDAvoidController;
 
 
 	/**
@@ -75,17 +55,11 @@ public class InputFormContactDataController extends AbstractInputFormController<
 	@FXML
 	protected void initialize() {
 
-		Map.Entry<Parent, FXMLLoader> nodeEMail = Resources.loadNode("inputforms/PartInputFormEMail");
-		embeddedCRUDEMailController.initController(
-				nodeEMail.getValue().getController(),
-				nodeEMail.getKey(),
-				AppModel.factory::createEMail);
-
-		Map.Entry<Parent, FXMLLoader> nodePhoneNumber = Resources.loadNode("inputforms/PartInputFormPhoneNumber");
-		embeddedCRUDPhoneNumberController.initController(
-				nodePhoneNumber.getValue().getController(),
-				nodePhoneNumber.getKey(),
-				AppModel.factory::createPhoneNumber);
+		Map.Entry<Parent, FXMLLoader> nodeAvoid = Resources.loadNode("inputforms/PartInputFormWish");
+		embeddedCRUDAvoidController.initController(
+				nodeAvoid.getValue().getController(),
+				nodeAvoid.getKey(),
+				AppModel.factory::createWish);
 
 	}
 

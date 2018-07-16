@@ -12,17 +12,27 @@
 			<tabs>
 				<Tab fx:id="tabPerson" closable="false" text="Personendaten">
 					<content>
-						<fx:include fx:id="embeddedInputFormPersonData" source="../inputforms/InputFormPersonData.fxml" />
+						<fx:include fx:id="embeddedInputFormPerson" source="../inputforms/InputFormPerson.fxml" />
 					</content>
 				</Tab>
-				<Tab fx:id="tabContact" closable="false" text="Kontakt">
+				<Tab fx:id="tabEMail" closable="false" text="E-Mail">
 					<content>
-						<fx:include fx:id="embeddedInputFormContactData" source="../inputforms/InputFormContactData.fxml" />
+						<fx:include fx:id="embeddedInputFormEMail" source="../inputforms/InputFormEMail.fxml" />
 					</content>
 				</Tab>
-				<Tab fx:id="tabAddress" closable="false" text="Adressen">
+				<Tab fx:id="tabPhone" closable="false" text="Telefon">
 					<content>
-						<fx:include fx:id="embeddedInputFormAddressData" source="../inputforms/InputFormAddressData.fxml" />
+						<fx:include fx:id="embeddedInputFormPhoneNumber" source="../inputforms/InputFormPhoneNumber.fxml" />
+					</content>
+				</Tab>
+				<Tab fx:id="tabAddress" closable="false" text="Adresse">
+					<content>
+						<fx:include fx:id="embeddedInputFormAddress" source="../inputforms/InputFormAddress.fxml" />
+					</content>
+				</Tab>
+				<Tab fx:id="tabURL" closable="false" text="URL">
+					<content>
+						<fx:include fx:id="embeddedInputFormURL" source="../inputforms/InputFormURL.fxml" />
 					</content>
 				</Tab>
 			</tabs>

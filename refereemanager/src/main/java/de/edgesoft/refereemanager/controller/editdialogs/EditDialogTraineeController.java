@@ -9,7 +9,6 @@ import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.jaxb.Trainee;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 
 /**
  * Controller for the trainee edit dialog scene.
@@ -40,88 +39,64 @@ import javafx.scene.Parent;
 public class EditDialogTraineeController extends AbstractTabbedEditDialogController<Trainee> {
 
 	/**
-	 * Person data.
-	 */
-	@FXML
-	private Parent embeddedInputFormPersonData;
-
-	/**
 	 * Person data controller.
 	 */
 	@FXML
-	private IInputFormController<Trainee> embeddedInputFormPersonDataController;
+	private IInputFormController<Trainee> embeddedInputFormPersonController;
 
 	/**
-	 * Contact data.
+	 * EMail controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormContactData;
+	private IInputFormController<Trainee> embeddedInputFormEMailController;
 
 	/**
-	 * Contact data controller.
+	 * Phone number controller.
 	 */
 	@FXML
-	private IInputFormController<Trainee> embeddedInputFormContactDataController;
+	private IInputFormController<Trainee> embeddedInputFormPhoneNumberController;
 
 	/**
-	 * Address data.
+	 * Address controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormAddressData;
+	private IInputFormController<Trainee> embeddedInputFormAddressController;
 
 	/**
-	 * Address data controller.
+	 * URL controller.
 	 */
 	@FXML
-	private IInputFormController<Trainee> embeddedInputFormAddressDataController;
-
-	/**
-	 * Referee data.
-	 */
-	@FXML
-	private Parent embeddedInputFormRefereeData;
+	private IInputFormController<Trainee> embeddedInputFormURLController;
 
 	/**
 	 * Referee data controller.
 	 */
 	@FXML
-	private IInputFormController<Trainee> embeddedInputFormRefereeDataController;
+	private IInputFormController<Trainee> embeddedInputFormRefereeController;
 
 	/**
-	 * Wish data.
+	 * Prefer controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormWishData;
+	private IInputFormController<Trainee> embeddedInputFormPreferController;
 
 	/**
-	 * Wish data controller.
+	 * Avoid controller.
 	 */
 	@FXML
-	private IInputFormController<Trainee> embeddedInputFormWishDataController;
+	private IInputFormController<Trainee> embeddedInputFormAvoidController;
 
 	/**
-	 * Training level data.
+	 * Training level controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormTrainingLevelData;
+	private IInputFormController<Trainee> embeddedInputFormTrainingLevelController;
 
 	/**
-	 * Training level data controller.
+	 * Exam controller.
 	 */
 	@FXML
-	private IInputFormController<Trainee> embeddedInputFormTrainingLevelDataController;
-
-	/**
-	 * Exam data.
-	 */
-	@FXML
-	private Parent embeddedInputFormExamData;
-
-	/**
-	 * Exam data controller.
-	 */
-	@FXML
-	private IInputFormController<Trainee> embeddedInputFormExamDataController;
+	private IInputFormController<Trainee> embeddedInputFormExamController;
 
 
 	/**
@@ -133,13 +108,16 @@ public class EditDialogTraineeController extends AbstractTabbedEditDialogControl
 	@Override
 	protected void initialize() {
 
-		addInputFormController(embeddedInputFormPersonDataController);
-		addInputFormController(embeddedInputFormContactDataController);
-		addInputFormController(embeddedInputFormAddressDataController);
-		addInputFormController(embeddedInputFormRefereeDataController);
-		addInputFormController(embeddedInputFormWishDataController);
-		addInputFormController(embeddedInputFormTrainingLevelDataController);
-		addInputFormController(embeddedInputFormExamDataController);
+		addInputFormController(embeddedInputFormPersonController);
+		addInputFormController(embeddedInputFormEMailController);
+		addInputFormController(embeddedInputFormPhoneNumberController);
+		addInputFormController(embeddedInputFormAddressController);
+		addInputFormController(embeddedInputFormURLController);
+		addInputFormController(embeddedInputFormRefereeController);
+		addInputFormController(embeddedInputFormPreferController);
+		addInputFormController(embeddedInputFormAvoidController);
+		addInputFormController(embeddedInputFormTrainingLevelController);
+		addInputFormController(embeddedInputFormExamController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class, Trainee.class})));
 

@@ -8,7 +8,6 @@ import de.edgesoft.refereemanager.jaxb.Person;
 import de.edgesoft.refereemanager.jaxb.Referee;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 
 /**
  * Controller for the referee edit dialog scene.
@@ -39,76 +38,58 @@ import javafx.scene.Parent;
 public class EditDialogRefereeController extends AbstractTabbedEditDialogController<Referee> {
 
 	/**
-	 * Person data.
-	 */
-	@FXML
-	private Parent embeddedInputFormPersonData;
-
-	/**
 	 * Person data controller.
 	 */
 	@FXML
-	private IInputFormController<Referee> embeddedInputFormPersonDataController;
+	private IInputFormController<Referee> embeddedInputFormPersonController;
 
 	/**
-	 * Contact data.
+	 * EMail controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormContactData;
+	private IInputFormController<Referee> embeddedInputFormEMailController;
 
 	/**
-	 * Contact data controller.
+	 * Phone number controller.
 	 */
 	@FXML
-	private IInputFormController<Referee> embeddedInputFormContactDataController;
+	private IInputFormController<Referee> embeddedInputFormPhoneNumberController;
 
 	/**
-	 * Address data.
+	 * Address controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormAddressData;
+	private IInputFormController<Referee> embeddedInputFormAddressController;
 
 	/**
-	 * Address data controller.
+	 * URL controller.
 	 */
 	@FXML
-	private IInputFormController<Referee> embeddedInputFormAddressDataController;
-
-	/**
-	 * Referee data.
-	 */
-	@FXML
-	private Parent embeddedInputFormRefereeData;
+	private IInputFormController<Referee> embeddedInputFormURLController;
 
 	/**
 	 * Referee data controller.
 	 */
 	@FXML
-	private IInputFormController<Referee> embeddedInputFormRefereeDataController;
+	private IInputFormController<Referee> embeddedInputFormRefereeController;
 
 	/**
-	 * Wish data.
+	 * Prefer controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormWishData;
+	private IInputFormController<Referee> embeddedInputFormPreferController;
 
 	/**
-	 * Wish data controller.
+	 * Avoid controller.
 	 */
 	@FXML
-	private IInputFormController<Referee> embeddedInputFormWishDataController;
+	private IInputFormController<Referee> embeddedInputFormAvoidController;
 
 	/**
-	 * Training level data.
+	 * Training level controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormTrainingLevelData;
-
-	/**
-	 * Training level data controller.
-	 */
-	@FXML
-	private IInputFormController<Referee> embeddedInputFormTrainingLevelDataController;
+	private IInputFormController<Referee> embeddedInputFormTrainingLevelController;
 
 
 	/**
@@ -120,12 +101,15 @@ public class EditDialogRefereeController extends AbstractTabbedEditDialogControl
 	@Override
 	protected void initialize() {
 
-		addInputFormController(embeddedInputFormPersonDataController);
-		addInputFormController(embeddedInputFormContactDataController);
-		addInputFormController(embeddedInputFormAddressDataController);
-		addInputFormController(embeddedInputFormRefereeDataController);
-		addInputFormController(embeddedInputFormWishDataController);
-		addInputFormController(embeddedInputFormTrainingLevelDataController);
+		addInputFormController(embeddedInputFormPersonController);
+		addInputFormController(embeddedInputFormEMailController);
+		addInputFormController(embeddedInputFormPhoneNumberController);
+		addInputFormController(embeddedInputFormAddressController);
+		addInputFormController(embeddedInputFormURLController);
+		addInputFormController(embeddedInputFormRefereeController);
+		addInputFormController(embeddedInputFormPreferController);
+		addInputFormController(embeddedInputFormAvoidController);
+		addInputFormController(embeddedInputFormTrainingLevelController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Person.class, Referee.class})));
 
