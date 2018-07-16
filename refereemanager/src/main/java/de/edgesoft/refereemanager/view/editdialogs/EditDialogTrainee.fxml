@@ -35,7 +35,7 @@
 						<fx:include fx:id="embeddedInputFormEMail" source="../inputforms/InputFormEMail.fxml" />
 					</content>
 				</Tab>
-				<Tab fx:id="tabPhone" closable="false" text="Telefon">
+				<Tab fx:id="tabPhoneNumber" closable="false" text="Telefon">
 					<content>
 						<fx:include fx:id="embeddedInputFormPhoneNumber" source="../inputforms/InputFormPhoneNumber.fxml" />
 					</content>

@@ -37,13 +37,7 @@ import javafx.scene.Parent;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormUpdateDataController extends AbstractInputFormController<TrainingLevel> {
-
-	/**
-	 * CRUD buttons updates.
-	 */
-	@FXML
-	private Parent embeddedCRUDUpdates;
+public class InputFormUpdateController extends AbstractInputFormController<TrainingLevel> {
 
 	/**
 	 * CRUD buttons updates controller.

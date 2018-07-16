@@ -69,7 +69,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.geometry.VerticalDirection;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -235,7 +234,7 @@ public class RefereeManagerTest {
     	verifyThat("#appPane #btnOverviewLeagueGames", NodeMatchers.isInvisible());
     	verifyThat("#appPane #btnOverviewTournaments", NodeMatchers.isInvisible());
     	verifyThat("#appPane #btnOverviewOtherEvents", NodeMatchers.isInvisible());
-    	verifyThat("#appPane #btnOverviewClubs", NodeMatchers.isInvisible());
+    	verifyThat("#appPane #btnOverviewClubs", NodeMatchers.isVisible());
     	verifyThat("#appPane #btnStatisticsData", NodeMatchers.isVisible());
     	verifyThat("#appPane #btnProgramPreferences", NodeMatchers.isVisible());
 
@@ -369,12 +368,17 @@ public class RefereeManagerTest {
     	robot.clickOn("#bbCRUD #btnAdd");
     	robot.sleep(SLEEP);
 
-    	fillPersonForm(getReferee1());
-    	fillContactForm(getReferee1());
-    	fillAddressForm(getReferee1());
-    	fillRefereeForm(getReferee1());
-    	fillWishForm(getReferee1());
-    	fillTrainingLevelForm(getReferee1());
+    	Referee refTemp = getReferee1();
+
+    	fillPersonForm(refTemp);
+    	fillEMailForm(refTemp);
+    	fillPhoneNumberForm(refTemp);
+    	fillAddressForm(refTemp);
+    	fillURLForm(refTemp);
+    	fillRefereeForm(refTemp);
+    	fillPreferForm(refTemp);
+    	fillAvoidForm(refTemp);
+    	fillTrainingLevelForm(refTemp);
 
     	robot.clickOn("#btnOK");
     	robot.sleep(SLEEP);
@@ -382,7 +386,7 @@ public class RefereeManagerTest {
     	// verify list entry and details entry (visible, selected automatically)
     	verifyThat("#tblData", TableViewMatchers.hasNumRows(1));
 //    	verifyThat("#tblData", TableViewMatchers.containsRow("Name Schiedsrichter 1", "Vorname Schiedsrichter 1", "", "", "", "", "")); // does not work yet (NullPointerException)
-    	verifyThat("#lblHeading", LabeledMatchers.hasText(String.format("%s %s", getReferee1().getFirstName().getValueSafe(), getReferee1().getName().getValueSafe())));
+    	verifyThat("#lblHeading", LabeledMatchers.hasText(String.format("%s %s", refTemp.getFirstName().getValueSafe(), refTemp.getName().getValueSafe())));
     	verifyThat("#lblFilter", LabeledMatchers.hasText("Filter (1 angezeigt)"));
 
     }
@@ -843,15 +847,15 @@ public class RefereeManagerTest {
     }
 
 	/**
-	 * Fills contact data in input form.
+	 * Fills email data in input form.
 	 *
 	 * @param person person data
 	 */
-    private static void fillContactForm(
+    private static void fillEMailForm(
     		Person person
     		) {
 
-    	robot.clickOn("#tabContact");
+    	robot.clickOn("#tabEMail");
     	robot.sleep(SLEEP);
 
     	verifyThat(".EMail #lstData", ListViewMatchers.isEmpty());
@@ -875,7 +879,19 @@ public class RefereeManagerTest {
 
     	verifyThat(".EMail #lstData", ListViewMatchers.hasItems(person.getEMail().size()));
 
-    	robot.scroll(30, VerticalDirection.DOWN);
+    }
+
+	/**
+	 * Fills phone number data in input form.
+	 *
+	 * @param person person data
+	 */
+    private static void fillPhoneNumberForm(
+    		Person person
+    		) {
+
+    	robot.clickOn("#tabPhoneNumber");
+    	robot.sleep(SLEEP);
 
     	verifyThat(".PhoneNumber #lstData", ListViewMatchers.isEmpty());
     	verifyThat(".PhoneNumber #txtID", NodeMatchers.isInvisible());
@@ -939,7 +955,19 @@ public class RefereeManagerTest {
 
     	verifyThat(".Address #lstData", ListViewMatchers.hasItems(person.getAddress().size()));
 
-    	robot.scroll(30, VerticalDirection.DOWN);
+    }
+
+	/**
+	 * Fills url data in input form.
+	 *
+	 * @param person person data
+	 */
+    private static void fillURLForm(
+    		Person person
+    		) {
+
+    	robot.clickOn("#tabURL");
+    	robot.sleep(SLEEP);
 
     	verifyThat(".URL #lstData", ListViewMatchers.isEmpty());
     	verifyThat(".URL #txtID", NodeMatchers.isInvisible());
@@ -984,15 +1012,15 @@ public class RefereeManagerTest {
     }
 
 	/**
-	 * Fills referee data in wish form.
+	 * Fills prefer wishes in input form.
 	 *
 	 * @param referee referee data
 	 */
-    private static void fillWishForm(
+    private static void fillPreferForm(
     		Referee referee
     		) {
 
-    	robot.clickOn("#tabWish");
+    	robot.clickOn("#tabPrefer");
     	robot.sleep(SLEEP);
 
     	verifyThat(".Prefer #lstData", ListViewMatchers.isEmpty());
@@ -1017,7 +1045,19 @@ public class RefereeManagerTest {
 
     	verifyThat(".Prefer #lstData", ListViewMatchers.hasItems(referee.getPrefer().size()));
 
-    	robot.scroll(30, VerticalDirection.DOWN);
+    }
+
+	/**
+	 * Fills avoid wishes in input form.
+	 *
+	 * @param referee referee data
+	 */
+    private static void fillAvoidForm(
+    		Referee referee
+    		) {
+
+    	robot.clickOn("#tabAvoid");
+    	robot.sleep(SLEEP);
 
     	verifyThat(".Avoid #lstData", ListViewMatchers.isEmpty());
 
@@ -1126,15 +1166,15 @@ public class RefereeManagerTest {
         	robot.clickOn(".TrainingLevel #btnEditUpdates");
 			robot.sleep(SLEEP);
 
-	    	verifyThat("#embeddedInputFormUpdateData .Updates #lstData", NodeMatchers.isVisible());
-	    	verifyThat("#embeddedInputFormUpdateData .Updates #lstData", ListViewMatchers.hasItems(theTrainingLevel.getUpdate().size()));
+	    	verifyThat("#embeddedInputFormUpdate .Updates #lstData", NodeMatchers.isVisible());
+	    	verifyThat("#embeddedInputFormUpdate .Updates #lstData", ListViewMatchers.hasItems(theTrainingLevel.getUpdate().size()));
 
 	    	for (Update theUpdate : theTrainingLevel.getUpdate()) {
 
-	    		selectListViewEntry("#embeddedInputFormUpdateData .Updates #lstData", theUpdate);
+	    		selectListViewEntry("#embeddedInputFormUpdate .Updates #lstData", theUpdate);
 	    		robot.sleep(SLEEP);
 
-	        	robot.clickOn("#embeddedInputFormUpdateData .Updates #btnDelete");
+	        	robot.clickOn("#embeddedInputFormUpdate .Updates #btnDelete");
 				robot.sleep(LONG_SLEEP);
 
 	        	robot.push(KeyCode.ENTER);
@@ -1142,21 +1182,21 @@ public class RefereeManagerTest {
 
 	    	}
 
-	    	verifyThat("#embeddedInputFormUpdateData .Updates #lstData", ListViewMatchers.isEmpty());
+	    	verifyThat("#embeddedInputFormUpdate .Updates #lstData", ListViewMatchers.isEmpty());
 
 	    	for (Update theUpdate : theTrainingLevel.getUpdate()) {
 
-	    		writeDate("#embeddedInputFormUpdateData .Updates #pckDate", theUpdate.getDate());
+	    		writeDate("#embeddedInputFormUpdate .Updates #pckDate", theUpdate.getDate());
 
-	        	robot.clickOn("#embeddedInputFormUpdateData .Updates #btnAdd");
+	        	robot.clickOn("#embeddedInputFormUpdate .Updates #btnAdd");
 				robot.sleep(SLEEP);
 
-	        	robot.clickOn("#embeddedInputFormUpdateData .Updates #btnClearList");
+	        	robot.clickOn("#embeddedInputFormUpdate .Updates #btnClearList");
 				robot.sleep(SLEEP);
 
 	    	}
 
-	    	verifyThat("#embeddedInputFormUpdateData .Updates #lstData", ListViewMatchers.hasItems(theTrainingLevel.getUpdate().size()));
+	    	verifyThat("#embeddedInputFormUpdate .Updates #lstData", ListViewMatchers.hasItems(theTrainingLevel.getUpdate().size()));
 
         	robot.clickOn("#btnOK");
 			robot.sleep(SLEEP);

@@ -7,7 +7,6 @@ import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.jaxb.TrainingLevel;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 
 /**
  * Controller for the updates edit dialog scene.
@@ -38,16 +37,10 @@ import javafx.scene.Parent;
 public class EditDialogUpdatesController extends AbstractTabbedEditDialogController<TrainingLevel> {
 
 	/**
-	 * Update data.
-	 */
-	@FXML
-	private Parent embeddedInputFormUpdateData;
-
-	/**
 	 * Update data controller.
 	 */
 	@FXML
-	private IInputFormController<TrainingLevel> embeddedInputFormUpdateDataController;
+	private IInputFormController<TrainingLevel> embeddedInputFormUpdateController;
 
 
 	/**
@@ -59,7 +52,7 @@ public class EditDialogUpdatesController extends AbstractTabbedEditDialogControl
 	@Override
 	protected void initialize() {
 
-		addInputFormController(embeddedInputFormUpdateDataController);
+		addInputFormController(embeddedInputFormUpdateController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, TrainingLevel.class})));
 

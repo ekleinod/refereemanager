@@ -12,7 +12,7 @@
 			<tabs>
 				<Tab fx:id="tabUpdates" closable="false" text="Fortbildungen">
 					<content>
-						<fx:include fx:id="embeddedInputFormUpdateData" source="../inputforms/InputFormUpdateData.fxml" />
+						<fx:include fx:id="embeddedInputFormUpdate" source="../inputforms/InputFormUpdate.fxml" />
 					</content>
 				</Tab>
 			</tabs>
