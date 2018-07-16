@@ -41,7 +41,7 @@ import javafx.scene.image.ImageView;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormLeagueDataController extends AbstractInputFormController<League> {
+public class InputFormLeagueController extends AbstractInputFormController<League> {
 
 	/**
 	 * Combobox for sex types.

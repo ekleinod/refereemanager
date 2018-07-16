@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<ScrollPane fx:id="scrStatusType" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormStatusTypeDataController">
+<ScrollPane fx:id="scrTrainingLevelType" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormTrainingLevelTypeController">
 	<content>
 		<GridPane alignment="TOP_CENTER" vgap="5.0">
 			<columnConstraints>
@@ -20,15 +19,20 @@
 			<rowConstraints>
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
 			</rowConstraints>
 			<children>
-				<Label text="Aktiv" />
-				<CheckBox fx:id="chkActive" text="Aktiv" GridPane.columnIndex="1" />
-				<Label text="MMD Start" GridPane.rowIndex="1" />
-				<TextField fx:id="txtMmdmarkupstart" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-				<Label text="MMD Ende" GridPane.rowIndex="2" />
-				<TextField fx:id="txtMmdmarkupend" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label text="Rang" />
+				<AnchorPane GridPane.columnIndex="1">
+					<children>
+						<Spinner fx:id="spnRank" editable="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+					</children>
+				</AnchorPane>
+				<Label text="Auffrischung (Jahre)" GridPane.rowIndex="1" />
+				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+					<children>
+						<Spinner fx:id="spnUpdateInterval" editable="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+					</children>
+				</AnchorPane>
 			</children>
 		</GridPane>
 	</content>

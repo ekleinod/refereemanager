@@ -7,7 +7,6 @@ import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.jaxb.ContactType;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 
 /**
  * Controller for the contact type edit dialog scene.
@@ -38,16 +37,10 @@ import javafx.scene.Parent;
 public class EditDialogContactTypeController extends AbstractTabbedEditDialogController<ContactType> {
 
 	/**
-	 * Titled id type data.
+	 * Titled id controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormTitledIDTypeData;
-
-	/**
-	 * Titled id data controller.
-	 */
-	@FXML
-	private IInputFormController<ContactType> embeddedInputFormTitledIDTypeDataController;
+	private IInputFormController<ContactType> embeddedInputFormTitledIDTypeController;
 
 
 	/**
@@ -59,7 +52,7 @@ public class EditDialogContactTypeController extends AbstractTabbedEditDialogCon
 	@Override
 	protected void initialize() {
 
-		addInputFormController(embeddedInputFormTitledIDTypeDataController);
+		addInputFormController(embeddedInputFormTitledIDTypeController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, ContactType.class})));
 

@@ -7,7 +7,6 @@ import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 
 /**
  * Controller for the status type edit dialog scene.
@@ -38,28 +37,16 @@ import javafx.scene.Parent;
 public class EditDialogStatusTypeController extends AbstractTabbedEditDialogController<StatusType> {
 
 	/**
-	 * Titled id type data.
+	 * Titled id controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormTitledIDTypeData;
+	private IInputFormController<StatusType> embeddedInputFormTitledIDTypeController;
 
 	/**
-	 * Titled id data controller.
+	 * Status type detail controller.
 	 */
 	@FXML
-	private IInputFormController<StatusType> embeddedInputFormTitledIDTypeDataController;
-
-	/**
-	 * Status type detail data.
-	 */
-	@FXML
-	private Parent embeddedInputFormStatusTypeData;
-
-	/**
-	 * Status type detail data controller.
-	 */
-	@FXML
-	private IInputFormController<StatusType> embeddedInputFormStatusTypeDataController;
+	private IInputFormController<StatusType> embeddedInputFormStatusTypeController;
 
 
 	/**
@@ -71,8 +58,8 @@ public class EditDialogStatusTypeController extends AbstractTabbedEditDialogCont
 	@Override
 	protected void initialize() {
 
-		addInputFormController(embeddedInputFormTitledIDTypeDataController);
-		addInputFormController(embeddedInputFormStatusTypeDataController);
+		addInputFormController(embeddedInputFormTitledIDTypeController);
+		addInputFormController(embeddedInputFormStatusTypeController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, StatusType.class})));
 

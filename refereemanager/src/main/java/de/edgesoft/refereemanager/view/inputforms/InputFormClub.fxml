@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<ScrollPane fx:id="scrTrainingLevelType" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormTrainingLevelTypeDataController">
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormClubController">
 	<content>
 		<GridPane alignment="TOP_CENTER" vgap="5.0">
 			<columnConstraints>
@@ -19,20 +19,17 @@
 			<rowConstraints>
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
 			</rowConstraints>
 			<children>
-				<Label text="Rang" />
-				<AnchorPane GridPane.columnIndex="1">
-					<children>
-						<Spinner fx:id="spnRank" editable="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-					</children>
-				</AnchorPane>
-				<Label text="Auffrischung (Jahre)" GridPane.rowIndex="1" />
-				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
-					<children>
-						<Spinner fx:id="spnUpdateInterval" editable="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-					</children>
-				</AnchorPane>
+				<Label text="Lokal?" />
+				<CheckBox fx:id="chkIsLocal" text="ist lokaler Club" GridPane.columnIndex="1" />
+				<Label text="Dateiname" GridPane.rowIndex="1" />
+				<TextField fx:id="txtFilename" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Label fx:id="lblGeneratedFilename" disable="true" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label text="Homepage" GridPane.rowIndex="3" />
+				<TextField fx:id="txtHomepage" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 			</children>
 		</GridPane>
 	</content>

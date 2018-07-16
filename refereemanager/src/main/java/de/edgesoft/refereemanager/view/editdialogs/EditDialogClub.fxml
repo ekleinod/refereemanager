@@ -12,12 +12,12 @@
 			<tabs>
 				<Tab fx:id="tabTitledID" closable="false" text="Basisdaten">
 					<content>
-						<fx:include fx:id="embeddedInputFormTitledIDTypeData" source="../inputforms/InputFormTitledIDTypeData.fxml" />
+						<fx:include fx:id="embeddedInputFormTitledIDType" source="../inputforms/InputFormTitledIDType.fxml" />
 					</content>
 				</Tab>
 				<Tab fx:id="tabClub" closable="false" text="Clubdaten">
 					<content>
-						<fx:include fx:id="embeddedInputFormClubData" source="../inputforms/InputFormClubData.fxml" />
+						<fx:include fx:id="embeddedInputFormClub" source="../inputforms/InputFormClub.fxml" />
 					</content>
 				</Tab>
 				<Tab fx:id="tabVenues" closable="false" text="Spielorte">

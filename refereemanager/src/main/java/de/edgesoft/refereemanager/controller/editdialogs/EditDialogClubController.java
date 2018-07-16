@@ -10,7 +10,6 @@ import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.jaxb.URL;
 import de.edgesoft.refereemanager.jaxb.Venue;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 
 /**
  * Controller for the club edit dialog scene.
@@ -41,34 +40,16 @@ import javafx.scene.Parent;
 public class EditDialogClubController extends AbstractTabbedEditDialogController<Club> {
 
 	/**
-	 * Titled id type data.
+	 * Titled id controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormTitledIDTypeData;
+	private IInputFormController<Club> embeddedInputFormTitledIDTypeController;
 
 	/**
-	 * Titled id data controller.
+	 * Club controller.
 	 */
 	@FXML
-	private IInputFormController<Club> embeddedInputFormTitledIDTypeDataController;
-
-	/**
-	 * Club data.
-	 */
-	@FXML
-	private Parent embeddedInputFormClubData;
-
-	/**
-	 * Club data controller.
-	 */
-	@FXML
-	private IInputFormController<Club> embeddedInputFormClubDataController;
-
-	/**
-	 * Venues.
-	 */
-	@FXML
-	private Parent embeddedInputFormVenueReference;
+	private IInputFormController<Club> embeddedInputFormClubController;
 
 	/**
 	 * Venues controller.
@@ -86,8 +67,8 @@ public class EditDialogClubController extends AbstractTabbedEditDialogController
 	@Override
 	protected void initialize() {
 
-		addInputFormController(embeddedInputFormTitledIDTypeDataController);
-		addInputFormController(embeddedInputFormClubDataController);
+		addInputFormController(embeddedInputFormTitledIDTypeController);
+		addInputFormController(embeddedInputFormClubController);
 		addInputFormController(embeddedInputFormVenueReferenceController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Club.class, URL.class, Venue.class, PersonVenueReferrer.class})));

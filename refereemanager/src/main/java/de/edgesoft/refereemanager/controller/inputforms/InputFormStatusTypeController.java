@@ -1,13 +1,12 @@
 package de.edgesoft.refereemanager.controller.inputforms;
-import de.edgesoft.edgeutils.commons.IDType;
-import de.edgesoft.refereemanager.jaxb.TitledIDType;
+import de.edgesoft.refereemanager.jaxb.StatusType;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
 /**
- * Controller for the titled id data edit dialog tab.
+ * Controller for the status type data edit dialog tab.
  *
  * ## Legal stuff
  *
@@ -32,35 +31,28 @@ import javafx.scene.control.TextField;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormTitledIDTypeDataController extends AbstractInputFormController<TitledIDType> {
+public class InputFormStatusTypeController extends AbstractInputFormController<StatusType> {
 
 	/**
-	 * ID text field.
+	 * Checkbox for active.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "id", jaxbclass = IDType.class)
-	protected TextField txtID;
+	@JAXBMatch(jaxbfield = "active", jaxbclass = StatusType.class)
+	protected CheckBox chkActive;
 
 	/**
-	 * Title text field.
+	 * MMD start field.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "title", jaxbclass = TitledIDType.class)
-	protected TextField txtTitle;
+	@JAXBMatch(jaxbfield = "mmdmarkupstart", jaxbclass = StatusType.class)
+	protected TextField txtMmdmarkupstart;
 
 	/**
-	 * Short title text field.
+	 * MMD end field.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "shorttitle", jaxbclass = TitledIDType.class)
-	protected TextField txtShorttitle;
-
-	/**
-	 * Text area for remark.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "remark", jaxbclass = TitledIDType.class)
-	protected TextArea txtRemark;
+	@JAXBMatch(jaxbfield = "mmdmarkupend", jaxbclass = StatusType.class)
+	protected TextField txtMmdmarkupend;
 
 
 	/**

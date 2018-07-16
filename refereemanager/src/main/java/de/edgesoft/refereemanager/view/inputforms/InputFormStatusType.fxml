@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<ScrollPane fx:id="scrTitledID" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormTitledIDTypeDataController">
+<ScrollPane fx:id="scrStatusType" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormStatusTypeController">
 	<content>
 		<GridPane alignment="TOP_CENTER" vgap="5.0">
 			<columnConstraints>
@@ -20,18 +21,14 @@
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
-				<RowConstraints valignment="TOP" />
 			</rowConstraints>
 			<children>
-				<Label text="ID" />
-				<TextField fx:id="txtID" GridPane.columnIndex="1" />
-				<Label text="Titel" GridPane.rowIndex="1" />
-				<TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-				<Label text="Kurztitel" GridPane.rowIndex="2" />
-				<TextField fx:id="txtShorttitle" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-				<Label text="Anmerkung" GridPane.rowIndex="3" />
-				<TextArea fx:id="txtRemark" prefHeight="80.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<Label text="Aktiv" />
+				<CheckBox fx:id="chkActive" text="Aktiv" GridPane.columnIndex="1" />
+				<Label text="MMD Start" GridPane.rowIndex="1" />
+				<TextField fx:id="txtMmdmarkupstart" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Label text="MMD Ende" GridPane.rowIndex="2" />
+				<TextField fx:id="txtMmdmarkupend" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 			</children>
 		</GridPane>
 	</content>

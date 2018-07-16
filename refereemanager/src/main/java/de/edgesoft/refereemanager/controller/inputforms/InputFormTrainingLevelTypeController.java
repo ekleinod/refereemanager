@@ -1,12 +1,12 @@
 package de.edgesoft.refereemanager.controller.inputforms;
-import de.edgesoft.refereemanager.jaxb.StatusType;
+import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
+import de.edgesoft.refereemanager.utils.SpinnerUtils;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Spinner;
 
 /**
- * Controller for the status type data edit dialog tab.
+ * Controller for the training level type data edit dialog tab.
  *
  * ## Legal stuff
  *
@@ -31,28 +31,21 @@ import javafx.scene.control.TextField;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormStatusTypeDataController extends AbstractInputFormController<StatusType> {
+public class InputFormTrainingLevelTypeController extends AbstractInputFormController<TrainingLevelType> {
 
 	/**
-	 * Checkbox for active.
+	 * Spinner for rank.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "active", jaxbclass = StatusType.class)
-	protected CheckBox chkActive;
+	@JAXBMatch(jaxbfield = "rank", jaxbclass = TrainingLevelType.class)
+	protected Spinner<Integer> spnRank;
 
 	/**
-	 * MMD start field.
+	 * Spinner for update interval.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "mmdmarkupstart", jaxbclass = StatusType.class)
-	protected TextField txtMmdmarkupstart;
-
-	/**
-	 * MMD end field.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "mmdmarkupend", jaxbclass = StatusType.class)
-	protected TextField txtMmdmarkupend;
+	@JAXBMatch(jaxbfield = "updateInterval", jaxbclass = TrainingLevelType.class)
+	protected Spinner<Integer> spnUpdateInterval;
 
 
 	/**
@@ -63,7 +56,9 @@ public class InputFormStatusTypeDataController extends AbstractInputFormControll
 	@FXML
 	protected void initialize() {
 
-		// nothing to do for now
+        // setup spinners
+        SpinnerUtils.prepareIntegerSpinner(spnRank, 0, 100);
+        SpinnerUtils.prepareIntegerSpinner(spnUpdateInterval, 0, 10);
 
 	}
 

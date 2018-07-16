@@ -12,7 +12,7 @@
 			<tabs>
 				<Tab closable="false" text="Rollen">
 					<content>
-						<fx:include fx:id="embeddedInputFormTitledIDTypeData" source="../inputforms/InputFormTitledIDTypeData.fxml" />
+						<fx:include fx:id="embeddedInputFormTitledIDType" source="../inputforms/InputFormTitledIDType.fxml" />
 					</content>
 				</Tab>
 			</tabs>

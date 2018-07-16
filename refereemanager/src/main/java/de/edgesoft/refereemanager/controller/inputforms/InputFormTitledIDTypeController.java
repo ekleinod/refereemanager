@@ -1,12 +1,13 @@
 package de.edgesoft.refereemanager.controller.inputforms;
-import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
+import de.edgesoft.edgeutils.commons.IDType;
+import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
-import de.edgesoft.refereemanager.utils.SpinnerUtils;
 import javafx.fxml.FXML;
-import javafx.scene.control.Spinner;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 /**
- * Controller for the training level type data edit dialog tab.
+ * Controller for the titled id data edit dialog tab.
  *
  * ## Legal stuff
  *
@@ -31,21 +32,35 @@ import javafx.scene.control.Spinner;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormTrainingLevelTypeDataController extends AbstractInputFormController<TrainingLevelType> {
+public class InputFormTitledIDTypeController extends AbstractInputFormController<TitledIDType> {
 
 	/**
-	 * Spinner for rank.
+	 * ID text field.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "rank", jaxbclass = TrainingLevelType.class)
-	protected Spinner<Integer> spnRank;
+	@JAXBMatch(jaxbfield = "id", jaxbclass = IDType.class)
+	protected TextField txtID;
 
 	/**
-	 * Spinner for update interval.
+	 * Title text field.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "updateInterval", jaxbclass = TrainingLevelType.class)
-	protected Spinner<Integer> spnUpdateInterval;
+	@JAXBMatch(jaxbfield = "title", jaxbclass = TitledIDType.class)
+	protected TextField txtTitle;
+
+	/**
+	 * Short title text field.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "shorttitle", jaxbclass = TitledIDType.class)
+	protected TextField txtShorttitle;
+
+	/**
+	 * Text area for remark.
+	 */
+	@FXML
+	@JAXBMatch(jaxbfield = "remark", jaxbclass = TitledIDType.class)
+	protected TextArea txtRemark;
 
 
 	/**
@@ -56,9 +71,7 @@ public class InputFormTrainingLevelTypeDataController extends AbstractInputFormC
 	@FXML
 	protected void initialize() {
 
-        // setup spinners
-        SpinnerUtils.prepareIntegerSpinner(spnRank, 0, 100);
-        SpinnerUtils.prepareIntegerSpinner(spnUpdateInterval, 0, 10);
+		// nothing to do for now
 
 	}
 

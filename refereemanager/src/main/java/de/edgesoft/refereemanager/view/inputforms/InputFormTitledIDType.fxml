@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormClubDataController">
+<ScrollPane fx:id="scrTitledID" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.inputforms.InputFormTitledIDTypeController">
 	<content>
 		<GridPane alignment="TOP_CENTER" vgap="5.0">
 			<columnConstraints>
@@ -23,13 +23,15 @@
 				<RowConstraints valignment="TOP" />
 			</rowConstraints>
 			<children>
-				<Label text="Lokal?" />
-				<CheckBox fx:id="chkIsLocal" text="ist lokaler Club" GridPane.columnIndex="1" />
-				<Label text="Dateiname" GridPane.rowIndex="1" />
-				<TextField fx:id="txtFilename" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-				<Label fx:id="lblGeneratedFilename" disable="true" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-				<Label text="Homepage" GridPane.rowIndex="3" />
-				<TextField fx:id="txtHomepage" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<Label text="ID" />
+				<TextField fx:id="txtID" GridPane.columnIndex="1" />
+				<Label text="Titel" GridPane.rowIndex="1" />
+				<TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Label text="Kurztitel" GridPane.rowIndex="2" />
+				<TextField fx:id="txtShorttitle" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+				<Label text="Anmerkung" GridPane.rowIndex="3" />
+				<TextArea fx:id="txtRemark" prefHeight="80.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 			</children>
 		</GridPane>
 	</content>

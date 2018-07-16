@@ -8,7 +8,6 @@ import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.jaxb.PersonVenueReferrer;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 
 /**
  * Controller for the league edit dialog scene.
@@ -39,37 +38,19 @@ import javafx.scene.Parent;
 public class EditDialogLeagueController extends AbstractTabbedEditDialogController<League> {
 
 	/**
-	 * Titled id type data.
+	 * Titled id controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormTitledIDTypeData;
+	private IInputFormController<League> embeddedInputFormTitledIDTypeController;
 
 	/**
-	 * Titled id data controller.
+	 * League controller.
 	 */
 	@FXML
-	private IInputFormController<League> embeddedInputFormTitledIDTypeDataController;
+	private IInputFormController<League> embeddedInputFormLeagueController;
 
 	/**
-	 * League data.
-	 */
-	@FXML
-	private Parent embeddedInputFormLeagueData;
-
-	/**
-	 * League data controller.
-	 */
-	@FXML
-	private IInputFormController<League> embeddedInputFormLeagueDataController;
-
-	/**
-	 * Referee report recipient data.
-	 */
-	@FXML
-	private Parent embeddedInputFormPersonReference;
-
-	/**
-	 * Referee report recipient data controller.
+	 * Referee report recipient controller.
 	 */
 	@FXML
 	private IInputFormController<League> embeddedInputFormPersonReferenceController;
@@ -84,8 +65,8 @@ public class EditDialogLeagueController extends AbstractTabbedEditDialogControll
 	@Override
 	protected void initialize() {
 
-		addInputFormController(embeddedInputFormTitledIDTypeDataController);
-		addInputFormController(embeddedInputFormLeagueDataController);
+		addInputFormController(embeddedInputFormTitledIDTypeController);
+		addInputFormController(embeddedInputFormLeagueController);
 		addInputFormController(embeddedInputFormPersonReferenceController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, League.class, PersonVenueReferrer.class})));

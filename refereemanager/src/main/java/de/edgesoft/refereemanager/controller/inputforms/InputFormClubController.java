@@ -34,7 +34,7 @@ import javafx.scene.text.FontPosture;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormClubDataController extends AbstractInputFormController<Club> {
+public class InputFormClubController extends AbstractInputFormController<Club> {
 
 	/**
 	 * Checkbox for local clubs.

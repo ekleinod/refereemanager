@@ -7,7 +7,6 @@ import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.jaxb.TrainingLevelType;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 
 /**
  * Controller for the training level type edit dialog scene.
@@ -38,28 +37,16 @@ import javafx.scene.Parent;
 public class EditDialogTrainingLevelTypeController extends AbstractTabbedEditDialogController<TrainingLevelType> {
 
 	/**
-	 * Titled id type data.
+	 * Titled id controller.
 	 */
 	@FXML
-	private Parent embeddedInputFormTitledIDTypeData;
+	private IInputFormController<TrainingLevelType> embeddedInputFormTitledIDTypeController;
 
 	/**
-	 * Titled id data controller.
+	 * Training level type controller.
 	 */
 	@FXML
-	private IInputFormController<TrainingLevelType> embeddedInputFormTitledIDTypeDataController;
-
-	/**
-	 * Training level type detail data.
-	 */
-	@FXML
-	private Parent embeddedInputFormTrainingLevelTypeData;
-
-	/**
-	 * Training level type detail data controller.
-	 */
-	@FXML
-	private IInputFormController<TrainingLevelType> embeddedInputFormTrainingLevelTypeDataController;
+	private IInputFormController<TrainingLevelType> embeddedInputFormTrainingLevelTypeController;
 
 
 	/**
@@ -71,8 +58,8 @@ public class EditDialogTrainingLevelTypeController extends AbstractTabbedEditDia
 	@Override
 	protected void initialize() {
 
-		addInputFormController(embeddedInputFormTitledIDTypeDataController);
-		addInputFormController(embeddedInputFormTrainingLevelTypeDataController);
+		addInputFormController(embeddedInputFormTitledIDTypeController);
+		addInputFormController(embeddedInputFormTrainingLevelTypeController);
 
 		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, TrainingLevelType.class})));
 
