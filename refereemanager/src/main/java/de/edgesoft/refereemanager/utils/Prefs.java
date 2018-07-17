@@ -103,35 +103,23 @@ public class Prefs {
 				return getPreferences().get(theKey.value(), Locale.GERMANY.toLanguageTag());
 
 			case OTHER_TITLE_FULLPATH:
-				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
 			case OTHER_DATA_SORT_LOADING:
 				return getPreferences().get(theKey.value(), Boolean.FALSE.toString());
 
 			case OVERVIEW_CONTACT_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_CLUB_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_LEAGUE_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_LEAGUE_GAME_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_OTHER_EVENT_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_PERSON_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_REFEREE_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_ROLETYPE_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_STATUSTYPE_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_SEXTYPE_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_TOURNAMENT_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_TRAINEE_SPLIT:
-				return getPreferences().get(theKey.value(), Double.toString(0.6));
 			case OVERVIEW_TRAININGLEVELTYPE_SPLIT:
+			case OVERVIEW_VENUE_SPLIT:
 				return getPreferences().get(theKey.value(), Double.toString(0.6));
 
 			case REFEREE_COMMUNICATION_SPLIT_0:

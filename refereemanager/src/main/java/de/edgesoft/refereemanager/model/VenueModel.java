@@ -1,5 +1,7 @@
 package de.edgesoft.refereemanager.model;
 
+import java.text.MessageFormat;
+
 import de.edgesoft.refereemanager.jaxb.Venue;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -39,6 +41,23 @@ public class VenueModel extends Venue {
 	@Override
 	public SimpleStringProperty getDisplayTitle() {
 		return (getShorttitle() == null) ? ((getTitle() == null) ? super.getDisplayTitle() : getTitle()) : getShorttitle();
+	}
+
+	/**
+	 * Geolocation.
+	 *
+	 * @return geolocation
+	 */
+	public SimpleStringProperty getGeolocation() {
+
+		if ((getLatitude() == null) || (getLongitude() == null)) {
+			return null;
+		}
+
+		return new SimpleStringProperty(MessageFormat.format("({0},{1})",
+				(getLatitude() == null) ? "?" : getLatitude().getValue(),
+				(getLongitude() == null) ? "?" : getLongitude().getValue()
+				));
 	}
 
 }

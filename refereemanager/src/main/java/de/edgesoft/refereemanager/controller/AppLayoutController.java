@@ -28,6 +28,7 @@ import de.edgesoft.refereemanager.controller.overview.OverviewStatusTypesControl
 import de.edgesoft.refereemanager.controller.overview.OverviewTournamentsController;
 import de.edgesoft.refereemanager.controller.overview.OverviewTraineesController;
 import de.edgesoft.refereemanager.controller.overview.OverviewTrainingLevelTypesController;
+import de.edgesoft.refereemanager.controller.overview.OverviewVenuesController;
 import de.edgesoft.refereemanager.jaxb.Content;
 import de.edgesoft.refereemanager.jaxb.ObjectFactory;
 import de.edgesoft.refereemanager.model.AppModel;
@@ -197,6 +198,14 @@ public class AppLayoutController {
 	 */
 	@FXML
 	private MenuItem mnuOverviewLeagues;
+
+	/**
+	 * Menu item venues overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private MenuItem mnuOverviewVenues;
 
 	/**
 	 * Menu item sex types overview.
@@ -399,6 +408,7 @@ public class AppLayoutController {
 		ButtonUtils.adaptButton(btnOverviewClubs, mnuOverviewClubs);
 
 		mnuOverviewLeagues.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		mnuOverviewVenues.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		mnuOverviewSexTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		mnuOverviewRoles.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		mnuOverviewContactTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
@@ -824,6 +834,16 @@ public class AppLayoutController {
 	@FXML
 	private void handleOverviewLeagues() {
 		handleOverview(new OverviewLeaguesController());
+	}
+
+	/**
+	 * Menu things -> venues.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private void handleOverviewVenues() {
+		handleOverview(new OverviewVenuesController());
 	}
 
 	/**

@@ -37,12 +37,22 @@ public class AddressModel extends Address {
 	 * Display title.
 	 *
 	 * @return display title
-	 *
-	 * @version 0.14.0
-	 * @since 0.6.0
 	 */
 	@Override
 	public SimpleStringProperty getDisplayTitle() {
+
+		return getDisplayAddress();
+
+	}
+
+	/**
+	 * Display address.
+	 *
+	 * @return display address
+	 *
+	 * @since 0.15.0
+	 */
+	public SimpleStringProperty getDisplayAddress() {
 
 		if (isPrivateOnly && !isPrivate()) {
 			return null;

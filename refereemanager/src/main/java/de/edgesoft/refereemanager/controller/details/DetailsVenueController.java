@@ -1,18 +1,15 @@
 package de.edgesoft.refereemanager.controller.details;
 
-import java.util.stream.Collectors;
-
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.controller.AbstractHyperlinkController;
-import de.edgesoft.refereemanager.model.LeagueModel;
+import de.edgesoft.refereemanager.model.VenueModel;
 import javafx.fxml.FXML;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.text.FontWeight;
 
 /**
- * Controller for the league details scene.
+ * Controller for the venue details scene.
  *
  * ## Legal stuff
  *
@@ -37,7 +34,7 @@ import javafx.scene.text.FontWeight;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class DetailsLeagueController<T extends LeagueModel> extends AbstractHyperlinkController implements IDetailsController<T> {
+public class DetailsVenueController<T extends VenueModel> extends AbstractHyperlinkController implements IDetailsController<T> {
 
 	/**
 	 * Heading.
@@ -46,34 +43,16 @@ public class DetailsLeagueController<T extends LeagueModel> extends AbstractHype
 	private Label lblHeading;
 
 	/**
-	 * Sex type.
+	 * Address.
 	 */
 	@FXML
-	private Label lblSexType;
+	private Label lblAddress;
 
 	/**
-	 * Rank.
+	 * Geo location.
 	 */
 	@FXML
-	private Label lblRank;
-
-	/**
-	 * Results.
-	 */
-	@FXML
-	private Hyperlink lnkResultsURL;
-
-	/**
-	 * Referee report.
-	 */
-	@FXML
-	private Hyperlink lnkRefereeReportURL;
-
-	/**
-	 * Referee report recipients.
-	 */
-	@FXML
-	private Label lblRefereeReportRecipient;
+	private Label lblGeolocation;
 
 
 	/**
@@ -99,35 +78,20 @@ public class DetailsLeagueController<T extends LeagueModel> extends AbstractHype
 
 		if (theDetailData == null) {
 
-			LabelUtils.setText(lblSexType, null);
-			LabelUtils.setText(lblRank, null);
-			lnkResultsURL.setText(null);
-			lnkRefereeReportURL.setText(null);
-			LabelUtils.setText(lblRefereeReportRecipient, null);
+			LabelUtils.setText(lblAddress, null);
+			LabelUtils.setText(lblGeolocation, null);
 
 		} else {
 
-			lblSexType.setText(
-					(theDetailData.getSexType() == null) ?
+			lblAddress.setText(
+					(theDetailData.getDisplayAddress() == null) ?
 							null :
-							theDetailData.getSexType().getDisplayText().getValue());
+							theDetailData.getDisplayAddress().getValue());
 
-			lblRank.setText(
-					(theDetailData.getRank() == null) ?
+			lblGeolocation.setText(
+					(theDetailData.getGeolocation() == null) ?
 							null :
-							theDetailData.getRank().getValue().toString());
-
-			lnkResultsURL.setText(
-					(theDetailData.getResultsURL() == null) ?
-							null :
-							theDetailData.getResultsURL().getValue());
-
-			lnkRefereeReportURL.setText(
-					(theDetailData.getRefereeReportURL() == null) ?
-							null :
-							theDetailData.getRefereeReportURL().getValue());
-
-			lblRefereeReportRecipient.setText(theDetailData.getPerson().stream().map(person -> person.getDisplayText().getValueSafe()).collect(Collectors.joining(System.lineSeparator())));
+							theDetailData.getGeolocation().getValue());
 
 		}
 
