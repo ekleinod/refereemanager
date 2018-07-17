@@ -39,7 +39,7 @@
 						<Button fx:id="btnRefforClear" onAction="#handleRefforClear" AnchorPane.rightAnchor="0.0" />
 					</children>
 				</AnchorPane>
-				<Label text="Einsatzhäufigkeit" GridPane.rowIndex="2" />
+				<Label text="Status" GridPane.rowIndex="2" />
 				<AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
 					<children>
 						<ComboBox fx:id="cboStatus" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
