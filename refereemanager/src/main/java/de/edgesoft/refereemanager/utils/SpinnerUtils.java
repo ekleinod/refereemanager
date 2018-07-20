@@ -1,8 +1,12 @@
 package de.edgesoft.refereemanager.utils;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextFormatter;
+import javafx.util.StringConverter;
 
 /**
  * Utility methods for {@link Spinner}.
@@ -67,11 +71,46 @@ public class SpinnerUtils {
 	 * @since 0.15.0
 	 */
 	public static final void prepareDoubleSpinner(Spinner<Double> theSpinner, final double theMin, final double theMax) {
+
+		// value factory with more decimal places than standard implementation (converter - taken from Java documentation)
         SpinnerValueFactory<Double> factory = new SpinnerValueFactory.DoubleSpinnerValueFactory(theMin, theMax);
+        factory.setConverter(new StringConverter<Double>() {
+
+            private final DecimalFormat df = new DecimalFormat("#.#####");
+
+            @Override public String toString(Double value) {
+                // If the specified value is null, return a zero-length String
+                if (value == null) {
+                    return "";
+                }
+
+                return df.format(value);
+            }
+
+            @Override public Double fromString(String value) {
+                try {
+
+                    // If the specified value is null or zero-length, return null
+                    if ((value == null) || value.trim().isEmpty()) {
+                        return null;
+                    }
+
+                    // Perform the requested parsing
+                    return df.parse(value.trim()).doubleValue();
+
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
         theSpinner.setValueFactory(factory);
+
+        // text formatter for output/editor binding
         TextFormatter<Double> formatter = new TextFormatter<>(factory.getConverter(), factory.getValue());
         theSpinner.getEditor().setTextFormatter(formatter);
         factory.valueProperty().bindBidirectional(formatter.valueProperty());
+
 	}
 
 }

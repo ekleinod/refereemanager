@@ -54,9 +54,9 @@ public class VenueModel extends Venue {
 			return null;
 		}
 
-		return new SimpleStringProperty(MessageFormat.format("({0},{1})",
-				(getLatitude() == null) ? "?" : getLatitude().getValue(),
-				(getLongitude() == null) ? "?" : getLongitude().getValue()
+		return new SimpleStringProperty(MessageFormat.format("({0,number,#.#####},{1,number,#.#####})",
+				(getLatitude() == null) ? 0 : getLatitude().getValue(),
+				(getLongitude() == null) ? 0 : getLongitude().getValue()
 				));
 	}
 

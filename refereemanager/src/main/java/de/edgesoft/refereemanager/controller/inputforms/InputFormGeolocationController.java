@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Spinner;
 
 /**
- * Controller for the venue edit dialog scene.
+ * Controller for the geolocation data edit dialog tab.
  *
  * ## Legal stuff
  *
@@ -31,7 +31,7 @@ import javafx.scene.control.Spinner;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class PartInputFormVenueController extends PartInputFormAddressController {
+public class InputFormGeolocationController extends AbstractInputFormController<Venue> {
 
 	/**
 	 * Spinner for latitude.
@@ -54,12 +54,9 @@ public class PartInputFormVenueController extends PartInputFormAddressController
 	 * This method is automatically called after the fxml file has been loaded.
 	 */
 	@FXML
-	@Override
 	protected void initialize() {
 
-		super.initialize();
-
-        // setup spinners
+		// spinners
         SpinnerUtils.prepareDoubleSpinner(spnLatitude, -90.0, 90.0);
         spnLatitude.getValueFactory().setValue(0.0);
         SpinnerUtils.prepareDoubleSpinner(spnLongitude, -180.0, 180.0);

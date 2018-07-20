@@ -10,8 +10,6 @@
 		<VBox spacing="10.0">
 			<children>
 				<fx:include fx:id="embeddedCRUDAddress" styleClass="Address" source="../crud/ListCRUD.fxml" />
-				<Separator />
-				<fx:include fx:id="embeddedCRUDURL" styleClass="URL" source="../crud/ListCRUD.fxml" />
 			</children>
 		</VBox>
 	</content>
