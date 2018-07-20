@@ -15,11 +15,11 @@
 						<fx:include fx:id="embeddedInputFormTitledIDType" source="../inputforms/InputFormTitledIDType.fxml" />
 					</content>
 				</Tab>
-				<!-- Tab fx:id="tabAddress" closable="false" text="Adresse">
+				<Tab fx:id="tabAddress" closable="false" text="Adresse">
 					<content>
 						<fx:include fx:id="embeddedInputFormSingleAddress" source="../inputforms/InputFormSingleAddress.fxml" />
 					</content>
-				</Tab-->
+				</Tab>
 				<Tab fx:id="tabGeolocation" closable="false" text="Geokoordinaten">
 					<content>
 						<fx:include fx:id="embeddedInputFormGeolocation" source="../inputforms/InputFormGeolocation.fxml" />

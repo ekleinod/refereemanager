@@ -1,12 +1,11 @@
 package de.edgesoft.refereemanager.controller.inputforms;
-import de.edgesoft.refereemanager.jaxb.Venue;
+import de.edgesoft.refereemanager.jaxb.Address;
+import de.edgesoft.refereemanager.jaxb.League;
 import de.edgesoft.refereemanager.utils.JAXBMatch;
-import de.edgesoft.refereemanager.utils.SpinnerUtils;
 import javafx.fxml.FXML;
-import javafx.scene.control.Spinner;
 
 /**
- * Controller for the geolocation data edit dialog tab.
+ * Controller for the single address edit dialog tab.
  *
  * ## Legal stuff
  *
@@ -31,21 +30,14 @@ import javafx.scene.control.Spinner;
  * @version 0.15.0
  * @since 0.15.0
  */
-public class InputFormGeolocationController extends AbstractInputFormController<Venue> {
+public class InputFormSingleAddressController extends AbstractInputFormController<League> {
 
 	/**
-	 * Spinner for latitude.
+	 * CRUD buttons address controller.
 	 */
 	@FXML
-	@JAXBMatch(jaxbfield = "latitude", jaxbclass = Venue.class)
-	protected Spinner<Double> spnLatitude;
-
-	/**
-	 * Spinner for longitude.
-	 */
-	@FXML
-	@JAXBMatch(jaxbfield = "longitude", jaxbclass = Venue.class)
-	protected Spinner<Double> spnLongitude;
+	@JAXBMatch(jaxbfield = "address", jaxbclass = League.class)
+	protected IInputFormController<Address> embeddedAddressController;
 
 
 	/**
@@ -56,11 +48,11 @@ public class InputFormGeolocationController extends AbstractInputFormController<
 	@FXML
 	protected void initialize() {
 
-		// spinners
-        SpinnerUtils.prepareDoubleSpinner(spnLatitude, -90.0, 90.0);
-//        spnLatitude.getValueFactory().setValue(0.0);
-        SpinnerUtils.prepareDoubleSpinner(spnLongitude, -180.0, 180.0);
-//        spnLongitude.getValueFactory().setValue(0.0);
+//		Map.Entry<Parent, FXMLLoader> nodeAddress = Resources.loadNode("inputforms/PartInputFormAddress");
+//		embeddedAddressController.initController(
+//				nodeAddress.getValue().getController(),
+//				nodeAddress.getKey(),
+//				AppModel.factory::createAddress);
 
 	}
 
