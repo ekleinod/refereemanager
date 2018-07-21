@@ -58,9 +58,7 @@ public class InputFormGeolocationController extends AbstractInputFormController<
 
 		// spinners
         SpinnerUtils.prepareDoubleSpinner(spnLatitude, -90.0, 90.0);
-//        spnLatitude.getValueFactory().setValue(0.0);
         SpinnerUtils.prepareDoubleSpinner(spnLongitude, -180.0, 180.0);
-//        spnLongitude.getValueFactory().setValue(0.0);
 
 	}
 
