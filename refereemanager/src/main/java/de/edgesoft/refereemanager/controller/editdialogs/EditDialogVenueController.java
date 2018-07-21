@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import de.edgesoft.edgeutils.commons.IDType;
 import de.edgesoft.refereemanager.controller.inputforms.IInputFormController;
+import de.edgesoft.refereemanager.jaxb.Address;
 import de.edgesoft.refereemanager.jaxb.TitledIDType;
 import de.edgesoft.refereemanager.jaxb.Venue;
 import javafx.fxml.FXML;
@@ -45,8 +46,8 @@ public class EditDialogVenueController extends AbstractTabbedEditDialogControlle
 	/**
 	 * Address controller.
 	 */
-//	@FXML
-//	private IInputFormController<Venue> embeddedInputFormAddressController;
+	@FXML
+	private IInputFormController<Venue> embeddedPartInputFormAddressController;
 
 	/**
 	 * Geolocation controller.
@@ -65,10 +66,10 @@ public class EditDialogVenueController extends AbstractTabbedEditDialogControlle
 	protected void initialize() {
 
 		addInputFormController(embeddedInputFormTitledIDTypeController);
-//		addInputFormController(embeddedInputFormAddressController);
+		addInputFormController(embeddedPartInputFormAddressController);
 		addInputFormController(embeddedInputFormGeolocationController);
 
-		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Venue.class})));
+		initForm(new ArrayList<>(Arrays.asList(new Class<?>[]{IDType.class, TitledIDType.class, Venue.class, Address.class})));
 
 		super.initialize();
 
