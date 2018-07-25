@@ -19,6 +19,7 @@
 			<rowConstraints>
 				<RowConstraints valignment="TOP" />
 				<RowConstraints valignment="TOP" />
+				<RowConstraints valignment="TOP" />
 			</rowConstraints>
 			<children>
 				<Label text="Breitengrad" />
@@ -33,6 +34,7 @@
 						<Spinner fx:id="spnLongitude" editable="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
 					</children>
 				</AnchorPane>
+				<Label disable="true" text="0 = keine Angabe (Java-Fehler, wird irgendwann gefixt)." GridPane.columnIndex="1" GridPane.rowIndex="2" />
 			</children>
 		</GridPane>
 	</content>
