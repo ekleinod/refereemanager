@@ -352,7 +352,15 @@ public class JAXBMatchUtils {
 
 	    						} else if (((Spinner<?>) theFieldObject).getValueFactory() instanceof SpinnerValueFactory.DoubleSpinnerValueFactory) {
 
-	    							getSetterMethod(theClass, sFieldName, DoubleProperty.class).invoke(theModel, new SimpleDoubleProperty(((Spinner<Double>) theFieldObject).getValue()));
+	    							// hack, because empty text field causes exception in double spinners
+	    							// check if this can be removed after using Java 9 (bug fixed there)
+	    							// was: getSetterMethod(theClass, sFieldName, DoubleProperty.class).invoke(theModel, new SimpleDoubleProperty(((Spinner<Double>) theFieldObject).getValue()));
+	    							Double dblTemp = ((Spinner<Double>) theFieldObject).getValue();
+	    							if (dblTemp == 0) {
+	    								getSetterMethod(theClass, sFieldName, DoubleProperty.class).invoke(theModel, new Object[] {null});
+	    							} else {
+	    								getSetterMethod(theClass, sFieldName, DoubleProperty.class).invoke(theModel, new SimpleDoubleProperty(dblTemp));
+	    							}
 
 	    						} else {
 	    							throw new IllegalArgumentException(String.format("Unknown SpinnerValueFactory: %s", ((Spinner<?>) theFieldObject).getValueFactory()));
