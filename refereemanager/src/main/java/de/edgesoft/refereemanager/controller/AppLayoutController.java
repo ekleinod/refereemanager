@@ -387,11 +387,11 @@ public class AppLayoutController {
 		ButtonUtils.adaptButton(btnFileSave, mnuFileSave);
 		mnuFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-save-as.png")));
 
-		mnuOverviewReferees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
+		mnuOverviewReferees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-list-referees.png")));
 		ButtonUtils.adaptButton(btnOverviewReferees, mnuOverviewReferees);
-		mnuOverviewPeople.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-referees.png")));
+		mnuOverviewPeople.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-list-people.png")));
 		ButtonUtils.adaptButton(btnOverviewPeople, mnuOverviewPeople);
-		mnuOverviewTrainees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-trainees.png")));
+		mnuOverviewTrainees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-list-trainees.png")));
 		ButtonUtils.adaptButton(btnOverviewTrainees, mnuOverviewTrainees);
 
 		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
