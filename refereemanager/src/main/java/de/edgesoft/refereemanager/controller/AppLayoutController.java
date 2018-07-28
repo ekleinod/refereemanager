@@ -404,7 +404,7 @@ public class AppLayoutController {
 		mnuOverviewOtherEvents.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		ButtonUtils.adaptButton(btnOverviewOtherEvents, mnuOverviewOtherEvents);
 
-		mnuOverviewClubs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		mnuOverviewClubs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-list-clubs.png")));
 		ButtonUtils.adaptButton(btnOverviewClubs, mnuOverviewClubs);
 
 		mnuOverviewLeagues.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
