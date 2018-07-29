@@ -409,7 +409,7 @@ public class AppLayoutController {
 
 		mnuOverviewLeagues.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-leagues.png")));
 		mnuOverviewVenues.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/atmosphere.png")));
-		mnuOverviewSexTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		mnuOverviewSexTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-sextypes.png")));
 		mnuOverviewRoles.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		mnuOverviewContactTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		mnuOverviewStatusTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
