@@ -169,8 +169,8 @@ public class StatisticsController {
 		btnOK.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/dialog-ok.png")));
 
 		tabGroups.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
-		tabGender.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-pie.png")));
-		tabTrainingLevel.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-pie.png")));
+		tabGender.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-sextypes.png")));
+		tabTrainingLevel.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-trainingleveltypes.png")));
 
 	}
 
