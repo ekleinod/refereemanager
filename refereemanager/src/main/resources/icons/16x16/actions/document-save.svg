@@ -14,11 +14,11 @@
    height="16"
    width="16"
    version="1.1"
-   inkscape:version="0.91 r"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="document-save.svg"
-   inkscape:export-filename="/home/ekleinod/working/git/open-tt/refereemanager/refereemanager/src/main/resources/icons/16x16/actions/document-save.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-filename="/home/ekleinod/working/git/tt-schiri/refereemanager/refereemanager/src/main/resources/icons/16x16/actions/document-save.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs10" />
   <sodipodi:namedview
@@ -30,16 +30,16 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="680"
-     inkscape:window-height="480"
+     inkscape:window-width="1920"
+     inkscape:window-height="998"
      id="namedview8"
      showgrid="false"
      inkscape:zoom="14.75"
      inkscape:cx="-0.77966102"
      inkscape:cy="8"
      inkscape:window-x="0"
-     inkscape:window-y="25"
-     inkscape:window-maximized="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
      inkscape:current-layer="svg7384" />
   <metadata
      id="metadata90">
@@ -55,16 +55,14 @@
   </metadata>
   <title
      id="title8473">Paper Symbolic Icon Theme</title>
-  <g
-     id="layer12"
-     transform="translate(-305 80.019)">
-    <path
-       id="path5972"
-       opacity=".5"
-       d="m312.99-66.694-4.332-6.3062h2.341v-6l4 0.02966v5.9703h2.373z" />
-    <path
-       id="path5976"
-       opacity=".5"
-       d="m306-65.988v1.9686h14.005l-0.005-1.9686z" />
-  </g>
+  <path
+     style="opacity:1;fill:#5c616c;fill-opacity:1"
+     inkscape:connector-curvature="0"
+     d="M 7.99,13.325 3.658,7.0188 h 2.341 v -6 l 4,0.02966 v 5.9703 h 2.373 z"
+     id="path5972" />
+  <path
+     style="opacity:1;fill:#5c616c;fill-opacity:1"
+     inkscape:connector-curvature="0"
+     d="m 1,14.031 v 1.9686 H 15.005 L 15,14.031 Z"
+     id="path5976" />
 </svg>

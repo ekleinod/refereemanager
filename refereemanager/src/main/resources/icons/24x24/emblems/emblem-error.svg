@@ -12,8 +12,11 @@
    width="24"
    height="24"
    id="svg2"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="emblem-error.svg">
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="emblem-error.svg"
+   inkscape:export-filename="/home/ekleinod/working/git/tt-schiri/refereemanager/refereemanager/src/main/resources/icons/24x24/emblems/emblem-error.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <metadata
      id="metadata16">
     <rdf:RDF>
@@ -37,11 +40,11 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1000"
+     inkscape:window-height="998"
      id="namedview12"
      showgrid="false"
      inkscape:zoom="9.8333333"
-     inkscape:cx="12.101695"
+     inkscape:cx="-5.6949152"
      inkscape:cy="12"
      inkscape:window-x="0"
      inkscape:window-y="27"

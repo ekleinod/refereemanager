@@ -14,11 +14,11 @@
    height="16"
    width="16"
    version="1.1"
-   inkscape:version="0.91 r"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="configure.svg"
-   inkscape:export-filename="/home/ekleinod/working/git/open-tt/refereemanager/refereemanager/src/main/resources/icons/16x16/actions/configure.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-filename="/home/ekleinod/working/git/tt-schiri/refereemanager/refereemanager/src/main/resources/icons/16x16/actions/configure.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -33,10 +33,10 @@
      id="namedview10"
      showgrid="false"
      inkscape:zoom="14.75"
-     inkscape:cx="8.1355932"
+     inkscape:cx="-3.7288136"
      inkscape:cy="8"
      inkscape:window-x="0"
-     inkscape:window-y="25"
+     inkscape:window-y="27"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg7384" />
   <metadata
@@ -64,13 +64,9 @@
          mode="darken" />
     </filter>
   </defs>
-  <g
-     id="layer2"
-     transform="translate(-424,-428)">
-    <path
-       id="path10500-6"
-       opacity=".5"
-       style="enable-background:new"
-       d="m430.25 429-0.1543 1.8438a5.5 5.5 0 0 0 -1.6074 0.92969l-1.6758-0.78906-1.75 3.0312 1.5215 1.0566a5.5 5.5 0 0 0 -0.084 0.92773 5.5 5.5 0 0 0 0.0801 0.93164l-1.5176 1.0527 1.75 3.0312 1.6719-0.7871a5.5 5.5 0 0 0 1.6113 0.92382l0.15 1.85h3.5l0.1543-1.8438a5.5 5.5 0 0 0 1.6074 -0.92969l1.6758 0.78906 1.75-3.0312-1.5215-1.0566a5.5 5.5 0 0 0 0.084 -0.92773 5.5 5.5 0 0 0 -0.0801 -0.93164l1.5176-1.0527-1.75-3.0312-1.6719 0.7871a5.5 5.5 0 0 0 -1.6113 -0.92382l-0.15-1.85h-3.5zm1.75 5a2 2 0 0 1 2 2 2 2 0 0 1 -2 2 2 2 0 0 1 -2 -2 2 2 0 0 1 2 -2z" />
-  </g>
+  <path
+     inkscape:connector-curvature="0"
+     d="M 6.25,1 6.0957,2.8438 A 5.5,5.5 0 0 0 4.4883,3.77349 L 2.8125,2.98443 1.0625,6.01563 2.584,7.07223 A 5.5,5.5 0 0 0 2.5,7.99996 5.5,5.5 0 0 0 2.5801,8.9316 l -1.5176,1.0527 1.75,3.0312 1.6719,-0.7871 a 5.5,5.5 0 0 0 1.6113,0.92382 l 0.15,1.85 h 3.5 L 9.9,13.15842 a 5.5,5.5 0 0 0 1.6074,-0.92969 l 1.6758,0.78906 1.75,-3.0312 -1.5215,-1.0566 a 5.5,5.5 0 0 0 0.084,-0.92773 5.5,5.5 0 0 0 -0.0801,-0.93164 l 1.5176,-1.0527 -1.75,-3.0312 -1.6719,0.7871 A 5.5,5.5 0 0 0 9.9,2.85 L 9.75,1 Z M 8,6 A 2,2 0 0 1 10,8 2,2 0 0 1 8,10 2,2 0 0 1 6,8 2,2 0 0 1 8,6 Z"
+     style="opacity:1;enable-background:new;fill:#5c616c;fill-opacity:1"
+     id="path10500-6" />
 </svg>

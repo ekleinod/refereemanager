@@ -33,7 +33,7 @@
      id="namedview12"
      showgrid="false"
      inkscape:zoom="34.166667"
-     inkscape:cx="7.2585364"
+     inkscape:cx="2.2829267"
      inkscape:cy="12"
      inkscape:window-x="0"
      inkscape:window-y="27"
@@ -86,22 +86,17 @@
          id="stop3828" />
     </linearGradient>
   </defs>
-  <g
-     id="g835"
-     transform="matrix(0.93288103,0,0,0.92776981,0.74611017,1.1481056)"
-     style="stroke-width:1.07489669">
-    <path
-       id="rect938"
-       d="m 8.1597875,12.643018 v 4.619093 h 7.8073795 v -4.619093 h -0.08752 l -3.814992,1.816245 -3.8149953,-1.816245 z"
-       style="opacity:1;fill:none;fill-opacity:1;stroke:#808080;stroke-width:2.14979339;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       inkscape:connector-curvature="0" />
-    <rect
-       transform="matrix(0.90294867,0.42974841,-0.90294867,0.42974841,0,0)"
-       y="0.065726109"
-       x="13.425938"
-       height="10.075606"
-       width="10.075606"
-       id="rect936"
-       style="opacity:1;fill:none;fill-opacity:1;stroke:#808080;stroke-width:2.44029927;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-  </g>
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:none;fill-opacity:1;stroke:#5c616c;stroke-width:1.99999988;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     d="m 8.3582211,12.877916 v 4.285455 h 7.2833559 v -4.285455 h -0.08164 l -3.558934,1.685057 -3.5589368,-1.685057 z"
+     id="rect938" />
+  <rect
+     style="opacity:1;fill:none;fill-opacity:1;stroke:#5c616c;stroke-width:2.27421045;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="rect936"
+     width="9.3898525"
+     height="9.3898525"
+     x="14.266684"
+     y="0.99030888"
+     transform="matrix(0.90386122,0.42782577,-0.90386122,0.42782577,0,0)" />
 </svg>
