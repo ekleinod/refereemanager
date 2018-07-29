@@ -224,7 +224,7 @@
                               <TextField fx:id="txtEMailFromName" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                               <Label text="E-Mail" GridPane.rowIndex="8" />
                               <TextField fx:id="txtEMailFromEMail" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                              <Label text="Antworten (zusätlich zu Absender)" GridPane.columnSpan="2147483647" GridPane.rowIndex="9">
+                              <Label text="Antworten (zusätzlich zu Absender)" GridPane.columnSpan="2147483647" GridPane.rowIndex="9">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>

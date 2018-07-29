@@ -390,15 +390,15 @@ public class PreferencesDialogController {
 
 		tabPaths.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
 
-		tabEMail.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+		tabEMail.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
 
-		tabLetters.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+		tabLetters.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
 
 		tabDocuments.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
 
 		tabTexts.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
 
-		tabStatistics.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-list-details.png")));
+		tabStatistics.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
 
 		// fill with existing values
 		fillValues();

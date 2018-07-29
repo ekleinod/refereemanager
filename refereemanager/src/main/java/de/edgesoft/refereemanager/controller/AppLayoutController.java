@@ -413,7 +413,7 @@ public class AppLayoutController {
 		mnuOverviewRoles.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		mnuOverviewContactTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		mnuOverviewStatusTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
-		mnuOverviewTrainingLevelTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		mnuOverviewTrainingLevelTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-list-trainingleveltypes.png")));
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
 		ButtonUtils.adaptButton(btnStatisticsData, mnuStatisticsData);
