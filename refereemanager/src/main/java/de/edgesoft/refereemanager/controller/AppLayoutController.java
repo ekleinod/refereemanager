@@ -394,7 +394,7 @@ public class AppLayoutController {
 		mnuOverviewTrainees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-list-trainees.png")));
 		ButtonUtils.adaptButton(btnOverviewTrainees, mnuOverviewTrainees);
 
-		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/mail-mark-unread.png")));
+		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/dialog-messages.png")));
 		ButtonUtils.adaptButton(btnRefereeCommunication, mnuRefereeCommunication);
 
 		mnuOverviewLeagueGames.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
