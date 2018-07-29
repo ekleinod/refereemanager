@@ -412,7 +412,7 @@ public class AppLayoutController {
 		mnuOverviewSexTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-sextypes.png")));
 		mnuOverviewRoles.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-roles.png")));
 		mnuOverviewContactTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/call-start.png")));
-		mnuOverviewStatusTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		mnuOverviewStatusTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-statustypes.png")));
 		mnuOverviewTrainingLevelTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-trainingleveltypes.png")));
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
