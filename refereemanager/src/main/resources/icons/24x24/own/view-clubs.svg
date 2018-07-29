@@ -16,8 +16,8 @@
    version="1.1"
    id="svg5065"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="view-list-clubs.svg"
-   inkscape:export-filename="/home/ekleinod/working/git/tt-schiri/refereemanager/refereemanager/src/main/resources/icons/24x24/own/view-list-clubs.png"
+   sodipodi:docname="view-clubs.svg"
+   inkscape:export-filename="/home/ekleinod/working/git/tt-schiri/refereemanager/refereemanager/src/main/resources/icons/24x24/own/view-clubs.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <defs
@@ -68,7 +68,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="31.958333"
-     inkscape:cx="12"
+     inkscape:cx="6.6805736"
      inkscape:cy="12"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"

@@ -387,11 +387,11 @@ public class AppLayoutController {
 		ButtonUtils.adaptButton(btnFileSave, mnuFileSave);
 		mnuFileSaveAs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/document-save-as.png")));
 
-		mnuOverviewReferees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-list-referees.png")));
+		mnuOverviewReferees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-referees.png")));
 		ButtonUtils.adaptButton(btnOverviewReferees, mnuOverviewReferees);
-		mnuOverviewPeople.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-list-people.png")));
+		mnuOverviewPeople.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-people.png")));
 		ButtonUtils.adaptButton(btnOverviewPeople, mnuOverviewPeople);
-		mnuOverviewTrainees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-list-trainees.png")));
+		mnuOverviewTrainees.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-trainees.png")));
 		ButtonUtils.adaptButton(btnOverviewTrainees, mnuOverviewTrainees);
 
 		mnuRefereeCommunication.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/dialog-messages.png")));
@@ -404,16 +404,16 @@ public class AppLayoutController {
 		mnuOverviewOtherEvents.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		ButtonUtils.adaptButton(btnOverviewOtherEvents, mnuOverviewOtherEvents);
 
-		mnuOverviewClubs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-list-clubs.png")));
+		mnuOverviewClubs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-clubs.png")));
 		ButtonUtils.adaptButton(btnOverviewClubs, mnuOverviewClubs);
 
-		mnuOverviewLeagues.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
+		mnuOverviewLeagues.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-leagues.png")));
 		mnuOverviewVenues.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/atmosphere.png")));
 		mnuOverviewSexTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		mnuOverviewRoles.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		mnuOverviewContactTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
 		mnuOverviewStatusTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/view-calendar-week.png")));
-		mnuOverviewTrainingLevelTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-list-trainingleveltypes.png")));
+		mnuOverviewTrainingLevelTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-trainingleveltypes.png")));
 
 		mnuStatisticsData.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/office-chart-bar.png")));
 		ButtonUtils.adaptButton(btnStatisticsData, mnuStatisticsData);
