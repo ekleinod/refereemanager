@@ -1,0 +1,12 @@
+<page xmlns="http://projectmallard.org/1.0/"
+			type="topic"
+			id="install">
+
+	<info>
+		<link type="guide" xref="index"/>
+	</info>
+
+	<title>Installation</title>
+	<p>Java</p>
+
+</page>
