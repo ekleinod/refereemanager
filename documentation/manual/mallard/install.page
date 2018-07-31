@@ -2,7 +2,13 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="install">
  <info>
   <link type="guide" xref="index#install"/>
+  <desc>Kurze Installationsanleitung.</desc>
+  <credit type="author">
+   <name>Ekkart Kleinod</name>
+   <email>ekleinod@edgesoft.de</email>
+  </credit>
+  <revision date="2018-07-31" docversion="0.15.0" status="stub"/>
  </info>
  <title>Installation</title>
- <p>jar runterladen und starten.</p>
+ <p>Es muss <app>Java</app> installiert sein.</p>
 </page>

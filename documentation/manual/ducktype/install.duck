@@ -1,5 +1,10 @@
 = Installation
   [type="topic"]
 @link[guide >index#install]
+@desc Kurze Installationsanleitung.
+@credit[type="author"]
+  @name Ekkart Kleinod
+  @email ekleinod@edgesoft.de
+@revision[date=2018-07-31 docversion="0.15.0" status=stub]
 
-jar runterladen und starten.
+Es muss $app(Java) installiert sein.

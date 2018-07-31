@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <page xmlns="http://projectmallard.org/1.0/" type="guide" id="index">
+ <info>
+  <desc>Das Handbuch für Nutzerinnen und Admins.</desc>
+  <credit type="author">
+   <name>Ekkart Kleinod</name>
+   <email>ekleinod@edgesoft.de</email>
+  </credit>
+  <revision date="2018-07-31" docversion="0.15.0" status="draft"/>
+ </info>
  <title>RefereeManager - Das Handbuch</title>
+ <subtitle>Schiedsrichterverwaltung für Tischtennis</subtitle>
  <media type="image" src="images/icon-64.png"/>
  <p>Alles Frauen.</p>
  <section id="communication" style="2column">

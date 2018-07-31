@@ -1,5 +1,11 @@
 = RefereeManager - Das Handbuch
+- Schiedsrichterverwaltung für Tischtennis
   [type="guide"]
+@desc Das Handbuch für Nutzerinnen und Admins.
+@credit[type="author"]
+  @name Ekkart Kleinod
+  @email ekleinod@edgesoft.de
+@revision[date=2018-07-31 docversion="0.15.0" status=draft]
 
 [media image src="images/icon-64.png"]
 
