@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page xmlns="http://projectmallard.org/1.0/" type="guide" id="index">
+ <title>RefereeManager - Das Handbuch</title>
+ <media type="image" src="images/icon-64.png"/>
+ <p>Alles Frauen.</p>
+ <section id="communication" style="2column">
+  <title>Mails und Dokumentgenerierung</title>
+ </section>
+ <section id="people" style="2column">
+  <title>Verwaltung von Personen</title>
+ </section>
+ <section id="things" style="2column">
+  <title>Verwaltung von Dingen</title>
+ </section>
+ <section id="settings" style="2column">
+  <title>Einstellungen</title>
+ </section>
+ <section id="install" style="2column">
+  <title>Administration</title>
+ </section>
+</page>

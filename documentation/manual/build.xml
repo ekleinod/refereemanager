@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Ant script for manual file creation.
+
+## Legal stuff
+
+Copyright 2016-2017 Ekkart Kleinod <ekleinod@edgesoft.de>
+
+This file is part of refereemanager.
+
+refereemanager is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+refereemanager is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
+
+@author Ekkart Kleinod
+@version 0.15.0
+@since 0.15.0
+-->
+
+<project name="manual" default="help" basedir=".">
+
+	<property name="edgeutils:ant" value="../../submodules/edgeutils/ant" />
+	<import file="${edgeutils:ant}/ant-commons.xml"/>
+
+	<property name="dir:mallard" value="mallard" />
+	<property name="dir:xhtml" value="xhtml" />
+	<property name="dir:epub" value="epub" />
+	<property name="file:epub" value="refman.epub" />
+
+	<target name="xhtml" description="Generates XHTML help.">
+
+		<exec
+				executable="yelp-build"
+				output="build.log"
+				append="true">
+
+			<arg value="xhtml" />
+			<arg line="-o xhtml" />
+			<arg line="mallard" />
+
+		</exec>
+
+	</target>
+
+	<target name="fixmodel" description="Fixes generation errors in model.">
+
+		<echo message="Fixing model." />
+
+		<antcall target="fixannotationimport">
+			<param name="modelclass" value="Club" />
+		</antcall>
+		<antcall target="fixclass">
+			<param name="modelclass" value="Club" />
+			<param name="element" value="venue" />
+			<param name="elementcamel" value="Venue" />
+			<param name="elementclass" value="Venue" />
+		</antcall>
+		<antcall target="fixclass">
+			<param name="modelclass" value="Club" />
+			<param name="element" value="contact_person" />
+			<param name="elementcamel" value="ContactPerson" />
+			<param name="elementclass" value="Person" />
+		</antcall>
+
+		<antcall target="fixannotationimport">
+			<param name="modelclass" value="League" />
+		</antcall>
+		<antcall target="fixclass">
+			<param name="modelclass" value="League" />
+			<param name="element" value="referee_report_recipient" />
+			<param name="elementcamel" value="RefereeReportRecipient" />
+			<param name="elementclass" value="PersonReference" />
+		</antcall>
+
+	</target>
+
+</project>
