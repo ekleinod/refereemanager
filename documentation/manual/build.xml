@@ -32,55 +32,80 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	<property name="edgeutils:ant" value="../../submodules/edgeutils/ant" />
 	<import file="${edgeutils:ant}/ant-commons.xml"/>
 
+	<property name="id:xhtml" value="xhtml" />
+	<property name="id:epub" value="epub" />
+
+	<property name="dir:ducktype" value="ducktype" />
 	<property name="dir:mallard" value="mallard" />
-	<property name="dir:xhtml" value="xhtml" />
-	<property name="dir:epub" value="epub" />
-	<property name="file:epub" value="refman.epub" />
+	<property name="dir:xhtml" value="${id:xhtml}" />
+	<property name="dir:epub" value="${id:epub}" />
 
-	<target name="xhtml" description="Generates XHTML help.">
+	<property name="ext:epub" value="${id:epub}" />
+	<property name="ext:duck" value="duck" />
+	<property name="ext:mallard" value="page" />
 
-		<exec
-				executable="yelp-build"
-				output="build.log"
-				append="true">
+	<property name="file:epub" value="refman.${ext:epub}" />
 
-			<arg value="xhtml" />
-			<arg line="-o xhtml" />
-			<arg line="mallard" />
+	<target name="all" description="Generate all help types.">
 
-		</exec>
+		<antcall target="clearLog" />
+
+		<antcall target="mallard" />
+		<antcall target="xhtml" />
+		<antcall target="epub" />
 
 	</target>
 
-	<target name="fixmodel" description="Fixes generation errors in model.">
+	<target name="mallard" description="Generates mallard files.">
 
-		<echo message="Fixing model." />
+		<apply
+				executable="ducktype"
+				output="build.log"
+				append="true"
+				parallel="true">
 
-		<antcall target="fixannotationimport">
-			<param name="modelclass" value="Club" />
-		</antcall>
-		<antcall target="fixclass">
-			<param name="modelclass" value="Club" />
-			<param name="element" value="venue" />
-			<param name="elementcamel" value="Venue" />
-			<param name="elementclass" value="Venue" />
-		</antcall>
-		<antcall target="fixclass">
-			<param name="modelclass" value="Club" />
-			<param name="element" value="contact_person" />
-			<param name="elementcamel" value="ContactPerson" />
-			<param name="elementclass" value="Person" />
-		</antcall>
+			<arg value="-o" />
+			<arg value="${dir:mallard}" />
+			<srcfile />
+			<fileset dir="${dir:ducktype}" includes="*.${ext:duck}" />
 
-		<antcall target="fixannotationimport">
-			<param name="modelclass" value="League" />
-		</antcall>
-		<antcall target="fixclass">
-			<param name="modelclass" value="League" />
-			<param name="element" value="referee_report_recipient" />
-			<param name="elementcamel" value="RefereeReportRecipient" />
-			<param name="elementclass" value="PersonReference" />
-		</antcall>
+		</apply>
+
+	</target>
+
+	<target name="xhtml" description="Generates XHTML help.">
+
+		<apply
+				executable="yelp-build"
+				output="build.log"
+				append="true"
+				parallel="true">
+
+			<arg value="${id:xhtml}" />
+			<arg value="-o" />
+			<arg value="${dir:xhtml}" />
+			<srcfile />
+			<fileset dir="${dir:mallard}" includes="*.${ext:mallard}"/>
+
+		</apply>
+
+	</target>
+
+	<target name="epub" description="Generates epub help.">
+
+		<apply
+				executable="yelp-build"
+				output="build.log"
+				append="true"
+				parallel="true">
+
+			<arg value="${id:epub}" />
+			<arg value="-o" />
+			<arg value="${dir:epub}/${file:epub}" />
+			<srcfile />
+			<fileset dir="${dir:mallard}" includes="*.${ext:mallard}"/>
+
+		</apply>
 
 	</target>
 
