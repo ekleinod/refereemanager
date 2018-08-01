@@ -51,6 +51,16 @@ import javafx.scene.layout.GridPane;
 public class ListCRUDController<T extends ModelClassExt> extends CRUDButtonsController implements ICRUDActionsController {
 
 	/**
+	 * Column to add input form parts to.
+	 */
+	private final static int PART_COLUMN = 0;
+
+	/**
+	 * Row to add input form parts to.
+	 */
+	private final static int PART_ROW = 1;
+
+	/**
 	 * Grid pane.
 	 */
 	@FXML
@@ -130,7 +140,7 @@ public class ListCRUDController<T extends ModelClassExt> extends CRUDButtonsCont
 
 		lstData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> ctlInputForm.fillFormFromData(lstData.getSelectionModel().getSelectedItem()));
 
-		grdListCRUD.add(thePartInputForm, 0, 2);
+		grdListCRUD.add(thePartInputForm, PART_COLUMN, PART_ROW);
 
 	}
 
