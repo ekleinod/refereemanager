@@ -43,6 +43,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 	<property name="ext:epub" value="${id:epub}" />
 	<property name="ext:duck" value="duck" />
 	<property name="ext:mallard" value="page" />
+	<property name="ext:xhtml" value="${id:xhtml}" />
 
 	<property name="file:epub" value="refman.${ext:epub}" />
 
@@ -51,7 +52,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 		<antcall target="clearLog" />
 
 		<antcall target="mallard" />
-		<antcall target="xhtml" />
+		<antcall target="fullxhtml" />
 		<antcall target="epub" />
 
 	</target>
@@ -73,6 +74,13 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 
 	</target>
 
+	<target name="fullxhtml" description="Generate XHTML help and pretty print the output.">
+
+		<antcall target="xhtml" />
+		<antcall target="prettyprint" />
+
+	</target>
+
 	<target name="xhtml" description="Generates XHTML help.">
 
 		<apply
@@ -85,7 +93,28 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<arg value="-o" />
 			<arg value="${dir:xhtml}" />
 			<srcfile />
-			<fileset dir="${dir:mallard}" includes="*.${ext:mallard}"/>
+			<fileset dir="${dir:mallard}" includes="*.${ext:mallard}" />
+
+		</apply>
+
+	</target>
+
+	<target name="prettyprint" description="Pretty prints XHTML files.">
+
+		<apply
+				executable="xmllint"
+				output="build.log"
+				append="true"
+				force="true"
+				parallel="false">
+
+			<arg value="--pretty" />
+			<arg value="1" />
+			<arg value="--output" />
+			<targetfile />
+			<srcfile />
+			<fileset dir="${dir:xhtml}" includes="*.${ext:xhtml}" />
+			<mapper type="glob" from="*.${ext:xhtml}" to="${dir:xhtml}/*.${ext:xhtml}" />
 
 		</apply>
 
@@ -103,7 +132,7 @@ along with refereemanager.  If not, see <http://www.gnu.org/licenses/>.
 			<arg value="-o" />
 			<arg value="${dir:epub}/${file:epub}" />
 			<srcfile />
-			<fileset dir="${dir:mallard}" includes="*.${ext:mallard}"/>
+			<fileset dir="${dir:mallard}" includes="*.${ext:mallard}" />
 
 		</apply>
 
