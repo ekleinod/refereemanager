@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.AboutTextController">
+<VBox prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.help.AboutTextController">
 	<children>
 		<Label text="Ein Qualitätsprodukt aus dem Hause &quot;edge-soft&quot;." wrapText="true" />
 		<Separator orientation="VERTICAL" prefHeight="15.0" visible="false" />

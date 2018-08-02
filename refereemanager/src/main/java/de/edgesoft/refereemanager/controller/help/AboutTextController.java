@@ -1,11 +1,9 @@
-package de.edgesoft.refereemanager.controller;
+package de.edgesoft.refereemanager.controller.help;
 
-import javafx.fxml.FXML;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+import de.edgesoft.refereemanager.controller.AbstractHyperlinkController;
 
 /**
- * Controller for known issues scene.
+ * Controller for about text.
  *
  * ## Legal stuff
  *
@@ -27,35 +25,12 @@ import javafx.scene.web.WebView;
  * along with TT-Schiri: Referee Manager. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Ekkart Kleinod
- * @version 0.15.0
- * @since 0.15.0
+ * @version 0.14.0
+ * @since 0.10.0
  */
-public class KnownIssuesController extends AbstractHyperlinkController {
+public class AboutTextController extends AbstractHyperlinkController {
 
-	/**
-	 * Web view.
-	 */
-	@FXML
-	private WebView viewMain;
-
-	/**
-	 * Web engine.
-	 */
-	private WebEngine webEngine;
-
-
-	/**
-	 * Initializes the controller class.
-	 *
-	 * This method is automatically called after the fxml file has been loaded.
-	 */
-	@FXML
-	private void initialize() {
-
-		webEngine = viewMain.getEngine();
-		webEngine.load("https://github.com/tt-schiri/refereemanager/issues");
-
-	}
+	// just inherit link methods so far
 
 }
 

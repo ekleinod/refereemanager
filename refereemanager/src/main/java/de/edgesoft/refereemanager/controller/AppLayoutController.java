@@ -720,7 +720,7 @@ public class AppLayoutController {
 				null
 				);
 
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("KnownIssues");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("help/KnownIssues");
 		alert.getDialogPane().contentProperty().set(pneLoad.getKey());
 
 		alert.setGraphic(new ImageView(Resources.loadImage("images/icon-64.png")));
@@ -740,7 +740,7 @@ public class AppLayoutController {
 				null
 				);
 
-		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("AboutText");
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("help/AboutText");
 		alert.getDialogPane().contentProperty().set(pneLoad.getKey());
 
 		alert.setGraphic(new ImageView(Resources.loadImage("images/icon-64.png")));
