@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="intro">
+ <info>
+  <link type="guide" xref="index"/>
+  <desc>Was soll das und wie kann ich mitmachen?</desc>
+  <credit type="author">
+   <name>Ekkart Kleinod</name>
+   <email>ekleinod@edgesoft.de</email>
+  </credit>
+  <revision date="2018-08-03" docversion="0.15.0" status="draft"/>
+ </info>
+ <title>Einleitung</title>
+ <subtitle>Was soll das und wie kann ich mitmachen?</subtitle>
+ <p>Der <app>RefereeManager</app> ist eine Schiedsrichterverwaltung für Tischtennisschiedsrichter.</p>
+ <p>Dass andere Sportarten nicht explizit unterstützt werden, schließt nicht aus, dass der <app>RefereeManager</app> in Teilbereichen nicht doch nützlich sein kann.
+ Wenn man die angebotenen Features nutzen möchte - voilà.</p>
+ <p>Der <app>RefereeManager</app> ist ein kostenloses, freies und quelloffenes (Open Source) Programm.
+ Das wird auch so bleiben, eine Kommerzialisierung ist nicht geplant und wird nicht stattfinden.
+ Die Quellen liegen unter <link href="https://github.com/tt-schiri/refereemanager/"/></p>
+ <section id="features">
+  <title>Features</title>
+  <p>Folgende Features bietet der <app>RefereeManager</app>:</p>
+  <list>
+   <item>
+    <p>Verwaltung von Personen (Schiedsrichterinnen, Vereinsverantwortliche, Berichtsempfänger, Auszubildende, ...) und deren Daten</p>
+    <list>
+     <item>
+      <p>Name und Titel</p>
+     </item>
+     <item>
+      <p>Adressen</p>
+     </item>
+     <item>
+      <p>Aus- und Fortbildung</p>
+     </item>
+     <item>
+      <p>Status</p>
+     </item>
+     <item>
+      <p>Geburtstage, Todestage</p>
+     </item>
+    </list>
+   </item>
+   <item>
+    <p>Verwaltung von Clubs</p>
+   </item>
+   <item>
+    <p>Verwaltung von Ligen</p>
+   </item>
+   <item>
+    <p>Verwaltung von zusätzlich notwendigen Daten (Geschlechter, Status, Ausbildungsarten, ...)</p>
+   </item>
+   <item>
+    <p>Kommunikation per E-Mail mit Personen</p>
+   </item>
+   <item>
+    <p>Erzeugung von Dokumenten oder Listen aus den Daten</p>
+   </item>
+  </list>
+  <p>Folgende Features werden in nachfolgenden Versionen abgestrebt:</p>
+  <list>
+   <title>2.0.0</title>
+   <item>
+    <p>Verwaltung von Terminen</p>
+   </item>
+   <item>
+    <p>Verwaltung von Schiedsrichtereinsätzen</p>
+   </item>
+   <item>
+    <p>Verwaltung von Turniereinsätzen</p>
+   </item>
+   <item>
+    <p>Verwaltung von Teams</p>
+   </item>
+  </list>
+  <list>
+   <title>3.0.0</title>
+   <item>
+    <p>andere Sprachen</p>
+   </item>
+   <item>
+    <p>Import von Daten anderer Systeme</p>
+   </item>
+   <item>
+    <p>Bereinigung der Datenbasis</p>
+   </item>
+   <item>
+    <p>Behandlung der Daten ausgeschiedener Personen</p>
+   </item>
+  </list>
+ </section>
+ <section id="data">
+  <title>Daten</title>
+  <p>Die Daten des <app>RefereeManager</app> werden in XML-Dateien lokal auf dem Rechner abgelegt.
+  Pro Saison wird eine XML-Datei erstellt.</p>
+  <p>Das heißt, für die Nutzung muss man nicht online sein und für die Datensicherung ist jede Nutzin selbst verantwortlich.
+  Diese Entscheidung wurde bewusst getroffen, es ist auch nicht geplant, eine Onlinespeicherung zu implementieren.</p>
+  <p>Das heißt ebenfalls, dass die meisten Daten der Personen redundant pro Saison gespeichert werden.
+  Diese Entscheidung wurde ebenfalls bewusst getroffen, da sonst die Datenmodellierung insbesondere des Archivs deutlich komplizierter geworden wäre.</p>
+ </section>
+ <section id="contribute">
+  <title>Mitmachen</title>
+  <p>Wie erwähnt, ist der <app>RefereeManager</app> Open Source, das heißt, jede Nutzerin oder Programmiererin kann sich am Projekt beteiligen oder ihre eigene Version des Programms erstellen.</p>
+  <p>Das Programm wird von mir (Ekkart Kleinod) in meiner Freizeit entwickelt, das heißt, ich bin frei in der Richtung, die ich dem Programm geben möchte.
+  Das heißt auch, ich programmiere, wenn ich Zeit und Lust dazu habe.
+  Interessante Features werde ich umsetzen, wenn sie mir nützen oder eine technische Herausforderung für mich darstellen.</p>
+  <p>Ergo: wenn etwas schnell umgesetzt werden soll: begeistert mich oder macht das selbst und erstellt einen Pull-Request.
+  Was <em>nicht</em> hilft (ernsthaft): mir Geld anbieten.</p>
+  <p>Wenn Ihr Geld ausgeben wollt, sucht Euch eine Programmiererin, die Euer Feature umsetzt und als Pull-Request einreicht.</p>
+  <p>Wobei könnt Ihr helfen?</p>
+  <list>
+   <item>
+    <p>Fehler melden</p>
+   </item>
+   <item>
+    <p>Verbesserungen und Wünsche melden</p>
+   </item>
+   <item>
+    <p>Übersetzungen in andere Sprachen (ab Meilenstein 3.0.0)</p>
+   </item>
+   <item>
+    <p>selbst programmieren</p>
+   </item>
+  </list>
+  <p>Der Programmcode, Fehler, Wünsche und die Dokumentation werden über <app>github</app> gehostet.
+  Ihr besorgt Euch also am besten einen Account dafür.</p>
+  <terms>
+   <item>
+    <title>Quellcode</title>
+    <p>per <app>git</app> in <app>github</app> unter: <link href="https://github.com/tt-schiri/refereemanager/"/></p>
+   </item>
+   <item>
+    <title>Fehler melden</title>
+    <p>in <app>github</app> unter: <link href="https://github.com/tt-schiri/refereemanager/issues"/></p>
+   </item>
+   <item>
+    <title>Wünsche melden</title>
+    <p>in <app>github</app> unter: <link href="https://github.com/tt-schiri/refereemanager/issues"/></p>
+   </item>
+   <item>
+    <title>Übersetzungen</title>
+    <p>gebe ich bekannt, wenn es soweit ist, derzeit ist die technische Basis dafür noch nicht da</p>
+   </item>
+  </terms>
+ </section>
+</page>

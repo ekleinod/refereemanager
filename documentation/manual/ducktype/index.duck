@@ -5,11 +5,16 @@
 @credit[type="author"]
   @name Ekkart Kleinod
   @email ekleinod@edgesoft.de
-@revision[date=2018-07-31 docversion="0.15.0" status=draft]
+@revision[date=2018-08-03 docversion="0.15.0" status=draft]
 
 [media image src="images/icon-64.png"]
 
-Alles Frauen.
+Der $app(RefereeManager) ist eine Schiedsrichterverwaltung für Tischtennisschiedsrichter.
+
+Andere Sportarten werden nicht explizit unterstützt, evtl. kann die Software ja auch so dafür eingesetzt werden.
+
+Die Anrede in diesem Handbuch ist durchgängig weiblich.
+Personen anderen Geschlechts können natürlich verwaltet werden bzw. das Programm bedienen.
 
 == Mails und Dokumentgenerierung
   [id="communication" style="2column"]
