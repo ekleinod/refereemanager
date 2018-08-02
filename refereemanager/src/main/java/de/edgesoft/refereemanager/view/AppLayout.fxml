@@ -130,6 +130,8 @@
 						</Menu>
 						<Menu fx:id="mnuHelp" text="_Hilfe">
 							<items>
+								<MenuItem fx:id="mnuHelpKnownIssues" onAction="#handleHelpKnownIssues" text="Bekannte _Probleme..." />
+								<SeparatorMenuItem />
 								<MenuItem fx:id="mnuHelpAbout" onAction="#handleHelpAbout" text="Ü_ber...">
 									<accelerator>
 										<KeyCodeCombination alt="UP" code="F1" control="DOWN" meta="UP" shift="UP" shortcut="UP" />

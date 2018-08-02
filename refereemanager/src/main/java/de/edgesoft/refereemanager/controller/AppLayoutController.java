@@ -254,6 +254,12 @@ public class AppLayoutController {
 	private MenuItem mnuStatisticsData;
 
 	/**
+	 * Menu item help -> known issues.
+	 */
+	@FXML
+	private MenuItem mnuHelpKnownIssues;
+
+	/**
 	 * Menu item help -> about.
 	 */
 	@FXML
@@ -419,6 +425,7 @@ public class AppLayoutController {
 		ButtonUtils.adaptButton(btnStatisticsData, mnuStatisticsData);
 
 		mnuHelpAbout.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/help-about.png")));
+		mnuHelpKnownIssues.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/help-about.png")));
 
 	}
 
@@ -698,6 +705,26 @@ public class AppLayoutController {
 			}
 			saveData(file.getPath());
 		}
+
+	}
+
+	/**
+	 * Help menu known issues.
+	 */
+	@FXML
+	private void handleHelpKnownIssues() {
+
+		Alert alert = AlertUtils.createAlert(AlertType.INFORMATION, primaryStage,
+				"Bekannte Probleme und Anregungen",
+				MessageFormat.format("Referee-Manager Version {0}", RefereeManager.getVersion()),
+				null
+				);
+
+		Map.Entry<Parent, FXMLLoader> pneLoad = Resources.loadNode("KnownIssues");
+		alert.getDialogPane().contentProperty().set(pneLoad.getKey());
+
+		alert.setGraphic(new ImageView(Resources.loadImage("images/icon-64.png")));
+		alert.showAndWait();
 
 	}
 
