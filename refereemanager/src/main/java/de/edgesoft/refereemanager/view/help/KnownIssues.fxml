@@ -8,7 +8,7 @@
 <VBox spacing="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edgesoft.refereemanager.controller.help.KnownIssuesController">
 	<children>
 		<Label text="Sehr rudimentäre Anzeige, im richtigen Browser wäre es wahrscheinlich besser:" wrapText="true" />
-		<Hyperlink onAction="#handleWebLinkAction" text="https://github.com/tt-schiri/refereemanager/issues" />
+		<Hyperlink onAction="#handleWebLinkAction" text="https://gitlab.com/open-tt/refereemanager/issues" />
 		<WebView fx:id="viewMain" />
 	</children>
 </VBox>
