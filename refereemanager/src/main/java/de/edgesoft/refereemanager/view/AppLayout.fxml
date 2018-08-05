@@ -159,6 +159,7 @@
 						<Button fx:id="btnOverviewOtherEvents" onAction="#handleOverviewOtherEvents" visible="false" managed="false" />
 						<Separator prefWidth="10.0" />
 						<Button fx:id="btnOverviewClubs" onAction="#handleOverviewClubs" />
+						<Button fx:id="btnOverviewLeagues" onAction="#handleOverviewLeagues" />
 						<Separator prefWidth="10.0" />
 						<Button fx:id="btnStatisticsData" onAction="#handleStatisticsData" />
 						<Separator prefWidth="10.0" />

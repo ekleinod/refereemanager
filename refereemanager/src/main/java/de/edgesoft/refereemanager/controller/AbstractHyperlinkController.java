@@ -8,6 +8,9 @@ import java.net.URISyntaxException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Labeled;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 
 /**
  * Abstract controller with hyperlink abilities.
@@ -63,6 +66,19 @@ public abstract class AbstractHyperlinkController {
 		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Copy url.
+	 */
+	protected void copyURL(
+			final Labeled theURLHolder
+			) {
+
+		ClipboardContent clpContent = new ClipboardContent();
+		clpContent.putString(theURLHolder.getText());
+		Clipboard.getSystemClipboard().setContent(clpContent);
+
 	}
 
 }

@@ -350,6 +350,14 @@ public class AppLayoutController {
 	private Button btnOverviewClubs;
 
 	/**
+	 * Button league overview.
+	 *
+	 * @since 0.15.0
+	 */
+	@FXML
+	private Button btnOverviewLeagues;
+
+	/**
 	 * Button statistics -> data.
 	 */
 	@FXML
@@ -412,8 +420,9 @@ public class AppLayoutController {
 
 		mnuOverviewClubs.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-clubs.png")));
 		ButtonUtils.adaptButton(btnOverviewClubs, mnuOverviewClubs);
-
 		mnuOverviewLeagues.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-leagues.png")));
+		ButtonUtils.adaptButton(btnOverviewLeagues, mnuOverviewLeagues);
+
 		mnuOverviewVenues.setGraphic(new ImageView(Resources.loadImage("icons/24x24/actions/atmosphere.png")));
 		mnuOverviewSexTypes.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-sextypes.png")));
 		mnuOverviewRoles.setGraphic(new ImageView(Resources.loadImage("icons/24x24/own/view-roles.png")));

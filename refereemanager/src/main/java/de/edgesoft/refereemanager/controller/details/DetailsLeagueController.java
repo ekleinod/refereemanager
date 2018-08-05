@@ -2,13 +2,17 @@ package de.edgesoft.refereemanager.controller.details;
 
 import java.util.stream.Collectors;
 
+import de.edgesoft.edgeutils.javafx.ButtonUtils;
 import de.edgesoft.edgeutils.javafx.FontUtils;
 import de.edgesoft.edgeutils.javafx.LabelUtils;
 import de.edgesoft.refereemanager.controller.AbstractHyperlinkController;
 import de.edgesoft.refereemanager.model.LeagueModel;
+import de.edgesoft.refereemanager.utils.Resources;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.FontWeight;
 
 /**
@@ -64,10 +68,22 @@ public class DetailsLeagueController<T extends LeagueModel> extends AbstractHype
 	private Hyperlink lnkResultsURL;
 
 	/**
+	 * Copy results URL.
+	 */
+	@FXML
+	private Button btnCopyResultsURL;
+
+	/**
 	 * Referee report.
 	 */
 	@FXML
 	private Hyperlink lnkRefereeReportURL;
+
+	/**
+	 * Copy referee report URL.
+	 */
+	@FXML
+	private Button btnCopyRefereeReportURL;
 
 	/**
 	 * Referee report recipients.
@@ -86,6 +102,14 @@ public class DetailsLeagueController<T extends LeagueModel> extends AbstractHype
 
 		// headings
 		lblHeading.setFont(FontUtils.getDerived(lblHeading.getFont(), FontWeight.BOLD));
+
+		// buttons
+        ButtonUtils.bindDisable(btnCopyResultsURL, lnkResultsURL);
+        ButtonUtils.bindDisable(btnCopyRefereeReportURL, lnkRefereeReportURL);
+
+		// icons
+		btnCopyResultsURL.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-copy.png")));
+		btnCopyRefereeReportURL.setGraphic(new ImageView(Resources.loadImage("icons/16x16/actions/edit-copy.png")));
 
 	}
 
@@ -131,6 +155,22 @@ public class DetailsLeagueController<T extends LeagueModel> extends AbstractHype
 
 		}
 
+	}
+
+	/**
+	 * Copy results url.
+	 */
+	@FXML
+	private void handleCopyResultsURL() {
+		copyURL(lnkResultsURL);
+	}
+
+	/**
+	 * Copy referee report url.
+	 */
+	@FXML
+	private void handleCopyRefereeReportURL() {
+		copyURL(lnkRefereeReportURL);
 	}
 
 }
