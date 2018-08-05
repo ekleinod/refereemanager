@@ -54,7 +54,7 @@ public class KnownIssuesController extends AbstractHyperlinkController {
 	private void initialize() {
 
 		webEngine = viewMain.getEngine();
-		webEngine.load("https://github.com/tt-schiri/refereemanager/issues");
+		webEngine.load("https://gitlab.com/open-tt/refereemanager/issues");
 
 	}
 

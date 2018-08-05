@@ -1,11 +1,11 @@
 = Einleitung
 - Was soll das und wie kann ich mitmachen?
-  [type="topic"]
+	[type="topic"]
 @link[guide >index]
 @desc Was soll das und wie kann ich mitmachen?
 @credit[type="author"]
-  @name Ekkart Kleinod
-  @email ekleinod@edgesoft.de
+	@name Ekkart Kleinod
+	@email ekleinod@edgesoft.de
 @revision[date=2018-08-03 docversion="0.15.0" status=draft]
 
 Der $app(RefereeManager) ist eine Schiedsrichterverwaltung für Tischtennisschiedsrichter.
@@ -15,20 +15,20 @@ Wenn man die angebotenen Features nutzen möchte - voilà.
 
 Der $app(RefereeManager) ist ein kostenloses, freies und quelloffenes (Open Source) Programm.
 Das wird auch so bleiben, eine Kommerzialisierung ist nicht geplant und wird nicht stattfinden.
-Die Quellen liegen unter $link[>>https://github.com/tt-schiri/refereemanager/]
+Die Quellen liegen unter $link[>>https://gitlab.com/open-tt/refereemanager]
 
 == Features
-  [id="features"]
+	[id="features"]
 
 Folgende Features bietet der $app(RefereeManager):
 
 [list]
 * Verwaltung von Personen (Schiedsrichterinnen, Vereinsverantwortliche, Berichtsempfänger, Auszubildende, ...) und deren Daten
-  * Name und Titel
-  * Adressen
-  * Aus- und Fortbildung
-  * Status
-  * Geburtstage, Todestage
+	* Name und Titel
+	* Adressen
+	* Aus- und Fortbildung
+	* Status
+	* Geburtstage, Todestage
 * Verwaltung von Clubs
 * Verwaltung von Ligen
 * Verwaltung von zusätzlich notwendigen Daten (Geschlechter, Status, Ausbildungsarten, ...)
@@ -52,7 +52,7 @@ Folgende Features werden in nachfolgenden Versionen abgestrebt:
 * Behandlung der Daten ausgeschiedener Personen
 
 == Daten
-  [id="data"]
+	[id="data"]
 
 Die Daten des $app(RefereeManager) werden in XML-Dateien lokal auf dem Rechner abgelegt.
 Pro Saison wird eine XML-Datei erstellt.
@@ -64,7 +64,7 @@ Das heißt ebenfalls, dass die meisten Daten der Personen redundant pro Saison g
 Diese Entscheidung wurde ebenfalls bewusst getroffen, da sonst die Datenmodellierung insbesondere des Archivs deutlich komplizierter geworden wäre.
 
 == Mitmachen
-  [id="contribute"]
+	[id="contribute"]
 
 Wie erwähnt, ist der $app(RefereeManager) Open Source, das heißt, jede Nutzerin oder Programmiererin kann sich am Projekt beteiligen oder ihre eigene Version des Programms erstellen.
 
@@ -85,18 +85,18 @@ Wobei könnt Ihr helfen?
 * Übersetzungen in andere Sprachen (ab Meilenstein 3.0.0)
 * selbst programmieren
 
-Der Programmcode, Fehler, Wünsche und die Dokumentation werden über $app(github) gehostet.
+Der Programmcode, Fehler, Wünsche und die Dokumentation werden über $app(gitlab) gehostet.
 Ihr besorgt Euch also am besten einen Account dafür.
 
 [terms]
 - Quellcode
-* per $app(git) in $app(github) unter: $link[>>https://github.com/tt-schiri/refereemanager/]
+* per $app(git) in $app(gitlab) unter: $link[>>https://gitlab.com/open-tt/refereemanager]
 
 - Fehler melden
-* in $app(github) unter: $link[>>https://github.com/tt-schiri/refereemanager/issues]
+* in $app(gitlab) unter: $link[>>https://gitlab.com/open-tt/refereemanager/issues]
 
 - Wünsche melden
-* in $app(github) unter: $link[>>https://github.com/tt-schiri/refereemanager/issues]
+* in $app(gitlab) unter: $link[>>https://gitlab.com/open-tt/refereemanager/issues]
 
 - Übersetzungen
 * gebe ich bekannt, wenn es soweit ist, derzeit ist die technische Basis dafür noch nicht da
